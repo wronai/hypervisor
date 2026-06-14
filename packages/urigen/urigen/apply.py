@@ -1,108 +1,18 @@
 from __future__ import annotations
 
-import shutil
 from pathlib import Path
 from typing import Any
 
-import yaml
-
+from urigen.apply_executor import (
+    build_plan_diff,
+    execute_apply_plan,
+    rollback_apply,
+)
 from urigen.apply_planner import build_apply_plan
+from urigen.apply_validate import validate_apply_artifact
 from urigen.io import load_yaml, write_json, write_yaml
 from urigen.models import repo_root
 from urigen.verify import verify_ecosystem
-
-
-def _resolve_path(value: str, repo: Path) -> Path:
-    path = Path(value)
-    return path if path.is_absolute() else repo / value
-
-
-def _merge_deployment_fragment(fragment_path: Path, target_path: Path, rollback_dir: Path) -> dict[str, Any]:
-    fragment = load_yaml(fragment_path)
-    backup = None
-    if target_path.exists():
-        rollback_dir.mkdir(parents=True, exist_ok=True)
-        backup = rollback_dir / "agent_deployments.yaml.bak"
-        shutil.copy2(target_path, backup)
-        registry = load_yaml(target_path)
-    else:
-        registry = {"deployments": []}
-    by_id = {item["id"]: item for item in registry.get("deployments") or [] if isinstance(item, dict)}
-    for item in fragment.get("deployments") or []:
-        if isinstance(item, dict) and item.get("id"):
-            merged = dict(by_id.get(item["id"], {}))
-            merged.update(item)
-            by_id[str(item["id"])] = merged
-    registry["deployments"] = sorted(by_id.values(), key=lambda row: str(row.get("id")))
-    target_path.parent.mkdir(parents=True, exist_ok=True)
-    target_path.write_text(yaml.safe_dump(registry, sort_keys=False, allow_unicode=True), encoding="utf-8")
-    return {"merged": len(fragment.get("deployments") or []), "backup": str(backup) if backup else None}
-
-
-def _copy_tree(source: Path, target: Path, rollback_dir: Path) -> dict[str, Any]:
-    copied: list[str] = []
-    if target.exists():
-        rollback_dir.mkdir(parents=True, exist_ok=True)
-        backup = rollback_dir / target.name
-        if backup.exists():
-            shutil.rmtree(backup)
-        shutil.copytree(target, backup)
-    target.mkdir(parents=True, exist_ok=True)
-    for path in sorted(source.rglob("*")):
-        if path.is_dir():
-            continue
-        rel = path.relative_to(source)
-        dest = target / rel
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(path, dest)
-        copied.append(str(rel))
-    return {"copied": copied}
-
-
-def _copy_file(source: Path, target: Path, rollback_dir: Path) -> dict[str, Any]:
-    if target.exists():
-        rollback_dir.mkdir(parents=True, exist_ok=True)
-        backup = rollback_dir / target.name
-        shutil.copy2(target, backup)
-    target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(source, target)
-    return {"source": str(source), "target": str(target)}
-
-
-def _execute_action(action: dict[str, Any], *, repo: Path, ecosystem_dir: Path, rollback_dir: Path) -> dict[str, Any]:
-    operation = action.get("operation")
-    source = _resolve_path(str(action.get("source")), repo)
-    target = _resolve_path(str(action.get("target")), repo)
-
-    if operation == "merge":
-        if not source.is_file():
-            return {"id": action["id"], "status": "skipped", "detail": "source missing"}
-        detail = _copy_file(source, target, rollback_dir)
-        return {"id": action["id"], "status": "completed", **detail}
-
-    if operation == "copy_dir":
-        if not source.is_dir():
-            return {"id": action["id"], "status": "skipped", "detail": "source missing"}
-        detail = _copy_tree(source, target, rollback_dir)
-        return {"id": action["id"], "status": "completed", **detail}
-
-    if operation == "merge_yaml_list":
-        if not source.is_file():
-            return {"id": action["id"], "status": "skipped", "detail": "source missing"}
-        detail = _merge_deployment_fragment(source, target, rollback_dir)
-        return {"id": action["id"], "status": "completed", **detail}
-
-    if operation == "verify":
-        verification = verify_ecosystem(
-            ecosystem_dir / "ecosystem.yaml",
-            root=repo if (repo / "docs" / "PACKAGE_BOUNDARIES.yaml").exists() else repo_root(None),
-            write_report=False,
-            skip_doctor=not (repo / "docs" / "PACKAGE_BOUNDARIES.yaml").exists(),
-        )
-        status = "completed" if verification.get("ok") else "failed"
-        return {"id": action["id"], "status": status, "detail": verification}
-
-    return {"id": action["id"], "status": "skipped", "detail": f"unknown operation {operation}"}
 
 
 def apply_ecosystem(
@@ -110,6 +20,7 @@ def apply_ecosystem(
     *,
     approve: bool = False,
     plan_only: bool = False,
+    rollback: bool = False,
     root: str | Path | None = None,
 ) -> dict[str, Any]:
     repo = repo_root(root)
@@ -119,8 +30,15 @@ def apply_ecosystem(
     eco_meta = ecosystem.get("metadata") or ecosystem.get("ecosystem") or {}
     eco_id = str(eco_meta.get("id") or "generated-ecosystem")
 
+    if rollback:
+        payload = rollback_apply(ecosystem_dir, repo=repo)
+        payload["ecosystem"] = eco_id
+        return payload
+
     plan = build_apply_plan(ecosystem_file, repo_root=repo)
+    plan_errors = validate_apply_artifact(plan, "apply_plan.schema.json", repo=repo)
     plan_path = write_yaml(ecosystem_dir / "apply_plan.yaml", plan)
+    diff = build_plan_diff(plan, repo=repo)
 
     if plan_only or not approve:
         blocked = not approve and not plan_only
@@ -132,6 +50,8 @@ def apply_ecosystem(
             "plan_path": str(plan_path),
             "plan_uri": plan["uri"]["self"],
             "actions": plan["spec"]["actions"],
+            "diff": diff,
+            "schema_errors": plan_errors or None,
         }
 
     verify_root = repo if (repo / "docs" / "PACKAGE_BOUNDARIES.yaml").exists() else repo_root(None)
@@ -150,23 +70,28 @@ def apply_ecosystem(
             "reason": "ecosystem verify failed before apply",
             "verification": verification,
             "plan_path": str(plan_path),
+            "diff": diff,
         }
 
-    rollback_dir = ecosystem_dir / "rollback"
-    action_results: list[dict[str, Any]] = []
-    for action in plan["spec"]["actions"]:
-        if action.get("requires_approval") and not approve:
-            action_results.append({"id": action["id"], "status": "skipped", "detail": "approval required"})
-            continue
-        action_results.append(
-            _execute_action(action, repo=repo, ecosystem_dir=ecosystem_dir, rollback_dir=rollback_dir)
-        )
+    execution = execute_apply_plan(
+        plan,
+        repo=repo,
+        ecosystem_dir=ecosystem_dir,
+        ecosystem_id=eco_id,
+        approve=approve,
+    )
+    action_results = execution["action_results"]
+    ok = execution["ok"]
+    execution_status = execution["execution_status"]
 
-    failed = [item for item in action_results if item.get("status") == "failed"]
-    ok = not failed
     lifecycle = dict((ecosystem.get("status") or {}).get("lifecycle") or {})
-    lifecycle.update({"verified": True, "applied": ok, "active": ok})
-    ecosystem["status"] = {"lifecycle": lifecycle, "apply_status": "applied" if ok else "failed"}
+    if execution_status == "rolled_back":
+        lifecycle.update({"verified": True, "applied": False, "active": False, "rolled_back": True})
+        apply_status = "rolled_back"
+    else:
+        lifecycle.update({"verified": True, "applied": ok, "active": ok})
+        apply_status = "applied" if ok else "failed"
+    ecosystem["status"] = {"lifecycle": lifecycle, "apply_status": apply_status}
     write_yaml(ecosystem_file, ecosystem)
 
     result = {
@@ -180,20 +105,26 @@ def apply_ecosystem(
         },
         "status": {
             "ok": ok,
-            "execution_status": "completed",
+            "execution_status": execution_status,
             "service_result_status": "succeeded" if ok else "failed",
-            "apply_status": "applied" if ok else "failed",
+            "apply_status": apply_status,
         },
         "actions": action_results,
-        "rollback": {"available": rollback_dir.exists(), "path": str(rollback_dir)},
+        "rollback": execution["rollback"],
+        "diff": diff,
     }
+    result_errors = validate_apply_artifact(result, "apply_result.schema.json", repo=repo)
+    if result_errors:
+        result["schema_warnings"] = result_errors
     result_path = write_json(ecosystem_dir / "apply_result.json", result)
     return {
         "ok": ok,
         "ecosystem": eco_id,
-        "status": "applied" if ok else "failed",
+        "status": apply_status,
         "plan_path": str(plan_path),
         "result_path": str(result_path),
         "actions": action_results,
+        "diff": diff,
+        "rollback": execution["rollback"],
         "result": result,
     }

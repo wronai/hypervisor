@@ -7,6 +7,7 @@ OUT_DIR="$ROOT/output/artifacts/voice"
 PROMPT="${1:-wygeneruj agenta pogodowego, uruchom go lokalnie i sprawdz health w Chrome}"
 
 export PYTHONPATH="$REGISTRY${PYTHONPATH:+:$PYTHONPATH}"
+source "$ROOT/scripts/examples/cli_fallback.sh"
 mkdir -p "$OUT_DIR"
 
 json_payload() {
@@ -19,7 +20,7 @@ PY
 }
 
 echo "1. Mock STT"
-touri call stt://mock/transcribe \
+run_cli touri call stt://mock/transcribe \
   --registry "$REGISTRY" \
   --payload "$(json_payload "$PROMPT")" \
   > "$OUT_DIR/stt_result.json"
@@ -35,7 +36,7 @@ PY
 )"
 
 echo "2. Voice command -> compact URI flow"
-touri call voice://command/from-text \
+run_cli touri call voice://command/from-text \
   --registry "$REGISTRY" \
   --payload "$(json_payload "$TRANSCRIPT")" \
   > "$OUT_DIR/voice_command_result.json"
@@ -44,16 +45,16 @@ FLOW="$OUT_DIR/voice_command.uri.flow.yaml"
 GRAPH="$OUT_DIR/voice_command.uri.graph.yaml"
 
 echo "3. Expand flow -> workflow graph"
-uri2flow expand "$FLOW" --out "$GRAPH"
+run_cli uri2flow expand "$FLOW" --out "$GRAPH"
 
 echo "4. Validate workflow graph"
-uri3 validate-workflow "$GRAPH"
+run_cli uri3 validate-workflow "$GRAPH"
 
 echo "5. Dry-run workflow"
-uri3 run-workflow "$GRAPH" --dry-run > "$OUT_DIR/voice_command.dry_run.json"
+run_cli uri3 run-workflow "$GRAPH" --dry-run > "$OUT_DIR/voice_command.dry_run.json"
 
 echo "6. Mock TTS"
-touri call tts://mock/speak \
+run_cli touri call tts://mock/speak \
   --registry "$REGISTRY" \
   --payload "$(json_payload "Workflow zostal przygotowany i przeszedl walidacje.")" \
   > "$OUT_DIR/tts_result.json"

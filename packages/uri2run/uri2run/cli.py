@@ -40,6 +40,8 @@ def call_cmd(
 
 
 def _backend_from_target(target: str, *, backend_type: str) -> dict[str, Any]:
+    from uri2run.voice_resolver import resolve_voice_backend
+
     if backend_type:
         kind = backend_type
     elif target.startswith("python://"):
@@ -63,6 +65,9 @@ def _backend_from_target(target: str, *, backend_type: str) -> dict[str, Any]:
     elif target.startswith("a2a://"):
         kind = "a2a"
     else:
+        voice_backend = resolve_voice_backend(target)
+        if voice_backend is not None:
+            return voice_backend
         kind = "shell"
     if kind == "python":
         return {"type": "python", "target": target}

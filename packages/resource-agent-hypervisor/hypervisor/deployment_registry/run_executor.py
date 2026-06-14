@@ -1,0 +1,183 @@
+from __future__ import annotations
+
+import time
+from pathlib import Path
+from typing import Any
+
+from hypervisor.deployment_registry.env import resolve_deployment_env
+from hypervisor.deployment_registry.health_uri import (
+    port_from_http_uri,
+    resolve_effective_health_uri,
+)
+from hypervisor.deployment_registry.models import AgentDeployment
+from hypervisor.deployment_registry.port_utils import find_free_port, is_port_free
+from hypervisor.deployment_registry.run_plans import build_run_plan
+from hypervisor.deployment_registry.runtime_state import (
+    clear_runtime_state,
+    is_process_alive,
+    load_runtime_state,
+    now_iso,
+    save_runtime_state,
+)
+
+
+def load_or_clear_runtime_state(deployment_id: str, repo: Path) -> dict[str, Any] | None:
+    existing = load_runtime_state(deployment_id, repo)
+    if existing and not is_process_alive(existing.get("pid")):
+        clear_runtime_state(deployment_id, repo)
+        return None
+    return existing
+
+
+def build_agent_run_plan(
+    deployment: AgentDeployment,
+    *,
+    repo: Path,
+    port: int | None,
+    host: str,
+    reload: bool,
+) -> dict[str, Any]:
+    return build_run_plan(deployment, root=repo, port=port, host=host, reload=reload)
+
+
+def rebind_plan_port_if_busy(
+    deployment: AgentDeployment,
+    plan: dict[str, Any],
+    *,
+    repo: Path,
+    host: str,
+    reload: bool,
+) -> dict[str, Any]:
+    preferred_port = int(plan.get("port") or 8101)
+    if is_port_free(preferred_port):
+        return plan
+    rebound_port = find_free_port(preferred_port)
+    rebound = build_run_plan(deployment, root=repo, port=rebound_port, host=host, reload=reload)
+    rebound["port_rebound"] = {
+        "from": preferred_port,
+        "to": rebound_port,
+        "reason": "port_in_use",
+    }
+    return rebound
+
+
+def resolve_running_mode(
+    *,
+    if_running: str | None,
+    detach: bool,
+    port: int | None,
+    existing: dict[str, Any],
+    plan: dict[str, Any],
+    deployment_id: str,
+) -> str:
+    running_mode = if_running or ("reuse" if detach else "fail")
+    existing_port = port_from_http_uri(str(existing.get("health_uri") or ""))
+    requested_port = plan.get("port")
+    if (
+        port is not None
+        and existing_port is not None
+        and requested_port is not None
+        and existing_port != requested_port
+    ):
+        if running_mode == "reuse":
+            return "restart"
+        if running_mode == "fail":
+            raise RuntimeError(
+                f"Agent {deployment_id} already running on port {existing_port}, "
+                f"requested port {requested_port}. Use --if-running restart."
+            )
+    return running_mode
+
+
+def reuse_existing_process_plan(
+    existing: dict[str, Any],
+    plan: dict[str, Any],
+    *,
+    port: int | None,
+) -> dict[str, Any]:
+    plan = dict(plan)
+    plan["pid"] = existing.get("pid")
+    plan["health_uri"] = (
+        plan.get("health_uri") if port is not None else resolve_effective_health_uri(existing, plan)
+    )
+    plan["runtime_status"] = "running"
+    plan["already_running"] = True
+    return plan
+
+
+def prepare_runtime_env(deployment: AgentDeployment, *, repo: Path) -> dict[str, str]:
+    return resolve_deployment_env(
+        deployment.id,
+        deployment.agent_ref,
+        deployment.env,
+        root=repo,
+        resolve_secrets=True,
+    )
+
+
+def verify_process_alive(process_pid: int, *, settle_seconds: float = 0.3) -> bool:
+    time.sleep(settle_seconds)
+    return is_process_alive(process_pid)
+
+
+def write_runtime_state_after_start(
+    deployment: AgentDeployment,
+    plan: dict[str, Any],
+    *,
+    process_pid: int,
+    runtime_env: dict[str, str],
+    host: str,
+    requested_port: int | None,
+    repo: Path,
+) -> None:
+    effective_port = plan.get("port")
+    declared_health = deployment.health_uri or plan.get("health_uri")
+    state = {
+        "id": deployment.id,
+        "agent_ref": deployment.agent_ref,
+        "pid": process_pid,
+        "status": "running",
+        "health_status": "unknown",
+        "lifecycle_status": "running",
+        "started_at": now_iso(),
+        "command": plan["command_string"],
+        "health_uri": plan["health_uri"],
+        "log_uri": plan["log_uri"],
+        "env": runtime_env,
+        "requested_port": requested_port,
+        "declared_health_uri": declared_health,
+        "network": {
+            "host": host,
+            "requested_port": requested_port,
+            "effective_port": effective_port,
+            "effective_health_uri": plan["health_uri"],
+            "declared_health_uri": declared_health,
+        },
+    }
+    save_runtime_state(deployment.id, state, repo)
+
+
+def process_start_failure_payload(
+    deployment_id: str,
+    *,
+    process_pid: int,
+    plan: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "ok": False,
+        "deployment_id": deployment_id,
+        "error": (
+            f"agent process exited immediately (pid={process_pid}); "
+            f"port {plan.get('port')} may be unavailable"
+        ),
+        "port": plan.get("port"),
+        "port_rebound": plan.get("port_rebound"),
+        "result_type": "lifecycle",
+    }
+
+
+def attach_started_process(plan: dict[str, Any], process_pid: int) -> dict[str, Any]:
+    plan = dict(plan)
+    plan["pid"] = process_pid
+    plan["runtime_status"] = "running"
+    return plan

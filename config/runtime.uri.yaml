@@ -1,12 +1,18 @@
-# Runtime defaults for local agent execution.
-# Values may use URI semantics (env://, http://, …).
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: RuntimeConfig
+metadata:
+  id: runtime
+  description: Runtime defaults for local agent execution.
+uri:
+  self: config://runtime
+spec:
+  version: 1
 
-version: 1
-
-defaults:
-  resource_runtime_url: http://localhost:8000
-  log_stream: hypervisor
-
-agents:
-  weather-map-agent:
+  defaults:
+    resource_runtime_url: http://localhost:8000
     log_stream: hypervisor
+
+  agents:
+    weather-map-agent:
+      log_stream: hypervisor

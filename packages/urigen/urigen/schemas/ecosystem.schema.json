@@ -2,8 +2,41 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "urigen ecosystem",
   "type": "object",
-  "required": ["version", "ecosystem", "capabilities", "flows", "tests"],
+  "required": [
+    "$schema",
+    "apiVersion",
+    "kind",
+    "metadata",
+    "uri",
+    "spec",
+    "version",
+    "ecosystem",
+    "capabilities",
+    "flows",
+    "tests"
+  ],
   "properties": {
+    "$schema": { "type": "string" },
+    "apiVersion": { "const": "uri3.io/v1" },
+    "kind": { "const": "Ecosystem" },
+    "metadata": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "uri": {
+      "type": "object",
+      "required": ["self"],
+      "properties": {
+        "self": { "type": "string", "pattern": "^ecosystem://" },
+        "proposal": { "type": "string", "pattern": "^proposal://ecosystem/" }
+      },
+      "additionalProperties": true
+    },
+    "spec": { "type": "object" },
     "version": { "const": 1 },
     "ecosystem": {
       "type": "object",

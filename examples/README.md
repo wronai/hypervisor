@@ -50,6 +50,7 @@ pip install -e '.[windows]'   # Windows UIA
 | 21 | [`21_touri_voice`](./21_touri_voice/) | STT/TTS/voice → nl2uri | `touri call stt://...`, `voice://command/from-text` |
 | 22 | [`22_markpact_weather`](./22_markpact_weather/) | markpact README → touri + uri2flow | `touri list/call markpact://...`, `uri2flow expand markpact://...#flow` |
 | 23 | [`23_nl_to_agent_tutorial`](./23_nl_to_agent_tutorial/) | **tutorial NL → agent HTTP** | `bash examples/23_nl_to_agent_tutorial/run.sh` |
+| 30 | [`30_golden_path`](./30_golden_path/) | **15 min onboarding (urish)** | `bash examples/30_golden_path/run.sh` |
 
 > **Uwaga:** numery 13–15 są współdzielone między ścieżkami (operator vs workflow) — używaj pełnej nazwy katalogu.
 

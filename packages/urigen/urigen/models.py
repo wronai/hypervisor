@@ -34,6 +34,30 @@ def wants_voice(prompt: str, profile: str) -> bool:
     )
 
 
+def wants_dashboard(prompt: str, profile: str) -> bool:
+    text = prompt.lower()
+    if profile == "dashboard-agent":
+        return True
+    return any(
+        token in text
+        for token in (
+            "dashboard",
+            "web ui",
+            "webui",
+            "przeglądark",
+            "przegladark",
+            "procesów hypervisor",
+            "procesow hypervisor",
+            "process viewer",
+            "process-viewer",
+            "hypervisor-dashboard",
+            "timeline",
+            "status agent",
+            "pokazywania proces",
+        )
+    )
+
+
 def wants_operator(prompt: str, profile: str) -> bool:
     text = prompt.lower()
     return profile in {"operator", "full"} or any(

@@ -38,7 +38,7 @@ def build_incident_from_inspection(
 ) -> IncidentArtifact:
     agent_id = str(inspection["id"])
     metadata_id = _incident_id()
-    readiness = inspection.get("readiness") or {}
+    readiness = inspection.get("agent_readiness") or inspection.get("readiness") or {}
     process = inspection.get("process") or {}
     health = inspection.get("health") or {}
     logs = inspection.get("log_errors") or {}

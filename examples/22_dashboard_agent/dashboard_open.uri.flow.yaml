@@ -1,0 +1,9 @@
+flow:
+  id: dashboard-open
+  description: Open hypervisor dashboard UI in browser after agent is healthy.
+
+do:
+  - uri: repair://agent/hypervisor-dashboard.local/diagnose
+  - uri: browser://chrome/page/open
+    with:
+      url: http://localhost:8788/ui

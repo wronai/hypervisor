@@ -20,6 +20,18 @@ def test_load_llm_uri_yaml():
     assert is_uri(data["profiles"]["default"]["api_key"])
 
 
+def test_load_uri_yaml_unwraps_artifact_envelope():
+    data = load_uri_yaml("config/llm.uri.yaml", unwrap_spec=False)
+    assert data["apiVersion"] == "uri3.io/v1"
+    assert data["kind"] == "LlmConfig"
+    assert data["uri"]["self"] == "config://llm"
+    assert data["spec"]["version"] == 1
+
+    unwrapped = load_uri_yaml("config/llm.uri.yaml")
+    assert "spec" not in unwrapped
+    assert "profiles" in unwrapped
+
+
 def test_resolve_uri_values_keeps_secrets_by_default():
     data = load_uri_yaml("config/llm.uri.yaml")
     resolved = resolve_uri_values(data, resolve_secrets=False)

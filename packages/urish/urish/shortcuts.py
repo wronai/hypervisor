@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
 import yaml
-
+from uri3.config.uri_yaml import unwrap_uri_yaml_document
 from uri3.paths import find_repo_root
 
 
@@ -20,17 +19,19 @@ def load_shortcuts(root: Path | None = None) -> dict[str, str]:
     payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     if not isinstance(payload, dict):
         return {}
+    payload = unwrap_uri_yaml_document(payload)
     shortcuts = payload.get("shortcuts") or {}
     resolved: dict[str, str] = {}
     for name, value in shortcuts.items():
         if isinstance(value, str):
             resolved[str(name)] = value
-        elif isinstance(value, dict) and value.get("uri"):
-            resolved[str(name)] = str(value["uri"])
-    scan = (payload.get("shortcuts") or {}).get("scan") if isinstance(payload.get("shortcuts"), dict) else {}
-    if isinstance(scan, dict):
-        for name, uri in scan.items():
-            resolved.setdefault(str(name), str(uri))
+        elif isinstance(value, dict):
+            if value.get("uri"):
+                resolved[str(name)] = str(value["uri"])
+            else:
+                for sub_name, sub_uri in value.items():
+                    if isinstance(sub_uri, str):
+                        resolved[f"{name}.{sub_name}"] = sub_uri
     return resolved
 
 

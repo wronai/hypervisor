@@ -8,6 +8,33 @@ from uri2run.cli import main as uri2run_main
 from uri3.results import service_result
 
 
+def test_run_target_stt_mock_scheme():
+    result = run_target("stt://mock/transcribe", payload={"text": "test"})
+    payload = result.to_dict()
+
+    assert payload["ok"] is True
+    assert payload["result_type"] == "transcript"
+    assert payload["data"]["text"] == "test"
+    assert payload["meta"]["transport"] == "python"
+
+
+def test_cli_call_stt_mock_scheme_outputs_json(capsys):
+    code = uri2run_main(
+        [
+            "call",
+            "stt://mock/transcribe",
+            "--payload",
+            '{"text":"cli-stt"}',
+        ]
+    )
+    captured = capsys.readouterr()
+    payload = json.loads(captured.out)
+
+    assert code == 0
+    assert payload["ok"] is True
+    assert payload["data"]["text"] == "cli-stt"
+
+
 def test_run_target_python_returns_service_result():
     result = run_target("python://uri2voice.stt:transcribe", payload={"text": "test"})
     payload = result.to_dict()

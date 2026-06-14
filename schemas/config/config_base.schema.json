@@ -3,7 +3,7 @@
   "$id": "https://uri3.io/schemas/config/config_base.schema.json",
   "title": "UriConfigBase",
   "type": "object",
-  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "required": ["apiVersion", "kind", "metadata", "uri", "spec"],
   "properties": {
     "$schema": { "type": "string" },
     "apiVersion": { "const": "uri3.io/v1" },
@@ -14,6 +14,14 @@
       "properties": {
         "id": { "type": "string" },
         "description": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "uri": {
+      "type": "object",
+      "required": ["self"],
+      "properties": {
+        "self": { "type": "string", "pattern": "^config://" }
       },
       "additionalProperties": true
     },

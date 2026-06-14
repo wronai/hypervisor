@@ -5,7 +5,7 @@
     "schema_version": 1,
     "description": "Central index for resources, capabilities, schemas, events and projections."
   },
-  "contract_hash": "sha256:4f5dd0ca32396dab6f416c49af33d7e128ec5e63d5a9eeb5de2c7741dfa30cbf",
+  "contract_hash": "sha256:178d7b8cf4d234a62a062a9cb0ca6913bcb3e3082b36371ff5e554f00900bc2c",
   "resources": [
     {
       "uri": "resource://users/{user_id}",
@@ -59,6 +59,42 @@
       "renderer": "timeline",
       "owner_agent": "invoices-agent",
       "stability": "stable",
+      "version": "v1"
+    },
+    {
+      "uri": "resource://dashboard/process/agent/{agent_id}/latest",
+      "projection": "dashboard_process_view",
+      "schema": "dashboard.v1.ProcessView",
+      "renderer": "html",
+      "owner_agent": "hypervisor-dashboard",
+      "stability": "experimental",
+      "version": "v1"
+    },
+    {
+      "uri": "resource://dashboard/workflow/{workflow_id}/timeline",
+      "projection": "dashboard_workflow_timeline_view",
+      "schema": "dashboard.v1.WorkflowTimelineView",
+      "renderer": "html",
+      "owner_agent": "hypervisor-dashboard",
+      "stability": "experimental",
+      "version": "v1"
+    },
+    {
+      "uri": "resource://dashboard/incident/{incident_id}/explain",
+      "projection": "dashboard_incident_explain_view",
+      "schema": "dashboard.v1.IncidentExplainView",
+      "renderer": "html",
+      "owner_agent": "hypervisor-dashboard",
+      "stability": "experimental",
+      "version": "v1"
+    },
+    {
+      "uri": "resource://dashboard/repair/agent/{agent_id}/diagnosis",
+      "projection": "dashboard_repair_diagnosis_view",
+      "schema": "dashboard.v1.RepairDiagnosisView",
+      "renderer": "json",
+      "owner_agent": "hypervisor-dashboard",
+      "stability": "experimental",
       "version": "v1"
     }
   ],
@@ -131,9 +167,119 @@
         "events"
       ],
       "rendererHint": "invoice-timeline"
+    },
+    {
+      "name": "dashboard_process_view",
+      "viewKind": "html",
+      "mimeType": "text/html",
+      "columns": [
+        "agent_id",
+        "service_status",
+        "process_status",
+        "health_status"
+      ],
+      "rendererHint": "process-dashboard"
+    },
+    {
+      "name": "dashboard_workflow_timeline_view",
+      "viewKind": "timeline",
+      "mimeType": "text/html",
+      "columns": [
+        "workflow_id",
+        "steps"
+      ],
+      "rendererHint": "workflow-timeline"
+    },
+    {
+      "name": "dashboard_incident_explain_view",
+      "viewKind": "html",
+      "mimeType": "text/html",
+      "columns": [
+        "incident_id",
+        "symptoms",
+        "classification"
+      ],
+      "rendererHint": "incident-explain"
+    },
+    {
+      "name": "dashboard_repair_diagnosis_view",
+      "viewKind": "json",
+      "mimeType": "application/json",
+      "columns": [
+        "agent_id",
+        "repair_plan",
+        "classification"
+      ],
+      "rendererHint": "json"
     }
   ],
   "capabilities": [
+    {
+      "name": "process_view",
+      "agent": "hypervisor-dashboard",
+      "type": "resource_read",
+      "uri": "resource://dashboard/process/agent/{agent_id}/latest",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "dashboard.v1.ProcessView",
+      "renderer": "html",
+      "emits": []
+    },
+    {
+      "name": "workflow_timeline",
+      "agent": "hypervisor-dashboard",
+      "type": "resource_read",
+      "uri": "resource://dashboard/workflow/{workflow_id}/timeline",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "dashboard.v1.WorkflowTimelineView",
+      "renderer": "html",
+      "emits": []
+    },
+    {
+      "name": "incident_explain",
+      "agent": "hypervisor-dashboard",
+      "type": "resource_read",
+      "uri": "resource://dashboard/incident/{incident_id}/explain",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "dashboard.v1.IncidentExplainView",
+      "renderer": "html",
+      "emits": []
+    },
+    {
+      "name": "repair_diagnose",
+      "agent": "hypervisor-dashboard",
+      "type": "resource_read",
+      "uri": "resource://dashboard/repair/agent/{agent_id}/diagnosis",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "dashboard.v1.RepairDiagnosisView",
+      "renderer": "json",
+      "emits": []
+    },
+    {
+      "name": "repair_action",
+      "agent": "hypervisor-dashboard",
+      "type": "command",
+      "uri": "repair://agent/{agent_id}/apply",
+      "command": "ApplySafeRepair",
+      "input_schema": "dashboard.v1.ApplySafeRepairCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": []
+    },
+    {
+      "name": "uri_call",
+      "agent": "hypervisor-dashboard",
+      "type": "command",
+      "uri": "hypervisor://dashboard/uri/call",
+      "command": "UriCall",
+      "input_schema": "dashboard.v1.UriCallCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": []
+    },
     {
       "name": "read_invoice",
       "agent": "invoices-agent",
@@ -244,8 +390,8 @@
     }
   ],
   "counts": {
-    "resources": 6,
-    "views": 6,
-    "capabilities": 9
+    "resources": 10,
+    "views": 10,
+    "capabilities": 15
   }
 }

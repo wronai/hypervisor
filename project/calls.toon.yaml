@@ -1,61 +1,59 @@
 # code2llm call graph | /home/tom/github/wronai/hypervisor
-# generated in 0.20s
-# nodes: 392 | edges: 500 | modules: 131
-# CC̄=3.6
+# generated in 0.23s
+# nodes: 411 | edges: 500 | modules: 137
+# CC̄=3.7
 
 HUBS[20]:
-  uri2ops.operation_registry.models.OperationRegistry.list
-    CC=1  in:51  out:2  total:53
   packages.uri3.uri3.config.repo_root.find_repo_root
-    CC=4  in:44  out:4  total:48
+    CC=4  in:59  out:4  total:63
+  uri2ops.operation_registry.models.OperationRegistry.list
+    CC=1  in:59  out:2  total:61
   packages.uri3.uri3.cli.commands.discovery.register
     CC=1  in:0  out:47  total:47
   examples.23_nl_to_agent_tutorial.run.print
-    CC=0  in:44  out:0  total:44
-  hypervisor.contract_registry.loader.load_contract_registry
-    CC=9  in:9  out:33  total:42
+    CC=0  in:47  out:0  total:47
+  packages.urigen.urigen.generator.generate_ecosystem
+    CC=7  in:3  out:40  total:43
   packages.uri3.uri3.cli.commands.explain._render
     CC=18  in:1  out:41  total:42
   packages.uri2run.uri2run.runner.run_backend
-    CC=5  in:24  out:15  total:39
+    CC=5  in:26  out:15  total:41
+  packages.urigen.urigen.cli.build_parser
+    CC=1  in:1  out:38  total:39
   packages.uri3.uri3.results.service_result.service_result
     CC=3  in:27  out:10  total:37
   packages.uri3.uri3.config.llm_profiles.resolve_llm_profile
     CC=10  in:4  out:32  total:36
+  packages.urigen.urigen.apply.apply_ecosystem
+    CC=19  in:4  out:30  total:34
   packages.uri2ops.uri2ops.server.routes.mcp.mcp_router
     CC=1  in:1  out:33  total:34
   uri3.graph.uri_graph.build_graph_from_tree
     CC=10  in:2  out:28  total:30
-  packages.uri3.uri3.doctor.boundary_scanner.scan_package_boundaries
-    CC=20  in:1  out:29  total:30
-  packages.uri2flow.uri2flow.parser._parse_step
-    CC=10  in:1  out:29  total:30
   packages.uri3.uri3.graph.artifacts.write_artifact
     CC=9  in:7  out:22  total:29
+  packages.urigen.urigen.apply_planner.build_apply_plan
+    CC=13  in:1  out:28  total:29
   packages.uri3.uri3.cli.commands.doctor._check_summary
     CC=16  in:1  out:28  total:29
+  packages.uri3.uri3.resolvers.explain.explain_uri
+    CC=14  in:8  out:21  total:29
   packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri
     CC=12  in:5  out:23  total:28
-  packages.uri3.uri3.resolvers.explain.explain_uri
-    CC=14  in:7  out:21  total:28
-  packages.uri2run.uri2run.runner.run_target
-    CC=13  in:1  out:25  total:26
-  uri2ops.remote_registry.loader.resolve_operation_registry
-    CC=12  in:8  out:18  total:26
-  packages.uri3.uri3.graph.graph_serializer.normalize_graph_payload
-    CC=12  in:2  out:24  total:26
+  packages.urigen.urigen.envelope.stamp_ecosystem
+    CC=17  in:1  out:26  total:27
+  packages.uri3.uri3.graph.graph_validator.validate_workflow_graph
+    CC=9  in:13  out:13  total:26
 
 MODULES:
+  domains.weather_map.handlers.generate_weather_map  [1 funcs]
+    handler  CC=3  out:10
   examples.23_nl_to_agent_tutorial.run  [1 funcs]
     print  CC=0  out:0
-  hypervisor.contract_registry.loader  [1 funcs]
-    load_contract_registry  CC=9  out:33
-  hypervisor.contract_registry.schema_validator  [1 funcs]
-    validate_contract_files  CC=6  out:13
   hypervisor.uri2llm.pypi_resolver  [1 funcs]
     resolve_pypi  CC=5  out:6
-  packages.resource-agent-hypervisor.hypervisor.contract_registry.validate  [1 funcs]
-    validate_registry  CC=1  out:3
+  packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client  [1 funcs]
+    _repo_root  CC=2  out:1
   packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle  [1 funcs]
     agent_status  CC=5  out:10
   packages.resource-agent-hypervisor.hypervisor.deployment_registry.run_plans  [1 funcs]
@@ -63,45 +61,37 @@ MODULES:
   packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector  [2 funcs]
     parse_hypervisor_uri  CC=14  out:4
     resolve_deployment  CC=12  out:13
-  packages.resource-agent-hypervisor.hypervisor.repair.playbooks  [1 funcs]
-    _repo_root  CC=2  out:2
-  packages.touri.touri.loader  [2 funcs]
-    iter_manifest_paths  CC=1  out:1
+  packages.resource-agent-hypervisor.hypervisor.repair.supervisor  [2 funcs]
+    diagnose_agent  CC=1  out:12
+    learn_from_incident  CC=10  out:18
+  packages.touri.touri.loader  [1 funcs]
     load_registry  CC=1  out:1
   packages.touri.touri.matcher  [1 funcs]
     match_uri  CC=3  out:4
-  packages.touri.touri.register  [1 funcs]
-    sample_uri_from_template  CC=1  out:3
   packages.touri.touri.validator  [1 funcs]
     validate_manifest  CC=3  out:4
-  packages.uri2flow.uri2flow.cli  [5 funcs]
-    build_parser  CC=1  out:14
-    cmd_expand  CC=3  out:8
-    cmd_print  CC=1  out:4
-    cmd_validate  CC=2  out:4
-    main  CC=1  out:3
-  packages.uri2flow.uri2flow.expander  [3 funcs]
-    _edges_from_depends  CC=4  out:2
-    _node_from_step  CC=11  out:3
+  packages.uri2flow.uri2flow.expander  [1 funcs]
     expand_flow  CC=6  out:8
-  packages.uri2flow.uri2flow.parser  [4 funcs]
-    _as_list  CC=5  out:5
-    _parse_step  CC=10  out:29
-    load_flow  CC=4  out:8
-    parse_flow  CC=12  out:16
-  packages.uri2flow.uri2flow.resolver  [3 funcs]
-    _match_pattern  CC=2  out:3
-    _pattern_to_regex  CC=4  out:8
-    default_operation_for_uri  CC=3  out:4
-  packages.uri2flow.uri2flow.utils  [4 funcs]
-    node_id_from_uri  CC=5  out:7
-    path_parts  CC=4  out:4
-    scheme_of  CC=1  out:1
-    slugify  CC=2  out:4
-  packages.uri2flow.uri2flow.validator  [3 funcs]
-    validate_expanded_flow  CC=2  out:5
+  packages.uri2flow.uri2flow.validator  [1 funcs]
     validate_flow  CC=11  out:5
-    validate_flow_document  CC=10  out:9
+  packages.uri2ops.uri2ops.cli  [7 funcs]
+    _print  CC=1  out:2
+    operations_cmd  CC=6  out:11
+    plan_cmd  CC=1  out:3
+    registry_cmd  CC=4  out:9
+    run_cmd  CC=2  out:4
+    serve_cmd  CC=2  out:4
+    validate_cmd  CC=2  out:3
+  packages.uri2ops.uri2ops.remote_registry.loader  [9 funcs]
+    _load_source  CC=14  out:19
+    _unwrap_config_document  CC=4  out:5
+    list_remote_sources  CC=4  out:9
+    load_registry_config  CC=4  out:8
+    merge_registry_documents  CC=6  out:6
+    registry_config_path  CC=2  out:2
+    registry_document  CC=4  out:4
+    registry_from_document  CC=8  out:9
+    resolve_operation_registry  CC=12  out:18
   packages.uri2ops.uri2ops.server.app  [1 funcs]
     create_app  CC=2  out:10
   packages.uri2ops.uri2ops.server.routes.a2a  [1 funcs]
@@ -116,21 +106,27 @@ MODULES:
   packages.uri2ops.uri2ops.server.routes.tasks  [2 funcs]
     run_task_handler  CC=2  out:3
     tasks_router  CC=1  out:11
-  packages.uri2pact.uri2pact.core  [1 funcs]
-    is_markpact_registry  CC=1  out:2
-  packages.uri2pact.uri2pact.flows  [1 funcs]
-    load_markpact_flow_dict  CC=1  out:4
-  packages.uri2run.uri2run.runner  [2 funcs]
+  packages.uri2run.uri2run.cli  [1 funcs]
+    _backend_from_target  CC=23  out:13
+  packages.uri2run.uri2run.runner  [1 funcs]
     run_backend  CC=5  out:15
-    run_target  CC=13  out:25
-  packages.uri2verify.uri2verify.capability_tests  [1 funcs]
-    capability_test_plan_from_registry  CC=1  out:1
   packages.uri2verify.uri2verify.replay  [2 funcs]
     create_regression_test  CC=7  out:17
     replay_workflow_events  CC=2  out:9
-  packages.uri2verify.uri2verify.result_checks  [2 funcs]
-    enrich_result_dict  CC=4  out:1
-    technical_vs_business_ok  CC=3  out:5
+  packages.uri3.uri3.artifacts.evolution_source  [4 funcs]
+    _scheme_from_uri  CC=2  out:1
+    attach_evolution_source  CC=2  out:6
+    evolution_proposal_uri  CC=5  out:7
+    normalize_evolution_source  CC=3  out:3
+  packages.uri3.uri3.artifacts.validator  [5 funcs]
+    _schema_repo_root  CC=2  out:2
+    load_schema  CC=1  out:3
+    schema_path  CC=1  out:1
+    validate_artifact  CC=3  out:5
+    validate_artifact_file  CC=3  out:5
+  packages.uri3.uri3.artifacts.writer  [2 funcs]
+    write_json_artifact  CC=3  out:6
+    write_yaml_artifact  CC=3  out:6
   packages.uri3.uri3.cli.commands.discovery  [1 funcs]
     register  CC=1  out:47
   packages.uri3.uri3.cli.commands.doctor  [3 funcs]
@@ -189,13 +185,14 @@ MODULES:
     resolve_ssh_password  CC=12  out:13
     ssh_auth_hint  CC=3  out:2
     ssh_config_path  CC=1  out:1
-  packages.uri3.uri3.config.uri_yaml  [6 funcs]
+  packages.uri3.uri3.config.uri_yaml  [7 funcs]
     _resolve_env_uri  CC=2  out:2
     _resolve_registered_uri  CC=4  out:4
     _resolve_scalar_uri  CC=6  out:3
     is_uri  CC=4  out:3
-    load_uri_yaml  CC=2  out:5
+    load_uri_yaml  CC=3  out:6
     resolve_uri_values  CC=7  out:8
+    unwrap_uri_yaml_document  CC=4  out:5
   packages.uri3.uri3.docker.actions.compose  [8 funcs]
     _parse_ps_stdout  CC=4  out:5
     compose_base  CC=3  out:2
@@ -216,42 +213,7 @@ MODULES:
     control_docker  CC=11  out:11
   packages.uri3.uri3.docker.runner  [1 funcs]
     run_command  CC=4  out:5
-  packages.uri3.uri3.doctor.boundary_scanner  [2 funcs]
-    load_boundary_rules  CC=5  out:4
-    scan_package_boundaries  CC=20  out:29
-  packages.uri3.uri3.doctor.checks._helpers  [1 funcs]
-    check_result  CC=1  out:1
-  packages.uri3.uri3.doctor.checks.boundaries  [5 funcs]
-    check_browser_delegation  CC=3  out:6
-    check_duplicate_top_level_modules  CC=5  out:7
-    check_legacy_import_roots  CC=5  out:11
-    check_package_boundaries  CC=1  out:3
-    check_runtime_transports  CC=7  out:18
-  packages.uri3.uri3.doctor.checks.config  [1 funcs]
-    check_config  CC=4  out:10
-  packages.uri3.uri3.doctor.checks.envelope  [2 funcs]
-    check_recent_workflow_logs  CC=11  out:12
-    check_result_envelope  CC=5  out:8
-  packages.uri3.uri3.doctor.checks.explain  [1 funcs]
-    check_explain_smoke  CC=4  out:10
-  packages.uri3.uri3.doctor.checks.registry  [3 funcs]
-    check_contract_registry  CC=5  out:8
-    check_touri_registry  CC=6  out:13
-    check_uri2ops_registry  CC=3  out:7
-  packages.uri3.uri3.doctor.checks.verify  [2 funcs]
-    check_capability_plan  CC=3  out:8
-    check_replay_failures  CC=9  out:16
-  packages.uri3.uri3.doctor.envelope_migrate  [2 funcs]
-    migrate_workflow_log  CC=9  out:16
-    migrate_workflow_logs  CC=4  out:10
-  packages.uri3.uri3.doctor.registry_index  [4 funcs]
-    build_capability_index  CC=3  out:6
-    build_operation_index  CC=3  out:8
-    build_uri_index  CC=3  out:8
-    write_registry_indexes  CC=4  out:13
-  packages.uri3.uri3.doctor.runner  [3 funcs]
-    _collect_warnings  CC=11  out:10
-    _standard_checks  CC=1  out:7
+  packages.uri3.uri3.doctor.runner  [1 funcs]
     run_doctor  CC=9  out:16
   packages.uri3.uri3.graph.adapters.browser_mock  [2 funcs]
     execute  CC=8  out:7
@@ -282,7 +244,10 @@ MODULES:
     _use_legacy_browser_adapter  CC=1  out:2
     cleanup_operator_adapters  CC=2  out:3
     resolve_operator_adapter  CC=2  out:1
-  packages.uri3.uri3.graph.artifacts  [1 funcs]
+  packages.uri3.uri3.graph.artifacts  [4 funcs]
+    artifact_path  CC=1  out:0
+    artifact_uri  CC=1  out:0
+    build_workflow_step_artifact  CC=4  out:2
     write_artifact  CC=9  out:22
   packages.uri3.uri3.graph.conditions  [1 funcs]
     evaluate_condition  CC=7  out:15
@@ -355,14 +320,19 @@ MODULES:
     matches_level  CC=2  out:3
     matches_logger  CC=3  out:4
     matches_time_window  CC=7  out:1
-  packages.uri3.uri3.logs.parsing  [1 funcs]
+  packages.uri3.uri3.logs.parsing  [4 funcs]
+    empty_entry  CC=1  out:0
+    parse_json_entry  CC=16  out:23
     parse_log_line  CC=4  out:5
+    parse_text_entry  CC=5  out:8
   packages.uri3.uri3.logs.reader  [5 funcs]
     _parse_since  CC=7  out:14
     read_logs  CC=9  out:10
     read_logs_result  CC=3  out:2
     resolve_log_path  CC=4  out:3
     summarize_logs  CC=6  out:18
+  packages.uri3.uri3.logs.writer  [1 funcs]
+    append_log  CC=13  out:19
   packages.uri3.uri3.protocols.schemes.analyze  [3 funcs]
     _analyze_query  CC=14  out:10
     analyze_uri  CC=2  out:7
@@ -396,11 +366,8 @@ MODULES:
     parse_docker_uri  CC=12  out:23
     resolve_docker  CC=2  out:4
     resolve_docker_target  CC=1  out:1
-  packages.uri3.uri3.resolvers.env_resolver  [6 funcs]
-    call  CC=1  out:1
-    resolve  CC=1  out:1
+  packages.uri3.uri3.resolvers.env_resolver  [3 funcs]
     _env_var_name  CC=3  out:3
-    _first  CC=2  out:1
     call_env  CC=8  out:17
     resolve_env  CC=1  out:2
   packages.uri3.uri3.resolvers.explain  [9 funcs]
@@ -411,23 +378,13 @@ MODULES:
     _match_uri3  CC=4  out:1
     default_touri_registry  CC=5  out:6
     explain_uri  CC=14  out:21
-    load_touri_config  CC=5  out:6
+    load_touri_config  CC=5  out:7
     runtime_transport_for_match  CC=9  out:5
   packages.uri3.uri3.resolvers.explain_verification  [2 funcs]
     build_verification_hints  CC=9  out:13
     summarize_fallbacks  CC=6  out:7
-  packages.uri3.uri3.resolvers.log_query  [6 funcs]
-    first  CC=2  out:1
-    parse_query  CC=3  out:4
-    query_bool  CC=3  out:2
-    query_int  CC=3  out:3
-    resolve_level  CC=3  out:3
-    resolve_path  CC=8  out:5
-  packages.uri3.uri3.resolvers.log_resolver  [4 funcs]
-    read  CC=2  out:2
-    resolve  CC=1  out:1
+  packages.uri3.uri3.resolvers.log_resolver  [1 funcs]
     parse_log_uri  CC=7  out:16
-    resolve_log  CC=1  out:2
   packages.uri3.uri3.resolvers.protocol_resolver  [4 funcs]
     resolve_a2a  CC=2  out:1
     resolve_http_like  CC=1  out:0
@@ -435,9 +392,6 @@ MODULES:
     resolve_resource  CC=4  out:4
   packages.uri3.uri3.resolvers.registry  [1 funcs]
     build_resolver_registry  CC=1  out:5
-  packages.uri3.uri3.resolvers.resolve_core  [2 funcs]
-    call  CC=8  out:8
-    resolve  CC=2  out:3
   packages.uri3.uri3.resolvers.router  [1 funcs]
     __init__  CC=1  out:1
   packages.uri3.uri3.resolvers.ssh_resolver  [7 funcs]
@@ -491,6 +445,30 @@ MODULES:
   packages.uri3.uri3.validators.uri_tree_validator  [2 funcs]
     load_yaml  CC=1  out:2
     validate_uri_tree  CC=2  out:7
+  packages.urigen.urigen.apply  [1 funcs]
+    apply_ecosystem  CC=19  out:30
+  packages.urigen.urigen.apply_executor  [2 funcs]
+    build_plan_diff  CC=3  out:3
+    execute_apply_plan  CC=11  out:16
+  packages.urigen.urigen.apply_planner  [1 funcs]
+    build_apply_plan  CC=13  out:28
+  packages.urigen.urigen.apply_validate  [2 funcs]
+    _load_schema  CC=2  out:5
+    validate_apply_artifact  CC=4  out:5
+  packages.urigen.urigen.cli  [9 funcs]
+    _emit  CC=2  out:4
+    build_parser  CC=1  out:38
+    cmd_apply  CC=3  out:3
+    cmd_explain  CC=1  out:2
+    cmd_generate  CC=2  out:3
+    cmd_plan  CC=3  out:3
+    cmd_schema_check  CC=3  out:3
+    cmd_verify  CC=2  out:3
+    main  CC=1  out:4
+  packages.urigen.urigen.envelope  [3 funcs]
+    _legacy_fields  CC=3  out:1
+    stamp_ecosystem  CC=17  out:26
+    stamp_proposal  CC=11  out:19
   packages.urigen.urigen.explain  [8 funcs]
     _agents  CC=7  out:9
     _capabilities  CC=5  out:11
@@ -500,14 +478,72 @@ MODULES:
     _flows  CC=6  out:9
     _risks  CC=5  out:5
     explain_ecosystem  CC=2  out:10
-  packages.urigen.urigen.io  [3 funcs]
+  packages.urigen.urigen.generator  [1 funcs]
+    generate_ecosystem  CC=7  out:40
+  packages.urigen.urigen.io  [4 funcs]
     dump_yaml  CC=1  out:1
     load_yaml  CC=3  out:5
+    write_json  CC=1  out:4
     write_yaml  CC=1  out:4
-  packages.urigen.urigen.models  [1 funcs]
-    repo_root  CC=2  out:3
-  packages.urigen.urigen.writer  [1 funcs]
-    render_readme  CC=4  out:10
+  packages.urigen.urigen.proposal  [1 funcs]
+    plan_ecosystem  CC=6  out:12
+  packages.urigen.urigen.schema_check  [1 funcs]
+    schema_check_ecosystem  CC=11  out:23
+  packages.urigen.urigen.verify  [7 funcs]
+    _check_capabilities  CC=8  out:14
+    _check_doctor  CC=5  out:10
+    _check_explain  CC=8  out:14
+    _check_flows  CC=7  out:16
+    _check_result  CC=1  out:0
+    _resolve  CC=2  out:2
+    verify_ecosystem  CC=8  out:15
+  packages.urish.urish.backends.agent  [1 funcs]
+    agent_action  CC=5  out:9
+  packages.urish.urish.backends.call  [1 funcs]
+    call_uri  CC=6  out:7
+  packages.urish.urish.backends.explain  [1 funcs]
+    explain_target  CC=2  out:1
+  packages.urish.urish.backends.logs  [1 funcs]
+    read_log_uri  CC=2  out:4
+  packages.urish.urish.backends.repair  [4 funcs]
+    _wrap  CC=4  out:2
+    repair_apply  CC=1  out:2
+    repair_diagnose  CC=1  out:2
+    repair_learn  CC=3  out:7
+  packages.urish.urish.backends.run  [1 funcs]
+    run_target  CC=8  out:14
+  packages.urish.urish.backends.stream  [6 funcs]
+    _error  CC=1  out:0
+    _runtime_event  CC=3  out:4
+    _stream_sse  CC=12  out:15
+    _stream_ws  CC=3  out:15
+    _success  CC=1  out:1
+    stream_uri  CC=5  out:8
+  packages.urish.urish.backends.watch  [4 funcs]
+    _event_type  CC=2  out:1
+    _normalize_watch_uri  CC=2  out:0
+    _poll_once  CC=6  out:10
+    watch_uri  CC=5  out:6
+  packages.urish.urish.context  [3 funcs]
+    context_dir  CC=2  out:1
+    list_contexts  CC=3  out:4
+    load_context  CC=7  out:7
+  packages.urish.urish.policy  [2 funcs]
+    classify_uri  CC=19  out:6
+    evaluate_policy  CC=14  out:1
+  packages.urish.urish.render  [3 funcs]
+    _render_table  CC=1  out:1
+    _render_text  CC=11  out:19
+    render_result  CC=10  out:10
+  packages.urish.urish.repl  [1 funcs]
+    run_repl  CC=10  out:20
+  packages.urish.urish.select  [2 funcs]
+    select_from_envelope  CC=3  out:5
+    select_path  CC=7  out:7
+  packages.urish.urish.shortcuts  [3 funcs]
+    load_shortcuts  CC=11  out:16
+    resolve_target  CC=4  out:4
+    shortcuts_path  CC=2  out:1
   uri2ops.operation_registry.dispatcher  [3 funcs]
     _split_python_uri  CC=3  out:4
     call_handler  CC=2  out:4
@@ -522,23 +558,16 @@ MODULES:
   uri2ops.operation_registry.validator  [2 funcs]
     validate_operation_registry  CC=14  out:13
     validate_registry_schema  CC=2  out:7
-  uri2ops.remote_registry.loader  [8 funcs]
-    _load_source  CC=14  out:19
-    list_remote_sources  CC=4  out:9
-    load_registry_config  CC=3  out:6
-    merge_registry_documents  CC=6  out:6
-    registry_config_path  CC=2  out:2
-    registry_document  CC=4  out:4
-    registry_from_document  CC=8  out:9
-    resolve_operation_registry  CC=12  out:18
   uri2ops.server.a2a_wrapper  [1 funcs]
     build_agent_card  CC=3  out:7
   uri2ops.server.mcp_wrapper  [1 funcs]
     list_mcp_tools  CC=2  out:3
-  uri2ops.server.service  [3 funcs]
+  uri2ops.server.service  [5 funcs]
     list_registry_sources  CC=1  out:1
+    plan_task  CC=1  out:2
     registry  CC=1  out:1
     registry_export  CC=1  out:2
+    run_task  CC=1  out:3
   uri3.graph.uri_graph  [1 funcs]
     build_graph_from_tree  CC=10  out:28
   uri3.protocols.normalizer  [1 funcs]
@@ -550,63 +579,59 @@ MODULES:
   uri3.resolvers.llm_resolver  [2 funcs]
     resolve  CC=2  out:4
     resolve_llm  CC=5  out:5
-  uri3.resolvers.python_resolver  [5 funcs]
-    call  CC=2  out:1
-    resolve  CC=1  out:1
-    _split_python_uri  CC=2  out:4
-    call_python  CC=1  out:4
+  uri3.resolvers.python_resolver  [1 funcs]
     resolve_python  CC=1  out:1
   uri3.validators.uri_validator  [1 funcs]
     validate_uri  CC=2  out:2
 
 EDGES:
-  packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.models.repo_root
+  packages.urish.urish.render.render_result → packages.urish.urish.render._render_table
+  packages.urish.urish.render.render_result → packages.urish.urish.render._render_text
+  packages.urish.urish.render._render_table → packages.urish.urish.render._render_text
+  packages.urish.urish.context.context_dir → packages.uri3.uri3.config.repo_root.find_repo_root
+  packages.urish.urish.context.load_context → packages.uri3.uri3.config.repo_root.find_repo_root
+  packages.urish.urish.context.load_context → packages.urish.urish.context.context_dir
+  packages.urish.urish.context.list_contexts → packages.urish.urish.context.context_dir
+  packages.urish.urish.policy.evaluate_policy → packages.urish.urish.policy.classify_uri
+  packages.urish.urish.select.select_from_envelope → packages.urish.urish.select.select_path
+  packages.urish.urish.repl.run_repl → packages.uri3.uri3.graph.adapters.uri2ops_adapter.Uri2OpsAdapter.execute
+  packages.urish.urish.repl.run_repl → examples.23_nl_to_agent_tutorial.run.print
+  packages.urish.urish.shortcuts.shortcuts_path → packages.uri3.uri3.config.repo_root.find_repo_root
+  packages.urish.urish.shortcuts.load_shortcuts → packages.urish.urish.shortcuts.shortcuts_path
+  packages.urish.urish.shortcuts.load_shortcuts → packages.uri3.uri3.config.uri_yaml.unwrap_uri_yaml_document
+  packages.urish.urish.shortcuts.resolve_target → packages.urish.urish.shortcuts.load_shortcuts
+  packages.urish.urish.backends.watch.watch_uri → packages.urish.urish.backends.watch._normalize_watch_uri
+  packages.urish.urish.backends.watch.watch_uri → packages.urish.urish.backends.watch._poll_once
+  packages.urish.urish.backends.watch._poll_once → packages.urish.urish.backends.call.call_uri
+  packages.urish.urish.backends.watch._poll_once → packages.urish.urish.backends.logs.read_log_uri
+  packages.urish.urish.backends.watch._poll_once → packages.urish.urish.backends.watch._event_type
+  packages.urish.urish.backends.explain.explain_target → packages.uri3.uri3.resolvers.explain.explain_uri
+  packages.urish.urish.backends.call.call_uri → packages.uri2run.uri2run.cli._backend_from_target
+  packages.urish.urish.backends.call.call_uri → packages.uri2run.uri2run.runner.run_backend
+  packages.urish.urish.backends.call.call_uri → packages.urish.urish.policy.evaluate_policy
+  packages.urish.urish.backends.call.call_uri → packages.urish.urish.backends.explain.explain_target
+  packages.urish.urish.backends.agent.agent_action → domains.weather_map.handlers.generate_weather_map.handler
+  packages.urish.urish.backends.stream.stream_uri → packages.urish.urish.backends.stream._stream_sse
+  packages.urish.urish.backends.stream.stream_uri → packages.urish.urish.backends.stream._stream_ws
+  packages.urish.urish.backends.stream._stream_sse → packages.urish.urish.backends.stream._success
+  packages.urish.urish.backends.stream._stream_sse → packages.urish.urish.backends.stream._error
+  packages.urish.urish.backends.stream._stream_sse → packages.urish.urish.backends.stream._runtime_event
+  packages.urish.urish.backends.stream._stream_ws → packages.urish.urish.backends.stream._success
+  packages.urish.urish.backends.stream._stream_ws → packages.urish.urish.backends.stream._error
+  packages.urish.urish.backends.stream._stream_ws → packages.urish.urish.backends.stream._runtime_event
+  packages.urish.urish.backends.logs.read_log_uri → packages.uri3.uri3.logs.reader.summarize_logs
+  packages.urish.urish.backends.logs.read_log_uri → packages.uri3.uri3.logs.reader.read_logs_result
+  packages.urish.urish.backends.run.run_target → uri2ops.server.service.OperatorService.run_task
+  packages.urish.urish.backends.run.run_target → packages.uri2flow.uri2flow.expander.expand_flow
+  packages.urish.urish.backends.repair.repair_diagnose → packages.resource-agent-hypervisor.hypervisor.repair.supervisor.diagnose_agent
+  packages.urish.urish.backends.repair.repair_diagnose → packages.urish.urish.backends.repair._wrap
+  packages.urish.urish.backends.repair.repair_apply → packages.urish.urish.backends.repair._wrap
+  packages.urish.urish.backends.repair.repair_learn → packages.resource-agent-hypervisor.hypervisor.repair.supervisor.learn_from_incident
+  packages.urish.urish.backends.repair.repair_learn → packages.urish.urish.backends.repair._wrap
+  packages.urish.urish.backends.repair.repair_learn → packages.uri3.uri3.config.repo_root.find_repo_root
+  packages.urigen.urigen.explain.explain_ecosystem → packages.uri3.uri3.config.repo_root.repo_root
   packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.io.load_yaml
   packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._domains
   packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._agents
   packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._capabilities
   packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._flows
-  packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._deployments
-  packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._risks
-  packages.urigen.urigen.explain._domains → packages.urigen.urigen.explain._exists
-  packages.urigen.urigen.explain._agents → packages.urigen.urigen.explain._exists
-  packages.urigen.urigen.explain._capabilities → packages.uri3.uri3.resolvers.explain.explain_uri
-  packages.urigen.urigen.explain._flows → packages.uri2flow.uri2flow.validator.validate_flow
-  packages.urigen.urigen.io.write_yaml → packages.urigen.urigen.io.dump_yaml
-  packages.urigen.urigen.models.repo_root → packages.uri3.uri3.config.repo_root.find_repo_root
-  packages.urigen.urigen.writer.render_readme → packages.urigen.urigen.io.dump_yaml
-  uri2ops.operation_registry.validator.validate_registry_schema → uri2ops.operation_registry.loader.registry_schema_path
-  uri2ops.operation_registry.validator.validate_registry_schema → uri2ops.operation_registry.models.OperationRegistry.list
-  uri2ops.operation_registry.loader.load_operation_registry → uri2ops.operation_registry.loader.default_registry_path
-  uri2ops.operation_registry.loader.load_operation_registry → uri2ops.operation_registry.validator.validate_registry_schema
-  uri2ops.operation_registry.models.OperationSpec.from_mapping → uri2ops.operation_registry.models.OperationRegistry.list
-  uri2ops.operation_registry.dispatcher.call_handler → uri2ops.operation_registry.dispatcher._split_python_uri
-  uri2ops.operation_registry.dispatcher.dispatch → uri2ops.remote_registry.loader.resolve_operation_registry
-  uri2ops.operation_registry.dispatcher.dispatch → uri2ops.operation_registry.dispatcher.call_handler
-  packages.uri2ops.uri2ops.server.app.create_app → packages.uri2ops.uri2ops.server.routes.health.health_router
-  packages.uri2ops.uri2ops.server.app.create_app → packages.uri2ops.uri2ops.server.routes.registry.registry_router
-  packages.uri2ops.uri2ops.server.app.create_app → packages.uri2ops.uri2ops.server.routes.registry.operations_router
-  packages.uri2ops.uri2ops.server.app.create_app → packages.uri2ops.uri2ops.server.routes.tasks.tasks_router
-  packages.uri2ops.uri2ops.server.app.create_app → packages.uri2ops.uri2ops.server.routes.a2a.a2a_router
-  packages.uri2ops.uri2ops.server.app.create_app → packages.uri2ops.uri2ops.server.routes.mcp.mcp_router
-  uri2ops.server.service.OperatorService.registry → uri2ops.remote_registry.loader.resolve_operation_registry
-  uri2ops.server.service.OperatorService.registry_export → uri2ops.remote_registry.loader.registry_document
-  uri2ops.server.service.OperatorService.list_registry_sources → uri2ops.remote_registry.loader.list_remote_sources
-  packages.uri2ops.uri2ops.server.routes.mcp.mcp_router → uri2ops.server.mcp_wrapper.list_mcp_tools
-  packages.uri2ops.uri2ops.server.routes.mcp.mcp_router → packages.uri2ops.uri2ops.server.routes.tasks.run_task_handler
-  packages.uri2ops.uri2ops.server.routes.a2a.a2a_router → uri2ops.server.a2a_wrapper.build_agent_card
-  packages.uri2ops.uri2ops.server.routes.a2a.a2a_router → packages.uri2ops.uri2ops.server.routes.tasks.run_task_handler
-  packages.uri2ops.uri2ops.server.routes.tasks.tasks_router → packages.uri2ops.uri2ops.server.routes.tasks.run_task_handler
-  uri2ops.remote_registry.loader.load_registry_config → uri2ops.remote_registry.loader.registry_config_path
-  uri2ops.remote_registry.loader.load_registry_config → uri2ops.operation_registry.loader.default_registry_path
-  uri2ops.remote_registry.loader.registry_from_document → uri2ops.operation_registry.validator.validate_registry_schema
-  uri2ops.remote_registry.loader.resolve_operation_registry → uri2ops.remote_registry.loader.load_registry_config
-  uri2ops.remote_registry.loader.resolve_operation_registry → uri2ops.remote_registry.loader.merge_registry_documents
-  uri2ops.remote_registry.loader.resolve_operation_registry → uri2ops.remote_registry.loader.registry_from_document
-  uri2ops.remote_registry.loader.resolve_operation_registry → uri2ops.operation_registry.loader.load_operation_registry
-  uri2ops.remote_registry.loader.resolve_operation_registry → uri2ops.remote_registry.loader._load_source
-  uri2ops.remote_registry.loader.resolve_operation_registry → uri2ops.operation_registry.loader.default_registry_path
-  uri2ops.remote_registry.loader.list_remote_sources → uri2ops.remote_registry.loader.load_registry_config
-  packages.uri3.uri3.logs.filters.matches_level → packages.uri3.uri3.logs.filters.level_rank
-  packages.uri3.uri3.logs.filters.matches_time_window → packages.uri3.uri3.logs.filters.entry_timestamp
-  packages.uri3.uri3.logs.filters.matches_filters → packages.uri3.uri3.logs.filters.matches_level

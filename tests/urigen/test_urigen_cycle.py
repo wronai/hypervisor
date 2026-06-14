@@ -10,7 +10,7 @@ from urigen import (
     verify_ecosystem,
 )
 from urigen.cli import main as urigen_main
-from urigen.io import write_yaml
+from urigen.io import dump_yaml, load_yaml, write_yaml
 
 
 def test_plan_generate_verify_explain_cycle(tmp_path: Path):
@@ -28,6 +28,10 @@ def test_plan_generate_verify_explain_cycle(tmp_path: Path):
     assert (
         ecosystem_path.parent / "capabilities" / "weather_forecast.uri.capability.yaml"
     ).is_file()
+    capability = load_yaml(
+        ecosystem_path.parent / "capabilities" / "weather_forecast.uri.capability.yaml"
+    )
+    assert capability["data_quality"]["failure_code"] == "GENERATED_ECOSYSTEM_DATA_QUALITY_FAILED"
     voice_flow = ecosystem_path.parent / "flows" / "voice_command_health.uri.flow.yaml"
     assert voice_flow.is_file()
 
@@ -43,11 +47,15 @@ def test_plan_generate_verify_explain_cycle(tmp_path: Path):
     assert weather["matched_registry"] == "touri"
     assert weather["runtime_transport"] == "uri2run:python"
     assert weather["backend"]["type"] == "python"
+    assert weather["verification"]["data_quality_enabled"] is True
+    assert explanation["risks"] == []
 
 
 def test_apply_plan_and_transaction(tmp_path: Path, repo_root: Path):
     (tmp_path / "deployments").mkdir()
-    (tmp_path / "deployments" / "agent_deployments.yaml").write_text("deployments: []\n", encoding="utf-8")
+    (tmp_path / "deployments" / "agent_deployments.yaml").write_text(
+        "deployments: []\n", encoding="utf-8"
+    )
     (tmp_path / "contracts" / "agents").mkdir(parents=True)
     (tmp_path / "examples" / "20_touri_capabilities").mkdir(parents=True)
     (tmp_path / "tests" / "ecosystems").mkdir(parents=True)
@@ -70,10 +78,80 @@ def test_apply_plan_and_transaction(tmp_path: Path, repo_root: Path):
     assert (tmp_path / "contracts" / "agents" / "weather_map_agent.yaml").is_file()
 
 
-def test_proposal_and_ecosystem_have_envelope():
+def _setup_apply_tmp(tmp_path: Path, repo_root: Path) -> dict[str, object]:
+    (tmp_path / "deployments").mkdir()
+    (tmp_path / "deployments" / "agent_deployments.yaml").write_text(
+        "deployments: []\n", encoding="utf-8"
+    )
+    (tmp_path / "contracts" / "agents").mkdir(parents=True)
+    (tmp_path / "examples" / "20_touri_capabilities").mkdir(parents=True)
+    (tmp_path / "tests" / "ecosystems").mkdir(parents=True)
+    proposal_path = write_yaml(tmp_path / "proposal.yaml", plan_ecosystem("agent pogodowy"))
+    return generate_ecosystem(proposal_path, out=tmp_path / "ecosystem", root=repo_root)
+
+
+def test_apply_plan_includes_diff(tmp_path: Path, repo_root: Path):
+    generated = _setup_apply_tmp(tmp_path, repo_root)
+    planned = apply_ecosystem(generated["ecosystem_file"], plan_only=True, root=tmp_path)
+    assert planned["status"] == "planned"
+    assert planned.get("diff")
+    assert any(item.get("change") in {"create", "update", "merge"} for item in planned["diff"])
+
+
+def test_apply_idempotent_second_run(tmp_path: Path, repo_root: Path):
+    generated = _setup_apply_tmp(tmp_path, repo_root)
+    first = apply_ecosystem(generated["ecosystem_file"], approve=True, root=tmp_path)
+    assert first["ok"] is True
+    second = apply_ecosystem(generated["ecosystem_file"], approve=True, root=tmp_path)
+    assert second["ok"] is True
+    contract_action = next(
+        item for item in second["actions"] if str(item.get("id", "")).startswith("merge_agent_contract")
+    )
+    assert contract_action["status"] == "unchanged"
+
+
+def test_apply_failure_rolls_back_created_files(tmp_path: Path, repo_root: Path, monkeypatch):
+    generated = _setup_apply_tmp(tmp_path, repo_root)
+    target = tmp_path / "contracts" / "agents" / "weather_map_agent.yaml"
+    monkeypatch.setattr(
+        "urigen.apply_executor.verify_ecosystem",
+        lambda *args, **kwargs: {"ok": False, "checks": [{"id": "doctor", "ok": False}]},
+    )
+    result = apply_ecosystem(generated["ecosystem_file"], approve=True, root=tmp_path)
+    assert result["ok"] is False
+    assert result["status"] == "rolled_back"
+    assert not target.exists()
+    assert (Path(result["rollback"]["path"]) / "manifest.json").is_file()
+
+
+def test_apply_manual_rollback_restores_files(tmp_path: Path, repo_root: Path):
+    generated = _setup_apply_tmp(tmp_path, repo_root)
+    result = apply_ecosystem(generated["ecosystem_file"], approve=True, root=tmp_path)
+    assert result["ok"] is True
+    target = tmp_path / "contracts" / "agents" / "weather_map_agent.yaml"
+    original = target.read_text(encoding="utf-8")
+    target.write_text("corrupted\n", encoding="utf-8")
+    rolled = apply_ecosystem(generated["ecosystem_file"], rollback=True, root=tmp_path)
+    assert rolled["ok"] is True
+    assert target.read_text(encoding="utf-8") == original
+
+
+def test_proposal_and_ecosystem_have_envelope(tmp_path: Path):
     proposal = plan_ecosystem("agent pogodowy z healthcheckiem")
     assert proposal["kind"] == "EcosystemProposal"
     assert proposal["uri"]["self"].startswith("proposal://ecosystem/")
+    rendered_proposal = dump_yaml(proposal)
+    assert rendered_proposal.startswith("$schema:")
+    assert "&id" not in rendered_proposal
+
+    proposal_path = write_yaml(tmp_path / "proposal.yaml", proposal)
+    generated = generate_ecosystem(proposal_path, out=tmp_path / "ecosystem")
+    ecosystem = load_yaml(generated["ecosystem_file"])
+    assert ecosystem["kind"] == "Ecosystem"
+    assert ecosystem["uri"]["self"].startswith("ecosystem://")
+    rendered_ecosystem = dump_yaml(ecosystem)
+    assert rendered_ecosystem.startswith("$schema:")
+    assert "&id" not in rendered_ecosystem
 
 
 def test_plan_and_verify_do_not_touch_repo_roots(tmp_path: Path, repo_root: Path):

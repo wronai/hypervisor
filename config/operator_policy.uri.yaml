@@ -1,43 +1,49 @@
-# Operator policy for uri2ops execution.
-# Hypervisor approves deployments; uri2ops enforces operator-side command gates.
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: OperatorPolicy
+metadata:
+  id: operator-policy
+  description: Operator policy for uri2ops execution.
+uri:
+  self: config://operator-policy
+spec:
+  version: 1
 
-version: 1
+  defaults:
+    require_approval_for:
+      - command
+    allowed_adapters:
+      - mock
+      - playwright
+      - builtin
+      - adb
+      - uia
 
-defaults:
-  require_approval_for:
-    - command
-  allowed_adapters:
-    - mock
-    - playwright
-    - builtin
-    - adb
-    - uia
-
-operations:
-  browser:open:
-    require_approval: true
-    allowed_adapters: [mock, playwright]
-  browser:click:
-    require_approval: true
-    allowed_adapters: [mock, playwright]
-  input:type:
-    require_approval: true
-    allowed_adapters: [mock]
-  assertion:check:
-    require_approval: false
-    allowed_adapters: [builtin]
-  android:screenshot:
-    require_approval: false
-    allowed_adapters: [mock, adb]
-  android:dump_ui:
-    require_approval: false
-    allowed_adapters: [mock, adb]
-  android:tap:
-    require_approval: true
-    allowed_adapters: [mock, adb]
-  pcwin:focus:
-    require_approval: true
-    allowed_adapters: [mock, uia]
-  pcwin:click:
-    require_approval: true
-    allowed_adapters: [mock, uia]
+  operations:
+    browser:open:
+      require_approval: true
+      allowed_adapters: [mock, playwright]
+    browser:click:
+      require_approval: true
+      allowed_adapters: [mock, playwright]
+    input:type:
+      require_approval: true
+      allowed_adapters: [mock]
+    assertion:check:
+      require_approval: false
+      allowed_adapters: [builtin]
+    android:screenshot:
+      require_approval: false
+      allowed_adapters: [mock, adb]
+    android:dump_ui:
+      require_approval: false
+      allowed_adapters: [mock, adb]
+    android:tap:
+      require_approval: true
+      allowed_adapters: [mock, adb]
+    pcwin:focus:
+      require_approval: true
+      allowed_adapters: [mock, uia]
+    pcwin:click:
+      require_approval: true
+      allowed_adapters: [mock, uia]

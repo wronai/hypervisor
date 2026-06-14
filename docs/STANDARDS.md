@@ -24,7 +24,10 @@ Schemas live in `schemas/`.
 
 ## URI configuration (`*.uri.yaml`)
 
-Files ending in `.uri.yaml` contain URI-valued fields resolved by `uri3` (no `_uri` field suffix inside these files).
+Files ending in `.uri.yaml` contain URI-valued fields resolved by `uri3` (no `_uri`
+field suffix inside these files). They are URI3 config artifacts with
+`$schema`, `apiVersion`, `kind`, `metadata`, `uri.self`, and semantic content under
+`spec`.
 
 ```txt
 config/llm.uri.yaml
@@ -33,7 +36,8 @@ config/llm.uri.yaml
 Rules:
 
 - use `env://` or future `secret://` for secrets — never raw API keys in YAML
-- resolve with `uri3.config.uri_yaml.load_uri_yaml`
+- resolve with `uri3.config.uri_yaml.load_uri_yaml`; loaders receive `spec`
+- inspect the raw artifact envelope with `load_uri_yaml(path, unwrap_spec=False)`
 - select LLM profile via `DEFAULT_LLM_PROFILE`
 
 See [`CONFIG_URI_YAML.md`](./CONFIG_URI_YAML.md).

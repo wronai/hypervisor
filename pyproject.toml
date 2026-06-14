@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resource-agent-system"
-version = "0.5.20"
+version = "0.5.21"
 description = "WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, touri, hypervisor, agent factory"
 readme = "README.md"
 license = "Apache-2.0"
@@ -82,6 +82,7 @@ uri2run = { workspace = true }
 urish = { workspace = true }
 uri2verify = { workspace = true }
 urigen = { workspace = true }
+hypervisor-dashboard-agent = { workspace = true }
 
 [tool.setuptools.packages.find]
 where = [
@@ -95,6 +96,8 @@ where = [
     "packages/uri2run",
     "packages/uri2verify",
     "packages/urigen",
+    "packages/urish",
+    "packages/hypervisor-dashboard-agent",
     "packages/resource-agent-hypervisor",
     "packages/resource-agent-factory",
     "examples/21_touri_voice",
@@ -107,6 +110,8 @@ include = [
     "uri2verify*",
     "uri2voice*",
     "urigen*",
+    "urish*",
+    "hypervisor_dashboard_agent*",
     "touri*",
     "touri_examples*",
     "touri_examples_voice*",
@@ -136,10 +141,14 @@ urigen = [
     "schemas/*.json",
     "templates/*.j2",
 ]
+hypervisor_dashboard_agent = ["templates/*", "static/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--import-mode=importlib"
+filterwarnings = [
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]
 markers = [
     "examples: integration tests for examples/* demos",
     "docker: requires docker daemon",
@@ -156,6 +165,8 @@ pythonpath = [
     "packages/uri2run",
     "packages/uri2verify",
     "packages/urigen",
+    "packages/urish",
+    "packages/hypervisor-dashboard-agent",
     "packages/resource-agent-hypervisor",
     "packages/resource-agent-factory",
     "examples/21_touri_voice",

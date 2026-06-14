@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Literal
 
 
@@ -34,6 +34,7 @@ RUN_SH_EXAMPLES: tuple[ExampleSpec, ...] = (
     ExampleSpec("21", "touri_voice", "run_sh", "examples/21_touri_voice/run.sh"),
     ExampleSpec("22", "markpact_weather", "run_sh", "examples/22_markpact_weather/run.sh"),
     ExampleSpec("23", "nl_to_agent_tutorial", "run_sh", "examples/23_nl_to_agent_tutorial/run.sh", ("slow",), 300),
+    ExampleSpec("30", "golden_path", "run_sh", "examples/30_golden_path/run.sh", timeout_s=180),
     ExampleSpec("01", "quickstart_local", "run_sh", "examples/01_quickstart_local/run.sh", timeout_s=180),
 )
 

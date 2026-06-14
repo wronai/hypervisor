@@ -3,12 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from hypervisor.deployment_registry.lifecycle import (
-    command_port_from_runtime,
-    restart_agent,
-    run_agent,
-    stop_agent,
-)
+from hypervisor.deployment_registry.health_uri import command_port_from_runtime
+from hypervisor.deployment_registry.lifecycle import restart_agent, run_agent, stop_agent
+from hypervisor.deployment_registry.port_utils import find_free_port, port_from_http_uri
 from hypervisor.deployment_registry.runtime_state import clear_runtime_state, load_runtime_state
 from hypervisor.deployment_registry.supervisor import inspect_agent
 from hypervisor.paths import find_repo_root
@@ -38,8 +35,11 @@ def apply_playbook(
     if playbook == "rebind_port":
         state = load_runtime_state(selector, repo) or {}
         plan = {"command_string": state.get("command", "")}
-        port = command_port_from_runtime(state, plan)
-        return restart_agent(selector, root=repo, detach=True, port=port)
+        current_port = command_port_from_runtime(state, plan) or port_from_http_uri(
+            str(state.get("health_uri") or "")
+        )
+        rebound = find_free_port(int(current_port or 8101))
+        return restart_agent(selector, root=repo, detach=True, port=rebound)
     if playbook in {"verify_effective_port", "read_logs", "check_process"}:
         return inspect_agent(selector, root=repo)
     if playbook in {"regenerate_agent", "modify_deployment_registry", "register_repair_capability"}:

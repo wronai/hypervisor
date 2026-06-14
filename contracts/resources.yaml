@@ -41,3 +41,31 @@ resources:
   owner_agent: invoices-agent
   stability: stable
   version: v1
+- uri: resource://dashboard/process/agent/{agent_id}/latest
+  projection: dashboard_process_view
+  schema: dashboard.v1.ProcessView
+  renderer: html
+  owner_agent: hypervisor-dashboard
+  stability: experimental
+  version: v1
+- uri: resource://dashboard/workflow/{workflow_id}/timeline
+  projection: dashboard_workflow_timeline_view
+  schema: dashboard.v1.WorkflowTimelineView
+  renderer: html
+  owner_agent: hypervisor-dashboard
+  stability: experimental
+  version: v1
+- uri: resource://dashboard/incident/{incident_id}/explain
+  projection: dashboard_incident_explain_view
+  schema: dashboard.v1.IncidentExplainView
+  renderer: html
+  owner_agent: hypervisor-dashboard
+  stability: experimental
+  version: v1
+- uri: resource://dashboard/repair/agent/{agent_id}/diagnosis
+  projection: dashboard_repair_diagnosis_view
+  schema: dashboard.v1.RepairDiagnosisView
+  renderer: json
+  owner_agent: hypervisor-dashboard
+  stability: experimental
+  version: v1

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import time
 from collections.abc import Callable
+from importlib import import_module
 from typing import Any
 
 from uri3.results import ServiceResult
@@ -147,6 +148,23 @@ def _run_a2a(backend: dict[str, Any], payload: dict[str, Any], context: dict[str
     return run_a2a(str(target), payload, context)
 
 
+def _run_touri(backend: dict[str, Any], payload: dict[str, Any], context: dict[str, Any]):
+    target = backend.get("target") or backend.get("voice_uri")
+    registry = backend.get("registry")
+    if not target or not registry:
+        return error_result("BACKEND_INVALID", "touri backend missing target/registry")
+    executor = import_module("touri.executor")
+    return executor.call_uri(str(target), str(registry), payload=payload, context=context)
+
+
+def _run_voice_unresolved(
+    backend: dict[str, Any], payload: dict[str, Any], context: dict[str, Any]
+):
+    del payload, context
+    message = str(backend.get("error") or "voice URI could not be resolved")
+    return error_result("VOICE_URI_UNRESOLVED", message, result_type="voice")
+
+
 _BACKEND_HANDLERS: dict[
     str, Callable[[dict[str, Any], dict[str, Any], dict[str, Any]], ServiceResult]
 ] = {
@@ -161,6 +179,8 @@ _BACKEND_HANDLERS: dict[
     "ssh": _run_ssh,
     "mcp": _run_mcp,
     "a2a": _run_a2a,
+    "touri": _run_touri,
+    "voice_unresolved": _run_voice_unresolved,
     "mock": lambda _backend, payload, context: run_mock(payload, context),
     "uri_flow": _run_flow,
     "uri_graph": _run_graph,
@@ -202,7 +222,8 @@ def _stamp_runtime_meta(
     duration_ms: int,
 ) -> ServiceResult:
     target = (
-        backend.get("target")
+        backend.get("voice_uri")
+        or backend.get("target")
         or backend.get("url")
         or backend.get("command")
         or backend.get("flow")
@@ -246,4 +267,9 @@ def run_target(
         return run_backend({"type": "mcp", "target": target}, payload, context)
     if target.startswith("a2a://"):
         return run_backend({"type": "a2a", "target": target}, payload, context)
+    from uri2run.voice_resolver import resolve_voice_backend
+
+    voice_backend = resolve_voice_backend(target)
+    if voice_backend is not None:
+        return run_backend(voice_backend, payload, context)
     return unsupported_backend(target.split(":", 1)[0] if ":" in target else target)

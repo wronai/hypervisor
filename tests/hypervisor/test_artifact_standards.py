@@ -144,3 +144,16 @@ def test_artifact_lifecycle_coverage_reports_loose_files(tmp_path):
     strict = check_lifecycle_coverage(tmp_path, strict=True)
     assert strict["ok"] is False
     assert strict["samples"][0]["path"] == "output/artifacts/operator/open_health.json"
+
+
+def test_repo_uri_configs_are_canonical_artifacts():
+    repo_root = Path(__file__).resolve().parents[2]
+    paths = sorted((repo_root / "config").glob("*.uri.yaml"))
+    assert paths
+    for path in paths:
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+        assert payload["$schema"].startswith("schemas/")
+        assert payload["apiVersion"] == "uri3.io/v1"
+        assert payload["kind"]
+        assert payload["uri"]["self"].startswith("config://")
+        assert isinstance(payload["spec"], dict)

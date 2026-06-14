@@ -1,0 +1,19 @@
+$schema: ../schemas/uri_shell_context.schema.json
+apiVersion: uri3.io/v1
+kind: UriShellContext
+
+metadata:
+  id: local-dev
+  description: Default local development context for urish
+
+spec:
+  default_runtime: uri2run
+  default_policy: dev
+  default_output: text
+
+  transports:
+    shell:
+      os: linux
+      cwd: .
+    python:
+      venv: .venv

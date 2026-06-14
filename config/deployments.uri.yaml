@@ -1,18 +1,25 @@
-# Deployment registry defaults and shared env for local agents.
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: DeploymentConfig
+metadata:
+  id: deployments
+  description: Deployment registry defaults and shared env for local agents.
+uri:
+  self: config://deployments
+spec:
+  version: 1
 
-version: 1
-
-defaults:
-  env:
-    RESOURCE_RUNTIME_URL: http://localhost:8000
-
-deployments:
-  weather-map-agent.local:
+  defaults:
     env:
       RESOURCE_RUNTIME_URL: http://localhost:8000
-      OPENROUTER_API_KEY: env://OPENROUTER_API_KEY
-  weather-map-agent.ssh-dev:
-    env:
-      RESOURCE_RUNTIME_URL: http://localhost:8000
-    ssh:
-      password: env://HYPERVISOR_SSH_PASSWORD
+
+  deployments:
+    weather-map-agent.local:
+      env:
+        RESOURCE_RUNTIME_URL: http://localhost:8000
+        OPENROUTER_API_KEY: env://OPENROUTER_API_KEY
+    weather-map-agent.ssh-dev:
+      env:
+        RESOURCE_RUNTIME_URL: http://localhost:8000
+      ssh:
+        password: env://HYPERVISOR_SSH_PASSWORD

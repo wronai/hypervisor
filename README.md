@@ -3,17 +3,19 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.20-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$11.94-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.21-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$12.64-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-9.1h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $11.9400 (19 commits)
-- 👤 **Human dev:** ~$893 (8.9h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $12.6422 (20 commits)
+- 👤 **Human dev:** ~$911 (9.1h @ $100/h, 30min dedup)
 
 Generated on 2026-06-14 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
 
 Monorepo: **uri3**, **nl2uri**, **uri2flow**, **uri2ops**, **hypervisor**, **agent factory** — contract-first thin agents z pipeline `prompt → URI plan → Domain Pack → generated agent`, plus warstwa operatora URI.
+
+**Nowy użytkownik:** zacznij od [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md) — jeden model `URI → plan → verify → apply/run → observe → repair/evolve` i jedna powłoka `uri` / `urish`.
 
 ## Architektura
 
@@ -27,6 +29,7 @@ uri2pact   = markpact:// README import (capabilities + flows)
 uri2run    = neutral runtime transport layer (python/shell/http/stdio/sse/ws/docker/ssh/mcp/a2a/flow/graph)
 uri2verify = data quality gates, workflow replay, regression tests
 urigen     = URI ecosystem generator: proposals, artifacts, verify/explain/apply gates
+urish      = unified URI shell (`uri`): ask, ecosystem, dashboard, ticket/evolve/repair, policy
 touri      = capability matching, fallbacks, data quality → delegates execution to uri2run
 nl2a       = prompt → URI Tree → Domain Pack → agent contract → generated agent
 hypervisor = registry, policy, deployment, lifecycle
@@ -156,21 +159,29 @@ Zobacz [`docs/URI3.md`](docs/URI3.md) · [`packages/uri2verify/README.md`](packa
 capability manifests, compact flows, kontrakty, deployment fragment, README
 markpact i test plan. Nie jest runtime'em i nie wykonuje backendów bezpośrednio.
 
+Profile: `minimal`, `voice`, `dashboard-agent` (hypervisor dashboard system agent).
+
 ```bash
 urigen plan -p "stworz agenta pogodowego z healthcheckiem" \
   --out output/proposals/weather.ecosystem.proposal.yaml
+
+urigen plan -p "stwórz web UI agenta hypervisor-dashboard" \
+  --profile dashboard-agent \
+  --out output/proposals/hypervisor-dashboard.ecosystem.proposal.yaml
 
 urigen generate output/proposals/weather.ecosystem.proposal.yaml \
   --out output/ecosystems/weather
 
 urigen verify output/ecosystems/weather/ecosystem.yaml
 urigen explain output/ecosystems/weather/ecosystem.yaml
+urigen apply output/ecosystems/weather/ecosystem.yaml --plan
 urigen apply output/ecosystems/weather/ecosystem.yaml --approve
+urigen apply output/ecosystems/weather/ecosystem.yaml --rollback
 ```
 
 `plan` i `verify` są side-effect safe. `generate` pisze tylko do wskazanego
-`--out`. `apply` jest approval-gated; obecny MVP zwraca idempotentny plan akcji
-bez mutowania rejestrów repozytorium.
+`--out`. `apply --plan` zapisuje diff; `apply --approve` mutuje repo
+transakcyjnie z rollback manifestem przy błędzie.
 
 Zobacz [`packages/urigen/README.md`](packages/urigen/README.md).
 
@@ -297,6 +308,57 @@ hypervisor repair learn output/incidents/.../inc_*.yaml
 Incydenty są artefaktami ze schemą (`schemas/incident.schema.json`); nierozwiązane awarie
 generują propozycję ewolucji w `evolution/proposals/from_incident_*.yaml`.
 
+**urish** — unified URI shell (`uri` command):
+
+Dashboard-agent powstaje przez kontrolowany pipeline URI (nie ręczną aplikację webową):
+
+```bash
+uri ask "stwórz web UI agenta hypervisor-dashboard do pokazywania procesów"
+# → Subtype: dashboard-agent, profile, planned URIs, next steps z ecosystem generate
+
+uri ecosystem plan "..." --profile dashboard-agent \
+  --out output/proposals/hypervisor-dashboard.ecosystem.proposal.yaml
+uri ecosystem generate output/proposals/hypervisor-dashboard.ecosystem.proposal.yaml \
+  --out output/ecosystems/hypervisor-dashboard
+uri ecosystem verify output/ecosystems/hypervisor-dashboard/ecosystem.yaml
+uri ecosystem apply output/ecosystems/hypervisor-dashboard/ecosystem.yaml --plan
+uri ecosystem apply output/ecosystems/hypervisor-dashboard/ecosystem.yaml --approve
+uri agent run hypervisor-dashboard.local --wait-healthy --approve
+uri dashboard create hypervisor-dashboard --plan-only   # skrót orkiestracji
+```
+
+Ticket → evolution → ecosystem (gdy ticket opisuje dashboard):
+
+```bash
+uri ticket show ticket://feature/PL-10
+uri evolve from-ticket ticket://feature/PL-10
+uri proposal verify evolution/proposals/proposal_from_ticket_PL-10.yaml
+uri proposal apply evolution/proposals/proposal_from_ticket_PL-10.yaml --sandbox
+```
+
+Pozostałe komendy:
+
+```bash
+uri call python://uri2voice.stt:transcribe --payload '{"text":"test"}'
+uri explain weather://forecast/Gdansk/14/html
+uri ask "stworz agenta pogodowego z healthcheckiem"
+uri watch health://agent/weather-map-agent.local --count 3
+uri shell
+uri agent health weather-map-agent.local
+uri repair diagnose weather-map-agent.local
+uri ticket list
+uri doctor
+uri doctor --strict   # + walidacja incidents/tickets/evolution i lifecycle envelope
+uri ecosystem plan "stworz agenta pogodowego" --out output/proposals/weather.yaml
+```
+
+Policy: `--dry-run`, `--approve`, `--policy safe|dev|prod`, `--readonly`, `--sandbox`.
+Piping: `--stdin`, `--stdin-envelope`, `uri select data.text`.
+
+Skróty: `config/cli_shortcuts.uri.yaml` (`uri wh`, `uri hwa`, `uri rwa`).
+
+Zobacz [`packages/urish/README.md`](packages/urish/README.md).
+
 Standaryzacja artefaktów (URI3 Artifact YAML):
 
 ```bash
@@ -312,6 +374,8 @@ hypervisor evolution propose-from-incident output/incidents/.../inc_*.yaml
 Runtime state (`output/runtime/agents/*/state.json`) i logi (`log://`) używają wspólnego
 envelope (`apiVersion`, `kind`, `$schema`). Tickety planfile (`ticket://feature/PL-1`) i
 incydenty (`incident://...`) są dwoma źródłami ewolucji przez `evolution://proposal/from-*`.
+Configi `config/*.uri.yaml` też są canonical URI3 config artifacts; stare pola konfiguracyjne
+są pod `spec`, a loadery zachowują kompatybilny odczyt.
 `artifacts lifecycle` skanuje configi, deploymenty, kontrakty, domain packi, runtime state,
 workflow outputs, incydenty, tickety i propozycje, żeby pokazać, które pliki nadal są legacy
 albo luźnymi JSON/YAML bez stabilnego URI.
@@ -334,6 +398,8 @@ Konfiguracja URI: [`docs/CONFIG_URI_YAML.md`](docs/CONFIG_URI_YAML.md) · [`conf
 
 ### Aktualne (v0.5–v0.6)
 
+- [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md) — **start tutaj** (15 min, jeden cykl życia)
+- [`docs/MENTAL_MODEL.md`](docs/MENTAL_MODEL.md) · [`docs/URI_COOKBOOK.md`](docs/URI_COOKBOOK.md)
 - [`docs/HYPERVISOR_WORKFLOW.md`](docs/HYPERVISOR_WORKFLOW.md) — generacja + uruchomienie przez hypervisor
 - [`docs/CONFIG_URI_YAML.md`](docs/CONFIG_URI_YAML.md) — konwencja `*.uri.yaml`
 - [`docs/URI3.md`](docs/URI3.md) — uri3 CLI, workflow, schematy URI

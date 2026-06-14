@@ -50,3 +50,35 @@ views:
   - invoice_id
   - events
   rendererHint: invoice-timeline
+- name: dashboard_process_view
+  viewKind: html
+  mimeType: text/html
+  columns:
+  - agent_id
+  - service_status
+  - process_status
+  - health_status
+  rendererHint: process-dashboard
+- name: dashboard_workflow_timeline_view
+  viewKind: timeline
+  mimeType: text/html
+  columns:
+  - workflow_id
+  - steps
+  rendererHint: workflow-timeline
+- name: dashboard_incident_explain_view
+  viewKind: html
+  mimeType: text/html
+  columns:
+  - incident_id
+  - symptoms
+  - classification
+  rendererHint: incident-explain
+- name: dashboard_repair_diagnosis_view
+  viewKind: json
+  mimeType: application/json
+  columns:
+  - agent_id
+  - repair_plan
+  - classification
+  rendererHint: json

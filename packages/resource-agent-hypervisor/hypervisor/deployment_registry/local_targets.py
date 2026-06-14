@@ -41,6 +41,10 @@ def local_target_to_module(target_uri: str) -> str:
     if len(parts) >= 3 and parts[0] == "agents" and parts[1] == "generated":
         package = parts[2]
         return f"agents.generated.{package}.main:app"
+    if len(parts) >= 2 and parts[0] == "packages":
+        package_dir = parts[1]
+        module_name = package_dir.replace("-", "_")
+        return f"{module_name}.main:app"
     raise ValueError(f"Unsupported local agent path: {target_uri}")
 
 

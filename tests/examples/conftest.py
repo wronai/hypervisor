@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-import os
 import shutil
 import subprocess
 from pathlib import Path
 
 import pytest
+
+from tests.conftest import workspace_env
 
 
 @pytest.fixture(scope="session")
@@ -20,27 +21,7 @@ def repo_root() -> Path:
 
 @pytest.fixture(scope="session")
 def examples_env(repo_root: Path) -> dict[str, str]:
-    env = os.environ.copy()
-    paths = [
-        repo_root / "packages" / "resource-agent-factory",
-        repo_root / "packages" / "resource-agent-hypervisor",
-        repo_root / "packages" / "nl2uri",
-        repo_root / "packages" / "uri3",
-        repo_root / "packages" / "uri2flow",
-        repo_root / "packages" / "uri2ops",
-        repo_root / "packages" / "touri",
-        repo_root / "packages" / "uri2voice",
-        repo_root / "packages" / "uri2pact",
-        repo_root / "packages" / "uri2run",
-        repo_root / "packages" / "uri2verify",
-        repo_root / "examples" / "21_touri_voice",
-    ]
-    prefix = os.pathsep.join(str(path) for path in paths if path.is_dir())
-    existing = env.get("PYTHONPATH", "")
-    env["PYTHONPATH"] = f"{prefix}{os.pathsep}{existing}" if existing else prefix
-    env.setdefault("LANG", "en_US.UTF-8")
-    env.setdefault("LC_ALL", env["LANG"])
-    return env
+    return workspace_env(repo_root)
 
 
 def run_shell(
@@ -68,9 +49,22 @@ def docker_available() -> bool:
     return probe.returncode == 0
 
 
-def playwright_available() -> bool:
+def playwright_available(repo_root: Path | None = None) -> bool:
+    if repo_root is not None:
+        env = workspace_env(repo_root)
+        python = shutil.which("python", path=env.get("PATH", ""))
+        if python is None:
+            return False
+        probe = subprocess.run(
+            [python, "-c", "import playwright.sync_api"],
+            env=env,
+            capture_output=True,
+            timeout=30,
+            check=False,
+        )
+        return probe.returncode == 0
     try:
-        import playwright  # noqa: F401
+        import playwright.sync_api  # noqa: F401
 
         return True
     except ImportError:
@@ -80,5 +74,8 @@ def playwright_available() -> bool:
 def skip_if_markers(spec, repo_root: Path) -> None:
     if "docker" in spec.markers and not docker_available():
         pytest.skip("docker not available")
-    if "playwright" in spec.markers and not playwright_available():
-        pytest.skip("playwright not installed (pip install -e '.[browser]' && playwright install chromium)")
+    if "playwright" in spec.markers and not playwright_available(repo_root):
+        pytest.skip(
+            "playwright not installed "
+            "(pip install -e '.[browser]' && playwright install chromium)"
+        )

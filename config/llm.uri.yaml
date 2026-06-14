@@ -1,57 +1,63 @@
-# Values in *.uri.yaml files are URI addresses resolved by uri3.
-# Never store raw secrets here — use env:// or secret:// only.
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: LlmConfig
+metadata:
+  id: llm
+  description: LLM profiles with URI-valued model and secret references.
+uri:
+  self: config://llm
+spec:
+  version: 1
 
-version: 1
+  defaults:
+    profile: default
 
-defaults:
-  profile: default
+  profiles:
+    default:
+      model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=8000
+      api_key: env://OPENROUTER_API_KEY
+      provider: openrouter
+      purpose: general
+      enabled: true
 
-profiles:
-  default:
-    model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=8000
-    api_key: env://OPENROUTER_API_KEY
-    provider: openrouter
-    purpose: general
-    enabled: true
+    domain_planner:
+      model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
+      api_key: env://OPENROUTER_API_KEY
+      provider: openrouter
+      purpose: nl2uri
+      enabled: true
 
-  domain_planner:
-    model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
-    api_key: env://OPENROUTER_API_KEY
-    provider: openrouter
-    purpose: nl2uri
-    enabled: true
+    graph_planner:
+      model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
+      api_key: env://OPENROUTER_API_KEY
+      provider: openrouter
+      purpose: nl2uri_graph
+      enabled: true
 
-  graph_planner:
-    model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
-    api_key: env://OPENROUTER_API_KEY
-    provider: openrouter
-    purpose: nl2uri_graph
-    enabled: true
+    flow_planner:
+      model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
+      api_key: env://OPENROUTER_API_KEY
+      provider: openrouter
+      purpose: nl2uri_flow
+      enabled: true
 
-  flow_planner:
-    model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
-    api_key: env://OPENROUTER_API_KEY
-    provider: openrouter
-    purpose: nl2uri_flow
-    enabled: true
+    repair:
+      model: llm://openrouter/qwen/qwen3-coder-next?temp=0&max_tokens=8000
+      api_key: env://OPENROUTER_API_KEY
+      provider: openrouter
+      purpose: repair
+      enabled: true
 
-  repair:
-    model: llm://openrouter/qwen/qwen3-coder-next?temp=0&max_tokens=8000
-    api_key: env://OPENROUTER_API_KEY
-    provider: openrouter
-    purpose: repair
-    enabled: true
+    validator:
+      model: llm://openrouter/qwen/qwen3-coder-next?temp=0&max_tokens=4000&format=json
+      api_key: env://OPENROUTER_API_KEY
+      provider: openrouter
+      purpose: validator
+      enabled: true
 
-  validator:
-    model: llm://openrouter/qwen/qwen3-coder-next?temp=0&max_tokens=4000&format=json
-    api_key: env://OPENROUTER_API_KEY
-    provider: openrouter
-    purpose: validator
-    enabled: true
-
-  local_fast:
-    model: llm://localhost:11434/qwen3-coder?temp=0.1
-    api_key: null
-    provider: ollama
-    purpose: local_dev
-    enabled: true
+    local_fast:
+      model: llm://localhost:11434/qwen3-coder?temp=0.1
+      api_key: null
+      provider: ollama
+      purpose: local_dev
+      enabled: true

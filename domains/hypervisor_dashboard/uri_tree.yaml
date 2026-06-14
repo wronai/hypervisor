@@ -1,0 +1,16 @@
+domain: hypervisor_dashboard
+roots:
+  - uri: agent://hypervisor-dashboard
+    kind: agent
+  - uri: view://process/agent/{agent_id}/latest
+    kind: view
+  - uri: view://workflow/{workflow_id}/timeline
+    kind: view
+  - uri: view://incident/{incident_id}/explain
+    kind: view
+  - uri: repair://agent/{agent_id}/diagnose
+    kind: repair
+  - uri: repair://agent/{agent_id}/apply
+    kind: repair
+  - uri: ticket://bug/from-incident/{incident_id}
+    kind: ticket

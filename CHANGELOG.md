@@ -28,8 +28,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added artifact standardization layer (`uri3/artifacts/`): schema validation on write,
   runtime state envelope, LogEvent JSONL, workflow step artifacts, ticket/evolution source URIs.
 - Added `hypervisor artifacts check|schemas`, `hypervisor ticket import`, `hypervisor evolution propose-from-*`.
+- Added **urish** unified URI shell (`uri` / `urish` CLI) over uri3, uri2run, hypervisor, urigen — including REPL, watch/stream, NL ask, policy gates, ticket/repair/evolve subcommands.
 - Added `hypervisor artifacts lifecycle` coverage report for `$schema` / `apiVersion`
   / `kind` / `uri.self` across configs, deployments, contracts, runtime state and outputs.
+- Standardized `config/*.uri.yaml` as URI3 config artifacts with shared
+  `schemas/config/config_base.schema.json` envelope and compatible `spec` unwrapping.
+- Made `urigen` proposal/ecosystem YAML envelope-first, alias-free, and added default
+  generated capability `data_quality` policies for clean explain output.
+- Split `urish` runtime commands into `urish.commands.runtime` and added regression
+  coverage for `uri plan` defaults and `--payload @file` input.
+- Added `urish` dashboard workflow coverage for `ecosystem generate`,
+  `dashboard create --plan-only`, and the `agent create-dashboard` alias.
+- Added `urish ask` dashboard-agent intent detection: semantic `hypervisor-dashboard`
+  slug, `dashboard-agent` profile, planned `view://` / `repair://` / `ticket://` URIs,
+  and full next steps including `ecosystem generate`.
+- Added `urigen` `dashboard-agent` profile (contracts, capabilities, flows, deployment
+  fragment) and `packages/hypervisor-dashboard-agent` system agent (FastAPI UI on port 8788).
+- Generated `dashboard-agent` ecosystems now include the FastAPI dashboard app tree
+  under `app/` with `hypervisor_dashboard_agent.main:app` as the entrypoint.
+- Added transactional `urigen apply`: diff plan, fail-fast apply, auto-rollback,
+  manual `--rollback`, and JSON Schema validation for apply artifacts.
+- Added Sprint 1 autonomy hardening: `run_executor`, inspection pipeline,
+  `AgentReadinessReport`, repair plan envelope from diagnosis.
+- Added `urish doctor --strict` with artifact schema validation, incidents/tickets/
+  evolution proposal checks, and lifecycle envelope coverage gate.
+- Added onboarding docs: `GETTING_STARTED`, `MENTAL_MODEL`, `URI_COOKBOOK`, `PROFILES`,
+  `ARTIFACT_STANDARD`, `AUTONOMY_LOOP`, `DASHBOARD`, `CLI_REFERENCE`.
+- Added `examples/30_golden_path` tutorial script.
+- Improved `urish ask` output: `Name`, `Planned` (filtered URIs), `urish`-prefixed next steps.
+- Extended CLI shortcuts: `weather-status`, `weather-process`, `dashboard`, `repair-weather`.
 - Added schemas: `ticket`, `log_event`, `workflow_artifact`, `deployment_registry`, `config/config_base`.
 - Added `docs/EXTERNAL_PACKAGES.md` with the local `semcod/*` and `wronai/*`
   package audit, version snapshot, integration boundary and recommended next
@@ -61,6 +88,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Delegated `touri` backend wrappers to `uri2run.run_backend` while preserving
   the existing `ServiceResult` envelope.
 - Extended `uri3 explain` to report `runtime_transport` for `uri2run` backends.
+- `urish ask` no longer slugifies the full prompt for dashboard intents; uses
+  semantic `hypervisor-dashboard` ecosystem id and `--profile dashboard-agent`.
+- `urigen apply --approve` now mutates repo transactionally (was plan-only MVP).
+- `urish proposal apply` accepts `--sandbox` without `--approve` for dry evolution apply.
 
 ### Fixed
 
@@ -72,6 +103,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`lifecycle.py` reuses healthy agent when already running).
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
+
+## [0.5.21] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/ARTIFACT_STANDARD.md
+- Update docs/AUTONOMY_LOOP.md
+- Update docs/CLI_REFERENCE.md
+- Update docs/CONFIG_URI_YAML.md
+- Update docs/DASHBOARD.md
+- Update docs/GETTING_STARTED.md
+- Update docs/MENTAL_MODEL.md
+- ... and 11 more files
+
+### Test
+- Update tests/conftest.py
+- Update tests/examples/catalog.py
+- Update tests/examples/conftest.py
+- Update tests/examples/test_examples_smoke.py
+- Update tests/examples/test_inline_examples.py
+- Update tests/hypervisor/test_agent_runner.py
+- Update tests/hypervisor/test_artifact_standards.py
+- Update tests/hypervisor/test_dashboard_agent.py
+- Update tests/hypervisor/test_sprint1_autonomy.py
+- Update tests/uri2run/test_uri2run.py
+- ... and 6 more files
+
+### Other
+- Update config/cli_shortcuts.uri.yaml
+- Update config/deployments.uri.yaml
+- Update config/docker.uri.yaml
+- Update config/flow_defaults.uri.yaml
+- Update config/llm.uri.yaml
+- Update config/operator_policy.uri.yaml
+- Update config/operator_registry.uri.yaml
+- Update config/runtime.uri.yaml
+- Update config/ssh.uri.yaml
+- Update config/touri.uri.yaml
+- ... and 131 more files
 
 ## [0.5.20] - 2026-06-14
 

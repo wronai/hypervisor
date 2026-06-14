@@ -1,9 +1,18 @@
-version: 1
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: OperatorRegistryConfig
+metadata:
+  id: operator-registry
+  description: Operator registry merge sources for uri2ops.
+uri:
+  self: config://operator-registry
+spec:
+  version: 1
 
-local:
-  path: packages/uri2ops/uri2ops/operation_registry/registry.yaml
+  local:
+    path: packages/uri2ops/uri2ops/operation_registry/registry.yaml
 
-remotes:
-  - id: extra-local
-    uri: file://config/extra_operator_registry.yaml
-    enabled: true
+  remotes:
+    - id: extra-local
+      uri: file://config/extra_operator_registry.yaml
+      enabled: true

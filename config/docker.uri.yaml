@@ -1,25 +1,32 @@
-# Docker stacks and agent compose profiles for uri3 docker:// control.
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: DockerConfig
+metadata:
+  id: docker
+  description: Docker stacks and agent compose profiles for uri3 docker:// control.
+uri:
+  self: config://docker
+spec:
+  version: 1
 
-version: 1
+  defaults:
+    build: true
+    detach: true
 
-defaults:
-  build: true
-  detach: true
+  stacks:
+    ssh-testenv:
+      compose_file: examples/03_ssh_remote_agent/docker-compose.yml
+      project: hypervisor-ssh
+      container_name: hypervisor-ssh-agent-host
+      description: Docker + SSH remote agent testenv (example 03)
+    weather-map-agent:
+      compose_file: output/deployments/weather-map-agent/docker-compose.yaml
+      project: weather-map-agent
+      description: Generated weather-map agent stack
 
-stacks:
-  ssh-testenv:
-    compose_file: examples/03_ssh_remote_agent/docker-compose.yml
-    project: hypervisor-ssh
-    container_name: hypervisor-ssh-agent-host
-    description: Docker + SSH remote agent testenv (example 03)
-  weather-map-agent:
-    compose_file: output/deployments/weather-map-agent/docker-compose.yaml
-    project: weather-map-agent
-    description: Generated weather-map agent stack
-
-agents:
-  weather-map-agent:
-    dockerfile: agents/generated/weather_map_agent/Dockerfile
-    output_compose: output/deployments/weather-map-agent/docker-compose.yaml
-    port: 8101
-    container_name: weather-map-agent
+  agents:
+    weather-map-agent:
+      dockerfile: agents/generated/weather_map_agent/Dockerfile
+      output_compose: output/deployments/weather-map-agent/docker-compose.yaml
+      port: 8101
+      container_name: weather-map-agent

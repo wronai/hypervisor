@@ -9,6 +9,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 import yaml
+from uri3.config.uri_yaml import unwrap_uri_yaml_document
 
 _CONFIG_NAME = "config/flow_defaults.uri.yaml"
 
@@ -54,7 +55,9 @@ def _load_flow_defaults_config() -> dict[str, Any]:
     if not path.exists():
         return {"defaults": {}, "patterns": [], "fallback": {}}
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    return data if isinstance(data, dict) else {"defaults": {}, "patterns": [], "fallback": {}}
+    if not isinstance(data, dict):
+        return {"defaults": {}, "patterns": [], "fallback": {}}
+    return unwrap_uri_yaml_document(data)
 
 
 def _defaults_from_entry(entry: dict[str, Any]) -> OperationDefaults:

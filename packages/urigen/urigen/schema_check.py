@@ -46,10 +46,37 @@ def schema_check_ecosystem(path: str | Path, *, root: str | Path | None = None) 
     base = Path(path)
     if base.is_file():
         base = base.parent
-    results = [_check_yaml_file(yaml_path, repo) for yaml_path in sorted(base.rglob("*.yaml"))]
+    yaml_results = [_check_yaml_file(yaml_path, repo) for yaml_path in sorted(base.rglob("*.yaml"))]
+    json_results: list[dict[str, Any]] = []
+    for json_path in sorted(base.glob("apply_*.json")):
+        try:
+            import json
+
+            payload = json.loads(json_path.read_text(encoding="utf-8"))
+            if not isinstance(payload, dict):
+                json_results.append({"path": str(json_path), "ok": False, "errors": ["root must be mapping"]})
+                continue
+            from urigen.apply_validate import validate_apply_artifact
+
+            schema_name = (
+                "apply_result.schema.json" if json_path.name == "apply_result.json" else "apply_plan.schema.json"
+            )
+            errors = validate_apply_artifact(payload, schema_name, repo=repo)
+            json_results.append(
+                {
+                    "path": _repo_relative(json_path, repo),
+                    "ok": not errors,
+                    "errors": errors,
+                    "warnings": [],
+                }
+            )
+        except (OSError, json.JSONDecodeError) as exc:
+            json_results.append({"path": str(json_path), "ok": False, "errors": [str(exc)]})
+    results = yaml_results + json_results
     warned = [item for item in results if item.get("warnings")]
+    failed = [item for item in results if not item.get("ok")]
     return {
-        "ok": True,
+        "ok": not failed,
         "checked": len(results),
         "warnings": len(warned),
         "results": results,

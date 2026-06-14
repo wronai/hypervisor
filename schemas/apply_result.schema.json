@@ -37,7 +37,9 @@
         "properties": {
           "id": { "type": "string" },
           "status": { "type": "string" },
-          "detail": { "type": "string" }
+          "detail": {
+            "oneOf": [{ "type": "string" }, { "type": "object" }]
+          }
         },
         "additionalProperties": true
       }

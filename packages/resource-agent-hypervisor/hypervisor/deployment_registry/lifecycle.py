@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import re
 import signal
 import time
 from pathlib import Path
@@ -9,6 +8,18 @@ from typing import Any
 
 from hypervisor.deployment_registry.env import default_log_uri, resolve_deployment_env
 from hypervisor.deployment_registry.process import start_process
+from hypervisor.deployment_registry.run_executor import (
+    attach_started_process,
+    build_agent_run_plan,
+    load_or_clear_runtime_state,
+    prepare_runtime_env,
+    process_start_failure_payload,
+    rebind_plan_port_if_busy,
+    resolve_running_mode,
+    reuse_existing_process_plan,
+    verify_process_alive,
+    write_runtime_state_after_start,
+)
 from hypervisor.deployment_registry.run_plans import build_run_plan
 from hypervisor.deployment_registry.runtime_state import (
     clear_runtime_state,
@@ -21,49 +32,6 @@ from hypervisor.deployment_registry.runtime_state import (
 from hypervisor.deployment_registry.selector import resolve_deployment
 from hypervisor.deployment_registry.status import resolve_status
 from hypervisor.paths import find_repo_root
-
-
-def _port_from_http_uri(uri: str | None) -> int | None:
-    if not uri:
-        return None
-    from urllib.parse import urlparse
-
-    parsed = urlparse(uri)
-    if parsed.port is not None:
-        return parsed.port
-    if parsed.scheme == "http":
-        return 80
-    if parsed.scheme == "https":
-        return 443
-    return None
-
-
-def _port_from_command(command: str | None) -> int | None:
-    if not command:
-        return None
-    match = re.search(r"--port(?:=|\s+)(\d+)", command)
-    return int(match.group(1)) if match else None
-
-
-def _health_uri_for_port(port: int) -> str:
-    return f"http://localhost:{port}/health"
-
-
-def _resolve_health_uri(state: dict[str, Any], plan: dict[str, Any]) -> str:
-    command = str(state.get("command") or plan.get("command_string") or "")
-    command_port = _port_from_command(command)
-    if command_port is not None:
-        return _health_uri_for_port(command_port)
-    return str(state.get("health_uri") or plan.get("health_uri") or "")
-
-
-def resolve_effective_health_uri(state: dict[str, Any], plan: dict[str, Any]) -> str:
-    return _resolve_health_uri(state, plan)
-
-
-def command_port_from_runtime(state: dict[str, Any], plan: dict[str, Any]) -> int | None:
-    command = str(state.get("command") or plan.get("command_string") or "")
-    return _port_from_command(command)
 
 
 def _lifecycle_payload(payload: dict[str, Any]) -> dict[str, Any]:
@@ -114,45 +82,29 @@ def run_agent(
                 payload["service_result_status"] = "failed"
         return payload
 
-    existing = load_runtime_state(deployment.id, repo)
-    if existing and not is_process_alive(existing.get("pid")):
-        clear_runtime_state(deployment.id, repo)
-        existing = None
-    plan = build_run_plan(deployment, root=repo, port=port, host=host, reload=reload)
+    existing = load_or_clear_runtime_state(deployment.id, repo)
+    plan = build_agent_run_plan(deployment, repo=repo, port=port, host=host, reload=reload)
     if existing and is_process_alive(existing.get("pid")):
-        running_mode = if_running or ("reuse" if detach else "fail")
-        existing_port = _port_from_http_uri(str(existing.get("health_uri") or ""))
-        requested_port = plan.get("port")
-        if (
-            port is not None
-            and existing_port is not None
-            and requested_port is not None
-            and existing_port != requested_port
-        ):
-            if running_mode == "reuse":
-                running_mode = "restart"
-            elif running_mode == "fail":
-                raise RuntimeError(
-                    f"Agent {deployment.id} already running on port {existing_port}, "
-                    f"requested port {requested_port}. Use --if-running restart."
-                )
+        running_mode = resolve_running_mode(
+            if_running=if_running,
+            detach=detach,
+            port=port,
+            existing=existing,
+            plan=plan,
+            deployment_id=deployment.id,
+        )
         if running_mode == "restart":
             stop_agent(selector, root=repo)
+            clear_runtime_state(deployment.id, repo)
+            existing = None
         elif running_mode == "reuse":
-            plan["pid"] = existing.get("pid")
-            plan["health_uri"] = (
-                plan.get("health_uri")
-                if port is not None
-                else resolve_effective_health_uri(existing, plan)
-            )
+            plan = reuse_existing_process_plan(existing, plan, port=port)
             if plan["health_uri"] != existing.get("health_uri"):
                 save_runtime_state(
                     deployment.id,
                     {**existing, "health_uri": plan["health_uri"]},
                     repo,
                 )
-            plan["runtime_status"] = "running"
-            plan["already_running"] = True
             return _finalize(plan)
         elif running_mode == "fail":
             raise RuntimeError(
@@ -161,6 +113,7 @@ def run_agent(
             )
         else:
             raise ValueError("--if-running must be one of: reuse, restart, fail")
+    plan = rebind_plan_port_if_busy(deployment, plan, repo=repo, host=host, reload=reload)
     if dry_run:
         return _lifecycle_payload(plan)
     if deployment.target_uri.startswith("ssh://"):
@@ -172,38 +125,23 @@ def run_agent(
         from hypervisor.deployment_registry.docker_runner import apply_docker_deploy
 
         return apply_docker_deploy(deployment, root=repo)
-    runtime_env = resolve_deployment_env(
-        deployment.id, deployment.agent_ref, deployment.env, root=repo, resolve_secrets=True
-    )
+    runtime_env = prepare_runtime_env(deployment, repo=repo)
     process = start_process(plan, root=repo, detach=detach, runtime_env=runtime_env)
     if detach and process is not None:
-        effective_port = plan.get("port")
-        declared_health = deployment.health_uri or plan.get("health_uri")
-        state = {
-            "id": deployment.id,
-            "agent_ref": deployment.agent_ref,
-            "pid": process.pid,
-            "status": "running",
-            "health_status": "unknown",
-            "lifecycle_status": "running",
-            "started_at": now_iso(),
-            "command": plan["command_string"],
-            "health_uri": plan["health_uri"],
-            "log_uri": plan["log_uri"],
-            "env": runtime_env,
-            "requested_port": port,
-            "declared_health_uri": declared_health,
-            "network": {
-                "host": host,
-                "requested_port": port,
-                "effective_port": effective_port,
-                "effective_health_uri": plan["health_uri"],
-                "declared_health_uri": declared_health,
-            },
-        }
-        save_runtime_state(deployment.id, state, repo)
-        plan["pid"] = process.pid
-        plan["runtime_status"] = "running"
+        if not verify_process_alive(process.pid):
+            return _lifecycle_payload(
+                process_start_failure_payload(deployment.id, process_pid=process.pid, plan=plan)
+            )
+        write_runtime_state_after_start(
+            deployment,
+            plan,
+            process_pid=process.pid,
+            runtime_env=runtime_env,
+            host=host,
+            requested_port=port,
+            repo=repo,
+        )
+        plan = attach_started_process(plan, process.pid)
     return _finalize(plan)
 
 
@@ -259,8 +197,19 @@ def restart_agent(
     reload: bool = False,
     detach: bool = True,
 ) -> dict[str, Any]:
-    stop_agent(selector, root=root)
-    return run_agent(selector, root=root, port=port, host=host, reload=reload, detach=detach)
+    repo = _repo_root(root)
+    deployment = resolve_deployment(selector, root=repo)
+    stop_agent(selector, root=repo)
+    clear_runtime_state(deployment.id, repo)
+    return run_agent(
+        selector,
+        root=repo,
+        port=port,
+        host=host,
+        reload=reload,
+        detach=detach,
+        if_running="fail",
+    )
 
 
 def agent_status(

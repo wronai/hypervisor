@@ -27,13 +27,14 @@ def test_run_sh_script_exists(spec, repo_root: Path):
 
 @pytest.mark.examples
 def test_touri_capability_manifests_validate(repo_root: Path, examples_env):
+    from tests.conftest import cli_argv
     from tests.examples.conftest import run_shell
 
     registry = repo_root / "examples/20_touri_capabilities"
     for manifest in sorted(registry.glob("*.uri.capability.yaml")):
         result = run_shell(
             repo_root,
-            ["touri", "validate", str(manifest)],
+            cli_argv("touri", "validate", str(manifest), env=examples_env, repo_root=repo_root),
             env=examples_env,
         )
         assert result.returncode == 0, manifest.name

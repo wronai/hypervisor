@@ -13,6 +13,24 @@ from .register import register_capability
 from .validator import validate_manifest
 
 
+def _resolve_registry(registry: str | None, uri: str) -> str:
+    if registry:
+        return registry
+    if uri.startswith(("stt://", "tts://", "voice://")):
+        try:
+            from uri2run.voice_resolver import default_voice_registry
+
+            default = default_voice_registry()
+            if default is not None:
+                return str(default)
+        except Exception:  # noqa: BLE001
+            pass
+    raise SystemExit(
+        "touri call requires --registry for this URI. "
+        "For voice mock URIs use examples/21_touri_voice or set TOURI_REGISTRY."
+    )
+
+
 def _print(payload):
     print(json.dumps(payload, ensure_ascii=False, indent=2))
 
@@ -35,7 +53,8 @@ def cmd_call(args):
         payload = json.loads(args.payload)
     elif args.payload_file:
         payload = json.loads(Path(args.payload_file).read_text(encoding="utf-8"))
-    result = call_uri(args.uri, args.registry, payload=payload)
+    registry = _resolve_registry(args.registry, args.uri)
+    result = call_uri(args.uri, registry, payload=payload)
     _print(result.to_dict())
     return 0 if result.ok else 1
 
@@ -77,8 +96,8 @@ def build_parser():
     p.add_argument("uri")
     p.add_argument(
         "--registry",
-        required=True,
-        help="Registry directory/file or markpact://path/to/README.md",
+        required=False,
+        help="Registry directory/file (defaults to examples/21_touri_voice for voice URIs)",
     )
     p.add_argument("--payload")
     p.add_argument("--payload-file")

@@ -33,7 +33,9 @@ def render_readme(ecosystem: dict[str, Any], embedded: dict[str, str]) -> str:
     return "\n".join(lines)
 
 
-def deployment_fragment() -> dict[str, Any]:
+def deployment_fragment(*, deployments: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    if deployments:
+        return {"deployments": deployments}
     return {
         "deployments": [
             {
@@ -45,6 +47,22 @@ def deployment_fragment() -> dict[str, Any]:
             }
         ]
     }
+
+
+def dashboard_deployment_fragment() -> dict[str, Any]:
+    return deployment_fragment(
+        deployments=[
+            {
+                "id": "hypervisor-dashboard.local",
+                "agent_ref": "agent://hypervisor-dashboard",
+                "target_uri": "local://packages/hypervisor-dashboard-agent",
+                "status": "planned",
+                "health_uri": "http://localhost:8788/health",
+                "card_uri": "http://localhost:8788/.well-known/agent-card.json",
+                "if_running": "reuse",
+            }
+        ]
+    )
 
 
 def voice_flow() -> dict[str, Any]:

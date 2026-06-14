@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from uri3.artifacts.validator import validate_artifact
+
 from hypervisor.repair.validator import (
     validate_evolution_proposal_dict,
     validate_incident_dict,
@@ -11,6 +13,10 @@ from hypervisor.repair.validator import (
     validate_runtime_state_dict,
     validate_ticket_dict,
 )
+
+
+def validate_config_dict(data: dict[str, Any], repo_root: Path) -> list[str]:
+    return validate_artifact(data, repo_root, "schemas/config/config_base.schema.json")
 
 
 @dataclass
@@ -34,6 +40,7 @@ class ArtifactLifecycleResult:
 
 
 ARTIFACT_CHECKS: list[tuple[str, str, Any]] = [
+    ("config/*.uri.yaml", "schemas/config/config_base.schema.json", validate_config_dict),
     ("output/incidents/**/*.yaml", "schemas/incident.schema.json", validate_incident_dict),
     (
         "evolution/proposals/**/*.yaml",

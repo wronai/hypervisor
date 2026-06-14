@@ -1,0 +1,53 @@
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: CliShortcuts
+metadata:
+  id: cli-shortcuts
+  description: Unified URI shell shortcuts for learning curve.
+uri:
+  self: config://cli-shortcuts
+spec:
+
+  shortcuts:
+    wh:
+      uri: weather://forecast/Gdansk/14/html
+      description: Weather forecast for Gdansk
+
+    hwa:
+      uri: health://agent/weather-map-agent.local
+      description: Weather agent health check
+
+    weather-status:
+      uri: health://agent/weather-map-agent.local
+      description: Alias for hwa — check weather agent health
+
+    weather-process:
+      uri: view://process/agent/weather-map-agent.local/latest
+      description: Dashboard process view for weather agent
+
+    rwa:
+      uri: repair://agent/weather-map-agent.local/diagnose
+      description: Diagnose weather agent
+
+    repair-weather:
+      uri: repair://agent/weather-map-agent.local/diagnose
+      description: Alias for rwa
+
+    dashboard-ui:
+      uri: browser://chrome/page/open
+      payload:
+        url: http://localhost:8788/ui
+      description: Open hypervisor dashboard UI (uri call dashboard-ui --approve)
+
+    scan:
+      http: http://localhost:8101
+      ssh: ssh://deploy@localhost:2222/opt/agents/weather-map-agent
+      docker: docker://stack/ssh-testenv
+
+  examples:
+    - uri ask "stwórz agenta pogodowego z healthcheckiem"
+    - uri agent status weather-map-agent.local
+    - uri hwa
+    - uri weather-process
+    - uri dashboard open
+    - uri doctor --strict

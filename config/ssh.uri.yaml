@@ -1,15 +1,21 @@
-# SSH auth for remote deployments and uri3 scan.
-# Never store raw passwords here — use env:// only.
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: SshConfig
+metadata:
+  id: ssh
+  description: SSH auth for remote deployments and uri3 scan.
+uri:
+  self: config://ssh
+spec:
+  version: 1
 
-version: 1
-
-defaults:
-  password: env://HYPERVISOR_SSH_PASSWORD
-
-profiles:
-  docker_testenv:
-    match:
-      user: deploy
-      host: localhost
-      port: 2222
+  defaults:
     password: env://HYPERVISOR_SSH_PASSWORD
+
+  profiles:
+    docker_testenv:
+      match:
+        user: deploy
+        host: localhost
+        port: 2222
+      password: env://HYPERVISOR_SSH_PASSWORD

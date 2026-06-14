@@ -1,0 +1,17 @@
+version: 1
+
+capability:
+  id: action.repair.diagnose
+  scheme: repair
+  uri_template: repair://agent/{agent_id}/diagnose
+  operation: read
+  kind: query
+  description: Diagnose agent health and build repair plan envelope.
+
+backend:
+  type: uri
+  target: repair://agent/{agent_id}/diagnose
+
+policy:
+  side_effects: false
+  requires_approval: false

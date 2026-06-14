@@ -14,6 +14,16 @@ from uri2ops.operation_registry.models import OperationRegistry, OperationSpec
 DEFAULT_CONFIG_PATH = "config/operator_registry.uri.yaml"
 
 
+def _unwrap_config_document(data: dict[str, Any]) -> dict[str, Any]:
+    if (
+        data.get("apiVersion") == "uri3.io/v1"
+        and data.get("kind")
+        and isinstance(data.get("spec"), dict)
+    ):
+        return dict(data["spec"])
+    return data
+
+
 def registry_config_path(root: Path | None = None) -> Path:
     base = Path(root) if root else Path.cwd()
     return base / DEFAULT_CONFIG_PATH
@@ -23,7 +33,8 @@ def load_registry_config(root: Path | None = None) -> dict[str, Any]:
     path = registry_config_path(root)
     if not path.exists():
         return {"version": 1, "local": {"path": str(default_registry_path())}, "remotes": []}
-    return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return _unwrap_config_document(data) if isinstance(data, dict) else {}
 
 
 def _load_source(uri_or_path: str, *, root: Path | None = None) -> dict[str, Any]:
@@ -64,7 +75,9 @@ def merge_registry_documents(*documents: dict[str, Any]) -> dict[str, Any]:
     return merged
 
 
-def registry_from_document(data: dict[str, Any], *, validate_schema: bool = True) -> OperationRegistry:
+def registry_from_document(
+    data: dict[str, Any], *, validate_schema: bool = True
+) -> OperationRegistry:
     if validate_schema:
         from uri2ops.operation_registry.validator import validate_registry_schema
 
@@ -74,7 +87,9 @@ def registry_from_document(data: dict[str, Any], *, validate_schema: bool = True
     operations: dict[tuple[str, str], OperationSpec] = {}
     for scheme, scheme_data in (data.get("schemes") or {}).items():
         for operation, op_data in (scheme_data.get("operations") or {}).items():
-            operations[(scheme, operation)] = OperationSpec.from_mapping(scheme, operation, op_data or {})
+            operations[(scheme, operation)] = OperationSpec.from_mapping(
+                scheme, operation, op_data or {}
+            )
     return OperationRegistry(operations=operations)
 
 

@@ -14,9 +14,27 @@ def transcribe(payload: dict[str, Any] | None = None, context: dict[str, Any] | 
 
     text = payload.get("text")
     transcript_file = payload.get("transcript_file")
+    audio_uri = payload.get("audio_uri")
 
     if not text and transcript_file:
         text = Path(transcript_file).read_text(encoding="utf-8").strip()
+
+    if not text and audio_uri:
+        return {
+            "ok": False,
+            "result_type": "transcript",
+            "errors": [
+                {
+                    "code": "MOCK_STT_NO_AUDIO",
+                    "detail": (
+                        "mock STT does not decode audio files. "
+                        "Pass text/transcript_file, or use a real engine via touri registry."
+                    ),
+                }
+            ],
+            "data": {"audio_uri": audio_uri},
+            "meta": {"engine": "mock", "audio_uri": audio_uri},
+        }
 
     if not text:
         text = _default_transcript()
@@ -30,6 +48,6 @@ def transcribe(payload: dict[str, Any] | None = None, context: dict[str, Any] | 
         },
         "meta": {
             "engine": "mock",
-            "audio_uri": payload.get("audio_uri"),
+            "audio_uri": audio_uri,
         },
     }

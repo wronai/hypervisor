@@ -28,14 +28,15 @@ def build_apply_plan(
     actions: list[dict[str, Any]] = []
     for agent in ecosystem.get("agents") or []:
         contract = agent.get("contract")
+        agent_name = str(agent.get("name") or agent.get("id") or "agent").replace("/", "_")
         if not contract:
             continue
         source = ecosystem_dir / contract
         if source.is_file():
             actions.append(
                 {
-                    "id": "merge_agent_contract",
-                    "operation": "merge",
+                    "id": f"merge_agent_contract_{agent_name}",
+                    "operation": "copy_file",
                     "source": _repo_relative(source, repo_root),
                     "target": contract,
                     "requires_approval": True,

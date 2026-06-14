@@ -78,8 +78,12 @@ def test_run_agent_detach_idempotent_when_already_running(monkeypatch: pytest.Mo
         "health_uri": "http://localhost:8101/health",
     }
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.lifecycle.load_runtime_state",
+        "hypervisor.deployment_registry.run_executor.load_runtime_state",
         lambda _deployment_id, _root=None: existing,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.is_process_alive",
+        lambda pid: pid == 4242,
     )
     monkeypatch.setattr(
         "hypervisor.deployment_registry.lifecycle.is_process_alive",
@@ -106,8 +110,12 @@ def test_run_agent_reuse_syncs_health_uri_from_command(monkeypatch: pytest.Monke
     }
     saved: list[dict[str, object]] = []
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.lifecycle.load_runtime_state",
+        "hypervisor.deployment_registry.run_executor.load_runtime_state",
         lambda _deployment_id, _root=None: existing,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.is_process_alive",
+        lambda pid: pid == 4242,
     )
     monkeypatch.setattr(
         "hypervisor.deployment_registry.lifecycle.is_process_alive",
@@ -136,16 +144,24 @@ def test_run_agent_restarts_when_explicit_port_differs(monkeypatch: pytest.Monke
     started: list[dict[str, object]] = []
 
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.lifecycle.load_runtime_state",
+        "hypervisor.deployment_registry.run_executor.load_runtime_state",
         lambda _deployment_id, _root=None: existing,
     )
     monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.is_process_alive",
+        lambda pid: pid in {4242, 5151},
+    )
+    monkeypatch.setattr(
         "hypervisor.deployment_registry.lifecycle.is_process_alive",
-        lambda pid: pid == 4242,
+        lambda pid: pid in {4242, 5151},
     )
     monkeypatch.setattr(
         "hypervisor.deployment_registry.lifecycle.stop_agent",
         lambda selector, **kwargs: stopped.append(selector) or {"status": "stopped"},
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.clear_runtime_state",
+        lambda *_args, **_kwargs: None,
     )
 
     class _Proc:
@@ -159,6 +175,12 @@ def test_run_agent_restarts_when_explicit_port_differs(monkeypatch: pytest.Monke
         "hypervisor.deployment_registry.lifecycle.save_runtime_state",
         lambda *_args, **_kwargs: None,
     )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.is_port_free",
+        lambda port, **kwargs: True,
+    )
+
+    monkeypatch.setattr("hypervisor.deployment_registry.run_executor.time.sleep", lambda *_args: None)
 
     from hypervisor.deployment_registry.runner import run_agent
 
@@ -177,8 +199,12 @@ def test_run_agent_if_running_fail(monkeypatch: pytest.MonkeyPatch):
         "health_uri": "http://localhost:8101/health",
     }
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.lifecycle.load_runtime_state",
+        "hypervisor.deployment_registry.run_executor.load_runtime_state",
         lambda _deployment_id, _root=None: existing,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.is_process_alive",
+        lambda pid: pid == 4242,
     )
     monkeypatch.setattr(
         "hypervisor.deployment_registry.lifecycle.is_process_alive",
@@ -191,6 +217,55 @@ def test_run_agent_if_running_fail(monkeypatch: pytest.MonkeyPatch):
         run_agent("weather-map-agent.local", detach=True, if_running="fail")
 
 
+def test_run_agent_rebinds_when_preferred_port_busy(monkeypatch: pytest.MonkeyPatch):
+    started: list[dict[str, object]] = []
+
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.load_runtime_state",
+        lambda _deployment_id, _root=None: None,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.is_port_free",
+        lambda port, **kwargs: port != 8101,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.find_free_port",
+        lambda preferred, **kwargs: 8110,
+    )
+
+    class _Proc:
+        pid = 9001
+
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.start_process",
+        lambda plan, **kwargs: started.append(plan) or _Proc(),
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.save_runtime_state",
+        lambda *_args, **_kwargs: None,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.is_process_alive",
+        lambda pid: pid == 9001,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.is_process_alive",
+        lambda pid: pid == 9001,
+    )
+    monkeypatch.setattr("hypervisor.deployment_registry.run_executor.time.sleep", lambda *_args: None)
+
+    from hypervisor.deployment_registry.runner import run_agent
+
+    result = run_agent("weather-map-agent.local", detach=True)
+    assert result["port"] == 8110
+    assert result["health_uri"] == "http://localhost:8110/health"
+    assert started and started[0]["port_rebound"] == {
+        "from": 8101,
+        "to": 8110,
+        "reason": "port_in_use",
+    }
+
+
 def test_inspect_agent_separates_process_running_from_health(monkeypatch: pytest.MonkeyPatch):
     existing = {
         "pid": 4242,
@@ -200,22 +275,22 @@ def test_inspect_agent_separates_process_running_from_health(monkeypatch: pytest
     }
 
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.load_runtime_state",
+        "hypervisor.deployment_registry.inspection.pipeline.load_runtime_state",
         lambda _deployment_id, _root=None: existing,
     )
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.is_process_alive",
+        "hypervisor.deployment_registry.inspection.pipeline.is_process_alive",
         lambda pid: pid == 4242,
     )
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.runtime_status",
+        "hypervisor.deployment_registry.inspection.pipeline.runtime_status",
         lambda _deployment_id, _root=None: "running",
     )
 
     def fake_get(uri: str, timeout: float):
         raise RuntimeError(f"connection refused: {uri}")
 
-    monkeypatch.setattr("hypervisor.deployment_registry.supervisor.httpx.get", fake_get)
+    monkeypatch.setattr("hypervisor.deployment_registry.inspection.probe.httpx.get", fake_get)
     payload = inspect_agent("weather-map-agent.local")
 
     assert payload["process"]["running"] is True
@@ -225,6 +300,8 @@ def test_inspect_agent_separates_process_running_from_health(monkeypatch: pytest
     assert "PROCESS_RUNNING_BUT_UNHEALTHY" in codes
     assert payload["readiness"]["process"] == "running"
     assert payload["readiness"]["health"] == "failed"
+    assert payload["agent_readiness"]["process_status"] == "running"
+    assert payload["agent_readiness"]["health_status"] == "failed"
 
 
 def test_inspect_agent_detects_command_health_mismatch(monkeypatch: pytest.MonkeyPatch):
@@ -240,15 +317,15 @@ def test_inspect_agent_detects_command_health_mismatch(monkeypatch: pytest.Monke
     }
 
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.load_runtime_state",
+        "hypervisor.deployment_registry.inspection.pipeline.load_runtime_state",
         lambda _deployment_id, _root=None: existing,
     )
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.is_process_alive",
+        "hypervisor.deployment_registry.inspection.pipeline.is_process_alive",
         lambda pid: pid == 4242,
     )
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.runtime_status",
+        "hypervisor.deployment_registry.inspection.pipeline.runtime_status",
         lambda _deployment_id, _root=None: "running",
     )
 
@@ -262,7 +339,7 @@ def test_inspect_agent_detects_command_health_mismatch(monkeypatch: pytest.Monke
             return response
         raise RuntimeError(f"connection refused: {uri}")
 
-    monkeypatch.setattr("hypervisor.deployment_registry.supervisor.httpx.get", fake_get)
+    monkeypatch.setattr("hypervisor.deployment_registry.inspection.probe.httpx.get", fake_get)
     payload = inspect_agent("weather-map-agent.local")
 
     assert payload["ok"] is False
@@ -285,15 +362,15 @@ def test_supervise_auto_syncs_health_uri(monkeypatch: pytest.MonkeyPatch):
     sync_calls: list[str] = []
 
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.load_runtime_state",
+        "hypervisor.deployment_registry.inspection.pipeline.load_runtime_state",
         lambda _deployment_id, _root=None: state,
     )
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.is_process_alive",
+        "hypervisor.deployment_registry.inspection.pipeline.is_process_alive",
         lambda pid: pid == 4242,
     )
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor.runtime_status",
+        "hypervisor.deployment_registry.inspection.pipeline.runtime_status",
         lambda _deployment_id, _root=None: "running",
     )
 
@@ -307,9 +384,9 @@ def test_supervise_auto_syncs_health_uri(monkeypatch: pytest.MonkeyPatch):
             return response
         return {"uri": uri, "ok": False, "error": "refused"}
 
-    monkeypatch.setattr("hypervisor.deployment_registry.supervisor.httpx.get", fake_get)
+    monkeypatch.setattr("hypervisor.deployment_registry.inspection.probe.httpx.get", fake_get)
     monkeypatch.setattr(
-        "hypervisor.deployment_registry.supervisor._read_error_logs",
+        "hypervisor.deployment_registry.inspection.probe.read_error_logs",
         lambda *_args, **_kwargs: {"error_count": 0, "entries": []},
     )
     monkeypatch.setattr(

@@ -45,11 +45,22 @@ def is_uri(value: Any) -> bool:
     return bool(scheme) and scheme in URI_SCHEMES
 
 
-def load_uri_yaml(path: str | Path) -> dict[str, Any]:
+def unwrap_uri_yaml_document(data: dict[str, Any]) -> dict[str, Any]:
+    """Return the semantic config payload from a legacy or artifact-envelope file."""
+    if (
+        data.get("apiVersion") == "uri3.io/v1"
+        and data.get("kind")
+        and isinstance(data.get("spec"), dict)
+    ):
+        return dict(data["spec"])
+    return data
+
+
+def load_uri_yaml(path: str | Path, *, unwrap_spec: bool = True) -> dict[str, Any]:
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError(f"URI YAML must be a mapping: {path}")
-    return data
+    return unwrap_uri_yaml_document(data) if unwrap_spec else data
 
 
 def _resolve_env_uri(value: str, *, resolve_secrets: bool) -> Any:

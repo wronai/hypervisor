@@ -5,6 +5,7 @@ from typing import Any
 
 from urigen.artifacts import (
     AGENT_CONTRACTS,
+    APP_SOURCES,
     CAPABILITY_SAMPLE_URIS,
     CAPABILITY_SOURCES,
     DOMAIN_FILES,
@@ -14,7 +15,19 @@ from urigen.artifacts import (
 from urigen.envelope import stamp_ecosystem
 from urigen.io import copy_file, load_yaml, relative_to, write_text, write_yaml
 from urigen.models import repo_root
-from urigen.writer import deployment_fragment, render_readme, test_plan, voice_flow
+from urigen.writer import (
+    dashboard_deployment_fragment,
+    deployment_fragment,
+    render_readme,
+    test_plan,
+    voice_flow,
+)
+
+DEFAULT_DATA_QUALITY_POLICY = {
+    "failure_code": "GENERATED_ECOSYSTEM_DATA_QUALITY_FAILED",
+    "recoverable": True,
+    "validators": [],
+}
 
 
 def generate_ecosystem(
@@ -38,19 +51,23 @@ def generate_ecosystem(
     flows = _write_flows(intent, repo, out_dir, files, embedded)
     domains = _copy_domains(intent, repo, out_dir, files)
     agents = _copy_agents(intent, repo, out_dir, files)
-    deployments = _write_deployments(out_dir, files)
+    deployments = _write_deployments(intent, out_dir, files)
+    applications = _copy_applications(intent, repo, out_dir, files)
 
     ecosystem = stamp_ecosystem(
         {
             "version": 1,
             "ecosystem": {
                 "id": ecosystem_id,
-                "description": f"Generated URI ecosystem for: {proposal_meta.get('source_prompt', '')}",
+                "description": (
+                    f"Generated URI ecosystem for: {proposal_meta.get('source_prompt', '')}"
+                ),
                 "source_prompt": proposal_meta.get("source_prompt", ""),
                 "profile": proposal_meta.get("profile", "minimal"),
             },
             "domains": domains,
             "agents": agents,
+            "applications": applications,
             "capabilities": capabilities,
             "flows": flows,
             "deployments": deployments,
@@ -109,6 +126,9 @@ def _copy_capabilities(
         source = repo_path(repo, source_rel)
         target = out_dir / "capabilities" / source.name
         copy_file(source, target)
+        manifest = load_yaml(target)
+        manifest.setdefault("data_quality", dict(DEFAULT_DATA_QUALITY_POLICY))
+        write_yaml(target, manifest)
         rel = relative_to(target, out_dir)
         files.append(rel)
         embedded[rel] = target.read_text(encoding="utf-8")
@@ -117,6 +137,7 @@ def _copy_capabilities(
                 "id": str(capability_id),
                 "source": rel,
                 "sample_uri": CAPABILITY_SAMPLE_URIS.get(str(capability_id), ""),
+                "data_quality": dict(DEFAULT_DATA_QUALITY_POLICY),
             }
         )
     return entries
@@ -207,19 +228,88 @@ def _copy_agents(
     return entries
 
 
-def _write_deployments(out_dir: Path, files: list[str]) -> list[dict[str, Any]]:
-    path = write_yaml(
-        out_dir / "deployments" / "agent_deployments.fragment.yaml",
-        deployment_fragment(),
+def _copy_applications(
+    intent: dict[str, Any],
+    repo: Path,
+    out_dir: Path,
+    files: list[str],
+) -> list[dict[str, Any]]:
+    entries: list[dict[str, Any]] = []
+    for agent_id in intent.get("agents") or []:
+        source_rel = APP_SOURCES.get(str(agent_id))
+        if not source_rel:
+            continue
+        source = repo_path(repo, source_rel)
+        target = out_dir / "app"
+        copied = _copy_application_tree(source, target, out_dir, files)
+        entries.append(
+            {
+                "id": f"{agent_id}.app",
+                "agent_ref": f"agent://{agent_id}",
+                "runtime": "fastapi",
+                "source": relative_to(target, out_dir),
+                "entrypoint": "hypervisor_dashboard_agent.main:app",
+                "files": copied,
+            }
+        )
+    return entries
+
+
+def _copy_application_tree(
+    source: Path,
+    target: Path,
+    out_dir: Path,
+    files: list[str],
+) -> list[str]:
+    copied: list[str] = []
+    for item in sorted(source.rglob("*")):
+        rel = item.relative_to(source)
+        if item.is_dir() or _skip_app_artifact(rel, item):
+            continue
+        destination = copy_file(item, target / rel)
+        relative = relative_to(destination, out_dir)
+        files.append(relative)
+        copied.append(relative)
+    return copied
+
+
+def _skip_app_artifact(rel: Path, item: Path) -> bool:
+    return (
+        item.suffix == ".pyc"
+        or any(part == "__pycache__" for part in rel.parts)
+        or any(part.endswith(".egg-info") for part in rel.parts)
     )
+
+
+def _write_deployments(
+    intent: dict[str, Any],
+    out_dir: Path,
+    files: list[str],
+) -> list[dict[str, Any]]:
+    agents = [str(item) for item in intent.get("agents") or []]
+    if "hypervisor-dashboard" in agents:
+        fragment = dashboard_deployment_fragment()
+        deployment_entries = [
+            {
+                "id": "hypervisor-dashboard.local",
+                "agent_ref": "agent://hypervisor-dashboard",
+                "target_uri": "local://packages/hypervisor-dashboard-agent",
+                "health_uri": "http://localhost:8788/health",
+                "if_running": "reuse",
+            }
+        ]
+    else:
+        fragment = deployment_fragment()
+        deployment_entries = [
+            {
+                "id": "weather-map-agent.local",
+                "agent_ref": "agent://weather-map-agent",
+                "target_uri": "local://agents/generated/weather_map_agent",
+                "health_uri": "http://localhost:8101/health",
+                "if_running": "reuse",
+            }
+        ]
+    path = write_yaml(out_dir / "deployments" / "agent_deployments.fragment.yaml", fragment)
     files.append(relative_to(path, out_dir))
-    return [
-        {
-            "id": "weather-map-agent.local",
-            "agent_ref": "agent://weather-map-agent",
-            "target_uri": "local://agents/generated/weather_map_agent",
-            "health_uri": "http://localhost:8101/health",
-            "if_running": "reuse",
-            "source": relative_to(path, out_dir),
-        }
-    ]
+    source = relative_to(path, out_dir)
+    return [{**entry, "source": source} for entry in deployment_entries]

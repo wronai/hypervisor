@@ -24,4 +24,10 @@ SUPPORTED_SCHEMES = {
     "screen",
     "assertion",
     "hypervisor",
+    "view",
+    "repair",
+    "health",
+    "runtime",
+    "readiness",
+    "incident",
 }

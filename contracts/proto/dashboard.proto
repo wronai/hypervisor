@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package dashboard.v1;
+
+message ProcessView {
+  string agent_id = 1;
+  string service_status = 2;
+  string process_status = 3;
+  string health_status = 4;
+  string recommended_action = 5;
+  string effective_health_uri = 6;
+  int32 effective_port = 7;
+}
+
+message WorkflowTimelineView {
+  string workflow_id = 1;
+  string html = 2;
+}
+
+message IncidentExplainView {
+  string incident_id = 1;
+  string html = 2;
+}
+
+message RepairDiagnosisView {
+  string agent_id = 1;
+  string repair_plan_json = 2;
+}
+
+message ApplySafeRepairCommand {
+  string agent_id = 1;
+  bool approved = 2;
+}
+
+message UriCallCommand {
+  string uri = 1;
+  bool approved = 2;
+  bool dry_run = 3;
+}

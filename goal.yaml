@@ -222,7 +222,7 @@ git:
     format: '{prefix}{version}'
 strategies:
   python:
-    test: pytest tests/ -v
+    test: bash scripts/ci/ensure_editable_install.sh && pytest tests/ -v
     build: python -m build
     publish: twine upload dist/resource-agent-system-{version}*
     publish_enabled: true

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ model.title }} — Hypervisor Dashboard</title>
+  <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+  <header>
+    <p><a href="/ui/agents">&larr; All agents</a></p>
+    <h1>{{ model.title }}</h1>
+    <p class="subtitle">{{ model.agent_ref }} · <code>{{ model.agent_id }}</code></p>
+  </header>
+
+  <main class="grid">
+    <section class="card status-{{ model.service_status }}">
+      <h2>Status</h2>
+      <dl>
+        <dt>Service</dt><dd>{{ model.service_status }}</dd>
+        <dt>Process</dt><dd>{{ model.process_status }}</dd>
+        <dt>Health</dt><dd>{{ model.health_status }}</dd>
+        <dt>Recommended</dt><dd>{{ model.recommended_action }}</dd>
+        {% if model.effective_port %}
+        <dt>Effective port</dt><dd>{{ model.effective_port }}</dd>
+        {% endif %}
+        {% if model.effective_health_uri %}
+        <dt>Health URI</dt><dd><code>{{ model.effective_health_uri }}</code></dd>
+        {% endif %}
+      </dl>
+    </section>
+
+    <section class="card">
+      <h2>Related URIs</h2>
+      <ul class="uri-list">
+        {% for label, uri in model.related_uris.items() %}
+        <li><strong>{{ label }}</strong> <code>{{ uri }}</code></li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    {% if model.incidents %}
+    <section class="card incidents">
+      <h2>Incidents</h2>
+      <ul>
+        {% for item in model.incidents %}
+        <li><code>{{ item.code }}</code> — {{ item.detail }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if model.warnings %}
+    <section class="card warnings">
+      <h2>Warnings</h2>
+      <ul>
+        {% for item in model.warnings %}
+        <li><code>{{ item.code }}</code> — {{ item.detail }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    <section class="card actions">
+      <h2>Actions</h2>
+      <p class="hint">Mutating actions require explicit approval via <code>POST /api/uri/call</code>.</p>
+      <ul class="action-list">
+        {% for action in model.actions %}
+        <li>
+          <strong>{{ action.label }}</strong>
+          <code>{{ action.uri }}</code>
+          {% if action.requires_approval %}
+          <span class="badge warn">requires approval</span>
+          <form class="uri-form" method="post" action="/api/uri/call" onsubmit="return submitUriCall(event, this);">
+            <input type="hidden" name="uri" value="{{ action.uri }}">
+            <button type="submit" name="mode" value="dry_run" formaction="#" onclick="return previewUri(event, '{{ action.uri }}')">Dry-run</button>
+            <button type="submit" name="mode" value="approve" class="danger">Approve &amp; run</button>
+          </form>
+          {% else %}
+          <button type="button" onclick="callReadUri('{{ action.uri }}')">Call</button>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+
+  <pre id="result" class="result"></pre>
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>

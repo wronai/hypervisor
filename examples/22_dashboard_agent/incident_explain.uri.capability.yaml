@@ -1,0 +1,17 @@
+version: 1
+
+capability:
+  id: view.incident.explain
+  scheme: view
+  uri_template: view://incident/{incident_id}/explain
+  operation: render
+  kind: query
+  description: Explain an incident artifact in the dashboard.
+
+backend:
+  type: http
+  url: http://localhost:8788/api/view/incident/{incident_id}
+
+policy:
+  side_effects: false
+  requires_approval: false

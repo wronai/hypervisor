@@ -1,0 +1,17 @@
+version: 1
+
+capability:
+  id: view.process.agent
+  scheme: view
+  uri_template: view://process/agent/{agent_id}/latest
+  operation: render
+  kind: query
+  description: Render latest process view for a deployed agent.
+
+backend:
+  type: http
+  url: http://localhost:8788/api/view/process/agent/{agent_id}
+
+policy:
+  side_effects: false
+  requires_approval: false

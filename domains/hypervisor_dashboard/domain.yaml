@@ -1,0 +1,4 @@
+domain:
+  id: hypervisor_dashboard
+  name: Hypervisor Dashboard
+  description: System dashboard views and approval-gated actions over agent processes.

@@ -17,6 +17,7 @@ dependencies = [
     "uri2flow",
     "uri2ops",
     "uri3",
+    "nl2uri",
     "resource-agent-hypervisor",
     "urigen",
 ]

@@ -1,11 +1,25 @@
 # Documentation index
 
-## Start here
+## Start here (learning curve)
+
+| Document | Time | Topic |
+|----------|------|--------|
+| [`GETTING_STARTED.md`](./GETTING_STARTED.md) | 15 min | One CLI, one lifecycle, five paths |
+| [`MENTAL_MODEL.md`](./MENTAL_MODEL.md) | 5 min | 7 core concepts |
+| [`URI_COOKBOOK.md`](./URI_COOKBOOK.md) | reference | “I want to…” recipes |
+| [`PROFILES.md`](./PROFILES.md) | 5 min | minimal, dashboard-agent, voice |
+| [`ARTIFACT_STANDARD.md`](./ARTIFACT_STANDARD.md) | reference | YAML envelope + statuses |
+| [`AUTONOMY_LOOP.md`](./AUTONOMY_LOOP.md) | 10 min | incident → repair → evolution |
+| [`DASHBOARD.md`](./DASHBOARD.md) | 10 min | Web UI as system agent |
+| [`CLI_REFERENCE.md`](./CLI_REFERENCE.md) | reference | urish commands |
+
+## Install & index
 
 - [`README.md`](../README.md) — instalacja, Makefile, przykłady, `make ci-gate`
-- [`examples/README.md`](../examples/README.md) — katalog `examples/*/*`, `scripts/test-all-examples.sh`
+- [`examples/README.md`](../examples/README.md) — katalog `examples/*/*`
+- [`examples/30_golden_path/`](../examples/30_golden_path/) — 15 min end-to-end tutorial
 - [`CHANGELOG.md`](../CHANGELOG.md) · [`TODO.md`](../TODO.md)
-- [`CLI_MAP.md`](./CLI_MAP.md) — mapa CLI (`uri3 doctor`, `uri2run`, `touri`, …)
+- [`CLI_MAP.md`](./CLI_MAP.md) — mapa CLI backendów (poziom 3+)
 
 ## v0.6 (aktualne)
 

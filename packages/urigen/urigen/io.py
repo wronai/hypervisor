@@ -8,6 +8,11 @@ from typing import Any
 import yaml
 
 
+class _NoAliasSafeDumper(yaml.SafeDumper):
+    def ignore_aliases(self, data: Any) -> bool:
+        return True
+
+
 def load_yaml(path: str | Path) -> dict[str, Any]:
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
     if not isinstance(data, dict):
@@ -16,7 +21,7 @@ def load_yaml(path: str | Path) -> dict[str, Any]:
 
 
 def dump_yaml(data: dict[str, Any]) -> str:
-    return yaml.safe_dump(data, sort_keys=False, allow_unicode=True)
+    return yaml.dump(data, Dumper=_NoAliasSafeDumper, sort_keys=False, allow_unicode=True)
 
 
 def write_yaml(path: str | Path, data: dict[str, Any]) -> Path:

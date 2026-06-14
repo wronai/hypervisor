@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hypervisor Dashboard — Agents</title>
+  <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+  <header>
+    <h1>Hypervisor Dashboard</h1>
+    <p class="subtitle">agent://hypervisor-dashboard — URI observer &amp; renderer</p>
+  </header>
+  <main>
+    <section>
+      <h2>Deployed agents</h2>
+      <ul class="agent-list">
+        {% for agent in agents %}
+        <li>
+          <a href="/ui/agents/{{ agent.id }}">{{ agent.id }}</a>
+          <span class="badge">{{ agent.status }}</span>
+          <code>{{ agent.view_uri }}</code>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

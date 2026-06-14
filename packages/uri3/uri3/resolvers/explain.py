@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 
 import yaml
 
+from uri3.config.uri_yaml import unwrap_uri_yaml_document
 from uri3.resolvers.dispatch import RESOLVE_BY_SCHEME, RESOURCE_SCHEMES, scheme_from_uri
 from uri3.resolvers.explain_verification import build_verification_hints, summarize_fallbacks
 
@@ -31,7 +32,7 @@ def load_touri_config(root: Path | None = None) -> dict[str, Any]:
             "resolution_order": list(RESOLUTION_ORDER),
         }
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    return data if isinstance(data, dict) else {}
+    return unwrap_uri_yaml_document(data) if isinstance(data, dict) else {}
 
 
 def default_touri_registry(root: Path | None = None) -> Path:

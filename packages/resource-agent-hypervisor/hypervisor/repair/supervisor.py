@@ -8,6 +8,7 @@ from hypervisor.deployment_registry.supervisor import ensure_agent_healthy, insp
 from hypervisor.paths import find_repo_root
 from hypervisor.repair.classifier import classify_inspection
 from hypervisor.repair.incident import build_incident_from_inspection, load_incident, write_incident
+from hypervisor.repair.plan_builder import build_repair_plan_from_diagnosis
 from hypervisor.repair.playbooks import apply_playbook
 from hypervisor.repair.policy import is_playbook_allowed, playbook_requires_approval
 from hypervisor.repair.proposal_builder import build_repair_proposal, link_proposal_to_incident
@@ -38,17 +39,18 @@ def diagnose_agent(
     inspection = inspect_agent(selector, root=repo, timeout=timeout, log_limit=log_limit)
     classification = classify_inspection(inspection, log_payload=inspection.get("log_errors"))
     known_case = find_matching_case(classification, inspection, repo_root=repo)
-    return _envelope(
-        {
-            "ok": bool(inspection.get("ok")),
-            "id": inspection.get("id"),
-            "result_type": "diagnosis",
-            "inspection": inspection,
-            "classification": classification,
-            "known_case": known_case,
-            "readiness": inspection.get("readiness"),
-        }
-    )
+    diagnosis_body = {
+        "ok": bool(inspection.get("ok")),
+        "id": inspection.get("id"),
+        "result_type": "diagnosis",
+        "inspection": inspection,
+        "classification": classification,
+        "known_case": known_case,
+        "readiness": inspection.get("readiness"),
+        "agent_readiness": inspection.get("agent_readiness"),
+    }
+    diagnosis_body["repair_plan"] = build_repair_plan_from_diagnosis(diagnosis_body)
+    return _envelope(diagnosis_body)
 
 
 def repair_apply(

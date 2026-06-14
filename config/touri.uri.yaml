@@ -1,11 +1,20 @@
-version: 1
+$schema: schemas/config/config_base.schema.json
+apiVersion: uri3.io/v1
+kind: TouriConfig
+metadata:
+  id: touri
+  description: Capability resolution order and touri registry path.
+uri:
+  self: config://touri
+spec:
+  version: 1
 
-registry:
-  path: examples/20_touri_capabilities
+  registry:
+    path: examples/20_touri_capabilities
 
-resolution_order:
-  - uri3
-  - touri
-  - uri2ops
-  - hypervisor
-  - denied
+  resolution_order:
+    - uri3
+    - touri
+    - uri2ops
+    - hypervisor
+    - denied

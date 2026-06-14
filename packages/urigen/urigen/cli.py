@@ -50,6 +50,7 @@ def cmd_apply(args: argparse.Namespace) -> int:
         args.ecosystem,
         approve=args.approve,
         plan_only=args.plan,
+        rollback=args.rollback,
         root=args.root or None,
     )
     _emit(payload, json_out=args.json)
@@ -94,7 +95,8 @@ def build_parser() -> argparse.ArgumentParser:
     apply_cmd = sub.add_parser("apply", help="approval-gated apply plan")
     apply_cmd.add_argument("ecosystem")
     apply_cmd.add_argument("--approve", action="store_true")
-    apply_cmd.add_argument("--plan", action="store_true", help="Generate apply_plan.yaml without mutating repo")
+    apply_cmd.add_argument("--plan", action="store_true", help="Generate apply_plan.yaml and diff without mutating repo")
+    apply_cmd.add_argument("--rollback", action="store_true", help="Rollback last apply using rollback/manifest.json")
     apply_cmd.add_argument("--root", default="", help="Repository root for apply targets")
     apply_cmd.add_argument("--json", action="store_true")
     apply_cmd.set_defaults(func=cmd_apply)
