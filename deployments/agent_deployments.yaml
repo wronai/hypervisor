@@ -1,14 +1,20 @@
 deployments:
-  - id: weather-map-agent.local
+  - id: weather-map-agent.local-dev
     agent_ref: agent://weather-map-agent
+    domain_ref: domain://weather-map
     target_uri: local://agents/generated/weather_map_agent
-    card_uri: http://localhost:8101/.well-known/agent-card.json
+    agent_card_uri: http://localhost:8101/.well-known/agent-card.json
     health_uri: http://localhost:8101/health
-    status: generated
+    status: planned
 
-  - id: user-agent.local
-    agent_ref: agent://user-agent
-    target_uri: local://agents/generated/user_agent
-    card_uri: http://localhost:8102/.well-known/agent-card.json
-    health_uri: http://localhost:8102/health
-    status: generated
+  - id: weather-map-agent.ssh-dev
+    agent_ref: agent://weather-map-agent
+    domain_ref: domain://weather-map
+    target_uri: ssh://deploy@localhost:2222/opt/agents/weather-map-agent
+    agent_card_uri: http://localhost:8101/.well-known/agent-card.json
+    health_uri: http://localhost:8101/health
+    status: planned
+    auth:
+      mode: password
+      username: deploy
+      password_env: SSH_TEST_PASSWORD

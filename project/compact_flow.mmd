@@ -1,72 +1,13 @@
 flowchart TD
 %% generated in 0.01s
-    generator__agent_generator["generator.agent_generator<br/>4 funcs"]
-    generator__hashutil["generator.hashutil<br/>1 funcs"]
-    generator__model["generator.model<br/>2 funcs"]
-    generator__validate["generator.validate<br/>3 funcs"]
-    generator__verify["generator.verify<br/>3 funcs"]
-    hypervisor__cli["hypervisor.cli<br/>5 funcs"]
-    hypervisor__compatibility["hypervisor.compatibility<br/>2 funcs"]
-    hypervisor__config["hypervisor.config<br/>4 funcs"]
-    hypervisor__contract_registry["hypervisor.contract_registry<br/>22 funcs"]
-    hypervisor__core["hypervisor.core<br/>7 funcs"]
-    hypervisor__domain_pack["hypervisor.domain_pack<br/>20 funcs"]
-    hypervisor__uri["hypervisor.uri<br/>6 funcs"]
-    hypervisor__verifier["hypervisor.verifier<br/>2 funcs"]
-    meta_agent__api["meta_agent.api<br/>7 funcs"]
-    meta_agent__cli["meta_agent.cli<br/>1 funcs"]
-    meta_agent__orchestrator["meta_agent.orchestrator<br/>4 funcs"]
-    meta_agent__planner["meta_agent.planner<br/>5 funcs"]
-    meta_agent__repair["meta_agent.repair<br/>3 funcs"]
-    nl2a__cli["nl2a.cli<br/>2 funcs"]
-    nl2uri__cli["nl2uri.cli<br/>2 funcs"]
-    nl2uri__llm_planner["nl2uri.llm_planner<br/>1 funcs"]
-    nl2uri__planner["nl2uri.planner<br/>2 funcs"]
-    nl2uri__writer["nl2uri.writer<br/>1 funcs"]
-    uri3__cli["uri3.cli<br/>6 funcs"]
-    uri3__graph["uri3.graph<br/>3 funcs"]
-    uri3__protocols["uri3.protocols<br/>2 funcs"]
-    uri3__resolvers["uri3.resolvers<br/>21 funcs"]
-    uri3__scanner["uri3.scanner<br/>2 funcs"]
-    uri3__validators["uri3.validators<br/>3 funcs"]
-    meta_agent__cli ==>|5| meta_agent__orchestrator
-    meta_agent__api ==>|5| meta_agent__orchestrator
-    hypervisor__contract_registry ==>|4| hypervisor__domain_pack
-    meta_agent__orchestrator -->|3| meta_agent__planner
-    meta_agent__repair -->|3| generator__validate
-    generator__agent_generator -->|2| generator__model
-    uri3__cli -->|2| uri3__validators
-    hypervisor__verifier -->|2| hypervisor__contract_registry
-    hypervisor__compatibility -->|2| hypervisor__contract_registry
-    nl2uri__llm_planner -->|2| nl2uri__planner
-    hypervisor__cli -->|2| hypervisor__config
-    generator__validate -->|1| generator__model
-    generator__agent_generator -->|1| generator__validate
-    generator__agent_generator -->|1| generator__hashutil
-    generator__verify -->|1| generator__hashutil
-    meta_agent__cli -->|1| generator__validate
-    meta_agent__cli -->|1| meta_agent__repair
-    meta_agent__cli -->|1| generator__verify
-    meta_agent__api -->|1| generator__validate
-    meta_agent__api -->|1| meta_agent__repair
-    meta_agent__api -->|1| generator__verify
-    meta_agent__orchestrator -->|1| generator__validate
-    meta_agent__orchestrator -->|1| generator__verify
-    meta_agent__orchestrator -->|1| meta_agent__repair
-    meta_agent__orchestrator -->|1| generator__agent_generator
-    meta_agent__repair -->|1| meta_agent__planner
-    uri3__cli -->|1| uri3__graph
-    uri3__validators -->|1| uri3__protocols
-    uri3__scanner -->|1| uri3__protocols
-    hypervisor__core -->|1| hypervisor__config
-    nl2uri__cli -->|1| nl2uri__planner
-    nl2uri__cli -->|1| nl2uri__llm_planner
-    nl2uri__cli -->|1| nl2uri__writer
-    nl2a__cli -->|1| nl2uri__writer
-    nl2a__cli -->|1| hypervisor__domain_pack
-    nl2a__cli -->|1| nl2uri__planner
-    nl2a__cli -->|1| nl2uri__llm_planner
-    hypervisor__uri -->|1| uri3__graph
-    hypervisor__uri -->|1| nl2uri__planner
-    uri3__resolvers -->|1| uri3__protocols
-    hypervisor__domain_pack -->|1| hypervisor__contract_registry
+    packages__nl2uri["packages.nl2uri<br/>18 funcs"]
+    packages__resource_agent_factory["packages.resource-agent-factory<br/>20 funcs"]
+    packages__resource_agent_hypervisor["packages.resource-agent-hypervisor<br/>144 funcs"]
+    packages__uri3["packages.uri3<br/>57 funcs"]
+    packages__resource_agent_hypervisor ==>|10| packages__resource_agent_factory
+    packages__resource_agent_hypervisor ==>|6| packages__uri3
+    packages__nl2uri -->|3| packages__resource_agent_hypervisor
+    packages__nl2uri -->|2| packages__resource_agent_factory
+    packages__uri3 -->|1| packages__resource_agent_factory
+    packages__resource_agent_hypervisor -->|1| packages__nl2uri
+    packages__nl2uri -->|1| packages__uri3

@@ -1,228 +1,266 @@
-# code2llm | 128f 6982L | python:80,yaml:26,json:10,txt:2,proto:2,yml:1,shell:1,j2:1,toml:1 | 2026-06-14
-# generated in 0.02s
-# CC̅=3.5 | critical:6/162 | dups:0 | cycles:3
+# code2llm | 180f 7896L | python:120,yaml:29,json:10,toml:5,yml:3,shell:3,txt:2,proto:2,j2:1 | 2026-06-14
+# generated in 0.03s
+# CC̅=3.5 | critical:8/243 | dups:0 | cycles:3
 
-HEALTH[6]:
+HEALTH[8]:
+  🟡 CC    _parse_entry CC=17 (limit:15)
+  🟡 CC    _matches_filters CC=16 (limit:15)
   🟡 CC    main CC=16 (limit:15)
-  🟡 CC    repair_agent_spec CC=26 (limit:15)
-  🟡 CC    load_config CC=16 (limit:15)
+  🟡 CC    validate_config CC=17 (limit:15)
   🟡 CC    main CC=20 (limit:15)
   🟡 CC    validate_registry CC=20 (limit:15)
   🟡 CC    validate_cross_references CC=22 (limit:15)
+  🟡 CC    parse_log_uri CC=17 (limit:15)
 
 REFACTOR[2]:
-  1. split 6 high-CC methods  (CC>15)
+  1. split 8 high-CC methods  (CC>15)
   2. break 3 circular dependencies
 
-PIPELINES[69]:
-  [1] Src [main]: main → iter_agent_specs
+PIPELINES[94]:
+  [1] Src [_json]: _json
       PURITY: 100% pure
-  [2] Src [main]: main → expand_paths
+  [2] Src [do_GET]: do_GET
       PURITY: 100% pure
-  [3] Src [main]: main → verify_generated → verify_generated_agent → file_sha256
+  [3] Src [log_message]: log_message
       PURITY: 100% pure
-  [4] Src [main]: main → save_proposal_from_prompt → infer_intent → singularize
+  [4] Src [handler]: handler
       PURITY: 100% pure
-  [5] Src [health]: health
+  [5] Src [resolve]: resolve → resolve_http_like
       PURITY: 100% pure
-  [6] Src [proposal_from_prompt]: proposal_from_prompt → save_proposal_from_prompt → infer_intent → singularize
+  [6] Src [fetch]: fetch
       PURITY: 100% pure
-  [7] Src [validate]: validate → validate_agent → load_agent_spec
+  [7] Src [validate]: validate → validate_uri → parse_uri
       PURITY: 100% pure
-  [8] Src [repair]: repair → repair_agent_spec → validate_agent → load_agent_spec
+  [8] Src [validate_tree]: validate_tree → validate_uri_tree → load_yaml
       PURITY: 100% pure
-  [9] Src [generate]: generate → asdict_result
+  [9] Src [graph]: graph → build_graph_from_tree
       PURITY: 100% pure
-  [10] Src [pipeline]: pipeline → pipeline_from_prompt → save_proposal_from_prompt → infer_intent → ...(1 more)
+  [10] Src [resolve]: resolve
       PURITY: 100% pure
-  [11] Src [verify]: verify → verify_generated → verify_generated_agent → file_sha256
+  [11] Src [scan]: scan
       PURITY: 100% pure
-  [12] Src [dump_yaml]: dump_yaml
+  [12] Src [logs]: logs → summarize_logs → parse_log_uri → _first
       PURITY: 100% pure
-  [13] Src [plan_domain_from_prompt]: plan_domain_from_prompt → _generic_plan → _slug
+  [13] Src [main]: main
       PURITY: 100% pure
-  [14] Src [validate]: validate → validate_uri → parse_uri
+  [14] Src [resolve]: resolve → resolve_env
       PURITY: 100% pure
-  [15] Src [validate_tree]: validate_tree → validate_uri_tree → load_yaml
+  [15] Src [resolve]: resolve → resolve_python → _split_python_uri
       PURITY: 100% pure
-  [16] Src [graph]: graph → build_graph_from_tree
+  [16] Src [call]: call → call_python → _split_python_uri
       PURITY: 100% pure
-  [17] Src [resolve]: resolve
+  [17] Src [normalize_uri]: normalize_uri → parse_uri
       PURITY: 100% pure
-  [18] Src [scan]: scan
+  [18] Src [main]: main → iter_agent_specs
       PURITY: 100% pure
-  [19] Src [main]: main
+  [19] Src [main]: main → verify_generated → verify_generated_agent → file_sha256
       PURITY: 100% pure
-  [20] Src [add_node]: add_node
+  [20] Src [main]: main → expand_paths
       PURITY: 100% pure
-  [21] Src [add_edge]: add_edge
+  [21] Src [generate]: generate → rule_based_plan → _slug
       PURITY: 100% pure
-  [22] Src [scan]: scan → scan_http
+  [22] Src [main]: main
       PURITY: 100% pure
-  [23] Src [normalize_uri]: normalize_uri → parse_uri
+  [23] Src [resolve]: resolve → resolve_llm
       PURITY: 100% pure
-  [24] Src [__post_init__]: __post_init__
+  [24] Src [generate]: generate → run_full_pipeline → run_generate_pipeline → generate_tree → ...(3 more)
       PURITY: 100% pure
-  [25] Src [from_config]: from_config → load_config → get_default_config → _load_yaml
+  [25] Src [main]: main
       PURITY: 100% pure
-  [26] Src [start]: start
+  [26] Src [main]: main → save_proposal_from_prompt → infer_intent → singularize
       PURITY: 100% pure
-  [27] Src [stop]: stop
+  [27] Src [add_node]: add_node
       PURITY: 100% pure
-  [28] Src [register_agent]: register_agent
+  [28] Src [add_edge]: add_edge
       PURITY: 100% pure
-  [29] Src [status]: status
+  [29] Src [repo_root]: repo_root → find_repo_root
       PURITY: 100% pure
-  [30] Src [__repr__]: __repr__
+  [30] Src [scan]: scan
       PURITY: 100% pure
-  [31] Src [main]: main → load_contract_registry → _read_yaml
+  [31] Src [resolve]: resolve
       PURITY: 100% pure
-  [32] Src [evaluate_change]: evaluate_change
+  [32] Src [status]: status
       PURITY: 100% pure
-  [33] Src [main]: main → load_proposal
+  [33] Src [config_cmd]: config_cmd → load_config → get_default_config → apply_builtin_defaults
       PURITY: 100% pure
-  [34] Src [main]: main → validate_contract_files → validate_file → _read_yaml
+  [34] Src [main]: main
       PURITY: 100% pure
-  [35] Src [export_json]: export_json → write_registry_manifest → build_registry_manifest → load_contract_registry → ...(1 more)
+  [35] Src [generic_proto]: generic_proto → package_name
       PURITY: 100% pure
-  [36] Src [resource_by_uri]: resource_by_uri
+  [36] Src [main]: main → load_contract_registry → _read_yaml
       PURITY: 100% pure
-  [37] Src [view_by_name]: view_by_name
+  [37] Src [evaluate_change]: evaluate_change
       PURITY: 100% pure
-  [38] Src [capability_by_name]: capability_by_name
+  [38] Src [load_hypervisor_config]: load_hypervisor_config → load_config → get_default_config → apply_builtin_defaults
       PURITY: 100% pure
-  [39] Src [_hash_file]: _hash_file
+  [39] Src [validate_config]: validate_config
       PURITY: 100% pure
-  [40] Src [classify_registry_change]: classify_registry_change → load_contract_registry → _read_yaml
+  [40] Src [main]: main → load_proposal
       PURITY: 100% pure
-  [41] Src [generate]: generate → rule_based_plan → _slug
+  [41] Src [export_json]: export_json → write_registry_manifest → build_registry_manifest → load_contract_registry → ...(1 more)
       PURITY: 100% pure
-  [42] Src [main]: main
+  [42] Src [__init__]: __init__
       PURITY: 100% pure
-  [43] Src [handler]: handler
+  [43] Src [resolve]: resolve
       PURITY: 100% pure
-  [44] Src [__init__]: __init__
+  [44] Src [call]: call
       PURITY: 100% pure
-  [45] Src [read_resource]: read_resource
+  [45] Src [logs]: logs → summarize_logs → parse_log_uri → _first
       PURITY: 100% pure
-  [46] Src [dispatch_command]: dispatch_command
+  [46] Src [graph]: graph → build_graph_from_tree
       PURITY: 100% pure
-  [47] Src [generate]: generate → write_uri_tree
+  [47] Src [nl2uri]: nl2uri → rule_based_plan → _slug
       PURITY: 100% pure
-  [48] Src [main]: main
+  [48] Src [main]: main → validate_contract_files → validate_file → _read_yaml
       PURITY: 100% pure
-  [49] Src [__init__]: __init__
+  [49] Src [from_dict]: from_dict
       PURITY: 100% pure
-  [50] Src [resolve]: resolve
+  [50] Src [from_dict]: from_dict
       PURITY: 100% pure
 
 LAYERS:
-  generator/                      CC̄=5.1    ←in:10  →out:0
-  │ model                       88L  2C    2m  CC=7      ←2
-  │ agent_generator             84L  0C    4m  CC=5      ←1
-  │ validate                    69L  0C    3m  CC=11     ←5
-  │ verify                      65L  0C    3m  CC=9      ←3
-  │ hashutil                     9L  0C    1m  CC=1      ←2
-  │ Dockerfile.j2                6L  0C    0m  CC=0.0    ←0
-  │ __init__                     0L  0C    0m  CC=0.0    ←0
-  │
-  meta_agent/                     CC̄=4.2    ←in:0  →out:10  !! split
+  packages/                       CC̄=3.5    ←in:0  →out:0
+  │ generator                  272L  1C   13m  CC=3      ←1
+  │ !! reader                     174L  0C    8m  CC=17     ←5
   │ planner                    159L  0C    5m  CC=9      ←2
-  │ llm_planner                141L  0C    7m  CC=6      ←0
-  │ !! repair                     107L  0C    3m  CC=26     ←3
-  │ !! cli                         93L  0C    1m  CC=16     ←0
-  │ api                         83L  2C    7m  CC=2      ←0
-  │ orchestrator                71L  0C    4m  CC=6      ←2
-  │ models                      43L  3C    1m  CC=1      ←0
-  │ domain_pack_generator       16L  0C    0m  CC=0.0    ←0
-  │ __init__                     1L  0C    0m  CC=0.0    ←0
-  │ __init__                     1L  0C    0m  CC=0.0    ←0
-  │
-  hypervisor/                     CC̄=3.5    ←in:0  →out:0
-  │ generator                  259L  1C   13m  CC=3      ←1
+  │ models                     158L  8C    9m  CC=4      ←0
+  │ domain_planner             151L  0C    7m  CC=6      ←1
+  │ status                     136L  0C    9m  CC=11     ←1
+  │ !! log_resolver               126L  2C    8m  CC=17     ←3
   │ templates                  115L  0C    5m  CC=1      ←0
-  │ !! config                     108L  0C    4m  CC=16     ←2
+  │ agent_generator            106L  0C    4m  CC=5      ←2
+  │ router                      99L  2C    5m  CC=11     ←0
+  │ pipeline                    95L  2C    3m  CC=3      ←1
+  │ model                       94L  2C    2m  CC=7      ←2
+  │ !! cli                         93L  0C    1m  CC=16     ←0
+  │ loader                      90L  0C    5m  CC=6      ←2
   │ core                        86L  1C    7m  CC=3      ←0
+  │ api                         83L  2C    7m  CC=2      ←0
+  │ rules                       82L  0C    6m  CC=8      ←1
   │ loader                      80L  0C    2m  CC=9      ←5
   │ !! cli                         77L  0C    1m  CC=20     ←0
-  │ merger                      66L  0C    1m  CC=11     ←1
-  │ registry_builder            60L  0C    4m  CC=5      ←2
+  │ verify                      73L  0C    3m  CC=9      ←4
+  │ orchestrator                72L  0C    4m  CC=7      ←2
+  │ validate                    69L  0C    3m  CC=11     ←5
+  │ merger                      68L  0C    1m  CC=12     ←1
+  │ defaults                    63L  0C    4m  CC=4      ←1
+  │ registry_builder            60L  0C    4m  CC=5      ←3
+  │ !! validators                  57L  0C    2m  CC=17     ←1
   │ !! cross_validator             56L  0C    4m  CC=22     ←1
   │ models                      56L  4C    3m  CC=4      ←0
   │ cli                         55L  0C    5m  CC=4      ←0
+  │ env                         54L  0C    4m  CC=9      ←1
   │ schema_validator            54L  1C    4m  CC=6      ←1
+  │ header                      51L  0C    5m  CC=3      ←1
+  │ uri_graph                   51L  3C    3m  CC=10     ←2
   │ !! validate                    50L  0C    1m  CC=20     ←2
+  │ nlp2uri.yaml                50L  0C    0m  CC=0.0    ←0
+  │ client                      47L  1C    3m  CC=2      ←0
+  │ models                      47L  2C    3m  CC=4      ←0
+  │ cli                         46L  0C    7m  CC=3      ←0
+  │ llm_resolver                45L  2C    2m  CC=5      ←1
+  │ writer                      45L  0C    4m  CC=3      ←1
+  │ loader                      43L  0C    4m  CC=5      ←2
   │ checker                     43L  0C    2m  CC=8      ←0
+  │ models                      43L  3C    1m  CC=1      ←0
+  │ pipeline                    39L  0C    1m  CC=2      ←3
+  │ python_resolver             36L  1C    5m  CC=2      ←1
+  │ scanner                     36L  0C    2m  CC=3      ←0
   │ cli                         33L  0C    1m  CC=10     ←0
+  │ pyproject.toml              33L  0C    0m  CC=0.0    ←0
+  │ __init__                    33L  0C    0m  CC=0.0    ←0
   │ capability_tests            32L  0C    1m  CC=4      ←1
+  │ planner                     32L  1C    2m  CC=8      ←3
   │ models                      32L  1C    1m  CC=5      ←1
+  │ client                      32L  1C    7m  CC=2      ←0
+  │ pyproject.toml              31L  0C    0m  CC=0.0    ←0
   │ __init__                    31L  0C    0m  CC=0.0    ←0
   │ registry_exporter           29L  0C    2m  CC=6      ←1
   │ cli                         28L  0C    1m  CC=5      ←0
-  │ client                      28L  1C    6m  CC=1      ←0
+  │ pyproject.toml              27L  0C    0m  CC=0.0    ←0
   │ gate                        26L  1C    1m  CC=5      ←0
+  │ cli                         25L  0C    2m  CC=1      ←0
+  │ pyproject.toml              25L  0C    0m  CC=0.0    ←0
+  │ __init__                    24L  0C    0m  CC=0.0    ←0
+  │ protocol_resolver           22L  0C    4m  CC=2      ←2
+  │ env_resolver                21L  1C    2m  CC=3      ←1
+  │ http_resolver               20L  1C    2m  CC=2      ←0
+  │ uri_tree_validator          20L  0C    2m  CC=2      ←2
   │ _version                    20L  0C    0m  CC=0.0    ←0
+  │ llm_planner                 18L  0C    1m  CC=4      ←1
+  │ paths                       18L  0C    2m  CC=6      ←0
+  │ paths                       17L  0C    2m  CC=6      ←2
+  │ parser                      17L  1C    1m  CC=2      ←4
+  │ paths                       17L  0C    2m  CC=6      ←2
+  │ loader                      17L  0C    2m  CC=2      ←1
+  │ http_scanner                16L  0C    1m  CC=6      ←1
+  │ pypi_resolver               16L  0C    1m  CC=5      ←1
+  │ cli                         16L  0C    2m  CC=4      ←0
   │ validator                   16L  0C    1m  CC=6      ←1
-  │ nlp2uri.yaml                15L  0C    0m  CC=0.0    ←0
+  │ domain_pack_generator       16L  0C    0m  CC=0.0    ←0
+  │ llm_planner                 15L  0C    0m  CC=0.0    ←0
   │ __init__                    15L  0C    0m  CC=0.0    ←0
-  │ writer                      13L  0C    2m  CC=1      ←2
   │ __init__                    13L  0C    0m  CC=0.0    ←0
+  │ writer                      11L  0C    1m  CC=1      ←2
   │ protocol_resolver           10L  0C    0m  CC=0.0    ←0
+  │ normalizer                   9L  0C    1m  CC=3      ←0
+  │ hashutil                     9L  0C    1m  CC=1      ←2
+  │ uri_validator                9L  0C    1m  CC=2      ←1
+  │ writer                       7L  0C    1m  CC=1      ←2
+  │ base                         7L  1C    0m  CC=0.0    ←0
+  │ Dockerfile.j2                7L  0C    0m  CC=0.0    ←0
+  │ function_resolver            5L  0C    0m  CC=0.0    ←0
   │ pypi_resolver                5L  0C    0m  CC=0.0    ←0
   │ llm_resolver                 5L  0C    0m  CC=0.0    ←0
   │ router                       5L  0C    0m  CC=0.0    ←0
   │ env_resolver                 5L  0C    0m  CC=0.0    ←0
-  │ function_resolver            5L  0C    0m  CC=0.0    ←0
-  │
-  nl2uri/                         CC̄=3.3    ←in:4  →out:0
-  │ planner                     32L  1C    2m  CC=8      ←4
-  │ llm_planner                 18L  0C    1m  CC=4      ←2
-  │ cli                         16L  0C    2m  CC=4      ←0
-  │ writer                       7L  0C    1m  CC=1      ←2
+  │ schemes                      4L  0C    0m  CC=0.0    ←0
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │ __init__                     1L  0C    0m  CC=0.0    ←0
+  │ __init__                     1L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
   domains/                        CC̄=3.0    ←in:0  →out:0
+  │ uri_tree.yaml               85L  0C    0m  CC=0.0    ←0
   │ weather_map.proto           41L  0C    0m  CC=0.0    ←0
-  │ uri_tree.yaml               38L  0C    0m  CC=0.0    ←0
   │ generate_weather_map        24L  0C    1m  CC=3      ←0
   │ resources.yaml              23L  0C    0m  CC=0.0    ←0
   │ views.yaml                  11L  0C    0m  CC=0.0    ←0
   │ renderers.yaml              10L  0C    0m  CC=0.0    ←0
-  │ domain.yaml                  8L  0C    0m  CC=0.0    ←0
+  │ domain.yaml                  9L  0C    0m  CC=0.0    ←0
   │ commands.yaml                8L  0C    0m  CC=0.0    ←0
   │ registry.fragment.yaml       2L  0C    0m  CC=0.0    ←0
   │
-  uri3/                           CC̄=2.6    ←in:0  →out:3
-  │ router                      87L  2C    5m  CC=10     ←0
-  │ uri_graph                   51L  3C    3m  CC=10     ←2
-  │ llm_resolver                45L  2C    2m  CC=5      ←1
-  │ cli                         36L  0C    6m  CC=3      ←0
-  │ python_resolver             36L  1C    5m  CC=2      ←1
-  │ protocol_resolver           22L  0C    4m  CC=2      ←2
-  │ env_resolver                21L  1C    2m  CC=3      ←1
-  │ http_resolver               20L  1C    2m  CC=2      ←0
-  │ uri_tree_validator          18L  0C    2m  CC=2      ←1
-  │ parser                      17L  1C    1m  CC=2      ←4
-  │ http_scanner                16L  0C    1m  CC=6      ←1
-  │ pypi_resolver               16L  0C    1m  CC=5      ←1
-  │ uri_validator                9L  0C    1m  CC=2      ←1
-  │ normalizer                   9L  0C    1m  CC=3      ←0
-  │ scanner                      7L  0C    1m  CC=2      ←0
-  │ base                         7L  1C    0m  CC=0.0    ←0
-  │ schemes                      4L  0C    0m  CC=0.0    ←0
-  │ __init__                     3L  0C    0m  CC=0.0    ←0
-  │
-  runtime_client/                 CC̄=1.7    ←in:0  →out:0
-  │ client                      47L  1C    3m  CC=2      ←0
-  │
-  nl2a/                           CC̄=1.5    ←in:0  →out:4
-  │ cli                         19L  0C    2m  CC=2      ←0
+  testenv/                        CC̄=2.3    ←in:0  →out:0
+  │ mock_agent_server           57L  1C    3m  CC=5      ←0
+  │ Dockerfile                  20L  0C    0m  CC=0.0    ←0
+  │ docker-compose.ssh.yml      10L  0C    0m  CC=0.0    ←0
+  │ entrypoint.sh                7L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ !! planfile.yaml             1319L  0C    0m  CC=0.0    ←0
+  │ !! planfile.yaml              578L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  511L  0C    0m  CC=0.0    ←0
   │ tree.txt                   240L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml             136L  0C    0m  CC=0.0    ←0
-  │ prefact.yaml                94L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml             126L  0C    0m  CC=0.0    ←0
+  │ prefact.yaml                97L  0C    0m  CC=0.0    ←0
   │ project.sh                  59L  0C    0m  CC=0.0    ←0
   │ Makefile                    32L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml          18L  0C    0m  CC=0.0    ←0
@@ -243,10 +281,23 @@ LAYERS:
   examples/                       CC̄=0.0    ←in:0  →out:0
   │ create_orders_agent.yaml    27L  0C    0m  CC=0.0    ←0
   │ broken_agent.yaml           14L  0C    0m  CC=0.0    ←0
+  │ docker-compose.yml          10L  0C    0m  CC=0.0    ←0
+  │ run.sh                       7L  0C    0m  CC=0.0    ←0
   │ create_invoices_agent_prompt.txt     1L  0C    0m  CC=0.0    ←0
+  │
+  deployments/                    CC̄=0.0    ←in:0  →out:0
+  │ agent_deployments.yaml      20L  0C    0m  CC=0.0    ←0
   │
   output/                         CC̄=0.0    ←in:0  →out:0
   │ contract_registry.resolved.json   174L  0C    0m  CC=0.0    ←0
+  │
+  testql-scenarios/               CC̄=0.0    ←in:0  →out:0
+  │ generated-api-smoke.testql.toon.yaml    35L  0C    0m  CC=0.0    ←0
+  │ generated-cli-tests.testql.toon.yaml    20L  0C    0m  CC=0.0    ←0
+  │ generated-from-pytests.testql.toon.yaml    14L  0C    0m  CC=0.0    ←0
+  │
+  generator/                      CC̄=0.0    ←in:0  →out:0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
   evolution/                      CC̄=0.0    ←in:0  →out:0
   │ add_invoices_agent.yaml     18L  0C    0m  CC=0.0    ←0
@@ -267,41 +318,43 @@ LAYERS:
   │ agent_card                  40L  0C    0m  CC=0.0    ←0
   │ main                        16L  0C    0m  CC=0.0    ←0
   │ main                        16L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                   6L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                   6L  0C    0m  CC=0.0    ←0
-  │ __init__                     3L  0C    0m  CC=0.0    ←0
-  │ __init__                     3L  0C    0m  CC=0.0    ←0
-  │
-  testql-scenarios/               CC̄=0.0    ←in:0  →out:0
-  │ generated-api-smoke.testql.toon.yaml    35L  0C    0m  CC=0.0    ←0
-  │ generated-cli-tests.testql.toon.yaml    20L  0C    0m  CC=0.0    ←0
-  │ generated-from-pytests.testql.toon.yaml    14L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              4L  0C    0m  CC=0.0    ←0
   │
   ── zero ──
      generator/__init__.py                     0L
+     packages/nl2uri/nl2a/__init__.py          0L
+     packages/nl2uri/nl2uri/__init__.py        0L
+     packages/nl2uri/nl2uri/prompts/__init__.py  0L
+     packages/resource-agent-factory/generator/__init__.py  0L
+     packages/resource-agent-hypervisor/hypervisor/compatibility/__init__.py  0L
+     packages/resource-agent-hypervisor/hypervisor/contract_registry/__init__.py  0L
+     packages/resource-agent-hypervisor/hypervisor/evolution/__init__.py  0L
+     packages/resource-agent-hypervisor/hypervisor/policy_gate/__init__.py  0L
+     packages/resource-agent-hypervisor/hypervisor/uri/__init__.py  0L
+     packages/resource-agent-hypervisor/hypervisor/verifier/__init__.py  0L
+     packages/resource-agent-hypervisor/runtime_client/__init__.py  0L
+     packages/uri3/uri3/__init__.py            0L
+     packages/uri3/uri3/discovery/__init__.py  0L
+     packages/uri3/uri3/graph/__init__.py      0L
+     packages/uri3/uri3/protocols/__init__.py  0L
+     packages/uri3/uri3/scanner/__init__.py    0L
+     packages/uri3/uri3/validators/__init__.py  0L
 
 COUPLING:
-                                                   generator                    meta_agent  hypervisor.contract_registry        hypervisor.domain_pack                          nl2a                        nl2uri                          uri3                uri3.protocols               uri3.validators      hypervisor.compatibility                hypervisor.uri           hypervisor.verifier                    uri3.graph                uri3.resolvers                  uri3.scanner
-                     generator                            ──                           ←10                                                                                                                                                                                                                                                                                                                                                                                                        hub
-                    meta_agent                            10                            ──                                                                                                                                                                                                                                                                                                                                                                                                        !! fan-out
-  hypervisor.contract_registry                                                                                        ──                             4                                                                                                                                                                                  ←2                                                          ←2                                                                                            hub
-        hypervisor.domain_pack                                                                                         1                            ──                            ←1                                                                                                                                                                                                                                                                                                              hub
-                          nl2a                                                                                                                       1                            ──                             3                                                                                                                                                                                                                                                                              
-                        nl2uri                                                                                                                                                    ←3                            ──                                                                                                                                                    ←1                                                                                                                        
-                          uri3                                                                                                                                                                                                                ──                                                           2                                                                                                                       1                                                            
-                uri3.protocols                                                                                                                                                                                                                                              ──                            ←1                                                                                                                                                    ←1                            ←1
-               uri3.validators                                                                                                                                                                                                                ←2                             1                            ──                                                                                                                                                                                    
-      hypervisor.compatibility                                                                                         2                                                                                                                                                                                                                ──                                                                                                                                                      
-                hypervisor.uri                                                                                                                                                                                   1                                                                                                                                                    ──                                                           1                                                            
-           hypervisor.verifier                                                                                         2                                                                                                                                                                                                                                                                            ──                                                                                          
-                    uri3.graph                                                                                                                                                                                                                ←1                                                                                                                      ←1                                                          ──                                                            
-                uri3.resolvers                                                                                                                                                                                                                                               1                                                                                                                                                                                  ──                              
-                  uri3.scanner                                                                                                                                                                                                                                               1                                                                                                                                                                                                                ──
+                                      packages.resource-agent-hypervisor     packages.resource-agent-factory                       packages.uri3                     packages.nl2uri
+  packages.resource-agent-hypervisor                                  ──                                  10                                   6                                   1  !! fan-out
+     packages.resource-agent-factory                                 ←10                                  ──                                  ←1                                  ←2  hub
+                       packages.uri3                                  ←6                                   1                                  ──                                  ←1  hub
+                     packages.nl2uri                                   3                                   2                                   1                                  ──
   CYCLES: 3
-  HUB: generator/ (fan-in=10)
-  HUB: hypervisor.contract_registry/ (fan-in=5)
-  HUB: hypervisor.domain_pack/ (fan-in=5)
-  SMELL: meta_agent/ fan-out=10 → split needed
+  HUB: packages.uri3/ (fan-in=7)
+  HUB: packages.resource-agent-factory/ (fan-in=13)
+  SMELL: packages.resource-agent-hypervisor/ fan-out=17 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

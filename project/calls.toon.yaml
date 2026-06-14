@@ -1,261 +1,332 @@
 # code2llm call graph | /home/tom/github/wronai/hypervisor
-# generated in 0.05s
-# nodes: 113 | edges: 115 | modules: 50
+# generated in 0.09s
+# nodes: 169 | edges: 186 | modules: 65
 # CC̄=3.5
 
 HUBS[20]:
-  meta_agent.repair.repair_agent_spec
-    CC=26  in:3  out:58  total:61
-  hypervisor.contract_registry.loader.load_contract_registry
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.loader.load_contract_registry
     CC=9  in:6  out:33  total:39
-  hypervisor.contract_registry.merger.merge_main_contracts
-    CC=11  in:1  out:31  total:32
-  meta_agent.planner.infer_intent
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.merger.merge_main_contracts
+    CC=12  in:1  out:31  total:32
+  packages.resource-agent-hypervisor.hypervisor.domain_pack.generator.write_domain_pack
+    CC=3  in:1  out:30  total:31
+  packages.resource-agent-hypervisor.meta_agent.planner.infer_intent
     CC=9  in:1  out:30  total:31
-  hypervisor.domain_pack.generator.write_domain_pack
-    CC=2  in:1  out:30  total:31
-  uri3.graph.uri_graph.build_graph_from_tree
+  packages.uri3.uri3.graph.uri_graph.build_graph_from_tree
     CC=10  in:2  out:28  total:30
-  hypervisor.config.load_config
-    CC=16  in:3  out:24  total:27
-  generator.model.load_agent_spec
+  packages.uri3.uri3.resolvers.log_resolver.parse_log_uri
+    CC=17  in:4  out:25  total:29
+  packages.resource-agent-factory.generator.model.load_agent_spec
     CC=7  in:2  out:24  total:26
-  hypervisor.contract_registry.cli.main
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.cli.main
     CC=20  in:0  out:26  total:26
-  hypervisor.contract_registry.validate.validate_registry
+  packages.uri3.uri3.logs.reader._parse_entry
+    CC=17  in:1  out:23  total:24
+  packages.uri3.uri3.logs.reader.summarize_logs
+    CC=6  in:5  out:18  total:23
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.validate.validate_registry
     CC=20  in:2  out:20  total:22
-  generator.validate.validate_agent
-    CC=11  in:8  out:10  total:18
-  nl2uri.llm_planner.llm_plan
-    CC=4  in:2  out:16  total:18
-  hypervisor.domain_pack.writer.write_file
-    CC=1  in:15  out:3  total:18
-  meta_agent.domain_planner.llm_planner._call_openrouter
+  packages.resource-agent-factory.generator.agent_generator.generate_agent
+    CC=5  in:3  out:17  total:20
+  packages.resource-agent-hypervisor.meta_agent.orchestrator.validate_repair_generate
+    CC=7  in:3  out:16  total:19
+  packages.resource-agent-hypervisor.hypervisor.config.defaults.apply_builtin_defaults
+    CC=1  in:2  out:17  total:19
+  packages.nl2uri.nl2uri.domain_planner._call_openrouter
     CC=4  in:1  out:17  total:18
-  meta_agent.orchestrator.validate_repair_generate
-    CC=6  in:3  out:15  total:18
-  hypervisor.contract_registry.schema_validator.validate_contract_files
-    CC=6  in:2  out:13  total:15
-  hypervisor.contract_registry.registry_exporter.export_markdown
-    CC=6  in:1  out:13  total:14
-  hypervisor.contract_registry.registry_builder._contract_hash
-    CC=3  in:1  out:13  total:14
-  generator.verify.verify_generated_agent
-    CC=6  in:1  out:11  total:12
-  hypervisor.evolution.models.load_proposal
-    CC=5  in:1  out:11  total:12
+  packages.resource-agent-hypervisor.hypervisor.config.env.apply_structured_env_overrides
+    CC=9  in:1  out:17  total:18
+  packages.resource-agent-factory.generator.validate.validate_agent
+    CC=11  in:8  out:10  total:18
+  packages.resource-agent-hypervisor.hypervisor.domain_pack.writer.write_file
+    CC=1  in:15  out:3  total:18
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.status.deployment_from_uri_tree
+    CC=8  in:1  out:17  total:18
+  packages.nl2uri.nl2uri.llm_planner.llm_plan
+    CC=4  in:1  out:16  total:17
 
 MODULES:
-  generator.agent_generator  [4 funcs]
+  packages.nl2uri.nl2a.cli  [1 funcs]
+    generate  CC=1  out:5
+  packages.nl2uri.nl2uri.cli  [1 funcs]
+    generate  CC=4  out:12
+  packages.nl2uri.nl2uri.domain_planner  [7 funcs]
+    _call_openrouter  CC=4  out:17
+    _deterministic_weather_plan  CC=2  out:2
+    _extract_json  CC=3  out:8
+    _generic_plan  CC=1  out:3
+    _llm_uri_from_env  CC=5  out:5
+    _slug  CC=2  out:3
+    plan_from_prompt  CC=6  out:8
+  packages.nl2uri.nl2uri.llm_planner  [1 funcs]
+    llm_plan  CC=4  out:16
+  packages.nl2uri.nl2uri.pipeline  [3 funcs]
+    generate_tree  CC=1  out:1
+    run_full_pipeline  CC=2  out:9
+    run_generate_pipeline  CC=3  out:11
+  packages.nl2uri.nl2uri.planner  [2 funcs]
+    _slug  CC=2  out:4
+    rule_based_plan  CC=8  out:6
+  packages.nl2uri.nl2uri.writer  [1 funcs]
+    write_uri_tree  CC=1  out:4
+  packages.resource-agent-factory.generator.agent_generator  [3 funcs]
     expand_paths  CC=4  out:7
-    generate_agent  CC=4  out:10
+    generate_agent  CC=5  out:17
     main  CC=5  out:4
-    render_template  CC=1  out:4
-  generator.hashutil  [1 funcs]
+  packages.resource-agent-factory.generator.hashutil  [1 funcs]
     file_sha256  CC=1  out:4
-  generator.model  [2 funcs]
+  packages.resource-agent-factory.generator.header  [3 funcs]
+    contract_source_ref  CC=3  out:7
+    dockerfile_header  CC=1  out:0
+    python_file_header  CC=1  out:0
+  packages.resource-agent-factory.generator.model  [1 funcs]
     load_agent_spec  CC=7  out:24
-    spec_to_plain_dict  CC=2  out:1
-  generator.validate  [3 funcs]
+  packages.resource-agent-factory.generator.paths  [2 funcs]
+    find_repo_root  CC=6  out:6
+    project_root  CC=1  out:1
+  packages.resource-agent-factory.generator.validate  [3 funcs]
     iter_agent_specs  CC=3  out:6
     main  CC=7  out:9
     validate_agent  CC=11  out:10
-  generator.verify  [3 funcs]
+  packages.resource-agent-factory.generator.verify  [3 funcs]
     main  CC=9  out:10
     verify_generated  CC=6  out:5
-    verify_generated_agent  CC=6  out:11
-  hypervisor.cli  [1 funcs]
+    verify_generated_agent  CC=7  out:10
+  packages.resource-agent-hypervisor.hypervisor.cli  [1 funcs]
     config_cmd  CC=2  out:8
-  hypervisor.compatibility.checker  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.compatibility.checker  [1 funcs]
     classify_registry_change  CC=8  out:11
-  hypervisor.config  [4 funcs]
-    _load_yaml  CC=4  out:4
-    get_config  CC=1  out:1
+  packages.resource-agent-hypervisor.hypervisor.config.defaults  [4 funcs]
+    apply_builtin_defaults  CC=1  out:17
+    embedded_defaults_raw  CC=1  out:1
     get_default_config  CC=1  out:3
-    load_config  CC=16  out:24
-  hypervisor.contract_registry.cli  [1 funcs]
+    load_yaml_file  CC=4  out:4
+  packages.resource-agent-hypervisor.hypervisor.config.env  [4 funcs]
+    _parse_bool  CC=1  out:1
+    apply_env_overrides  CC=1  out:2
+    apply_legacy_env_overrides  CC=6  out:4
+    apply_structured_env_overrides  CC=9  out:17
+  packages.resource-agent-hypervisor.hypervisor.config.loader  [5 funcs]
+    config_search_paths  CC=6  out:11
+    get_config  CC=1  out:1
+    load_config  CC=2  out:7
+    load_hypervisor_config  CC=1  out:2
+    resolve_config_path  CC=3  out:2
+  packages.resource-agent-hypervisor.hypervisor.config.validators  [1 funcs]
+    merge_config  CC=5  out:5
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.cli  [1 funcs]
     main  CC=20  out:26
-  hypervisor.contract_registry.cross_validator  [4 funcs]
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.cross_validator  [4 funcs]
     _load_proto_text  CC=2  out:5
     _schema_exists  CC=1  out:3
     validate_cross_references  CC=22  out:11
     validate_root  CC=1  out:2
-  hypervisor.contract_registry.loader  [2 funcs]
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.loader  [2 funcs]
     _read_yaml  CC=3  out:4
     load_contract_registry  CC=9  out:33
-  hypervisor.contract_registry.merger  [1 funcs]
-    merge_main_contracts  CC=11  out:31
-  hypervisor.contract_registry.registry_builder  [3 funcs]
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.merger  [1 funcs]
+    merge_main_contracts  CC=12  out:31
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.registry_builder  [3 funcs]
     _contract_hash  CC=3  out:13
     build_registry_manifest  CC=5  out:9
     write_registry_manifest  CC=2  out:6
-  hypervisor.contract_registry.registry_exporter  [2 funcs]
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.registry_exporter  [2 funcs]
     export_json  CC=1  out:1
     export_markdown  CC=6  out:13
-  hypervisor.contract_registry.schema_validator  [4 funcs]
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.schema_validator  [4 funcs]
     _read_json  CC=1  out:2
     _read_yaml  CC=2  out:2
     validate_contract_files  CC=6  out:13
     validate_file  CC=3  out:8
-  hypervisor.contract_registry.validate  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.contract_registry.validate  [1 funcs]
     validate_registry  CC=20  out:20
-  hypervisor.core  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.core  [1 funcs]
     from_config  CC=1  out:2
-  hypervisor.domain_pack.generator  [12 funcs]
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.loader  [4 funcs]
+    _parse_deployment  CC=2  out:10
+    _read_yaml  CC=3  out:4
+    default_registry_path  CC=1  out:1
+    load_deployment_registry  CC=5  out:8
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.status  [5 funcs]
+    deployment_from_uri_tree  CC=8  out:17
+    get_deployment_for_agent  CC=3  out:2
+    list_deployments  CC=2  out:2
+    registry_summary  CC=3  out:1
+    sync_from_uri_tree  CC=2  out:4
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.writer  [3 funcs]
+    save_deployment_registry  CC=2  out:4
+    upsert_deployment  CC=3  out:2
+    write_deployment_registry  CC=1  out:2
+  packages.resource-agent-hypervisor.hypervisor.domain_pack.generator  [12 funcs]
     derive_domain_model  CC=1  out:2
     generate_agent_contract  CC=2  out:3
     generate_commands  CC=2  out:6
     generate_domain_pack  CC=1  out:3
-    generate_domain_pack_from_tree  CC=1  out:10
+    generate_domain_pack_from_tree  CC=2  out:11
     generate_handlers  CC=3  out:2
     generate_proto  CC=2  out:2
     generate_renderers  CC=3  out:5
     generate_resources  CC=2  out:5
     generate_views  CC=2  out:1
-  hypervisor.domain_pack.templates  [2 funcs]
+  packages.resource-agent-hypervisor.hypervisor.domain_pack.templates  [2 funcs]
     generic_proto  CC=1  out:1
     package_name  CC=1  out:0
-  hypervisor.domain_pack.writer  [2 funcs]
-    repo_root  CC=1  out:2
+  packages.resource-agent-hypervisor.hypervisor.domain_pack.writer  [1 funcs]
     write_file  CC=1  out:3
-  hypervisor.evolution.cli  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.evolution.cli  [1 funcs]
     main  CC=10  out:11
-  hypervisor.evolution.models  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.evolution.models  [1 funcs]
     load_proposal  CC=5  out:11
-  hypervisor.evolution.validator  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.evolution.validator  [1 funcs]
     validate_proposal  CC=6  out:6
-  hypervisor.uri.client  [2 funcs]
+  packages.resource-agent-hypervisor.hypervisor.paths  [2 funcs]
+    find_repo_root  CC=6  out:6
+    repo_root  CC=1  out:1
+  packages.resource-agent-hypervisor.hypervisor.uri.client  [3 funcs]
     graph  CC=1  out:1
+    logs  CC=2  out:2
     nl2uri  CC=1  out:1
-  hypervisor.verifier.capability_tests  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.verifier.capability_tests  [1 funcs]
     build_capability_test_plan  CC=4  out:2
-  hypervisor.verifier.cli  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.verifier.cli  [1 funcs]
     main  CC=5  out:8
-  meta_agent.api  [6 funcs]
+  packages.resource-agent-hypervisor.meta_agent.api  [6 funcs]
     generate  CC=2  out:6
     pipeline  CC=2  out:4
     proposal_from_prompt  CC=2  out:6
     repair  CC=2  out:5
     validate  CC=2  out:5
     verify  CC=1  out:2
-  meta_agent.domain_planner.llm_planner  [7 funcs]
-    _call_openrouter  CC=4  out:17
-    _deterministic_weather_plan  CC=2  out:2
-    _extract_json  CC=3  out:8
-    _generic_plan  CC=1  out:2
-    _llm_uri_from_env  CC=5  out:5
-    _slug  CC=2  out:3
-    plan_domain_from_prompt  CC=6  out:8
-  meta_agent.orchestrator  [4 funcs]
+  packages.resource-agent-hypervisor.meta_agent.orchestrator  [4 funcs]
     asdict_result  CC=1  out:0
     pipeline_from_prompt  CC=1  out:2
     save_proposal_from_prompt  CC=2  out:6
-    validate_repair_generate  CC=6  out:15
-  meta_agent.planner  [4 funcs]
+    validate_repair_generate  CC=7  out:16
+  packages.resource-agent-hypervisor.meta_agent.planner  [4 funcs]
     infer_intent  CC=9  out:30
     intent_to_agent_spec  CC=8  out:11
     package_name  CC=3  out:6
     singularize  CC=4  out:3
-  meta_agent.repair  [2 funcs]
-    _load_yaml  CC=2  out:3
-    repair_agent_spec  CC=26  out:58
-  nl2a.cli  [1 funcs]
-    generate  CC=2  out:9
-  nl2uri.cli  [1 funcs]
-    generate  CC=4  out:12
-  nl2uri.llm_planner  [1 funcs]
-    llm_plan  CC=4  out:16
-  nl2uri.planner  [2 funcs]
-    _slug  CC=2  out:4
-    rule_based_plan  CC=8  out:6
-  nl2uri.writer  [1 funcs]
-    write_uri_tree  CC=1  out:4
-  uri3.cli  [3 funcs]
+  packages.resource-agent-hypervisor.meta_agent.repair.loader  [2 funcs]
+    load_spec  CC=2  out:3
+    write_spec  CC=1  out:2
+  packages.resource-agent-hypervisor.meta_agent.repair.pipeline  [1 funcs]
+    repair_agent_spec  CC=2  out:12
+  packages.resource-agent-hypervisor.meta_agent.repair.rules  [6 funcs]
+    repair_agent_block  CC=6  out:12
+    repair_capabilities  CC=6  out:8
+    repair_command_capability  CC=4  out:10
+    repair_duplicate_capability_names  CC=5  out:5
+    repair_missing_capability_type  CC=3  out:4
+    repair_resource_read_capability  CC=8  out:14
+  packages.uri3.uri3.cli  [4 funcs]
     graph  CC=3  out:5
+    logs  CC=2  out:6
     validate  CC=1  out:3
     validate_tree  CC=3  out:5
-  uri3.graph.uri_graph  [1 funcs]
+  packages.uri3.uri3.graph.uri_graph  [1 funcs]
     build_graph_from_tree  CC=10  out:28
-  uri3.protocols.normalizer  [1 funcs]
+  packages.uri3.uri3.logs.reader  [8 funcs]
+    _entry_timestamp  CC=4  out:5
+    _level_rank  CC=3  out:2
+    _matches_filters  CC=16  out:13
+    _parse_entry  CC=17  out:23
+    _parse_since  CC=7  out:14
+    read_logs  CC=9  out:10
+    resolve_log_path  CC=4  out:3
+    summarize_logs  CC=6  out:18
+  packages.uri3.uri3.paths  [2 funcs]
+    find_repo_root  CC=6  out:6
+    repo_root  CC=1  out:1
+  packages.uri3.uri3.protocols.normalizer  [1 funcs]
     normalize_uri  CC=3  out:4
-  uri3.protocols.parser  [1 funcs]
+  packages.uri3.uri3.protocols.parser  [1 funcs]
     parse_uri  CC=2  out:4
-  uri3.resolvers.env_resolver  [2 funcs]
+  packages.uri3.uri3.resolvers.env_resolver  [2 funcs]
     resolve  CC=1  out:1
     resolve_env  CC=3  out:4
-  uri3.resolvers.http_resolver  [1 funcs]
+  packages.uri3.uri3.resolvers.http_resolver  [1 funcs]
     resolve  CC=1  out:1
-  uri3.resolvers.llm_resolver  [2 funcs]
+  packages.uri3.uri3.resolvers.llm_resolver  [2 funcs]
     resolve  CC=2  out:4
     resolve_llm  CC=5  out:5
-  uri3.resolvers.protocol_resolver  [1 funcs]
+  packages.uri3.uri3.resolvers.log_resolver  [7 funcs]
+    read  CC=2  out:2
+    resolve  CC=1  out:1
+    _bool  CC=3  out:2
+    _first  CC=2  out:1
+    _int  CC=3  out:3
+    parse_log_uri  CC=17  out:25
+    resolve_log  CC=1  out:2
+  packages.uri3.uri3.resolvers.protocol_resolver  [1 funcs]
     resolve_http_like  CC=1  out:0
-  uri3.resolvers.python_resolver  [5 funcs]
+  packages.uri3.uri3.resolvers.python_resolver  [5 funcs]
     call  CC=2  out:1
     resolve  CC=1  out:1
     _split_python_uri  CC=2  out:4
     call_python  CC=1  out:4
     resolve_python  CC=1  out:1
-  uri3.resolvers.router  [1 funcs]
-    call  CC=3  out:3
-  uri3.scanner.http_scanner  [1 funcs]
+  packages.uri3.uri3.resolvers.router  [1 funcs]
+    call  CC=6  out:6
+  packages.uri3.uri3.scanner.http_scanner  [1 funcs]
     scan_http  CC=6  out:8
-  uri3.scanner.scanner  [1 funcs]
-    scan  CC=2  out:2
-  uri3.validators.uri_tree_validator  [2 funcs]
+  packages.uri3.uri3.scanner.scanner  [2 funcs]
+    scan  CC=3  out:3
+    scan_log  CC=2  out:5
+  packages.uri3.uri3.validators.uri_tree_validator  [2 funcs]
     load_yaml  CC=1  out:2
     validate_uri_tree  CC=2  out:7
-  uri3.validators.uri_validator  [1 funcs]
+  packages.uri3.uri3.validators.uri_validator  [1 funcs]
     validate_uri  CC=2  out:2
 
 EDGES:
-  generator.validate.validate_agent → generator.model.load_agent_spec
-  generator.validate.main → generator.validate.iter_agent_specs
-  generator.validate.main → generator.validate.validate_agent
-  generator.agent_generator.generate_agent → generator.validate.validate_agent
-  generator.agent_generator.generate_agent → generator.model.load_agent_spec
-  generator.agent_generator.generate_agent → generator.hashutil.file_sha256
-  generator.agent_generator.generate_agent → generator.model.spec_to_plain_dict
-  generator.agent_generator.generate_agent → generator.agent_generator.render_template
-  generator.agent_generator.main → generator.agent_generator.expand_paths
-  generator.agent_generator.main → generator.agent_generator.generate_agent
-  generator.verify.verify_generated_agent → generator.hashutil.file_sha256
-  generator.verify.verify_generated → generator.verify.verify_generated_agent
-  generator.verify.main → generator.verify.verify_generated
-  meta_agent.planner.infer_intent → meta_agent.planner.singularize
-  meta_agent.planner.intent_to_agent_spec → meta_agent.planner.singularize
-  meta_agent.planner.intent_to_agent_spec → meta_agent.planner.package_name
-  meta_agent.api.proposal_from_prompt → meta_agent.orchestrator.save_proposal_from_prompt
-  meta_agent.api.validate → generator.validate.validate_agent
-  meta_agent.api.repair → meta_agent.repair.repair_agent_spec
-  meta_agent.api.generate → meta_agent.orchestrator.asdict_result
-  meta_agent.api.generate → meta_agent.orchestrator.validate_repair_generate
-  meta_agent.api.pipeline → meta_agent.orchestrator.pipeline_from_prompt
-  meta_agent.api.pipeline → meta_agent.orchestrator.asdict_result
-  meta_agent.api.verify → generator.verify.verify_generated
-  meta_agent.orchestrator.save_proposal_from_prompt → meta_agent.planner.infer_intent
-  meta_agent.orchestrator.save_proposal_from_prompt → meta_agent.planner.intent_to_agent_spec
-  meta_agent.orchestrator.save_proposal_from_prompt → meta_agent.planner.package_name
-  meta_agent.orchestrator.validate_repair_generate → generator.validate.validate_agent
-  meta_agent.orchestrator.validate_repair_generate → generator.verify.verify_generated
-  meta_agent.orchestrator.validate_repair_generate → meta_agent.repair.repair_agent_spec
-  meta_agent.orchestrator.validate_repair_generate → generator.agent_generator.generate_agent
-  meta_agent.orchestrator.pipeline_from_prompt → meta_agent.orchestrator.save_proposal_from_prompt
-  meta_agent.orchestrator.pipeline_from_prompt → meta_agent.orchestrator.validate_repair_generate
-  meta_agent.repair.repair_agent_spec → generator.validate.validate_agent
-  meta_agent.repair.repair_agent_spec → meta_agent.repair._load_yaml
-  meta_agent.domain_planner.llm_planner._deterministic_weather_plan → meta_agent.domain_planner.llm_planner._llm_uri_from_env
-  meta_agent.domain_planner.llm_planner._generic_plan → meta_agent.domain_planner.llm_planner._slug
-  meta_agent.domain_planner.llm_planner._call_openrouter → meta_agent.domain_planner.llm_planner._extract_json
-  meta_agent.domain_planner.llm_planner.plan_domain_from_prompt → meta_agent.domain_planner.llm_planner._generic_plan
-  meta_agent.domain_planner.llm_planner.plan_domain_from_prompt → meta_agent.domain_planner.llm_planner._deterministic_weather_plan
-  meta_agent.domain_planner.llm_planner.plan_domain_from_prompt → meta_agent.domain_planner.llm_planner._call_openrouter
-  uri3.cli.validate → uri3.validators.uri_validator.validate_uri
-  uri3.cli.validate_tree → uri3.validators.uri_tree_validator.validate_uri_tree
-  uri3.cli.graph → uri3.graph.uri_graph.build_graph_from_tree
-  uri3.validators.uri_validator.validate_uri → uri3.protocols.parser.parse_uri
-  uri3.validators.uri_tree_validator.validate_uri_tree → uri3.validators.uri_tree_validator.load_yaml
-  uri3.scanner.scanner.scan → uri3.scanner.http_scanner.scan_http
-  uri3.scanner.scanner.scan → uri3.protocols.parser.parse_uri
-  uri3.protocols.normalizer.normalize_uri → uri3.protocols.parser.parse_uri
-  hypervisor.config.get_default_config → hypervisor.config._load_yaml
+  packages.uri3.uri3.resolvers.http_resolver.HttpResolver.resolve → packages.uri3.uri3.resolvers.protocol_resolver.resolve_http_like
+  packages.uri3.uri3.cli.validate → packages.uri3.uri3.validators.uri_validator.validate_uri
+  packages.uri3.uri3.cli.validate_tree → packages.uri3.uri3.validators.uri_tree_validator.validate_uri_tree
+  packages.uri3.uri3.cli.graph → packages.uri3.uri3.graph.uri_graph.build_graph_from_tree
+  packages.uri3.uri3.cli.logs → packages.uri3.uri3.logs.reader.summarize_logs
+  packages.uri3.uri3.cli.logs → packages.uri3.uri3.logs.reader.read_logs
+  packages.uri3.uri3.resolvers.env_resolver.EnvResolver.resolve → packages.uri3.uri3.resolvers.env_resolver.resolve_env
+  packages.uri3.uri3.resolvers.python_resolver.resolve_python → packages.uri3.uri3.resolvers.python_resolver._split_python_uri
+  packages.uri3.uri3.resolvers.python_resolver.call_python → packages.uri3.uri3.resolvers.python_resolver._split_python_uri
+  packages.uri3.uri3.resolvers.python_resolver.PythonResolver.resolve → packages.uri3.uri3.resolvers.python_resolver.resolve_python
+  packages.uri3.uri3.resolvers.python_resolver.PythonResolver.call → packages.uri3.uri3.resolvers.python_resolver.call_python
+  packages.uri3.uri3.protocols.normalizer.normalize_uri → packages.uri3.uri3.protocols.parser.parse_uri
+  packages.uri3.uri3.logs.reader.resolve_log_path → packages.resource-agent-factory.generator.paths.find_repo_root
+  packages.uri3.uri3.logs.reader._matches_filters → packages.uri3.uri3.logs.reader._entry_timestamp
+  packages.uri3.uri3.logs.reader._matches_filters → packages.uri3.uri3.logs.reader._level_rank
+  packages.uri3.uri3.logs.reader.read_logs → packages.uri3.uri3.resolvers.log_resolver.parse_log_uri
+  packages.uri3.uri3.logs.reader.read_logs → packages.uri3.uri3.logs.reader.resolve_log_path
+  packages.uri3.uri3.logs.reader.read_logs → packages.uri3.uri3.logs.reader._parse_since
+  packages.uri3.uri3.logs.reader.read_logs → packages.uri3.uri3.logs.reader._parse_entry
+  packages.uri3.uri3.logs.reader.read_logs → packages.uri3.uri3.logs.reader._matches_filters
+  packages.uri3.uri3.logs.reader.summarize_logs → packages.uri3.uri3.resolvers.log_resolver.parse_log_uri
+  packages.uri3.uri3.logs.reader.summarize_logs → packages.uri3.uri3.logs.reader.resolve_log_path
+  packages.uri3.uri3.logs.reader.summarize_logs → packages.uri3.uri3.logs.reader.read_logs
+  packages.resource-agent-factory.generator.validate.validate_agent → packages.resource-agent-factory.generator.model.load_agent_spec
+  packages.resource-agent-factory.generator.validate.main → packages.resource-agent-factory.generator.validate.iter_agent_specs
+  packages.resource-agent-factory.generator.validate.main → packages.resource-agent-factory.generator.validate.validate_agent
+  packages.resource-agent-factory.generator.header.contract_source_ref → packages.resource-agent-factory.generator.paths.project_root
+  packages.resource-agent-factory.generator.paths.project_root → packages.resource-agent-factory.generator.paths.find_repo_root
+  packages.resource-agent-factory.generator.verify.verify_generated_agent → packages.resource-agent-factory.generator.hashutil.file_sha256
+  packages.resource-agent-factory.generator.verify.verify_generated → packages.resource-agent-factory.generator.verify.verify_generated_agent
+  packages.resource-agent-factory.generator.verify.main → packages.resource-agent-factory.generator.verify.verify_generated
+  packages.resource-agent-factory.generator.agent_generator.generate_agent → packages.resource-agent-factory.generator.validate.validate_agent
+  packages.resource-agent-factory.generator.agent_generator.generate_agent → packages.resource-agent-factory.generator.model.load_agent_spec
+  packages.resource-agent-factory.generator.agent_generator.generate_agent → packages.resource-agent-factory.generator.hashutil.file_sha256
+  packages.resource-agent-factory.generator.agent_generator.generate_agent → packages.resource-agent-factory.generator.header.contract_source_ref
+  packages.resource-agent-factory.generator.agent_generator.generate_agent → packages.resource-agent-factory.generator.header.python_file_header
+  packages.resource-agent-factory.generator.agent_generator.generate_agent → packages.resource-agent-factory.generator.header.dockerfile_header
+  packages.resource-agent-factory.generator.agent_generator.main → packages.resource-agent-factory.generator.agent_generator.expand_paths
+  packages.resource-agent-factory.generator.agent_generator.main → packages.resource-agent-factory.generator.agent_generator.generate_agent
+  packages.nl2uri.nl2uri.cli.generate → packages.nl2uri.nl2uri.planner.rule_based_plan
+  packages.nl2uri.nl2uri.cli.generate → packages.nl2uri.nl2uri.llm_planner.llm_plan
+  packages.nl2uri.nl2uri.cli.generate → packages.nl2uri.nl2uri.writer.write_uri_tree
+  packages.nl2uri.nl2uri.llm_planner.llm_plan → packages.nl2uri.nl2uri.planner.rule_based_plan
+  packages.uri3.uri3.resolvers.llm_resolver.LLMResolver.resolve → packages.uri3.uri3.resolvers.llm_resolver.resolve_llm
+  packages.uri3.uri3.resolvers.llm_resolver.LLMResolver.resolve → packages.uri3.uri3.protocols.parser.parse_uri
+  packages.uri3.uri3.paths.repo_root → packages.uri3.uri3.paths.find_repo_root
+  packages.nl2uri.nl2a.cli.generate → packages.nl2uri.nl2uri.pipeline.run_full_pipeline
+  packages.nl2uri.nl2uri.domain_planner._deterministic_weather_plan → packages.nl2uri.nl2uri.domain_planner._llm_uri_from_env
+  packages.nl2uri.nl2uri.domain_planner._generic_plan → packages.nl2uri.nl2uri.domain_planner._slug
+  packages.nl2uri.nl2uri.domain_planner._call_openrouter → packages.nl2uri.nl2uri.domain_planner._extract_json

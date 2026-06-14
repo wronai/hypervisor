@@ -1,58 +1,54 @@
-# hypervisor | 162 func | 57f | 6987L | python | 2026-06-14
+# hypervisor | 243 func | 75f | 7896L | python | 2026-06-14
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.5  critical=11 (limit:10)  dup=0  cycles=3
+  CC̄=3.5  critical=14 (limit:10)  dup=1  cycles=3
 
 ALERTS[20]:
-  !!! cc_exceeded      repair_agent_spec = 26 (limit:15)
-  !!! high_fan_out     repair_agent_spec = 21 (limit:10)
   !!! high_fan_out     merge_main_contracts = 20 (limit:10)
   !!  cc_exceeded      validate_cross_references = 22 (limit:15)
   !!  cc_exceeded      main = 20 (limit:15)
   !!  cc_exceeded      validate_registry = 20 (limit:15)
-  !!  high_fan_out     load_config = 18 (limit:10)
+  !!  high_fan_out     generate_agent = 17 (limit:10)
   !!  high_fan_out     infer_intent = 17 (limit:10)
   !!  high_fan_out     main = 16 (limit:10)
   !!  high_fan_out     load_contract_registry = 15 (limit:10)
+  !   cc_exceeded      _parse_entry = 17 (limit:15)
+  !   cc_exceeded      validate_config = 17 (limit:15)
 
-MODULES[128] (top by size):
-  M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
+MODULES[180] (top by size):
+  M[planfile.yaml] 578L C:0 F:0 CC↑0 D:0 (yaml)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
-  M[hypervisor/domain_pack/generator.py] 259L C:1 F:13 CC↑3 D:1 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/domain_pack/generator.py] 272L C:1 F:13 CC↑3 D:1 (python)
   M[tree.txt] 240L C:0 F:0 CC↑0 D:0 (txt)
+  M[packages/uri3/uri3/logs/reader.py] 174L C:0 F:8 CC↑17 D:5 (python)
   M[output/contract_registry.resolved.json] 174L C:0 F:0 CC↑0 D:0 (json)
-  M[meta_agent/planner.py] 159L C:0 F:5 CC↑9 D:2 (python)
-  M[meta_agent/domain_planner/llm_planner.py] 141L C:0 F:7 CC↑6 D:0 (python)
-  M[pyproject.toml] 136L C:0 F:0 CC↑0 D:0 (toml)
+  M[packages/resource-agent-hypervisor/meta_agent/planner.py] 159L C:0 F:5 CC↑9 D:2 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/config/models.py] 158L C:8 F:9 CC↑4 D:0 (python)
+  M[packages/nl2uri/nl2uri/domain_planner.py] 151L C:0 F:7 CC↑6 D:1 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/status.py] 136L C:0 F:9 CC↑11 D:1 (python)
   M[schemas/contract_registry.schema.json] 129L C:0 F:0 CC↑0 D:0 (json)
-  M[hypervisor/domain_pack/templates.py] 115L C:0 F:5 CC↑1 D:0 (python)
-  M[hypervisor/config.py] 108L C:0 F:4 CC↑16 D:2 (python)
-  M[meta_agent/repair.py] 107L C:0 F:3 CC↑26 D:3 (python)
-  M[prefact.yaml] 94L C:0 F:0 CC↑0 D:0 (yaml)
-  M[meta_agent/cli.py] 93L C:0 F:1 CC↑16 D:0 (python)
-  M[generator/model.py] 88L C:2 F:2 CC↑7 D:2 (python)
-  LANGS: python:80/yaml:26/json:10/other:4/proto:2/txt:2/yml:1/j2:1/shell:1/toml:1
+  M[packages/uri3/uri3/resolvers/log_resolver.py] 126L C:2 F:8 CC↑17 D:3 (python)
+  M[pyproject.toml] 126L C:0 F:0 CC↑0 D:0 (toml)
+  M[packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py] 115L C:0 F:5 CC↑1 D:0 (python)
+  M[packages/resource-agent-factory/generator/agent_generator.py] 106L C:0 F:4 CC↑5 D:2 (python)
+  LANGS: python:120/yaml:29/json:10/other:5/toml:5/yml:3/shell:3/proto:2/txt:2/j2:1
 
 HOTSPOTS[10]:
-  ★ repair_agent_spec fan=21  // Repair common YAML contract mistakes without inventing domain logic.
-
-It fixes m
   ★ merge_main_contracts fan=20  // Register generated domain artifacts in global contracts.
-  ★ load_config fan=18  // Load configuration with precedence:
-1. Explicit path (if given)
-2. ./nlp2uri.yam
+  ★ generate_agent fan=17  // Orchestrates 17 calls
   ★ infer_intent fan=17  // Rule-based planner used as safe default before any LLM integration.
 
 This intent
   ★ main fan=16  // Orchestrates 16 calls
+  ★ load_contract_registry fan=15  // Orchestrates 15 calls
 
-REFACTOR[14]:
-  [1] H/L Split repair_agent_spec (CC=26)
-  [2] H/H Split god module goal.yaml (511L, 0 classes)
-  [3] H/H Split god module planfile.yaml (1319L, 0 classes)
-  [4] M/L Split main (CC=16)
-  [5] M/L Split load_config (CC=16)
+REFACTOR[15]:
+  [1] H/H Split god module goal.yaml (511L, 0 classes)
+  [2] H/H Split god module planfile.yaml (578L, 0 classes)
+  [3] M/L Split _parse_entry (CC=17)
+  [4] M/L Split _matches_filters (CC=16)
+  [5] M/L Split main (CC=16)
 
 EVOLUTION:
-  2026-06-14 CC̄=3.5 crit=11 6987L // Automated analysis
+  2026-06-14 CC̄=3.5 crit=14 7896L // Automated analysis

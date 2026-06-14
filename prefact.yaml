@@ -1,7 +1,10 @@
 project_root: .
 package_name: ''
 include:
-- '**/*.py'
+- 'agents/**/*.py'
+- 'domains/**/*.py'
+- 'packages/**/*.py'
+- 'testenv/**/*.py'
 exclude:
 - '**/__pycache__/**'
 - '**/node_modules/**'

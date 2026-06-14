@@ -1,0 +1,10 @@
+services:
+  ssh-agent-host:
+    build:
+      context: ./ssh_agent_host
+    container_name: hypervisor-ssh-agent-host
+    ports:
+      - "2222:22"
+      - "8101:8101"
+    environment:
+      - PYTHONUNBUFFERED=1

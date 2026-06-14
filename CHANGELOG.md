@@ -5,6 +5,157 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.6] - 2026-06-14
+
+### Added
+
+- `log://` URI scheme in `uri3` for reading and filtering log files.
+- `uri3.logs.reader` with JSON/text parsing and filters: `level`, `grep`, `logger`, `since`, `until`, `limit`, `offset`, `tail`.
+- `uri3.resolvers.log_resolver` and router integration (`resolve`, `call`).
+- `uri3 scan log://...` for log discovery with match counts and level breakdown.
+- CLI command `uri3 logs <log://...>` with optional `--summary`.
+- `Uri3Client.logs()` adapter in hypervisor.
+- Tests in `tests/uri3/test_log_uri.py`.
+
+### Changed
+
+- `uri3.protocols.schemes` and hypervisor config `enabled_schemes` include `log`.
+
+### Notes
+
+- Default streams map to `output/logs/{stream}.log` under repo root, e.g. `log://hypervisor?level=ERROR`.
+- Explicit files use `log://file/output/logs/hypervisor.log` or `log://hypervisor/subpath.log` with repo-relative paths.
+- Filters compose: `log://hypervisor?level=ERROR&grep=deployment&since=1h&limit=100`.
+
+## [0.5.5] - 2026-06-14
+
+### Added
+
+- Monorepo layout under `packages/`:
+  - `packages/uri3`
+  - `packages/nl2uri` (+ `nl2a`)
+  - `packages/resource-agent-hypervisor`
+  - `packages/resource-agent-factory`
+- uv workspace in root `pyproject.toml`.
+- Shared `find_repo_root()` markers (`contracts/` + `schemas/`).
+
+### Changed
+
+- Generator templates path and domain pack `root=` parameter for isolated tests.
+- Unified AUTO-GENERATED headers in `resource-agent-factory`.
+
+## [0.5.4] - 2026-06-14
+
+### Added
+
+- `hypervisor/deployment_registry/` (models, loader, writer, status).
+- `deployments/agent_deployments.yaml` as Agent Deployment Registry seed.
+- Pipeline sync via `sync_from_uri_tree()`.
+- Tests in `tests/hypervisor/test_deployment_registry.py`.
+
+## [0.5.3] - 2026-06-14
+
+### Added
+
+- `nl2uri.pipeline.run_full_pipeline()` — prompt → URI Tree → Domain Pack → agent → registry.
+- `meta_agent/repair/` split into loader, rules, pipeline.
+- E2E tests in `tests/integration/test_nl2a_e2e.py`.
+
+### Changed
+
+- `nl2a` CLI uses full pipeline.
+- Config split into `hypervisor/config/{defaults,env,loader,models,validators}.py`.
+
+## [0.5.2] - 2026-06-14
+
+### Added
+
+- Canonical Domain Pack generator in `hypervisor/domain_pack/generator.py` (parse → model → artifacts → write → validate → merge).
+- Templates and contract merger for domain packs.
+- Tests in `tests/domain_pack/test_generator.py`.
+
+### Changed
+
+- `meta_agent/domain_planner/domain_pack_generator.py` deprecated as re-export.
+
+## [0.5.1] - 2026-06-14
+
+### Added
+
+- Testowe środowisko `testenv/docker-compose.ssh.yml`.
+- Kontener `testenv/ssh_agent_host/` z OpenSSH oraz mock agentem HTTP.
+- Przykłady w `examples/*/*`:
+  - lokalny quickstart,
+  - skanowanie HTTP,
+  - skanowanie SSH przez kontener,
+  - prompt weather-map.
+- `deployments/agent_deployments.yaml` jako początek Agent Deployment Registry.
+- `uri3.scanner.ssh_scanner` z bezpiecznym trybem `BatchMode=yes`.
+- Komendy Makefile:
+  - `make docker-ssh-up`,
+  - `make docker-ssh-down`,
+  - `make scan-http`,
+  - `make scan-ssh`,
+  - `make examples`.
+- `uri3` jako paczka od URI, graph, resolverów i scannerów.
+- `nl2uri` jako paczka `prompt -> URI Tree`.
+- `nl2a` jako pipeline `prompt -> URI Tree -> Domain Pack -> agent`.
+
+### Changed
+
+- README opisuje teraz praktyczny start, przykłady i środowisko SSH.
+- `uri3.scanner.scanner` obsługuje `ssh://` obok `http://` i `https://`.
+- Resolver logic przeniesiony do `uri3/resolvers/` (`protocol_resolver`, `pypi_resolver`, unified router).
+
+### Notes
+
+- Skaner SSH nie podaje hasła automatycznie i nie powinien tego robić. Do automatyzacji używaj kluczy SSH.
+- Mock agent HTTP jest tylko środowiskiem testowym; nie implementuje pełnego A2A task lifecycle.
+
+## [0.5.0] - 2026-06-14
+
+### Added
+
+- Initial split: `uri3`, `nl2uri`, `nl2a`, hypervisor responsibilities documented in `docs/ARCHITECTURE_V0_5.md`.
+
+## [0.1.10] - 2026-06-14
+
+### Fixed
+- Fix unused-imports issues (ticket-00003659)
+- Fix smart-return-type issues (ticket-872cfffc)
+- Fix unused-imports issues (ticket-04f706f9)
+- Fix smart-return-type issues (ticket-7dfb5b9a)
+- Fix magic-numbers issues (ticket-dac6468f)
+- Fix ai-boilerplate issues (ticket-ad9d29e1)
+- Fix smart-return-type issues (ticket-8c04edf3)
+- Fix unused-imports issues (ticket-6405c5fd)
+- Fix smart-return-type issues (ticket-3b7074ab)
+- Fix unused-imports issues (ticket-a5ed41d3)
+- Fix smart-return-type issues (ticket-009a2fdd)
+- Fix unused-imports issues (ticket-928e2453)
+- Fix smart-return-type issues (ticket-90793d63)
+- Fix unused-imports issues (ticket-c63d0bcd)
+- Fix smart-return-type issues (ticket-b1ab7af7)
+- Fix unused-imports issues (ticket-5eb38ac1)
+
+## [0.1.10] - 2026-06-14
+
+### Fixed
+- Fix relative-imports issues (ticket-9f7a174f)
+- Fix unused-imports issues (ticket-34e3f904)
+- Fix unused-imports issues (ticket-79b13394)
+- Fix unused-imports issues (ticket-cd6cf91d)
+- Fix unused-imports issues (ticket-79f07cd0)
+- Fix unused-imports issues (ticket-2d8b8b22)
+- Fix unused-imports issues (ticket-1394e230)
+- Fix unused-imports issues (ticket-98cbf095)
+- Fix string-concat issues (ticket-8f700c0b)
+- Fix unused-imports issues (ticket-70ac9a95)
+- Fix unused-imports issues (ticket-e646160e)
+- Fix string-concat issues (ticket-754eab08)
+- Fix unused-imports issues (ticket-60b3c445)
+- Fix smart-return-type issues (ticket-cba515d7)
+
 ## [0.1.10] - 2026-06-14
 
 ### Fixed
@@ -110,6 +261,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix smart-return-type issues (ticket-780e8124)
 
 ## [Unreleased]
+
+## [0.5.7] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update agents/custom/README.md
+- Update agents/generated/README.md
+- Update agents/generated/user_agent/README.md
+- Update agents/generated/weather_map_agent/README.md
+- Update examples/01_quickstart_local/README.md
+- ... and 7 more files
+
+### Test
+- Update testenv/docker-compose.ssh.yml
+- Update testenv/ssh_agent_host/Dockerfile
+- Update testenv/ssh_agent_host/entrypoint.sh
+- Update testenv/ssh_agent_host/mock_agent_server.py
+- Update tests/generator/__init__.py
+- Update tests/generator/test_headers.py
+- Update tests/hypervisor/__init__.py
+- Update tests/hypervisor/test_config.py
+- Update tests/hypervisor/test_deployment_registry.py
+- Update tests/integration/__init__.py
+- ... and 2 more files
+
+### Other
+- Update VERSION
+- Update agents/generated/user_agent/.generated.yaml
+- Update agents/generated/user_agent/Dockerfile
+- Update agents/generated/user_agent/__init__.py
+- Update agents/generated/weather_map_agent/.generated.yaml
+- Update agents/generated/weather_map_agent/Dockerfile
+- Update agents/generated/weather_map_agent/__init__.py
+- Update agents/generated/weather_map_agent/agent_card.py
+- Update agents/generated/weather_map_agent/main.py
+- Update agents/generated/weather_map_agent/routes.py
+- ... and 162 more files
 
 ## [0.1.2] - 2026-06-14
 

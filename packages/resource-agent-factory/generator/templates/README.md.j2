@@ -1,0 +1,31 @@
+{% include '_markdown_header.j2' %}
+# {{ spec.name }}
+
+Generated thin resource agent.
+
+- Version: `{{ spec.version }}`
+- Source: `{{ source_ref }}`
+- Contract hash: `{{ contract_hash }}`
+
+## Run
+
+```bash
+uvicorn agents.generated.{{ spec.python_package }}.main:app --reload --port 8101
+```
+
+## Endpoints
+
+```txt
+GET /health
+GET /capabilities
+GET /.well-known/agent.json
+GET /.well-known/agent-card.json
+GET /resources/read?uri=...
+POST /commands
+```
+
+## Capabilities
+
+{% for cap in spec.capabilities %}
+- `{{ cap.name }}` — `{{ cap.type }}`{% if cap.uri %}, URI: `{{ cap.uri }}`{% endif %}{% if cap.command %}, command: `{{ cap.command }}`{% endif %}
+{% endfor %}

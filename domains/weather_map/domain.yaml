@@ -1,5 +1,6 @@
 domain:
   id: weather_map
+  uri: domain://weather-map
   name: weather-map
   description: Generate forecast weather maps as HTML URL artifacts.
 dependencies:

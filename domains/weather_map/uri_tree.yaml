@@ -1,7 +1,13 @@
 domain:
   id: weather_map
   uri: domain://weather-map
-  description: Generate two-week weather forecast map as HTML URL.
+  name: weather-map
+  description: Generate forecast weather maps as HTML URL artifacts.
+standards:
+  uri_tree_schema: schemas/uri_tree.schema.json
+  data_contract: protobuf
+  agent_manifest: a2a_agent_card
+  resource_model: mcp_resources
 inputs:
   place:
     uri: input://weather-map/place
@@ -11,28 +17,69 @@ inputs:
     uri: input://weather-map/days
     type: integer
     default: 14
-models:
+  forecast_model:
+    uri: input://weather-map/forecast-model
+    type: string
+    default: auto
+llm:
   planner:
     uri: llm://openrouter/qwen/qwen3-coder-next
     api_key_uri: env://OPENROUTER_API_KEY
 commands:
   generate_weather_map:
     uri: command://weather-map/generate
+    name: GenerateWeatherMap
     handler_uri: python://domains.weather_map.handlers.generate_weather_map:handler
+    input_schema_ref: app.weather.v1.GenerateWeatherMapCommand
+    emits:
+    - event://weather-map/WeatherMapGenerationRequested
+    - event://weather-map/WeatherMapGenerated
+events:
+  generation_requested:
+    uri: event://weather-map/WeatherMapGenerationRequested
+    name: WeatherMapGenerationRequested
+    schema_ref: app.weather.v1.WeatherMapGenerationRequested
+  generated:
+    uri: event://weather-map/WeatherMapGenerated
+    name: WeatherMapGenerated
+    schema_ref: app.weather.v1.WeatherMapGenerated
 resources:
+  forecast_data:
+    uri_template: resource://weather/forecast/{place}/{days}
+    schema_ref: app.weather.v1.ForecastDataView
+    renderer_ref: json
+    mime_type: application/json
   html_map:
     uri_template: resource://weather/maps/{place}/forecast/{days}
     schema_ref: app.weather.v1.WeatherMapHtmlView
     renderer_ref: html
+    mime_type: text/html
+artifacts:
+  html_file:
+    uri_template: artifact://weather-map/{place}/forecast/{days}/index.html
+    mime_type: text/html
+    public_url_template: http://localhost:8000/artifacts/weather-map/{place}/forecast/{days}/index.html
 agent:
   id: weather-map-agent
   uri: agent://weather-map-agent
+  name: weather-map-agent
   card_uri: a2a://weather-map-agent/.well-known/agent-card.json
   capabilities:
-    - name: generate_weather_map
-      uri: a2a://weather-map-agent/skills/generate_weather_map
-    - name: read_weather_map
-      uri: a2a://weather-map-agent/skills/read_weather_map
+  - name: generate_weather_map
+    type: command
+    uri: a2a://weather-map-agent/skills/generate_weather_map
+  - name: read_weather_map
+    type: resource_read
+    uri: a2a://weather-map-agent/skills/read_weather_map
 deployment:
   default:
     uri: local://agents/generated/weather_map_agent
+mcp:
+  resources_read:
+    uri: mcp://weather-map-agent/resources/read
+  tools_call:
+    uri: mcp://weather-map-agent/tools/call
+dependencies:
+- pypi://httpx
+- pypi://jinja2
+- pypi://pydantic

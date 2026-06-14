@@ -4,46 +4,27 @@ flowchart TD
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
-    subgraph CLI
-        meta_agent__cli__main["main"]
-        uri3__cli__validate["validate"]
-        uri3__cli__validate_tree["validate_tree"]
-        uri3__cli__graph["graph"]
-        uri3__cli__resolve["resolve"]
-        uri3__cli__scan["scan"]
-        uri3__cli__main["main"]
-        nl2uri__cli__generate["generate"]
-        nl2uri__cli__main["main"]
-        runtime_client__client__ResourceRuntimeClient__read_resource["read_resource"]
-        runtime_client__client__ResourceRuntimeClient__dispatch_command["dispatch_command"]
-        nl2a__cli__generate["generate"]
-        nl2a__cli__main["main"]
-        hypervisor__cli__scan["scan"]
-        hypervisor__cli__resolve["resolve"]
-        ...["+3 more"]
-    end
-
     subgraph Core
-        generator__validate__main["main"]
-        generator__hashutil__file_sha256["file_sha256"]
-        generator__agent_generator__main["main"]
-        generator__verify__verify_generated_agent["verify_generated_agent"]
-        generator__verify__verify_generated["verify_generated"]
-        generator__verify__main["main"]
-        meta_agent__api__health["health"]
-        meta_agent__api__proposal_from_prompt["proposal_from_prompt"]
-        meta_agent__api__validate["validate"]
-        meta_agent__api__repair["repair"]
-        meta_agent__api__generate["generate"]
-        meta_agent__api__pipeline["pipeline"]
-        meta_agent__api__verify["verify"]
-        meta_agent__orchestrator__validate_repair_generate["validate_repair_generate"]
-        meta_agent__orchestrator__pipeline_from_prompt["pipeline_from_prompt"]
-        ...["+45 more"]
+        testenv__ssh_agent_host__mock_agent_server__Handler___json["_json"]
+        testenv__ssh_agent_host__mock_agent_server__Handler__do_GET["do_GET"]
+        testenv__ssh_agent_host__mock_agent_server__Handler__log_message["log_message"]
+        domains__weather_map__handlers__generate_weather_map__handler["handler"]
+        packages__uri3__uri3__resolvers__http_resolver__HttpResolver__resolve["resolve"]
+        packages__uri3__uri3__resolvers__http_resolver__HttpResolver__fetch["fetch"]
+        packages__uri3__uri3__cli__validate["validate"]
+        packages__uri3__uri3__cli__validate_tree["validate_tree"]
+        packages__uri3__uri3__cli__graph["graph"]
+        packages__uri3__uri3__cli__resolve["resolve"]
+        packages__uri3__uri3__cli__scan["scan"]
+        packages__uri3__uri3__cli__logs["logs"]
+        packages__uri3__uri3__cli__main["main"]
+        packages__uri3__uri3__resolvers__env_resolver__EnvResolver__resolve["resolve"]
+        packages__uri3__uri3__resolvers__python_resolver__PythonResolver__resolve["resolve"]
+        ...["+94 more"]
     end
 
     subgraph Exporters
-        hypervisor__contract_registry__registry_exporter__export_json["export_json"]
+        packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_exporter__export_json["export_json"]
     end
 
-    class generator__validate__main,generator__agent_generator__main,generator__verify__main,meta_agent__cli__main,meta_agent__api__health,meta_agent__api__proposal_from_prompt,meta_agent__api__validate,meta_agent__api__repair,meta_agent__api__generate,meta_agent__api__pipeline entry
+    class testenv__ssh_agent_host__mock_agent_server__Handler___json,testenv__ssh_agent_host__mock_agent_server__Handler__do_GET,testenv__ssh_agent_host__mock_agent_server__Handler__log_message,domains__weather_map__handlers__generate_weather_map__handler,packages__uri3__uri3__resolvers__http_resolver__HttpResolver__resolve,packages__uri3__uri3__resolvers__http_resolver__HttpResolver__fetch,packages__uri3__uri3__cli__validate,packages__uri3__uri3__cli__validate_tree,packages__uri3__uri3__cli__graph,packages__uri3__uri3__cli__resolve entry

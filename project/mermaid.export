@@ -3,362 +3,379 @@ flowchart TD
     subgraph domains__weather_map
         domains__weather_map__handlers__generate_weather_map__handler["handler"]
     end
-    subgraph generator__agent_generator
-        generator__agent_generator__render_template["render_template"]
-        generator__agent_generator__generate_agent["generate_agent"]
-        generator__agent_generator__expand_paths["expand_paths"]
-        generator__agent_generator__main["main"]
+    subgraph packages__nl2uri
+        packages__nl2uri__nl2uri__cli__generate["generate"]
+        packages__nl2uri__nl2uri__cli__main["main"]
+        packages__nl2uri__nl2uri__llm_planner__llm_plan["llm_plan"]
+        packages__nl2uri__nl2uri__writer__write_uri_tree["write_uri_tree"]
+        packages__nl2uri__nl2a__cli__generate["generate"]
+        packages__nl2uri__nl2a__cli__main["main"]
+        packages__nl2uri__nl2uri__domain_planner___slug["_slug"]
+        packages__nl2uri__nl2uri__domain_planner___llm_uri_from_env["_llm_uri_from_env"]
+        packages__nl2uri__nl2uri__domain_planner___deterministic_weather_plan["_deterministic_weather_plan"]
+        packages__nl2uri__nl2uri__domain_planner___generic_plan["_generic_plan"]
+        packages__nl2uri__nl2uri__domain_planner___extract_json["_extract_json"]
+        packages__nl2uri__nl2uri__domain_planner___call_openrouter["_call_openrouter"]
+        packages__nl2uri__nl2uri__domain_planner__plan_from_prompt["plan_from_prompt"]
+        packages__nl2uri__nl2uri__planner___slug["_slug"]
+        packages__nl2uri__nl2uri__planner__rule_based_plan("rule_based_plan CC=8")
+        packages__nl2uri__nl2uri__pipeline__generate_tree["generate_tree"]
+        packages__nl2uri__nl2uri__pipeline__run_generate_pipeline["run_generate_pipeline"]
+        packages__nl2uri__nl2uri__pipeline__run_full_pipeline["run_full_pipeline"]
     end
-    subgraph generator__hashutil
-        generator__hashutil__file_sha256["file_sha256"]
+    subgraph packages__resource_agent_factory
+        packages__resource_agent_factory__generator__hashutil__file_sha256["file_sha256"]
+        packages__resource_agent_factory__generator__validate__validate_agent("validate_agent CC=11")
+        packages__resource_agent_factory__generator__validate__iter_agent_specs["iter_agent_specs"]
+        packages__resource_agent_factory__generator__validate__main["main"]
+        packages__resource_agent_factory__generator__header__contract_source_ref["contract_source_ref"]
+        packages__resource_agent_factory__generator__header__python_file_header["python_file_header"]
+        packages__resource_agent_factory__generator__header__dockerfile_header["dockerfile_header"]
+        packages__resource_agent_factory__generator__header__markdown_generated_banner["markdown_generated_banner"]
+        packages__resource_agent_factory__generator__header__generated_marker_payload["generated_marker_payload"]
+        packages__resource_agent_factory__generator__paths__find_repo_root["find_repo_root"]
+        packages__resource_agent_factory__generator__paths__project_root["project_root"]
+        packages__resource_agent_factory__generator__verify__verify_generated_agent["verify_generated_agent"]
+        packages__resource_agent_factory__generator__verify__verify_generated["verify_generated"]
+        packages__resource_agent_factory__generator__verify__main("main CC=9")
+        packages__resource_agent_factory__generator__agent_generator__render_template["render_template"]
+        packages__resource_agent_factory__generator__agent_generator__generate_agent["generate_agent"]
+        packages__resource_agent_factory__generator__agent_generator__expand_paths["expand_paths"]
+        packages__resource_agent_factory__generator__agent_generator__main["main"]
+        packages__resource_agent_factory__generator__model__load_agent_spec["load_agent_spec"]
+        packages__resource_agent_factory__generator__model__spec_to_plain_dict["spec_to_plain_dict"]
     end
-    subgraph generator__model
-        generator__model__load_agent_spec["load_agent_spec"]
-        generator__model__spec_to_plain_dict["spec_to_plain_dict"]
+    subgraph packages__resource_agent_hypervisor
+        packages__resource_agent_hypervisor__meta_agent__orchestrator__save_proposal_from_prompt["save_proposal_from_prompt"]
+        packages__resource_agent_hypervisor__meta_agent__orchestrator__validate_repair_generate["validate_repair_generate"]
+        packages__resource_agent_hypervisor__meta_agent__orchestrator__pipeline_from_prompt["pipeline_from_prompt"]
+        packages__resource_agent_hypervisor__meta_agent__orchestrator__asdict_result["asdict_result"]
+        packages__resource_agent_hypervisor__meta_agent__cli__main{{main CC=16}}
+        packages__resource_agent_hypervisor__meta_agent__planner__slugify["slugify"]
+        packages__resource_agent_hypervisor__meta_agent__planner__package_name["package_name"]
+        packages__resource_agent_hypervisor__meta_agent__planner__singularize["singularize"]
+        packages__resource_agent_hypervisor__meta_agent__planner__infer_intent("infer_intent CC=9")
+        packages__resource_agent_hypervisor__meta_agent__planner__intent_to_agent_spec("intent_to_agent_spec CC=8")
+        packages__resource_agent_hypervisor__meta_agent__repair__loader__load_spec["load_spec"]
+        packages__resource_agent_hypervisor__meta_agent__repair__loader__write_spec["write_spec"]
+        packages__resource_agent_hypervisor__meta_agent__repair__pipeline__repair_agent_spec["repair_agent_spec"]
+        packages__resource_agent_hypervisor__hypervisor__paths__find_repo_root["find_repo_root"]
+        packages__resource_agent_hypervisor__hypervisor__paths__repo_root["repo_root"]
+        packages__resource_agent_hypervisor__hypervisor__cli__scan["scan"]
+        packages__resource_agent_hypervisor__hypervisor__cli__resolve["resolve"]
+        packages__resource_agent_hypervisor__hypervisor__cli__status["status"]
+        packages__resource_agent_hypervisor__hypervisor__cli__config_cmd["config_cmd"]
+        packages__resource_agent_hypervisor__hypervisor__cli__main["main"]
+        packages__resource_agent_hypervisor__hypervisor__domain_pack__templates__package_name["package_name"]
+        packages__resource_agent_hypervisor__hypervisor__domain_pack__templates__generic_proto["generic_proto"]
+        packages__resource_agent_hypervisor__hypervisor__domain_pack__templates__weather_proto["weather_proto"]
+        packages__resource_agent_hypervisor__hypervisor__domain_pack__templates__weather_handler["weather_handler"]
+        packages__resource_agent_hypervisor__hypervisor__domain_pack__templates__generic_handler["generic_handler"]
+        packages__resource_agent_hypervisor__hypervisor__domain_pack__writer__write_file["write_file"]
+        packages__resource_agent_hypervisor__hypervisor__verifier__capability_tests__build_capability_test_plan["build_capability_test_plan"]
+        packages__resource_agent_hypervisor__hypervisor__verifier__cli__main["main"]
+        packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_agent_block["repair_agent_block"]
+        packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_duplicate_capability_names["repair_duplicate_capability_names"]
+        packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_missing_capability_type["repair_missing_capability_type"]
+        packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_resource_read_capability("repair_resource_read_capability CC=8")
+        packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_command_capability["repair_command_capability"]
+        packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_capabilities["repair_capabilities"]
+        packages__resource_agent_hypervisor__hypervisor__policy_gate__gate__evaluate_change["evaluate_change"]
+        packages__resource_agent_hypervisor__hypervisor__config__loader__config_search_paths["config_search_paths"]
+        packages__resource_agent_hypervisor__hypervisor__config__loader__resolve_config_path["resolve_config_path"]
+        packages__resource_agent_hypervisor__hypervisor__config__loader__load_config["load_config"]
+        packages__resource_agent_hypervisor__hypervisor__config__loader__get_config["get_config"]
+        packages__resource_agent_hypervisor__hypervisor__config__loader__load_hypervisor_config["load_hypervisor_config"]
+        packages__resource_agent_hypervisor__hypervisor__config__env___parse_bool["_parse_bool"]
+        packages__resource_agent_hypervisor__hypervisor__config__env__apply_legacy_env_overrides["apply_legacy_env_overrides"]
+        packages__resource_agent_hypervisor__hypervisor__config__env__apply_structured_env_overrides("apply_structured_env_overrides CC=9")
+        packages__resource_agent_hypervisor__hypervisor__config__env__apply_env_overrides["apply_env_overrides"]
+        packages__resource_agent_hypervisor__hypervisor__evolution__validator__validate_proposal["validate_proposal"]
+        packages__resource_agent_hypervisor__hypervisor__config__validators__merge_config["merge_config"]
+        packages__resource_agent_hypervisor__hypervisor__config__validators__validate_config{{validate_config CC=17}}
+        packages__resource_agent_hypervisor__hypervisor__evolution__cli__main("main CC=10")
+        packages__resource_agent_hypervisor__hypervisor__evolution__models__load_proposal["load_proposal"]
+        packages__resource_agent_hypervisor__hypervisor__contract_registry__loader___read_yaml["_read_yaml"]
+        packages__resource_agent_hypervisor__hypervisor__contract_registry__loader__load_contract_registry("load_contract_registry CC=9")
+        packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_exporter__export_json["export_json"]
+        packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_exporter__export_markdown["export_markdown"]
+        packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client____init__["__init__"]
+        packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__resolve["resolve"]
+        packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__call["call"]
+        packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__scan["scan"]
+        packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__logs["logs"]
+        packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__graph["graph"]
+        packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__nl2uri["nl2uri"]
     end
-    subgraph generator__validate
-        generator__validate__validate_agent("validate_agent CC=11")
-        generator__validate__iter_agent_specs["iter_agent_specs"]
-        generator__validate__main["main"]
+    subgraph packages__uri3
+        packages__uri3__uri3__scanner__http_scanner__scan_http["scan_http"]
+        packages__uri3__uri3__resolvers__pypi_resolver__resolve_pypi["resolve_pypi"]
+        packages__uri3__uri3__resolvers__http_resolver__HttpResolver__resolve["resolve"]
+        packages__uri3__uri3__resolvers__http_resolver__HttpResolver__fetch["fetch"]
+        packages__uri3__uri3__cli__validate["validate"]
+        packages__uri3__uri3__cli__validate_tree["validate_tree"]
+        packages__uri3__uri3__cli__graph["graph"]
+        packages__uri3__uri3__cli__resolve["resolve"]
+        packages__uri3__uri3__cli__scan["scan"]
+        packages__uri3__uri3__cli__logs["logs"]
+        packages__uri3__uri3__cli__main["main"]
+        packages__uri3__uri3__resolvers__protocol_resolver__resolve_http_like["resolve_http_like"]
+        packages__uri3__uri3__resolvers__protocol_resolver__resolve_a2a["resolve_a2a"]
+        packages__uri3__uri3__resolvers__protocol_resolver__resolve_mcp["resolve_mcp"]
+        packages__uri3__uri3__resolvers__protocol_resolver__resolve_resource["resolve_resource"]
+        packages__uri3__uri3__resolvers__env_resolver__resolve_env["resolve_env"]
+        packages__uri3__uri3__resolvers__env_resolver__EnvResolver__resolve["resolve"]
+        packages__uri3__uri3__resolvers__python_resolver___split_python_uri["_split_python_uri"]
+        packages__uri3__uri3__resolvers__python_resolver__resolve_python["resolve_python"]
+        packages__uri3__uri3__resolvers__python_resolver__call_python["call_python"]
+        packages__uri3__uri3__resolvers__python_resolver__PythonResolver__resolve["resolve"]
+        packages__uri3__uri3__resolvers__python_resolver__PythonResolver__call["call"]
+        packages__uri3__uri3__protocols__normalizer__normalize_uri["normalize_uri"]
+        packages__uri3__uri3__logs__reader__resolve_log_path["resolve_log_path"]
+        packages__uri3__uri3__logs__reader___parse_since["_parse_since"]
+        packages__uri3__uri3__logs__reader___parse_entry{{_parse_entry CC=17}}
+        packages__uri3__uri3__logs__reader___entry_timestamp["_entry_timestamp"]
+        packages__uri3__uri3__logs__reader___level_rank["_level_rank"]
+        packages__uri3__uri3__logs__reader___matches_filters{{_matches_filters CC=16}}
+        packages__uri3__uri3__logs__reader__read_logs("read_logs CC=9")
+        packages__uri3__uri3__logs__reader__summarize_logs["summarize_logs"]
+        packages__uri3__uri3__protocols__parser__parse_uri["parse_uri"]
+        packages__uri3__uri3__resolvers__llm_resolver__resolve_llm["resolve_llm"]
+        packages__uri3__uri3__resolvers__llm_resolver__LLMResolver__resolve["resolve"]
+        packages__uri3__uri3__paths__find_repo_root["find_repo_root"]
+        packages__uri3__uri3__paths__repo_root["repo_root"]
+        packages__uri3__uri3__graph__uri_graph__UriGraph__add_node["add_node"]
+        packages__uri3__uri3__graph__uri_graph__UriGraph__add_edge["add_edge"]
+        packages__uri3__uri3__graph__uri_graph__build_graph_from_tree("build_graph_from_tree CC=10")
+        packages__uri3__uri3__validators__uri_validator__validate_uri["validate_uri"]
+        packages__uri3__uri3__validators__uri_tree_validator__load_yaml["load_yaml"]
+        packages__uri3__uri3__validators__uri_tree_validator__validate_uri_tree["validate_uri_tree"]
+        packages__uri3__uri3__scanner__scanner__scan_log["scan_log"]
+        packages__uri3__uri3__scanner__scanner__scan["scan"]
+        packages__uri3__uri3__resolvers__log_resolver__LogRef__to_dict["to_dict"]
+        packages__uri3__uri3__resolvers__log_resolver___first["_first"]
+        packages__uri3__uri3__resolvers__log_resolver___int["_int"]
+        packages__uri3__uri3__resolvers__log_resolver___bool["_bool"]
+        packages__uri3__uri3__resolvers__log_resolver__parse_log_uri{{parse_log_uri CC=17}}
+        packages__uri3__uri3__resolvers__log_resolver__resolve_log["resolve_log"]
+        packages__uri3__uri3__resolvers__log_resolver__LogResolver__resolve["resolve"]
+        packages__uri3__uri3__resolvers__log_resolver__LogResolver__read["read"]
+        packages__uri3__uri3__resolvers__router__resolve("resolve CC=11")
+        packages__uri3__uri3__resolvers__router__call["call"]
+        packages__uri3__uri3__resolvers__router__Uri3Router____init__["__init__"]
+        packages__uri3__uri3__resolvers__router__Uri3Router__resolve["resolve"]
+        packages__uri3__uri3__resolvers__router__Uri3Router__call["call"]
     end
-    subgraph generator__verify
-        generator__verify__verify_generated_agent["verify_generated_agent"]
-        generator__verify__verify_generated["verify_generated"]
-        generator__verify__main("main CC=9")
+    subgraph testenv__ssh_agent_host
+        testenv__ssh_agent_host__mock_agent_server__Handler___json["_json"]
+        testenv__ssh_agent_host__mock_agent_server__Handler__do_GET["do_GET"]
+        testenv__ssh_agent_host__mock_agent_server__Handler__log_message["log_message"]
     end
-    subgraph hypervisor__cli
-        hypervisor__cli__scan["scan"]
-        hypervisor__cli__resolve["resolve"]
-        hypervisor__cli__status["status"]
-        hypervisor__cli__config_cmd["config_cmd"]
-        hypervisor__cli__main["main"]
-    end
-    subgraph hypervisor__compatibility
-        hypervisor__compatibility__checker___load_policy["_load_policy"]
-        hypervisor__compatibility__checker__classify_registry_change("classify_registry_change CC=8")
-    end
-    subgraph hypervisor__config
-        hypervisor__config___load_yaml["_load_yaml"]
-        hypervisor__config__get_default_config["get_default_config"]
-        hypervisor__config__load_config{{load_config CC=16}}
-        hypervisor__config__get_config["get_config"]
-    end
-    subgraph hypervisor__contract_registry
-        hypervisor__contract_registry__loader___read_yaml["_read_yaml"]
-        hypervisor__contract_registry__loader__load_contract_registry("load_contract_registry CC=9")
-        hypervisor__contract_registry__cli__main{{main CC=20}}
-        hypervisor__contract_registry__registry_exporter__export_json["export_json"]
-        hypervisor__contract_registry__registry_exporter__export_markdown["export_markdown"]
-        hypervisor__contract_registry__validate__validate_registry{{validate_registry CC=20}}
-        hypervisor__contract_registry__schema_validator___read_yaml["_read_yaml"]
-        hypervisor__contract_registry__schema_validator___read_json["_read_json"]
-        hypervisor__contract_registry__schema_validator__validate_file["validate_file"]
-        hypervisor__contract_registry__schema_validator__validate_contract_files["validate_contract_files"]
-        hypervisor__contract_registry__cross_validator___load_proto_text["_load_proto_text"]
-        hypervisor__contract_registry__cross_validator___schema_exists["_schema_exists"]
-        hypervisor__contract_registry__cross_validator__validate_cross_references{{validate_cross_references CC=22}}
-        hypervisor__contract_registry__cross_validator__validate_root["validate_root"]
-        hypervisor__contract_registry__models__ContractRegistry__resource_by_uri["resource_by_uri"]
-        hypervisor__contract_registry__models__ContractRegistry__view_by_name["view_by_name"]
-        hypervisor__contract_registry__models__ContractRegistry__capability_by_name["capability_by_name"]
-        hypervisor__contract_registry__registry_builder___hash_file["_hash_file"]
-        hypervisor__contract_registry__registry_builder___contract_hash["_contract_hash"]
-        hypervisor__contract_registry__registry_builder__build_registry_manifest["build_registry_manifest"]
-        hypervisor__contract_registry__registry_builder__write_registry_manifest["write_registry_manifest"]
-        hypervisor__contract_registry__merger__merge_main_contracts("merge_main_contracts CC=11")
-    end
-    subgraph hypervisor__core
-        hypervisor__core__Hypervisor____post_init__["__post_init__"]
-        hypervisor__core__Hypervisor__from_config["from_config"]
-        hypervisor__core__Hypervisor__start["start"]
-        hypervisor__core__Hypervisor__stop["stop"]
-        hypervisor__core__Hypervisor__register_agent["register_agent"]
-        hypervisor__core__Hypervisor__status["status"]
-        hypervisor__core__Hypervisor____repr__["__repr__"]
-    end
-    subgraph hypervisor__domain_pack
-        hypervisor__domain_pack__templates__package_name["package_name"]
-        hypervisor__domain_pack__templates__generic_proto["generic_proto"]
-        hypervisor__domain_pack__templates__weather_proto["weather_proto"]
-        hypervisor__domain_pack__templates__weather_handler["weather_handler"]
-        hypervisor__domain_pack__templates__generic_handler["generic_handler"]
-        hypervisor__domain_pack__writer__repo_root["repo_root"]
-        hypervisor__domain_pack__writer__write_file["write_file"]
-        hypervisor__domain_pack__generator__DomainModel__from_uri_tree["from_uri_tree"]
-        hypervisor__domain_pack__generator__parse_uri_tree["parse_uri_tree"]
-        hypervisor__domain_pack__generator__derive_domain_model["derive_domain_model"]
-        hypervisor__domain_pack__generator__generate_proto["generate_proto"]
-        hypervisor__domain_pack__generator__generate_resources["generate_resources"]
-        hypervisor__domain_pack__generator__generate_views["generate_views"]
-        hypervisor__domain_pack__generator__generate_commands["generate_commands"]
-        hypervisor__domain_pack__generator__generate_renderers["generate_renderers"]
-        hypervisor__domain_pack__generator__generate_handlers["generate_handlers"]
-        hypervisor__domain_pack__generator__generate_agent_contract["generate_agent_contract"]
-        hypervisor__domain_pack__generator__write_domain_pack["write_domain_pack"]
-        hypervisor__domain_pack__generator__generate_domain_pack_from_tree["generate_domain_pack_from_tree"]
-        hypervisor__domain_pack__generator__generate_domain_pack["generate_domain_pack"]
-    end
-    subgraph hypervisor__evolution
-        hypervisor__evolution__validator__validate_proposal["validate_proposal"]
-        hypervisor__evolution__cli__main("main CC=10")
-        hypervisor__evolution__models__load_proposal["load_proposal"]
-    end
-    subgraph hypervisor__policy_gate
-        hypervisor__policy_gate__gate__evaluate_change["evaluate_change"]
-    end
-    subgraph hypervisor__uri
-        hypervisor__uri__client__Uri3Client____init__["__init__"]
-        hypervisor__uri__client__Uri3Client__resolve["resolve"]
-        hypervisor__uri__client__Uri3Client__call["call"]
-        hypervisor__uri__client__Uri3Client__scan["scan"]
-        hypervisor__uri__client__Uri3Client__graph["graph"]
-        hypervisor__uri__client__Uri3Client__nl2uri["nl2uri"]
-    end
-    subgraph hypervisor__verifier
-        hypervisor__verifier__cli__main["main"]
-        hypervisor__verifier__capability_tests__build_capability_test_plan["build_capability_test_plan"]
-    end
-    subgraph meta_agent__api
-        meta_agent__api__health["health"]
-        meta_agent__api__proposal_from_prompt["proposal_from_prompt"]
-        meta_agent__api__validate["validate"]
-        meta_agent__api__repair["repair"]
-        meta_agent__api__generate["generate"]
-        meta_agent__api__pipeline["pipeline"]
-        meta_agent__api__verify["verify"]
-    end
-    subgraph meta_agent__cli
-        meta_agent__cli__main{{main CC=16}}
-    end
-    subgraph meta_agent__domain_planner
-        meta_agent__domain_planner__llm_planner___slug["_slug"]
-        meta_agent__domain_planner__llm_planner___llm_uri_from_env["_llm_uri_from_env"]
-        meta_agent__domain_planner__llm_planner___deterministic_weather_plan["_deterministic_weather_plan"]
-        meta_agent__domain_planner__llm_planner___generic_plan["_generic_plan"]
-        meta_agent__domain_planner__llm_planner___extract_json["_extract_json"]
-        meta_agent__domain_planner__llm_planner___call_openrouter["_call_openrouter"]
-        meta_agent__domain_planner__llm_planner__plan_domain_from_prompt["plan_domain_from_prompt"]
-    end
-    subgraph meta_agent__models
-        meta_agent__models__dump_yaml["dump_yaml"]
-    end
-    subgraph meta_agent__orchestrator
-        meta_agent__orchestrator__save_proposal_from_prompt["save_proposal_from_prompt"]
-        meta_agent__orchestrator__validate_repair_generate["validate_repair_generate"]
-        meta_agent__orchestrator__pipeline_from_prompt["pipeline_from_prompt"]
-        meta_agent__orchestrator__asdict_result["asdict_result"]
-    end
-    subgraph meta_agent__planner
-        meta_agent__planner__slugify["slugify"]
-        meta_agent__planner__package_name["package_name"]
-        meta_agent__planner__singularize["singularize"]
-        meta_agent__planner__infer_intent("infer_intent CC=9")
-        meta_agent__planner__intent_to_agent_spec("intent_to_agent_spec CC=8")
-    end
-    subgraph meta_agent__repair
-        meta_agent__repair___load_yaml["_load_yaml"]
-        meta_agent__repair___write_yaml["_write_yaml"]
-        meta_agent__repair__repair_agent_spec{{repair_agent_spec CC=26}}
-    end
-    subgraph nl2a__cli
-        nl2a__cli__generate["generate"]
-        nl2a__cli__main["main"]
-    end
-    subgraph nl2uri__cli
-        nl2uri__cli__generate["generate"]
-        nl2uri__cli__main["main"]
-    end
-    subgraph nl2uri__llm_planner
-        nl2uri__llm_planner__llm_plan["llm_plan"]
-    end
-    subgraph nl2uri__planner
-        nl2uri__planner___slug["_slug"]
-        nl2uri__planner__rule_based_plan("rule_based_plan CC=8")
-    end
-    subgraph nl2uri__writer
-        nl2uri__writer__write_uri_tree["write_uri_tree"]
-    end
-    subgraph runtime_client__client
-        runtime_client__client__ResourceRuntimeClient____init__["__init__"]
-        runtime_client__client__ResourceRuntimeClient__read_resource["read_resource"]
-        runtime_client__client__ResourceRuntimeClient__dispatch_command["dispatch_command"]
-    end
-    subgraph uri3__cli
-        uri3__cli__validate["validate"]
-        uri3__cli__validate_tree["validate_tree"]
-        uri3__cli__graph["graph"]
-        uri3__cli__resolve["resolve"]
-        uri3__cli__scan["scan"]
-        uri3__cli__main["main"]
-    end
-    subgraph uri3__graph
-        uri3__graph__uri_graph__UriGraph__add_node["add_node"]
-        uri3__graph__uri_graph__UriGraph__add_edge["add_edge"]
-        uri3__graph__uri_graph__build_graph_from_tree("build_graph_from_tree CC=10")
-    end
-    subgraph uri3__protocols
-        uri3__protocols__normalizer__normalize_uri["normalize_uri"]
-        uri3__protocols__parser__parse_uri["parse_uri"]
-    end
-    subgraph uri3__resolvers
-        uri3__resolvers__protocol_resolver__resolve_http_like["resolve_http_like"]
-        uri3__resolvers__protocol_resolver__resolve_a2a["resolve_a2a"]
-        uri3__resolvers__protocol_resolver__resolve_mcp["resolve_mcp"]
-        uri3__resolvers__protocol_resolver__resolve_resource["resolve_resource"]
-        uri3__resolvers__pypi_resolver__resolve_pypi["resolve_pypi"]
-        uri3__resolvers__env_resolver__resolve_env["resolve_env"]
-        uri3__resolvers__env_resolver__EnvResolver__resolve["resolve"]
-        uri3__resolvers__llm_resolver__resolve_llm["resolve_llm"]
-        uri3__resolvers__llm_resolver__LLMResolver__resolve["resolve"]
-        uri3__resolvers__python_resolver___split_python_uri["_split_python_uri"]
-        uri3__resolvers__python_resolver__resolve_python["resolve_python"]
-        uri3__resolvers__python_resolver__call_python["call_python"]
-        uri3__resolvers__python_resolver__PythonResolver__resolve["resolve"]
-        uri3__resolvers__python_resolver__PythonResolver__call["call"]
-        uri3__resolvers__http_resolver__HttpResolver__resolve["resolve"]
-        uri3__resolvers__http_resolver__HttpResolver__fetch["fetch"]
-        uri3__resolvers__router__resolve("resolve CC=10")
-        uri3__resolvers__router__call["call"]
-        uri3__resolvers__router__Uri3Router____init__["__init__"]
-        uri3__resolvers__router__Uri3Router__resolve["resolve"]
-        uri3__resolvers__router__Uri3Router__call["call"]
-    end
-    subgraph uri3__scanner
-        uri3__scanner__http_scanner__scan_http["scan_http"]
-        uri3__scanner__scanner__scan["scan"]
-    end
-    subgraph uri3__validators
-        uri3__validators__uri_validator__validate_uri["validate_uri"]
-        uri3__validators__uri_tree_validator__load_yaml["load_yaml"]
-        uri3__validators__uri_tree_validator__validate_uri_tree["validate_uri_tree"]
-    end
-    generator__validate__validate_agent --> generator__model__load_agent_spec
-    generator__validate__main --> generator__validate__iter_agent_specs
-    generator__validate__main --> generator__validate__validate_agent
-    generator__agent_generator__generate_agent --> generator__validate__validate_agent
-    generator__agent_generator__generate_agent --> generator__model__load_agent_spec
-    generator__agent_generator__generate_agent --> generator__hashutil__file_sha256
-    generator__agent_generator__generate_agent --> generator__model__spec_to_plain_dict
-    generator__agent_generator__generate_agent --> generator__agent_generator__render_template
-    generator__agent_generator__main --> generator__agent_generator__expand_paths
-    generator__agent_generator__main --> generator__agent_generator__generate_agent
-    generator__verify__verify_generated_agent --> generator__hashutil__file_sha256
-    generator__verify__verify_generated --> generator__verify__verify_generated_agent
-    generator__verify__main --> generator__verify__verify_generated
-    meta_agent__planner__infer_intent --> meta_agent__planner__singularize
-    meta_agent__planner__infer_intent --> meta_agent__planner__slugify
-    meta_agent__planner__intent_to_agent_spec --> meta_agent__planner__singularize
-    meta_agent__planner__intent_to_agent_spec --> meta_agent__planner__package_name
-    meta_agent__api__proposal_from_prompt --> meta_agent__orchestrator__save_proposal_from_prompt
-    meta_agent__api__validate --> generator__validate__validate_agent
-    meta_agent__api__repair --> meta_agent__repair__repair_agent_spec
-    meta_agent__api__generate --> meta_agent__orchestrator__asdict_result
-    meta_agent__api__generate --> meta_agent__orchestrator__validate_repair_generate
-    meta_agent__api__pipeline --> meta_agent__orchestrator__pipeline_from_prompt
-    meta_agent__api__pipeline --> meta_agent__orchestrator__asdict_result
-    meta_agent__api__verify --> generator__verify__verify_generated
-    meta_agent__orchestrator__save_proposal_from_prompt --> meta_agent__planner__infer_intent
-    meta_agent__orchestrator__save_proposal_from_prompt --> meta_agent__planner__intent_to_agent_spec
-    meta_agent__orchestrator__save_proposal_from_prompt --> meta_agent__planner__package_name
-    meta_agent__orchestrator__validate_repair_generate --> generator__validate__validate_agent
-    meta_agent__orchestrator__validate_repair_generate --> generator__verify__verify_generated
-    meta_agent__orchestrator__validate_repair_generate --> meta_agent__repair__repair_agent_spec
-    meta_agent__orchestrator__validate_repair_generate --> generator__agent_generator__generate_agent
-    meta_agent__orchestrator__pipeline_from_prompt --> meta_agent__orchestrator__save_proposal_from_prompt
-    meta_agent__orchestrator__pipeline_from_prompt --> meta_agent__orchestrator__validate_repair_generate
-    meta_agent__repair__repair_agent_spec --> generator__validate__validate_agent
-    meta_agent__repair__repair_agent_spec --> meta_agent__repair___load_yaml
-    meta_agent__repair__repair_agent_spec --> meta_agent__planner__package_name
-    meta_agent__domain_planner__llm_planner___deterministic_weather_plan --> meta_agent__domain_planner__llm_planner___llm_uri_from_env
-    meta_agent__domain_planner__llm_planner___generic_plan --> meta_agent__domain_planner__llm_planner___slug
-    meta_agent__domain_planner__llm_planner___call_openrouter --> meta_agent__domain_planner__llm_planner___extract_json
-    meta_agent__domain_planner__llm_planner__plan_domain_from_prompt --> meta_agent__domain_planner__llm_planner___generic_plan
-    meta_agent__domain_planner__llm_planner__plan_domain_from_prompt --> meta_agent__domain_planner__llm_planner___deterministic_weather_plan
-    meta_agent__domain_planner__llm_planner__plan_domain_from_prompt --> meta_agent__domain_planner__llm_planner___call_openrouter
-    uri3__cli__validate --> uri3__validators__uri_validator__validate_uri
-    uri3__cli__validate_tree --> uri3__validators__uri_tree_validator__validate_uri_tree
-    uri3__cli__graph --> uri3__graph__uri_graph__build_graph_from_tree
-    uri3__validators__uri_validator__validate_uri --> uri3__protocols__parser__parse_uri
-    uri3__validators__uri_tree_validator__validate_uri_tree --> uri3__validators__uri_tree_validator__load_yaml
-    uri3__scanner__scanner__scan --> uri3__scanner__http_scanner__scan_http
-    uri3__scanner__scanner__scan --> uri3__protocols__parser__parse_uri
-    uri3__protocols__normalizer__normalize_uri --> uri3__protocols__parser__parse_uri
-    hypervisor__config__get_default_config --> hypervisor__config___load_yaml
-    hypervisor__config__load_config --> hypervisor__config__get_default_config
-    hypervisor__config__load_config --> hypervisor__config___load_yaml
-    hypervisor__config__get_config --> hypervisor__config__load_config
-    hypervisor__core__Hypervisor__from_config --> hypervisor__config__load_config
-    hypervisor__verifier__cli__main --> hypervisor__contract_registry__loader__load_contract_registry
-    hypervisor__verifier__cli__main --> hypervisor__contract_registry__validate__validate_registry
-    hypervisor__verifier__cli__main --> hypervisor__verifier__capability_tests__build_capability_test_plan
-    hypervisor__evolution__cli__main --> hypervisor__evolution__models__load_proposal
-    hypervisor__evolution__cli__main --> hypervisor__evolution__validator__validate_proposal
-    hypervisor__contract_registry__loader__load_contract_registry --> hypervisor__contract_registry__loader___read_yaml
-    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__schema_validator__validate_contract_files
-    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__loader__load_contract_registry
-    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__validate__validate_registry
-    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__cross_validator__validate_root
-    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__registry_builder__write_registry_manifest
-    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__registry_exporter__export_markdown
-    hypervisor__contract_registry__registry_exporter__export_json --> hypervisor__contract_registry__registry_builder__write_registry_manifest
-    hypervisor__contract_registry__registry_exporter__export_markdown --> hypervisor__contract_registry__registry_builder__build_registry_manifest
-    hypervisor__contract_registry__schema_validator__validate_file --> hypervisor__contract_registry__schema_validator___read_yaml
-    hypervisor__contract_registry__schema_validator__validate_file --> hypervisor__contract_registry__schema_validator___read_json
-    hypervisor__contract_registry__schema_validator__validate_contract_files --> hypervisor__contract_registry__schema_validator__validate_file
-    hypervisor__contract_registry__cross_validator__validate_cross_references --> hypervisor__contract_registry__cross_validator___load_proto_text
-    hypervisor__contract_registry__cross_validator__validate_cross_references --> hypervisor__contract_registry__cross_validator___schema_exists
-    hypervisor__contract_registry__cross_validator__validate_root --> hypervisor__contract_registry__cross_validator__validate_cross_references
-    hypervisor__contract_registry__cross_validator__validate_root --> hypervisor__contract_registry__loader__load_contract_registry
-    hypervisor__contract_registry__registry_builder__build_registry_manifest --> hypervisor__contract_registry__loader__load_contract_registry
-    hypervisor__contract_registry__registry_builder__build_registry_manifest --> hypervisor__contract_registry__registry_builder___contract_hash
-    hypervisor__contract_registry__registry_builder__write_registry_manifest --> hypervisor__contract_registry__registry_builder__build_registry_manifest
-    hypervisor__compatibility__checker__classify_registry_change --> hypervisor__contract_registry__loader__load_contract_registry
-    hypervisor__compatibility__checker__classify_registry_change --> hypervisor__compatibility__checker___load_policy
-    nl2uri__cli__generate --> nl2uri__planner__rule_based_plan
-    nl2uri__cli__generate --> nl2uri__llm_planner__llm_plan
-    nl2uri__cli__generate --> nl2uri__writer__write_uri_tree
-    nl2uri__llm_planner__llm_plan --> nl2uri__planner__rule_based_plan
-    nl2uri__planner__rule_based_plan --> nl2uri__planner___slug
-    nl2a__cli__generate --> nl2uri__writer__write_uri_tree
-    nl2a__cli__generate --> hypervisor__domain_pack__generator__generate_domain_pack
-    nl2a__cli__generate --> nl2uri__planner__rule_based_plan
-    nl2a__cli__generate --> nl2uri__llm_planner__llm_plan
-    hypervisor__uri__client__Uri3Client__graph --> uri3__graph__uri_graph__build_graph_from_tree
-    hypervisor__uri__client__Uri3Client__nl2uri --> nl2uri__planner__rule_based_plan
-    hypervisor__contract_registry__merger__merge_main_contracts --> hypervisor__domain_pack__writer__repo_root
-    hypervisor__contract_registry__merger__merge_main_contracts --> hypervisor__domain_pack__writer__write_file
-    hypervisor__domain_pack__templates__generic_proto --> hypervisor__domain_pack__templates__package_name
-    uri3__resolvers__env_resolver__EnvResolver__resolve --> uri3__resolvers__env_resolver__resolve_env
-    uri3__resolvers__llm_resolver__LLMResolver__resolve --> uri3__resolvers__llm_resolver__resolve_llm
-    uri3__resolvers__llm_resolver__LLMResolver__resolve --> uri3__protocols__parser__parse_uri
-    uri3__resolvers__python_resolver__resolve_python --> uri3__resolvers__python_resolver___split_python_uri
-    uri3__resolvers__python_resolver__call_python --> uri3__resolvers__python_resolver___split_python_uri
-    uri3__resolvers__python_resolver__PythonResolver__resolve --> uri3__resolvers__python_resolver__resolve_python
-    uri3__resolvers__python_resolver__PythonResolver__call --> uri3__resolvers__python_resolver__call_python
-    uri3__resolvers__http_resolver__HttpResolver__resolve --> uri3__resolvers__protocol_resolver__resolve_http_like
-    hypervisor__cli__config_cmd --> hypervisor__config__load_config
-    hypervisor__cli__config_cmd --> hypervisor__config__get_config
-    hypervisor__domain_pack__generator__write_domain_pack --> hypervisor__domain_pack__writer__repo_root
-    hypervisor__domain_pack__generator__write_domain_pack --> hypervisor__domain_pack__writer__write_file
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__derive_domain_model
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__generate_proto
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__generate_resources
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__generate_views
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__generate_commands
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__generate_renderers
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__generate_handlers
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__generate_agent_contract
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__domain_pack__generator__write_domain_pack
-    hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> hypervisor__contract_registry__merger__merge_main_contracts
-    hypervisor__domain_pack__generator__generate_domain_pack --> hypervisor__domain_pack__generator__parse_uri_tree
-    hypervisor__domain_pack__generator__generate_domain_pack --> hypervisor__domain_pack__generator__generate_domain_pack_from_tree
-    uri3__resolvers__router__resolve --> uri3__resolvers__env_resolver__resolve_env
-    uri3__resolvers__router__resolve --> uri3__resolvers__llm_resolver__resolve_llm
-    uri3__resolvers__router__resolve --> uri3__resolvers__python_resolver__resolve_python
-    uri3__resolvers__router__resolve --> uri3__resolvers__pypi_resolver__resolve_pypi
-    uri3__resolvers__router__call --> uri3__resolvers__python_resolver__call_python
+    packages__uri3__uri3__resolvers__http_resolver__HttpResolver__resolve --> packages__uri3__uri3__resolvers__protocol_resolver__resolve_http_like
+    packages__uri3__uri3__cli__validate --> packages__uri3__uri3__validators__uri_validator__validate_uri
+    packages__uri3__uri3__cli__validate_tree --> packages__uri3__uri3__validators__uri_tree_validator__validate_uri_tree
+    packages__uri3__uri3__cli__graph --> packages__uri3__uri3__graph__uri_graph__build_graph_from_tree
+    packages__uri3__uri3__cli__logs --> packages__uri3__uri3__logs__reader__summarize_logs
+    packages__uri3__uri3__cli__logs --> packages__uri3__uri3__logs__reader__read_logs
+    packages__uri3__uri3__resolvers__env_resolver__EnvResolver__resolve --> packages__uri3__uri3__resolvers__env_resolver__resolve_env
+    packages__uri3__uri3__resolvers__python_resolver__resolve_python --> packages__uri3__uri3__resolvers__python_resolver___split_python_uri
+    packages__uri3__uri3__resolvers__python_resolver__call_python --> packages__uri3__uri3__resolvers__python_resolver___split_python_uri
+    packages__uri3__uri3__resolvers__python_resolver__PythonResolver__resolve --> packages__uri3__uri3__resolvers__python_resolver__resolve_python
+    packages__uri3__uri3__resolvers__python_resolver__PythonResolver__call --> packages__uri3__uri3__resolvers__python_resolver__call_python
+    packages__uri3__uri3__protocols__normalizer__normalize_uri --> packages__uri3__uri3__protocols__parser__parse_uri
+    packages__uri3__uri3__logs__reader__resolve_log_path --> packages__resource_agent_factory__generator__paths__find_repo_root
+    packages__uri3__uri3__logs__reader___matches_filters --> packages__uri3__uri3__logs__reader___entry_timestamp
+    packages__uri3__uri3__logs__reader___matches_filters --> packages__uri3__uri3__logs__reader___level_rank
+    packages__uri3__uri3__logs__reader__read_logs --> packages__uri3__uri3__resolvers__log_resolver__parse_log_uri
+    packages__uri3__uri3__logs__reader__read_logs --> packages__uri3__uri3__logs__reader__resolve_log_path
+    packages__uri3__uri3__logs__reader__read_logs --> packages__uri3__uri3__logs__reader___parse_since
+    packages__uri3__uri3__logs__reader__read_logs --> packages__uri3__uri3__logs__reader___parse_entry
+    packages__uri3__uri3__logs__reader__read_logs --> packages__uri3__uri3__logs__reader___matches_filters
+    packages__uri3__uri3__logs__reader__summarize_logs --> packages__uri3__uri3__resolvers__log_resolver__parse_log_uri
+    packages__uri3__uri3__logs__reader__summarize_logs --> packages__uri3__uri3__logs__reader__resolve_log_path
+    packages__uri3__uri3__logs__reader__summarize_logs --> packages__uri3__uri3__logs__reader__read_logs
+    packages__resource_agent_factory__generator__validate__validate_agent --> packages__resource_agent_factory__generator__model__load_agent_spec
+    packages__resource_agent_factory__generator__validate__main --> packages__resource_agent_factory__generator__validate__iter_agent_specs
+    packages__resource_agent_factory__generator__validate__main --> packages__resource_agent_factory__generator__validate__validate_agent
+    packages__resource_agent_factory__generator__header__contract_source_ref --> packages__resource_agent_factory__generator__paths__project_root
+    packages__resource_agent_factory__generator__paths__project_root --> packages__resource_agent_factory__generator__paths__find_repo_root
+    packages__resource_agent_factory__generator__verify__verify_generated_agent --> packages__resource_agent_factory__generator__hashutil__file_sha256
+    packages__resource_agent_factory__generator__verify__verify_generated --> packages__resource_agent_factory__generator__verify__verify_generated_agent
+    packages__resource_agent_factory__generator__verify__main --> packages__resource_agent_factory__generator__verify__verify_generated
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__validate__validate_agent
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__model__load_agent_spec
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__hashutil__file_sha256
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__header__contract_source_ref
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__header__python_file_header
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__header__dockerfile_header
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__header__markdown_generated_banner
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__model__spec_to_plain_dict
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> packages__resource_agent_factory__generator__agent_generator__render_template
+    packages__resource_agent_factory__generator__agent_generator__main --> packages__resource_agent_factory__generator__agent_generator__expand_paths
+    packages__resource_agent_factory__generator__agent_generator__main --> packages__resource_agent_factory__generator__agent_generator__generate_agent
+    packages__nl2uri__nl2uri__cli__generate --> packages__nl2uri__nl2uri__planner__rule_based_plan
+    packages__nl2uri__nl2uri__cli__generate --> packages__nl2uri__nl2uri__llm_planner__llm_plan
+    packages__nl2uri__nl2uri__cli__generate --> packages__nl2uri__nl2uri__writer__write_uri_tree
+    packages__nl2uri__nl2uri__llm_planner__llm_plan --> packages__nl2uri__nl2uri__planner__rule_based_plan
+    packages__uri3__uri3__resolvers__llm_resolver__LLMResolver__resolve --> packages__uri3__uri3__resolvers__llm_resolver__resolve_llm
+    packages__uri3__uri3__resolvers__llm_resolver__LLMResolver__resolve --> packages__uri3__uri3__protocols__parser__parse_uri
+    packages__uri3__uri3__paths__repo_root --> packages__uri3__uri3__paths__find_repo_root
+    packages__nl2uri__nl2a__cli__generate --> packages__nl2uri__nl2uri__pipeline__run_full_pipeline
+    packages__nl2uri__nl2uri__domain_planner___deterministic_weather_plan --> packages__nl2uri__nl2uri__domain_planner___llm_uri_from_env
+    packages__nl2uri__nl2uri__domain_planner___generic_plan --> packages__nl2uri__nl2uri__domain_planner___slug
+    packages__nl2uri__nl2uri__domain_planner___call_openrouter --> packages__nl2uri__nl2uri__domain_planner___extract_json
+    packages__nl2uri__nl2uri__domain_planner__plan_from_prompt --> packages__nl2uri__nl2uri__domain_planner___generic_plan
+    packages__nl2uri__nl2uri__domain_planner__plan_from_prompt --> packages__nl2uri__nl2uri__domain_planner___deterministic_weather_plan
+    packages__nl2uri__nl2uri__domain_planner__plan_from_prompt --> packages__nl2uri__nl2uri__domain_planner___call_openrouter
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__save_proposal_from_prompt --> packages__resource_agent_hypervisor__meta_agent__planner__infer_intent
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__save_proposal_from_prompt --> packages__resource_agent_hypervisor__meta_agent__planner__intent_to_agent_spec
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__save_proposal_from_prompt --> packages__resource_agent_hypervisor__meta_agent__planner__package_name
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__validate_repair_generate --> packages__resource_agent_factory__generator__validate__validate_agent
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__validate_repair_generate --> packages__resource_agent_hypervisor__meta_agent__repair__pipeline__repair_agent_spec
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__validate_repair_generate --> packages__resource_agent_factory__generator__agent_generator__generate_agent
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__validate_repair_generate --> packages__resource_agent_factory__generator__verify__verify_generated_agent
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__pipeline_from_prompt --> packages__resource_agent_hypervisor__meta_agent__orchestrator__save_proposal_from_prompt
+    packages__resource_agent_hypervisor__meta_agent__orchestrator__pipeline_from_prompt --> packages__resource_agent_hypervisor__meta_agent__orchestrator__validate_repair_generate
+    packages__resource_agent_hypervisor__meta_agent__planner__infer_intent --> packages__resource_agent_hypervisor__meta_agent__planner__singularize
+    packages__resource_agent_hypervisor__meta_agent__planner__infer_intent --> packages__resource_agent_hypervisor__meta_agent__planner__slugify
+    packages__resource_agent_hypervisor__meta_agent__planner__intent_to_agent_spec --> packages__resource_agent_hypervisor__meta_agent__planner__singularize
+    packages__resource_agent_hypervisor__meta_agent__planner__intent_to_agent_spec --> packages__resource_agent_hypervisor__meta_agent__planner__package_name
+    packages__resource_agent_hypervisor__meta_agent__repair__pipeline__repair_agent_spec --> packages__resource_agent_factory__generator__validate__validate_agent
+    packages__resource_agent_hypervisor__meta_agent__repair__pipeline__repair_agent_spec --> packages__resource_agent_hypervisor__meta_agent__repair__loader__load_spec
+    packages__resource_agent_hypervisor__meta_agent__repair__pipeline__repair_agent_spec --> packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_agent_block
+    packages__resource_agent_hypervisor__meta_agent__repair__pipeline__repair_agent_spec --> packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_capabilities
+    packages__resource_agent_hypervisor__meta_agent__repair__pipeline__repair_agent_spec --> packages__resource_agent_hypervisor__meta_agent__repair__loader__write_spec
+    packages__resource_agent_hypervisor__hypervisor__paths__repo_root --> packages__resource_agent_hypervisor__hypervisor__paths__find_repo_root
+    packages__resource_agent_hypervisor__hypervisor__cli__config_cmd --> packages__resource_agent_hypervisor__hypervisor__config__loader__load_config
+    packages__resource_agent_hypervisor__hypervisor__cli__config_cmd --> packages__resource_agent_hypervisor__hypervisor__config__loader__get_config
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__templates__generic_proto --> packages__resource_agent_hypervisor__hypervisor__domain_pack__templates__package_name
+    packages__resource_agent_hypervisor__hypervisor__verifier__cli__main --> packages__resource_agent_hypervisor__hypervisor__contract_registry__loader__load_contract_registry
+    packages__resource_agent_hypervisor__hypervisor__verifier__cli__main --> packages__resource_agent_hypervisor__hypervisor__contract_registry__validate__validate_registry
+    packages__resource_agent_hypervisor__hypervisor__verifier__cli__main --> packages__resource_agent_hypervisor__hypervisor__verifier__capability_tests__build_capability_test_plan
+    packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_agent_block --> packages__resource_agent_hypervisor__meta_agent__planner__package_name
+    packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_capabilities --> packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_duplicate_capability_names
+    packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_capabilities --> packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_missing_capability_type
+    packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_capabilities --> packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_resource_read_capability
+    packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_capabilities --> packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_command_capability
+    packages__nl2uri__nl2uri__planner__rule_based_plan --> packages__nl2uri__nl2uri__planner___slug
+    packages__resource_agent_hypervisor__hypervisor__config__loader__resolve_config_path --> packages__resource_agent_hypervisor__hypervisor__config__loader__config_search_paths
+    packages__resource_agent_hypervisor__hypervisor__config__loader__load_config --> packages__resource_agent_hypervisor__hypervisor__config__defaults__get_default_config
+    packages__resource_agent_hypervisor__hypervisor__config__loader__load_config --> packages__resource_agent_hypervisor__hypervisor__config__loader__resolve_config_path
+    packages__resource_agent_hypervisor__hypervisor__config__loader__load_config --> packages__resource_agent_hypervisor__hypervisor__config__defaults__apply_builtin_defaults
+    packages__resource_agent_hypervisor__hypervisor__config__loader__load_config --> packages__resource_agent_hypervisor__hypervisor__config__env__apply_env_overrides
+    packages__resource_agent_hypervisor__hypervisor__config__loader__load_config --> packages__resource_agent_hypervisor__hypervisor__config__validators__merge_config
+    packages__resource_agent_hypervisor__hypervisor__config__loader__load_config --> packages__resource_agent_hypervisor__hypervisor__config__defaults__load_yaml_file
+    packages__resource_agent_hypervisor__hypervisor__config__loader__get_config --> packages__resource_agent_hypervisor__hypervisor__config__loader__load_config
+    packages__resource_agent_hypervisor__hypervisor__config__loader__load_hypervisor_config --> packages__resource_agent_hypervisor__hypervisor__config__loader__load_config
+    packages__resource_agent_hypervisor__hypervisor__config__env__apply_legacy_env_overrides --> packages__resource_agent_hypervisor__hypervisor__config__env___parse_bool
+    packages__resource_agent_hypervisor__hypervisor__config__env__apply_env_overrides --> packages__resource_agent_hypervisor__hypervisor__config__env__apply_legacy_env_overrides
+    packages__resource_agent_hypervisor__hypervisor__config__env__apply_env_overrides --> packages__resource_agent_hypervisor__hypervisor__config__env__apply_structured_env_overrides
+    packages__resource_agent_hypervisor__hypervisor__evolution__cli__main --> packages__resource_agent_hypervisor__hypervisor__evolution__models__load_proposal
+    packages__resource_agent_hypervisor__hypervisor__evolution__cli__main --> packages__resource_agent_hypervisor__hypervisor__evolution__validator__validate_proposal
+    packages__uri3__uri3__validators__uri_validator__validate_uri --> packages__uri3__uri3__protocols__parser__parse_uri
+    packages__uri3__uri3__validators__uri_tree_validator__validate_uri_tree --> packages__uri3__uri3__validators__uri_tree_validator__load_yaml
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__loader__load_contract_registry --> packages__resource_agent_hypervisor__hypervisor__contract_registry__loader___read_yaml
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_exporter__export_json --> packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder__write_registry_manifest
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_exporter__export_markdown --> packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder__build_registry_manifest
+    packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__logs --> packages__uri3__uri3__logs__reader__summarize_logs
+    packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__logs --> packages__uri3__uri3__logs__reader__read_logs
+    packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__graph --> packages__uri3__uri3__graph__uri_graph__build_graph_from_tree
+    packages__resource_agent_hypervisor__hypervisor__uri__client__Uri3Client__nl2uri --> packages__nl2uri__nl2uri__planner__rule_based_plan
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cli__main --> packages__resource_agent_hypervisor__hypervisor__contract_registry__schema_validator__validate_contract_files
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cli__main --> packages__resource_agent_hypervisor__hypervisor__contract_registry__loader__load_contract_registry
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cli__main --> packages__resource_agent_hypervisor__hypervisor__contract_registry__validate__validate_registry
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cli__main --> packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator__validate_root
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cli__main --> packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder__write_registry_manifest
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cli__main --> packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_exporter__export_markdown
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__schema_validator__validate_file --> packages__resource_agent_hypervisor__hypervisor__contract_registry__schema_validator___read_yaml
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__schema_validator__validate_file --> packages__resource_agent_hypervisor__hypervisor__contract_registry__schema_validator___read_json
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__schema_validator__validate_contract_files --> packages__resource_agent_hypervisor__hypervisor__contract_registry__schema_validator__validate_file
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator__validate_cross_references --> packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator___load_proto_text
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator__validate_cross_references --> packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator___schema_exists
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator__validate_root --> packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator__validate_cross_references
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator__validate_root --> packages__resource_agent_hypervisor__hypervisor__contract_registry__loader__load_contract_registry
+    packages__resource_agent_hypervisor__hypervisor__core__Hypervisor__from_config --> packages__resource_agent_hypervisor__hypervisor__config__loader__load_config
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder__build_registry_manifest --> packages__resource_agent_hypervisor__hypervisor__contract_registry__loader__load_contract_registry
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder__build_registry_manifest --> packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder___contract_hash
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder__write_registry_manifest --> packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder__build_registry_manifest
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__load_deployment_registry --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader___read_yaml
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__load_deployment_registry --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__default_registry_path
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__load_deployment_registry --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader___parse_deployment
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__merger__merge_main_contracts --> packages__resource_agent_hypervisor__hypervisor__domain_pack__writer__write_file
+    packages__resource_agent_hypervisor__hypervisor__contract_registry__merger__merge_main_contracts --> packages__uri3__uri3__paths__repo_root
+    packages__resource_agent_hypervisor__hypervisor__compatibility__checker__classify_registry_change --> packages__resource_agent_hypervisor__hypervisor__contract_registry__loader__load_contract_registry
+    packages__resource_agent_hypervisor__hypervisor__compatibility__checker__classify_registry_change --> packages__resource_agent_hypervisor__hypervisor__compatibility__checker___load_policy
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__deployment_from_uri_tree --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__deployment_id_for_agent
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__deployment_from_uri_tree --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__infer_card_uri
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__deployment_from_uri_tree --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__infer_health_uri
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__sync_from_uri_tree --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__deployment_from_uri_tree
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__sync_from_uri_tree --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__load_deployment_registry
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__sync_from_uri_tree --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__writer__upsert_deployment
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__sync_from_uri_tree --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__writer__save_deployment_registry
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__list_deployments --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__load_deployment_registry
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__get_deployment_for_agent --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__load_deployment_registry
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__registry_summary --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__load_deployment_registry
+    packages__uri3__uri3__scanner__scanner__scan_log --> packages__uri3__uri3__resolvers__log_resolver__parse_log_uri
+    packages__uri3__uri3__scanner__scanner__scan_log --> packages__uri3__uri3__logs__reader__resolve_log_path
+    packages__uri3__uri3__scanner__scanner__scan_log --> packages__uri3__uri3__logs__reader__summarize_logs
+    packages__uri3__uri3__scanner__scanner__scan --> packages__uri3__uri3__protocols__parser__parse_uri
+    packages__uri3__uri3__scanner__scanner__scan --> packages__uri3__uri3__scanner__http_scanner__scan_http
+    packages__uri3__uri3__scanner__scanner__scan --> packages__uri3__uri3__scanner__scanner__scan_log
+    packages__nl2uri__nl2uri__pipeline__generate_tree --> packages__nl2uri__nl2uri__domain_planner__plan_from_prompt
+    packages__nl2uri__nl2uri__pipeline__run_generate_pipeline --> packages__nl2uri__nl2uri__pipeline__generate_tree
+    packages__nl2uri__nl2uri__pipeline__run_generate_pipeline --> packages__nl2uri__nl2uri__writer__write_uri_tree
+    packages__nl2uri__nl2uri__pipeline__run_generate_pipeline --> packages__uri3__uri3__validators__uri_tree_validator__validate_uri_tree
+    packages__nl2uri__nl2uri__pipeline__run_generate_pipeline --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack
+    packages__nl2uri__nl2uri__pipeline__run_generate_pipeline --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__sync_from_uri_tree
+    packages__nl2uri__nl2uri__pipeline__run_full_pipeline --> packages__nl2uri__nl2uri__pipeline__run_generate_pipeline
+    packages__nl2uri__nl2uri__pipeline__run_full_pipeline --> packages__resource_agent_factory__generator__agent_generator__generate_agent
+    packages__nl2uri__nl2uri__pipeline__run_full_pipeline --> packages__resource_agent_hypervisor__hypervisor__contract_registry__registry_builder__write_registry_manifest
+    packages__nl2uri__nl2uri__pipeline__run_full_pipeline --> packages__resource_agent_factory__generator__verify__verify_generated_agent
+    packages__resource_agent_hypervisor__hypervisor__config__defaults__embedded_defaults_raw --> packages__resource_agent_hypervisor__hypervisor__config__defaults__load_yaml_file
+    packages__resource_agent_hypervisor__hypervisor__config__defaults__get_default_config --> packages__resource_agent_hypervisor__hypervisor__config__defaults__apply_builtin_defaults
+    packages__resource_agent_hypervisor__hypervisor__config__defaults__get_default_config --> packages__resource_agent_hypervisor__hypervisor__config__defaults__embedded_defaults_raw
+    packages__uri3__uri3__resolvers__log_resolver___int --> packages__uri3__uri3__resolvers__log_resolver___first
+    packages__uri3__uri3__resolvers__log_resolver___bool --> packages__uri3__uri3__resolvers__log_resolver___first
+    packages__uri3__uri3__resolvers__log_resolver__parse_log_uri --> packages__uri3__uri3__resolvers__log_resolver___first
+    packages__uri3__uri3__resolvers__log_resolver__parse_log_uri --> packages__uri3__uri3__resolvers__log_resolver___int
+    packages__uri3__uri3__resolvers__log_resolver__parse_log_uri --> packages__uri3__uri3__resolvers__log_resolver___bool
+    packages__uri3__uri3__resolvers__log_resolver__resolve_log --> packages__uri3__uri3__resolvers__log_resolver__parse_log_uri
+    packages__uri3__uri3__resolvers__log_resolver__LogResolver__resolve --> packages__uri3__uri3__resolvers__log_resolver__resolve_log
+    packages__uri3__uri3__resolvers__log_resolver__LogResolver__read --> packages__uri3__uri3__logs__reader__read_logs
+    packages__uri3__uri3__resolvers__log_resolver__LogResolver__read --> packages__uri3__uri3__logs__reader__summarize_logs
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__write_domain_pack --> packages__resource_agent_hypervisor__hypervisor__domain_pack__writer__write_file
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__write_domain_pack --> packages__uri3__uri3__paths__repo_root
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__derive_domain_model
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_proto
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_resources
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_views
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_commands
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_renderers
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_handlers
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_agent_contract
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__write_domain_pack
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__resource_agent_hypervisor__hypervisor__contract_registry__merger__merge_main_contracts
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree --> packages__uri3__uri3__paths__repo_root
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__parse_uri_tree
+    packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack --> packages__resource_agent_hypervisor__hypervisor__domain_pack__generator__generate_domain_pack_from_tree
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__writer__write_deployment_registry --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__loader__load_deployment_registry
+    packages__resource_agent_hypervisor__hypervisor__deployment_registry__writer__write_deployment_registry --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__writer__save_deployment_registry
+    packages__uri3__uri3__resolvers__router__resolve --> packages__uri3__uri3__resolvers__env_resolver__resolve_env
+    packages__uri3__uri3__resolvers__router__resolve --> packages__uri3__uri3__resolvers__llm_resolver__resolve_llm
+    packages__uri3__uri3__resolvers__router__resolve --> packages__uri3__uri3__resolvers__python_resolver__resolve_python
+    packages__uri3__uri3__resolvers__router__call --> packages__uri3__uri3__resolvers__python_resolver__call_python
+    packages__uri3__uri3__resolvers__router__call --> packages__uri3__uri3__logs__reader__read_logs
+    packages__uri3__uri3__resolvers__router__call --> packages__uri3__uri3__logs__reader__summarize_logs
+    packages__resource_agent_hypervisor__meta_agent__api__proposal_from_prompt --> packages__resource_agent_hypervisor__meta_agent__orchestrator__save_proposal_from_prompt
+    packages__resource_agent_hypervisor__meta_agent__api__validate --> packages__resource_agent_factory__generator__validate__validate_agent
+    packages__resource_agent_hypervisor__meta_agent__api__repair --> packages__resource_agent_hypervisor__meta_agent__repair__pipeline__repair_agent_spec
+    packages__resource_agent_hypervisor__meta_agent__api__generate --> packages__resource_agent_hypervisor__meta_agent__orchestrator__asdict_result
+    packages__resource_agent_hypervisor__meta_agent__api__generate --> packages__resource_agent_hypervisor__meta_agent__orchestrator__validate_repair_generate
+    packages__resource_agent_hypervisor__meta_agent__api__pipeline --> packages__resource_agent_hypervisor__meta_agent__orchestrator__pipeline_from_prompt
+    packages__resource_agent_hypervisor__meta_agent__api__pipeline --> packages__resource_agent_hypervisor__meta_agent__orchestrator__asdict_result
+    packages__resource_agent_hypervisor__meta_agent__api__verify --> packages__resource_agent_factory__generator__verify__verify_generated
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class meta_agent__cli__main,meta_agent__repair__repair_agent_spec,hypervisor__config__load_config,hypervisor__contract_registry__cli__main,hypervisor__contract_registry__validate__validate_registry,hypervisor__contract_registry__cross_validator__validate_cross_references highCC
-    class generator__validate__validate_agent,generator__verify__main,meta_agent__planner__infer_intent,meta_agent__planner__intent_to_agent_spec,uri3__graph__uri_graph__build_graph_from_tree,hypervisor__evolution__cli__main,hypervisor__contract_registry__loader__load_contract_registry,hypervisor__compatibility__checker__classify_registry_change,nl2uri__planner__rule_based_plan,hypervisor__contract_registry__merger__merge_main_contracts,uri3__resolvers__router__resolve medCC
+    class packages__uri3__uri3__logs__reader___parse_entry,packages__uri3__uri3__logs__reader___matches_filters,packages__resource_agent_hypervisor__meta_agent__cli__main,packages__resource_agent_hypervisor__hypervisor__config__validators__validate_config,packages__resource_agent_hypervisor__hypervisor__contract_registry__cli__main,packages__resource_agent_hypervisor__hypervisor__contract_registry__validate__validate_registry,packages__resource_agent_hypervisor__hypervisor__contract_registry__cross_validator__validate_cross_references,packages__uri3__uri3__resolvers__log_resolver__parse_log_uri highCC
+    class packages__uri3__uri3__logs__reader__read_logs,packages__resource_agent_factory__generator__validate__validate_agent,packages__resource_agent_factory__generator__verify__main,packages__resource_agent_hypervisor__meta_agent__planner__infer_intent,packages__resource_agent_hypervisor__meta_agent__planner__intent_to_agent_spec,packages__uri3__uri3__graph__uri_graph__build_graph_from_tree,packages__resource_agent_hypervisor__meta_agent__repair__rules__repair_resource_read_capability,packages__nl2uri__nl2uri__planner__rule_based_plan,packages__resource_agent_hypervisor__hypervisor__config__env__apply_structured_env_overrides,packages__resource_agent_hypervisor__hypervisor__evolution__cli__main,packages__resource_agent_hypervisor__hypervisor__contract_registry__loader__load_contract_registry,packages__resource_agent_hypervisor__hypervisor__contract_registry__merger__merge_main_contracts,packages__resource_agent_hypervisor__hypervisor__compatibility__checker__classify_registry_change,packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__deployment_from_uri_tree,packages__resource_agent_hypervisor__hypervisor__deployment_registry__status__resolve_status,packages__uri3__uri3__resolvers__router__resolve medCC

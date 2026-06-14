@@ -1,14 +1,13 @@
 // LESS format — define @variables here as needed
 
 app {
-  name: hypervisor;
-  version: 0.1.0;
+  name: resource-agent-system;
+  version: 0.5.5;
 }
 
 dependencies {
-  runtime: "pyyaml>=6.0, python-dotenv>=1.0.0";
-  dev: "pytest>=7.0, pytest-cov>=4.0, pytest-asyncio>=0.21.0, ruff>=0.1.0, mypy>=1.0, build>=1.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
-  cli: rich>=13.0.0;
+  runtime: "uri3, nl2uri, resource-agent-hypervisor, resource-agent-factory";
+  dev: "pytest>=7.0, pytest-cov>=4.0, pytest-asyncio>=0.21.0, ruff>=0.1.0, mypy>=1.0, build>=1.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60, rich>=13.0.0";
 }
 
 interface[type="api"] {
@@ -81,6 +80,10 @@ workflow[name="clean"] {
   trigger: manual;
   step-1: run cmd=rm -rf agents/generated/* output/* .pytest_cache;
   step-2: run cmd=find . -type d -name __pycache__ -prune -exec rm -rf {} +;
+}
+
+tests {
+  import: testql-scenarios/**/*.testql.toon.yaml;
 }
 
 env_vars {

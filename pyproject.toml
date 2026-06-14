@@ -1,47 +1,25 @@
 [build-system]
-requires = ["setuptools>=68.0", "wheel"]
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "hypervisor"
-version = "0.1.2"
-description = "WronAI Hypervisor — orchestrator and control plane for AI desktop agents, NLP-to-URI resolution, koru drivers, and virtualized execution"
+name = "resource-agent-system"
+version = "0.5.7"
+description = "WronAI resource agent monorepo — uri3, nl2uri, hypervisor, agent factory"
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.10"
-authors = [
-    { name = "Tom Sapletta", email = "tom@sapletta.com" },
-]
-keywords = [
-    "hypervisor", "ai", "desktop", "orchestration", "nlp", "nlp2uri", "koru",
-    "wronai", "automation", "agent", "control-plane", "virtualization",
-]
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Topic :: Software Development :: Libraries",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: System :: Systems Administration",
-    "Typing :: Typed",
-]
+authors = [{ name = "Tom Sapletta", email = "tom@sapletta.com" }]
 
 dependencies = [
-    "pyyaml>=6.0",
-    "python-dotenv>=1.0.0",
+    "fastapi>=0.115",
     "httpx>=0.27",
     "jinja2>=3.1",
     "jsonschema>=4.23",
     "pydantic>=2.0",
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0",
     "typer>=0.12",
-    "fastapi>=0.115",
 ]
 
 [project.optional-dependencies]
@@ -55,9 +33,7 @@ dev = [
     "goal>=2.1.0",
     "costs>=0.1.20",
     "pfix>=0.1.60",
-]
-cli = [
-    "rich>=13.0.0",  # pretty CLI output (optional)
+    "rich>=13.0.0",
 ]
 
 [project.scripts]
@@ -71,27 +47,46 @@ Homepage = "https://github.com/wronai/hypervisor"
 Repository = "https://github.com/wronai/hypervisor"
 Issues = "https://github.com/wronai/hypervisor/issues"
 Documentation = "https://github.com/wronai/hypervisor#readme"
-Changelog = "https://github.com/wronai/hypervisor/blob/main/CHANGELOG.md"
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+uri3 = { workspace = true }
+nl2uri = { workspace = true }
+resource-agent-hypervisor = { workspace = true }
+resource-agent-factory = { workspace = true }
 
 [tool.setuptools.packages.find]
+where = [
+    "packages/uri3",
+    "packages/nl2uri",
+    "packages/resource-agent-hypervisor",
+    "packages/resource-agent-factory",
+]
 include = [
-    "hypervisor*",
     "uri3*",
-    "nl2a*",
     "nl2uri*",
-    "generator*",
+    "nl2a*",
+    "hypervisor*",
     "meta_agent*",
     "runtime_client*",
-    "domains*",
+    "generator*",
 ]
-exclude = ["tests*", "tests.*", "venv*", ".venv*", "dist*", "build*", "project*"]
 
 [tool.setuptools.package-data]
 hypervisor = ["py.typed", "data/*.yaml"]
+generator = ["templates/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["."]
+pythonpath = [
+    "packages/uri3",
+    "packages/nl2uri",
+    "packages/resource-agent-hypervisor",
+    "packages/resource-agent-factory",
+    ".",
+]
 
 [tool.ruff]
 target-version = "py310"
@@ -106,7 +101,6 @@ strict = false
 warn_return_any = true
 
 [tool.pfix]
-# Self-healing Python configuration
 model = "openrouter/qwen/qwen3-coder-next"
 auto_apply = true
 auto_install_deps = true
@@ -122,7 +116,6 @@ min_severity = "low"
 deduplicate = true
 
 [tool.costs]
-# AI Cost tracking configuration
 badge = true
 update_readme = true
 readme_path = "README.md"
@@ -130,7 +123,4 @@ default_model = "openrouter/qwen/qwen3-coder-next"
 analysis_mode = "byok"
 full_history = true
 max_commits = 500
-
-# Cost thresholds for badge colors (USD)
 badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0 }
-
