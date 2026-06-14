@@ -1,0 +1,38 @@
+nl2uri:
+  version: 1
+  kind: workflow_graph
+  source: compact_uri_flow
+graph:
+  id: weather-agent-health
+  version: 1
+  kind: workflow
+  nodes:
+  - id: agent-weather-generator
+    uri: agent://weather-generator
+    operation: generate
+    kind: command
+    requires_approval: true
+  - id: hypervisor-local-weather-agent-run
+    uri: hypervisor://local/weather-agent/run
+    operation: run
+    kind: command
+    depends_on:
+    - agent-weather-generator
+    requires_approval: true
+  - id: browser-chrome-page-open
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    payload:
+      url: http://localhost:8101/health
+    depends_on:
+    - hypervisor-local-weather-agent-run
+    requires_approval: true
+  edges:
+  - from: agent-weather-generator
+    to: hypervisor-local-weather-agent-run
+    type: depends_on
+  - from: hypervisor-local-weather-agent-run
+    to: browser-chrome-page-open
+    type: depends_on
+  description: Generate weather agent, run locally and verify health in Chrome.

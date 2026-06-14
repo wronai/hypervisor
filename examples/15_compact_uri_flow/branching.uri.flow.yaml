@@ -1,0 +1,20 @@
+flow:
+  id: weather-agent-branching-check
+  description: Run agent, then read health and agent card in parallel.
+
+do:
+  - id: run_agent
+    uri: hypervisor://local/weather-agent/run
+
+  - id: check_health
+    uri: http://localhost:8101/health
+    after: run_agent
+
+  - id: read_card
+    uri: http://localhost:8101/.well-known/agent-card.json
+    after: run_agent
+
+  - id: logs_if_failed
+    uri: log://weather-map-agent.local
+    after: check_health
+    if: check_health.ok == false

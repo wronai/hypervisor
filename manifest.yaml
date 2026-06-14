@@ -1,0 +1,20 @@
+package: uri2flow-dropin
+version: 0.1.0
+layout: monorepo-dropin
+safe_to_extract_at_repo_root: true
+adds:
+  - packages/uri2flow/
+  - tests/uri2flow/
+  - examples/15_compact_uri_flow/
+  - integration/uri2flow/
+  - URI2FLOW_DROPIN_README.md
+  - manifest.yaml
+no_root_overwrites:
+  - README.md
+  - CHANGELOG.md
+  - TODO.md
+  - pyproject.toml
+  - Makefile
+notes:
+  - Optional integration snippets are in integration/uri2flow/.
+  - Add root pyproject/Makefile snippets manually after review.

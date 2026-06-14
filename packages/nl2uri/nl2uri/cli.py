@@ -7,6 +7,8 @@ from typing import Any
 import typer
 import yaml
 
+from nl2uri.flow_planner import plan_flow
+from nl2uri.flow_repair import repair_and_validate_flow, repair_flow_body, validate_expanded_flow
 from nl2uri.graph_planner import plan_auto, plan_by_kind, plan_list, plan_single, plan_task, plan_tree, plan_workflow_graph
 from nl2uri.output_classifier import classify_output_kind
 from nl2uri.domain_planner import plan_from_prompt
@@ -14,7 +16,7 @@ from nl2uri.writer import write_uri_tree
 from uri3.graph import dry_run_workflow, validate_workflow_graph
 from uri3.validators.uri_tree_validator import validate_uri_tree
 
-app = typer.Typer(help="nl2uri: natural language -> URI plans (single, list, tree, task, graph)")
+app = typer.Typer(help="nl2uri: natural language -> URI plans (single, list, tree, flow, task, graph)")
 
 
 def _default_use_llm() -> bool:
@@ -39,6 +41,15 @@ def _emit(payload: dict[str, Any], *, json_out: bool) -> None:
     )
 
 
+def _validate_flow_payload(payload: dict[str, Any]) -> list[str]:
+    try:
+        return validate_expanded_flow(payload)
+    except ValueError as exc:
+        typer.echo("Flow validation failed:", err=True)
+        typer.echo(str(exc), err=True)
+        raise typer.Exit(1) from exc
+
+
 def _plan_command(
     prompt: str,
     *,
@@ -48,13 +59,16 @@ def _plan_command(
     validate: bool,
 ) -> None:
     payload = plan_by_kind(prompt, kind=kind, use_llm=use_llm)
-    if validate and kind in {"task_graph", "workflow_graph"}:
-        errors = validate_workflow_graph(payload)
-        if errors:
-            typer.echo("Workflow graph validation failed:", err=True)
-            for error in errors:
-                typer.echo(error, err=True)
-            raise typer.Exit(1)
+    if validate and kind in {"uri_flow", "task_graph", "workflow_graph"}:
+        if kind == "uri_flow":
+            _validate_flow_payload(payload)
+        else:
+            errors = validate_workflow_graph(payload)
+            if errors:
+                typer.echo("Workflow graph validation failed:", err=True)
+                for error in errors:
+                    typer.echo(error, err=True)
+                raise typer.Exit(1)
     _emit(payload, json_out=json_out)
 
 
@@ -68,13 +82,16 @@ def plan(
 ):
     """Classify prompt and generate the best matching URI plan."""
     payload = plan_auto(prompt, use_llm=_resolve_use_llm(llm=llm, no_llm=no_llm))
-    if validate and payload["nl2uri"]["kind"] in {"task_graph", "workflow_graph"}:
-        errors = validate_workflow_graph(payload)
-        if errors:
-            typer.echo("Workflow graph validation failed:", err=True)
-            for error in errors:
-                typer.echo(error, err=True)
-            raise typer.Exit(1)
+    if validate and payload["nl2uri"]["kind"] in {"uri_flow", "task_graph", "workflow_graph"}:
+        if payload["nl2uri"]["kind"] == "uri_flow":
+            _validate_flow_payload(payload)
+        else:
+            errors = validate_workflow_graph(payload)
+            if errors:
+                typer.echo("Workflow graph validation failed:", err=True)
+                for error in errors:
+                    typer.echo(error, err=True)
+                raise typer.Exit(1)
     _emit(payload, json_out=json_out)
 
 
@@ -122,6 +139,35 @@ def tree(
                 typer.echo(error, err=True)
             raise typer.Exit(1)
         typer.echo(str(path))
+        return
+    _emit(payload, json_out=json_out)
+
+
+@app.command()
+def flow(
+    prompt: str = typer.Option(..., "-p", "--prompt"),
+    json_out: bool = typer.Option(False, "--json"),
+    llm: bool = typer.Option(False, "--llm", help="Use LLM compact flow planner with repair/validate"),
+    no_llm: bool = typer.Option(False, "--no-llm"),
+    validate: bool = typer.Option(False, "--validate", help="Validate compact flow, expand, and validate workflow graph"),
+    repair: bool = typer.Option(False, "--repair", help="Repair/normalize compact flow before output"),
+    expand: bool = typer.Option(False, "--expand", help="Print expanded workflow_graph after compact flow"),
+):
+    """Generate compact URI flow (*.uri.flow.yaml style)."""
+    payload = plan_flow(prompt, use_llm=_resolve_use_llm(llm=llm, no_llm=no_llm))
+    if repair:
+        body, repair_warnings = repair_flow_body(payload, prompt)
+        payload = {**payload, **body}
+        if repair_warnings:
+            payload["repair_warning"] = "; ".join(repair_warnings)
+    if validate:
+        flow_warnings = _validate_flow_payload(payload)
+        for warning in flow_warnings:
+            typer.echo(f"warning: {warning}", err=True)
+    if expand:
+        from uri2flow import expand_flow
+
+        _emit(expand_flow(payload), json_out=json_out)
         return
     _emit(payload, json_out=json_out)
 

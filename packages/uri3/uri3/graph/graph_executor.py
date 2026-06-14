@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from uri3.graph.adapters.browser_router import cleanup_browser_adapters
+from uri3.graph.adapters.uri2ops_adapter import cleanup_operator_adapters
 from uri3.graph.adapters.registry import adapter_for_uri
 from uri3.graph.conditions import evaluate_condition
 from uri3.graph.dependency_graph import topological_sort
@@ -223,7 +223,7 @@ def run_workflow(
                 workflow_ok = False
                 break
     finally:
-        cleanup_browser_adapters(context)
+        cleanup_operator_adapters(context)
 
     completed_at = utc_now_iso()
     append_workflow_event(

@@ -1,6 +1,6 @@
-# Resource Agent System v0.5.7
+# Resource Agent System v0.6
 
-WronAI resource agent monorepo — uri3, nl2uri, uri2ops, hypervisor, agent factory
+WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, hypervisor, agent factory
 
 ## Contents
 
@@ -22,7 +22,7 @@ WronAI resource agent monorepo — uri3, nl2uri, uri2ops, hypervisor, agent fact
 ## Metadata
 
 - **name**: `resource-agent-system`
-- **version**: `0.5.10`
+- **version**: `0.5.11`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -42,7 +42,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: resource-agent-system;
-  version: 0.5.10;
+  version: 0.5.11;
 }
 
 dependencies {
@@ -50,6 +50,7 @@ dependencies {
   dev: "pytest>=7.0, pytest-cov>=4.0, pytest-asyncio>=0.21.0, ruff>=0.1.0, mypy>=1.0, build>=1.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60, rich>=13.0.0";
   browser: playwright>=1.40;
   windows: pywinauto>=0.6;
+  server: uvicorn>=0.27;
 }
 
 interface[type="api"] {
@@ -68,6 +69,9 @@ interface[type="cli"] page[name="uri3"] {
 }
 interface[type="cli"] page[name="uri2ops"] {
   entry: uri2ops.cli:main;
+}
+interface[type="cli"] page[name="uri2flow"] {
+  entry: uri2flow.cli:main;
 }
 interface[type="cli"] page[name="nl2uri"] {
   entry: nl2uri.cli:main;
@@ -94,6 +98,22 @@ workflow[name="verify"] {
 workflow[name="test"] {
   trigger: manual;
   step-1: run cmd=pytest -q;
+}
+
+workflow[name="uri2flow-test"] {
+  trigger: manual;
+  step-1: run cmd=pytest tests/uri2flow -q;
+}
+
+workflow[name="uri2flow-validate"] {
+  trigger: manual;
+  step-1: run cmd=uri2flow validate examples/15_compact_uri_flow/weather.uri.flow.yaml;
+}
+
+workflow[name="uri2flow-expand"] {
+  trigger: manual;
+  step-1: run cmd=mkdir -p output;
+  step-2: run cmd=uri2flow expand examples/15_compact_uri_flow/weather.uri.flow.yaml --out output/weather.uri.graph.yaml;
 }
 
 workflow[name="uri-tree"] {
@@ -222,6 +242,7 @@ environment[name="local"] {
 - `hypervisor`
 - `uri3`
 - `uri2ops`
+- `uri2flow`
 - `nl2uri`
 - `nl2a`
 
@@ -318,7 +339,7 @@ ASSERT[4]{field, operator, expected}:
 ```yaml
 project:
   name: resource-agent-system
-  version: 0.5.10
+  version: 0.5.11
   env: local
 ```
 
@@ -389,7 +410,7 @@ pip install -e .[dev]
 - **commits**: `conventional` scope=`hypervisor`
 - **changelog**: `keep-a-changelog`
 - **build strategies**: `python`, `nodejs`, `rust`
-- **version files**: `VERSION`, `pyproject.toml:version`, `uri2ops/__init__.py:__version__`
+- **version files**: `VERSION`, `pyproject.toml:version`, `packages/uri2ops/uri2ops/__init__.py:__version__`
 
 ## Makefile Targets
 
@@ -397,6 +418,9 @@ pip install -e .[dev]
 - `generate`
 - `verify`
 - `test`
+- `uri2flow-test`
+- `uri2flow-validate`
+- `uri2flow-expand`
 - `uri-tree`
 - `graph`
 - `nl2a-weather`
@@ -422,13 +446,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# hypervisor | 328f 14830L | python:316,shell:11,less:1 | 2026-06-14
-# stats: 727 func | 65 cls | 328 mod | CC̄=3.6 | critical:31 | cycles:0
-# alerts[5]: CC run_workflow=21; CC classify_output_kind=20; CC test_nl2a_full_pipeline_weather_map=20; CC sanitize_node=16; CC resolve_uri_values=15
-# hotspots[5]: run_workflow fan=23; test_playwright_task_executes_against_local_server fan=21; test_playwright_browser_workflow fan=18; generate_agent fan=17; run_agent fan=14
+# hypervisor | 351f 15897L | python:337,shell:13,less:1 | 2026-06-14
+# stats: 772 func | 72 cls | 351 mod | CC̄=3.7 | critical:37 | cycles:0
+# alerts[5]: CC default_operation_for_uri=21; CC run_workflow=21; CC classify_output_kind=20; CC test_nl2a_full_pipeline_weather_map=20; CC sanitize_node=16
+# hotspots[5]: create_app fan=24; run_workflow fan=23; test_playwright_task_executes_against_local_server fan=21; test_playwright_browser_workflow fan=18; generate_agent fan=17
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[328]:
+M[351]:
   agents/__init__.py,1
   agents/custom/__init__.py,1
   agents/generated/__init__.py,1
@@ -442,7 +466,7 @@ M[328]:
   agents/generated/weather_map_agent/main.py,16
   agents/generated/weather_map_agent/routes.py,85
   agents/generated/weather_map_agent/tests/test_contract.py,18
-  app.doql.less,176
+  app.doql.less,196
   domains/__init__.py,1
   domains/weather_map/__init__.py,1
   domains/weather_map/handlers/__init__.py,1
@@ -453,7 +477,9 @@ M[328]:
   examples/12_android_operator/run.sh,9
   examples/13_nl2uri_multi_uri_graph/run.sh,42
   examples/13_pcwin_operator/run.sh,9
+  examples/14_uri2ops_serve/run.sh,21
   examples/14_workflow_executor_mock/run.sh,39
+  examples/15_compact_uri_flow/run.sh,8
   examples/16_llm_graph_planner/run.sh,18
   packages/nl2uri/nl2a/__init__.py,1
   packages/nl2uri/nl2a/cli.py,26
@@ -594,6 +620,29 @@ M[328]:
   packages/resource-agent-hypervisor/meta_agent/repair/rules.py,83
   packages/resource-agent-hypervisor/runtime_client/__init__.py,1
   packages/resource-agent-hypervisor/runtime_client/client.py,48
+  packages/uri2flow/uri2flow/__init__.py,8
+  packages/uri2flow/uri2flow/cli.py,67
+  packages/uri2flow/uri2flow/expander.py,82
+  packages/uri2flow/uri2flow/models.py,48
+  packages/uri2flow/uri2flow/parser.py,91
+  packages/uri2flow/uri2flow/resolver.py,67
+  packages/uri2flow/uri2flow/utils.py,39
+  packages/uri2flow/uri2flow/validator.py,24
+  packages/uri2ops/uri2ops/__init__.py,4
+  packages/uri2ops/uri2ops/cli.py,136
+  packages/uri2ops/uri2ops/operation_registry/__init__.py,1
+  packages/uri2ops/uri2ops/operation_registry/dispatcher.py,34
+  packages/uri2ops/uri2ops/operation_registry/loader.py,34
+  packages/uri2ops/uri2ops/operation_registry/models.py,68
+  packages/uri2ops/uri2ops/operation_registry/validator.py,44
+  packages/uri2ops/uri2ops/remote_registry/__init__.py,1
+  packages/uri2ops/uri2ops/remote_registry/loader.py,131
+  packages/uri2ops/uri2ops/schemas/__init__.py,1
+  packages/uri2ops/uri2ops/server/__init__.py,1
+  packages/uri2ops/uri2ops/server/a2a_wrapper.py,46
+  packages/uri2ops/uri2ops/server/app.py,126
+  packages/uri2ops/uri2ops/server/mcp_wrapper.py,48
+  packages/uri2ops/uri2ops/server/service.py,51
   packages/uri3/domains/weather_map/__init__.py,1
   packages/uri3/domains/weather_map/handlers/__init__.py,1
   packages/uri3/domains/weather_map/handlers/generate_weather_map.py,25
@@ -726,11 +775,17 @@ M[328]:
   tests/test_uri2llm_v04.py,22
   tests/test_uri2ops_android.py,72
   tests/test_uri2ops_browser.py,100
-  tests/test_uri2ops_pcwin.py,62
+  tests/test_uri2ops_pcwin.py,69
+  tests/test_uri2ops_serve.py,67
   tests/test_uri2ops_v01.py,64
   tests/test_uri3.py,12
   tests/test_uri_tree_validator.py,5
   tests/test_validate.py,9
+  tests/uri2flow/conftest.py,15
+  tests/uri2flow/test_cli.py,13
+  tests/uri2flow/test_expand_branching_flow.py,14
+  tests/uri2flow/test_expand_linear_flow.py,15
+  tests/uri2flow/test_parser_forms.py,16
   tests/uri3/__init__.py,2
   tests/uri3/test_browser_adapter.py,109
   tests/uri3/test_cli.py,88
@@ -749,14 +804,6 @@ M[328]:
   tests/uri3/test_workflow_executor.py,96
   tests/uri3/test_workflow_graph.py,53
   tree.sh,2
-  uri2ops/__init__.py,4
-  uri2ops/cli.py,96
-  uri2ops/operation_registry/__init__.py,1
-  uri2ops/operation_registry/dispatcher.py,33
-  uri2ops/operation_registry/loader.py,34
-  uri2ops/operation_registry/models.py,68
-  uri2ops/operation_registry/validator.py,44
-  uri2ops/schemas/__init__.py,1
 D:
   agents/__init__.py:
   agents/custom/__init__.py:
@@ -1328,6 +1375,102 @@ D:
   packages/resource-agent-hypervisor/runtime_client/client.py:
     e: ResourceRuntimeClient
     ResourceRuntimeClient: __init__(2),read_resource(1),dispatch_command(2)  # Small HTTP client used by generated thin agents.
+  packages/uri2flow/uri2flow/__init__.py:
+  packages/uri2flow/uri2flow/cli.py:
+    e: cmd_validate,cmd_expand,cmd_print,build_parser,main
+    cmd_validate(args)
+    cmd_expand(args)
+    cmd_print(args)
+    build_parser()
+    main(argv)
+  packages/uri2flow/uri2flow/expander.py:
+    e: _node_from_step,_edges_from_depends,expand_flow,dump_yaml
+    _node_from_step(step;previous_id;used)
+    _edges_from_depends(nodes)
+    expand_flow(flow)
+    dump_yaml(data)
+  packages/uri2flow/uri2flow/models.py:
+    e: FlowStep,FlowDocument
+    FlowStep:
+    FlowDocument: to_dict(0)
+  packages/uri2flow/uri2flow/parser.py:
+    e: _as_list,_parse_step,parse_flow,load_flow,FlowParseError
+    FlowParseError:
+    _as_list(value)
+    _parse_step(raw)
+    parse_flow(data)
+    load_flow(path)
+  packages/uri2flow/uri2flow/resolver.py:
+    e: default_operation_for_uri,OperationDefaults
+    OperationDefaults:
+    default_operation_for_uri(uri)
+  packages/uri2flow/uri2flow/utils.py:
+    e: slugify,scheme_of,path_parts,node_id_from_uri
+    slugify(value)
+    scheme_of(uri)
+    path_parts(uri)
+    node_id_from_uri(uri;used)
+  packages/uri2flow/uri2flow/validator.py:
+    e: validate_flow
+    validate_flow(path)
+  packages/uri2ops/uri2ops/__init__.py:
+  packages/uri2ops/uri2ops/cli.py:
+    e: _print,operations_cmd,registry_cmd,validate_cmd,plan_cmd,run_cmd,serve_cmd,main
+    _print(data)
+    operations_cmd(args)
+    registry_cmd(args)
+    validate_cmd(args)
+    plan_cmd(args)
+    run_cmd(args)
+    serve_cmd(args)
+    main(argv)
+  packages/uri2ops/uri2ops/operation_registry/__init__.py:
+  packages/uri2ops/uri2ops/operation_registry/dispatcher.py:
+    e: _split_python_uri,call_handler,dispatch
+    _split_python_uri(uri)
+    call_handler(spec;payload;context)
+    dispatch(scheme;operation;payload;context)
+  packages/uri2ops/uri2ops/operation_registry/loader.py:
+    e: default_registry_path,registry_schema_path,load_operation_registry
+    default_registry_path()
+    registry_schema_path()
+    load_operation_registry(path)
+  packages/uri2ops/uri2ops/operation_registry/models.py:
+    e: OperationSpec,OperationRegistry
+    OperationSpec: from_mapping(4),to_dict(0)
+    OperationRegistry: get(2),require(2),list(0)
+  packages/uri2ops/uri2ops/operation_registry/validator.py:
+    e: validate_registry_schema,validate_operation_registry
+    validate_registry_schema(data)
+    validate_operation_registry(registry)
+  packages/uri2ops/uri2ops/remote_registry/__init__.py:
+  packages/uri2ops/uri2ops/remote_registry/loader.py:
+    e: registry_config_path,load_registry_config,_load_source,merge_registry_documents,registry_from_document,resolve_operation_registry,registry_document,list_remote_sources
+    registry_config_path(root)
+    load_registry_config(root)
+    _load_source(uri_or_path)
+    merge_registry_documents()
+    registry_from_document(data)
+    resolve_operation_registry(path)
+    registry_document(registry)
+    list_remote_sources(root)
+  packages/uri2ops/uri2ops/schemas/__init__.py:
+  packages/uri2ops/uri2ops/server/__init__.py:
+  packages/uri2ops/uri2ops/server/a2a_wrapper.py:
+    e: build_agent_card
+    build_agent_card(base_url;registry)
+  packages/uri2ops/uri2ops/server/app.py:
+    e: create_app,TaskRequest,McpToolCallRequest
+    TaskRequest:
+    McpToolCallRequest:
+    create_app()
+  packages/uri2ops/uri2ops/server/mcp_wrapper.py:
+    e: list_mcp_tools,mcp_tool_name_for_operation
+    list_mcp_tools(registry)
+    mcp_tool_name_for_operation(scheme;operation)
+  packages/uri2ops/uri2ops/server/service.py:
+    e: OperatorService
+    OperatorService: __init__(0),registry(0),registry_export(0),list_operations(0),describe_operation(2),list_registry_sources(0),validate_task(1),plan_task(1),run_task(1)
   packages/uri3/domains/weather_map/__init__.py:
   packages/uri3/domains/weather_map/handlers/__init__.py:
   packages/uri3/domains/weather_map/handlers/generate_weather_map.py:
@@ -1924,14 +2067,23 @@ D:
     test_mock_task_writes_artifacts(tmp_path)
     test_playwright_task_executes_against_local_server(tmp_path)
   tests/test_uri2ops_pcwin.py:
-    e: test_parse_pcwin_window_uri,test_parse_pcwin_control_uri,test_resolve_adapter_mode_mock,test_resolve_adapter_mode_auto_on_linux,test_pcwin_mock_task,test_pcwin_blocked_without_approve,test_pcwin_uia_available_only_on_windows
+    e: test_parse_pcwin_window_uri,test_parse_pcwin_control_uri,test_parse_pcwin_path_only_form,test_resolve_adapter_mode_mock,test_resolve_adapter_mode_auto_on_linux,test_pcwin_mock_task,test_pcwin_blocked_without_approve,test_pcwin_uia_available_only_on_windows
     test_parse_pcwin_window_uri()
     test_parse_pcwin_control_uri()
+    test_parse_pcwin_path_only_form()
     test_resolve_adapter_mode_mock()
     test_resolve_adapter_mode_auto_on_linux()
     test_pcwin_mock_task(tmp_path)
     test_pcwin_blocked_without_approve(tmp_path)
     test_pcwin_uia_available_only_on_windows()
+  tests/test_uri2ops_serve.py:
+    e: test_merge_remote_registry_adds_browser_wait,test_serve_health_and_registry_export,test_serve_agent_card_and_mcp_tools,test_serve_run_task_via_a2a,test_serve_mcp_run_operator_task,test_merge_registry_documents_overlays_operations
+    test_merge_remote_registry_adds_browser_wait()
+    test_serve_health_and_registry_export()
+    test_serve_agent_card_and_mcp_tools()
+    test_serve_run_task_via_a2a()
+    test_serve_mcp_run_operator_task()
+    test_merge_registry_documents_overlays_operations()
   tests/test_uri2ops_v01.py:
     e: test_redact_secret_payload_field,test_registry_schema_validates_yaml,test_artifact_resolver_reads_written_file,test_policy_blocks_command_without_approve,test_policy_allows_dry_run_without_approve,test_task_blocks_without_approve
     test_redact_secret_payload_field()
@@ -1950,6 +2102,21 @@ D:
   tests/test_validate.py:
     e: test_user_agent_contract_is_valid
     test_user_agent_contract_is_valid()
+  tests/uri2flow/conftest.py:
+    e: repo_root
+    repo_root()
+  tests/uri2flow/test_cli.py:
+    e: test_cli_expand
+    test_cli_expand(repo_root;tmp_path)
+  tests/uri2flow/test_expand_branching_flow.py:
+    e: test_expand_branching_flow
+    test_expand_branching_flow(repo_root)
+  tests/uri2flow/test_expand_linear_flow.py:
+    e: test_expand_linear_flow
+    test_expand_linear_flow(repo_root)
+  tests/uri2flow/test_parser_forms.py:
+    e: test_accepts_string_and_mapping_forms
+    test_accepts_string_and_mapping_forms()
   tests/uri3/__init__.py:
   tests/uri3/test_browser_adapter.py:
     e: test_resolve_browser_mode_mock,test_mock_adapter_writes_artifact_files,test_playwright_browser_workflow
@@ -2069,42 +2236,13 @@ D:
     test_validate_task_payload()
     test_execution_plan_order()
     test_detect_cycle()
-  uri2ops/__init__.py:
-  uri2ops/cli.py:
-    e: _print,operations_cmd,validate_cmd,plan_cmd,run_cmd,main
-    _print(data)
-    operations_cmd(args)
-    validate_cmd(args)
-    plan_cmd(args)
-    run_cmd(args)
-    main(argv)
-  uri2ops/operation_registry/__init__.py:
-  uri2ops/operation_registry/dispatcher.py:
-    e: _split_python_uri,call_handler,dispatch
-    _split_python_uri(uri)
-    call_handler(spec;payload;context)
-    dispatch(scheme;operation;payload;context)
-  uri2ops/operation_registry/loader.py:
-    e: default_registry_path,registry_schema_path,load_operation_registry
-    default_registry_path()
-    registry_schema_path()
-    load_operation_registry(path)
-  uri2ops/operation_registry/models.py:
-    e: OperationSpec,OperationRegistry
-    OperationSpec: from_mapping(4),to_dict(0)
-    OperationRegistry: get(2),require(2),list(0)
-  uri2ops/operation_registry/validator.py:
-    e: validate_registry_schema,validate_operation_registry
-    validate_registry_schema(data)
-    validate_operation_registry(registry)
-  uri2ops/schemas/__init__.py:
 ```
 
 ### `project/logic.pl`
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('hypervisor', '0.5.10', 'python').
+project_metadata('hypervisor', '0.5.11', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('agents/__init__.py', 1, 'python').
@@ -2120,7 +2258,7 @@ project_file('agents/generated/weather_map_agent/agent_card.py', 40, 'python').
 project_file('agents/generated/weather_map_agent/main.py', 16, 'python').
 project_file('agents/generated/weather_map_agent/routes.py', 85, 'python').
 project_file('agents/generated/weather_map_agent/tests/test_contract.py', 18, 'python').
-project_file('app.doql.less', 176, 'less').
+project_file('app.doql.less', 196, 'less').
 project_file('domains/__init__.py', 1, 'python').
 project_file('domains/weather_map/__init__.py', 1, 'python').
 project_file('domains/weather_map/handlers/__init__.py', 1, 'python').
@@ -2131,7 +2269,9 @@ project_file('examples/11_playwright_browser/run.sh', 86, 'shell').
 project_file('examples/12_android_operator/run.sh', 9, 'shell').
 project_file('examples/13_nl2uri_multi_uri_graph/run.sh', 42, 'shell').
 project_file('examples/13_pcwin_operator/run.sh', 9, 'shell').
+project_file('examples/14_uri2ops_serve/run.sh', 21, 'shell').
 project_file('examples/14_workflow_executor_mock/run.sh', 39, 'shell').
+project_file('examples/15_compact_uri_flow/run.sh', 8, 'shell').
 project_file('examples/16_llm_graph_planner/run.sh', 18, 'shell').
 project_file('packages/nl2uri/nl2a/__init__.py', 1, 'python').
 project_file('packages/nl2uri/nl2a/cli.py', 26, 'python').
@@ -2272,6 +2412,29 @@ project_file('packages/resource-agent-hypervisor/meta_agent/repair/pipeline.py',
 project_file('packages/resource-agent-hypervisor/meta_agent/repair/rules.py', 83, 'python').
 project_file('packages/resource-agent-hypervisor/runtime_client/__init__.py', 1, 'python').
 project_file('packages/resource-agent-hypervisor/runtime_client/client.py', 48, 'python').
+project_file('packages/uri2flow/uri2flow/__init__.py', 8, 'python').
+project_file('packages/uri2flow/uri2flow/cli.py', 67, 'python').
+project_file('packages/uri2flow/uri2flow/expander.py', 82, 'python').
+project_file('packages/uri2flow/uri2flow/models.py', 48, 'python').
+project_file('packages/uri2flow/uri2flow/parser.py', 91, 'python').
+project_file('packages/uri2flow/uri2flow/resolver.py', 67, 'python').
+project_file('packages/uri2flow/uri2flow/utils.py', 39, 'python').
+project_file('packages/uri2flow/uri2flow/validator.py', 24, 'python').
+project_file('packages/uri2ops/uri2ops/__init__.py', 4, 'python').
+project_file('packages/uri2ops/uri2ops/cli.py', 136, 'python').
+project_file('packages/uri2ops/uri2ops/operation_registry/__init__.py', 1, 'python').
+project_file('packages/uri2ops/uri2ops/operation_registry/dispatcher.py', 34, 'python').
+project_file('packages/uri2ops/uri2ops/operation_registry/loader.py', 34, 'python').
+project_file('packages/uri2ops/uri2ops/operation_registry/models.py', 68, 'python').
+project_file('packages/uri2ops/uri2ops/operation_registry/validator.py', 44, 'python').
+project_file('packages/uri2ops/uri2ops/remote_registry/__init__.py', 1, 'python').
+project_file('packages/uri2ops/uri2ops/remote_registry/loader.py', 131, 'python').
+project_file('packages/uri2ops/uri2ops/schemas/__init__.py', 1, 'python').
+project_file('packages/uri2ops/uri2ops/server/__init__.py', 1, 'python').
+project_file('packages/uri2ops/uri2ops/server/a2a_wrapper.py', 46, 'python').
+project_file('packages/uri2ops/uri2ops/server/app.py', 126, 'python').
+project_file('packages/uri2ops/uri2ops/server/mcp_wrapper.py', 48, 'python').
+project_file('packages/uri2ops/uri2ops/server/service.py', 51, 'python').
 project_file('packages/uri3/domains/weather_map/__init__.py', 1, 'python').
 project_file('packages/uri3/domains/weather_map/handlers/__init__.py', 1, 'python').
 project_file('packages/uri3/domains/weather_map/handlers/generate_weather_map.py', 25, 'python').
@@ -2404,11 +2567,17 @@ project_file('tests/test_schema_validation_v03.py', 8, 'python').
 project_file('tests/test_uri2llm_v04.py', 22, 'python').
 project_file('tests/test_uri2ops_android.py', 72, 'python').
 project_file('tests/test_uri2ops_browser.py', 100, 'python').
-project_file('tests/test_uri2ops_pcwin.py', 62, 'python').
+project_file('tests/test_uri2ops_pcwin.py', 69, 'python').
+project_file('tests/test_uri2ops_serve.py', 67, 'python').
 project_file('tests/test_uri2ops_v01.py', 64, 'python').
 project_file('tests/test_uri3.py', 12, 'python').
 project_file('tests/test_uri_tree_validator.py', 5, 'python').
 project_file('tests/test_validate.py', 9, 'python').
+project_file('tests/uri2flow/conftest.py', 15, 'python').
+project_file('tests/uri2flow/test_cli.py', 13, 'python').
+project_file('tests/uri2flow/test_expand_branching_flow.py', 14, 'python').
+project_file('tests/uri2flow/test_expand_linear_flow.py', 15, 'python').
+project_file('tests/uri2flow/test_parser_forms.py', 16, 'python').
 project_file('tests/uri3/__init__.py', 2, 'python').
 project_file('tests/uri3/test_browser_adapter.py', 109, 'python').
 project_file('tests/uri3/test_cli.py', 88, 'python').
@@ -2427,14 +2596,6 @@ project_file('tests/uri3/test_uri_yaml.py', 27, 'python').
 project_file('tests/uri3/test_workflow_executor.py', 96, 'python').
 project_file('tests/uri3/test_workflow_graph.py', 53, 'python').
 project_file('tree.sh', 2, 'shell').
-project_file('uri2ops/__init__.py', 4, 'python').
-project_file('uri2ops/cli.py', 96, 'python').
-project_file('uri2ops/operation_registry/__init__.py', 1, 'python').
-project_file('uri2ops/operation_registry/dispatcher.py', 33, 'python').
-project_file('uri2ops/operation_registry/loader.py', 34, 'python').
-project_file('uri2ops/operation_registry/models.py', 68, 'python').
-project_file('uri2ops/operation_registry/validator.py', 44, 'python').
-project_file('uri2ops/schemas/__init__.py', 1, 'python').
 
 % ── Python Functions ─────────────────────────────────────
 python_function('agents/generated/user_agent/tests/test_contract.py', 'test_agent_card_has_expected_name', 0, 2, 0).
@@ -2719,6 +2880,53 @@ python_function('packages/resource-agent-hypervisor/meta_agent/repair/rules.py',
 python_function('packages/resource-agent-hypervisor/meta_agent/repair/rules.py', 'repair_resource_read_capability', 2, 8, 6).
 python_function('packages/resource-agent-hypervisor/meta_agent/repair/rules.py', 'repair_command_capability', 2, 4, 5).
 python_function('packages/resource-agent-hypervisor/meta_agent/repair/rules.py', 'repair_capabilities', 2, 6, 7).
+python_function('packages/uri2flow/uri2flow/cli.py', 'cmd_validate', 1, 2, 4).
+python_function('packages/uri2flow/uri2flow/cli.py', 'cmd_expand', 1, 3, 7).
+python_function('packages/uri2flow/uri2flow/cli.py', 'cmd_print', 1, 1, 4).
+python_function('packages/uri2flow/uri2flow/cli.py', 'build_parser', 0, 1, 5).
+python_function('packages/uri2flow/uri2flow/cli.py', 'main', 1, 1, 3).
+python_function('packages/uri2flow/uri2flow/expander.py', '_node_from_step', 3, 11, 3).
+python_function('packages/uri2flow/uri2flow/expander.py', '_edges_from_depends', 1, 4, 2).
+python_function('packages/uri2flow/uri2flow/expander.py', 'expand_flow', 1, 6, 7).
+python_function('packages/uri2flow/uri2flow/expander.py', 'dump_yaml', 1, 1, 1).
+python_function('packages/uri2flow/uri2flow/parser.py', '_as_list', 1, 5, 4).
+python_function('packages/uri2flow/uri2flow/parser.py', '_parse_step', 1, 10, 11).
+python_function('packages/uri2flow/uri2flow/parser.py', 'parse_flow', 1, 12, 7).
+python_function('packages/uri2flow/uri2flow/parser.py', 'load_flow', 1, 3, 6).
+python_function('packages/uri2flow/uri2flow/resolver.py', 'default_operation_for_uri', 1, 21, 3).
+python_function('packages/uri2flow/uri2flow/utils.py', 'slugify', 1, 2, 3).
+python_function('packages/uri2flow/uri2flow/utils.py', 'scheme_of', 1, 1, 1).
+python_function('packages/uri2flow/uri2flow/utils.py', 'path_parts', 1, 4, 4).
+python_function('packages/uri2flow/uri2flow/utils.py', 'node_id_from_uri', 2, 5, 7).
+python_function('packages/uri2flow/uri2flow/validator.py', 'validate_flow', 1, 9, 6).
+python_function('packages/uri2ops/uri2ops/cli.py', '_print', 1, 1, 2).
+python_function('packages/uri2ops/uri2ops/cli.py', 'operations_cmd', 1, 6, 7).
+python_function('packages/uri2ops/uri2ops/cli.py', 'registry_cmd', 1, 4, 7).
+python_function('packages/uri2ops/uri2ops/cli.py', 'validate_cmd', 1, 2, 2).
+python_function('packages/uri2ops/uri2ops/cli.py', 'plan_cmd', 1, 1, 3).
+python_function('packages/uri2ops/uri2ops/cli.py', 'run_cmd', 1, 2, 4).
+python_function('packages/uri2ops/uri2ops/cli.py', 'serve_cmd', 1, 2, 4).
+python_function('packages/uri2ops/uri2ops/cli.py', 'main', 1, 1, 7).
+python_function('packages/uri2ops/uri2ops/operation_registry/dispatcher.py', '_split_python_uri', 1, 3, 3).
+python_function('packages/uri2ops/uri2ops/operation_registry/dispatcher.py', 'call_handler', 3, 2, 4).
+python_function('packages/uri2ops/uri2ops/operation_registry/dispatcher.py', 'dispatch', 4, 1, 3).
+python_function('packages/uri2ops/uri2ops/operation_registry/loader.py', 'default_registry_path', 0, 1, 2).
+python_function('packages/uri2ops/uri2ops/operation_registry/loader.py', 'registry_schema_path', 0, 1, 2).
+python_function('packages/uri2ops/uri2ops/operation_registry/loader.py', 'load_operation_registry', 1, 10, 11).
+python_function('packages/uri2ops/uri2ops/operation_registry/validator.py', 'validate_registry_schema', 1, 2, 7).
+python_function('packages/uri2ops/uri2ops/operation_registry/validator.py', 'validate_operation_registry', 1, 14, 6).
+python_function('packages/uri2ops/uri2ops/remote_registry/loader.py', 'registry_config_path', 1, 2, 2).
+python_function('packages/uri2ops/uri2ops/remote_registry/loader.py', 'load_registry_config', 1, 3, 6).
+python_function('packages/uri2ops/uri2ops/remote_registry/loader.py', '_load_source', 1, 14, 13).
+python_function('packages/uri2ops/uri2ops/remote_registry/loader.py', 'merge_registry_documents', 0, 6, 4).
+python_function('packages/uri2ops/uri2ops/remote_registry/loader.py', 'registry_from_document', 1, 8, 7).
+python_function('packages/uri2ops/uri2ops/remote_registry/loader.py', 'resolve_operation_registry', 1, 12, 11).
+python_function('packages/uri2ops/uri2ops/remote_registry/loader.py', 'registry_document', 1, 4, 4).
+python_function('packages/uri2ops/uri2ops/remote_registry/loader.py', 'list_remote_sources', 1, 4, 4).
+python_function('packages/uri2ops/uri2ops/server/a2a_wrapper.py', 'build_agent_card', 2, 3, 3).
+python_function('packages/uri2ops/uri2ops/server/app.py', 'create_app', 0, 1, 24).
+python_function('packages/uri2ops/uri2ops/server/mcp_wrapper.py', 'list_mcp_tools', 1, 2, 2).
+python_function('packages/uri2ops/uri2ops/server/mcp_wrapper.py', 'mcp_tool_name_for_operation', 2, 1, 0).
 python_function('packages/uri3/domains/weather_map/handlers/generate_weather_map.py', 'handler', 1, 3, 7).
 python_function('packages/uri3/uri3/cli.py', '_quick_reference', 0, 5, 4).
 python_function('packages/uri3/uri3/cli.py', '_list_payload', 0, 2, 3).
@@ -3049,11 +3257,18 @@ python_function('tests/test_uri2ops_browser.py', 'test_mock_task_writes_artifact
 python_function('tests/test_uri2ops_browser.py', 'test_playwright_task_executes_against_local_server', 1, 5, 21).
 python_function('tests/test_uri2ops_pcwin.py', 'test_parse_pcwin_window_uri', 0, 4, 1).
 python_function('tests/test_uri2ops_pcwin.py', 'test_parse_pcwin_control_uri', 0, 4, 1).
+python_function('tests/test_uri2ops_pcwin.py', 'test_parse_pcwin_path_only_form', 0, 4, 1).
 python_function('tests/test_uri2ops_pcwin.py', 'test_resolve_adapter_mode_mock', 0, 2, 1).
 python_function('tests/test_uri2ops_pcwin.py', 'test_resolve_adapter_mode_auto_on_linux', 0, 2, 1).
 python_function('tests/test_uri2ops_pcwin.py', 'test_pcwin_mock_task', 1, 6, 4).
 python_function('tests/test_uri2ops_pcwin.py', 'test_pcwin_blocked_without_approve', 1, 3, 2).
 python_function('tests/test_uri2ops_pcwin.py', 'test_pcwin_uia_available_only_on_windows', 0, 3, 5).
+python_function('tests/test_uri2ops_serve.py', 'test_merge_remote_registry_adds_browser_wait', 0, 2, 3).
+python_function('tests/test_uri2ops_serve.py', 'test_serve_health_and_registry_export', 0, 5, 5).
+python_function('tests/test_uri2ops_serve.py', 'test_serve_agent_card_and_mcp_tools', 0, 7, 5).
+python_function('tests/test_uri2ops_serve.py', 'test_serve_run_task_via_a2a', 0, 3, 8).
+python_function('tests/test_uri2ops_serve.py', 'test_serve_mcp_run_operator_task', 0, 3, 8).
+python_function('tests/test_uri2ops_serve.py', 'test_merge_registry_documents_overlays_operations', 0, 3, 1).
 python_function('tests/test_uri2ops_v01.py', 'test_redact_secret_payload_field', 0, 3, 1).
 python_function('tests/test_uri2ops_v01.py', 'test_registry_schema_validates_yaml', 0, 3, 6).
 python_function('tests/test_uri2ops_v01.py', 'test_artifact_resolver_reads_written_file', 1, 3, 4).
@@ -3064,6 +3279,11 @@ python_function('tests/test_uri3.py', 'test_validate_uri', 0, 3, 1).
 python_function('tests/test_uri3.py', 'test_graph_weather_tree', 0, 3, 3).
 python_function('tests/test_uri_tree_validator.py', 'test_uri_tree_schema_ok', 0, 2, 1).
 python_function('tests/test_validate.py', 'test_user_agent_contract_is_valid', 0, 2, 2).
+python_function('tests/uri2flow/conftest.py', 'repo_root', 0, 4, 6).
+python_function('tests/uri2flow/test_cli.py', 'test_cli_expand', 2, 4, 3).
+python_function('tests/uri2flow/test_expand_branching_flow.py', 'test_expand_branching_flow', 1, 6, 1).
+python_function('tests/uri2flow/test_expand_linear_flow.py', 'test_expand_linear_flow', 1, 7, 1).
+python_function('tests/uri2flow/test_parser_forms.py', 'test_accepts_string_and_mapping_forms', 0, 4, 2).
 python_function('tests/uri3/test_browser_adapter.py', 'test_resolve_browser_mode_mock', 0, 2, 2).
 python_function('tests/uri3/test_browser_adapter.py', 'test_mock_adapter_writes_artifact_files', 1, 5, 4).
 python_function('tests/uri3/test_browser_adapter.py', 'test_playwright_browser_workflow', 1, 4, 18).
@@ -3150,20 +3370,6 @@ python_function('tests/uri3/test_workflow_graph.py', 'test_load_task_payload', 0
 python_function('tests/uri3/test_workflow_graph.py', 'test_validate_task_payload', 0, 2, 1).
 python_function('tests/uri3/test_workflow_graph.py', 'test_execution_plan_order', 0, 2, 1).
 python_function('tests/uri3/test_workflow_graph.py', 'test_detect_cycle', 0, 4, 6).
-python_function('uri2ops/cli.py', '_print', 1, 1, 2).
-python_function('uri2ops/cli.py', 'operations_cmd', 1, 6, 7).
-python_function('uri2ops/cli.py', 'validate_cmd', 1, 2, 2).
-python_function('uri2ops/cli.py', 'plan_cmd', 1, 1, 3).
-python_function('uri2ops/cli.py', 'run_cmd', 1, 2, 4).
-python_function('uri2ops/cli.py', 'main', 1, 1, 7).
-python_function('uri2ops/operation_registry/dispatcher.py', '_split_python_uri', 1, 3, 3).
-python_function('uri2ops/operation_registry/dispatcher.py', 'call_handler', 3, 2, 4).
-python_function('uri2ops/operation_registry/dispatcher.py', 'dispatch', 4, 1, 3).
-python_function('uri2ops/operation_registry/loader.py', 'default_registry_path', 0, 1, 2).
-python_function('uri2ops/operation_registry/loader.py', 'registry_schema_path', 0, 1, 2).
-python_function('uri2ops/operation_registry/loader.py', 'load_operation_registry', 1, 10, 11).
-python_function('uri2ops/operation_registry/validator.py', 'validate_registry_schema', 1, 2, 7).
-python_function('uri2ops/operation_registry/validator.py', 'validate_operation_registry', 1, 14, 6).
 
 % ── Python Classes ───────────────────────────────────────
 python_class('packages/nl2uri/nl2uri/pipeline.py', 'PipelineResult').
@@ -3232,6 +3438,30 @@ python_class('packages/resource-agent-hypervisor/runtime_client/client.py', 'Res
 python_method('ResourceRuntimeClient', '__init__', 2, 1, 1).
 python_method('ResourceRuntimeClient', 'read_resource', 1, 2, 4).
 python_method('ResourceRuntimeClient', 'dispatch_command', 2, 2, 4).
+python_class('packages/uri2flow/uri2flow/models.py', 'FlowStep').
+python_class('packages/uri2flow/uri2flow/models.py', 'FlowDocument').
+python_method('FlowDocument', 'to_dict', 0, 11, 2).
+python_class('packages/uri2flow/uri2flow/parser.py', 'FlowParseError').
+python_class('packages/uri2flow/uri2flow/resolver.py', 'OperationDefaults').
+python_class('packages/uri2ops/uri2ops/operation_registry/models.py', 'OperationSpec').
+python_method('OperationSpec', 'from_mapping', 4, 1, 4).
+python_method('OperationSpec', 'to_dict', 0, 1, 0).
+python_class('packages/uri2ops/uri2ops/operation_registry/models.py', 'OperationRegistry').
+python_method('OperationRegistry', 'get', 2, 1, 1).
+python_method('OperationRegistry', 'require', 2, 2, 2).
+python_method('OperationRegistry', 'list', 0, 1, 2).
+python_class('packages/uri2ops/uri2ops/server/app.py', 'TaskRequest').
+python_class('packages/uri2ops/uri2ops/server/app.py', 'McpToolCallRequest').
+python_class('packages/uri2ops/uri2ops/server/service.py', 'OperatorService').
+python_method('OperatorService', '__init__', 0, 2, 2).
+python_method('OperatorService', 'registry', 0, 1, 1).
+python_method('OperatorService', 'registry_export', 0, 1, 2).
+python_method('OperatorService', 'list_operations', 0, 2, 3).
+python_method('OperatorService', 'describe_operation', 2, 1, 2).
+python_method('OperatorService', 'list_registry_sources', 0, 1, 1).
+python_method('OperatorService', 'validate_task', 1, 1, 2).
+python_method('OperatorService', 'plan_task', 1, 1, 2).
+python_method('OperatorService', 'run_task', 1, 1, 3).
 python_class('packages/uri3/uri3/config/llm_profiles.py', 'LlmProfile').
 python_method('LlmProfile', 'to_dict', 0, 1, 1).
 python_class('packages/uri3/uri3/graph/adapters/base.py', 'StepAdapter').
@@ -3302,13 +3532,6 @@ python_class('testenv/ssh_agent_host/mock_agent_server.py', 'Handler').
 python_method('Handler', '_json', 2, 1, 8).
 python_method('Handler', 'do_GET', 0, 5, 4).
 python_method('Handler', 'log_message', 1, 1, 1).
-python_class('uri2ops/operation_registry/models.py', 'OperationSpec').
-python_method('OperationSpec', 'from_mapping', 4, 1, 4).
-python_method('OperationSpec', 'to_dict', 0, 1, 0).
-python_class('uri2ops/operation_registry/models.py', 'OperationRegistry').
-python_method('OperationRegistry', 'get', 2, 1, 1).
-python_method('OperationRegistry', 'require', 2, 2, 2).
-python_method('OperationRegistry', 'list', 0, 1, 2).
 
 % ── Dependencies ─────────────────────────────────────────
 
@@ -3317,6 +3540,9 @@ makefile_target('validate', '').
 makefile_target('generate', '').
 makefile_target('verify', '').
 makefile_target('test', '').
+makefile_target('uri2flow-test', '').
+makefile_target('uri2flow-validate', '').
+makefile_target('uri2flow-expand', '').
 makefile_target('uri-tree', '').
 makefile_target('graph', '').
 makefile_target('nl2a-weather', '').
@@ -3368,6 +3594,7 @@ sumd_interface('cli', '').
 sumd_interface('cli', '').
 sumd_interface('cli', '').
 sumd_interface('cli', '').
+sumd_interface('cli', '').
 sumd_workflow('validate', 'manual').
 sumd_workflow_step('validate', 1, 'python -m generator.validate contracts').
 sumd_workflow('generate', 'manual').
@@ -3376,6 +3603,13 @@ sumd_workflow('verify', 'manual').
 sumd_workflow_step('verify', 1, 'python -m generator.verify agents/generated').
 sumd_workflow('test', 'manual').
 sumd_workflow_step('test', 1, 'pytest -q').
+sumd_workflow('uri2flow-test', 'manual').
+sumd_workflow_step('uri2flow-test', 1, 'pytest tests/uri2flow -q').
+sumd_workflow('uri2flow-validate', 'manual').
+sumd_workflow_step('uri2flow-validate', 1, 'uri2flow validate examples/15_compact_uri_flow/weather.uri.flow.yaml').
+sumd_workflow('uri2flow-expand', 'manual').
+sumd_workflow_step('uri2flow-expand', 1, 'mkdir -p output').
+sumd_workflow_step('uri2flow-expand', 2, 'uri2flow expand examples/15_compact_uri_flow/weather.uri.flow.yaml --out output/weather.uri.graph.yaml').
 sumd_workflow('uri-tree', 'manual').
 sumd_workflow_step('uri-tree', 1, 'python -m nl2uri.cli --no-llm -p "$(WEATHER_PROMPT)" --out domains/weather_map/uri_tree.yaml').
 sumd_workflow('graph', 'manual').
@@ -3416,7 +3650,7 @@ sumd_deploy_compose_file('docker-compose.yml').
 
 ## Call Graph
 
-*398 nodes · 500 edges · 128 modules · CC̄=3.5*
+*398 nodes · 500 edges · 128 modules · CC̄=3.6*
 
 ### Hubs (by degree)
 
@@ -3425,17 +3659,17 @@ sumd_deploy_compose_file('docker-compose.yml').
 | `run_workflow` *(in packages.uri3.uri3.graph.graph_executor)* | 21 ⚠ | 2 | 39 | **41** |
 | `load_contract_registry` *(in hypervisor.contract_registry.loader)* | 9 | 6 | 33 | **39** |
 | `resolve_llm_profile` *(in packages.uri3.uri3.config.llm_profiles)* | 10 ⚠ | 3 | 32 | **35** |
-| `list` *(in uri2ops.operation_registry.models.OperationRegistry)* | 1 | 32 | 2 | **34** |
-| `infer_intent` *(in meta_agent.planner)* | 9 | 1 | 30 | **31** |
+| `list` *(in uri2ops.operation_registry.models.OperationRegistry)* | 1 | 31 | 2 | **33** |
 | `write_domain_pack` *(in packages.resource-agent-hypervisor.hypervisor.domain_pack.pack_writer)* | 3 | 1 | 30 | **31** |
+| `infer_intent` *(in meta_agent.planner)* | 9 | 1 | 30 | **31** |
 | `build_graph_from_tree` *(in uri3.graph.uri_graph)* | 10 ⚠ | 2 | 28 | **30** |
 | `parse_docker_uri` *(in packages.uri3.uri3.resolvers.docker_resolver)* | 12 ⚠ | 5 | 23 | **28** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/wronai/hypervisor
-# generated in 0.19s
+# generated in 0.21s
 # nodes: 398 | edges: 500 | modules: 128
-# CC̄=3.5
+# CC̄=3.6
 
 HUBS[20]:
   packages.uri3.uri3.graph.graph_executor.run_workflow
@@ -3445,19 +3679,19 @@ HUBS[20]:
   packages.uri3.uri3.config.llm_profiles.resolve_llm_profile
     CC=10  in:3  out:32  total:35
   uri2ops.operation_registry.models.OperationRegistry.list
-    CC=1  in:32  out:2  total:34
-  meta_agent.planner.infer_intent
-    CC=9  in:1  out:30  total:31
+    CC=1  in:31  out:2  total:33
   packages.resource-agent-hypervisor.hypervisor.domain_pack.pack_writer.write_domain_pack
     CC=3  in:1  out:30  total:31
+  meta_agent.planner.infer_intent
+    CC=9  in:1  out:30  total:31
   uri3.graph.uri_graph.build_graph_from_tree
     CC=10  in:2  out:28  total:30
   packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri
     CC=12  in:5  out:23  total:28
-  packages.uri3.uri3.graph.graph_serializer.normalize_graph_payload
-    CC=12  in:2  out:24  total:26
   packages.nl2uri.nl2uri.graph_repair.repair_graph_body
     CC=12  in:1  out:25  total:26
+  packages.uri3.uri3.graph.graph_serializer.normalize_graph_payload
+    CC=12  in:2  out:24  total:26
   generator.model.load_agent_spec
     CC=7  in:2  out:24  total:26
   packages.nl2uri.nl2uri.graph_repair.sanitize_node
@@ -3468,10 +3702,10 @@ HUBS[20]:
     CC=11  in:0  out:23  total:23
   packages.uri3.uri3.config.repo_root.find_repo_root
     CC=4  in:18  out:4  total:22
-  packages.resource-agent-hypervisor.hypervisor.cli_commands.echo_json
-    CC=2  in:16  out:5  total:21
   packages.uri3.uri3.resolvers.log_resolver.parse_log_uri
     CC=7  in:5  out:16  total:21
+  packages.resource-agent-hypervisor.hypervisor.cli_commands.echo_json
+    CC=2  in:16  out:5  total:21
   packages.uri3.uri3.cli.scan
     CC=8  in:0  out:21  total:21
   packages.uri3.uri3.graph.graph_validator.validate_workflow_graph
@@ -4068,4 +4302,4 @@ EDGES:
 
 ## Intent
 
-WronAI resource agent monorepo — uri3, nl2uri, uri2ops, hypervisor, agent factory
+WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, hypervisor, agent factory

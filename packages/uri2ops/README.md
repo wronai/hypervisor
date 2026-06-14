@@ -75,15 +75,18 @@ uri2ops registry list
 ## Directory map
 
 ```txt
-uri2ops/
-  operation_registry/
-  operator/
-    adapters/
-  schemas/
+packages/uri2ops/
+  uri2ops/
+    operation_registry/
+    operator/adapters/
+    schemas/
+    server/
+  README.md
+  CHANGELOG.md
+  TODO.md
 contracts/proto/operator/
 examples/10_browser_operator/
-docs/
-tests/
+tests/test_uri2ops_*.py
 ```
 
 ## Example task
@@ -121,9 +124,9 @@ steps:
 
 ## Links
 
-- [URI Operation Registry](../docs/URI_OPERATION_REGISTRY.md)
-- [Operator Runtime](../docs/OPERATOR_RUNTIME.md)
-- [Security Policy](../docs/OPERATOR_SECURITY.md)
-- [Example 10: Browser Operator](../examples/10_browser_operator/README.md)
+- [URI Operation Registry](../../docs/URI_OPERATION_REGISTRY.md)
+- [Operator Runtime](../../docs/OPERATOR_RUNTIME.md)
+- [Security Policy](../../docs/OPERATOR_SECURITY.md)
+- [Example 10: Browser Operator](../../examples/10_browser_operator/README.md)
 - [CHANGELOG](CHANGELOG.md)
 - [TODO](TODO.md)

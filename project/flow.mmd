@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.02s
+%% generated in 0.03s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
@@ -9,36 +9,31 @@ flowchart TD
         nl2a__cli__main["main"]
         runtime_client__client__ResourceRuntimeClient__read_resource["read_resource"]
         runtime_client__client__ResourceRuntimeClient__dispatch_command["dispatch_command"]
-        uri2ops__cli___print["_print"]
-        uri2ops__cli__operations_cmd["operations_cmd"]
-        uri2ops__cli__validate_cmd["validate_cmd"]
-        uri2ops__cli__plan_cmd["plan_cmd"]
-        uri2ops__cli__run_cmd["run_cmd"]
-        uri2ops__cli__main["main"]
     end
 
     subgraph Core
-        packages__uri3__uri3__cli___quick_reference["_quick_reference"]
-        packages__uri3__uri3__cli___list_payload["_list_payload"]
-        packages__uri3__uri3__cli__main["main"]
-        packages__uri3__uri3__cli__list_cmd["list_cmd"]
-        packages__uri3__uri3__cli__validate["validate"]
-        packages__uri3__uri3__cli__validate_tree["validate_tree"]
-        packages__uri3__uri3__cli__graph["graph"]
-        packages__uri3__uri3__cli__validate_workflow["validate_workflow"]
-        packages__uri3__uri3__cli__plan_workflow["plan_workflow"]
-        packages__uri3__uri3__cli__run_workflow_cmd["run_workflow_cmd"]
-        packages__uri3__uri3__cli__resolve["resolve"]
-        packages__uri3__uri3__cli__call["call"]
-        packages__uri3__uri3__cli__scan["scan"]
-        packages__uri3__uri3__cli__logs["logs"]
-        packages__uri3__uri3__cli__schema["schema"]
-        ...["+224 more"]
+        packages__uri3__uri3__graph__dependency_graph__adjacency["adjacency"]
+        packages__uri3__uri3__graph__dependency_graph__reverse_adjacency["reverse_adjacency"]
+        packages__uri3__uri3__graph__dependency_graph__detect_cycles{{detect_cycles CC=15}}
+        packages__uri3__uri3__graph__dependency_graph__dependency_summary["dependency_summary"]
+        uri3__graph__uri_graph__UriGraph__add_node["add_node"]
+        uri3__graph__uri_graph__UriGraph__add_edge["add_edge"]
+        packages__uri3__uri3__graph__models__GraphNode__from_dict["from_dict"]
+        packages__uri3__uri3__graph__models__GraphNode__to_dict["to_dict"]
+        packages__uri3__uri3__graph__models__GraphEdge__to_dict["to_dict"]
+        packages__uri3__uri3__graph__models__WorkflowGraph__add_node["add_node"]
+        packages__uri3__uri3__graph__models__WorkflowGraph__to_dict["to_dict"]
+        packages__uri3__uri3__graph__execution_models__ExecutionContext__resolve_ref["resolve_ref"]
+        packages__uri3__uri3__graph__execution_models__StepExecutionResult__to_dict["to_dict"]
+        packages__uri3__uri3__graph__execution_models__GraphExecutionPlan__to_dict["to_dict"]
+        packages__uri3__uri3__graph__execution_models__GraphExecutionResult__to_dict["to_dict"]
+        ...["+225 more"]
     end
 
     subgraph Exporters
         hypervisor__contract_registry__registry_exporter__export_json["export_json"]
         packages__resource_agent_hypervisor__hypervisor__contract_registry__cli_commands__run_export_md_command["run_export_md_command"]
+        packages__uri2ops__uri2ops__server__service__OperatorService__registry_export["registry_export"]
     end
 
-    class packages__uri3__uri3__cli___quick_reference,packages__uri3__uri3__cli___list_payload,packages__uri3__uri3__cli__main,packages__uri3__uri3__cli__list_cmd,packages__uri3__uri3__cli__validate,packages__uri3__uri3__cli__validate_tree,packages__uri3__uri3__cli__graph,packages__uri3__uri3__cli__validate_workflow,packages__uri3__uri3__cli__plan_workflow,packages__uri3__uri3__cli__run_workflow_cmd entry
+    class packages__uri3__uri3__graph__dependency_graph__adjacency,packages__uri3__uri3__graph__dependency_graph__reverse_adjacency,packages__uri3__uri3__graph__dependency_graph__dependency_summary,uri3__graph__uri_graph__UriGraph__add_node,uri3__graph__uri_graph__UriGraph__add_edge,packages__uri3__uri3__graph__models__GraphNode__from_dict,packages__uri3__uri3__graph__models__GraphNode__to_dict,packages__uri3__uri3__graph__models__GraphEdge__to_dict,packages__uri3__uri3__graph__models__WorkflowGraph__add_node,packages__uri3__uri3__graph__models__WorkflowGraph__to_dict entry

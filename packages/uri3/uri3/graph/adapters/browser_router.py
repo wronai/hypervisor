@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import warnings
 from typing import Any
 
 from uri3.graph.adapters.browser_mock import BrowserMockAdapter
@@ -40,6 +41,8 @@ def resolve_browser_mode(context: ExecutionContext) -> str:
 
 
 class BrowserRouterAdapter:
+    """Deprecated: uri3 delegates operator schemes to uri2ops (see Uri2OpsAdapter)."""
+
     schemes = frozenset({"browser", "dom", "screen"})
 
     def __init__(self) -> None:
@@ -47,6 +50,11 @@ class BrowserRouterAdapter:
         self._playwright = PlaywrightBrowserAdapter()
 
     def execute(self, node: GraphNode, context: ExecutionContext) -> dict[str, Any]:
+        warnings.warn(
+            "BrowserRouterAdapter is deprecated; operator schemes delegate to uri2ops",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         mode = resolve_browser_mode(context)
         if mode == "playwright":
             return self._playwright.execute(node, context)

@@ -20,6 +20,8 @@ members = [
     "resource-agent-factory",
     "resource-agent-hypervisor",
     "resource-agent-system",
+    "uri2flow",
+    "uri2ops",
     "uri3",
 ]
 
@@ -3255,7 +3257,7 @@ requires-dist = [
 
 [[package]]
 name = "resource-agent-system"
-version = "0.5.11"
+version = "0.5.12"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
@@ -3945,6 +3947,66 @@ sdist = { url = "https://files.pythonhosted.org/packages/ba/19/1b9b0e29f30c6d35c
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ce/e4/dccd7f47c4b64213ac01ef921a1337ee6e30e8c6466046018326977efd95/tzdata-2026.2-py2.py3-none-any.whl", hash = "sha256:bbe9af844f658da81a5f95019480da3a89415801f6cc966806612cc7169bffe7", size = 349321, upload-time = "2026-04-24T15:22:05.876Z" },
 ]
+
+[[package]]
+name = "uri2flow"
+version = "0.1.0"
+source = { editable = "packages/uri2flow" }
+dependencies = [
+    { name = "pyyaml" },
+]
+
+[package.optional-dependencies]
+jsonschema = [
+    { name = "jsonschema" },
+]
+test = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "jsonschema", marker = "extra == 'jsonschema'", specifier = ">=4.0" },
+    { name = "pytest", marker = "extra == 'test'", specifier = ">=8.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+]
+provides-extras = ["test", "jsonschema"]
+
+[[package]]
+name = "uri2ops"
+version = "0.5.11"
+source = { editable = "packages/uri2ops" }
+dependencies = [
+    { name = "fastapi" },
+    { name = "httpx" },
+    { name = "jsonschema" },
+    { name = "pyyaml" },
+    { name = "typer" },
+]
+
+[package.optional-dependencies]
+browser = [
+    { name = "playwright" },
+]
+server = [
+    { name = "uvicorn" },
+]
+windows = [
+    { name = "pywinauto" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "fastapi", specifier = ">=0.115" },
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "jsonschema", specifier = ">=4.23" },
+    { name = "playwright", marker = "extra == 'browser'", specifier = ">=1.40" },
+    { name = "pywinauto", marker = "extra == 'windows'", specifier = ">=0.6" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "typer", specifier = ">=0.12" },
+    { name = "uvicorn", marker = "extra == 'server'", specifier = ">=0.27" },
+]
+provides-extras = ["browser", "windows", "server"]
 
 [[package]]
 name = "uri3"

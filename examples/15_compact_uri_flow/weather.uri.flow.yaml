@@ -1,0 +1,9 @@
+flow:
+  id: weather-agent-local-health
+  description: Generate weather agent, run it locally and verify health in Chrome.
+
+do:
+  - agent://weather-generator
+  - hypervisor://local/weather-agent/run
+  - browser://chrome/page/open:
+      url: http://localhost:8101/health

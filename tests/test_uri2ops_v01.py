@@ -6,7 +6,7 @@ from pathlib import Path
 
 import yaml
 
-from uri2ops.operation_registry.loader import load_operation_registry
+from uri2ops.operation_registry.loader import default_registry_path, load_operation_registry
 from uri2ops.operation_registry.validator import validate_operation_registry, validate_registry_schema
 from uri2ops.operator.artifact_resolver import read_artifact, resolve_artifact_path
 from uri2ops.operator.artifacts import write_artifact
@@ -28,7 +28,7 @@ def test_redact_secret_payload_field():
 
 
 def test_registry_schema_validates_yaml():
-    data = yaml.safe_load(Path("uri2ops/operation_registry/registry.yaml").read_text(encoding="utf-8"))
+    data = yaml.safe_load(default_registry_path().read_text(encoding="utf-8"))
     assert validate_registry_schema(data) == []
     assert validate_operation_registry(load_operation_registry()) == []
 

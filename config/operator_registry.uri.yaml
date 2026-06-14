@@ -1,7 +1,7 @@
 version: 1
 
 local:
-  path: uri2ops/operation_registry/registry.yaml
+  path: packages/uri2ops/uri2ops/operation_registry/registry.yaml
 
 remotes:
   - id: extra-local

@@ -1,23 +1,23 @@
-# redup/duplication | 16 groups | 254f 11465L | 2026-06-14
+# redup/duplication | 19 groups | 277f 12851L | 2026-06-14
 
 SUMMARY:
-  files_scanned: 254
-  total_lines:   11465
-  dup_groups:    16
-  dup_fragments: 43
-  saved_lines:   250
-  scan_ms:       2634
+  files_scanned: 277
+  total_lines:   12851
+  dup_groups:    19
+  dup_fragments: 52
+  saved_lines:   272
+  scan_ms:       2699
 
 HOTSPOTS[7] (files with most duplication):
-  packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py  dup=76L  groups=1  frags=3  (0.7%)
+  packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py  dup=76L  groups=1  frags=3  (0.6%)
   packages/nl2uri/nl2uri/cli.py  dup=50L  groups=2  frags=4  (0.4%)
   packages/uri3/uri3/protocols/schemes/instance_parser.py  dup=40L  groups=1  frags=10  (0.3%)
-  domains/weather_map/handlers/generate_weather_map.py  dup=18L  groups=1  frags=1  (0.2%)
-  packages/uri3/domains/weather_map/handlers/generate_weather_map.py  dup=18L  groups=1  frags=1  (0.2%)
-  packages/resource-agent-factory/generator/header.py  dup=18L  groups=1  frags=3  (0.2%)
+  domains/weather_map/handlers/generate_weather_map.py  dup=18L  groups=1  frags=1  (0.1%)
+  packages/uri3/domains/weather_map/handlers/generate_weather_map.py  dup=18L  groups=1  frags=1  (0.1%)
+  packages/resource-agent-factory/generator/header.py  dup=18L  groups=1  frags=3  (0.1%)
   packages/uri3/uri3/graph/adapters/browser_router.py  dup=17L  groups=1  frags=1  (0.1%)
 
-DUPLICATES[16] (ranked by impact):
+DUPLICATES[19] (ranked by impact):
   [49d1d03e6ce392a1] ! STRU  weather_proto  L=43 N=3 saved=86 sim=1.00
       packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py:36-78  (weather_proto)
       packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py:81-106  (weather_handler)
@@ -42,6 +42,12 @@ DUPLICATES[16] (ranked by impact):
   [16b912bffbd4a264]   EXAC  _playwright_ready  L=17 N=2 saved=17 sim=1.00
       packages/uri3/uri3/graph/adapters/browser_router.py:14-30  (_playwright_ready)
       uri2ops/operator/adapters/browser_router.py:12-28  (_playwright_ready)
+  [70c693fa623a6ad1]   EXAC  _task_context  L=3 N=5 saved=12 sim=1.00
+      uri2ops/operator/adapters/android_adb.py:16-18  (_task_context)
+      uri2ops/operator/adapters/android_mock.py:10-12  (_task_context)
+      uri2ops/operator/adapters/browser_playwright.py:20-22  (_task_context)
+      uri2ops/operator/adapters/pcwin_mock.py:10-12  (_task_context)
+      uri2ops/operator/adapters/pcwin_uia.py:11-13  (_task_context)
   [277a3a34943f29ee]   STRU  python_file_header  L=6 N=3 saved=12 sim=1.00
       packages/resource-agent-factory/generator/header.py:21-26  (python_file_header)
       packages/resource-agent-factory/generator/header.py:29-34  (dockerfile_header)
@@ -56,6 +62,9 @@ DUPLICATES[16] (ranked by impact):
   [08d26c604b41d098]   STRU  validate_tree  L=7 N=2 saved=7 sim=1.00
       packages/uri3/uri3/cli.py:120-126  (validate_tree)
       packages/uri3/uri3/cli.py:145-151  (validate_workflow)
+  [0e9dc2bdedc9fb73]   STRU  window_id_from_payload  L=7 N=2 saved=7 sim=1.00
+      uri2ops/operator/adapters/pcwin_uri.py:32-38  (window_id_from_payload)
+      uri2ops/operator/adapters/pcwin_uri.py:41-47  (automation_id_from_payload)
   [c3b5ea290d7363ba]   STRU  single  L=6 N=2 saved=6 sim=1.00
       packages/nl2uri/nl2uri/cli.py:91-96  (single)
       packages/nl2uri/nl2uri/cli.py:100-105  (list_cmd)
@@ -77,8 +86,11 @@ DUPLICATES[16] (ranked by impact):
   [bc6d855bfb035b8b]   STRU  resolve_a2a  L=3 N=2 saved=3 sim=1.00
       packages/uri3/uri3/resolvers/protocol_resolver.py:10-12  (resolve_a2a)
       packages/uri3/uri3/resolvers/protocol_resolver.py:15-17  (resolve_mcp)
+  [e9d49a2572194471]   STRU  policy_config_path  L=3 N=2 saved=3 sim=1.00
+      uri2ops/operator/policy_loader.py:60-62  (policy_config_path)
+      uri2ops/remote_registry/loader.py:17-19  (registry_config_path)
 
-REFACTOR[16] (ranked by priority):
+REFACTOR[19] (ranked by priority):
   [1] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/domain_pack/utils/weather_proto.py
       WHY: 3 occurrences of 43-line block across 1 files — saves 86 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py
@@ -94,41 +106,50 @@ REFACTOR[16] (ranked by priority):
   [5] ○ extract_function   → utils/_playwright_ready.py
       WHY: 2 occurrences of 17-line block across 2 files — saves 17 lines
       FILES: packages/uri3/uri3/graph/adapters/browser_router.py, uri2ops/operator/adapters/browser_router.py
-  [6] ○ extract_function   → packages/resource-agent-factory/generator/utils/python_file_header.py
+  [6] ○ extract_function   → uri2ops/operator/adapters/utils/_task_context.py
+      WHY: 5 occurrences of 3-line block across 5 files — saves 12 lines
+      FILES: uri2ops/operator/adapters/android_adb.py, uri2ops/operator/adapters/android_mock.py, uri2ops/operator/adapters/browser_playwright.py, uri2ops/operator/adapters/pcwin_mock.py, uri2ops/operator/adapters/pcwin_uia.py
+  [7] ○ extract_function   → packages/resource-agent-factory/generator/utils/python_file_header.py
       WHY: 3 occurrences of 6-line block across 1 files — saves 12 lines
       FILES: packages/resource-agent-factory/generator/header.py
-  [7] ○ extract_function   → packages/uri3/uri3/protocols/schemes/utils/spec.py
+  [8] ○ extract_function   → packages/uri3/uri3/protocols/schemes/utils/spec.py
       WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
       FILES: packages/uri3/uri3/protocols/schemes/a2a.py, packages/uri3/uri3/protocols/schemes/mcp.py
-  [8] ○ extract_function   → packages/nl2uri/nl2uri/utils/_slug.py
+  [9] ○ extract_function   → packages/nl2uri/nl2uri/utils/_slug.py
       WHY: 3 occurrences of 4-line block across 3 files — saves 8 lines
       FILES: packages/nl2uri/nl2uri/graph_planner.py, packages/nl2uri/nl2uri/graph_repair.py, packages/nl2uri/nl2uri/planner_templates.py
-  [9] ○ extract_function   → packages/uri3/uri3/utils/validate_tree.py
+  [10] ○ extract_function   → packages/uri3/uri3/utils/validate_tree.py
       WHY: 2 occurrences of 7-line block across 1 files — saves 7 lines
       FILES: packages/uri3/uri3/cli.py
-  [10] ○ extract_function   → packages/nl2uri/nl2uri/utils/single.py
+  [11] ○ extract_function   → uri2ops/operator/adapters/utils/window_id_from_payload.py
+      WHY: 2 occurrences of 7-line block across 1 files — saves 7 lines
+      FILES: uri2ops/operator/adapters/pcwin_uri.py
+  [12] ○ extract_function   → packages/nl2uri/nl2uri/utils/single.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/nl2uri/nl2uri/cli.py
-  [11] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/utils/deploy_agent_cmd.py
+  [13] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/utils/deploy_agent_cmd.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/cli.py
-  [12] ○ extract_function   → packages/uri3/uri3/graph/utils/adjacency.py
+  [14] ○ extract_function   → packages/uri3/uri3/graph/utils/adjacency.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/uri3/uri3/graph/dependency_graph.py
-  [13] ○ extract_function   → packages/uri3/uri3/resolvers/utils/_first.py
+  [15] ○ extract_function   → packages/uri3/uri3/resolvers/utils/_first.py
       WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
       FILES: packages/uri3/uri3/resolvers/docker_resolver.py, packages/uri3/uri3/resolvers/log_query.py
-  [14] ○ extract_function   → packages/uri3/uri3/resolvers/utils/_bool.py
+  [16] ○ extract_function   → packages/uri3/uri3/resolvers/utils/_bool.py
       WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
       FILES: packages/uri3/uri3/resolvers/docker_resolver.py, packages/uri3/uri3/resolvers/log_query.py
-  [15] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/contract_registry/utils/run_build_command.py
+  [17] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/contract_registry/utils/run_build_command.py
       WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/contract_registry/cli_commands.py
-  [16] ○ extract_function   → packages/uri3/uri3/resolvers/utils/resolve_a2a.py
+  [18] ○ extract_function   → packages/uri3/uri3/resolvers/utils/resolve_a2a.py
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
       FILES: packages/uri3/uri3/resolvers/protocol_resolver.py
+  [19] ○ extract_function   → uri2ops/utils/policy_config_path.py
+      WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
+      FILES: uri2ops/operator/policy_loader.py, uri2ops/remote_registry/loader.py
 
-QUICK_WINS[12] (low risk, high savings — do first):
+QUICK_WINS[14] (low risk, high savings — do first):
   [1] extract_function   saved=86L  → packages/resource-agent-hypervisor/hypervisor/domain_pack/utils/weather_proto.py
       FILES: templates.py
   [2] extract_function   saved=36L  → packages/uri3/uri3/protocols/schemes/utils/_parse_env.py
@@ -139,15 +160,15 @@ QUICK_WINS[12] (low risk, high savings — do first):
       FILES: generate_weather_map.py, generate_weather_map.py
   [5] extract_function   saved=17L  → utils/_playwright_ready.py
       FILES: browser_router.py, browser_router.py
-  [6] extract_function   saved=12L  → packages/resource-agent-factory/generator/utils/python_file_header.py
+  [6] extract_function   saved=12L  → uri2ops/operator/adapters/utils/_task_context.py
+      FILES: android_adb.py, android_mock.py, browser_playwright.py +2
+  [7] extract_function   saved=12L  → packages/resource-agent-factory/generator/utils/python_file_header.py
       FILES: header.py
-  [7] extract_function   saved=12L  → packages/uri3/uri3/protocols/schemes/utils/spec.py
+  [8] extract_function   saved=12L  → packages/uri3/uri3/protocols/schemes/utils/spec.py
       FILES: a2a.py, mcp.py
-  [8] extract_function   saved=8L  → packages/nl2uri/nl2uri/utils/_slug.py
+  [9] extract_function   saved=8L  → packages/nl2uri/nl2uri/utils/_slug.py
       FILES: graph_planner.py, graph_repair.py, planner_templates.py
-  [9] extract_function   saved=7L  → packages/uri3/uri3/utils/validate_tree.py
-      FILES: cli.py
-  [10] extract_function   saved=6L  → packages/nl2uri/nl2uri/utils/single.py
+  [10] extract_function   saved=7L  → packages/uri3/uri3/utils/validate_tree.py
       FILES: cli.py
 
 DEPENDENCY_RISK[2] (duplicates spanning multiple packages):
@@ -158,19 +179,19 @@ DEPENDENCY_RISK[2] (duplicates spanning multiple packages):
       packages/uri3/uri3/graph/adapters/browser_router.py
       uri2ops/operator/adapters/browser_router.py
 
-EFFORT_ESTIMATE (total ≈ 10.9h):
+EFFORT_ESTIMATE (total ≈ 11.7h):
   hard   weather_proto                       saved=86L  ~258min
   medium _parse_env                          saved=36L  ~72min
   medium task                                saved=19L  ~38min
   medium handler                             saved=18L  ~72min
   medium _playwright_ready                   saved=17L  ~68min
+  easy   _task_context                       saved=12L  ~24min
   easy   python_file_header                  saved=12L  ~24min
   easy   spec                                saved=12L  ~24min
   easy   _slug                               saved=8L  ~16min
   easy   validate_tree                       saved=7L  ~14min
-  easy   single                              saved=6L  ~12min
-  ... +6 more (~58min)
+  ... +9 more (~90min)
 
 METRICS-TARGET:
-  dup_groups:  16 → 0
-  saved_lines: 250 lines recoverable
+  dup_groups:  19 → 0
+  saved_lines: 272 lines recoverable

@@ -28,6 +28,13 @@ profiles:
     purpose: nl2uri_graph
     enabled: true
 
+  flow_planner:
+    model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
+    api_key: env://OPENROUTER_API_KEY
+    provider: openrouter
+    purpose: nl2uri_flow
+    enabled: true
+
   repair:
     model: llm://openrouter/qwen/qwen3-coder-next?temp=0&max_tokens=8000
     api_key: env://OPENROUTER_API_KEY

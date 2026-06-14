@@ -11,12 +11,12 @@ def test_classify_resource_tree():
 
 
 def test_classify_task_graph():
-    assert classify_output_kind("otwórz Chrome i sprawdź czy localhost:8101/health działa") == "task_graph"
+    assert classify_output_kind("otwórz Chrome i sprawdź czy localhost:8101/health działa") == "uri_flow"
 
 
 def test_classify_workflow_graph():
     prompt = "wygeneruj agenta pogodowego, uruchom go lokalnie i sprawdź health w Chrome"
-    assert classify_output_kind(prompt) == "workflow_graph"
+    assert classify_output_kind(prompt) == "uri_flow"
 
 
 def test_plan_single_status():

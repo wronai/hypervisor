@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Compact URI Flow",
+  "type": "object",
+  "required": ["do"],
+  "properties": {
+    "nl2uri": {
+      "type": "object",
+      "properties": {
+        "version": {"type": "integer"},
+        "kind": {"enum": ["uri_flow"]},
+        "source_prompt": {"type": "string"}
+      }
+    },
+    "flow": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "description": {"type": "string"},
+        "source_prompt": {"type": "string"}
+      }
+    },
+    "do": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {"type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9+.-]*://"},
+          {
+            "type": "object",
+            "oneOf": [
+              {"required": ["uri"]},
+              {"minProperties": 1, "maxProperties": 1}
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

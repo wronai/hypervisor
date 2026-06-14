@@ -1,0 +1,10 @@
+# Optional root pyproject.toml snippets for monorepo integration.
+# Nie wklejaj bez sprawdzenia istniejących sekcji.
+
+[tool.pytest.ini_options]
+pythonpath = ["packages/uri2flow"]
+
+# If you maintain workspace-style dependency groups, add uri2flow path there.
+# Example only:
+# [tool.uv.workspace]
+# members = ["packages/uri2flow"]

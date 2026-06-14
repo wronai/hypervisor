@@ -307,6 +307,10 @@ def plan_auto(prompt: str, *, use_llm: bool = False) -> dict[str, Any]:
 
 
 def plan_by_kind(prompt: str, *, kind: str, use_llm: bool = False) -> dict[str, Any]:
+    if kind == "uri_flow":
+        from nl2uri.flow_planner import plan_flow
+
+        return plan_flow(prompt, use_llm=use_llm)
     planners = {
         "single_uri": plan_single,
         "uri_list": plan_list,

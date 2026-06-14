@@ -375,6 +375,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **v0.6.1 flow as primary input** — `nl2uri flow`, `uri3 expand-flow` / `run-flow`, `config/flow_defaults.uri.yaml`, `examples/17_flow_vs_graph/`, `docs/FLOW_FORMAT.md`.
+- **v0.6.2 flow defaults registry** — `default_operation_for_uri` reads only `config/flow_defaults.uri.yaml` (scheme defaults, patterns, fallback); expanded patterns for dom/screen/input/hypervisor browser ops.
+- **v0.6.3 uri3 → uri2ops delegation** — workflow executor delegates `browser://`, `dom://`, `screen://`, `input://` to uri2ops; uri3 browser adapters deprecated (`URI3_USE_LEGACY_BROWSER=1` escape hatch).
+- **v0.6.4 LLM compact flow** — `nl2uri flow --llm` uses dedicated flow planner (`flow_planner_llm`), `flow_repair`, and `validate_expanded_flow`; CLI flags `--repair`, `--validate`, `--expand`.
+- **uri2flow v0.1** — compact URI flow compiler (`validate`, `expand`, `print`); package at `packages/uri2flow/`, example `15_compact_uri_flow`.
+- **v0.6 workflow layer** — uri3: `validate-workflow`, `plan-workflow`, `run-workflow` with mock/Playwright browser adapters and JSONL event log.
+- **nl2uri multi-output** — CLI: `plan`, `classify`, `single`, `list`, `tree`, `task`, `graph`; LLM graph planner (`--llm`) with registry injection and graph repair.
+- **uri2ops v0.1–v0.5** — standalone operator runtime: operation registry, mock/Playwright/Android/Windows adapters, policy, artifacts, `uri2ops serve` (A2A/MCP), remote registry merge.
+- Examples: `10_browser_operator` … `16_llm_graph_planner`.
+- Docs: `docs/URI2FLOW.md`, `docs/URI2OPS.md`, updated operator and workflow guides.
+
+### Fixed
+- `load_workflow_graph()` accepts in-memory `WorkflowGraph` objects (fixes `uri3 run-workflow` TypeError).
+- `pcwin_uri` parsing for netloc+path form (`pcwin://window/Notepad/focus`).
+
+## [0.5.12] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update URI2FLOW_DROPIN_README.md
+- Update docs/ARCHITECTURE_V0_5.md
+- Update docs/FLOW_FORMAT.md
+- Update docs/NL2URI.md
+- Update docs/OPERATOR_RUNTIME.md
+- ... and 21 more files
+
+### Test
+- Update tests/conftest.py
+- Update tests/integration/test_flow_to_workflow_execution.py
+- Update tests/integration/test_uri3_uri2ops_delegation.py
+- Update tests/nl2uri/test_flow_planner.py
+- Update tests/nl2uri/test_flow_planner_llm.py
+- Update tests/nl2uri/test_flow_repair.py
+- Update tests/nl2uri/test_graph_planner.py
+- Update tests/test_uri2ops_v01.py
+- Update tests/uri2flow/conftest.py
+- Update tests/uri2flow/test_cli.py
+- ... and 4 more files
+
+### Other
+- Update Makefile
+- Update app.doql.less
+- Update config/flow_defaults.uri.yaml
+- Update config/llm.uri.yaml
+- Update config/operator_registry.uri.yaml
+- Update examples/15_compact_uri_flow/branching.uri.flow.yaml
+- Update examples/15_compact_uri_flow/run.sh
+- Update examples/15_compact_uri_flow/weather.uri.flow.yaml
+- Update examples/17_flow_vs_graph/expanded.expected.uri.graph.yaml
+- Update examples/17_flow_vs_graph/run.sh
+- ... and 88 more files
+
 ## [0.5.11] - 2026-06-14
 
 ### Docs

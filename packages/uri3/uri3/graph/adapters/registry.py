@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import warnings
 from typing import Any
 from urllib.parse import urlparse
 
 from uri3.graph.adapters.base import StepAdapter
 from uri3.graph.adapters.browser_router import BrowserRouterAdapter
+from uri3.graph.adapters.uri2ops_adapter import Uri2OpsAdapter, _use_legacy_browser_adapter
 from uri3.graph.execution_models import ExecutionContext
 from uri3.graph.models import GraphNode
 
@@ -78,8 +80,26 @@ class HypervisorAdapter:
         }
 
 
+class LegacyBrowserRouterAdapter(BrowserRouterAdapter):
+    """Deprecated: use uri2ops via Uri2OpsAdapter (set URI3_USE_LEGACY_BROWSER=1 to force)."""
+
+    def execute(self, node: GraphNode, context: ExecutionContext) -> dict[str, Any]:
+        warnings.warn(
+            "uri3 browser adapters are deprecated; operator schemes delegate to uri2ops",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return super().execute(node, context)
+
+
+def _operator_adapter() -> StepAdapter:
+    if _use_legacy_browser_adapter():
+        return LegacyBrowserRouterAdapter()
+    return Uri2OpsAdapter()
+
+
 ADAPTERS: list[StepAdapter] = [
-    BrowserRouterAdapter(),
+    _operator_adapter(),
     AssertionAdapter(),
     HypervisorAdapter(),
 ]

@@ -1,0 +1,132 @@
+version: 1
+
+defaults:
+  agent:
+    operation: generate
+    kind: command
+    requires_approval: true
+
+  hypervisor:
+    operation: call
+    kind: command
+    requires_approval: true
+
+  http:
+    operation: read
+    kind: query
+
+  https:
+    operation: read
+    kind: query
+
+  browser:
+    operation: call
+    kind: command
+    requires_approval: true
+
+  dom:
+    operation: extract_dom
+    kind: query
+
+  screen:
+    operation: observe
+    kind: query
+
+  input:
+    operation: type
+    kind: command
+    requires_approval: true
+
+  assertion:
+    operation: check
+    kind: query
+
+  log:
+    operation: read
+    kind: query
+
+  docker:
+    operation: inspect
+    kind: query
+
+  domain:
+    operation: generate
+    kind: command
+    requires_approval: true
+
+fallback:
+  operation: resolve
+  kind: query
+  requires_approval: false
+
+patterns:
+  - match: hypervisor://local/{agent}/run
+    operation: run
+    kind: command
+    requires_approval: true
+
+  - match: hypervisor://local/{agent}/stop
+    operation: stop
+    kind: command
+    requires_approval: true
+
+  - match: hypervisor://local/{agent}/restart
+    operation: restart
+    kind: command
+    requires_approval: true
+
+  - match: hypervisor://local/{agent}/deploy
+    operation: deploy
+    kind: command
+    requires_approval: true
+
+  - match: hypervisor://local/{agent}/verify
+    operation: verify
+    kind: command
+    requires_approval: true
+
+  - match: hypervisor://deployment/{name}/run
+    operation: run
+    kind: command
+    requires_approval: true
+
+  - match: browser://{browser}/page/open
+    operation: open
+    kind: command
+    requires_approval: true
+
+  - match: browser://{browser}/page/active
+    operation: extract_dom
+    kind: query
+
+  - match: browser://{browser}/page/click
+    operation: click
+    kind: command
+    requires_approval: true
+
+  - match: browser://{browser}/page/type
+    operation: type
+    kind: command
+    requires_approval: true
+
+  - match: browser://{browser}/page/submit
+    operation: submit
+    kind: command
+    requires_approval: true
+
+  - match: dom://*
+    operation: extract_dom
+    kind: query
+
+  - match: screen://*
+    operation: observe
+    kind: query
+
+  - match: input://*
+    operation: type
+    kind: command
+    requires_approval: true
+
+  - match: log://{target}
+    operation: read
+    kind: query

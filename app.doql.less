@@ -2,7 +2,7 @@
 
 app {
   name: resource-agent-system;
-  version: 0.5.10;
+  version: 0.5.11;
 }
 
 dependencies {
@@ -10,6 +10,7 @@ dependencies {
   dev: "pytest>=7.0, pytest-cov>=4.0, pytest-asyncio>=0.21.0, ruff>=0.1.0, mypy>=1.0, build>=1.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60, rich>=13.0.0";
   browser: playwright>=1.40;
   windows: pywinauto>=0.6;
+  server: uvicorn>=0.27;
 }
 
 interface[type="api"] {
@@ -28,6 +29,9 @@ interface[type="cli"] page[name="uri3"] {
 }
 interface[type="cli"] page[name="uri2ops"] {
   entry: uri2ops.cli:main;
+}
+interface[type="cli"] page[name="uri2flow"] {
+  entry: uri2flow.cli:main;
 }
 interface[type="cli"] page[name="nl2uri"] {
   entry: nl2uri.cli:main;
@@ -54,6 +58,22 @@ workflow[name="verify"] {
 workflow[name="test"] {
   trigger: manual;
   step-1: run cmd=pytest -q;
+}
+
+workflow[name="uri2flow-test"] {
+  trigger: manual;
+  step-1: run cmd=pytest tests/uri2flow -q;
+}
+
+workflow[name="uri2flow-validate"] {
+  trigger: manual;
+  step-1: run cmd=uri2flow validate examples/15_compact_uri_flow/weather.uri.flow.yaml;
+}
+
+workflow[name="uri2flow-expand"] {
+  trigger: manual;
+  step-1: run cmd=mkdir -p output;
+  step-2: run cmd=uri2flow expand examples/15_compact_uri_flow/weather.uri.flow.yaml --out output/weather.uri.graph.yaml;
 }
 
 workflow[name="uri-tree"] {

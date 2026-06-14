@@ -1,6 +1,6 @@
 # uri3
 
-`uri3` to niezależna paczka do pracy z URI: parser, normalizer, resolvery, skanery, graf zależności, walidacja URI Tree, logi (`log://`) i introspection schematów.
+`uri3` to niezależna paczka do pracy z URI: parser, normalizer, resolvery, skanery, graf zależności, walidacja URI Tree, **workflow executor**, logi (`log://`) i introspection schematów.
 
 Hypervisor korzysta z `uri3` przez cienki adapter (`hypervisor.uri.client.Uri3Client`), ale `uri3` nie zależy od hypervisora.
 
@@ -40,12 +40,44 @@ uri3 schema 'log://hypervisor?level=ERROR'
 uri3 schema --list
 ```
 
+## Workflow executor (v0.6)
+
+Graf zadań YAML (z `nl2uri task` / `nl2uri graph` lub ręcznie):
+
+```bash
+uri3 validate-workflow examples/14_workflow_executor_mock/task_graph.yaml
+uri3 plan-workflow examples/14_workflow_executor_mock/task_graph.yaml
+uri3 run-workflow examples/14_workflow_executor_mock/task_graph.yaml --dry-run
+uri3 run-workflow examples/14_workflow_executor_mock/task_graph.yaml --approve
+uri3 run-workflow examples/14_workflow_executor_mock/task_graph.yaml --approve --browser playwright
+```
+
+| Flaga | Znaczenie |
+|-------|-----------|
+| `--dry-run` | Symulacja wszystkich kroków bez blokady policy |
+| `--approve` | Zezwolenie na węzły `command` ze side effects |
+| `--browser auto\|mock\|playwright` | Adapter przekazywany do uri2ops (operator schemes) |
+
+Operator schemes (`browser://`, `dom://`, `screen://`, `input://`) są wykonywane przez **uri2ops** operation registry. Wbudowane adaptery uri3 (`uri3/graph/adapters/browser_*`) są **deprecated** — użyj `URI3_USE_LEGACY_BROWSER=1` tylko dla kompatybilności wstecznej.
+
+Wynik wykonania: JSON na stdout + event log JSONL w `output/events/workflows/`.
+
+Przykłady:
+
+- [`examples/14_workflow_executor_mock/`](../examples/14_workflow_executor_mock/README.md)
+- [`examples/15_playwright_browser/`](../examples/15_playwright_browser/README.md)
+
+Pełny operator runtime (browser/android/pcwin, policy, serve): [`docs/URI2OPS.md`](./URI2OPS.md).
+
+Compact flow authoring: [`docs/FLOW_FORMAT.md`](./FLOW_FORMAT.md) — `uri2flow expand` / `uri3 expand-flow` przed `validate-workflow`.
+
 ## Obsługiwane schematy
 
 ```txt
 env llm log python pypi http https a2a mcp
 resource artifact domain agent local input command event
 ssh docker git
+browser assertion (workflow MVP; browser/dom/screen/input → uri2ops)
 ```
 
 Pełna lista i opcje query: `uri3 schema --list` oraz `uri3 schema '<scheme>://'`.
@@ -97,10 +129,13 @@ Szczegóły SSH/Docker testenv: [`examples/03_ssh_remote_agent/`](../examples/03
 from uri3.resolvers.router import resolve, call
 from uri3.logs.reader import read_logs, summarize_logs
 from uri3.protocols.scheme_registry import get_scheme_schema, analyze_uri, describe_uri
+from uri3.graph import validate_workflow_graph, run_workflow, load_workflow_graph
 ```
 
 ## Powiązane dokumenty
 
+- [`docs/NL2URI.md`](./NL2URI.md) — generowanie grafów workflow
+- [`docs/URI2OPS.md`](./URI2OPS.md) — docelowy backend operatora
 - [`docs/ARCHITECTURE_V0_5.md`](./ARCHITECTURE_V0_5.md)
 - [`docs/URI2LLM.md`](./URI2LLM.md) — historyczna warstwa routing (dziś `uri3.resolvers`)
 - [`examples/02_uri3_scan_http/`](../examples/02_uri3_scan_http/README.md)
