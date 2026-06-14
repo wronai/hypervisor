@@ -295,6 +295,11 @@ def test_cli_ecosystem_generate_command(tmp_path):
         mocked.assert_called_once_with(str(proposal), out=str(out))
 
 
+def test_cli_ecosystem_profiles_command():
+    code = main(["ecosystem", "profiles", "--json"])
+    assert code == 0
+
+
 def test_cli_dashboard_create_plan_only():
     with patch("urish.backends.dashboard.create_dashboard") as mocked:
         mocked.return_value = {
@@ -325,3 +330,28 @@ def test_cli_agent_create_dashboard_alias():
         _, kwargs = mocked.call_args
         assert kwargs["dry_run"] is True
         assert kwargs["approve"] is False
+
+
+def test_cli_www_create_from_nl_prompt():
+    with patch("urish.backends.dashboard.create_dashboard") as mocked:
+        mocked.return_value = {
+            "ok": True,
+            "status": "planned",
+            "ecosystem_id": "hypervisor-dashboard",
+            "steps": [{"step": "plan", "ok": True}],
+        }
+        code = main(
+            [
+                "www",
+                "create",
+                "stwórz prosty chat markdown połączony z API systemu",
+                "--plan-only",
+                "--json",
+            ]
+        )
+        assert code == 0
+        mocked.assert_called_once()
+        args, kwargs = mocked.call_args
+        assert args[0] == "hypervisor-dashboard"
+        assert kwargs["prompt"] == "stwórz prosty chat markdown połączony z API systemu"
+        assert kwargs["plan_only"] is True

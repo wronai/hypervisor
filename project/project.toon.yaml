@@ -1,8 +1,8 @@
-# hypervisor | 1549 func | 373f | 35033L | python | 2026-06-14
+# hypervisor | 1584 func | 373f | 35538L | python | 2026-06-14
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.7  critical=104 (limit:10)  dup=3  cycles=0
+  CC̄=3.7  critical=105 (limit:10)  dup=3  cycles=0
 
 ALERTS[20]:
   !!! high_fan_out     register_runtime_commands = 30 (limit:10)
@@ -16,10 +16,11 @@ ALERTS[20]:
   !!! high_fan_out     scan_package_boundaries = 20 (limit:10)
   !!  cc_exceeded      _backend_from_target = 23 (limit:15)
 
-MODULES[620] (top by size):
+MODULES[623] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
-  M[packages/urish/urish/cli.py] 770L C:0 F:41 CC↑11 D:0 (python)
+  M[packages/urish/urish/cli.py] 814L C:0 F:43 CC↑11 D:0 (python)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
+  M[www/app.js] 423L C:0 F:60 CC↑10 D:0 (javascript)
   M[packages/resource-agent-hypervisor/hypervisor/cli.py] 419L C:0 F:27 CC↑5 D:0 (python)
   M[packages/urigen/urigen/apply_executor.py] 394L C:2 F:15 CC↑13 D:1 (python)
   M[packages/nl2uri/nl2uri/graph_planner.py] 322L C:0 F:11 CC↑12 D:4 (python)
@@ -31,8 +32,7 @@ MODULES[620] (top by size):
   M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py] 254L C:0 F:7 CC↑16 D:6 (python)
   M[packages/uri3/uri3/resolvers/explain.py] 251L C:0 F:9 CC↑14 D:10 (python)
   M[www/assets/app.js] 247L C:0 F:29 CC↑21 D:0 (javascript)
-  M[packages/nl2uri/nl2uri/cli.py] 246L C:0 F:15 CC↑6 D:0 (python)
-  LANGS: python:440/yaml:79/json:32/shell:25/toml:17/other:7/javascript:5/txt:5/proto:4/yml:3/mk:2/j2:1
+  LANGS: python:440/yaml:79/json:32/shell:26/toml:17/other:8/javascript:5/txt:5/proto:4/yml:4/mk:2/j2:1
 
 HOTSPOTS[10]:
   ★ register_runtime_commands fan=30  // Orchestrates 30 calls
@@ -44,9 +44,9 @@ HOTSPOTS[10]:
 REFACTOR[15]:
   [1] H/L Split call_system_uri (CC=25)
   [2] H/L Split build_incident_from_inspection (CC=29)
-  [3] H/H Split god module packages/urish/urish/cli.py (770L, 0 classes)
+  [3] H/H Split god module packages/urish/urish/cli.py (814L, 0 classes)
   [4] H/H Split god module goal.yaml (511L, 0 classes)
   [5] H/H Split god module planfile.yaml (1319L, 0 classes)
 
 EVOLUTION:
-  2026-06-14 CC̄=3.7 crit=104 35033L // Automated analysis
+  2026-06-14 CC̄=3.7 crit=105 35538L // Automated analysis

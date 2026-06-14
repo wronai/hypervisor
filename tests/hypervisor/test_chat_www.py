@@ -6,7 +6,6 @@ from typing import Any
 
 import pytest
 from fastapi.testclient import TestClient
-
 from hypervisor_dashboard_agent.chat_format import format_ask_markdown, format_uri_result_markdown
 from hypervisor_dashboard_agent.main import app
 
@@ -89,3 +88,6 @@ def test_www_index_served(client: TestClient):
     response = client.get("/www/")
     assert response.status_code == 200
     assert "Hypervisor Chat" in response.text
+    assert "quick-prompts" in response.text
+    assert "agent-list" in response.text
+    assert "api-detail" in response.text

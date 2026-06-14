@@ -1,5 +1,7 @@
 # Example NL commands for Taskinity Chat UI
 
+stwórz prosty web UI hypervisora jako chat markdown połączony z API systemu
+stwórz dashboard agenta hypervisor-dashboard do pokazywania procesów i napraw
 pokaż proces agenta weather-map-agent.local
 sprawdź health agenta weather-map-agent.local
 zdiagnozuj agenta weather-map-agent.local

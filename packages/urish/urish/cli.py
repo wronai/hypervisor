@@ -409,6 +409,19 @@ def ecosystem_apply_cmd(
     _finish(payload)
 
 
+@ecosystem_app.command("profiles")
+def ecosystem_profiles_cmd(json_out: bool = typer.Option(False, "--json")) -> None:
+    from urigen.io import dump_yaml
+    from urigen.models import profile_catalog
+
+    payload = {
+        "ok": True,
+        "profiles": list(profile_catalog().values()),
+        "result_type": "ecosystem_profiles",
+    }
+    typer.echo(json.dumps(payload, indent=2) if json_out else dump_yaml(payload))
+
+
 app.add_typer(ecosystem_app, name="ecosystem")
 
 
@@ -471,7 +484,9 @@ def www_serve_cmd(
     try:
         import uvicorn
     except ImportError as exc:
-        raise typer.BadParameter("Install server extras: pip install hypervisor-dashboard-agent[server]") from exc
+        raise typer.BadParameter(
+            "Install server extras: pip install hypervisor-dashboard-agent[server]"
+        ) from exc
 
     typer.echo(f"Chat UI: http://localhost:{port}/www/")
     uvicorn.run(
@@ -500,6 +515,35 @@ def www_open_cmd(
         payload={"url": url},
         dry_run=dry_run,
         policy_options=PolicyOptions.from_flags(approve=approve, dry_run=dry_run),
+    )
+    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
+    _finish(result)
+
+
+@www_app.command("create")
+def www_create_cmd(
+    prompt: str = typer.Argument(
+        "stwórz prosty web UI hypervisora jako chat markdown połączony z API systemu"
+    ),
+    name: str = typer.Option("hypervisor-dashboard", "--name"),
+    plan_only: bool = typer.Option(False, "--plan-only"),
+    dry_run: bool = typer.Option(False, "--dry-run"),
+    sandbox: bool = typer.Option(False, "--sandbox"),
+    approve: bool = typer.Option(False, "--approve"),
+    open_ui: bool = typer.Option(False, "--open"),
+    json_out: bool = typer.Option(False, "--json"),
+) -> None:
+    """Create the www chat/dashboard agent from a natural-language prompt."""
+    from urish.backends.dashboard import create_dashboard
+
+    result = create_dashboard(
+        name,
+        prompt=prompt,
+        plan_only=plan_only,
+        dry_run=dry_run,
+        sandbox=sandbox,
+        approve=approve,
+        open_browser=open_ui,
     )
     _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
     _finish(result)

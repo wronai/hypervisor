@@ -5,7 +5,6 @@ from typing import Any
 
 from urigen.models import wants_dashboard
 
-
 DASHBOARD_PLANNED_URIS = [
     "agent://hypervisor-dashboard",
     "deployment://hypervisor-dashboard.local",
@@ -54,6 +53,10 @@ def detect_intent(prompt: str) -> dict[str, Any]:
 
 def _detect_kind(prompt: str) -> str:
     if re.search(r"\b(ecosystem|ekosystem)\b", prompt, re.I):
+        return "ecosystem"
+    if re.search(r"\b(stw[oó]rz|zbuduj|generuj)\b", prompt, re.I) and re.search(
+        r"\b(web\s*ui|webui|dashboard|chat\s+markdown)\b", prompt, re.I
+    ) and re.search(r"\b(hypervisor|system|api|proces|process|agent)\b", prompt, re.I):
         return "ecosystem"
     if re.search(r"\b(stw[oó]rz|zbuduj|generuj)\b.*\b(agent|agenta)\b", prompt, re.I):
         return "ecosystem"

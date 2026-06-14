@@ -24,7 +24,12 @@ hypervisor run-agent hypervisor-dashboard.local --detach
 
 | Path | Maps to |
 |------|---------|
+| `GET /www/` | static chat UI from repo `www/` |
 | `GET /ui/agents` | agent list |
 | `GET /ui/agents/{id}` | `view://process/agent/{id}/latest` |
+| `POST /api/ask` | `urish ask` as markdown-ready NL planning |
+| `POST /api/uri/preview` | policy preview for URI calls |
 | `GET /api/view/process/agent/{id}` | JSON view envelope |
 | `POST /api/uri/call` | policy-gated URI execution |
+| `GET /api/agents` | deployment list for the chat sidebar |
+| `GET /api/events` | recent observable events |

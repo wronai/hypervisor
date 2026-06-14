@@ -6,7 +6,7 @@ window.TASKINITY_CONFIG = {
     health: "/health",
     call: "/api/uri/call",
     explain: "/api/uri/explain",
-    ask: "/api/nl/ask",
+    ask: "/api/ask",
     events: "/api/events"
   },
   defaultAgent: "weather-map-agent.local"

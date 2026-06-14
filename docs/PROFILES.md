@@ -3,6 +3,7 @@
 Users pick a **profile** instead of hand-picking capabilities, flows, and deployments.
 
 ```bash
+uri ecosystem profiles
 uri ecosystem plan "stwórz dashboard hypervisora" --profile dashboard-agent
 uri ask "stwórz web UI do procesów hypervisora"   # auto-selects dashboard-agent
 ```
@@ -14,10 +15,20 @@ uri ask "stwórz web UI do procesów hypervisora"   # auto-selects dashboard-age
 | `minimal` | Weather demo agent + health | capabilities, flows, weather deployment |
 | `voice` | minimal + STT/TTS/voice | voice capabilities and flows |
 | `dashboard-agent` | Hypervisor Web UI system agent | view/repair/ticket capabilities, dashboard deployment |
-| `api-agent` | HTTP agent with endpoints | *(planned)* |
-| `repair-agent` | Diagnose/repair focused agent | *(planned)* |
-| `operator-agent` | Browser/shell/system operator | *(planned)* |
+| `agent` | agent package with deployment fragment | partial |
+| `operator` | Browser/shell/system operator | partial |
 | `ecosystem` / `full` | Domain + agent + deploy + tests | *(partial)* |
+
+Friendly aliases are accepted:
+
+```text
+dashboard       → dashboard-agent
+voice-agent     → voice
+operator-agent  → operator
+ecosystem       → full
+```
+
+Planned but not yet generated as dedicated profiles: `api-agent`, `repair-agent`.
 
 ## dashboard-agent
 

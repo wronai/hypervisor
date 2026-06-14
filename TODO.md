@@ -60,6 +60,12 @@
 - [x] `urish doctor --strict` artifact gate (schemas, incidents/tickets/evolution, lifecycle).
 - [x] `urish ticket_workflow`: ticket show/plan/evolve with `detected_intent` and
       chained evolution → ecosystem next steps.
+- [x] Payload-aware `urish` shortcuts for onboarding aliases
+      (`uri dashboard-ui --approve`, `uri hwa`, `uri weather-process`).
+- [x] Discoverable ecosystem profiles and onboarding aliases
+      (`uri ecosystem profiles`, `voice-agent`, `operator-agent`, `ecosystem`).
+- [x] `www/` chat UI backed by real dashboard-agent API with Markdown rendering,
+      agents/events context, URI preview/run actions, and `urish www create`.
 - [ ] Add port conflict classifier using socket/lsof probes without killing unrelated processes.
 - [ ] Add safe deployment registry update proposal when effective runtime port differs from declared `health_uri`.
 - [ ] Add `health://agent/{deployment}` and `repair://agent/{deployment}/auto` URI schemes or resolver aliases.

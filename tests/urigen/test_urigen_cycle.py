@@ -11,6 +11,7 @@ from urigen import (
 )
 from urigen.cli import main as urigen_main
 from urigen.io import dump_yaml, load_yaml, write_yaml
+from urigen.models import normalize_profile, profile_catalog
 
 
 def test_plan_generate_verify_explain_cycle(tmp_path: Path):
@@ -49,6 +50,18 @@ def test_plan_generate_verify_explain_cycle(tmp_path: Path):
     assert weather["backend"]["type"] == "python"
     assert weather["verification"]["data_quality_enabled"] is True
     assert explanation["risks"] == []
+
+
+def test_profile_aliases_are_canonicalized():
+    assert normalize_profile("voice-agent") == "voice"
+    assert normalize_profile("operator-agent") == "operator"
+    assert normalize_profile("ecosystem") == "full"
+    assert normalize_profile("dashboard") == "dashboard-agent"
+
+    proposal = plan_ecosystem("stworz agenta pogodowego z TTS", profile="voice-agent")
+    assert proposal["proposal"]["profile"] == "voice"
+    assert proposal["profile"]["name"] == "voice"
+    assert "voice-agent" in profile_catalog()["voice"]["aliases"]
 
 
 def test_apply_plan_and_transaction(tmp_path: Path, repo_root: Path):
@@ -105,7 +118,9 @@ def test_apply_idempotent_second_run(tmp_path: Path, repo_root: Path):
     second = apply_ecosystem(generated["ecosystem_file"], approve=True, root=tmp_path)
     assert second["ok"] is True
     contract_action = next(
-        item for item in second["actions"] if str(item.get("id", "")).startswith("merge_agent_contract")
+        item
+        for item in second["actions"]
+        if str(item.get("id", "")).startswith("merge_agent_contract")
     )
     assert contract_action["status"] == "unchanged"
 
@@ -192,3 +207,10 @@ def test_cli_plan_generate_verify(tmp_path: Path):
 
     assert urigen_main(["generate", str(proposal_path), "--out", str(ecosystem_dir)]) == 0
     assert urigen_main(["verify", str(ecosystem_dir / "ecosystem.yaml"), "--no-report"]) == 0
+
+
+def test_cli_profiles_lists_aliases(capsys):
+    assert urigen_main(["profiles", "--json"]) == 0
+    output = capsys.readouterr().out
+    assert '"voice-agent"' in output
+    assert '"dashboard-agent"' in output

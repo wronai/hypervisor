@@ -1,26 +1,26 @@
 # System Architecture Analysis
-<!-- generated in 0.02s -->
+<!-- generated in 0.01s -->
 
 ## Overview
 
 - **Project**: /home/tom/github/wronai/hypervisor
 - **Primary Language**: python
-- **Languages**: python: 440, yaml: 79, json: 32, shell: 25, toml: 17
+- **Languages**: python: 440, yaml: 79, json: 32, shell: 26, toml: 17
 - **Analysis Mode**: static
-- **Total Functions**: 1549
+- **Total Functions**: 1584
 - **Total Classes**: 110
-- **Modules**: 620
-- **Entry Points**: 504
+- **Modules**: 623
+- **Entry Points**: 524
 
 ## Architecture by Module
 
-### packages.urish.urish.cli
-- **Functions**: 41
-- **File**: `cli.py`
-
 ### www.app
-- **Functions**: 35
+- **Functions**: 69
 - **File**: `app.js`
+
+### packages.urish.urish.cli
+- **Functions**: 43
+- **File**: `cli.py`
 
 ### www.assets.app
 - **Functions**: 33
@@ -64,14 +64,14 @@
 - **Functions**: 15
 - **File**: `runtime_state.py`
 
-### packages.nl2uri.nl2uri.flow_helpers
-- **Functions**: 14
-- **File**: `flow_helpers.py`
-
 ### packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.routes
 - **Functions**: 14
 - **Classes**: 2
 - **File**: `routes.py`
+
+### packages.nl2uri.nl2uri.flow_helpers
+- **Functions**: 14
+- **File**: `flow_helpers.py`
 
 ### packages.uri3.uri3.protocols.schemes.instance_parser
 - **Functions**: 13
@@ -148,18 +148,24 @@ Main execution flows into the system:
 ### packages.uri3.uri3.doctor.checks.boundaries.check_runtime_transports
 - **Calls**: frozenset, packages.uri3.uri3.doctor.checks._helpers.check_result, packages.uri2run.uri2run.runner.run_backend, result.to_dict, body.setdefault, body.setdefault, body.setdefault, set
 
+### packages.urish.urish.cli.ticket_show_cmd
+- **Calls**: ticket_app.command, typer.Option, packages.urish.urish.cli._emit, packages.urish.urish.cli._finish, packages.urish.urish.backends.ticket.show_ticket, result.get, isinstance, intent.get
+
 ### packages.nl2uri.nl2uri.cli.flow
 > Generate compact URI flow (*.uri.flow.yaml style).
 - **Calls**: app.command, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
 
-### packages.urish.urish.cli.ticket_show_cmd
-- **Calls**: ticket_app.command, typer.Option, packages.urish.urish.cli._emit, packages.urish.urish.cli._finish, packages.urish.urish.backends.ticket.show_ticket, result.get, isinstance, intent.get
+### packages.urish.urish.cli.agent_run_cmd
+- **Calls**: agent_app.command, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, packages.urish.urish.cli._policy_options, packages.urish.urish.policy.evaluate_policy
 
 ### packages.uri3.uri3.doctor.checks.verify.check_replay_failures
 - **Calls**: sorted, packages.uri3.uri3.doctor.checks._helpers.check_result, logs_dir.is_dir, packages.uri3.uri3.doctor.checks._helpers.check_result, logs_dir.glob, packages.uri2verify.uri2verify.replay.replay_workflow_events, summary.get, summary.get
 
-### packages.urish.urish.cli.agent_run_cmd
-- **Calls**: agent_app.command, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, packages.urish.urish.cli._policy_options, packages.urish.urish.policy.evaluate_policy
+### packages.urish.urish.cli.ecosystem_plan_cmd
+- **Calls**: ecosystem_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, packages.urish.urish.intent.detect_intent, packages.urigen.urigen.proposal.plan_ecosystem
+
+### packages.urish.urish.cli.ecosystem_apply_cmd
+- **Calls**: ecosystem_app.command, typer.Option, typer.Option, typer.Option, typer.Option, packages.urigen.urigen.apply.apply_ecosystem, typer.echo, packages.urish.urish.cli._finish
 
 ### uri2ops.operation_registry.models.OperationSpec.from_mapping
 - **Calls**: cls, data.get, data.get, data.get, data.get, uri2ops.operation_registry.models.OperationRegistry.list, bool, bool
@@ -178,12 +184,6 @@ Main execution flows into the system:
 
 ### www.assets.app.init
 - **Calls**: www.assets.app.updateApiLabels, www.assets.app.addAssistantWelcome, www.assets.app.addEventListener, www.assets.app.preventDefault, www.assets.app.trim, www.assets.app.handlePrompt, www.assets.app.querySelectorAll, www.assets.app.forEach
-
-### packages.urish.urish.cli.ecosystem_plan_cmd
-- **Calls**: ecosystem_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, packages.urish.urish.intent.detect_intent, packages.urigen.urigen.proposal.plan_ecosystem
-
-### packages.urish.urish.cli.ecosystem_apply_cmd
-- **Calls**: ecosystem_app.command, typer.Option, typer.Option, typer.Option, typer.Option, packages.urigen.urigen.apply.apply_ecosystem, typer.echo, packages.urish.urish.cli._finish
 
 ### packages.nl2uri.nl2uri.cli.plan
 > Classify prompt and generate the best matching URI plan.
@@ -498,8 +498,8 @@ Functions exposed as public API (no underscore prefix):
 - `packages.resource-agent-hypervisor.hypervisor.repair.incident.build_incident_from_inspection` - 57 calls
 - `packages.uri3.uri3.cli.commands.discovery.register` - 47 calls
 - `packages.resource-agent-hypervisor.hypervisor.deployment_registry.runtime_state.normalize_runtime_state` - 42 calls
+- `packages.urigen.urigen.cli.build_parser` - 41 calls
 - `packages.urigen.urigen.generator.generate_ecosystem` - 40 calls
-- `packages.urigen.urigen.cli.build_parser` - 38 calls
 - `packages.urish.urish.backends.dashboard.create_dashboard` - 37 calls
 - `packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.view_builder.build_process_view` - 37 calls
 - `packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle.run_agent` - 35 calls
@@ -518,10 +518,10 @@ Functions exposed as public API (no underscore prefix):
 - `uri3.graph.uri_graph.build_graph_from_tree` - 28 calls
 - `packages.uri2run.uri2run.runner.run_target` - 27 calls
 - `packages.urigen.urigen.envelope.stamp_ecosystem` - 26 calls
+- `packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.chat_format.format_ask_markdown` - 26 calls
 - `packages.uri2run.uri2run.transports.flow_transport.run_uri_flow` - 26 calls
 - `packages.uri2run.uri2run.transports.graph_transport.run_uri_graph` - 26 calls
 - `hypervisor.config.models.HypervisorConfig.from_dict` - 26 calls
-- `packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.chat_format.format_ask_markdown` - 26 calls
 - `packages.uri3.uri3.protocols.schemes.spec_registry.build_scheme_registry` - 25 calls
 - `packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client.call_system_uri` - 25 calls
 - `packages.resource-agent-hypervisor.meta_agent.cli.main` - 25 calls

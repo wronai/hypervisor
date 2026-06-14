@@ -21,8 +21,11 @@ pokaż proces agenta weather-map-agent.local
 ## Required API
 
 ```http
-POST /api/nl/ask
+POST /api/ask
+POST /api/uri/preview
 POST /api/uri/call
+GET /api/agents
+GET /api/events
 GET /health
 ```
 
@@ -43,7 +46,7 @@ GET /health
 ## UX acceptance criteria
 
 - User sees a chat message, not raw JSON.
-- User can set API base URL.
-- UI has mock fallback.
 - Each action still maps to a URI.
+- NL creation is available through the UI and `urish www create "..."`.
+- API status, agents and recent events are visible as simple system context.
 - Mutating actions are visible as repair/ticket/evolution steps.

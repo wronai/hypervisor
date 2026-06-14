@@ -3295,7 +3295,7 @@ requires-dist = [
 
 [[package]]
 name = "resource-agent-system"
-version = "0.5.22"
+version = "0.5.23"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },

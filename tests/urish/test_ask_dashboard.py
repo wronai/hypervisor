@@ -18,6 +18,15 @@ def test_detect_dashboard_agent_intent():
     assert intent["profile"] == "dashboard-agent"
 
 
+def test_detect_www_chat_dashboard_intent_without_agent_word():
+    intent = detect_intent(
+        "stwórz prosty web UI hypervisora jako chat markdown połączony z API systemu"
+    )
+    assert intent["kind"] == "ecosystem"
+    assert intent["subtype"] == "dashboard-agent"
+    assert intent["ecosystem_id"] == "hypervisor-dashboard"
+
+
 def test_ask_dashboard_includes_generate_and_semantic_id():
     result = ask_prompt("stwórz aplikację web UI jako agenta do pokazywania procesów hypervisora")
     data = result["data"]

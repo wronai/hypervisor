@@ -59,6 +59,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extended CLI shortcuts: `weather-status`, `weather-process`, `dashboard-ui`, `repair-weather`.
 - Added payload-aware `urish` shortcuts so aliases such as `uri dashboard-ui --approve`
   can carry the configured `browser://chrome/page/open` payload.
+- Added user-facing ecosystem profile discovery via `urigen profiles` and
+  `uri ecosystem profiles`, plus aliases such as `voice-agent`, `operator-agent`,
+  `dashboard`, and `ecosystem`.
+- Added real-system `www/` chat UI surface with Markdown rendering, health/agents/events
+  API context, URI preview/run actions, and `urish www create` for NL-driven dashboard
+  creation.
 - Added schemas: `ticket`, `log_event`, `workflow_artifact`, `deployment_registry`, `config/config_base`.
 - Added `docs/EXTERNAL_PACKAGES.md` with the local `semcod/*` and `wronai/*`
   package audit, version snapshot, integration boundary and recommended next
@@ -105,6 +111,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`lifecycle.py` reuses healthy agent when already running).
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
+
+## [0.5.23] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/PROFILES.md
+- Update packages/hypervisor-dashboard-agent/README.md
+- Update packages/urigen/README.md
+- Update project/README.md
+- Update project/context.md
+- Update www/README.md
+- Update www/markpact/chat-ui-api.markpact.md
+
+### Test
+- Update tests/hypervisor/test_chat_www.py
+- Update tests/urigen/test_urigen_cycle.py
+- Update tests/urish/test_ask_dashboard.py
+- Update tests/urish/test_urish_cli.py
+
+### Other
+- Update .dockerignore
+- Update packages/urigen/urigen/cli.py
+- Update packages/urigen/urigen/models.py
+- Update packages/urish/urish/cli.py
+- Update packages/urish/urish/intent.py
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- ... and 22 more files
 
 ## [0.5.22] - 2026-06-14
 

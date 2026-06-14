@@ -15,30 +15,66 @@
       </div>
       <div class="header-actions">
         <span id="status-pill" class="pill pill--pending">łączenie…</span>
+        <button class="ghost-btn" type="button" id="refresh-btn">Odśwież</button>
         <a class="link" href="/ui/agents">Dashboard UI</a>
         <a class="link" href="demo.html">Demo statyczne</a>
       </div>
     </header>
 
-    <main id="messages" class="messages" aria-live="polite"></main>
+    <main class="workspace">
+      <aside class="sidebar" aria-label="System">
+        <section class="panel">
+          <h2>Połączenie</h2>
+          <dl class="kv">
+            <div>
+              <dt>API</dt>
+              <dd id="api-detail">sprawdzanie…</dd>
+            </div>
+            <div>
+              <dt>Tryb</dt>
+              <dd>policy gate + dry-run</dd>
+            </div>
+          </dl>
+        </section>
 
-    <footer class="composer">
-      <form id="chat-form">
-        <textarea
-          id="prompt"
-          rows="2"
-          placeholder="Np. stwórz dashboard agenta hypervisor… lub wklej URI agent://…"
-          autocomplete="off"
-        ></textarea>
-        <div class="composer-bar">
-          <label class="checkbox">
-            <input type="checkbox" id="dry-run" checked>
-            dry-run
-          </label>
-          <button type="submit" id="send-btn">Wyślij</button>
-        </div>
-      </form>
-    </footer>
+        <section class="panel">
+          <h2>NL komendy</h2>
+          <div id="quick-prompts" class="quick-list"></div>
+        </section>
+
+        <section class="panel">
+          <h2>Agenci</h2>
+          <div id="agent-list" class="list list--empty">ładowanie…</div>
+        </section>
+
+        <section class="panel">
+          <h2>Zdarzenia</h2>
+          <div id="event-list" class="list list--empty">ładowanie…</div>
+        </section>
+      </aside>
+
+      <section class="chat" aria-label="Chat">
+        <main id="messages" class="messages" aria-live="polite"></main>
+
+        <footer class="composer">
+          <form id="chat-form">
+            <textarea
+              id="prompt"
+              rows="2"
+              placeholder="Napisz polecenie NL albo wklej URI agent://…"
+              autocomplete="off"
+            ></textarea>
+            <div class="composer-bar">
+              <label class="checkbox">
+                <input type="checkbox" id="dry-run" checked>
+                dry-run
+              </label>
+              <button type="submit" id="send-btn">Wyślij</button>
+            </div>
+          </form>
+        </footer>
+      </section>
+    </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

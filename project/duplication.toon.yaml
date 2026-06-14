@@ -1,12 +1,12 @@
-# redup/duplication | 70 groups | 489f 29504L | 2026-06-14
+# redup/duplication | 70 groups | 489f 29646L | 2026-06-14
 
 SUMMARY:
   files_scanned: 489
-  total_lines:   29504
+  total_lines:   29646
   dup_groups:    70
   dup_fragments: 178
   saved_lines:   922
-  scan_ms:       3829
+  scan_ms:       3273
 
 HOTSPOTS[7] (files with most duplication):
   output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py  dup=123L  groups=5  frags=5  (0.4%)

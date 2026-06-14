@@ -80,6 +80,13 @@ The planner accepts these profile names:
 - `dashboard-agent` — hypervisor dashboard system agent (view/repair/ticket UI)
 - `agent`, `operator`, `provider`, `full` — extended profiles (partial)
 
+Friendly aliases are accepted for onboarding:
+
+- `dashboard` → `dashboard-agent`
+- `voice-agent` → `voice`
+- `operator-agent` → `operator`
+- `ecosystem` / `full-ecosystem` → `full`
+
 ```txt
 minimal
 agent
@@ -87,6 +94,14 @@ voice
 operator
 provider
 full
+dashboard-agent
+```
+
+List profiles from the CLI:
+
+```bash
+urigen profiles
+uri ecosystem profiles
 ```
 
 The MVP uses `minimal` and `voice` paths directly. The other profiles are

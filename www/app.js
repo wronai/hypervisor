@@ -1,29 +1,120 @@
 const API = "";
 
+const QUICK_PROMPTS = [
+  {
+    label: "Utwórz WWW chat",
+    prompt: "stwórz prosty web UI hypervisora jako chat markdown połączony z API systemu",
+  },
+  {
+    label: "Dashboard agent",
+    prompt: "stwórz dashboard agenta hypervisor-dashboard do pokazywania procesów i napraw",
+  },
+  {
+    label: "Status agenta",
+    prompt: "pokaż proces agenta weather-map-agent.local",
+  },
+  {
+    label: "Diagnoza",
+    prompt: "zdiagnozuj agenta weather-map-agent.local i pokaż plan naprawy",
+  },
+];
+
 const messagesEl = document.getElementById("messages");
 const form = document.getElementById("chat-form");
 const promptEl = document.getElementById("prompt");
 const dryRunEl = document.getElementById("dry-run");
 const sendBtn = document.getElementById("send-btn");
 const statusPill = document.getElementById("status-pill");
+const apiDetail = document.getElementById("api-detail");
+const refreshBtn = document.getElementById("refresh-btn");
+const quickPromptsEl = document.getElementById("quick-prompts");
+const agentListEl = document.getElementById("agent-list");
+const eventListEl = document.getElementById("event-list");
 
-marked.setOptions({ breaks: true, gfm: true });
+if (window.marked) {
+  marked.setOptions({ breaks: true, gfm: true });
+}
 
 function renderMarkdown(text) {
-  const raw = marked.parse(text || "");
-  return DOMPurify.sanitize(raw, { USE_PROFILES: { html: true } });
+  if (window.marked && window.DOMPurify) {
+    const raw = marked.parse(text || "");
+    return DOMPurify.sanitize(raw, { USE_PROFILES: { html: true } });
+  }
+  return renderBasicMarkdown(text || "");
+}
+
+function renderBasicMarkdown(text) {
+  const blocks = [];
+  const pattern = /```(\w+)?\n([\s\S]*?)```/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      blocks.push(renderBasicText(text.slice(lastIndex, match.index)));
+    }
+    blocks.push(`<pre><code>${escapeHtml(match[2].trim())}</code></pre>`);
+    lastIndex = pattern.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    blocks.push(renderBasicText(text.slice(lastIndex)));
+  }
+  return blocks.join("");
+}
+
+function renderBasicText(text) {
+  return text
+    .split(/\n{2,}/)
+    .map((paragraph) => {
+      const lines = paragraph.trim().split("\n");
+      if (!paragraph.trim()) return "";
+      if (lines[0].startsWith("## ")) {
+        return `<h2>${inlineMarkdown(lines[0].slice(3))}</h2>`;
+      }
+      if (lines.every((line) => line.startsWith("- "))) {
+        return `<ul>${lines.map((line) => `<li>${inlineMarkdown(line.slice(2))}</li>`).join("")}</ul>`;
+      }
+      return `<p>${inlineMarkdown(lines.join("\n")).replace(/\n/g, "<br>")}</p>`;
+    })
+    .join("");
+}
+
+function inlineMarkdown(text) {
+  return escapeHtml(text)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
 }
 
 function extractUri(text) {
-  const match = text.match(/([a-z][a-z0-9+.-]*:\/\/[^\s`'"]+)/i);
+  const match = text.match(/([a-z][a-z0-9+.-]*:\/\/[^\s`'")]+)/i);
   return match ? match[1].replace(/[.,;]+$/, "") : null;
+}
+
+function extractUrisFromText(text) {
+  const matches = text.match(/[a-z][a-z0-9+.-]*:\/\/[^\s`'")]+/gi) || [];
+  return [...new Set(matches.map((item) => item.replace(/[.,;]+$/, "")))];
+}
+
+function collectUris(data) {
+  if (!data || typeof data !== "object") return [];
+  const uris = [];
+  for (const key of ["planned_uris", "uris"]) {
+    if (Array.isArray(data[key])) uris.push(...data[key]);
+  }
+  if (typeof data.uri === "string") uris.push(data.uri);
+  if (Array.isArray(data.actions)) {
+    data.actions.forEach((action) => {
+      if (action && typeof action.uri === "string") uris.push(action.uri);
+    });
+  }
+  return [...new Set(uris.filter((uri) => typeof uri === "string" && uri.includes("://")))];
 }
 
 function looksLikeUri(text) {
   return /[a-z][a-z0-9+.-]*:\/\//i.test(text.trim());
 }
 
-function appendMessage(role, bodyHtml, { error = false } = {}) {
+function appendMessage(role, bodyHtml, { error = false, uris = [] } = {}) {
   const wrap = document.createElement("article");
   wrap.className = `msg msg--${role}${error ? " msg--error" : ""}`;
   wrap.innerHTML = `
@@ -32,6 +123,7 @@ function appendMessage(role, bodyHtml, { error = false } = {}) {
   `;
   messagesEl.appendChild(wrap);
   enhanceBlocks(wrap);
+  appendUriActions(wrap, uris);
   messagesEl.scrollTop = messagesEl.scrollHeight;
   return wrap;
 }
@@ -50,15 +142,37 @@ function enhanceBlocks(root) {
     actions.appendChild(copyBtn);
 
     if (uri) {
-      const runBtn = document.createElement("button");
-      runBtn.type = "button";
-      runBtn.textContent = dryRunEl.checked ? "Dry-run URI" : "Wykonaj URI";
-      runBtn.addEventListener("click", () => callUri(uri));
-      actions.appendChild(runBtn);
+      actions.appendChild(actionButton("Podgląd URI", () => previewUri(uri)));
+      actions.appendChild(actionButton(dryRunEl.checked ? "Dry-run URI" : "Wykonaj URI", () => callUri(uri)));
     }
 
     codeEl.parentElement?.insertAdjacentElement("afterend", actions);
   });
+}
+
+function appendUriActions(root, uris) {
+  const uniqueUris = [...new Set([...(uris || []), ...extractUrisFromText(root.textContent || "")])];
+  if (!uniqueUris.length) return;
+
+  const actions = document.createElement("div");
+  actions.className = "uri-actions";
+  uniqueUris.slice(0, 6).forEach((uri) => {
+    actions.appendChild(actionButton(shortUri(uri), () => previewUri(uri), "uri-chip"));
+  });
+  root.appendChild(actions);
+}
+
+function actionButton(label, handler, className = "") {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = className;
+  button.textContent = label;
+  button.addEventListener("click", handler);
+  return button;
+}
+
+function shortUri(uri) {
+  return uri.length > 46 ? `${uri.slice(0, 43)}...` : uri;
 }
 
 async function apiFetch(path, options = {}) {
@@ -74,27 +188,89 @@ async function apiFetch(path, options = {}) {
   return payload;
 }
 
-async function checkHealth() {
+async function checkHealth({ silent = false } = {}) {
   try {
     const health = await apiFetch("/health");
     statusPill.textContent = `${health.agent} · OK`;
     statusPill.className = "pill pill--ok";
+    apiDetail.textContent = `${health.version || "dev"} · ${API || "same-origin"}`;
+    return health;
   } catch (err) {
     statusPill.textContent = "brak API";
     statusPill.className = "pill pill--warn";
-    appendMessage(
-      "assistant",
-      `<p>Brak połączenia z API. Uruchom serwer:</p><pre><code>urish www serve</code></pre><p>${escapeHtml(String(err))}</p>`,
-      { error: true },
-    );
+    apiDetail.textContent = "offline";
+    if (!silent) {
+      appendMessage(
+        "assistant",
+        `<p>Brak połączenia z API. Uruchom serwer:</p><pre><code>urish www serve</code></pre><p>${escapeHtml(String(err))}</p>`,
+        { error: true },
+      );
+    }
+    return null;
+  }
+}
+
+async function loadSystemState() {
+  await checkHealth({ silent: true });
+  await Promise.all([loadAgents(), loadEvents()]);
+}
+
+async function loadAgents() {
+  try {
+    const payload = await apiFetch("/api/agents");
+    const agents = payload.agents || [];
+    if (!agents.length) {
+      agentListEl.className = "list list--empty";
+      agentListEl.textContent = "brak wpisów";
+      return;
+    }
+    agentListEl.className = "list";
+    agentListEl.innerHTML = "";
+    agents.slice(0, 6).forEach((agent) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "list-item";
+      item.innerHTML = `<strong>${escapeHtml(agent.id)}</strong><span>${escapeHtml(agent.status || "unknown")}</span>`;
+      item.addEventListener("click", () => callUri(agent.view_uri || `view://process/agent/${agent.id}/latest`));
+      agentListEl.appendChild(item);
+    });
+  } catch (err) {
+    agentListEl.className = "list list--empty";
+    agentListEl.textContent = "API niedostępne";
+  }
+}
+
+async function loadEvents() {
+  try {
+    const payload = await apiFetch("/api/events?limit=5");
+    const events = payload.events || [];
+    if (!events.length) {
+      eventListEl.className = "list list--empty";
+      eventListEl.textContent = "brak zdarzeń";
+      return;
+    }
+    eventListEl.className = "list";
+    eventListEl.innerHTML = "";
+    events.forEach((event) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "list-item";
+      item.innerHTML = `<strong>${escapeHtml(event.type)}</strong><span>${escapeHtml(event.agent_id || event.uri || "")}</span>`;
+      if (event.uri) item.addEventListener("click", () => callUri(event.uri));
+      eventListEl.appendChild(item);
+    });
+  } catch (err) {
+    eventListEl.className = "list list--empty";
+    eventListEl.textContent = "API niedostępne";
   }
 }
 
 function escapeHtml(value) {
-  return value
+  return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }
 
 async function askPrompt(text) {
@@ -106,6 +282,43 @@ async function askPrompt(text) {
       llm: false,
     }),
   });
+}
+
+async function previewUri(uri) {
+  appendMessage("user", `<p>Podgląd <code>${escapeHtml(uri)}</code></p>`);
+  setBusy(true);
+  try {
+    const result = await apiFetch("/api/uri/preview", {
+      method: "POST",
+      body: JSON.stringify({
+        uri,
+        dry_run: true,
+        policy: "dev",
+      }),
+    });
+    appendMessage("assistant", renderMarkdown(formatPreviewMarkdown(result)), { uris: [uri] });
+  } catch (err) {
+    appendMessage("assistant", `<p><strong>Błąd preview</strong></p><p>${escapeHtml(String(err))}</p>`, {
+      error: true,
+    });
+  } finally {
+    setBusy(false);
+  }
+}
+
+function formatPreviewMarkdown(result) {
+  const approval = result.requires_approval ? "tak" : "nie";
+  const dryRun = result.dry_run_allowed ? "tak" : "nie";
+  const execute = result.execute_allowed_with_approval ? "tak" : "nie";
+  return [
+    "## Podgląd URI",
+    `URI: \`${result.uri}\``,
+    `Dry-run: **${dryRun}** · wymaga approval: **${approval}** · execute po approval: **${execute}**`,
+    "",
+    "```json",
+    JSON.stringify(result, null, 2),
+    "```",
+  ].join("\n");
 }
 
 async function callUri(uri, { approved = false, echoUser = true } = {}) {
@@ -124,7 +337,8 @@ async function callUri(uri, { approved = false, echoUser = true } = {}) {
       }),
     });
     const md = result.message_markdown || "```json\n" + JSON.stringify(result, null, 2) + "\n```";
-    appendMessage("assistant", renderMarkdown(md));
+    appendMessage("assistant", renderMarkdown(md), { uris: collectUris(result.data) });
+    await loadSystemState();
   } catch (err) {
     appendMessage("assistant", `<p><strong>Błąd URI</strong></p><p>${escapeHtml(String(err))}</p>`, {
       error: true,
@@ -137,6 +351,7 @@ async function callUri(uri, { approved = false, echoUser = true } = {}) {
 function setBusy(busy) {
   sendBtn.disabled = busy;
   promptEl.disabled = busy;
+  refreshBtn.disabled = busy;
 }
 
 async function handleSubmit(event) {
@@ -156,7 +371,9 @@ async function handleSubmit(event) {
     }
 
     const result = await askPrompt(text);
-    appendMessage("assistant", renderMarkdown(result.message_markdown || "_Brak odpowiedzi._"));
+    appendMessage("assistant", renderMarkdown(result.message_markdown || "_Brak odpowiedzi._"), {
+      uris: collectUris(result.data),
+    });
   } catch (err) {
     appendMessage("assistant", `<p><strong>Błąd ask</strong></p><p>${escapeHtml(String(err))}</p>`, {
       error: true,
@@ -166,7 +383,23 @@ async function handleSubmit(event) {
   }
 }
 
+function renderQuickPrompts() {
+  quickPromptsEl.innerHTML = "";
+  QUICK_PROMPTS.forEach((item) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = item.label;
+    button.dataset.prompt = item.prompt;
+    button.addEventListener("click", () => {
+      promptEl.value = item.prompt;
+      promptEl.focus();
+    });
+    quickPromptsEl.appendChild(button);
+  });
+}
+
 form.addEventListener("submit", handleSubmit);
+refreshBtn.addEventListener("click", () => loadSystemState());
 promptEl.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
@@ -174,16 +407,17 @@ promptEl.addEventListener("keydown", (event) => {
   }
 });
 
+renderQuickPrompts();
 appendMessage(
   "assistant",
   renderMarkdown(
-    "## Witaj w Hypervisor Chat\n\n" +
-      "Wpisz prompt po polsku lub angielsku — np.:\n\n" +
-      "- `stwórz dashboard agenta hypervisor`\n" +
-      "- `ecosystem weather demo`\n\n" +
-      "Albo wklej URI (`agent://…`, `view://…`) aby wykonać przez policy gate.\n\n" +
-      "Odpowiedzi renderują się jako **markdown** z planowanymi URI i komendami `urish`.",
+    "## Hypervisor Chat\n\n" +
+      "Połączony widok NL → URI → wynik. Zacznij od komendy z panelu albo wpisz własne polecenie.\n\n" +
+      "```bash\n" +
+      "urish www create \"stwórz prosty chat markdown połączony z API systemu\" --plan-only\n" +
+      "urish www serve\n" +
+      "```",
   ),
 );
 
-checkHealth();
+loadSystemState();

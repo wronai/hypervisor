@@ -25,13 +25,11 @@ from __future__ import annotations
 
 import json
 import subprocess
-from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-
+from pydantic import BaseModel, Field
 
 app = FastAPI(title="Taskinity API Bridge", version="0.1.0")
 
@@ -46,11 +44,16 @@ app.add_middleware(
 
 class UriCall(BaseModel):
     uri: str
-    payload: dict[str, Any] = {}
+    payload: dict[str, Any] = Field(default_factory=dict)
+    approved: bool = False
+    dry_run: bool = True
+    policy: str = "dev"
 
 
 class AskCall(BaseModel):
     prompt: str
+    dry_run: bool = True
+    llm: bool = False
 
 
 def envelope(ok: bool, result_type: str, data: Any, **meta: Any) -> dict[str, Any]:
@@ -152,6 +155,31 @@ def call_uri(body: UriCall) -> dict[str, Any]:
     return envelope(result["returncode"] == 0, "uri_call", result, target=uri)
 
 
+@app.post("/api/uri/preview")
+def preview_uri(body: UriCall) -> dict[str, Any]:
+    mutating = body.uri.startswith(("repair://", "hypervisor://", "docker://", "shell://"))
+    return {
+        "uri": body.uri,
+        "readonly_allowed": not mutating,
+        "dry_run_allowed": True,
+        "execute_allowed_with_approval": True,
+        "requires_approval": mutating,
+        "policy": body.policy,
+        "reason": "mutating URI requires approval" if mutating else None,
+    }
+
+
+@app.get("/api/agents")
+def agents() -> dict[str, Any]:
+    return {"agents": []}
+
+
+@app.get("/api/events")
+def events(limit: int = 20) -> dict[str, Any]:
+    return {"events": [], "limit": limit}
+
+
+@app.post("/api/ask")
 @app.post("/api/nl/ask")
 def ask(body: AskCall) -> dict[str, Any]:
     prompt = body.prompt.lower()
@@ -177,11 +205,20 @@ def ask(body: AskCall) -> dict[str, Any]:
         uri = f"view://process/agent/{agent}/latest"
         intent = "show_process"
 
-    return envelope(True, "nl_plan", {
+    data = {
         "intent": intent,
+        "detected_kind": "runtime",
+        "planned_uris": [uri],
         "uri": uri,
-        "explanation": "Backend API zamienił polecenie naturalne na URI."
-    }, prompt=body.prompt)
+        "next_steps": [f"urish call {uri} --dry-run"],
+        "explanation": "Backend API zamienił polecenie naturalne na URI.",
+    }
+    result = envelope(True, "nl_plan", data, prompt=body.prompt)
+    result["message_markdown"] = (
+        f"## Plan NL\n\nIntent: `{intent}`\n\n### Planowane URI\n- `{uri}`\n\n"
+        f"```bash\nurish call {uri} --dry-run\n```"
+    )
+    return result
 
 
 if __name__ == "__main__":

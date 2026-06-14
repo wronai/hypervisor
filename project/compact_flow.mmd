@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.24s
+%% generated in 0.13s
     domains__weather_map["domains.weather_map<br/>1 funcs"]
     examples__23_nl_to_agent_tutorial["examples.23_nl_to_agent_tutorial<br/>3 funcs"]
     generator__hashutil["generator.hashutil<br/>1 funcs"]
@@ -29,8 +29,8 @@ flowchart TD
     packages__uri2verify["packages.uri2verify<br/>44 funcs"]
     packages__uri2voice["packages.uri2voice<br/>7 funcs"]
     packages__uri3["packages.uri3<br/>357 funcs"]
-    packages__urigen["packages.urigen<br/>82 funcs"]
-    packages__urish["packages.urish<br/>108 funcs"]
+    packages__urigen["packages.urigen<br/>84 funcs"]
+    packages__urish["packages.urish<br/>110 funcs"]
     testenv__ssh_agent_host["testenv.ssh_agent_host<br/>3 funcs"]
     uri2ops__operation_registry["uri2ops.operation_registry<br/>13 funcs"]
     uri2ops__server["uri2ops.server<br/>12 funcs"]
@@ -43,8 +43,8 @@ flowchart TD
     packages__uri3 ==>|29| uri2ops__operation_registry
     packages__nl2uri ==>|27| packages__uri3
     packages__resource_agent_hypervisor ==>|24| examples__23_nl_to_agent_tutorial
-    packages__urish ==>|21| packages__uri3
-    packages__urish ==>|20| packages__urigen
+    packages__urish ==>|22| packages__urigen
+    packages__urish ==>|19| packages__uri3
     packages__touri ==>|13| packages__uri2run
     packages__resource_agent_hypervisor ==>|12| uri2ops__operation_registry
     packages__urish ==>|11| packages__resource_agent_hypervisor
@@ -66,14 +66,15 @@ flowchart TD
     meta_agent__api ==>|5| packages__resource_agent_hypervisor
     packages__urish ==>|4| packages__uri2run
     packages__urish ==>|4| domains__weather_map
+    packages__urigen ==>|4| uri2ops__operation_registry
     packages__hypervisor_dashboard_agent ==>|4| packages__uri3
     packages__uri2flow ==>|4| packages__urigen
     generator__validate ==>|4| examples__23_nl_to_agent_tutorial
     packages__nl2uri ==>|4| packages__uri2flow
     packages__uri2verify ==>|4| packages__uri3
+    packages__urish -->|3| uri2ops__operation_registry
     packages__urish -->|3| examples__23_nl_to_agent_tutorial
     packages__urigen -->|3| packages__uri2flow
-    packages__urigen -->|3| uri2ops__operation_registry
     uri2ops__server -->|3| packages__uri2ops
     packages__uri3 -->|3| hypervisor__contract_registry
     packages__hypervisor_dashboard_agent -->|3| packages__urish
@@ -85,9 +86,9 @@ flowchart TD
     packages__resource_agent_hypervisor -->|3| packages__resource_agent_factory
     meta_agent__repair -->|3| generator__validate
     hypervisor__verifier -->|3| examples__23_nl_to_agent_tutorial
-    packages__urish -->|2| uri2ops__operation_registry
     packages__urish -->|2| packages__nl2uri
     packages__uri3 -->|2| uri3__validators
+    packages__uri3 -->|2| packages__urish
     packages__uri3 -->|2| packages__uri2flow
     packages__uri3 -->|2| packages__urigen
     packages__uri2flow -->|2| packages__uri3
@@ -109,7 +110,6 @@ flowchart TD
     packages__urigen -->|1| packages__touri
     packages__uri2ops -->|1| examples__23_nl_to_agent_tutorial
     uri2ops__operation_registry -->|1| packages__uri2ops
-    packages__uri3 -->|1| packages__urish
     uri3__validators -->|1| uri3__protocols
     packages__uri3 -->|1| uri3__graph
     packages__uri3 -->|1| uri3__protocols

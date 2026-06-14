@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.24s
+%% generated in 0.13s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
@@ -12,22 +12,22 @@ flowchart TD
     end
 
     subgraph Core
-        packages__urish__urish__ticket_workflow__detect_intent_from_ticket{{detect_intent_from_ticket CC=15}}
-        packages__urish__urish__policy__PolicyOptions__from_flags["from_flags"]
-        packages__urish__urish__policy__classify_uri{{classify_uri CC=19}}
-        packages__urish__urish__backends__repair__repair_learn["repair_learn"]
-        packages__urigen__urigen__cli___emit["_emit"]
-        packages__urigen__urigen__cli__cmd_plan["cmd_plan"]
-        packages__urigen__urigen__cli__cmd_generate["cmd_generate"]
-        packages__urigen__urigen__cli__cmd_verify["cmd_verify"]
-        packages__urigen__urigen__cli__cmd_explain["cmd_explain"]
-        packages__urigen__urigen__cli__cmd_apply["cmd_apply"]
-        packages__urigen__urigen__cli__cmd_schema_check["cmd_schema_check"]
-        packages__urigen__urigen__cli__build_parser["build_parser"]
-        packages__urigen__urigen__cli__main["main"]
-        packages__urigen__urigen__io___NoAliasSafeDumper__ignore_aliases["ignore_aliases"]
-        packages__urigen__urigen__apply_executor__RollbackEntry__to_dict["to_dict"]
-        ...["+563 more"]
+        packages__urish__urish__cli___policy_options["_policy_options"]
+        packages__urish__urish__cli___context_policy["_context_policy"]
+        packages__urish__urish__cli___emit["_emit"]
+        packages__urish__urish__cli___finish["_finish"]
+        packages__urish__urish__cli___print_evolve_summary["_print_evolve_summary"]
+        packages__urish__urish__cli__root["root"]
+        packages__urish__urish__cli__ask_cmd["ask_cmd"]
+        packages__urish__urish__cli__nl_cmd["nl_cmd"]
+        packages__urish__urish__cli__select_cmd["select_cmd"]
+        packages__urish__urish__cli__shell_cmd["shell_cmd"]
+        packages__urish__urish__cli__doctor_cmd["doctor_cmd"]
+        packages__urish__urish__cli__shortcuts_cmd["shortcuts_cmd"]
+        packages__urish__urish__cli__agent_status_cmd["agent_status_cmd"]
+        packages__urish__urish__cli__agent_health_cmd["agent_health_cmd"]
+        packages__urish__urish__cli__agent_create_dashboard_cmd["agent_create_dashboard_cmd"]
+        ...["+583 more"]
     end
 
     subgraph Exporters
@@ -36,4 +36,4 @@ flowchart TD
         packages__resource_agent_hypervisor__hypervisor__contract_registry__cli_commands__run_export_md_command["run_export_md_command"]
     end
 
-    class packages__urish__urish__policy__PolicyOptions__from_flags,packages__urigen__urigen__cli___emit,packages__urigen__urigen__cli__cmd_plan,packages__urigen__urigen__cli__cmd_generate,packages__urigen__urigen__cli__cmd_verify,packages__urigen__urigen__cli__cmd_explain,packages__urigen__urigen__cli__cmd_apply,packages__urigen__urigen__cli__cmd_schema_check,packages__urigen__urigen__cli__build_parser,packages__urigen__urigen__cli__main entry
+    class packages__urish__urish__cli___policy_options,packages__urish__urish__cli___context_policy,packages__urish__urish__cli___emit,packages__urish__urish__cli___finish,packages__urish__urish__cli___print_evolve_summary,packages__urish__urish__cli__root,packages__urish__urish__cli__ask_cmd,packages__urish__urish__cli__nl_cmd,packages__urish__urish__cli__select_cmd,packages__urish__urish__cli__shell_cmd entry
