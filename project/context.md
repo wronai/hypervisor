@@ -5,18 +5,22 @@
 
 - **Project**: /home/tom/github/wronai/hypervisor
 - **Primary Language**: python
-- **Languages**: python: 440, yaml: 79, json: 32, shell: 26, toml: 17
+- **Languages**: python: 448, yaml: 81, json: 32, shell: 30, toml: 17
 - **Analysis Mode**: static
-- **Total Functions**: 1584
-- **Total Classes**: 110
-- **Modules**: 623
-- **Entry Points**: 524
+- **Total Functions**: 1714
+- **Total Classes**: 112
+- **Modules**: 639
+- **Entry Points**: 608
 
 ## Architecture by Module
 
 ### www.app
-- **Functions**: 69
+- **Functions**: 81
 - **File**: `app.js`
+
+### www.landing
+- **Functions**: 80
+- **File**: `landing.js`
 
 ### packages.urish.urish.cli
 - **Functions**: 43
@@ -86,17 +90,13 @@
 - **Functions**: 13
 - **File**: `replay.py`
 
+### packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle
+- **Functions**: 13
+- **File**: `lifecycle.py`
+
 ### packages.uri3.uri3.graph.dependency_graph
 - **Functions**: 12
 - **File**: `dependency_graph.py`
-
-### packages.uri2pact.uri2pact.core
-- **Functions**: 12
-- **File**: `core.py`
-
-### packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.static.dashboard
-- **Functions**: 11
-- **File**: `dashboard.js`
 
 ## Key Entry Points
 
@@ -129,6 +129,9 @@ Main execution flows into the system:
 
 ### packages.uri3.uri3.cli.commands.resolve.register
 - **Calls**: app.command, app.command, app.command, app.command, uri3.validators.uri_validator.validate_uri, typer.echo, packages.uri3.uri3.validators.uri_tree_validator.validate_uri_tree, typer.echo
+
+### scripts.www.monitor_landing.main
+- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, scripts.www.monitor_landing.load_baseline
 
 ### packages.uri3.uri3.graph.adapters.browser_playwright.PlaywrightBrowserAdapter.execute
 - **Calls**: packages.uri3.uri3.graph.adapters.browser_playwright._session_state, state.get, None.execute, urlparse, str, None.start, playwright.chromium.launch, browser.new_page
@@ -191,10 +194,6 @@ Main execution flows into the system:
 
 ### packages.nl2uri.nl2uri.cli.tree
 - **Calls**: app.command, typer.Option, typer.Option, typer.Option, typer.Option, packages.nl2uri.nl2uri.graph_planner.plan_tree, packages.nl2uri.nl2uri.cli._emit, nl2uri.writer.write_uri_tree
-
-### packages.nl2uri.nl2uri.cli.generate
-> Backward-compatible URI Tree generation.
-- **Calls**: app.command, typer.Option, typer.Option, typer.Option, typer.Option, packages.nl2uri.nl2uri.domain_planner.plan_from_prompt, packages.nl2uri.nl2uri.cli._emit, nl2uri.writer.write_uri_tree
 
 ## Process Flows
 
@@ -500,9 +499,9 @@ Functions exposed as public API (no underscore prefix):
 - `packages.resource-agent-hypervisor.hypervisor.deployment_registry.runtime_state.normalize_runtime_state` - 42 calls
 - `packages.urigen.urigen.cli.build_parser` - 41 calls
 - `packages.urigen.urigen.generator.generate_ecosystem` - 40 calls
+- `packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle.run_agent` - 40 calls
 - `packages.urish.urish.backends.dashboard.create_dashboard` - 37 calls
 - `packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.view_builder.build_process_view` - 37 calls
-- `packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle.run_agent` - 35 calls
 - `packages.urish.urish.cli.ask_cmd` - 34 calls
 - `packages.uri2ops.uri2ops.cli.main` - 33 calls
 - `packages.uri2ops.uri2ops.server.routes.mcp.mcp_router` - 33 calls
@@ -529,11 +528,11 @@ Functions exposed as public API (no underscore prefix):
 - `packages.uri3.uri3.graph.graph_serializer.normalize_graph_payload` - 24 calls
 - `packages.uri3.uri3.cli.commands.resolve.register` - 24 calls
 - `generator.model.load_agent_spec` - 24 calls
+- `scripts.www.monitor_landing.main` - 24 calls
 - `packages.urigen.urigen.apply_executor.preview_action_diff` - 23 calls
 - `packages.urigen.urigen.schema_check.schema_check_ecosystem` - 23 calls
 - `packages.uri3.uri3.logs.parsing.parse_json_entry` - 23 calls
 - `packages.uri3.uri3.graph.adapters.browser_playwright.PlaywrightBrowserAdapter.execute` - 23 calls
-- `packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri` - 23 calls
 
 ## System Interactions
 

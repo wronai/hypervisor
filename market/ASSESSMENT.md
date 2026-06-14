@@ -1,7 +1,7 @@
 # Ocena strategiczna: kierunek dobry, research do zaostrzenia
 
-Dokument krytyczny — korekty wobec pierwotnego researchu rynkowego (2026-06).  
-**Wniosek:** Taskinity nie powinno być kolejnym frameworkiem agentów, tylko warstwą sterowania przez URI: chat → API → CLI → runtime → observe → repair → ticket/evolution. To mocna, spójna narracja produktu.
+> **Aktualna strategia operacyjna:** [STRATEGY.md](./STRATEGY.md) (10 sekcji, kanoniczna).  
+> Ten dokument = pierwotna krytyka researchu; szczegóły sprzedaży → [SALES_MESSAGES.md](./SALES_MESSAGES.md), [DEMO_10MIN.md](./DEMO_10MIN.md).
 
 Pierwotny research trafnie zauważa, że obecne „AI agent control plane” są zwykle **enterprise/governance-first**, a nie URI/developer/runtime-first. Po własnym sprawdzeniu rynku — poniższe korekty.
 

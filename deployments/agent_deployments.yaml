@@ -13,6 +13,34 @@ deployments:
   metadata:
     source: system_agent
     role: observer_renderer_controller
+- id: invoices-agent.local
+  agent_ref: agent://invoices-agent
+  target_uri: local://agents/generated/invoices_agent
+  status: generated
+  declared:
+    target_uri: local://agents/generated/invoices_agent
+    preferred_port: 8103
+    health_uri: http://localhost:8103/health
+    card_uri: http://localhost:8103/.well-known/agent-card.json
+  card_uri: http://localhost:8103/.well-known/agent-card.json
+  health_uri: http://localhost:8103/health
+  metadata:
+    source: contract
+    contract: contracts/agents/invoices_agent.yaml
+- id: user-agent.local
+  agent_ref: agent://user-agent
+  target_uri: local://agents/generated/user_agent
+  status: generated
+  declared:
+    target_uri: local://agents/generated/user_agent
+    preferred_port: 8102
+    health_uri: http://localhost:8102/health
+    card_uri: http://localhost:8102/.well-known/agent-card.json
+  card_uri: http://localhost:8102/.well-known/agent-card.json
+  health_uri: http://localhost:8102/health
+  metadata:
+    source: contract
+    contract: contracts/agents/user_agent.yaml
 - id: weather-map-agent.docker
   agent_ref: agent://weather-map-agent
   target_uri: docker://stack/weather-map-agent

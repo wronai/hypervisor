@@ -1,13 +1,16 @@
 from __future__ import annotations
 
-import os
-import signal
-import time
 from pathlib import Path
 from typing import Any
 
 from hypervisor.deployment_registry.env import default_log_uri, resolve_deployment_env
+from hypervisor.deployment_registry.health_uri import port_from_command, port_from_http_uri
 from hypervisor.deployment_registry.process import start_process
+from hypervisor.deployment_registry.process_discovery import (
+    command_matches_plan,
+    pids_listening_on_port,
+    terminate_pid,
+)
 from hypervisor.deployment_registry.run_executor import (
     attach_started_process,
     build_agent_run_plan,
@@ -17,6 +20,7 @@ from hypervisor.deployment_registry.run_executor import (
     rebind_plan_port_if_busy,
     resolve_running_mode,
     reuse_existing_process_plan,
+    sync_runtime_health_uri,
     verify_process_alive,
     write_runtime_state_after_start,
 )
@@ -42,6 +46,80 @@ def _lifecycle_payload(payload: dict[str, Any]) -> dict[str, Any]:
 
 def _repo_root(root: str | Path) -> Path:
     return Path(root) if str(root) != "." else find_repo_root()
+
+
+def _safe_stop_plan(deployment, *, repo: Path) -> dict[str, Any]:
+    try:
+        return build_agent_run_plan(deployment, repo=repo, port=None, host="0.0.0.0", reload=False)
+    except (FileNotFoundError, ValueError):
+        return {}
+
+
+def _state_pid(state: dict[str, Any]) -> int | None:
+    process = state.get("process") or {}
+    if isinstance(process, dict) and process.get("pid") is not None:
+        return process.get("pid")
+    return state.get("pid")
+
+
+def _state_command(state: dict[str, Any]) -> str:
+    process = state.get("process") or {}
+    if isinstance(process, dict) and process.get("command"):
+        return str(process["command"])
+    return str(state.get("command") or "")
+
+
+def _state_health_uri(state: dict[str, Any]) -> str:
+    network = state.get("network") or {}
+    if isinstance(network, dict) and network.get("effective_health_uri"):
+        return str(network["effective_health_uri"])
+    return str(state.get("health_uri") or "")
+
+
+def _candidate_stop_ports(state: dict[str, Any], plan: dict[str, Any]) -> set[int]:
+    ports: set[int] = set()
+    command_port = port_from_command(_state_command(state))
+    if command_port is not None:
+        ports.add(command_port)
+    health_port = port_from_http_uri(_state_health_uri(state))
+    if health_port is not None:
+        ports.add(health_port)
+    plan_port = plan.get("port")
+    if isinstance(plan_port, int):
+        ports.add(plan_port)
+    return ports
+
+
+def _terminate_matching_agent_processes(
+    state: dict[str, Any],
+    plan: dict[str, Any],
+    *,
+    timeout: float,
+) -> dict[str, Any]:
+    pids: set[int] = set()
+    skipped: list[dict[str, Any]] = []
+    state_pid = _state_pid(state)
+    if isinstance(state_pid, int) and is_process_alive(state_pid):
+        if not plan or command_matches_plan(state_pid, plan):
+            pids.add(state_pid)
+        else:
+            skipped.append({"pid": state_pid, "reason": "runtime_pid_command_mismatch"})
+
+    for port in _candidate_stop_ports(state, plan):
+        for pid in pids_listening_on_port(port):
+            if not plan or command_matches_plan(pid, plan):
+                pids.add(pid)
+            else:
+                skipped.append({"pid": pid, "port": port, "reason": "listener_command_mismatch"})
+
+    terminated: list[int] = []
+    failed: list[int] = []
+    for pid in sorted(pids):
+        if terminate_pid(pid, timeout=timeout):
+            terminated.append(pid)
+        else:
+            failed.append(pid)
+    return {"terminated_pids": terminated, "failed_pids": failed, "skipped": skipped}
 
 
 def run_agent(
@@ -83,6 +161,10 @@ def run_agent(
         return payload
 
     existing = load_or_clear_runtime_state(deployment.id, repo)
+    if existing and not is_process_alive(existing.get("pid")):
+        stop_agent(selector, root=repo)
+        clear_runtime_state(deployment.id, repo)
+        existing = None
     plan = build_agent_run_plan(deployment, repo=repo, port=port, host=host, reload=reload)
     if existing and is_process_alive(existing.get("pid")):
         running_mode = resolve_running_mode(
@@ -102,7 +184,7 @@ def run_agent(
             if plan["health_uri"] != existing.get("health_uri"):
                 save_runtime_state(
                     deployment.id,
-                    {**existing, "health_uri": plan["health_uri"]},
+                    sync_runtime_health_uri(existing, plan["health_uri"]),
                     repo,
                 )
             return _finalize(plan)
@@ -157,12 +239,47 @@ def stop_agent(
         from hypervisor.deployment_registry.docker_runner import stop_docker_deployment
 
         return stop_docker_deployment(deployment, root=repo)
+    plan = _safe_stop_plan(deployment, repo=repo)
     state = load_runtime_state(deployment.id, repo)
     if not state:
+        stopped_without_state = _terminate_matching_agent_processes({}, plan, timeout=timeout)
+        if stopped_without_state["terminated_pids"]:
+            return _lifecycle_payload(
+                {
+                    "id": deployment.id,
+                    "status": "stopped",
+                    "message": "Matching agent process discovered without runtime state; stopped",
+                    **stopped_without_state,
+                }
+            )
         return _lifecycle_payload(
             {"id": deployment.id, "status": "stopped", "message": "No runtime state found"}
         )
-    pid = state.get("pid")
+    pid = _state_pid(state)
+    stop_result = _terminate_matching_agent_processes(state, plan, timeout=timeout)
+    if stop_result["failed_pids"]:
+        return _lifecycle_payload(
+            {
+                "ok": False,
+                "id": deployment.id,
+                "status": "failed",
+                "message": "Failed to stop one or more matching agent processes",
+                **stop_result,
+            }
+        )
+    if stop_result["terminated_pids"]:
+        reported_pid = pid
+        if reported_pid not in stop_result["terminated_pids"]:
+            reported_pid = stop_result["terminated_pids"][0]
+        stopped = {
+            "id": deployment.id,
+            "pid": reported_pid,
+            "status": "stopped",
+            "stopped_at": now_iso(),
+            **stop_result,
+        }
+        save_runtime_state(deployment.id, stopped, repo)
+        return _lifecycle_payload(stopped)
     if not is_process_alive(pid):
         clear_runtime_state(deployment.id, repo)
         return _lifecycle_payload(
@@ -170,22 +287,20 @@ def stop_agent(
                 "id": deployment.id,
                 "status": "stopped",
                 "message": "Process not alive; state cleared",
+                **stop_result,
             }
         )
-    os.kill(pid, signal.SIGTERM)
-    deadline = time.time() + timeout
-    while time.time() < deadline and is_process_alive(pid):
-        time.sleep(0.1)
-    if is_process_alive(pid):
-        os.kill(pid, signal.SIGKILL)
-    stopped = {
-        "id": deployment.id,
-        "pid": pid,
-        "status": "stopped",
-        "stopped_at": now_iso(),
-    }
-    save_runtime_state(deployment.id, stopped, repo)
-    return _lifecycle_payload(stopped)
+    return _lifecycle_payload(
+        {
+            "ok": False,
+            "id": deployment.id,
+            "status": "failed",
+            "message": (
+                "Runtime PID is alive but does not match the deployment command; not stopped"
+            ),
+            **stop_result,
+        }
+    )
 
 
 def restart_agent(

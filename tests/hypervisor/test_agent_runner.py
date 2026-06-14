@@ -180,7 +180,9 @@ def test_run_agent_restarts_when_explicit_port_differs(monkeypatch: pytest.Monke
         lambda port, **kwargs: True,
     )
 
-    monkeypatch.setattr("hypervisor.deployment_registry.run_executor.time.sleep", lambda *_args: None)
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.time.sleep", lambda *_args: None
+    )
 
     from hypervisor.deployment_registry.runner import run_agent
 
@@ -252,7 +254,9 @@ def test_run_agent_rebinds_when_preferred_port_busy(monkeypatch: pytest.MonkeyPa
         "hypervisor.deployment_registry.lifecycle.is_process_alive",
         lambda pid: pid == 9001,
     )
-    monkeypatch.setattr("hypervisor.deployment_registry.run_executor.time.sleep", lambda *_args: None)
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.run_executor.time.sleep", lambda *_args: None
+    )
 
     from hypervisor.deployment_registry.runner import run_agent
 
@@ -264,6 +268,81 @@ def test_run_agent_rebinds_when_preferred_port_busy(monkeypatch: pytest.MonkeyPa
         "to": 8110,
         "reason": "port_in_use",
     }
+
+
+def test_stop_agent_cleans_orphan_listener_from_stale_runtime(monkeypatch: pytest.MonkeyPatch):
+    existing = {
+        "pid": 9001,
+        "status": "running",
+        "health_uri": "http://localhost:8110/health",
+        "command": (
+            "python -m uvicorn agents.generated.weather_map_agent.main:app "
+            "--host 0.0.0.0 --port 8110"
+        ),
+    }
+    terminated: list[int] = []
+    saved: list[dict[str, object]] = []
+
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.load_runtime_state",
+        lambda _deployment_id, _root=None: existing,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.is_process_alive",
+        lambda pid: False if pid == 9001 else pid == 447240,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.pids_listening_on_port",
+        lambda port: {447240} if port == 8110 else set(),
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.command_matches_plan",
+        lambda pid, _plan: pid == 447240,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.terminate_pid",
+        lambda pid, **_kwargs: terminated.append(pid) or True,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.save_runtime_state",
+        lambda _deployment_id, state, _root=None: saved.append(state),
+    )
+
+    from hypervisor.deployment_registry.runner import stop_agent
+
+    result = stop_agent("weather-map-agent.local")
+    assert result["status"] == "stopped"
+    assert result["terminated_pids"] == [447240]
+    assert terminated == [447240]
+    assert saved and saved[0]["terminated_pids"] == [447240]
+
+
+def test_stop_agent_does_not_kill_foreign_listener_without_state(monkeypatch: pytest.MonkeyPatch):
+    killed: list[int] = []
+
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.load_runtime_state",
+        lambda _deployment_id, _root=None: None,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.pids_listening_on_port",
+        lambda port: {12345} if port == 8101 else set(),
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.command_matches_plan",
+        lambda _pid, _plan: False,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.terminate_pid",
+        lambda pid, **_kwargs: killed.append(pid) or True,
+    )
+
+    from hypervisor.deployment_registry.runner import stop_agent
+
+    result = stop_agent("weather-map-agent.local")
+    assert result["status"] == "stopped"
+    assert result["message"] == "No runtime state found"
+    assert killed == []
 
 
 def test_inspect_agent_separates_process_running_from_health(monkeypatch: pytest.MonkeyPatch):
@@ -403,3 +482,27 @@ def test_supervise_auto_syncs_health_uri(monkeypatch: pytest.MonkeyPatch):
     payload = supervise_agent("weather-map-agent.local", repair="auto", max_attempts=1)
     assert payload["ok"] is True
     assert sync_calls == ["sync"]
+
+
+def test_ensure_agent_healthy_waits_before_first_probe(monkeypatch: pytest.MonkeyPatch):
+    sleeps: list[float] = []
+
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.supervisor.time.sleep",
+        lambda seconds: sleeps.append(seconds),
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.supervisor.inspect_agent",
+        lambda *args, **kwargs: {
+            "ok": True,
+            "id": "weather-map-agent.local",
+            "service_status": "healthy",
+        },
+    )
+
+    from hypervisor.deployment_registry.supervisor import ensure_agent_healthy
+
+    payload = ensure_agent_healthy("weather-map-agent.local", settle_seconds=0.25)
+    assert payload["ok"] is True
+    assert payload["attempts"] == 0
+    assert sleeps == [0.25]

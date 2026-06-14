@@ -13,6 +13,7 @@ from hypervisor.deployment_registry.writer import save_deployment_registry, upse
 DEFAULT_AGENT_PORTS = {
     "weather-map-agent": 8101,
     "user-agent": 8102,
+    "invoices-agent": 8103,
 }
 
 

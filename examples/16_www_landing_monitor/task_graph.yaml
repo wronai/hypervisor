@@ -1,0 +1,48 @@
+task:
+  id: www-landing-monitor
+  description: Check www landing is reachable and pricing text is present.
+
+steps:
+  - id: open_www
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    payload:
+      url: http://localhost:8788/www/
+
+  - id: extract_body
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - open_www
+
+  - id: verify_brand
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - extract_body
+    payload:
+      actual_from: extract_body.text
+      expected: Taskinity
+
+  - id: verify_pilot_price
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - extract_body
+    payload:
+      actual_from: extract_body.text
+      expected: "8 000–15 000 zł"
+
+  - id: verify_audit_price
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - extract_body
+    payload:
+      actual_from: extract_body.text
+      expected: "2 500–5 000 zł"

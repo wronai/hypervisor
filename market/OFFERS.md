@@ -155,7 +155,10 @@ Czy warto sprawdzić to na jednym waszym procesie zamówień lub faktur?
 
 ## Powiązane dokumenty
 
+- [STRATEGY.md](./STRATEGY.md) — strategia kanoniczna
+- [SALES_MESSAGES.md](./SALES_MESSAGES.md) — gotowce outreach (3 segmenty × 2 wersje)
 - [PAIN_LANGUAGE.md](./PAIN_LANGUAGE.md) — język bólu
 - [GTM_POLAND.md](./GTM_POLAND.md) — plan 30/90 dni
-- [DEMO_SCRIPT.md](./DEMO_SCRIPT.md) — scenariusz demo
-- [ASSESSMENT.md](./ASSESSMENT.md) — strategia zaostrzona
+- [DEMO_10MIN.md](./DEMO_10MIN.md) — demo sprzedażowe
+- [DEMO_SCRIPT.md](./DEMO_SCRIPT.md) — demo techniczne
+- [ASSESSMENT.md](./ASSESSMENT.md) — krytyka researchu

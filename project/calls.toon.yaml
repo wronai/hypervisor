@@ -1,15 +1,15 @@
 # code2llm call graph | /home/tom/github/wronai/hypervisor
-# generated in 0.21s
-# nodes: 363 | edges: 500 | modules: 112
-# CC̄=3.7
+# generated in 0.22s
+# nodes: 362 | edges: 500 | modules: 112
+# CC̄=3.6
 
 HUBS[20]:
   uri2ops.operation_registry.models.OperationRegistry.list
-    CC=1  in:62  out:2  total:64
+    CC=1  in:63  out:2  total:65
   packages.uri3.uri3.config.repo_root.find_repo_root
     CC=4  in:60  out:4  total:64
   examples.23_nl_to_agent_tutorial.run.print
-    CC=0  in:47  out:0  total:47
+    CC=0  in:54  out:0  total:54
   packages.urigen.urigen.generator.generate_ecosystem
     CC=7  in:3  out:40  total:43
   packages.urigen.urigen.cli.build_parser
@@ -30,20 +30,20 @@ HUBS[20]:
     CC=3  in:27  out:4  total:31
   packages.uri3.uri3.resolvers.explain.explain_uri
     CC=14  in:8  out:21  total:29
-  packages.urigen.urigen.apply_planner.build_apply_plan
-    CC=13  in:1  out:28  total:29
   packages.uri3.uri3.graph.artifacts.write_artifact
     CC=9  in:7  out:22  total:29
+  packages.urigen.urigen.apply_planner.build_apply_plan
+    CC=13  in:1  out:28  total:29
   packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri
     CC=12  in:5  out:23  total:28
   packages.urigen.urigen.envelope.stamp_ecosystem
     CC=17  in:1  out:26  total:27
-  packages.urigen.urigen.apply_executor._copy_tree
-    CC=7  in:1  out:25  total:26
+  packages.uri3.uri3.logs.reader.summarize_logs
+    CC=6  in:8  out:18  total:26
   packages.urish.urish.cli._emit
     CC=2  in:24  out:2  total:26
-  packages.uri3.uri3.graph.graph_validator.validate_workflow_graph
-    CC=9  in:13  out:13  total:26
+  packages.urigen.urigen.apply_executor._copy_tree
+    CC=7  in:1  out:25  total:26
 
 MODULES:
   domains.weather_map.handlers.generate_weather_map  [1 funcs]
@@ -130,8 +130,6 @@ MODULES:
   packages.uri3.uri3.artifacts.writer  [2 funcs]
     write_json_artifact  CC=3  out:6
     write_yaml_artifact  CC=3  out:6
-  packages.uri3.uri3.config.docker_stacks  [1 funcs]
-    resolve_agent_stack  CC=4  out:15
   packages.uri3.uri3.config.repo_root  [1 funcs]
     find_repo_root  CC=4  out:4
   packages.uri3.uri3.config.uri_yaml  [1 funcs]
@@ -141,8 +139,7 @@ MODULES:
   packages.uri3.uri3.docker.actions.container  [2 funcs]
     control_container  CC=8  out:9
     handles_container_action  CC=3  out:1
-  packages.uri3.uri3.docker.compose_generator  [2 funcs]
-    build_generate_plan  CC=2  out:9
+  packages.uri3.uri3.docker.compose_generator  [1 funcs]
     write_generated_compose  CC=1  out:6
   packages.uri3.uri3.docker.controller  [1 funcs]
     control_docker  CC=11  out:11
@@ -489,6 +486,8 @@ MODULES:
     parse_uri  CC=2  out:4
   uri3.validators.uri_validator  [1 funcs]
     validate_uri  CC=2  out:2
+  www.landing  [1 funcs]
+    open  CC=1  out:0
 
 EDGES:
   packages.urish.urish.render.render_result → packages.urish.urish.render._render_table

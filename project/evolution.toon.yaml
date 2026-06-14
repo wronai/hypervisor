@@ -1,44 +1,44 @@
-# code2llm/evolution | 1565 func | 367f | 2026-06-14
+# code2llm/evolution | 1677 func | 370f | 2026-06-14
 # generated in 0.01s
 
 NEXT[10] (ranked by impact):
-  [1] !! SPLIT           packages/urish/urish/cli.py
+  [1] !! SPLIT           www/landing.js
+      WHY: 641L, 0 classes, max CC=15
+      EFFORT: ~4h  IMPACT: 9615
+
+  [2] !! SPLIT           packages/urish/urish/cli.py
       WHY: 814L, 0 classes, max CC=11
       EFFORT: ~4h  IMPACT: 8954
 
-  [2] !! SPLIT-FUNC      build_incident_from_inspection  CC=29  fan=16
+  [3] !  SPLIT-FUNC      run_agent  CC=18  fan=27
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 486
+
+  [4] !! SPLIT-FUNC      build_incident_from_inspection  CC=29  fan=16
       WHY: CC=29 exceeds 15
       EFFORT: ~1h  IMPACT: 464
 
-  [3] !! SPLIT-FUNC      call_system_uri  CC=25  fan=18
+  [5] !! SPLIT-FUNC      call_system_uri  CC=25  fan=18
       WHY: CC=25 exceeds 15
       EFFORT: ~1h  IMPACT: 450
 
-  [4] !  SPLIT-FUNC      run_agent  CC=16  fan=26
-      WHY: CC=16 exceeds 15
-      EFFORT: ~1h  IMPACT: 416
-
-  [5] !  SPLIT-FUNC      scan_package_boundaries  CC=20  fan=20
+  [6] !  SPLIT-FUNC      scan_package_boundaries  CC=20  fan=20
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 400
 
-  [6] !  SPLIT-FUNC      apply_ecosystem  CC=19  fan=20
+  [7] !  SPLIT-FUNC      apply_ecosystem  CC=19  fan=20
       WHY: CC=19 exceeds 15
       EFFORT: ~1h  IMPACT: 380
 
-  [7] !  SPLIT-FUNC      build_process_view  CC=18  fan=11
+  [8] !  SPLIT-FUNC      build_process_view  CC=18  fan=11
       WHY: CC=18 exceeds 15
       EFFORT: ~1h  IMPACT: 198
 
-  [8] !  SPLIT-FUNC      normalize_runtime_state  CC=18  fan=11
+  [9] !  SPLIT-FUNC      normalize_runtime_state  CC=18  fan=11
       WHY: CC=18 exceeds 15
       EFFORT: ~1h  IMPACT: 198
 
-  [9] !  SPLIT-FUNC      check_lifecycle_coverage  CC=17  fan=11
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 187
-
-  [10] !  SPLIT-FUNC      _collect_text  CC=17  fan=11
+  [10] !  SPLIT-FUNC      check_lifecycle_coverage  CC=17  fan=11
       WHY: CC=17 exceeds 15
       EFFORT: ~1h  IMPACT: 187
 
@@ -46,13 +46,13 @@ NEXT[10] (ranked by impact):
 RISKS[3]:
   ⚠ Splitting planfile.yaml may break 0 import paths
   ⚠ Splitting packages/urish/urish/cli.py may break 43 import paths
-  ⚠ Splitting goal.yaml may break 0 import paths
+  ⚠ Splitting www/landing.js may break 77 import paths
 
 METRICS-TARGET:
-  CC̄:          3.7 → ≤2.6
+  CC̄:          3.6 → ≤2.5
   max-CC:      29 → ≤14
-  god-modules: 3 → 0
-  high-CC(≥15): 21 → ≤10
+  god-modules: 5 → 0
+  high-CC(≥15): 22 → ≤11
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -80,4 +80,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.7 → now CC̄=3.7
+  prev CC̄=3.7 → now CC̄=3.6

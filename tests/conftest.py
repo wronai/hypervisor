@@ -59,7 +59,7 @@ def workspace_env(repo_root: Path) -> dict[str, str]:
     env["PYTHONPATH"] = workspace_pythonpath(repo_root)
     env.setdefault("LANG", "en_US.UTF-8")
     env.setdefault("LC_ALL", env["LANG"])
-    bin_dirs = [repo_root / ".venv" / "bin", Path(sys.executable).resolve().parent]
+    bin_dirs = [Path(sys.executable).resolve().parent, repo_root / ".venv" / "bin"]
     prepend = os.pathsep.join(str(path) for path in bin_dirs if path.is_dir())
     if prepend:
         env["PATH"] = f"{prepend}{os.pathsep}{env.get('PATH', '')}"
@@ -74,11 +74,11 @@ def cli_argv(
 ) -> list[str]:
     """Resolve a workspace console script for subprocess use."""
     candidates: list[Path] = []
-    if repo_root is not None:
-        candidates.append(repo_root / ".venv" / "bin" / name)
     exe_parent = Path(sys.executable).parent
     if exe_parent.name == "bin":
         candidates.append(exe_parent / name)
+    if repo_root is not None:
+        candidates.append(repo_root / ".venv" / "bin" / name)
     search_path = (env or os.environ).get("PATH", "")
     for directory in search_path.split(os.pathsep):
         if directory:

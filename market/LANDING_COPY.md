@@ -2,6 +2,10 @@
 
 Teksty na stronę sprzedażową. **URI i „control plane” tylko w sekcji technicznej**, nie w nagłówku.
 
+Strategia: [STRATEGY.md](./STRATEGY.md) · Demo: [DEMO_10MIN.md](./DEMO_10MIN.md).
+
+---
+
 ## Hero
 
 ### Nagłówek
@@ -12,24 +16,29 @@ Teksty na stronę sprzedażową. **URI i „control plane” tylko w sekcji tech
 
 > Jeden chat i dashboard dla skryptów, webhooków, n8n, API, Dockera i agentów AI. Health, logi, incident, ticket i propozycja naprawy.
 
+### Kompas (wewnętrzny — nie na hero)
+
+> W jednym chacie widzisz, co działa, co padło, dlaczego i co z tym zrobić.
+
 ### CTA primary
 
 > **Umów 10-min demo** · **Audyt automatyzacji od 2 500 zł**
 
 ### CTA secondary
 
-> Zobacz jak działa na przykładzie faktur → błąd API → naprawa
+> Zobacz: faktury nie weszły do ERP → chat → incident → naprawa
 
 ---
 
-## Sekcja: Problem (język klienta)
+## Sekcja: Problem (język 9:00)
 
-**Nagłówek:** Znasz to?
+**Nagłówek:** Znasz ten poniedziałek o 9:00?
 
-- n8n się wykonał, ale dane nie trafiły do systemu
-- Nie wiesz, kto odpowiada za skrypt, który padł w nocy
-- Szukasz po logach, webhookach i Excelu — 3 godziny na diagnozę
-- Klient pyta „czy automatyzacja działa?” — a Ty nie masz jednego widoku
+- Automatyzacja faktur znowu nie działa — nie wiem, gdzie tego szukać
+- Scenario w n8n poszedł, ale dane nie doszły do ERP
+- Agent miał zrobić ticket, a wysłał zły mail do klienta
+- Skrypt pisał ktoś, kto już nie pracuje — nie wiemy, czy w ogóle działa
+- Nie mam jednego miejsca na crony, webhooki, pipeline’y, agentów i status
 
 **Nagłówek:** Taskinity daje odpowiedź w minutach, nie godzinach.
 
@@ -39,25 +48,41 @@ Teksty na stronę sprzedażową. **URI i „control plane” tylko w sekcji tech
 
 | Funkcja | Opis biznesowy |
 |---------|----------------|
-| **Jeden widok** | Wszystkie procesy: cron, API, Docker, n8n, agenci |
-| **Chat** | „Co się stało z procesem faktur?” → status, przyczyna, logi |
-| **Health** | Co działa, co nie — bez wchodzenia na 5 serwerów |
-| **Incident** | Każdy błąd zapisany z kontekstem |
+| **Jeden widok** | Cron, API, Docker, n8n, agenci — bez pięciu narzędzi |
+| **Chat po polsku** | „Co się stało z procesem faktur?” → status, przyczyna, logi |
+| **Health** | Co działa, co nie |
+| **Incident** | Błąd zapisany z kontekstem — nie ginie w Slacku |
 | **Ticket** | Eskalacja do naprawy lub zmiany w systemie |
-| **Naprawa** | Propozycja kroków — najpierw podgląd, potem zatwierdzenie |
+| **Naprawa** | Propozycja kroków — podgląd, potem zatwierdzenie |
+
+**Nie obiecuj:** pełnego tracingu LLM (to LangSmith/Langfuse). **Obiecuj:** kontrolę nad chaosem automatyzacji.
 
 ---
 
 ## Sekcja: Dla kogo
 
-- **Software house’y** — panel procesów dla projektów i klientów
-- **Integratorzy n8n / Make** — warstwa SLA i utrzymania wdrożeń
-- **E-commerce** — zamówienia, faktury, ERP, marketplace
-- **Biura i BPO** — dokumenty, OCR, KSeF, maile
+| Segment | Korzyść |
+|---------|---------|
+| **Software house’y** | Panel procesów dla projektów i klientów; odsprzedaż utrzymania |
+| **Integratorzy n8n / Make** | Warstwa SLA nad wdrożeniami — panel serwisowy |
+| **E-commerce** | Zamówienia, faktury, ERP, marketplace — jeden chat przy awarii |
+| **Biura i BPO** | Dokumenty, OCR, KSeF — widok od maila do systemu |
+
+**Polska przewaga:** wdrożenie, język polski, wsparcie lokalne ([Trade.gov](https://www.trade.gov/country-commercial-guides/poland-digital-economy)).
+
+---
+
+## Sekcja: Jak to działa (3 kroki, bez URI)
+
+1. **Podłączamy 3 procesy** — webhook/API, skrypt/cron, docker (lub n8n)
+2. **Pytasz w chacie** — „dlaczego faktury nie weszły?”
+3. **Dostajesz** — status, przyczynę, incident, ticket, propozycję naprawy
 
 ---
 
 ## Sekcja: Oferta
+
+Ścieżka: audyt → pilot → utrzymanie.
 
 | Pakiet | Cena | Czas |
 |--------|------|------|
@@ -69,44 +94,62 @@ Szczegóły: [OFFERS.md](./OFFERS.md).
 
 ---
 
-## Sekcja techniczna (niżej na stronie)
+## Sekcja techniczna (scroll w dół)
 
 **Nagłówek:** Dla zespołów technicznych
 
-> Pod spodem każdy proces jest **URI**. To samo URI można wykonać przez Web UI, API, CLI, workflow albo runtime (shell, HTTP, Docker, SSH).
+> Pod spodem każdy proces jest **URI**. To samo URI możesz uruchomić przez Web UI, API, CLI, workflow, shell, Docker, SSH albo innego agenta.
 
-> Taskinity to warstwa wykonania i naprawy nad agentami, workflow i narzędziami — zgodna z kierunkiem standardów MCP, A2A i `agent://` (IETF).
+> Taskinity = **URI execution and repair layer** over agents, workflows and tools — zgodnie z kierunkiem MCP, A2A i `agent://` (IETF).
 
-**Bullet points (tech):**
+**Dowód (demo):**
 
-- `health://`, `repair://`, `ticket://`, `evolution://`
-- Policy gate: dry-run przed mutacją
-- Self-host, open pipeline
-- Integracja z Langfuse / Phoenix do głębokiego tracingu LLM
+```bash
+urish proof view://process/agent/weather-map-agent.local/latest
+```
+
+**API:**
+
+- `POST /api/ask` — pytanie NL → plan URI
+- `POST /api/uri/call` — wykonanie URI (dry-run / approve)
+
+**Integracje MVP:** `http://`, `shell://`, `docker://` — potem n8n, GitHub Actions, MCP.
+
+**Observability LLM:** integracja Langfuse / Phoenix / LangSmith — nie duplikujemy deep trace.
+
+---
+
+## Sekcja: vs inne narzędzia (FAQ skrót)
+
+**Czy zastępujecie n8n / Make / Zapier?**  
+Nie. Masz już automatyzacje — my pokazujemy, które działają, które padły i co dalej.
+
+**Czym różnicie się od LangSmith / LangSmith Engine?**  
+[LangSmith Engine](https://www.langchain.com/blog/introducing-langsmith-engine) naprawia agentów LangChain z production traces. Taskinity spinamy **cały** chaos: skrypty, cron, webhooki, n8n, Docker i agentów — jeden command center.
+
+**Czy to dla firm bez agentów AI?**  
+Tak — skrypty, cron i webhooki często padają pierwsze.
+
+**Czy macie SOC2 / enterprise governance?**  
+Nie — produkt dla MŚP i software house’ów, self-host z policy gate.
+
+**Czy budujecie własny Langfuse?**  
+Nie — integrujemy jako źródło sygnałów do trace LLM.
 
 ---
 
 ## Social proof (placeholder)
 
-- „Pilot 3 procesów — diagnoza z 2h do 15 min” (case study po pierwszym kliencie)
-- Polski support i wdrożenie
+- „Pilot 3 procesów — diagnoza z 2h do 15 min” (case study po kliencie)
+- Polski support · wdrożenie · audyt od 2 500 zł
 
 ---
 
-## FAQ (skrót)
+## Meta / SEO (propozycja)
 
-**Czy zastępujecie n8n?**  
-Nie. Pokazujemy status i błędy procesów, które już macie.
-
-**Czy to dla firm bez agentów AI?**  
-Tak — skrypty, cron, webhooki i API też.
-
-**Czy macie SOC2?**  
-Nie — to produkt dla MŚP i software house’ów, self-host z policy gate.
-
-**Czym różnicie się od LangSmith?**  
-LangSmith świetny do trace LLM. My spinamy cały chaos automatyzacji — nie tylko LangChain.
+**Title:** Taskinity — command center dla automatyzacji i agentów AI  
+**Description:** Jeden chat i dashboard: co działa, co padło, incident, ticket, naprawa. Skrypty, n8n, API, Docker. Polski pilot 7–14 dni.
 
 ---
 
-Powiązane: [POSITIONING.md](./POSITIONING.md), [ASSESSMENT.md](./ASSESSMENT.md).
+Powiązane: [SALES_MESSAGES.md](./SALES_MESSAGES.md), [DEMO_10MIN.md](./DEMO_10MIN.md).

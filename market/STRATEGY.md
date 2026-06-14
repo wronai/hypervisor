@@ -107,7 +107,7 @@ wiem, co padło → dlaczego → mam ticket → propozycja naprawy → nie trac�
 
 ### 4.2 ICP (priorytety)
 
-Szczegóły: [MARKET_HYPOTHESIS.md](./MARKET_HYPOTHESES.md) — patrz [MARKET_HYPOTHESIS.md](./MARKET_HYPOTHESIS.md).
+Szczegóły: [MARKET_HYPOTHESIS.md](./MARKET_HYPOTHESIS.md).
 
 | # | Segment | Pilot | Buyer |
 |---|---------|-------|-------|

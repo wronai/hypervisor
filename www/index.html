@@ -3,82 +3,407 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hypervisor Chat</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Taskinity — command center dla automatyzacji i agentów AI</title>
+  <meta name="description" content="Jeden chat i dashboard: co działa, co padło, incident, ticket, naprawa. Skrypty, n8n, API, Docker. Polski pilot 7–14 dni.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <div>
-        <h1>Hypervisor Chat</h1>
-        <p class="subtitle">NL → plan → URI · połączenie z API systemu</p>
+  <nav class="site-nav" aria-label="Główna nawigacja">
+    <div class="container">
+      <a class="brand" href="/www/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Taskinity
+      </a>
+      <div class="nav-links">
+        <a class="nav-hide-mobile" href="#problem">Problem</a>
+        <a class="nav-hide-mobile" href="#tour">Jak działa</a>
+        <a class="nav-hide-mobile" href="#oferta">Oferta</a>
+        <a href="chat.html">Otwórz chat</a>
+        <a class="btn btn-primary" href="#kontakt">Umów demo</a>
       </div>
-      <div class="header-actions">
-        <span id="status-pill" class="pill pill--pending">łączenie…</span>
-        <button class="ghost-btn" type="button" id="refresh-btn">Odśwież</button>
-        <a class="link" href="/ui/agents">Dashboard UI</a>
-        <a class="link" href="demo.html">Demo statyczne</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="hero-badge">Command center · PL · self-host</span>
+        <h1>Automatyzacje i agenci AI przestali działać? Taskinity pokaże gdzie, dlaczego i co zrobić dalej.</h1>
+        <p class="hero-lead">
+          Jeden chat i dashboard dla skryptów, webhooków, n8n, API, Dockera i agentów AI.
+          Health, logi, incident, ticket i propozycja naprawy — bez szukania po pięciu narzędziach.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#tour">Zobacz demo (2 min)</a>
+          <a class="btn btn-secondary" href="chat.html">Wypróbuj chat na żywo</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>3 procesy</strong> w pilocie</div>
+          <div><strong>7–14 dni</strong> wdrożenie</div>
+          <div><strong>od 2 500 zł</strong> audyt</div>
+        </div>
       </div>
-    </header>
-
-    <main class="workspace">
-      <aside class="sidebar" aria-label="System">
-        <section class="panel">
-          <h2>Połączenie</h2>
-          <dl class="kv">
-            <div>
-              <dt>API</dt>
-              <dd id="api-detail">sprawdzanie…</dd>
+      <div class="hero-visual reveal">
+        <div class="hero-card hero-product-shot" aria-label="Podgląd działania Taskinity">
+          <div class="product-shot-top">
+            <span class="live-dot"></span>
+            <span>autonomy run · 3 agents · repair loop</span>
+          </div>
+          <div class="product-shot-grid">
+            <div class="shot-chat">
+              <div class="shot-line user">stwórz 3 agentów i pilnuj health</div>
+              <div class="shot-line bot">Plan: generate → run → inspect → repair</div>
+              <div class="shot-line bot ok">user-agent naprawiony · 1 próba</div>
             </div>
-            <div>
-              <dt>Tryb</dt>
-              <dd>policy gate + dry-run</dd>
+            <div class="shot-agents">
+              <div class="shot-agent ok"><span>weather</span><strong>8110</strong></div>
+              <div class="shot-agent ok"><span>user</span><strong>8118</strong></div>
+              <div class="shot-agent ok"><span>invoices</span><strong>8122</strong></div>
             </div>
-          </dl>
-        </section>
+          </div>
+          <div class="product-shot-flow" aria-hidden="true">
+            <span>NL</span><i></i><span>URI</span><i></i><span>Agents</span><i></i><span>Heal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-        <section class="panel">
-          <h2>NL komendy</h2>
-          <div id="quick-prompts" class="quick-list"></div>
-        </section>
+  <section id="problem" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <h2>Znasz ten poniedziałek o 9:00?</h2>
+        <p>Klient nie mówi „potrzebuję control plane”. Mówi tak:</p>
+      </div>
+      <div class="pain-grid">
+        <article class="pain-card">
+          <p>Automatyzacja faktur znowu nie działa — nie wiem, gdzie tego szukać.</p>
+          <div class="time">~2–3 h diagnozy</div>
+        </article>
+        <article class="pain-card">
+          <p>Scenario w n8n poszedł, ale dane nie doszły do ERP.</p>
+          <div class="time">Chaos integracji</div>
+        </article>
+        <article class="pain-card">
+          <p>Skrypt pisał ktoś, kto już nie pracuje — nie wiemy, czy w ogóle działa.</p>
+          <div class="time">Brak właściciela</div>
+        </article>
+        <article class="pain-card">
+          <p>Nie mam jednego miejsca na crony, webhooki, pipeline’y i agentów.</p>
+          <div class="time">Pięć narzędzi naraz</div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-        <section class="panel">
-          <h2>Agenci</h2>
-          <div id="agent-list" class="list list--empty">ładowanie…</div>
-        </section>
+  <section id="tour" class="tour reveal">
+    <div class="container">
+      <div class="section-head">
+        <h2>Autonomia w praktyce</h2>
+        <p>Interaktywny pokaz: komenda NL tworzy agentów, runtime odbija zajęte porty, a supervisor naprawia awarię w pętli.</p>
+      </div>
 
-        <section class="panel">
-          <h2>Zdarzenia</h2>
-          <div id="event-list" class="list list--empty">ładowanie…</div>
-        </section>
-      </aside>
+      <div class="tour-layout">
+        <nav class="tour-steps" aria-label="Kroki prezentacji">
+          <button type="button" class="tour-step-btn is-active" data-step="0" aria-current="step">
+            <span class="tour-step-num">1</span>
+            <span class="tour-step-label">Komenda NL</span>
+          </button>
+          <button type="button" class="tour-step-btn" data-step="1">
+            <span class="tour-step-num">2</span>
+            <span class="tour-step-label">Plan URI</span>
+          </button>
+          <button type="button" class="tour-step-btn" data-step="2">
+            <span class="tour-step-num">3</span>
+            <span class="tour-step-label">3 agenci</span>
+          </button>
+          <button type="button" class="tour-step-btn" data-step="3">
+            <span class="tour-step-num">4</span>
+            <span class="tour-step-label">Awaria</span>
+          </button>
+          <button type="button" class="tour-step-btn" data-step="4">
+            <span class="tour-step-num">5</span>
+            <span class="tour-step-label">Repair loop</span>
+          </button>
+          <button type="button" class="tour-step-btn" data-step="5">
+            <span class="tour-step-num">6</span>
+            <span class="tour-step-label">Proof</span>
+          </button>
+        </nav>
 
-      <section class="chat" aria-label="Chat">
-        <main id="messages" class="messages" aria-live="polite"></main>
+        <div class="tour-stage-wrap">
+          <div class="tour-live-strip" aria-label="Wynik demo">
+            <div><span>Agents</span><strong>3 healthy</strong></div>
+            <div><span>Porty</span><strong>8101 → 8110</strong></div>
+            <div><span>Repair</span><strong>1 próba</strong></div>
+            <div><span>Tryb</span><strong>dry-run → approve</strong></div>
+          </div>
+          <div class="tour-controls">
+            <button type="button" class="btn btn-ghost" id="tour-prev" aria-label="Poprzedni slajd">← Wstecz</button>
+            <div class="tour-progress" aria-hidden="true"><div class="tour-progress-bar" id="tour-progress-bar"></div></div>
+            <span class="tour-count" id="tour-count">1 / 6</span>
+            <button type="button" class="btn btn-ghost" id="tour-play" aria-pressed="false">⏸ Pauza</button>
+            <button type="button" class="btn btn-ghost" id="tour-copy-chat" title="Kopiuj widoczną rozmowę z demo">Kopiuj chat</button>
+            <button type="button" class="btn btn-ghost" id="tour-next" aria-label="Następny slajd">Dalej →</button>
+          </div>
 
-        <footer class="composer">
-          <form id="chat-form">
-            <textarea
-              id="prompt"
-              rows="2"
-              placeholder="Napisz polecenie NL albo wklej URI agent://…"
-              autocomplete="off"
-            ></textarea>
-            <div class="composer-bar">
-              <label class="checkbox">
-                <input type="checkbox" id="dry-run" checked>
-                dry-run
-              </label>
-              <button type="submit" id="send-btn">Wyślij</button>
+          <div class="tour-stage" aria-live="polite">
+            <div class="tour-chrome">
+              <div class="chrome-dots"><span></span><span></span><span></span></div>
+              <div class="tour-url">taskinity.local/chat — proces: invoice-sync</div>
             </div>
-          </form>
-        </footer>
-      </section>
-    </main>
-  </div>
+            <div id="tour-slide-host"></div>
+          </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
-  <script src="app.js"></script>
+          <div class="tour-caption">
+            <h3 id="tour-caption-title">Jedna komenda zamiast ręcznego klejenia usług</h3>
+            <p id="tour-caption-text">Operator opisuje cel po polsku. Taskinity zamienia go na plan URI, artefakty i kontrolowany runtime.</p>
+          </div>
+
+          <div class="scenario-lab" aria-label="Praktyczne scenariusze autonomii">
+            <div class="scenario-lab-head">
+              <div>
+                <span class="scenario-kicker">Tryb praktyczny</span>
+                <h3>Odtwórz przebieg autonomii w terminalu</h3>
+              </div>
+              <button type="button" class="btn btn-secondary" id="scenario-replay">Odtwórz terminal</button>
+            </div>
+            <div class="scenario-tabs" role="tablist" aria-label="Scenariusze demo">
+              <button type="button" class="scenario-tab is-active" data-scenario="agents" role="tab" aria-selected="true">3 agenci</button>
+              <button type="button" class="scenario-tab" data-scenario="ports" role="tab" aria-selected="false">Port zajęty</button>
+              <button type="button" class="scenario-tab" data-scenario="repair" role="tab" aria-selected="false">Awaria + repair</button>
+            </div>
+            <div class="scenario-grid">
+              <div class="scenario-terminal" id="scenario-terminal" aria-live="polite"></div>
+              <div class="scenario-result" id="scenario-result" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="system-map" aria-label="Mapa przepływu Taskinity">
+            <div class="system-map-head">
+              <span class="scenario-kicker">Mapa systemu</span>
+              <strong>Od komendy po naprawę</strong>
+            </div>
+            <div class="system-map-grid">
+              <div class="system-map-node" data-map-node="nl">
+                <span>01</span>
+                <strong>Chat NL</strong>
+                <p>Operator opisuje cel i ograniczenia.</p>
+              </div>
+              <div class="system-map-node" data-map-node="uri">
+                <span>02</span>
+                <strong>Plan URI</strong>
+                <p><code>urish</code> rozbija cel na kroki.</p>
+              </div>
+              <div class="system-map-node" data-map-node="registry">
+                <span>03</span>
+                <strong>Deployment registry</strong>
+                <p>Artefakty, porty i runtime state.</p>
+              </div>
+              <div class="system-map-node" data-map-node="runtime">
+                <span>04</span>
+                <strong>Agent runtime</strong>
+                <p>Proces, health, card i logi.</p>
+              </div>
+              <div class="system-map-node" data-map-node="repair">
+                <span>05</span>
+                <strong>Supervisor</strong>
+                <p>Klasyfikacja i kontrolowana naprawa.</p>
+              </div>
+              <div class="system-map-node" data-map-node="proof">
+                <span>06</span>
+                <strong>Proof</strong>
+                <p>Spójny wynik w UI, CLI i API.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="funkcje" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <h2>Co dostajesz</h2>
+        <p>Kontrola nad chaosem automatyzacji — nie kolejny framework agenta.</p>
+      </div>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">📊</div>
+          <h3>Jeden widok</h3>
+          <p>Cron, API, Docker, n8n, agenci — status w jednym miejscu.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">💬</div>
+          <h3>Chat po polsku</h3>
+          <p>„Co się stało z procesem faktur?” → status, przyczyna, logi.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🩺</div>
+          <h3>Health</h3>
+          <p>Widać od razu, co działa, a co wymaga uwagi.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">📋</div>
+          <h3>Incident → ticket</h3>
+          <p>Błąd z kontekstem — eskalacja do naprawy lub zmiany w systemie.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🔧</div>
+          <h3>Naprawa z podglądem</h3>
+          <p>Propozycja kroków — dry-run, potem świadome approve.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🇵🇱</div>
+          <h3>Wdrożenie w PL</h3>
+          <p>Polski język, lokalny support, self-host u klienta.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="dla-kogo" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <h2>Dla kogo</h2>
+      </div>
+      <div class="audience-grid">
+        <article class="audience-card">
+          <h3>Software house’y</h3>
+          <p>Panel procesów dla projektów i klientów — możliwość odsprzedaży utrzymania.</p>
+        </article>
+        <article class="audience-card">
+          <h3>Integratorzy n8n / Make</h3>
+          <p>Warstwa SLA nad wdrożeniami — panel serwisowy dla klientów.</p>
+        </article>
+        <article class="audience-card">
+          <h3>E-commerce</h3>
+          <p>Zamówienia, faktury, ERP, marketplace — jeden chat przy awarii.</p>
+        </article>
+        <article class="audience-card">
+          <h3>Biura i BPO</h3>
+          <p>Dokumenty, OCR, KSeF — widok od maila do systemu księgowego.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="oferta" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <h2>Oferta</h2>
+        <p>Od audytu do utrzymania — konkretny efekt, nie abstrakcyjna „platforma agentowa”.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card">
+          <h3>Audyt automatyzacji</h3>
+          <p class="price">2 500–5 000 zł <span>netto · 1–3 dni</span></p>
+          <ul>
+            <li>Mapa procesów i punktów awarii</li>
+            <li>Mini-demo Taskinity</li>
+            <li>Rekomendacja pilota</li>
+          </ul>
+          <a class="btn btn-secondary" href="#kontakt">Zapytaj o audyt</a>
+        </article>
+        <article class="price-card featured">
+          <h3>Pilot 3 procesów</h3>
+          <p class="price">8 000–15 000 zł <span>netto · 7–14 dni</span></p>
+          <ul>
+            <li>Webhook/API + cron + docker (lub n8n)</li>
+            <li>Chat + dashboard + health</li>
+            <li>Incident, ticket, raport czasu</li>
+          </ul>
+          <a class="btn btn-primary" href="#kontakt">Umów pilot</a>
+        </article>
+        <article class="price-card">
+          <h3>Utrzymanie</h3>
+          <p class="price">1 500–4 000 zł <span>netto / mies.</span></p>
+          <ul>
+            <li>Monitoring procesów</li>
+            <li>Miesięczny raport awarii</li>
+            <li>Wsparcie przy nowych URI</li>
+          </ul>
+          <a class="btn btn-secondary" href="#kontakt">Porozmawiajmy</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <h2>Dla zespołów technicznych</h2>
+        <p>URI to sekret architektoniczny — nie pierwsze hasło sprzedażowe.</p>
+      </div>
+      <div class="tech-block">
+        <p>Pod spodem każdy proces jest <strong>URI</strong>. To samo URI uruchomisz przez Web UI, API, CLI, workflow, shell, Docker lub SSH.</p>
+        <pre>POST /api/ask          → pytanie NL → plan URI
+POST /api/uri/call     → wykonanie (dry-run / approve)
+
+$ urish proof view://process/invoice-sync/latest</pre>
+        <p style="margin-top:0.75rem">
+          Integracje MVP: <code>http://</code>, <code>shell://</code>, <code>docker://</code>.
+          Deep tracing LLM → Langfuse / Phoenix / LangSmith (integracja, nie duplikacja).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <h2>FAQ</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button type="button" class="faq-q">Czy zastępujecie n8n / Make / Zapier?</button>
+          <div class="faq-a"><div class="faq-a-inner">Nie. Masz już automatyzacje — Taskinity pokazuje, które działają, które padły i co dalej.</div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">Czym różnicie się od LangSmith Engine?</button>
+          <div class="faq-a"><div class="faq-a-inner">LangSmith Engine naprawia agentów LangChain z production traces. Taskinity spinamy cały chaos: skrypty, cron, webhooki, n8n, Docker i agentów — jeden command center.</div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">Czy to dla firm bez agentów AI?</button>
+          <div class="faq-a"><div class="faq-a-inner">Tak — skrypty, cron i webhooki często padają pierwsze i też je monitorujemy.</div></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-q">Czy macie SOC2 / enterprise governance?</button>
+          <div class="faq-a"><div class="faq-a-inner">Nie — produkt dla MŚP i software house’ów, self-host z policy gate (dry-run przed mutacją).</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <h2>Umów 10-min demo</h2>
+        <p>Pokażemy scenariusz: webhook → błąd API → incident → ticket → naprawa.</p>
+      </div>
+      <div style="text-align:center;display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center">
+        <a class="btn btn-primary" href="mailto:kontakt@taskinity.local?subject=Demo%20Taskinity">Napisz: kontakt@taskinity.local</a>
+        <a class="btn btn-secondary" href="chat.html">Otwórz chat produkcyjny</a>
+        <a class="btn btn-ghost" href="demo.html">Demo techniczne (URI)</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Taskinity · command center dla automatyzacji</span>
+      <div class="footer-links">
+        <a href="chat.html">Chat</a>
+        <a href="/ui/agents">Dashboard</a>
+        <a href="demo.html">Demo techniczne</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="landing.js"></script>
 </body>
 </html>

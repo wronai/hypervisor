@@ -28,6 +28,8 @@ def test_load_default_deployments():
     local = registry.by_id("weather-map-agent.local")
     assert local is not None
     assert local.target_uri.startswith("local://")
+    assert registry.by_id("user-agent.local") is not None
+    assert registry.by_id("invoices-agent.local") is not None
 
 
 def test_deployment_from_weather_uri_tree():

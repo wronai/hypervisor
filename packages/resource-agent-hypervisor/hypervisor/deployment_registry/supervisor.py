@@ -99,6 +99,8 @@ def ensure_agent_healthy(
 ) -> dict[str, Any]:
     """Run bounded inspect → repair → re-probe loop until healthy or attempts exhausted."""
     repo = _repo_root(root)
+    if settle_seconds > 0:
+        time.sleep(settle_seconds)
     before = inspect_agent(selector, root=repo, timeout=timeout, log_limit=log_limit)
     if before.get("ok"):
         return _lifecycle_payload(

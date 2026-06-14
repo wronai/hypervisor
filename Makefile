@@ -2,7 +2,7 @@
 .PHONY: uri-tree graph nl2a-weather docker-ssh-up docker-ssh-down scan-http scan-ssh docker-testenv-up docker-testenv-down evolution-check examples run-weather-agent
 .PHONY: uri2flow-test uri2flow-validate uri2flow-expand uri3-flow-dry-run nl2uri-flow-validate example-18 touri-test touri-demo voice-test voice-demo
 .PHONY: architecture-test doctor architecture-gate ci-gate examples-test
-.PHONY: start stop www-test www-smoke www-logs
+.PHONY: start stop www-test www-smoke www-logs www-monitor www-monitor-reset www-monitor-test
 
 WWW_PORT ?= 8788
 WWW_COMPOSE = docker compose -f www/docker-compose.yml
@@ -149,6 +149,15 @@ www-test:
 
 www-smoke:
 	bash scripts/www/smoke.sh "$(WWW_BASE)"
+
+www-monitor:
+	bash scripts/www/run_monitors.sh
+
+www-monitor-reset:
+	python3 scripts/www/monitor_landing.py --url "$(WWW_BASE)/www/" --reset-baseline
+
+www-monitor-test:
+	bash scripts/www/test_monitors.sh
 
 www-logs:
 	$(WWW_COMPOSE) logs -f --tail=100

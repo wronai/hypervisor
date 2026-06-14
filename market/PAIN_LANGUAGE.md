@@ -6,11 +6,11 @@ Klient **nie kupuje** „URI-first control plane”. Kupuje rozwiązanie konkret
 
 | Sytuacja | Co mówi klient |
 |----------|----------------|
-| Automatyzacja dokumentów | „Nie wiem, dlaczego automatyzacja faktur znowu nie działa.” |
-| n8n / workflow | „n8n się wykonał, ale dane nie trafiły do systemu.” |
-| Agenty AI | „Agent miał zrobić ticket, ale wysłał zły mail.” |
-| Skrypty / cron | „Nie wiem, kto odpowiada za ten skrypt.” |
-| Chaos integracji | „Nie mam jednego widoku automatyzacji, cronów, webhooków, API i agentów.” |
+| Automatyzacja dokumentów | „Automatyzacja faktur znowu nie działa — nie wiem, gdzie tego szukać.” |
+| n8n / workflow | „Scenario w n8n poszedł, ale dane nie doszły do ERP.” |
+| Agenty AI | „Agent miał zrobić ticket, a wysłał zły mail do klienta.” |
+| Skrypty / cron | „Ten skrypt pisał ktoś, kto już tu nie pracuje — nie wiemy, czy w ogóle działa.” |
+| Chaos integracji | „Nie mam jednego miejsca na crony, webhooki, pipeline’y, agentów i status.” |
 | E-commerce | „Zamówienia z Allegro nie weszły do ERP — gdzie to się urwało?” |
 | Integrator | „Klient pisze ‘nie działa’, a my ręcznie sprawdzamy scenariusze, logi i API.” |
 | Software house | „Mamy 12 projektów klientów — każdy ma inne webhooki i nikt nie widzi awarii centralnie.” |
@@ -27,6 +27,12 @@ Klient **nie kupuje** „URI-first control plane”. Kupuje rozwiązanie konkret
 | „Mamy n8n i skrypty” | Nie zastępujemy — spinamy widok | URI nad http/shell/docker |
 
 ## Pytania discovery (30 rozmów)
+
+W każdej rozmowie — **pytanie walidacyjne:**
+
+> „Czy zapłacilibyście X zł za jedno miejsce, które mówi: który proces padł, dlaczego i co dalej?”
+
+Plus:
 
 ```text
 Jakie automatyzacje macie dziś w firmie?

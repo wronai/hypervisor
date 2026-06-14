@@ -89,10 +89,43 @@ def test_root_redirects_to_www(client: TestClient):
 def test_www_index_served(client: TestClient):
     response = client.get("/www/")
     assert response.status_code == 200
-    assert "Hypervisor Chat" in response.text
+    assert "Taskinity" in response.text
+    assert "Autonomia w praktyce" in response.text
+    assert "tour-slide-host" in response.text
+    assert "tour-live-strip" in response.text
+    assert "scenario-lab" in response.text
+    assert "scenario-terminal" in response.text
+    assert "system-map" in response.text
+    assert "Deployment registry" in response.text
+    assert "landing.css" in response.text
+
+
+def test_www_chat_served(client: TestClient):
+    response = client.get("/www/chat.html")
+    assert response.status_code == 200
+    assert "Taskinity Chat" in response.text
     assert "quick-prompts" in response.text
     assert "agent-list" in response.text
-    assert "api-detail" in response.text
+    assert "copy-chat-btn" in response.text
+    assert "Kopiuj chat" in response.text
+
+
+def test_www_landing_has_tour_copy(client: TestClient):
+    response = client.get("/www/")
+    assert response.status_code == 200
+    assert "tour-copy-chat" in response.text
+    assert "Kopiuj chat" in response.text
+
+
+def test_www_landing_js_explains_repair_loop(repo_root: Path):
+    script = (repo_root / "www" / "landing.js").read_text(encoding="utf-8")
+    assert "buildSlideRepair" in script
+    assert "SCENARIOS" in script
+    assert "scenario-replay" in script
+    assert "setSystemMapFocus" in script
+    assert "failSafeTimer" in script
+    assert "RUNTIME_STATE_STALE" in script
+    assert "hypervisor supervise user-agent.local --repair auto" in script
 
 
 def test_www_compose_mounts_system_artifacts(repo_root: Path):

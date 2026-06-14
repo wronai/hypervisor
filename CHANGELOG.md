@@ -114,6 +114,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
 
+## [0.5.25] - 2026-06-14
+
+### Docs
+- Update README.md
+- Update agents/generated/invoices_agent/README.md
+- Update market/ASSESSMENT.md
+- Update market/DEMO_10MIN.md
+- Update market/GTM_POLAND.md
+- Update market/LANDING_COPY.md
+- Update market/OFFERS.md
+- Update market/PAIN_LANGUAGE.md
+- Update market/README.md
+- Update market/SALES_MESSAGES.md
+- ... and 4 more files
+
+### Test
+- Update tests/conftest.py
+- Update tests/hypervisor/test_agent_lifecycle.py
+- Update tests/hypervisor/test_agent_runner.py
+- Update tests/hypervisor/test_chat_www.py
+- Update tests/hypervisor/test_deployment_registry.py
+- Update tests/hypervisor/test_monitor_landing.py
+- Update tests/hypervisor/test_monitor_url.py
+- Update tests/hypervisor/test_runtime_state.py
+
+### Other
+- Update Makefile
+- Update agents/generated/invoices_agent/.generated.yaml
+- Update agents/generated/invoices_agent/Dockerfile
+- Update agents/generated/invoices_agent/__init__.py
+- Update agents/generated/invoices_agent/agent_card.py
+- Update agents/generated/invoices_agent/main.py
+- Update agents/generated/invoices_agent/routes.py
+- Update agents/generated/invoices_agent/tests/test_contract.py
+- Update deployments/agent_deployments.yaml
+- Update examples/16_www_landing_monitor/task_graph.yaml
+- ... and 36 more files
+
 ## [0.5.24] - 2026-06-14
 
 ### Docs

@@ -14,10 +14,20 @@ const QUICK_PROMPTS = [
     prompt: "pokaż proces agenta weather-map-agent.local",
   },
   {
+    label: "User agent",
+    prompt: "pokaż health agenta user-agent.local",
+  },
+  {
+    label: "Invoices agent",
+    prompt: "zdiagnozuj agenta invoices-agent.local",
+  },
+  {
     label: "Diagnoza",
     prompt: "zdiagnozuj agenta weather-map-agent.local i pokaż plan naprawy",
   },
 ];
+
+const conversationLog = [];
 
 const messagesEl = document.getElementById("messages");
 const form = document.getElementById("chat-form");
@@ -27,6 +37,7 @@ const sendBtn = document.getElementById("send-btn");
 const statusPill = document.getElementById("status-pill");
 const apiDetail = document.getElementById("api-detail");
 const refreshBtn = document.getElementById("refresh-btn");
+const copyChatBtn = document.getElementById("copy-chat-btn");
 const quickPromptsEl = document.getElementById("quick-prompts");
 const agentListEl = document.getElementById("agent-list");
 const eventListEl = document.getElementById("event-list");
@@ -114,7 +125,68 @@ function looksLikeUri(text) {
   return /[a-z][a-z0-9+.-]*:\/\//i.test(text.trim());
 }
 
-function appendMessage(role, bodyHtml, { error = false, uris = [] } = {}) {
+function htmlToPlainText(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return (div.innerText || div.textContent || "").trim();
+}
+
+function buildConversationMarkdown() {
+  const lines = ["# Taskinity Chat", ""];
+  conversationLog.forEach((entry) => {
+    lines.push(`## ${entry.role === "user" ? "Ty" : "System"}`);
+    lines.push("");
+    lines.push(entry.text);
+    lines.push("");
+  });
+  return lines.join("\n").trim();
+}
+
+async function copyToClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const area = document.createElement("textarea");
+  area.value = text;
+  area.setAttribute("readonly", "");
+  area.style.position = "fixed";
+  area.style.left = "-9999px";
+  document.body.appendChild(area);
+  area.select();
+  document.execCommand("copy");
+  document.body.removeChild(area);
+}
+
+function flashButtonFeedback(button, okLabel = "Skopiowano") {
+  if (!button) return;
+  const original = button.textContent;
+  button.textContent = okLabel;
+  button.disabled = true;
+  window.setTimeout(() => {
+    button.textContent = original;
+    button.disabled = false;
+  }, 1400);
+}
+
+async function copyConversation() {
+  const markdown = buildConversationMarkdown();
+  if (!markdown || conversationLog.length === 0) {
+    flashButtonFeedback(copyChatBtn, "Brak treści");
+    return;
+  }
+  try {
+    await copyToClipboard(markdown);
+    flashButtonFeedback(copyChatBtn);
+  } catch (err) {
+    flashButtonFeedback(copyChatBtn, "Błąd kopiowania");
+    console.error(err);
+  }
+}
+
+function appendMessage(role, bodyHtml, { text, error = false, uris = [] } = {}) {
+  const bodyText = text ?? htmlToPlainText(bodyHtml);
+  conversationLog.push({ role, text: bodyText });
   const wrap = document.createElement("article");
   wrap.className = `msg msg--${role}${error ? " msg--error" : ""}`;
   wrap.innerHTML = `
@@ -138,7 +210,14 @@ function enhanceBlocks(root) {
     const copyBtn = document.createElement("button");
     copyBtn.type = "button";
     copyBtn.textContent = "Kopiuj";
-    copyBtn.addEventListener("click", () => navigator.clipboard.writeText(text.trim()));
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await copyToClipboard(text.trim());
+        flashButtonFeedback(copyBtn);
+      } catch (err) {
+        console.error(err);
+      }
+    });
     actions.appendChild(copyBtn);
 
     if (uri) {
@@ -285,7 +364,9 @@ async function askPrompt(text) {
 }
 
 async function previewUri(uri) {
-  appendMessage("user", `<p>Podgląd <code>${escapeHtml(uri)}</code></p>`);
+  appendMessage("user", `<p>Podgląd <code>${escapeHtml(uri)}</code></p>`, {
+    text: `Podgląd \`${uri}\``,
+  });
   setBusy(true);
   try {
     const result = await apiFetch("/api/uri/preview", {
@@ -296,7 +377,10 @@ async function previewUri(uri) {
         policy: "dev",
       }),
     });
-    appendMessage("assistant", renderMarkdown(formatPreviewMarkdown(result)), { uris: [uri] });
+    appendMessage("assistant", renderMarkdown(formatPreviewMarkdown(result)), {
+      uris: [uri],
+      text: formatPreviewMarkdown(result),
+    });
   } catch (err) {
     appendMessage("assistant", `<p><strong>Błąd preview</strong></p><p>${escapeHtml(String(err))}</p>`, {
       error: true,
@@ -323,7 +407,7 @@ function formatPreviewMarkdown(result) {
 
 async function callUri(uri, { approved = false, echoUser = true } = {}) {
   if (echoUser) {
-    appendMessage("user", `<p><code>${escapeHtml(uri)}</code></p>`);
+    appendMessage("user", `<p><code>${escapeHtml(uri)}</code></p>`, { text: `\`${uri}\`` });
   }
   setBusy(true);
   try {
@@ -337,7 +421,7 @@ async function callUri(uri, { approved = false, echoUser = true } = {}) {
       }),
     });
     const md = result.message_markdown || "```json\n" + JSON.stringify(result, null, 2) + "\n```";
-    appendMessage("assistant", renderMarkdown(md), { uris: collectUris(result.data) });
+    appendMessage("assistant", renderMarkdown(md), { uris: collectUris(result.data), text: md });
     await loadSystemState();
   } catch (err) {
     appendMessage("assistant", `<p><strong>Błąd URI</strong></p><p>${escapeHtml(String(err))}</p>`, {
@@ -352,6 +436,7 @@ function setBusy(busy) {
   sendBtn.disabled = busy;
   promptEl.disabled = busy;
   refreshBtn.disabled = busy;
+  if (copyChatBtn) copyChatBtn.disabled = busy;
 }
 
 async function handleSubmit(event) {
@@ -359,7 +444,7 @@ async function handleSubmit(event) {
   const text = promptEl.value.trim();
   if (!text) return;
 
-  appendMessage("user", `<p>${escapeHtml(text)}</p>`);
+  appendMessage("user", `<p>${escapeHtml(text)}</p>`, { text });
   promptEl.value = "";
   setBusy(true);
 
@@ -371,8 +456,10 @@ async function handleSubmit(event) {
     }
 
     const result = await askPrompt(text);
-    appendMessage("assistant", renderMarkdown(result.message_markdown || "_Brak odpowiedzi._"), {
+    const md = result.message_markdown || "_Brak odpowiedzi._";
+    appendMessage("assistant", renderMarkdown(md), {
       uris: collectUris(result.data),
+      text: md,
     });
   } catch (err) {
     appendMessage("assistant", `<p><strong>Błąd ask</strong></p><p>${escapeHtml(String(err))}</p>`, {
@@ -400,6 +487,7 @@ function renderQuickPrompts() {
 
 form.addEventListener("submit", handleSubmit);
 refreshBtn.addEventListener("click", () => loadSystemState());
+copyChatBtn?.addEventListener("click", () => copyConversation());
 promptEl.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
@@ -418,6 +506,15 @@ appendMessage(
       "urish www serve\n" +
       "```",
   ),
+  {
+    text:
+      "## Hypervisor Chat\n\n" +
+      "Połączony widok NL → URI → wynik. Zacznij od komendy z panelu albo wpisz własne polecenie.\n\n" +
+      "```bash\n" +
+      "urish www create \"stwórz prosty chat markdown połączony z API systemu\" --plan-only\n" +
+      "urish www serve\n" +
+      "```",
+  },
 );
 
 loadSystemState();

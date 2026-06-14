@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.14s
+%% generated in 0.20s
     domains__weather_map["domains.weather_map<br/>1 funcs"]
     examples__23_nl_to_agent_tutorial["examples.23_nl_to_agent_tutorial<br/>3 funcs"]
     generator__hashutil["generator.hashutil<br/>1 funcs"]
@@ -20,7 +20,7 @@ flowchart TD
     packages__hypervisor_dashboard_agent["packages.hypervisor-dashboard-agent<br/>39 funcs"]
     packages__nl2uri["packages.nl2uri<br/>132 funcs"]
     packages__resource_agent_factory["packages.resource-agent-factory<br/>14 funcs"]
-    packages__resource_agent_hypervisor["packages.resource-agent-hypervisor<br/>293 funcs"]
+    packages__resource_agent_hypervisor["packages.resource-agent-hypervisor<br/>307 funcs"]
     packages__touri["packages.touri<br/>69 funcs"]
     packages__uri2flow["packages.uri2flow<br/>31 funcs"]
     packages__uri2ops["packages.uri2ops<br/>25 funcs"]
@@ -31,6 +31,7 @@ flowchart TD
     packages__uri3["packages.uri3<br/>357 funcs"]
     packages__urigen["packages.urigen<br/>84 funcs"]
     packages__urish["packages.urish<br/>110 funcs"]
+    scripts__www["scripts.www<br/>18 funcs"]
     testenv__ssh_agent_host["testenv.ssh_agent_host<br/>3 funcs"]
     uri2ops__operation_registry["uri2ops.operation_registry<br/>13 funcs"]
     uri2ops__server["uri2ops.server<br/>12 funcs"]
@@ -38,6 +39,7 @@ flowchart TD
     uri3__protocols["uri3.protocols<br/>2 funcs"]
     uri3__resolvers["uri3.resolvers<br/>9 funcs"]
     uri3__validators["uri3.validators<br/>1 funcs"]
+    www__landing["www.landing<br/>77 funcs"]
     packages__resource_agent_hypervisor ==>|74| packages__uri3
     packages__uri2run ==>|42| packages__uri3
     packages__uri3 ==>|29| uri2ops__operation_registry
@@ -46,7 +48,7 @@ flowchart TD
     packages__urish ==>|22| packages__urigen
     packages__urish ==>|19| packages__uri3
     packages__touri ==>|13| packages__uri2run
-    packages__resource_agent_hypervisor ==>|12| uri2ops__operation_registry
+    packages__resource_agent_hypervisor ==>|13| uri2ops__operation_registry
     packages__urish ==>|11| packages__resource_agent_hypervisor
     packages__uri3 ==>|10| packages__touri
     packages__uri3 ==>|9| packages__hypervisor_dashboard_agent
@@ -54,6 +56,7 @@ flowchart TD
     packages__uri2ops ==>|7| uri2ops__operation_registry
     packages__hypervisor_dashboard_agent ==>|7| packages__resource_agent_hypervisor
     packages__resource_agent_hypervisor ==>|7| hypervisor__contract_registry
+    scripts__www ==>|7| examples__23_nl_to_agent_tutorial
     packages__uri3 ==>|6| packages__resource_agent_hypervisor
     packages__uri3 ==>|6| packages__uri2verify
     packages__resource_agent_factory ==>|6| examples__23_nl_to_agent_tutorial
@@ -76,6 +79,7 @@ flowchart TD
     packages__urish -->|3| examples__23_nl_to_agent_tutorial
     packages__urigen -->|3| packages__uri2flow
     uri2ops__server -->|3| packages__uri2ops
+    packages__uri3 -->|3| www__landing
     packages__uri3 -->|3| hypervisor__contract_registry
     packages__hypervisor_dashboard_agent -->|3| packages__urish
     packages__hypervisor_dashboard_agent -->|3| uri2ops__operation_registry
@@ -102,8 +106,8 @@ flowchart TD
     packages__resource_agent_hypervisor -->|2| generator__validate
     packages__resource_agent_hypervisor -->|2| meta_agent__repair
     packages__resource_agent_hypervisor -->|2| packages__uri2verify
-    packages__resource_agent_hypervisor -->|2| hypervisor__deployment_registry
     hypervisor__compatibility -->|2| hypervisor__contract_registry
+    packages__resource_agent_hypervisor -->|2| hypervisor__deployment_registry
     packages__urish -->|1| uri2ops__server
     packages__urish -->|1| packages__uri2flow
     packages__urigen -->|1| examples__23_nl_to_agent_tutorial
@@ -143,6 +147,7 @@ flowchart TD
     hypervisor__verifier -->|1| packages__resource_agent_hypervisor
     hypervisor__verifier -->|1| packages__uri2verify
     packages__resource_agent_hypervisor -->|1| hypervisor__config
+    packages__resource_agent_hypervisor -->|1| www__landing
     hypervisor__config -->|1| uri2ops__operation_registry
     packages__resource_agent_hypervisor -->|1| hypervisor__evolution
     packages__resource_agent_hypervisor -->|1| uri3__graph

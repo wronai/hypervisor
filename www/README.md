@@ -1,8 +1,14 @@
-# Hypervisor Chat (`www/`)
+# Taskinity WWW (`www/`)
 
-Prosty interfejs czatu z renderowaniem markdown, podłączony do realnego API `hypervisor-dashboard-agent`.
-Strona jest statyczna, ale działa na tym samym FastAPI co dashboard systemowy, więc widzi realne
-deploymenty, statusy i policy-gated URI calls.
+Strona produktowa + interfejs czatu podłączony do API `hypervisor-dashboard-agent`.
+
+## Strony
+
+| URL | Plik | Opis |
+|-----|------|------|
+| `/www/` | `index.html` | **Landing** — prezentacja produktu, slajdy, animacje |
+| `/www/chat.html` | `chat.html` | **Chat na żywo** — NL → plan URI, wywołania API |
+| `/www/demo.html` | `demo.html` | Demo techniczne URI (statyczne) |
 
 ## Uruchomienie
 
@@ -10,72 +16,77 @@ deploymenty, statusy i policy-gated URI calls.
 
 ```bash
 make start          # build + uruchom kontener
-make www-smoke      # test health / www / api/ask
+make www-smoke      # test health / www / chat / api/ask
 make stop           # zatrzymaj kontener
 make www-logs       # logi
 ```
 
-Chat: http://localhost:8788/www/
+- Landing: http://localhost:8788/www/
+- Chat: http://localhost:8788/www/chat.html
 
-Compose montuje katalogi runtime z hosta:
-
-| Host | Kontener | Tryb |
-|------|----------|------|
-| `agents/generated/` | `/app/agents/generated` | read-only |
-| `deployments/` | `/app/deployments` | read-only |
-| `config/`, `contracts/`, `domains/`, `schemas/` | `/app/...` | read-only |
-| `knowledge/` | `/app/knowledge` | read-only |
-| `output/` | `/app/output` | read-write |
-
-To jest potrzebne dla realnego `repair://...`, runtime state, logów i incydentów.
+Compose montuje katalogi runtime z hosta (patrz `docker-compose.yml`).
 
 ### Lokalnie (bez Docker)
 
 ```bash
-# z katalogu repo (wymaga editable install pakietów)
 urish www serve
 # lub
 urish www open
 ```
 
-### Tworzenie z NL
+## Landing page
 
-```bash
-urish www create "stwórz prosty chat markdown połączony z API systemu" --plan-only
-urish www create "stwórz dashboard agenta hypervisor-dashboard do procesów i napraw" --approve --open
-```
+Pliki:
 
-## Jak to działa
+- `index.html` — struktura sekcji (hero, problem, tour, oferta, FAQ)
+- `landing.css` — styl, animacje, responsywność
+- `landing.js` — interaktywna prezentacja 6 kroków (autoplay, pauza, nawigacja)
+
+Sekcja **„Jak to działa w praktyce”** pokazuje scenariusz faktur → ERP 401 → chat → incident → ticket → proof techniczny.
+
+Copy marketingowe: [`../market/LANDING_COPY.md`](../market/LANDING_COPY.md)
+
+## Chat (`chat.html`)
 
 | Akcja | Endpoint |
 |-------|----------|
-| Prompt NL | `POST /api/ask` → `urish.backends.ask.ask_prompt` |
-| Preview URI | `POST /api/uri/preview` → policy preview |
-| URI | `POST /api/uri/call` → policy gate + wykonanie |
+| Prompt NL | `POST /api/ask` |
+| Preview URI | `POST /api/uri/preview` |
+| URI | `POST /api/uri/call` |
 | Agenci | `GET /api/agents` |
 | Zdarzenia | `GET /api/events` |
-| Status | `GET /health` |
 
-- Wpisz naturalny język — dostaniesz plan URI i komendy `urish` jako markdown.
-- Wklej URI — wykonanie przez policy (domyślnie dry-run).
-- Panel boczny pokazuje zdrowie API, deploymenty agentów i ostatnie zdarzenia.
-- Przy blokach kodu i URI: **Kopiuj**, **Podgląd URI**, **Dry-run URI**.
-
-## Pliki
-
-- `index.html` — chat (główna strona pod `/www/`)
-- `app.js` — logika czatu i API
-- `styles.css` — prosty layout
-- `demo.html` — poprzednia statyczna wizualizacja Taskinity
+Pliki: `app.js`, `styles.css`.
 
 ## Tworzenie przez NL (CLI)
-
-Chat to wizualizacja tego samego co:
 
 ```bash
 urish ask "stwórz dashboard agenta hypervisor"
 urish www create "stwórz prosty chat markdown połączony z API systemu" --plan-only
-urish ecosystem plan --prompt "..."
 ```
 
-Serwer musi działać w katalogu repo, aby `www/` było zamontowane i `find_repo_root()` działało.
+## Monitoring landingu
+
+```bash
+make www-monitor       # uruchom sprawdzenia teraz
+make www-monitor-test  # testy monitoringu, webhooka i crona
+make www-monitor-reset # nowa baseline cen po celowej zmianie
+```
+
+Cron:
+
+```bash
+bash scripts/www/install-cron.sh            # podgląd wpisu
+bash scripts/www/install-cron.sh --install  # instalacja co 5 min
+bash scripts/www/install-cron.sh --status   # status + ostatnie linie logu
+bash scripts/www/install-cron.sh --remove   # usunięcie wpisu
+```
+
+`--install` przygotowuje `/tmp/taskinity-monitor.log`, więc `tail -f /tmp/taskinity-monitor.log`
+nie powinien padać przed pierwszym przebiegiem crona. Dla n8n/Slack/Make podaj prawdziwy URL:
+
+```bash
+bash scripts/www/install-cron.sh --update --webhook "https://hooks.n8n.cloud/webhook/real-token"
+```
+
+Adresy przykładowe typu `twoja-instancja...`, `hooks.example...` albo `abc123` są traktowane jako placeholder i nie są wysyłane do webhooka.

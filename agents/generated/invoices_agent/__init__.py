@@ -1,0 +1,4 @@
+# AUTO-GENERATED FILE. DO NOT EDIT.
+# Source: contracts/agents/invoices_agent.yaml
+# Contract hash: sha256:a536397207b68bed66eefb1defcfb80529b8d2aa4fe82645f2ffa38069c60960
+

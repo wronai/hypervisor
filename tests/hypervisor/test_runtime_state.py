@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from hypervisor.deployment_registry.env import resolve_deployment_env
+from hypervisor.deployment_registry.run_executor import sync_runtime_health_uri
 from hypervisor.deployment_registry.runner import build_run_plan, resolve_deployment
 from hypervisor.deployment_registry.runtime_state import (
     is_process_alive,
@@ -48,3 +49,21 @@ def test_runtime_state_roundtrip(tmp_path):
     assert state["pid"] == 999999
     assert runtime_status("weather-map-agent.local", tmp_path) in {"stale", "stopped"}
     assert is_process_alive(999999) is False
+
+
+def test_sync_runtime_health_uri_updates_network_fields():
+    state = {
+        "kind": "RuntimeState",
+        "status": {"process_status": "running"},
+        "health_uri": "http://localhost:8101/health",
+        "network": {
+            "effective_port": 8101,
+            "effective_health_uri": "http://localhost:8101/health",
+        },
+    }
+
+    updated = sync_runtime_health_uri(state, "http://localhost:43773/health")
+
+    assert updated["health_uri"] == "http://localhost:43773/health"
+    assert updated["network"]["effective_health_uri"] == "http://localhost:43773/health"
+    assert updated["network"]["effective_port"] == 43773

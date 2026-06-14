@@ -1,13 +1,13 @@
-# hypervisor | 1584 func | 373f | 35549L | python | 2026-06-14
+# hypervisor | 1714 func | 382f | 37472L | python | 2026-06-14
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.7  critical=105 (limit:10)  dup=3  cycles=0
+  CC̄=3.6  critical=109 (limit:10)  dup=3  cycles=0
 
 ALERTS[20]:
   !!! high_fan_out     register_runtime_commands = 30 (limit:10)
   !!! cc_exceeded      build_incident_from_inspection = 29 (limit:15)
-  !!! high_fan_out     run_agent = 26 (limit:10)
+  !!! high_fan_out     run_agent = 27 (limit:10)
   !!! cc_exceeded      call_system_uri = 25 (limit:15)
   !!! high_fan_out     generate_ecosystem = 23 (limit:10)
   !!! high_fan_out     _merge_deployment_fragment = 21 (limit:10)
@@ -16,27 +16,27 @@ ALERTS[20]:
   !!! high_fan_out     scan_package_boundaries = 20 (limit:10)
   !!  cc_exceeded      _backend_from_target = 23 (limit:15)
 
-MODULES[623] (top by size):
+MODULES[639] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
   M[packages/urish/urish/cli.py] 814L C:0 F:43 CC↑11 D:0 (python)
+  M[www/landing.js] 641L C:0 F:77 CC↑15 D:4 (javascript)
+  M[www/app.js] 520L C:0 F:71 CC↑10 D:0 (javascript)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
-  M[www/app.js] 423L C:0 F:60 CC↑10 D:0 (javascript)
   M[packages/resource-agent-hypervisor/hypervisor/cli.py] 419L C:0 F:27 CC↑5 D:0 (python)
   M[packages/urigen/urigen/apply_executor.py] 394L C:2 F:15 CC↑13 D:1 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py] 369L C:0 F:13 CC↑18 D:6 (python)
   M[packages/nl2uri/nl2uri/graph_planner.py] 322L C:0 F:11 CC↑12 D:4 (python)
   M[packages/nl2uri/nl2uri/graph_repair.py] 315L C:0 F:27 CC↑7 D:2 (python)
   M[packages/urigen/urigen/generator.py] 315L C:0 F:9 CC↑7 D:3 (python)
   M[packages/uri2run/uri2run/runner.py] 275L C:0 F:20 CC↑14 D:9 (python)
   M[packages/resource-agent-hypervisor/hypervisor/artifacts/gate.py] 274L C:2 F:7 CC↑17 D:2 (python)
   M[packages/urish/urish/commands/runtime.py] 258L C:1 F:1 CC↑1 D:0 (python)
-  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py] 254L C:0 F:7 CC↑16 D:6 (python)
   M[packages/uri3/uri3/resolvers/explain.py] 251L C:0 F:9 CC↑14 D:10 (python)
-  M[www/assets/app.js] 247L C:0 F:29 CC↑21 D:0 (javascript)
-  LANGS: python:440/yaml:79/json:32/shell:26/toml:17/other:8/javascript:5/txt:5/proto:4/yml:4/mk:2/j2:1
+  LANGS: python:448/yaml:81/json:32/shell:30/toml:17/other:9/javascript:6/txt:5/proto:4/yml:4/mk:2/j2:1
 
 HOTSPOTS[10]:
   ★ register_runtime_commands fan=30  // Orchestrates 30 calls
-  ★ run_agent fan=26  // Orchestrates 26 calls
+  ★ run_agent fan=27  // Orchestrates 27 calls
   ★ generate_ecosystem fan=23  // Generate an isolated ecosystem artifact directory from a proposal.
   ★ _merge_deployment_fragment fan=21  // Orchestrates 21 calls
   ★ apply_ecosystem fan=20  // Orchestrates 20 calls
@@ -44,9 +44,9 @@ HOTSPOTS[10]:
 REFACTOR[15]:
   [1] H/L Split call_system_uri (CC=25)
   [2] H/L Split build_incident_from_inspection (CC=29)
-  [3] H/H Split god module packages/urish/urish/cli.py (814L, 0 classes)
-  [4] H/H Split god module goal.yaml (511L, 0 classes)
-  [5] H/H Split god module planfile.yaml (1319L, 0 classes)
+  [3] H/H Split god module www/landing.js (641L, 0 classes)
+  [4] H/H Split god module packages/urish/urish/cli.py (814L, 0 classes)
+  [5] H/H Split god module www/app.js (520L, 0 classes)
 
 EVOLUTION:
-  2026-06-14 CC̄=3.7 crit=105 35549L // Automated analysis
+  2026-06-14 CC̄=3.6 crit=109 37472L // Automated analysis

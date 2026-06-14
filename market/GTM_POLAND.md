@@ -86,6 +86,12 @@ bash examples/30_golden_path/run.sh
 
 ## Pytania discovery
 
+**Pytanie walidacyjne (każda rozmowa):**
+
+> „Czy zapłacilibyście **X zł** za jedno miejsce, które mówi: **który proces padł, dlaczego i co dalej**?”
+
+Notuj: słowa reakcji (health, incident, n8n, cron) + **3 procesy** kandydatów do pilota.
+
 ```text
 Jakie automatyzacje macie dziś w firmie?
 Co najczęściej się psuje?
@@ -93,13 +99,12 @@ Gdzie szukacie logów?
 Ile trwa ustalenie przyczyny?
 Kto odpowiada za naprawę?
 Czy klient widzi status procesu?
-Czy płacilibyście za prosty dashboard health + ticket + repair?
-Jakie 3 procesy warto byłoby podłączyć jako pierwsze?
+Jakie 3 procesy podłączylibyście jako pierwsze?
 ```
 
 ## Messaging per kanał
 
-Gotowce: [OFFERS.md](./OFFERS.md). Język bólu: [PAIN_LANGUAGE.md](./PAIN_LANGUAGE.md).
+Gotowce: [SALES_MESSAGES.md](./SALES_MESSAGES.md) (3 segmenty × 2 wersje). Demo: [DEMO_10MIN.md](./DEMO_10MIN.md).
 
 ### Cold outreach (software house)
 
@@ -117,7 +122,7 @@ Gotowce: [OFFERS.md](./OFFERS.md). Język bólu: [PAIN_LANGUAGE.md](./PAIN_LANGU
 
 | Obiekcja | Odpowiedź |
 |----------|-----------|
-| „Mamy już Langfuse” | Langfuse pokazuje trace; my operujemy naprawą i ticketem — warstwa wyżej |
+| „Mamy LangSmith / Engine” | Engine naprawia LangChain z trace’ów; my spinamy też cron, webhooki, n8n |
 | „To brzmi zbyt technicznie (URI)” | Użytkownik widzi chat; URI jest dla devops i audytu |
 | „Czy to nie duplikat n8n?” | n8n buduje workflow; my operujemy gdy workflow/agent padnie |
 | „Czy mamy SOC2?” | Nie — policy gate i self-host; enterprise gov to inna kategoria |

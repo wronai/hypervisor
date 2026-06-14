@@ -13,7 +13,6 @@ from hypervisor.deployment_registry.models import AgentDeployment
 from hypervisor.deployment_registry.port_utils import find_free_port, is_port_free
 from hypervisor.deployment_registry.run_plans import build_run_plan
 from hypervisor.deployment_registry.runtime_state import (
-    clear_runtime_state,
     is_process_alive,
     load_runtime_state,
     now_iso,
@@ -22,11 +21,7 @@ from hypervisor.deployment_registry.runtime_state import (
 
 
 def load_or_clear_runtime_state(deployment_id: str, repo: Path) -> dict[str, Any] | None:
-    existing = load_runtime_state(deployment_id, repo)
-    if existing and not is_process_alive(existing.get("pid")):
-        clear_runtime_state(deployment_id, repo)
-        return None
-    return existing
+    return load_runtime_state(deployment_id, repo)
 
 
 def build_agent_run_plan(
@@ -103,6 +98,19 @@ def reuse_existing_process_plan(
     plan["runtime_status"] = "running"
     plan["already_running"] = True
     return plan
+
+
+def sync_runtime_health_uri(state: dict[str, Any], health_uri: str) -> dict[str, Any]:
+    """Update flat and canonical runtime-state health URI fields together."""
+    updated = dict(state)
+    updated["health_uri"] = health_uri
+    network = dict(updated.get("network") or {})
+    network["effective_health_uri"] = health_uri
+    port = port_from_http_uri(health_uri)
+    if port is not None:
+        network["effective_port"] = port
+    updated["network"] = network
+    return updated
 
 
 def prepare_runtime_env(deployment: AgentDeployment, *, repo: Path) -> dict[str, str]:
