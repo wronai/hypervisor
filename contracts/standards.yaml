@@ -1,0 +1,28 @@
+standards:
+  mcp_resources:
+    role: URI-addressed resource model for runtime reads
+    resource_uri_scheme: resource://
+    canonical_read_method: resources/read
+  protobuf:
+    role: IDL for events, commands, queries and views
+    rules:
+      - do_not_reuse_field_numbers
+      - reserve_deleted_fields_and_names
+      - prefer_additive_changes
+  json_schema_2020_12:
+    role: validation for YAML/JSON registry files and proposals
+  a2a_agent_card:
+    role: public manifest of agent capabilities
+    canonical_path: /.well-known/agent-card.json
+    aliases:
+      - /.well-known/agent.json
+  controlled_proposal_pipeline:
+    role: safe auto-evolution flow
+    stages:
+      - proposal
+      - schema_validation
+      - cross_reference_validation
+      - compatibility_check
+      - policy_gate
+      - generation
+      - verification

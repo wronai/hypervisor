@@ -1,0 +1,1193 @@
+project: /home/tom/github/wronai/hypervisor
+generated_from: code2llm call graph analysis
+stats:
+  total_nodes: 97
+  total_edges: 98
+  modules_count: 46
+nodes:
+  hypervisor.uri2llm.function_resolver.resolve_python:
+    name: resolve_python
+    module: hypervisor.uri2llm.function_resolver
+    line: 17
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  uri3.scanner.http_scanner.scan_http:
+    name: scan_http
+    module: uri3.scanner.http_scanner
+    line: 5
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 1
+  hypervisor.contract_registry.validate.validate_registry:
+    name: validate_registry
+    module: hypervisor.contract_registry.validate
+    line: 6
+    cyclomatic_complexity: 20
+    calls_out: 20
+    calls_in: 2
+  hypervisor.uri.client.Uri3Client.graph:
+    name: graph
+    module: hypervisor.uri.client
+    line: 9
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  generator.hashutil.file_sha256:
+    name: file_sha256
+    module: generator.hashutil
+    line: 7
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 2
+  hypervisor.contract_registry.schema_validator.validate_contract_files:
+    name: validate_contract_files
+    module: hypervisor.contract_registry.schema_validator
+    line: 36
+    cyclomatic_complexity: 6
+    calls_out: 13
+    calls_in: 2
+  hypervisor.contract_registry.cross_validator._load_proto_text:
+    name: _load_proto_text
+    module: hypervisor.contract_registry.cross_validator
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 1
+  meta_agent.domain_planner.llm_planner._llm_uri_from_env:
+    name: _llm_uri_from_env
+    module: meta_agent.domain_planner.llm_planner
+    line: 20
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  meta_agent.domain_planner.llm_planner._extract_json:
+    name: _extract_json
+    module: meta_agent.domain_planner.llm_planner
+    line: 96
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  meta_agent.orchestrator.save_proposal_from_prompt:
+    name: save_proposal_from_prompt
+    module: meta_agent.orchestrator
+    line: 19
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 3
+  uri3.cli.validate_tree:
+    name: validate_tree
+    module: uri3.cli
+    line: 14
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  hypervisor.verifier.cli.main:
+    name: main
+    module: hypervisor.verifier.cli
+    line: 12
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 0
+  meta_agent.api.generate:
+    name: generate
+    module: meta_agent.api
+    line: 66
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  hypervisor.uri2llm.function_resolver._split_python_uri:
+    name: _split_python_uri
+    module: hypervisor.uri2llm.function_resolver
+    line: 8
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 2
+  hypervisor.compatibility.checker.classify_registry_change:
+    name: classify_registry_change
+    module: hypervisor.compatibility.checker
+    line: 19
+    cyclomatic_complexity: 8
+    calls_out: 11
+    calls_in: 0
+  meta_agent.orchestrator.asdict_result:
+    name: asdict_result
+    module: meta_agent.orchestrator
+    line: 63
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 4
+  meta_agent.orchestrator.pipeline_from_prompt:
+    name: pipeline_from_prompt
+    module: meta_agent.orchestrator
+    line: 58
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  hypervisor.core.Hypervisor.from_config:
+    name: from_config
+    module: hypervisor.core
+    line: 42
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  uri3.resolvers.router.Uri3Router.resolve:
+    name: resolve
+    module: uri3.resolvers.router
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  meta_agent.repair.repair_agent_spec:
+    name: repair_agent_spec
+    module: meta_agent.repair
+    line: 26
+    cyclomatic_complexity: 26
+    calls_out: 58
+    calls_in: 3
+  nl2a.cli.generate:
+    name: generate
+    module: nl2a.cli
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 0
+  uri3.validators.uri_tree_validator.load_yaml:
+    name: load_yaml
+    module: uri3.validators.uri_tree_validator
+    line: 8
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  uri3.resolvers.llm_resolver.LLMResolver.resolve:
+    name: resolve
+    module: uri3.resolvers.llm_resolver
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  uri3.cli.graph:
+    name: graph
+    module: uri3.cli
+    line: 22
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  hypervisor.config.get_config:
+    name: get_config
+    module: hypervisor.config
+    line: 105
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  generator.model.load_agent_spec:
+    name: load_agent_spec
+    module: generator.model
+    line: 41
+    cyclomatic_complexity: 7
+    calls_out: 24
+    calls_in: 2
+  nl2uri.cli.generate:
+    name: generate
+    module: nl2uri.cli
+    line: 8
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 0
+  hypervisor.contract_registry.cross_validator.validate_root:
+    name: validate_root
+    module: hypervisor.contract_registry.cross_validator
+    line: 55
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  uri3.cli.validate:
+    name: validate
+    module: uri3.cli
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  hypervisor.evolution.validator.validate_proposal:
+    name: validate_proposal
+    module: hypervisor.evolution.validator
+    line: 6
+    cyclomatic_complexity: 6
+    calls_out: 6
+    calls_in: 1
+  meta_agent.planner.infer_intent:
+    name: infer_intent
+    module: meta_agent.planner
+    line: 37
+    cyclomatic_complexity: 9
+    calls_out: 30
+    calls_in: 1
+  hypervisor.contract_registry.loader._read_yaml:
+    name: _read_yaml
+    module: hypervisor.contract_registry.loader
+    line: 17
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 4
+  uri3.protocols.normalizer.normalize_uri:
+    name: normalize_uri
+    module: uri3.protocols.normalizer
+    line: 4
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 0
+  hypervisor.contract_registry.cli.main:
+    name: main
+    module: hypervisor.contract_registry.cli
+    line: 15
+    cyclomatic_complexity: 20
+    calls_out: 26
+    calls_in: 0
+  generator.model.spec_to_plain_dict:
+    name: spec_to_plain_dict
+    module: generator.model
+    line: 78
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  hypervisor.config.load_config:
+    name: load_config
+    module: hypervisor.config
+    line: 42
+    cyclomatic_complexity: 16
+    calls_out: 24
+    calls_in: 2
+  meta_agent.domain_planner.domain_pack_generator._package:
+    name: _package
+    module: meta_agent.domain_planner.domain_pack_generator
+    line: 17
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 2
+  generator.validate.main:
+    name: main
+    module: generator.validate
+    line: 46
+    cyclomatic_complexity: 7
+    calls_out: 9
+    calls_in: 0
+  uri3.graph.uri_graph.build_graph_from_tree:
+    name: build_graph_from_tree
+    module: uri3.graph.uri_graph
+    line: 29
+    cyclomatic_complexity: 10
+    calls_out: 28
+    calls_in: 2
+  hypervisor.contract_registry.schema_validator._read_json:
+    name: _read_json
+    module: hypervisor.contract_registry.schema_validator
+    line: 24
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  meta_agent.domain_planner.domain_pack_generator.generate_domain_pack_from_tree:
+    name: generate_domain_pack_from_tree
+    module: meta_agent.domain_planner.domain_pack_generator
+    line: 175
+    cyclomatic_complexity: 11
+    calls_out: 54
+    calls_in: 0
+  hypervisor.contract_registry.registry_exporter.export_json:
+    name: export_json
+    module: hypervisor.contract_registry.registry_exporter
+    line: 8
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  meta_agent.domain_planner.domain_pack_generator._write:
+    name: _write
+    module: meta_agent.domain_planner.domain_pack_generator
+    line: 11
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 15
+  uri3.protocols.parser.parse_uri:
+    name: parse_uri
+    module: uri3.protocols.parser
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 8
+  nl2uri.llm_planner.llm_plan:
+    name: llm_plan
+    module: nl2uri.llm_planner
+    line: 6
+    cyclomatic_complexity: 4
+    calls_out: 16
+    calls_in: 2
+  uri3.resolvers.env_resolver.EnvResolver.resolve:
+    name: resolve
+    module: uri3.resolvers.env_resolver
+    line: 6
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  generator.agent_generator.main:
+    name: main
+    module: generator.agent_generator
+    line: 69
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 0
+  generator.verify.verify_generated:
+    name: verify_generated
+    module: generator.verify
+    line: 35
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 4
+  meta_agent.planner.singularize:
+    name: singularize
+    module: meta_agent.planner
+    line: 29
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 2
+  hypervisor.evolution.models.load_proposal:
+    name: load_proposal
+    module: hypervisor.evolution.models
+    line: 20
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 1
+  hypervisor.contract_registry.schema_validator.validate_file:
+    name: validate_file
+    module: hypervisor.contract_registry.schema_validator
+    line: 28
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 3
+  hypervisor.contract_registry.cross_validator.validate_cross_references:
+    name: validate_cross_references
+    module: hypervisor.contract_registry.cross_validator
+    line: 23
+    cyclomatic_complexity: 22
+    calls_out: 11
+    calls_in: 1
+  meta_agent.domain_planner.llm_planner._slug:
+    name: _slug
+    module: meta_agent.domain_planner.llm_planner
+    line: 14
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  uri3.validators.uri_tree_validator.validate_uri_tree:
+    name: validate_uri_tree
+    module: uri3.validators.uri_tree_validator
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  generator.agent_generator.generate_agent:
+    name: generate_agent
+    module: generator.agent_generator
+    line: 24
+    cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 2
+  meta_agent.domain_planner.llm_planner._deterministic_weather_plan:
+    name: _deterministic_weather_plan
+    module: meta_agent.domain_planner.llm_planner
+    line: 31
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  meta_agent.api.verify:
+    name: verify
+    module: meta_agent.api
+    line: 81
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  generator.verify.main:
+    name: main
+    module: generator.verify
+    line: 45
+    cyclomatic_complexity: 9
+    calls_out: 10
+    calls_in: 0
+  hypervisor.contract_registry.registry_builder._contract_hash:
+    name: _contract_hash
+    module: hypervisor.contract_registry.registry_builder
+    line: 15
+    cyclomatic_complexity: 3
+    calls_out: 13
+    calls_in: 1
+  hypervisor.config._load_yaml:
+    name: _load_yaml
+    module: hypervisor.config
+    line: 24
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 2
+  meta_agent.api.repair:
+    name: repair
+    module: meta_agent.api
+    line: 51
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  meta_agent.domain_planner.llm_planner.plan_domain_from_prompt:
+    name: plan_domain_from_prompt
+    module: meta_agent.domain_planner.llm_planner
+    line: 129
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 0
+  uri3.scanner.scanner.scan:
+    name: scan
+    module: uri3.scanner.scanner
+    line: 4
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  generator.validate.validate_agent:
+    name: validate_agent
+    module: generator.validate
+    line: 9
+    cyclomatic_complexity: 11
+    calls_out: 10
+    calls_in: 8
+  generator.validate.iter_agent_specs:
+    name: iter_agent_specs
+    module: generator.validate
+    line: 40
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 1
+  generator.agent_generator.render_template:
+    name: render_template
+    module: generator.agent_generator
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  meta_agent.domain_planner.domain_pack_generator._merge_main_contracts:
+    name: _merge_main_contracts
+    module: meta_agent.domain_planner.domain_pack_generator
+    line: 131
+    cyclomatic_complexity: 11
+    calls_out: 30
+    calls_in: 1
+  hypervisor.uri2llm.function_resolver.call_python:
+    name: call_python
+    module: hypervisor.uri2llm.function_resolver
+    line: 22
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  nl2uri.writer.write_uri_tree:
+    name: write_uri_tree
+    module: nl2uri.writer
+    line: 4
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 2
+  meta_agent.api.proposal_from_prompt:
+    name: proposal_from_prompt
+    module: meta_agent.api
+    line: 35
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  uri3.resolvers.router.Uri3Router.call:
+    name: call
+    module: uri3.resolvers.router
+    line: 16
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  hypervisor.uri2llm.router.call:
+    name: call
+    module: hypervisor.uri2llm.router
+    line: 47
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  hypervisor.contract_registry.cross_validator._schema_exists:
+    name: _schema_exists
+    module: hypervisor.contract_registry.cross_validator
+    line: 17
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  hypervisor.verifier.capability_tests.build_capability_test_plan:
+    name: build_capability_test_plan
+    module: hypervisor.verifier.capability_tests
+    line: 6
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  uri3.validators.uri_validator.validate_uri:
+    name: validate_uri
+    module: uri3.validators.uri_validator
+    line: 5
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  hypervisor.config.get_default_config:
+    name: get_default_config
+    module: hypervisor.config
+    line: 32
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  hypervisor.contract_registry.schema_validator._read_yaml:
+    name: _read_yaml
+    module: hypervisor.contract_registry.schema_validator
+    line: 19
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  meta_agent.planner.package_name:
+    name: package_name
+    module: meta_agent.planner
+    line: 18
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 4
+  meta_agent.repair._load_yaml:
+    name: _load_yaml
+    module: meta_agent.repair
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  hypervisor.contract_registry.registry_builder.write_registry_manifest:
+    name: write_registry_manifest
+    module: hypervisor.contract_registry.registry_builder
+    line: 55
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 3
+  meta_agent.domain_planner.domain_pack_generator._generic_proto:
+    name: _generic_proto
+    module: meta_agent.domain_planner.domain_pack_generator
+    line: 21
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  generator.verify.verify_generated_agent:
+    name: verify_generated_agent
+    module: generator.verify
+    line: 13
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 1
+  hypervisor.contract_registry.registry_exporter.export_markdown:
+    name: export_markdown
+    module: hypervisor.contract_registry.registry_exporter
+    line: 12
+    cyclomatic_complexity: 6
+    calls_out: 13
+    calls_in: 1
+  nl2uri.planner._slug:
+    name: _slug
+    module: nl2uri.planner
+    line: 8
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  meta_agent.api.validate:
+    name: validate
+    module: meta_agent.api
+    line: 42
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  hypervisor.uri.client.Uri3Client.nl2uri:
+    name: nl2uri
+    module: hypervisor.uri.client
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  meta_agent.domain_planner.llm_planner._call_openrouter:
+    name: _call_openrouter
+    module: meta_agent.domain_planner.llm_planner
+    line: 107
+    cyclomatic_complexity: 4
+    calls_out: 17
+    calls_in: 1
+  meta_agent.planner.intent_to_agent_spec:
+    name: intent_to_agent_spec
+    module: meta_agent.planner
+    line: 107
+    cyclomatic_complexity: 8
+    calls_out: 11
+    calls_in: 1
+  hypervisor.evolution.cli.main:
+    name: main
+    module: hypervisor.evolution.cli
+    line: 10
+    cyclomatic_complexity: 10
+    calls_out: 11
+    calls_in: 0
+  generator.agent_generator.expand_paths:
+    name: expand_paths
+    module: generator.agent_generator
+    line: 56
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  meta_agent.api.pipeline:
+    name: pipeline
+    module: meta_agent.api
+    line: 74
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  hypervisor.contract_registry.loader.load_contract_registry:
+    name: load_contract_registry
+    module: hypervisor.contract_registry.loader
+    line: 24
+    cyclomatic_complexity: 9
+    calls_out: 33
+    calls_in: 6
+  nl2uri.planner.rule_based_plan:
+    name: rule_based_plan
+    module: nl2uri.planner
+    line: 13
+    cyclomatic_complexity: 8
+    calls_out: 6
+    calls_in: 5
+  uri3.resolvers.python_resolver.PythonResolver.resolve:
+    name: resolve
+    module: uri3.resolvers.python_resolver
+    line: 6
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  hypervisor.contract_registry.registry_builder.build_registry_manifest:
+    name: build_registry_manifest
+    module: hypervisor.contract_registry.registry_builder
+    line: 36
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 2
+  meta_agent.domain_planner.llm_planner._generic_plan:
+    name: _generic_plan
+    module: meta_agent.domain_planner.llm_planner
+    line: 78
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  meta_agent.orchestrator.validate_repair_generate:
+    name: validate_repair_generate
+    module: meta_agent.orchestrator
+    line: 28
+    cyclomatic_complexity: 6
+    calls_out: 15
+    calls_in: 3
+edges:
+- caller: uri3.cli.validate
+  callee: uri3.validators.uri_validator.validate_uri
+  call_type: resolved
+- caller: uri3.cli.validate_tree
+  callee: uri3.validators.uri_tree_validator.validate_uri_tree
+  call_type: resolved
+- caller: uri3.cli.graph
+  callee: uri3.graph.uri_graph.build_graph_from_tree
+  call_type: resolved
+- caller: uri3.validators.uri_validator.validate_uri
+  callee: uri3.protocols.parser.parse_uri
+  call_type: resolved
+- caller: meta_agent.planner.infer_intent
+  callee: meta_agent.planner.singularize
+  call_type: resolved
+- caller: meta_agent.planner.intent_to_agent_spec
+  callee: meta_agent.planner.singularize
+  call_type: resolved
+- caller: meta_agent.planner.intent_to_agent_spec
+  callee: meta_agent.planner.package_name
+  call_type: resolved
+- caller: generator.validate.validate_agent
+  callee: generator.model.load_agent_spec
+  call_type: resolved
+- caller: generator.validate.main
+  callee: generator.validate.iter_agent_specs
+  call_type: resolved
+- caller: generator.validate.main
+  callee: generator.validate.validate_agent
+  call_type: resolved
+- caller: uri3.scanner.scanner.scan
+  callee: uri3.scanner.http_scanner.scan_http
+  call_type: resolved
+- caller: uri3.scanner.scanner.scan
+  callee: uri3.protocols.parser.parse_uri
+  call_type: resolved
+- caller: generator.verify.verify_generated_agent
+  callee: generator.hashutil.file_sha256
+  call_type: resolved
+- caller: generator.verify.verify_generated
+  callee: generator.verify.verify_generated_agent
+  call_type: resolved
+- caller: generator.verify.main
+  callee: generator.verify.verify_generated
+  call_type: resolved
+- caller: uri3.protocols.normalizer.normalize_uri
+  callee: uri3.protocols.parser.parse_uri
+  call_type: resolved
+- caller: uri3.resolvers.router.Uri3Router.resolve
+  callee: uri3.protocols.parser.parse_uri
+  call_type: resolved
+- caller: uri3.resolvers.router.Uri3Router.call
+  callee: uri3.protocols.parser.parse_uri
+  call_type: resolved
+- caller: uri3.resolvers.python_resolver.PythonResolver.resolve
+  callee: uri3.protocols.parser.parse_uri
+  call_type: resolved
+- caller: uri3.resolvers.env_resolver.EnvResolver.resolve
+  callee: uri3.protocols.parser.parse_uri
+  call_type: resolved
+- caller: hypervisor.config.get_default_config
+  callee: hypervisor.config._load_yaml
+  call_type: resolved
+- caller: hypervisor.config.load_config
+  callee: hypervisor.config.get_default_config
+  call_type: resolved
+- caller: hypervisor.config.get_config
+  callee: hypervisor.config.load_config
+  call_type: resolved
+- caller: meta_agent.repair.repair_agent_spec
+  callee: generator.validate.validate_agent
+  call_type: resolved
+- caller: meta_agent.repair.repair_agent_spec
+  callee: meta_agent.repair._load_yaml
+  call_type: resolved
+- caller: hypervisor.verifier.cli.main
+  callee: hypervisor.contract_registry.loader.load_contract_registry
+  call_type: resolved
+- caller: hypervisor.verifier.cli.main
+  callee: hypervisor.contract_registry.validate.validate_registry
+  call_type: resolved
+- caller: hypervisor.verifier.cli.main
+  callee: hypervisor.verifier.capability_tests.build_capability_test_plan
+  call_type: resolved
+- caller: hypervisor.uri2llm.function_resolver.resolve_python
+  callee: hypervisor.uri2llm.function_resolver._split_python_uri
+  call_type: resolved
+- caller: hypervisor.uri2llm.function_resolver.call_python
+  callee: hypervisor.uri2llm.function_resolver._split_python_uri
+  call_type: resolved
+- caller: hypervisor.evolution.cli.main
+  callee: hypervisor.evolution.models.load_proposal
+  call_type: resolved
+- caller: hypervisor.evolution.cli.main
+  callee: hypervisor.evolution.validator.validate_proposal
+  call_type: resolved
+- caller: hypervisor.uri.client.Uri3Client.graph
+  callee: uri3.graph.uri_graph.build_graph_from_tree
+  call_type: resolved
+- caller: hypervisor.uri.client.Uri3Client.nl2uri
+  callee: nl2uri.planner.rule_based_plan
+  call_type: resolved
+- caller: hypervisor.contract_registry.loader.load_contract_registry
+  callee: hypervisor.contract_registry.loader._read_yaml
+  call_type: resolved
+- caller: hypervisor.contract_registry.cli.main
+  callee: hypervisor.contract_registry.schema_validator.validate_contract_files
+  call_type: resolved
+- caller: hypervisor.contract_registry.cli.main
+  callee: hypervisor.contract_registry.loader.load_contract_registry
+  call_type: resolved
+- caller: hypervisor.contract_registry.cli.main
+  callee: hypervisor.contract_registry.validate.validate_registry
+  call_type: resolved
+- caller: hypervisor.contract_registry.cli.main
+  callee: hypervisor.contract_registry.cross_validator.validate_root
+  call_type: resolved
+- caller: hypervisor.contract_registry.cli.main
+  callee: hypervisor.contract_registry.registry_builder.write_registry_manifest
+  call_type: resolved
+- caller: uri3.resolvers.llm_resolver.LLMResolver.resolve
+  callee: uri3.protocols.parser.parse_uri
+  call_type: resolved
+- caller: hypervisor.contract_registry.registry_exporter.export_json
+  callee: hypervisor.contract_registry.registry_builder.write_registry_manifest
+  call_type: resolved
+- caller: hypervisor.contract_registry.registry_exporter.export_markdown
+  callee: hypervisor.contract_registry.registry_builder.build_registry_manifest
+  call_type: resolved
+- caller: hypervisor.contract_registry.schema_validator.validate_file
+  callee: hypervisor.contract_registry.schema_validator._read_yaml
+  call_type: resolved
+- caller: hypervisor.contract_registry.schema_validator.validate_file
+  callee: hypervisor.contract_registry.schema_validator._read_json
+  call_type: resolved
+- caller: nl2uri.cli.generate
+  callee: nl2uri.planner.rule_based_plan
+  call_type: resolved
+- caller: nl2uri.cli.generate
+  callee: nl2uri.llm_planner.llm_plan
+  call_type: resolved
+- caller: nl2uri.cli.generate
+  callee: nl2uri.writer.write_uri_tree
+  call_type: resolved
+- caller: hypervisor.contract_registry.registry_builder.build_registry_manifest
+  callee: hypervisor.contract_registry.loader.load_contract_registry
+  call_type: resolved
+- caller: hypervisor.contract_registry.registry_builder.build_registry_manifest
+  callee: hypervisor.contract_registry.registry_builder._contract_hash
+  call_type: resolved
+- caller: hypervisor.contract_registry.registry_builder.write_registry_manifest
+  callee: hypervisor.contract_registry.registry_builder.build_registry_manifest
+  call_type: resolved
+- caller: hypervisor.compatibility.checker.classify_registry_change
+  callee: hypervisor.contract_registry.loader.load_contract_registry
+  call_type: resolved
+- caller: nl2uri.llm_planner.llm_plan
+  callee: nl2uri.planner.rule_based_plan
+  call_type: resolved
+- caller: nl2uri.planner.rule_based_plan
+  callee: nl2uri.planner._slug
+  call_type: resolved
+- caller: meta_agent.domain_planner.llm_planner._deterministic_weather_plan
+  callee: meta_agent.domain_planner.llm_planner._llm_uri_from_env
+  call_type: resolved
+- caller: meta_agent.domain_planner.llm_planner._generic_plan
+  callee: meta_agent.domain_planner.llm_planner._slug
+  call_type: resolved
+- caller: meta_agent.domain_planner.llm_planner._call_openrouter
+  callee: meta_agent.domain_planner.llm_planner._extract_json
+  call_type: resolved
+- caller: meta_agent.domain_planner.llm_planner.plan_domain_from_prompt
+  callee: meta_agent.domain_planner.llm_planner._generic_plan
+  call_type: resolved
+- caller: meta_agent.domain_planner.llm_planner.plan_domain_from_prompt
+  callee: meta_agent.domain_planner.llm_planner._deterministic_weather_plan
+  call_type: resolved
+- caller: meta_agent.domain_planner.llm_planner.plan_domain_from_prompt
+  callee: meta_agent.domain_planner.llm_planner._call_openrouter
+  call_type: resolved
+- caller: nl2a.cli.generate
+  callee: nl2uri.writer.write_uri_tree
+  call_type: resolved
+- caller: nl2a.cli.generate
+  callee: nl2uri.planner.rule_based_plan
+  call_type: resolved
+- caller: nl2a.cli.generate
+  callee: nl2uri.llm_planner.llm_plan
+  call_type: resolved
+- caller: hypervisor.contract_registry.cross_validator.validate_cross_references
+  callee: hypervisor.contract_registry.cross_validator._load_proto_text
+  call_type: resolved
+- caller: hypervisor.contract_registry.cross_validator.validate_cross_references
+  callee: hypervisor.contract_registry.cross_validator._schema_exists
+  call_type: resolved
+- caller: hypervisor.contract_registry.cross_validator.validate_root
+  callee: hypervisor.contract_registry.cross_validator.validate_cross_references
+  call_type: resolved
+- caller: hypervisor.contract_registry.cross_validator.validate_root
+  callee: hypervisor.contract_registry.loader.load_contract_registry
+  call_type: resolved
+- caller: hypervisor.core.Hypervisor.from_config
+  callee: hypervisor.config.load_config
+  call_type: resolved
+- caller: generator.agent_generator.generate_agent
+  callee: generator.validate.validate_agent
+  call_type: resolved
+- caller: generator.agent_generator.generate_agent
+  callee: generator.model.load_agent_spec
+  call_type: resolved
+- caller: generator.agent_generator.generate_agent
+  callee: generator.hashutil.file_sha256
+  call_type: resolved
+- caller: generator.agent_generator.generate_agent
+  callee: generator.model.spec_to_plain_dict
+  call_type: resolved
+- caller: generator.agent_generator.generate_agent
+  callee: generator.agent_generator.render_template
+  call_type: resolved
+- caller: generator.agent_generator.main
+  callee: generator.agent_generator.expand_paths
+  call_type: resolved
+- caller: generator.agent_generator.main
+  callee: generator.agent_generator.generate_agent
+  call_type: resolved
+- caller: uri3.validators.uri_tree_validator.validate_uri_tree
+  callee: uri3.validators.uri_tree_validator.load_yaml
+  call_type: resolved
+- caller: meta_agent.orchestrator.save_proposal_from_prompt
+  callee: meta_agent.planner.infer_intent
+  call_type: resolved
+- caller: meta_agent.orchestrator.save_proposal_from_prompt
+  callee: meta_agent.planner.intent_to_agent_spec
+  call_type: resolved
+- caller: meta_agent.orchestrator.save_proposal_from_prompt
+  callee: meta_agent.planner.package_name
+  call_type: resolved
+- caller: meta_agent.orchestrator.validate_repair_generate
+  callee: generator.validate.validate_agent
+  call_type: resolved
+- caller: meta_agent.orchestrator.validate_repair_generate
+  callee: generator.verify.verify_generated
+  call_type: resolved
+- caller: meta_agent.orchestrator.validate_repair_generate
+  callee: meta_agent.repair.repair_agent_spec
+  call_type: resolved
+- caller: meta_agent.orchestrator.validate_repair_generate
+  callee: generator.agent_generator.generate_agent
+  call_type: resolved
+- caller: meta_agent.orchestrator.pipeline_from_prompt
+  callee: meta_agent.orchestrator.save_proposal_from_prompt
+  call_type: resolved
+- caller: meta_agent.orchestrator.pipeline_from_prompt
+  callee: meta_agent.orchestrator.validate_repair_generate
+  call_type: resolved
+- caller: meta_agent.domain_planner.domain_pack_generator._generic_proto
+  callee: meta_agent.domain_planner.domain_pack_generator._package
+  call_type: resolved
+- caller: meta_agent.domain_planner.domain_pack_generator._merge_main_contracts
+  callee: meta_agent.domain_planner.domain_pack_generator._write
+  call_type: resolved
+- caller: meta_agent.domain_planner.domain_pack_generator.generate_domain_pack_from_tree
+  callee: meta_agent.domain_planner.domain_pack_generator._write
+  call_type: resolved
+- caller: meta_agent.domain_planner.domain_pack_generator.generate_domain_pack_from_tree
+  callee: meta_agent.domain_planner.domain_pack_generator._merge_main_contracts
+  call_type: resolved
+- caller: hypervisor.uri2llm.router.call
+  callee: hypervisor.uri2llm.function_resolver.call_python
+  call_type: resolved
+- caller: meta_agent.api.proposal_from_prompt
+  callee: meta_agent.orchestrator.save_proposal_from_prompt
+  call_type: resolved
+- caller: meta_agent.api.validate
+  callee: generator.validate.validate_agent
+  call_type: resolved
+- caller: meta_agent.api.repair
+  callee: meta_agent.repair.repair_agent_spec
+  call_type: resolved
+- caller: meta_agent.api.generate
+  callee: meta_agent.orchestrator.asdict_result
+  call_type: resolved
+- caller: meta_agent.api.generate
+  callee: meta_agent.orchestrator.validate_repair_generate
+  call_type: resolved
+- caller: meta_agent.api.pipeline
+  callee: meta_agent.orchestrator.pipeline_from_prompt
+  call_type: resolved
+- caller: meta_agent.api.pipeline
+  callee: meta_agent.orchestrator.asdict_result
+  call_type: resolved
+- caller: meta_agent.api.verify
+  callee: generator.verify.verify_generated
+  call_type: resolved
+modules:
+  generator.agent_generator:
+  - generator.agent_generator.expand_paths
+  - generator.agent_generator.generate_agent
+  - generator.agent_generator.main
+  - generator.agent_generator.render_template
+  generator.hashutil:
+  - generator.hashutil.file_sha256
+  generator.model:
+  - generator.model.load_agent_spec
+  - generator.model.spec_to_plain_dict
+  generator.validate:
+  - generator.validate.iter_agent_specs
+  - generator.validate.main
+  - generator.validate.validate_agent
+  generator.verify:
+  - generator.verify.main
+  - generator.verify.verify_generated
+  - generator.verify.verify_generated_agent
+  hypervisor.compatibility.checker:
+  - hypervisor.compatibility.checker.classify_registry_change
+  hypervisor.config:
+  - hypervisor.config._load_yaml
+  - hypervisor.config.get_config
+  - hypervisor.config.get_default_config
+  - hypervisor.config.load_config
+  hypervisor.contract_registry.cli:
+  - hypervisor.contract_registry.cli.main
+  hypervisor.contract_registry.cross_validator:
+  - hypervisor.contract_registry.cross_validator._load_proto_text
+  - hypervisor.contract_registry.cross_validator._schema_exists
+  - hypervisor.contract_registry.cross_validator.validate_cross_references
+  - hypervisor.contract_registry.cross_validator.validate_root
+  hypervisor.contract_registry.loader:
+  - hypervisor.contract_registry.loader._read_yaml
+  - hypervisor.contract_registry.loader.load_contract_registry
+  hypervisor.contract_registry.registry_builder:
+  - hypervisor.contract_registry.registry_builder._contract_hash
+  - hypervisor.contract_registry.registry_builder.build_registry_manifest
+  - hypervisor.contract_registry.registry_builder.write_registry_manifest
+  hypervisor.contract_registry.registry_exporter:
+  - hypervisor.contract_registry.registry_exporter.export_json
+  - hypervisor.contract_registry.registry_exporter.export_markdown
+  hypervisor.contract_registry.schema_validator:
+  - hypervisor.contract_registry.schema_validator._read_json
+  - hypervisor.contract_registry.schema_validator._read_yaml
+  - hypervisor.contract_registry.schema_validator.validate_contract_files
+  - hypervisor.contract_registry.schema_validator.validate_file
+  hypervisor.contract_registry.validate:
+  - hypervisor.contract_registry.validate.validate_registry
+  hypervisor.core:
+  - hypervisor.core.Hypervisor.from_config
+  hypervisor.evolution.cli:
+  - hypervisor.evolution.cli.main
+  hypervisor.evolution.models:
+  - hypervisor.evolution.models.load_proposal
+  hypervisor.evolution.validator:
+  - hypervisor.evolution.validator.validate_proposal
+  hypervisor.uri.client:
+  - hypervisor.uri.client.Uri3Client.graph
+  - hypervisor.uri.client.Uri3Client.nl2uri
+  hypervisor.uri2llm.function_resolver:
+  - hypervisor.uri2llm.function_resolver._split_python_uri
+  - hypervisor.uri2llm.function_resolver.call_python
+  - hypervisor.uri2llm.function_resolver.resolve_python
+  hypervisor.uri2llm.router:
+  - hypervisor.uri2llm.router.call
+  hypervisor.verifier.capability_tests:
+  - hypervisor.verifier.capability_tests.build_capability_test_plan
+  hypervisor.verifier.cli:
+  - hypervisor.verifier.cli.main
+  meta_agent.api:
+  - meta_agent.api.generate
+  - meta_agent.api.pipeline
+  - meta_agent.api.proposal_from_prompt
+  - meta_agent.api.repair
+  - meta_agent.api.validate
+  - meta_agent.api.verify
+  meta_agent.domain_planner.domain_pack_generator:
+  - meta_agent.domain_planner.domain_pack_generator._generic_proto
+  - meta_agent.domain_planner.domain_pack_generator._merge_main_contracts
+  - meta_agent.domain_planner.domain_pack_generator._package
+  - meta_agent.domain_planner.domain_pack_generator._write
+  - meta_agent.domain_planner.domain_pack_generator.generate_domain_pack_from_tree
+  meta_agent.domain_planner.llm_planner:
+  - meta_agent.domain_planner.llm_planner._call_openrouter
+  - meta_agent.domain_planner.llm_planner._deterministic_weather_plan
+  - meta_agent.domain_planner.llm_planner._extract_json
+  - meta_agent.domain_planner.llm_planner._generic_plan
+  - meta_agent.domain_planner.llm_planner._llm_uri_from_env
+  - meta_agent.domain_planner.llm_planner._slug
+  - meta_agent.domain_planner.llm_planner.plan_domain_from_prompt
+  meta_agent.orchestrator:
+  - meta_agent.orchestrator.asdict_result
+  - meta_agent.orchestrator.pipeline_from_prompt
+  - meta_agent.orchestrator.save_proposal_from_prompt
+  - meta_agent.orchestrator.validate_repair_generate
+  meta_agent.planner:
+  - meta_agent.planner.infer_intent
+  - meta_agent.planner.intent_to_agent_spec
+  - meta_agent.planner.package_name
+  - meta_agent.planner.singularize
+  meta_agent.repair:
+  - meta_agent.repair._load_yaml
+  - meta_agent.repair.repair_agent_spec
+  nl2a.cli:
+  - nl2a.cli.generate
+  nl2uri.cli:
+  - nl2uri.cli.generate
+  nl2uri.llm_planner:
+  - nl2uri.llm_planner.llm_plan
+  nl2uri.planner:
+  - nl2uri.planner._slug
+  - nl2uri.planner.rule_based_plan
+  nl2uri.writer:
+  - nl2uri.writer.write_uri_tree
+  uri3.cli:
+  - uri3.cli.graph
+  - uri3.cli.validate
+  - uri3.cli.validate_tree
+  uri3.graph.uri_graph:
+  - uri3.graph.uri_graph.build_graph_from_tree
+  uri3.protocols.normalizer:
+  - uri3.protocols.normalizer.normalize_uri
+  uri3.protocols.parser:
+  - uri3.protocols.parser.parse_uri
+  uri3.resolvers.env_resolver:
+  - uri3.resolvers.env_resolver.EnvResolver.resolve
+  uri3.resolvers.llm_resolver:
+  - uri3.resolvers.llm_resolver.LLMResolver.resolve
+  uri3.resolvers.python_resolver:
+  - uri3.resolvers.python_resolver.PythonResolver.resolve
+  uri3.resolvers.router:
+  - uri3.resolvers.router.Uri3Router.call
+  - uri3.resolvers.router.Uri3Router.resolve
+  uri3.scanner.http_scanner:
+  - uri3.scanner.http_scanner.scan_http
+  uri3.scanner.scanner:
+  - uri3.scanner.scanner.scan
+  uri3.validators.uri_tree_validator:
+  - uri3.validators.uri_tree_validator.load_yaml
+  - uri3.validators.uri_tree_validator.validate_uri_tree
+  uri3.validators.uri_validator:
+  - uri3.validators.uri_validator.validate_uri
+entry_points:
+- domains.weather_map.handlers.generate_weather_map.handler
+- generator.agent_generator.main
+- generator.validate.main
+- generator.verify.main
+- hypervisor.cli.main
+- hypervisor.cli.resolve
+- hypervisor.cli.scan
+- hypervisor.compatibility.checker.classify_registry_change
+- hypervisor.config.get_config
+- hypervisor.contract_registry.cli.main
+- hypervisor.contract_registry.models.ContractRegistry.capability_by_name
+- hypervisor.contract_registry.models.ContractRegistry.resource_by_uri
+- hypervisor.contract_registry.models.ContractRegistry.view_by_name
+- hypervisor.contract_registry.registry_builder._hash_file
+- hypervisor.contract_registry.registry_exporter.export_json
+- hypervisor.core.Hypervisor.__post_init__
+- hypervisor.core.Hypervisor.__repr__
+- hypervisor.core.Hypervisor.from_config
+- hypervisor.core.Hypervisor.register_agent
+- hypervisor.core.Hypervisor.start
+- hypervisor.core.Hypervisor.status
+- hypervisor.core.Hypervisor.stop
+- hypervisor.evolution.cli.main
+- hypervisor.policy_gate.gate.evaluate_change
+- hypervisor.uri.client.Uri3Client.__init__
+- hypervisor.uri.client.Uri3Client.graph
+- hypervisor.uri.client.Uri3Client.nl2uri
+- hypervisor.uri.client.Uri3Client.resolve
+- hypervisor.uri2llm.router.call
+- hypervisor.uri2llm.router.resolve
+- hypervisor.verifier.cli.main
+- meta_agent.api.generate
+- meta_agent.api.health
+- meta_agent.api.pipeline
+- meta_agent.api.proposal_from_prompt
+- meta_agent.api.repair
+- meta_agent.api.validate
+- meta_agent.api.verify
+- meta_agent.cli.main
+- meta_agent.domain_planner.domain_pack_generator.generate_domain_pack_from_tree
+- meta_agent.domain_planner.llm_planner.plan_domain_from_prompt
+- meta_agent.models.dump_yaml
+- nl2a.cli.generate
+- nl2a.cli.main
+- nl2uri.cli.generate
+- nl2uri.cli.main
+- runtime_client.client.ResourceRuntimeClient.__init__
+- runtime_client.client.ResourceRuntimeClient.dispatch_command
+- runtime_client.client.ResourceRuntimeClient.read_resource
+- uri3.cli.graph
+- uri3.cli.main
+- uri3.cli.resolve
+- uri3.cli.scan
+- uri3.cli.validate
+- uri3.cli.validate_tree
+- uri3.graph.uri_graph.UriGraph.add_edge
+- uri3.graph.uri_graph.UriGraph.add_node
+- uri3.protocols.normalizer.normalize_uri
+- uri3.resolvers.env_resolver.EnvResolver.resolve
+- uri3.resolvers.http_resolver.HttpResolver.resolve
+- uri3.resolvers.llm_resolver.LLMResolver.resolve
+- uri3.resolvers.python_resolver.PythonResolver.call
+- uri3.resolvers.python_resolver.PythonResolver.resolve
+- uri3.resolvers.router.Uri3Router.__init__
+- uri3.resolvers.router.Uri3Router.call
+- uri3.resolvers.router.Uri3Router.resolve
+- uri3.scanner.scanner.scan

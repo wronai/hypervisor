@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/evolution_proposal.schema.json",
+  "title": "Evolution Proposal",
+  "type": "object",
+  "required": [
+    "proposal_id",
+    "type",
+    "reason"
+  ],
+  "properties": {
+    "proposal_id": {
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "new_agent",
+        "modify_agent",
+        "new_resource",
+        "new_projection",
+        "breaking_change"
+      ]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "adds": {
+      "type": "object"
+    },
+    "checks": {
+      "oneOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "approval": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,24 @@
+compatibility:
+  default_mode: expand_contract
+  require_version_bump_on_breaking_change: true
+  require_approval_for:
+    - breaking_change
+    - delete_resource
+    - delete_capability
+    - remove_proto_field
+    - rename_uri
+  allowed_without_approval:
+    - add_resource
+    - add_capability
+    - add_optional_proto_field
+    - add_renderer
+
+protobuf:
+  reserved_removed_fields: true
+  forbid_reuse_field_numbers: true
+  forbid_reuse_field_names: true
+
+uri:
+  require_resource_scheme: true
+  forbid_physical_storage_names: true
+  stable_uri_required_for_stable_resources: true

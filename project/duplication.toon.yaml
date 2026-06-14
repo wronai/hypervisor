@@ -1,0 +1,42 @@
+# redup/duplication | 2 groups | 96f 3010L | 2026-06-14
+
+SUMMARY:
+  files_scanned: 96
+  total_lines:   3010
+  dup_groups:    2
+  dup_fragments: 5
+  saved_lines:   89
+  scan_ms:       3511
+
+HOTSPOTS[2] (files with most duplication):
+  meta_agent/domain_planner/domain_pack_generator.py  dup=76L  groups=1  frags=3  (2.5%)
+  hypervisor/uri2llm/protocol_resolver.py  dup=6L  groups=1  frags=2  (0.2%)
+
+DUPLICATES[2] (ranked by impact):
+  [49d1d03e6ce392a1] ! STRU  _weather_proto  L=43 N=3 saved=86 sim=1.00
+      meta_agent/domain_planner/domain_pack_generator.py:49-91  (_weather_proto)
+      meta_agent/domain_planner/domain_pack_generator.py:94-119  (_weather_handler)
+      meta_agent/domain_planner/domain_pack_generator.py:122-128  (_generic_handler)
+  [bc6d855bfb035b8b]   STRU  resolve_a2a  L=3 N=2 saved=3 sim=1.00
+      hypervisor/uri2llm/protocol_resolver.py:10-12  (resolve_a2a)
+      hypervisor/uri2llm/protocol_resolver.py:15-17  (resolve_mcp)
+
+REFACTOR[2] (ranked by priority):
+  [1] ○ extract_function   → meta_agent/domain_planner/utils/_weather_proto.py
+      WHY: 3 occurrences of 43-line block across 1 files — saves 86 lines
+      FILES: meta_agent/domain_planner/domain_pack_generator.py
+  [2] ○ extract_function   → hypervisor/uri2llm/utils/resolve_a2a.py
+      WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
+      FILES: hypervisor/uri2llm/protocol_resolver.py
+
+QUICK_WINS[1] (low risk, high savings — do first):
+  [1] extract_function   saved=86L  → meta_agent/domain_planner/utils/_weather_proto.py
+      FILES: domain_pack_generator.py
+
+EFFORT_ESTIMATE (total ≈ 4.4h):
+  hard   _weather_proto                      saved=86L  ~258min
+  easy   resolve_a2a                         saved=3L  ~6min
+
+METRICS-TARGET:
+  dup_groups:  2 → 0
+  saved_lines: 89 lines recoverable

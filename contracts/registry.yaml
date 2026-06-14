@@ -1,0 +1,28 @@
+registry:
+  id: resource-agent-hypervisor-registry
+  version: 0.3.0
+  schema_version: 1
+  description: Central index for resources, capabilities, schemas, events and projections.
+
+standards:
+  resource_model: mcp_resources
+  data_contract: protobuf
+  config_validation: json_schema_2020_12
+  agent_manifest: a2a_agent_card
+  evolution_model: controlled_proposal_pipeline
+
+imports:
+  resources: contracts/resources.yaml
+  views: contracts/views.yaml
+  agents: contracts/agents/*.yaml
+  proto: contracts/proto/*.proto
+  compatibility: contracts/compatibility/policy.yaml
+
+hashing:
+  algorithm: sha256
+  include:
+    - contracts/resources.yaml
+    - contracts/views.yaml
+    - contracts/agents/
+    - contracts/proto/
+    - contracts/compatibility/

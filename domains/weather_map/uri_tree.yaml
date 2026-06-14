@@ -1,0 +1,38 @@
+domain:
+  id: weather_map
+  uri: domain://weather-map
+  description: Generate two-week weather forecast map as HTML URL.
+inputs:
+  place:
+    uri: input://weather-map/place
+    type: string
+    required: true
+  days:
+    uri: input://weather-map/days
+    type: integer
+    default: 14
+models:
+  planner:
+    uri: llm://openrouter/qwen/qwen3-coder-next
+    api_key_uri: env://OPENROUTER_API_KEY
+commands:
+  generate_weather_map:
+    uri: command://weather-map/generate
+    handler_uri: python://domains.weather_map.handlers.generate_weather_map:handler
+resources:
+  html_map:
+    uri_template: resource://weather/maps/{place}/forecast/{days}
+    schema_ref: app.weather.v1.WeatherMapHtmlView
+    renderer_ref: html
+agent:
+  id: weather-map-agent
+  uri: agent://weather-map-agent
+  card_uri: a2a://weather-map-agent/.well-known/agent-card.json
+  capabilities:
+    - name: generate_weather_map
+      uri: a2a://weather-map-agent/skills/generate_weather_map
+    - name: read_weather_map
+      uri: a2a://weather-map-agent/skills/read_weather_map
+deployment:
+  default:
+    uri: local://agents/generated/weather_map_agent

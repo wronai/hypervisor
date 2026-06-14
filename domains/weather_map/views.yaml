@@ -1,0 +1,11 @@
+views:
+- name: weather_map_forecast_data_view
+  schema_ref: app.weather.v1.ForecastDataView
+  renderer: json
+  mime_type: application/json
+  rebuildable: true
+- name: weather_map_html_map_view
+  schema_ref: app.weather.v1.WeatherMapHtmlView
+  renderer: html
+  mime_type: text/html
+  rebuildable: true

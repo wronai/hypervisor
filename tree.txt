@@ -1,0 +1,240 @@
+.
+├── agents
+│   ├── custom
+│   │   └── __init__.py
+│   ├── generated
+│   │   ├── __init__.py
+│   │   ├── user_agent
+│   │   │   ├── agent_card.py
+│   │   │   ├── Dockerfile
+│   │   │   ├── __init__.py
+│   │   │   ├── main.py
+│   │   │   ├── README.md
+│   │   │   ├── routes.py
+│   │   │   └── tests
+│   │   │       └── test_contract.py
+│   │   └── weather_map_agent
+│   │       ├── agent_card.py
+│   │       ├── Dockerfile
+│   │       ├── __init__.py
+│   │       ├── main.py
+│   │       ├── README.md
+│   │       ├── routes.py
+│   │       └── tests
+│   │           └── test_contract.py
+│   └── __init__.py
+├── CHANGELOG.md
+├── contracts
+│   ├── agents
+│   │   ├── user_agent.yaml
+│   │   └── weather_map_agent.yaml
+│   ├── compatibility
+│   │   └── policy.yaml
+│   ├── proto
+│   │   ├── user.proto
+│   │   └── weather.proto
+│   ├── registry.yaml
+│   ├── resources.yaml
+│   ├── standards.yaml
+│   └── views.yaml
+├── docker-compose.yml
+├── Dockerfile
+├── domains
+│   ├── __init__.py
+│   └── weather_map
+│       ├── commands.yaml
+│       ├── domain.yaml
+│       ├── handlers
+│       │   ├── generate_weather_map.py
+│       │   └── __init__.py
+│       ├── __init__.py
+│       ├── proto
+│       │   └── weather_map.proto
+│       ├── registry.fragment.yaml
+│       ├── renderers.yaml
+│       ├── resources.yaml
+│       ├── uri_tree.yaml
+│       └── views.yaml
+├── evolution
+│   ├── proposals
+│   │   ├── add_invoices_agent.yaml
+│   │   └── add_orders_agent.yaml
+│   └── reports
+├── examples
+│   ├── broken_agent.yaml
+│   ├── create_invoices_agent_prompt.txt
+│   ├── create_orders_agent.yaml
+│   └── evolution
+├── generator
+│   ├── agent_generator.py
+│   ├── hashutil.py
+│   ├── __init__.py
+│   ├── model.py
+│   ├── templates
+│   │   ├── agent_card.py.j2
+│   │   ├── Dockerfile.j2
+│   │   ├── __init__.py.j2
+│   │   ├── main.py.j2
+│   │   ├── README.md.j2
+│   │   ├── routes.py.j2
+│   │   └── test_contract.py.j2
+│   ├── validate.py
+│   └── verify.py
+├── goal.yaml
+├── hypervisor
+│   ├── cli.py
+│   ├── compatibility
+│   │   ├── checker.py
+│   │   └── __init__.py
+│   ├── config.py
+│   ├── contract_registry
+│   │   ├── cli.py
+│   │   ├── cross_validator.py
+│   │   ├── __init__.py
+│   │   ├── loader.py
+│   │   ├── models.py
+│   │   ├── registry_builder.py
+│   │   ├── registry_exporter.py
+│   │   ├── schema_validator.py
+│   │   └── validate.py
+│   ├── core.py
+│   ├── data
+│   │   └── nlp2uri.yaml
+│   ├── deployment_registry
+│   │   └── __init__.py
+│   ├── domain_pack
+│   │   ├── generator.py
+│   │   └── __init__.py
+│   ├── evolution
+│   │   ├── cli.py
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   └── validator.py
+│   ├── __init__.py
+│   ├── policy_gate
+│   │   ├── gate.py
+│   │   └── __init__.py
+│   ├── py.typed
+│   ├── uri
+│   │   ├── client.py
+│   │   └── __init__.py
+│   ├── uri2llm
+│   │   ├── env_resolver.py
+│   │   ├── function_resolver.py
+│   │   ├── __init__.py
+│   │   ├── llm_resolver.py
+│   │   ├── protocol_resolver.py
+│   │   ├── pypi_resolver.py
+│   │   └── router.py
+│   ├── verifier
+│   │   ├── capability_tests.py
+│   │   ├── cli.py
+│   │   └── __init__.py
+│   └── _version.py
+├── hypervisor.egg-info
+│   ├── dependency_links.txt
+│   ├── entry_points.txt
+│   ├── PKG-INFO
+│   ├── requires.txt
+│   ├── SOURCES.txt
+│   └── top_level.txt
+├── LICENSE
+├── Makefile
+├── meta_agent
+│   ├── api.py
+│   ├── cli.py
+│   ├── domain_planner
+│   │   ├── domain_pack_generator.py
+│   │   ├── __init__.py
+│   │   └── llm_planner.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── orchestrator.py
+│   ├── planner.py
+│   └── repair.py
+├── nl2a
+│   ├── cli.py
+│   └── __init__.py
+├── nl2uri
+│   ├── cli.py
+│   ├── __init__.py
+│   ├── llm_planner.py
+│   ├── planner.py
+│   ├── prompts
+│   │   └── __init__.py
+│   └── writer.py
+├── nlp2uri.yaml
+├── output
+│   └── contract_registry.resolved.json
+├── project.sh
+├── pyproject.toml
+├── README.md
+├── reports
+├── runtime_client
+│   ├── client.py
+│   └── __init__.py
+├── schemas
+│   ├── agent_contract.schema.json
+│   ├── command_contract.schema.json
+│   ├── contract_registry.schema.json
+│   ├── domain_pack.schema.json
+│   ├── evolution_proposal.schema.json
+│   ├── renderer_contract.schema.json
+│   ├── resources.schema.json
+│   ├── uri_tree.schema.json
+│   └── views.schema.json
+├── screenshots
+├── tests
+│   ├── __init__.py
+│   ├── test_capability_tests.py
+│   ├── test_contract_registry.py
+│   ├── test_cross_validation_v03.py
+│   ├── test_evolution_proposal.py
+│   ├── test_generate.py
+│   ├── test_hypervisor.py
+│   ├── test_meta_agent.py
+│   ├── test_nl2a_v04.py
+│   ├── test_nl2uri.py
+│   ├── test_policy_gate.py
+│   ├── test_registry_builder_v03.py
+│   ├── test_runtime_client.py
+│   ├── test_schema_validation_v03.py
+│   ├── test_uri2llm_v04.py
+│   ├── test_uri3.py
+│   ├── test_uri_tree_validator.py
+│   └── test_validate.py
+├── tree.sh
+├── tree.txt
+├── uri3
+│   ├── cli.py
+│   ├── discovery
+│   │   └── __init__.py
+│   ├── graph
+│   │   ├── __init__.py
+│   │   └── uri_graph.py
+│   ├── __init__.py
+│   ├── protocols
+│   │   ├── __init__.py
+│   │   ├── normalizer.py
+│   │   ├── parser.py
+│   │   └── schemes.py
+│   ├── resolvers
+│   │   ├── env_resolver.py
+│   │   ├── http_resolver.py
+│   │   ├── __init__.py
+│   │   ├── llm_resolver.py
+│   │   ├── python_resolver.py
+│   │   └── router.py
+│   ├── scanner
+│   │   ├── base.py
+│   │   ├── http_scanner.py
+│   │   ├── __init__.py
+│   │   └── scanner.py
+│   └── validators
+│       ├── __init__.py
+│       ├── uri_tree_validator.py
+│       └── uri_validator.py
+├── uv.lock
+└── VERSION
+
+53 directories, 185 files

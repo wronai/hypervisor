@@ -1,0 +1,8 @@
+commands:
+- name: GenerateWeatherMap
+  uri: command://weather-map/generate
+  handler_uri: python://domains.weather_map.handlers.generate_weather_map:handler
+  input_schema_ref: app.weather.v1.GenerateWeatherMapCommand
+  emits:
+  - event://weather-map/WeatherMapGenerationRequested
+  - event://weather-map/WeatherMapGenerated

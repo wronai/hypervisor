@@ -1,0 +1,2 @@
+domain_pack: domains/weather_map
+agent_contract: contracts/agents/weather_map_agent.yaml

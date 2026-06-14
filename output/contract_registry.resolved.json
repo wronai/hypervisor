@@ -1,0 +1,174 @@
+{
+  "registry": {
+    "id": "resource-agent-hypervisor-registry",
+    "version": "0.3.0",
+    "schema_version": 1,
+    "description": "Central index for resources, capabilities, schemas, events and projections."
+  },
+  "contract_hash": "sha256:a25150f58b85f9da5a27989d497a2db53cce3c7ce665e56883500bc16437d94a",
+  "resources": [
+    {
+      "uri": "resource://users/{user_id}",
+      "projection": "users_view",
+      "schema": "app.users.v1.UserView",
+      "renderer": "detail",
+      "owner_agent": "user-agent",
+      "stability": "stable",
+      "version": "v1"
+    },
+    {
+      "uri": "resource://users/{user_id}/roles",
+      "projection": "user_roles_view",
+      "schema": "app.users.v1.UserRolesView",
+      "renderer": "table",
+      "owner_agent": "user-agent",
+      "stability": "stable",
+      "version": "v1"
+    },
+    {
+      "uri": "resource://weather/forecast/{place}/{days}",
+      "projection": "weather_map_forecast_data_view",
+      "schema": "app.weather.v1.ForecastDataView",
+      "renderer": "json",
+      "owner_agent": "weather-map-agent",
+      "stability": "experimental",
+      "version": "v1"
+    },
+    {
+      "uri": "resource://weather/maps/{place}/forecast/{days}",
+      "projection": "weather_map_html_map_view",
+      "schema": "app.weather.v1.WeatherMapHtmlView",
+      "renderer": "html",
+      "owner_agent": "weather-map-agent",
+      "stability": "experimental",
+      "version": "v1"
+    }
+  ],
+  "views": [
+    {
+      "name": "users_view",
+      "viewKind": "detail",
+      "mimeType": "application/json",
+      "columns": [
+        "user_id",
+        "email",
+        "display_name",
+        "created_at"
+      ],
+      "rendererHint": "user-detail"
+    },
+    {
+      "name": "user_roles_view",
+      "viewKind": "table",
+      "mimeType": "application/json",
+      "columns": [
+        "user_id",
+        "role",
+        "assigned_at"
+      ],
+      "rendererHint": "compact-table"
+    },
+    {
+      "name": "weather_map_forecast_data_view",
+      "viewKind": "json",
+      "mimeType": "application/json",
+      "columns": [
+        "place",
+        "days",
+        "model"
+      ],
+      "rendererHint": "json"
+    },
+    {
+      "name": "weather_map_html_map_view",
+      "viewKind": "html",
+      "mimeType": "text/html",
+      "columns": [
+        "place",
+        "days",
+        "html_url"
+      ],
+      "rendererHint": "html"
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "read_user",
+      "agent": "user-agent",
+      "type": "resource_read",
+      "uri": "resource://users/{user_id}",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "app.users.v1.UserView",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "read_user_roles",
+      "agent": "user-agent",
+      "type": "resource_read",
+      "uri": "resource://users/{user_id}/roles",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "app.users.v1.UserRolesView",
+      "renderer": "table",
+      "emits": []
+    },
+    {
+      "name": "create_user",
+      "agent": "user-agent",
+      "type": "command",
+      "uri": null,
+      "command": "CreateUser",
+      "input_schema": "app.users.v1.CreateUserCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": [
+        "UserCreated"
+      ]
+    },
+    {
+      "name": "assign_user_role",
+      "agent": "user-agent",
+      "type": "command",
+      "uri": null,
+      "command": "AssignUserRole",
+      "input_schema": "app.users.v1.AssignUserRoleCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": [
+        "UserRoleAssigned"
+      ]
+    },
+    {
+      "name": "read_weather_map",
+      "agent": "weather-map-agent",
+      "type": "resource_read",
+      "uri": "resource://weather/maps/{place}/forecast/{days}",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "app.weather.v1.WeatherMapHtmlView",
+      "renderer": "html",
+      "emits": []
+    },
+    {
+      "name": "generate_weather_map",
+      "agent": "weather-map-agent",
+      "type": "command",
+      "uri": null,
+      "command": "GenerateWeatherMap",
+      "input_schema": "app.weather.v1.GenerateWeatherMapCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": [
+        "WeatherMapGenerationRequested",
+        "WeatherMapGenerated"
+      ]
+    }
+  ],
+  "counts": {
+    "resources": 4,
+    "views": 4,
+    "capabilities": 6
+  }
+}

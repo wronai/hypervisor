@@ -1,0 +1,49 @@
+flowchart TD
+%% generated in 0.00s
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph CLI
+        uri3__cli__validate["validate"]
+        uri3__cli__validate_tree["validate_tree"]
+        uri3__cli__graph["graph"]
+        uri3__cli__resolve["resolve"]
+        uri3__cli__scan["scan"]
+        uri3__cli__main["main"]
+        meta_agent__cli__main["main"]
+        hypervisor__cli__scan["scan"]
+        hypervisor__cli__resolve["resolve"]
+        hypervisor__cli__main["main"]
+        nl2uri__cli__generate["generate"]
+        nl2uri__cli__main["main"]
+        nl2a__cli__generate["generate"]
+        nl2a__cli__main["main"]
+        runtime_client__client__ResourceRuntimeClient__read_resource["read_resource"]
+        ...["+1 more"]
+    end
+
+    subgraph Core
+        generator__hashutil__file_sha256["file_sha256"]
+        generator__validate__main["main"]
+        uri3__scanner__scanner__scan["scan"]
+        generator__verify__verify_generated_agent["verify_generated_agent"]
+        generator__verify__verify_generated["verify_generated"]
+        generator__verify__main["main"]
+        uri3__protocols__normalizer__normalize_uri["normalize_uri"]
+        uri3__resolvers__http_resolver__HttpResolver__resolve["resolve"]
+        uri3__resolvers__router__Uri3Router__resolve["resolve"]
+        uri3__resolvers__router__Uri3Router__call["call"]
+        uri3__resolvers__python_resolver__PythonResolver__resolve["resolve"]
+        uri3__resolvers__python_resolver__PythonResolver__call["call"]
+        uri3__resolvers__env_resolver__EnvResolver__resolve["resolve"]
+        hypervisor__config__load_config{{load_config CC=16}}
+        hypervisor__config__get_config["get_config"]
+        ...["+42 more"]
+    end
+
+    subgraph Exporters
+        hypervisor__contract_registry__registry_exporter__export_json["export_json"]
+    end
+
+    class uri3__cli__validate,uri3__cli__validate_tree,uri3__cli__graph,uri3__cli__resolve,uri3__cli__scan,uri3__cli__main,generator__validate__main,uri3__scanner__scanner__scan,generator__verify__main,uri3__protocols__normalizer__normalize_uri entry

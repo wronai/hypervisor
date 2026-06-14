@@ -3,17 +3,15 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.43-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.31-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.65-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $0.4309 (2 commits)
+- 🤖 **LLM usage:** $0.6488 (3 commits)
 - 👤 **Human dev:** ~$200 (2.0h @ $100/h, 30min dedup)
 
 Generated on 2026-06-14 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
-
-
 
 Generator, validator and repairer for contract-first thin agents.
 
@@ -104,6 +102,43 @@ contracts/agents/*.yaml
 ```
 
 Then regenerate.
+# Resource Agent Hypervisor v0.5
+
+Ta wersja dodaje osobne paczki **`uri3`** i **`nl2uri`**.
+
+- `uri3` = parser, normalizer, resolver, scanner, graf zależności i walidator URI Tree.
+- `nl2uri` = natural language/query/prompt -> `URI Tree`, korzystając z modelu URI i walidacji z `uri3`.
+
+Hypervisor nie skanuje usług samodzielnie i nie generuje domeny bezpośrednio z promptu. Robi to przez `uri3` i `nl2uri`.
+
+```txt
+prompt -> nl2uri -> URI Tree -> uri3 validation/graph -> Domain Pack -> Agent Factory -> generated thin agent
+```
+
+## Instalacja
+
+```bash
+pip install -e .[dev]
+```
+
+## Przykład
+
+```bash
+nl2uri generate --no-llm -p "generuj mape pogody dwa tygodnie do przodu w oparciu o miejscowosc i odpowiedni model przewidujacy pogode, generuj widok w formie html pod adresem url" --out domains/weather_map/uri_tree.yaml
+uri3 validate-tree domains/weather_map/uri_tree.yaml
+uri3 graph domains/weather_map/uri_tree.yaml
+nl2a generate --no-llm -p "generuj mape pogody dwa tygodnie do przodu w oparciu o miejscowosc i odpowiedni model przewidujacy pogode, generuj widok w formie html pod adresem url"
+```
+
+## Zasada odpowiedzialności
+
+```txt
+uri3 = adresowanie, discovery, routing, graf URI
+nl2uri = język naturalny -> URI Tree
+hypervisor = registry, policy, deployment, lifecycle
+agent factory = generowanie kodu cienkiego agenta
+domain pack = logika domenowa
+```
 
 ## Documentation
 

@@ -1,0 +1,34 @@
+views:
+- name: users_view
+  viewKind: detail
+  mimeType: application/json
+  columns:
+  - user_id
+  - email
+  - display_name
+  - created_at
+  rendererHint: user-detail
+- name: user_roles_view
+  viewKind: table
+  mimeType: application/json
+  columns:
+  - user_id
+  - role
+  - assigned_at
+  rendererHint: compact-table
+- name: weather_map_forecast_data_view
+  viewKind: json
+  mimeType: application/json
+  columns:
+  - place
+  - days
+  - model
+  rendererHint: json
+- name: weather_map_html_map_view
+  viewKind: html
+  mimeType: text/html
+  columns:
+  - place
+  - days
+  - html_url
+  rendererHint: html

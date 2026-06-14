@@ -1,0 +1,8 @@
+domain:
+  id: weather_map
+  name: weather-map
+  description: Generate forecast weather maps as HTML URL artifacts.
+dependencies:
+- pypi://httpx
+- pypi://jinja2
+- pypi://pydantic

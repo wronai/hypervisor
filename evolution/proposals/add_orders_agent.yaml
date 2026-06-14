@@ -1,0 +1,17 @@
+proposal_id: add-orders-agent
+type: new_agent
+reason: Potrzebny osobny cienki agent do obsługi zamówień.
+adds:
+  agents:
+    - contracts/agents/orders_agent.yaml
+  resources:
+    - resource://orders/{order_id}
+    - resource://orders/{order_id}/events
+  capabilities:
+    - read_order
+    - read_order_events
+    - create_order
+compatibility:
+  breaking_change: false
+  requires_approval: false
+  migration_required: true

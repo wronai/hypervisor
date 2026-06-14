@@ -1,0 +1,243 @@
+# code2llm call graph | /home/tom/github/wronai/hypervisor
+# generated in 0.04s
+# nodes: 97 | edges: 98 | modules: 46
+# CC̄=3.8
+
+HUBS[20]:
+  meta_agent.repair.repair_agent_spec
+    CC=26  in:3  out:58  total:61
+  meta_agent.domain_planner.domain_pack_generator.generate_domain_pack_from_tree
+    CC=11  in:0  out:54  total:54
+  hypervisor.contract_registry.loader.load_contract_registry
+    CC=9  in:6  out:33  total:39
+  meta_agent.planner.infer_intent
+    CC=9  in:1  out:30  total:31
+  meta_agent.domain_planner.domain_pack_generator._merge_main_contracts
+    CC=11  in:1  out:30  total:31
+  uri3.graph.uri_graph.build_graph_from_tree
+    CC=10  in:2  out:28  total:30
+  generator.model.load_agent_spec
+    CC=7  in:2  out:24  total:26
+  hypervisor.contract_registry.cli.main
+    CC=20  in:0  out:26  total:26
+  hypervisor.config.load_config
+    CC=16  in:2  out:24  total:26
+  hypervisor.contract_registry.validate.validate_registry
+    CC=20  in:2  out:20  total:22
+  meta_agent.domain_planner.domain_pack_generator._write
+    CC=1  in:15  out:3  total:18
+  nl2uri.llm_planner.llm_plan
+    CC=4  in:2  out:16  total:18
+  generator.validate.validate_agent
+    CC=11  in:8  out:10  total:18
+  meta_agent.domain_planner.llm_planner._call_openrouter
+    CC=4  in:1  out:17  total:18
+  meta_agent.orchestrator.validate_repair_generate
+    CC=6  in:3  out:15  total:18
+  hypervisor.contract_registry.schema_validator.validate_contract_files
+    CC=6  in:2  out:13  total:15
+  hypervisor.contract_registry.registry_builder._contract_hash
+    CC=3  in:1  out:13  total:14
+  hypervisor.contract_registry.registry_exporter.export_markdown
+    CC=6  in:1  out:13  total:14
+  nl2uri.cli.generate
+    CC=4  in:0  out:12  total:12
+  uri3.protocols.parser.parse_uri
+    CC=2  in:8  out:4  total:12
+
+MODULES:
+  generator.agent_generator  [4 funcs]
+    expand_paths  CC=4  out:7
+    generate_agent  CC=4  out:10
+    main  CC=5  out:4
+    render_template  CC=1  out:4
+  generator.hashutil  [1 funcs]
+    file_sha256  CC=1  out:4
+  generator.model  [2 funcs]
+    load_agent_spec  CC=7  out:24
+    spec_to_plain_dict  CC=2  out:1
+  generator.validate  [3 funcs]
+    iter_agent_specs  CC=3  out:6
+    main  CC=7  out:9
+    validate_agent  CC=11  out:10
+  generator.verify  [3 funcs]
+    main  CC=9  out:10
+    verify_generated  CC=6  out:5
+    verify_generated_agent  CC=6  out:11
+  hypervisor.compatibility.checker  [1 funcs]
+    classify_registry_change  CC=8  out:11
+  hypervisor.config  [4 funcs]
+    _load_yaml  CC=4  out:4
+    get_config  CC=1  out:1
+    get_default_config  CC=1  out:3
+    load_config  CC=16  out:24
+  hypervisor.contract_registry.cli  [1 funcs]
+    main  CC=20  out:26
+  hypervisor.contract_registry.cross_validator  [4 funcs]
+    _load_proto_text  CC=2  out:5
+    _schema_exists  CC=1  out:3
+    validate_cross_references  CC=22  out:11
+    validate_root  CC=1  out:2
+  hypervisor.contract_registry.loader  [2 funcs]
+    _read_yaml  CC=3  out:4
+    load_contract_registry  CC=9  out:33
+  hypervisor.contract_registry.registry_builder  [3 funcs]
+    _contract_hash  CC=3  out:13
+    build_registry_manifest  CC=5  out:9
+    write_registry_manifest  CC=2  out:6
+  hypervisor.contract_registry.registry_exporter  [2 funcs]
+    export_json  CC=1  out:1
+    export_markdown  CC=6  out:13
+  hypervisor.contract_registry.schema_validator  [4 funcs]
+    _read_json  CC=1  out:2
+    _read_yaml  CC=2  out:2
+    validate_contract_files  CC=6  out:13
+    validate_file  CC=3  out:8
+  hypervisor.contract_registry.validate  [1 funcs]
+    validate_registry  CC=20  out:20
+  hypervisor.core  [1 funcs]
+    from_config  CC=1  out:2
+  hypervisor.evolution.cli  [1 funcs]
+    main  CC=10  out:11
+  hypervisor.evolution.models  [1 funcs]
+    load_proposal  CC=5  out:11
+  hypervisor.evolution.validator  [1 funcs]
+    validate_proposal  CC=6  out:6
+  hypervisor.uri.client  [2 funcs]
+    graph  CC=1  out:1
+    nl2uri  CC=1  out:1
+  hypervisor.uri2llm.function_resolver  [3 funcs]
+    _split_python_uri  CC=2  out:4
+    call_python  CC=1  out:4
+    resolve_python  CC=1  out:1
+  hypervisor.uri2llm.router  [1 funcs]
+    call  CC=3  out:3
+  hypervisor.verifier.capability_tests  [1 funcs]
+    build_capability_test_plan  CC=4  out:2
+  hypervisor.verifier.cli  [1 funcs]
+    main  CC=5  out:8
+  meta_agent.api  [6 funcs]
+    generate  CC=2  out:6
+    pipeline  CC=2  out:4
+    proposal_from_prompt  CC=2  out:6
+    repair  CC=2  out:5
+    validate  CC=2  out:5
+    verify  CC=1  out:2
+  meta_agent.domain_planner.domain_pack_generator  [5 funcs]
+    _generic_proto  CC=1  out:1
+    _merge_main_contracts  CC=11  out:30
+    _package  CC=1  out:0
+    _write  CC=1  out:3
+    generate_domain_pack_from_tree  CC=11  out:54
+  meta_agent.domain_planner.llm_planner  [7 funcs]
+    _call_openrouter  CC=4  out:17
+    _deterministic_weather_plan  CC=2  out:2
+    _extract_json  CC=3  out:8
+    _generic_plan  CC=1  out:2
+    _llm_uri_from_env  CC=5  out:5
+    _slug  CC=2  out:3
+    plan_domain_from_prompt  CC=6  out:8
+  meta_agent.orchestrator  [4 funcs]
+    asdict_result  CC=1  out:0
+    pipeline_from_prompt  CC=1  out:2
+    save_proposal_from_prompt  CC=2  out:6
+    validate_repair_generate  CC=6  out:15
+  meta_agent.planner  [4 funcs]
+    infer_intent  CC=9  out:30
+    intent_to_agent_spec  CC=8  out:11
+    package_name  CC=3  out:6
+    singularize  CC=4  out:3
+  meta_agent.repair  [2 funcs]
+    _load_yaml  CC=2  out:3
+    repair_agent_spec  CC=26  out:58
+  nl2a.cli  [1 funcs]
+    generate  CC=2  out:9
+  nl2uri.cli  [1 funcs]
+    generate  CC=4  out:12
+  nl2uri.llm_planner  [1 funcs]
+    llm_plan  CC=4  out:16
+  nl2uri.planner  [2 funcs]
+    _slug  CC=2  out:4
+    rule_based_plan  CC=8  out:6
+  nl2uri.writer  [1 funcs]
+    write_uri_tree  CC=1  out:4
+  uri3.cli  [3 funcs]
+    graph  CC=3  out:5
+    validate  CC=1  out:3
+    validate_tree  CC=3  out:5
+  uri3.graph.uri_graph  [1 funcs]
+    build_graph_from_tree  CC=10  out:28
+  uri3.protocols.normalizer  [1 funcs]
+    normalize_uri  CC=3  out:4
+  uri3.protocols.parser  [1 funcs]
+    parse_uri  CC=2  out:4
+  uri3.resolvers.env_resolver  [1 funcs]
+    resolve  CC=3  out:3
+  uri3.resolvers.llm_resolver  [1 funcs]
+    resolve  CC=1  out:3
+  uri3.resolvers.python_resolver  [1 funcs]
+    resolve  CC=2  out:6
+  uri3.resolvers.router  [2 funcs]
+    call  CC=3  out:5
+    resolve  CC=2  out:3
+  uri3.scanner.http_scanner  [1 funcs]
+    scan_http  CC=6  out:8
+  uri3.scanner.scanner  [1 funcs]
+    scan  CC=2  out:2
+  uri3.validators.uri_tree_validator  [2 funcs]
+    load_yaml  CC=1  out:2
+    validate_uri_tree  CC=2  out:7
+  uri3.validators.uri_validator  [1 funcs]
+    validate_uri  CC=2  out:2
+
+EDGES:
+  uri3.cli.validate → uri3.validators.uri_validator.validate_uri
+  uri3.cli.validate_tree → uri3.validators.uri_tree_validator.validate_uri_tree
+  uri3.cli.graph → uri3.graph.uri_graph.build_graph_from_tree
+  uri3.validators.uri_validator.validate_uri → uri3.protocols.parser.parse_uri
+  meta_agent.planner.infer_intent → meta_agent.planner.singularize
+  meta_agent.planner.intent_to_agent_spec → meta_agent.planner.singularize
+  meta_agent.planner.intent_to_agent_spec → meta_agent.planner.package_name
+  generator.validate.validate_agent → generator.model.load_agent_spec
+  generator.validate.main → generator.validate.iter_agent_specs
+  generator.validate.main → generator.validate.validate_agent
+  uri3.scanner.scanner.scan → uri3.scanner.http_scanner.scan_http
+  uri3.scanner.scanner.scan → uri3.protocols.parser.parse_uri
+  generator.verify.verify_generated_agent → generator.hashutil.file_sha256
+  generator.verify.verify_generated → generator.verify.verify_generated_agent
+  generator.verify.main → generator.verify.verify_generated
+  uri3.protocols.normalizer.normalize_uri → uri3.protocols.parser.parse_uri
+  uri3.resolvers.router.Uri3Router.resolve → uri3.protocols.parser.parse_uri
+  uri3.resolvers.router.Uri3Router.call → uri3.protocols.parser.parse_uri
+  uri3.resolvers.python_resolver.PythonResolver.resolve → uri3.protocols.parser.parse_uri
+  uri3.resolvers.env_resolver.EnvResolver.resolve → uri3.protocols.parser.parse_uri
+  hypervisor.config.get_default_config → hypervisor.config._load_yaml
+  hypervisor.config.load_config → hypervisor.config.get_default_config
+  hypervisor.config.get_config → hypervisor.config.load_config
+  meta_agent.repair.repair_agent_spec → generator.validate.validate_agent
+  meta_agent.repair.repair_agent_spec → meta_agent.repair._load_yaml
+  hypervisor.verifier.cli.main → hypervisor.contract_registry.loader.load_contract_registry
+  hypervisor.verifier.cli.main → hypervisor.contract_registry.validate.validate_registry
+  hypervisor.verifier.cli.main → hypervisor.verifier.capability_tests.build_capability_test_plan
+  hypervisor.uri2llm.function_resolver.resolve_python → hypervisor.uri2llm.function_resolver._split_python_uri
+  hypervisor.uri2llm.function_resolver.call_python → hypervisor.uri2llm.function_resolver._split_python_uri
+  hypervisor.evolution.cli.main → hypervisor.evolution.models.load_proposal
+  hypervisor.evolution.cli.main → hypervisor.evolution.validator.validate_proposal
+  hypervisor.uri.client.Uri3Client.graph → uri3.graph.uri_graph.build_graph_from_tree
+  hypervisor.uri.client.Uri3Client.nl2uri → nl2uri.planner.rule_based_plan
+  hypervisor.contract_registry.loader.load_contract_registry → hypervisor.contract_registry.loader._read_yaml
+  hypervisor.contract_registry.cli.main → hypervisor.contract_registry.schema_validator.validate_contract_files
+  hypervisor.contract_registry.cli.main → hypervisor.contract_registry.loader.load_contract_registry
+  hypervisor.contract_registry.cli.main → hypervisor.contract_registry.validate.validate_registry
+  hypervisor.contract_registry.cli.main → hypervisor.contract_registry.cross_validator.validate_root
+  hypervisor.contract_registry.cli.main → hypervisor.contract_registry.registry_builder.write_registry_manifest
+  uri3.resolvers.llm_resolver.LLMResolver.resolve → uri3.protocols.parser.parse_uri
+  hypervisor.contract_registry.registry_exporter.export_json → hypervisor.contract_registry.registry_builder.write_registry_manifest
+  hypervisor.contract_registry.registry_exporter.export_markdown → hypervisor.contract_registry.registry_builder.build_registry_manifest
+  hypervisor.contract_registry.schema_validator.validate_file → hypervisor.contract_registry.schema_validator._read_yaml
+  hypervisor.contract_registry.schema_validator.validate_file → hypervisor.contract_registry.schema_validator._read_json
+  nl2uri.cli.generate → nl2uri.planner.rule_based_plan
+  nl2uri.cli.generate → nl2uri.llm_planner.llm_plan
+  nl2uri.cli.generate → nl2uri.writer.write_uri_tree
+  hypervisor.contract_registry.registry_builder.build_registry_manifest → hypervisor.contract_registry.loader.load_contract_registry
+  hypervisor.contract_registry.registry_builder.build_registry_manifest → hypervisor.contract_registry.registry_builder._contract_hash

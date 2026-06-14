@@ -1,0 +1,23 @@
+resources:
+- id: weather_map.forecast_data.v1
+  kind: resource
+  uri_template: resource://weather/forecast/{place}/{days}
+  stability: experimental
+  version: v1
+  schema_ref: app.weather.v1.ForecastDataView
+  projection_ref: weather_map_forecast_data_view
+  renderer_ref: json
+  owner_agent: weather-map-agent
+  read_method: resources/read
+  mime_type: application/json
+- id: weather_map.html_map.v1
+  kind: resource
+  uri_template: resource://weather/maps/{place}/forecast/{days}
+  stability: experimental
+  version: v1
+  schema_ref: app.weather.v1.WeatherMapHtmlView
+  projection_ref: weather_map_html_map_view
+  renderer_ref: html
+  owner_agent: weather-map-agent
+  read_method: resources/read
+  mime_type: text/html

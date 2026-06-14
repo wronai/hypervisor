@@ -1,0 +1,515 @@
+# hypervisor | 123f 3712L | python:120,shell:2,less:1 | 2026-06-14
+# stats: 156 func | 30 cls | 123 mod | CC̄=4.0 | critical:12 | cycles:0
+# alerts[5]: CC repair_agent_spec=26; CC validate_cross_references=22; CC main=20; CC validate_registry=20; CC load_config=16
+# hotspots[5]: load_config fan=18; generate_domain_pack_from_tree fan=18; repair_agent_spec fan=18; main fan=16; infer_intent fan=14
+# evolution: baseline
+# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
+M[123]:
+  agents/__init__.py,1
+  agents/custom/__init__.py,1
+  agents/generated/__init__.py,1
+  agents/generated/user_agent/__init__.py,3
+  agents/generated/user_agent/agent_card.py,63
+  agents/generated/user_agent/main.py,16
+  agents/generated/user_agent/routes.py,91
+  agents/generated/user_agent/tests/test_contract.py,18
+  agents/generated/weather_map_agent/__init__.py,3
+  agents/generated/weather_map_agent/agent_card.py,40
+  agents/generated/weather_map_agent/main.py,16
+  agents/generated/weather_map_agent/routes.py,85
+  agents/generated/weather_map_agent/tests/test_contract.py,18
+  app.doql.less,103
+  domains/__init__.py,1
+  domains/weather_map/__init__.py,1
+  domains/weather_map/handlers/__init__.py,1
+  domains/weather_map/handlers/generate_weather_map.py,25
+  generator/__init__.py,1
+  generator/agent_generator.py,85
+  generator/hashutil.py,10
+  generator/model.py,89
+  generator/validate.py,70
+  generator/verify.py,66
+  hypervisor/__init__.py,1
+  hypervisor/_version.py,21
+  hypervisor/cli.py,11
+  hypervisor/compatibility/__init__.py,1
+  hypervisor/compatibility/checker.py,44
+  hypervisor/config.py,109
+  hypervisor/contract_registry/__init__.py,1
+  hypervisor/contract_registry/cli.py,78
+  hypervisor/contract_registry/cross_validator.py,57
+  hypervisor/contract_registry/loader.py,81
+  hypervisor/contract_registry/models.py,57
+  hypervisor/contract_registry/registry_builder.py,61
+  hypervisor/contract_registry/registry_exporter.py,30
+  hypervisor/contract_registry/schema_validator.py,55
+  hypervisor/contract_registry/validate.py,51
+  hypervisor/core.py,87
+  hypervisor/deployment_registry/__init__.py,1
+  hypervisor/domain_pack/__init__.py,1
+  hypervisor/domain_pack/generator.py,43
+  hypervisor/evolution/__init__.py,1
+  hypervisor/evolution/cli.py,34
+  hypervisor/evolution/models.py,33
+  hypervisor/evolution/validator.py,17
+  hypervisor/policy_gate/__init__.py,1
+  hypervisor/policy_gate/gate.py,27
+  hypervisor/uri/__init__.py,1
+  hypervisor/uri/client.py,11
+  hypervisor/uri2llm/__init__.py,4
+  hypervisor/uri2llm/env_resolver.py,13
+  hypervisor/uri2llm/function_resolver.py,27
+  hypervisor/uri2llm/llm_resolver.py,19
+  hypervisor/uri2llm/protocol_resolver.py,23
+  hypervisor/uri2llm/pypi_resolver.py,17
+  hypervisor/uri2llm/router.py,52
+  hypervisor/verifier/__init__.py,1
+  hypervisor/verifier/capability_tests.py,33
+  hypervisor/verifier/cli.py,29
+  meta_agent/__init__.py,2
+  meta_agent/api.py,84
+  meta_agent/cli.py,94
+  meta_agent/domain_planner/__init__.py,2
+  meta_agent/domain_planner/domain_pack_generator.py,249
+  meta_agent/domain_planner/llm_planner.py,142
+  meta_agent/models.py,44
+  meta_agent/orchestrator.py,72
+  meta_agent/planner.py,160
+  meta_agent/repair.py,108
+  nl2a/__init__.py,1
+  nl2a/cli.py,20
+  nl2uri/__init__.py,1
+  nl2uri/cli.py,17
+  nl2uri/llm_planner.py,19
+  nl2uri/planner.py,33
+  nl2uri/prompts/__init__.py,1
+  nl2uri/writer.py,8
+  project.sh,59
+  runtime_client/__init__.py,1
+  runtime_client/client.py,48
+  tests/__init__.py,1
+  tests/test_capability_tests.py,11
+  tests/test_contract_registry.py,21
+  tests/test_cross_validation_v03.py,6
+  tests/test_evolution_proposal.py,9
+  tests/test_generate.py,11
+  tests/test_hypervisor.py,85
+  tests/test_meta_agent.py,63
+  tests/test_nl2a_v04.py,21
+  tests/test_nl2uri.py,10
+  tests/test_policy_gate.py,19
+  tests/test_registry_builder_v03.py,21
+  tests/test_runtime_client.py,9
+  tests/test_schema_validation_v03.py,8
+  tests/test_uri2llm_v04.py,20
+  tests/test_uri3.py,12
+  tests/test_uri_tree_validator.py,5
+  tests/test_validate.py,9
+  tree.sh,2
+  uri3/__init__.py,1
+  uri3/cli.py,37
+  uri3/discovery/__init__.py,1
+  uri3/graph/__init__.py,1
+  uri3/graph/uri_graph.py,52
+  uri3/protocols/__init__.py,1
+  uri3/protocols/normalizer.py,10
+  uri3/protocols/parser.py,18
+  uri3/protocols/schemes.py,5
+  uri3/resolvers/__init__.py,1
+  uri3/resolvers/env_resolver.py,12
+  uri3/resolvers/http_resolver.py,8
+  uri3/resolvers/llm_resolver.py,15
+  uri3/resolvers/python_resolver.py,15
+  uri3/resolvers/router.py,22
+  uri3/scanner/__init__.py,1
+  uri3/scanner/base.py,8
+  uri3/scanner/http_scanner.py,17
+  uri3/scanner/scanner.py,8
+  uri3/validators/__init__.py,1
+  uri3/validators/uri_tree_validator.py,19
+  uri3/validators/uri_validator.py,10
+D:
+  agents/__init__.py:
+  agents/custom/__init__.py:
+  agents/generated/__init__.py:
+  agents/generated/user_agent/__init__.py:
+  agents/generated/user_agent/agent_card.py:
+  agents/generated/user_agent/main.py:
+  agents/generated/user_agent/routes.py:
+  agents/generated/user_agent/tests/test_contract.py:
+    e: test_agent_card_has_expected_name,test_agent_card_has_capabilities,test_agent_card_has_contract_hash
+    test_agent_card_has_expected_name()
+    test_agent_card_has_capabilities()
+    test_agent_card_has_contract_hash()
+  agents/generated/weather_map_agent/__init__.py:
+  agents/generated/weather_map_agent/agent_card.py:
+  agents/generated/weather_map_agent/main.py:
+  agents/generated/weather_map_agent/routes.py:
+  agents/generated/weather_map_agent/tests/test_contract.py:
+    e: test_agent_card_has_expected_name,test_agent_card_has_capabilities,test_agent_card_has_contract_hash
+    test_agent_card_has_expected_name()
+    test_agent_card_has_capabilities()
+    test_agent_card_has_contract_hash()
+  domains/__init__.py:
+  domains/weather_map/__init__.py:
+  domains/weather_map/handlers/__init__.py:
+  domains/weather_map/handlers/generate_weather_map.py:
+    e: handler
+    handler(payload)
+  generator/__init__.py:
+  generator/agent_generator.py:
+    e: render_template,generate_agent,expand_paths,main
+    render_template(env;template_name;dest;context)
+    generate_agent(spec_path)
+    expand_paths(patterns)
+    main(argv)
+  generator/hashutil.py:
+    e: file_sha256
+    file_sha256(path)
+  generator/model.py:
+    e: load_agent_spec,spec_to_plain_dict,Capability,AgentSpec
+    Capability:
+    AgentSpec: output_dir_name(0)
+    load_agent_spec(path)
+    spec_to_plain_dict(spec;contract_hash)
+  generator/validate.py:
+    e: validate_agent,iter_agent_specs,main
+    validate_agent(path)
+    iter_agent_specs(root)
+    main(argv)
+  generator/verify.py:
+    e: verify_generated_agent,verify_generated,main
+    verify_generated_agent(agent_dir)
+    verify_generated(root)
+    main(argv)
+  hypervisor/__init__.py:
+  hypervisor/_version.py:
+  hypervisor/cli.py:
+    e: scan,resolve,main
+    scan(uri)
+    resolve(uri)
+    main()
+  hypervisor/compatibility/__init__.py:
+  hypervisor/compatibility/checker.py:
+    e: _load_policy,classify_registry_change
+    _load_policy(root)
+    classify_registry_change(old_root;new_root)
+  hypervisor/config.py:
+    e: _load_yaml,get_default_config,load_config,get_config
+    _load_yaml(path)
+    get_default_config()
+    load_config(path)
+    get_config()
+  hypervisor/contract_registry/__init__.py:
+  hypervisor/contract_registry/cli.py:
+    e: main
+    main(argv)
+  hypervisor/contract_registry/cross_validator.py:
+    e: _load_proto_text,_schema_exists,validate_cross_references,validate_root
+    _load_proto_text(root)
+    _schema_exists(proto_text;schema_ref)
+    validate_cross_references(registry)
+    validate_root(root)
+  hypervisor/contract_registry/loader.py:
+    e: _read_yaml,load_contract_registry
+    _read_yaml(path)
+    load_contract_registry(root)
+  hypervisor/contract_registry/models.py:
+    e: ResourceContract,ViewContract,CapabilityContract,ContractRegistry
+    ResourceContract:
+    ViewContract:
+    CapabilityContract:
+    ContractRegistry: resource_by_uri(1),view_by_name(1),capability_by_name(2)
+  hypervisor/contract_registry/registry_builder.py:
+    e: _hash_file,_contract_hash,build_registry_manifest,write_registry_manifest
+    _hash_file(path)
+    _contract_hash(root)
+    build_registry_manifest(root)
+    write_registry_manifest(root;output)
+  hypervisor/contract_registry/registry_exporter.py:
+    e: export_json,export_markdown
+    export_json(root;output)
+    export_markdown(root;output)
+  hypervisor/contract_registry/schema_validator.py:
+    e: _read_yaml,_read_json,validate_file,validate_contract_files,SchemaValidationResult
+    SchemaValidationResult:
+    _read_yaml(path)
+    _read_json(path)
+    validate_file(data_path;schema_path)
+    validate_contract_files(root)
+  hypervisor/contract_registry/validate.py:
+    e: validate_registry
+    validate_registry(registry)
+  hypervisor/core.py:
+    e: Hypervisor
+    Hypervisor: __post_init__(0),from_config(2),start(0),stop(0),register_agent(1),status(0),__repr__(0)  # Main Hypervisor controller.
+  hypervisor/deployment_registry/__init__.py:
+  hypervisor/domain_pack/__init__.py:
+  hypervisor/domain_pack/generator.py:
+  hypervisor/evolution/__init__.py:
+  hypervisor/evolution/cli.py:
+    e: main
+    main(argv)
+  hypervisor/evolution/models.py:
+    e: load_proposal,EvolutionProposal
+    EvolutionProposal:
+    load_proposal(path)
+  hypervisor/evolution/validator.py:
+    e: validate_proposal
+    validate_proposal(proposal)
+  hypervisor/policy_gate/__init__.py:
+  hypervisor/policy_gate/gate.py:
+    e: evaluate_change,GateDecision
+    GateDecision:
+    evaluate_change(change_report;approved)
+  hypervisor/uri/__init__.py:
+  hypervisor/uri/client.py:
+    e: Uri3Client
+    Uri3Client: __init__(0),resolve(1),scan(1),graph(1),nl2uri(1)
+  hypervisor/uri2llm/__init__.py:
+  hypervisor/uri2llm/env_resolver.py:
+    e: resolve_env
+    resolve_env(uri)
+  hypervisor/uri2llm/function_resolver.py:
+    e: _split_python_uri,resolve_python,call_python
+    _split_python_uri(uri)
+    resolve_python(uri)
+    call_python(uri;payload)
+  hypervisor/uri2llm/llm_resolver.py:
+    e: resolve_llm
+    resolve_llm(uri)
+  hypervisor/uri2llm/protocol_resolver.py:
+    e: resolve_http_like,resolve_a2a,resolve_mcp,resolve_resource
+    resolve_http_like(uri)
+    resolve_a2a(uri)
+    resolve_mcp(uri)
+    resolve_resource(uri)
+  hypervisor/uri2llm/pypi_resolver.py:
+    e: resolve_pypi
+    resolve_pypi(uri)
+  hypervisor/uri2llm/router.py:
+    e: resolve,call,UriResolution
+    UriResolution:
+    resolve(uri)
+    call(uri;payload)
+  hypervisor/verifier/__init__.py:
+  hypervisor/verifier/capability_tests.py:
+    e: build_capability_test_plan
+    build_capability_test_plan(registry)
+  hypervisor/verifier/cli.py:
+    e: main
+    main(argv)
+  meta_agent/__init__.py:
+  meta_agent/api.py:
+    e: health,proposal_from_prompt,validate,repair,generate,pipeline,verify,PromptRequest,SpecPathRequest
+    PromptRequest:
+    SpecPathRequest:
+    health()
+    proposal_from_prompt(req)
+    validate(req)
+    repair(req)
+    generate(req)
+    pipeline(req)
+    verify()
+  meta_agent/cli.py:
+    e: main
+    main()
+  meta_agent/domain_planner/__init__.py:
+  meta_agent/domain_planner/domain_pack_generator.py:
+    e: _write,_package,_generic_proto,_weather_proto,_weather_handler,_generic_handler,_merge_main_contracts,generate_domain_pack_from_tree
+    _write(path;content)
+    _package(domain_id)
+    _generic_proto(domain_id)
+    _weather_proto()
+    _weather_handler()
+    _generic_handler()
+    _merge_main_contracts(domain_id;resources;views;proto_text)
+    generate_domain_pack_from_tree(tree;out_dir)
+  meta_agent/domain_planner/llm_planner.py:
+    e: _slug,_llm_uri_from_env,_deterministic_weather_plan,_generic_plan,_extract_json,_call_openrouter,plan_domain_from_prompt
+    _slug(text)
+    _llm_uri_from_env()
+    _deterministic_weather_plan(prompt)
+    _generic_plan(prompt)
+    _extract_json(text)
+    _call_openrouter(prompt)
+    plan_domain_from_prompt(prompt;use_llm)
+  meta_agent/models.py:
+    e: dump_yaml,AgentCreationIntent,RepairResult,PipelineResult
+    AgentCreationIntent:  # Normalized request to create an agent.
+    RepairResult:
+    PipelineResult:
+    dump_yaml(data)
+  meta_agent/orchestrator.py:
+    e: save_proposal_from_prompt,validate_repair_generate,pipeline_from_prompt,asdict_result
+    save_proposal_from_prompt(prompt;output_path)
+    validate_repair_generate(spec_path)
+    pipeline_from_prompt(prompt)
+    asdict_result(result)
+  meta_agent/planner.py:
+    e: slugify,package_name,singularize,infer_intent,intent_to_agent_spec
+    slugify(value)
+    package_name(agent_name)
+    singularize(word)
+    infer_intent(prompt)
+    intent_to_agent_spec(intent)
+  meta_agent/repair.py:
+    e: _load_yaml,_write_yaml,repair_agent_spec
+    _load_yaml(path)
+    _write_yaml(path;data)
+    repair_agent_spec(path)
+  nl2a/__init__.py:
+  nl2a/cli.py:
+    e: generate,main
+    generate(prompt;no_llm;out_dir)
+    main()
+  nl2uri/__init__.py:
+  nl2uri/cli.py:
+    e: generate,main
+    generate(prompt;out;no_llm;json_out)
+    main()
+  nl2uri/llm_planner.py:
+    e: llm_plan
+    llm_plan(prompt)
+  nl2uri/planner.py:
+    e: _slug,rule_based_plan,PlanResult
+    PlanResult:
+    _slug(text)
+    rule_based_plan(prompt)
+  nl2uri/prompts/__init__.py:
+  nl2uri/writer.py:
+    e: write_uri_tree
+    write_uri_tree(tree;out)
+  runtime_client/__init__.py:
+  runtime_client/client.py:
+    e: ResourceRuntimeClient
+    ResourceRuntimeClient: __init__(2),read_resource(1),dispatch_command(2)  # Small HTTP client used by generated thin agents.
+  tests/__init__.py:
+  tests/test_capability_tests.py:
+    e: test_capability_test_plan_is_built_from_registry
+    test_capability_test_plan_is_built_from_registry()
+  tests/test_contract_registry.py:
+    e: test_contract_registry_loads_and_validates,test_user_read_capability_matches_resource_contract
+    test_contract_registry_loads_and_validates()
+    test_user_read_capability_matches_resource_contract()
+  tests/test_cross_validation_v03.py:
+    e: test_cross_validation_ok
+    test_cross_validation_ok()
+  tests/test_evolution_proposal.py:
+    e: test_evolution_proposal_validates
+    test_evolution_proposal_validates()
+  tests/test_generate.py:
+    e: test_generate_user_agent
+    test_generate_user_agent()
+  tests/test_hypervisor.py:
+    e: test_version_present,test_default_config_has_hypervisor_section,test_load_config_merges_user_file,test_hypervisor_object,test_hypervisor_from_config_and_limits,test_cli_status_runs,test_cli_config_path
+    test_version_present()
+    test_default_config_has_hypervisor_section()
+    test_load_config_merges_user_file(tmp_path)
+    test_hypervisor_object()
+    test_hypervisor_from_config_and_limits()
+    test_cli_status_runs(capsys)
+    test_cli_config_path(capsys)
+  tests/test_meta_agent.py:
+    e: test_save_proposal_from_prompt,test_repair_broken_agent,test_pipeline_from_prompt_generates_agent
+    test_save_proposal_from_prompt(tmp_path)
+    test_repair_broken_agent(tmp_path)
+    test_pipeline_from_prompt_generates_agent(tmp_path)
+  tests/test_nl2a_v04.py:
+    e: test_weather_prompt_generates_uri_tree,test_domain_pack_generation
+    test_weather_prompt_generates_uri_tree()
+    test_domain_pack_generation(tmp_path)
+  tests/test_nl2uri.py:
+    e: test_weather_prompt_generates_weather_uri_tree
+    test_weather_prompt_generates_weather_uri_tree()
+  tests/test_policy_gate.py:
+    e: test_policy_gate_allows_non_breaking_change,test_policy_gate_blocks_breaking_change_without_approval,test_policy_gate_allows_breaking_change_with_approval
+    test_policy_gate_allows_non_breaking_change()
+    test_policy_gate_blocks_breaking_change_without_approval()
+    test_policy_gate_allows_breaking_change_with_approval()
+  tests/test_registry_builder_v03.py:
+    e: test_registry_manifest_contains_contract_hash,test_registry_exports
+    test_registry_manifest_contains_contract_hash()
+    test_registry_exports(tmp_path)
+  tests/test_runtime_client.py:
+    e: test_runtime_client_returns_error_when_runtime_unavailable
+    test_runtime_client_returns_error_when_runtime_unavailable()
+  tests/test_schema_validation_v03.py:
+    e: test_schema_validation_ok
+    test_schema_validation_ok()
+  tests/test_uri2llm_v04.py:
+    e: test_env_uri_resolution,test_llm_uri_resolution,test_pypi_uri_resolution
+    test_env_uri_resolution(monkeypatch)
+    test_llm_uri_resolution()
+    test_pypi_uri_resolution()
+  tests/test_uri3.py:
+    e: test_validate_uri,test_graph_weather_tree
+    test_validate_uri()
+    test_graph_weather_tree()
+  tests/test_uri_tree_validator.py:
+    e: test_uri_tree_schema_ok
+    test_uri_tree_schema_ok()
+  tests/test_validate.py:
+    e: test_user_agent_contract_is_valid
+    test_user_agent_contract_is_valid()
+  uri3/__init__.py:
+  uri3/cli.py:
+    e: validate,validate_tree,graph,resolve,scan,main
+    validate(uri)
+    validate_tree(path)
+    graph(path)
+    resolve(uri)
+    scan(uri)
+    main()
+  uri3/discovery/__init__.py:
+  uri3/graph/__init__.py:
+  uri3/graph/uri_graph.py:
+    e: build_graph_from_tree,UriNode,UriEdge,UriGraph
+    UriNode:
+    UriEdge:
+    UriGraph: add_node(3),add_edge(3)
+    build_graph_from_tree(path)
+  uri3/protocols/__init__.py:
+  uri3/protocols/normalizer.py:
+    e: normalize_uri
+    normalize_uri(uri)
+  uri3/protocols/parser.py:
+    e: parse_uri,ParsedURI
+    ParsedURI:
+    parse_uri(uri)
+  uri3/protocols/schemes.py:
+  uri3/resolvers/__init__.py:
+  uri3/resolvers/env_resolver.py:
+    e: EnvResolver
+    EnvResolver: resolve(1)
+  uri3/resolvers/http_resolver.py:
+    e: HttpResolver
+    HttpResolver: resolve(1)
+  uri3/resolvers/llm_resolver.py:
+    e: LLMRef,LLMResolver
+    LLMRef:
+    LLMResolver: resolve(1)
+  uri3/resolvers/python_resolver.py:
+    e: PythonResolver
+    PythonResolver: resolve(1),call(2)
+  uri3/resolvers/router.py:
+    e: Uri3Router
+    Uri3Router: __init__(0),resolve(1),call(2)
+  uri3/scanner/__init__.py:
+  uri3/scanner/base.py:
+    e: ScanItem
+    ScanItem:
+  uri3/scanner/http_scanner.py:
+    e: scan_http
+    scan_http(base_url)
+  uri3/scanner/scanner.py:
+    e: scan
+    scan(uri)
+  uri3/validators/__init__.py:
+  uri3/validators/uri_tree_validator.py:
+    e: load_yaml,validate_uri_tree
+    load_yaml(path)
+    validate_uri_tree(path)
+  uri3/validators/uri_validator.py:
+    e: validate_uri
+    validate_uri(uri)

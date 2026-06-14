@@ -1,0 +1,330 @@
+flowchart TD
+%% generated in 0.00s
+    subgraph domains__weather_map
+        domains__weather_map__handlers__generate_weather_map__handler["handler"]
+    end
+    subgraph generator__agent_generator
+        generator__agent_generator__render_template["render_template"]
+        generator__agent_generator__generate_agent["generate_agent"]
+        generator__agent_generator__expand_paths["expand_paths"]
+        generator__agent_generator__main["main"]
+    end
+    subgraph generator__hashutil
+        generator__hashutil__file_sha256["file_sha256"]
+    end
+    subgraph generator__model
+        generator__model__load_agent_spec["load_agent_spec"]
+        generator__model__spec_to_plain_dict["spec_to_plain_dict"]
+    end
+    subgraph generator__validate
+        generator__validate__validate_agent("validate_agent CC=11")
+        generator__validate__iter_agent_specs["iter_agent_specs"]
+        generator__validate__main["main"]
+    end
+    subgraph generator__verify
+        generator__verify__verify_generated_agent["verify_generated_agent"]
+        generator__verify__verify_generated["verify_generated"]
+        generator__verify__main("main CC=9")
+    end
+    subgraph hypervisor__cli
+        hypervisor__cli__scan["scan"]
+        hypervisor__cli__resolve["resolve"]
+        hypervisor__cli__main["main"]
+    end
+    subgraph hypervisor__compatibility
+        hypervisor__compatibility__checker___load_policy["_load_policy"]
+        hypervisor__compatibility__checker__classify_registry_change("classify_registry_change CC=8")
+    end
+    subgraph hypervisor__config
+        hypervisor__config___load_yaml["_load_yaml"]
+        hypervisor__config__get_default_config["get_default_config"]
+        hypervisor__config__load_config{{load_config CC=16}}
+        hypervisor__config__get_config["get_config"]
+    end
+    subgraph hypervisor__contract_registry
+        hypervisor__contract_registry__loader___read_yaml["_read_yaml"]
+        hypervisor__contract_registry__loader__load_contract_registry("load_contract_registry CC=9")
+        hypervisor__contract_registry__cli__main{{main CC=20}}
+        hypervisor__contract_registry__registry_exporter__export_json["export_json"]
+        hypervisor__contract_registry__registry_exporter__export_markdown["export_markdown"]
+        hypervisor__contract_registry__validate__validate_registry{{validate_registry CC=20}}
+        hypervisor__contract_registry__schema_validator___read_yaml["_read_yaml"]
+        hypervisor__contract_registry__schema_validator___read_json["_read_json"]
+        hypervisor__contract_registry__schema_validator__validate_file["validate_file"]
+        hypervisor__contract_registry__schema_validator__validate_contract_files["validate_contract_files"]
+        hypervisor__contract_registry__registry_builder___hash_file["_hash_file"]
+        hypervisor__contract_registry__registry_builder___contract_hash["_contract_hash"]
+        hypervisor__contract_registry__registry_builder__build_registry_manifest["build_registry_manifest"]
+        hypervisor__contract_registry__registry_builder__write_registry_manifest["write_registry_manifest"]
+        hypervisor__contract_registry__cross_validator___load_proto_text["_load_proto_text"]
+        hypervisor__contract_registry__cross_validator___schema_exists["_schema_exists"]
+        hypervisor__contract_registry__cross_validator__validate_cross_references{{validate_cross_references CC=22}}
+        hypervisor__contract_registry__cross_validator__validate_root["validate_root"]
+        hypervisor__contract_registry__models__ContractRegistry__resource_by_uri["resource_by_uri"]
+        hypervisor__contract_registry__models__ContractRegistry__view_by_name["view_by_name"]
+        hypervisor__contract_registry__models__ContractRegistry__capability_by_name["capability_by_name"]
+    end
+    subgraph hypervisor__core
+        hypervisor__core__Hypervisor____post_init__["__post_init__"]
+        hypervisor__core__Hypervisor__from_config["from_config"]
+        hypervisor__core__Hypervisor__start["start"]
+        hypervisor__core__Hypervisor__stop["stop"]
+        hypervisor__core__Hypervisor__register_agent["register_agent"]
+        hypervisor__core__Hypervisor__status["status"]
+        hypervisor__core__Hypervisor____repr__["__repr__"]
+    end
+    subgraph hypervisor__evolution
+        hypervisor__evolution__validator__validate_proposal["validate_proposal"]
+        hypervisor__evolution__cli__main("main CC=10")
+        hypervisor__evolution__models__load_proposal["load_proposal"]
+    end
+    subgraph hypervisor__policy_gate
+        hypervisor__policy_gate__gate__evaluate_change["evaluate_change"]
+    end
+    subgraph hypervisor__uri
+        hypervisor__uri__client__Uri3Client____init__["__init__"]
+        hypervisor__uri__client__Uri3Client__resolve["resolve"]
+        hypervisor__uri__client__Uri3Client__scan["scan"]
+        hypervisor__uri__client__Uri3Client__graph["graph"]
+        hypervisor__uri__client__Uri3Client__nl2uri["nl2uri"]
+    end
+    subgraph hypervisor__uri2llm
+        hypervisor__uri2llm__function_resolver___split_python_uri["_split_python_uri"]
+        hypervisor__uri2llm__function_resolver__resolve_python["resolve_python"]
+        hypervisor__uri2llm__function_resolver__call_python["call_python"]
+        hypervisor__uri2llm__protocol_resolver__resolve_http_like["resolve_http_like"]
+        hypervisor__uri2llm__protocol_resolver__resolve_a2a["resolve_a2a"]
+        hypervisor__uri2llm__protocol_resolver__resolve_mcp["resolve_mcp"]
+        hypervisor__uri2llm__protocol_resolver__resolve_resource["resolve_resource"]
+        hypervisor__uri2llm__pypi_resolver__resolve_pypi["resolve_pypi"]
+        hypervisor__uri2llm__llm_resolver__resolve_llm["resolve_llm"]
+        hypervisor__uri2llm__env_resolver__resolve_env["resolve_env"]
+        hypervisor__uri2llm__router__resolve("resolve CC=10")
+        hypervisor__uri2llm__router__call["call"]
+    end
+    subgraph hypervisor__verifier
+        hypervisor__verifier__capability_tests__build_capability_test_plan["build_capability_test_plan"]
+        hypervisor__verifier__cli__main["main"]
+    end
+    subgraph meta_agent__api
+        meta_agent__api__health["health"]
+        meta_agent__api__proposal_from_prompt["proposal_from_prompt"]
+        meta_agent__api__validate["validate"]
+        meta_agent__api__repair["repair"]
+        meta_agent__api__generate["generate"]
+        meta_agent__api__pipeline["pipeline"]
+        meta_agent__api__verify["verify"]
+    end
+    subgraph meta_agent__cli
+        meta_agent__cli__main{{main CC=16}}
+    end
+    subgraph meta_agent__domain_planner
+        meta_agent__domain_planner__llm_planner___slug["_slug"]
+        meta_agent__domain_planner__llm_planner___llm_uri_from_env["_llm_uri_from_env"]
+        meta_agent__domain_planner__llm_planner___deterministic_weather_plan["_deterministic_weather_plan"]
+        meta_agent__domain_planner__llm_planner___generic_plan["_generic_plan"]
+        meta_agent__domain_planner__llm_planner___extract_json["_extract_json"]
+        meta_agent__domain_planner__llm_planner___call_openrouter["_call_openrouter"]
+        meta_agent__domain_planner__llm_planner__plan_domain_from_prompt["plan_domain_from_prompt"]
+        meta_agent__domain_planner__domain_pack_generator___write["_write"]
+        meta_agent__domain_planner__domain_pack_generator___package["_package"]
+        meta_agent__domain_planner__domain_pack_generator___generic_proto["_generic_proto"]
+        meta_agent__domain_planner__domain_pack_generator___weather_proto["_weather_proto"]
+        meta_agent__domain_planner__domain_pack_generator___weather_handler["_weather_handler"]
+        meta_agent__domain_planner__domain_pack_generator___generic_handler["_generic_handler"]
+        meta_agent__domain_planner__domain_pack_generator___merge_main_contracts("_merge_main_contracts CC=11")
+        meta_agent__domain_planner__domain_pack_generator__generate_domain_pack_from_tree("generate_domain_pack_from_tree CC=11")
+    end
+    subgraph meta_agent__models
+        meta_agent__models__dump_yaml["dump_yaml"]
+    end
+    subgraph meta_agent__orchestrator
+        meta_agent__orchestrator__save_proposal_from_prompt["save_proposal_from_prompt"]
+        meta_agent__orchestrator__validate_repair_generate["validate_repair_generate"]
+        meta_agent__orchestrator__pipeline_from_prompt["pipeline_from_prompt"]
+        meta_agent__orchestrator__asdict_result["asdict_result"]
+    end
+    subgraph meta_agent__planner
+        meta_agent__planner__slugify["slugify"]
+        meta_agent__planner__package_name["package_name"]
+        meta_agent__planner__singularize["singularize"]
+        meta_agent__planner__infer_intent("infer_intent CC=9")
+        meta_agent__planner__intent_to_agent_spec("intent_to_agent_spec CC=8")
+    end
+    subgraph meta_agent__repair
+        meta_agent__repair___load_yaml["_load_yaml"]
+        meta_agent__repair___write_yaml["_write_yaml"]
+        meta_agent__repair__repair_agent_spec{{repair_agent_spec CC=26}}
+    end
+    subgraph nl2a__cli
+        nl2a__cli__generate["generate"]
+        nl2a__cli__main["main"]
+    end
+    subgraph nl2uri__cli
+        nl2uri__cli__generate["generate"]
+        nl2uri__cli__main["main"]
+    end
+    subgraph nl2uri__llm_planner
+        nl2uri__llm_planner__llm_plan["llm_plan"]
+    end
+    subgraph nl2uri__planner
+        nl2uri__planner___slug["_slug"]
+        nl2uri__planner__rule_based_plan("rule_based_plan CC=8")
+    end
+    subgraph nl2uri__writer
+        nl2uri__writer__write_uri_tree["write_uri_tree"]
+    end
+    subgraph runtime_client__client
+        runtime_client__client__ResourceRuntimeClient____init__["__init__"]
+        runtime_client__client__ResourceRuntimeClient__read_resource["read_resource"]
+        runtime_client__client__ResourceRuntimeClient__dispatch_command["dispatch_command"]
+    end
+    subgraph uri3__cli
+        uri3__cli__validate["validate"]
+        uri3__cli__validate_tree["validate_tree"]
+        uri3__cli__graph["graph"]
+        uri3__cli__resolve["resolve"]
+        uri3__cli__scan["scan"]
+        uri3__cli__main["main"]
+    end
+    subgraph uri3__graph
+        uri3__graph__uri_graph__UriGraph__add_node["add_node"]
+        uri3__graph__uri_graph__UriGraph__add_edge["add_edge"]
+        uri3__graph__uri_graph__build_graph_from_tree("build_graph_from_tree CC=10")
+    end
+    subgraph uri3__protocols
+        uri3__protocols__normalizer__normalize_uri["normalize_uri"]
+        uri3__protocols__parser__parse_uri["parse_uri"]
+    end
+    subgraph uri3__resolvers
+        uri3__resolvers__http_resolver__HttpResolver__resolve["resolve"]
+        uri3__resolvers__router__Uri3Router____init__["__init__"]
+        uri3__resolvers__router__Uri3Router__resolve["resolve"]
+        uri3__resolvers__router__Uri3Router__call["call"]
+        uri3__resolvers__python_resolver__PythonResolver__resolve["resolve"]
+        uri3__resolvers__python_resolver__PythonResolver__call["call"]
+        uri3__resolvers__env_resolver__EnvResolver__resolve["resolve"]
+        uri3__resolvers__llm_resolver__LLMResolver__resolve["resolve"]
+    end
+    subgraph uri3__scanner
+        uri3__scanner__http_scanner__scan_http["scan_http"]
+        uri3__scanner__scanner__scan["scan"]
+    end
+    subgraph uri3__validators
+        uri3__validators__uri_validator__validate_uri["validate_uri"]
+        uri3__validators__uri_tree_validator__load_yaml["load_yaml"]
+        uri3__validators__uri_tree_validator__validate_uri_tree["validate_uri_tree"]
+    end
+    uri3__cli__validate --> uri3__validators__uri_validator__validate_uri
+    uri3__cli__validate_tree --> uri3__validators__uri_tree_validator__validate_uri_tree
+    uri3__cli__graph --> uri3__graph__uri_graph__build_graph_from_tree
+    uri3__validators__uri_validator__validate_uri --> uri3__protocols__parser__parse_uri
+    meta_agent__planner__infer_intent --> meta_agent__planner__singularize
+    meta_agent__planner__infer_intent --> meta_agent__planner__slugify
+    meta_agent__planner__intent_to_agent_spec --> meta_agent__planner__singularize
+    meta_agent__planner__intent_to_agent_spec --> meta_agent__planner__package_name
+    generator__validate__validate_agent --> generator__model__load_agent_spec
+    generator__validate__main --> generator__validate__iter_agent_specs
+    generator__validate__main --> generator__validate__validate_agent
+    uri3__scanner__scanner__scan --> uri3__scanner__http_scanner__scan_http
+    uri3__scanner__scanner__scan --> uri3__protocols__parser__parse_uri
+    generator__verify__verify_generated_agent --> generator__hashutil__file_sha256
+    generator__verify__verify_generated --> generator__verify__verify_generated_agent
+    generator__verify__main --> generator__verify__verify_generated
+    uri3__protocols__normalizer__normalize_uri --> uri3__protocols__parser__parse_uri
+    uri3__resolvers__router__Uri3Router__resolve --> uri3__protocols__parser__parse_uri
+    uri3__resolvers__router__Uri3Router__call --> uri3__protocols__parser__parse_uri
+    uri3__resolvers__python_resolver__PythonResolver__resolve --> uri3__protocols__parser__parse_uri
+    uri3__resolvers__env_resolver__EnvResolver__resolve --> uri3__protocols__parser__parse_uri
+    hypervisor__config__get_default_config --> hypervisor__config___load_yaml
+    hypervisor__config__load_config --> hypervisor__config__get_default_config
+    hypervisor__config__load_config --> hypervisor__config___load_yaml
+    hypervisor__config__get_config --> hypervisor__config__load_config
+    meta_agent__repair__repair_agent_spec --> generator__validate__validate_agent
+    meta_agent__repair__repair_agent_spec --> meta_agent__repair___load_yaml
+    meta_agent__repair__repair_agent_spec --> meta_agent__planner__package_name
+    hypervisor__verifier__cli__main --> hypervisor__contract_registry__loader__load_contract_registry
+    hypervisor__verifier__cli__main --> hypervisor__contract_registry__validate__validate_registry
+    hypervisor__verifier__cli__main --> hypervisor__verifier__capability_tests__build_capability_test_plan
+    hypervisor__uri2llm__function_resolver__resolve_python --> hypervisor__uri2llm__function_resolver___split_python_uri
+    hypervisor__uri2llm__function_resolver__call_python --> hypervisor__uri2llm__function_resolver___split_python_uri
+    hypervisor__evolution__cli__main --> hypervisor__evolution__models__load_proposal
+    hypervisor__evolution__cli__main --> hypervisor__evolution__validator__validate_proposal
+    hypervisor__uri__client__Uri3Client__graph --> uri3__graph__uri_graph__build_graph_from_tree
+    hypervisor__uri__client__Uri3Client__nl2uri --> nl2uri__planner__rule_based_plan
+    hypervisor__contract_registry__loader__load_contract_registry --> hypervisor__contract_registry__loader___read_yaml
+    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__schema_validator__validate_contract_files
+    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__loader__load_contract_registry
+    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__validate__validate_registry
+    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__cross_validator__validate_root
+    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__registry_builder__write_registry_manifest
+    hypervisor__contract_registry__cli__main --> hypervisor__contract_registry__registry_exporter__export_markdown
+    uri3__resolvers__llm_resolver__LLMResolver__resolve --> uri3__protocols__parser__parse_uri
+    hypervisor__contract_registry__registry_exporter__export_json --> hypervisor__contract_registry__registry_builder__write_registry_manifest
+    hypervisor__contract_registry__registry_exporter__export_markdown --> hypervisor__contract_registry__registry_builder__build_registry_manifest
+    hypervisor__contract_registry__schema_validator__validate_file --> hypervisor__contract_registry__schema_validator___read_yaml
+    hypervisor__contract_registry__schema_validator__validate_file --> hypervisor__contract_registry__schema_validator___read_json
+    hypervisor__contract_registry__schema_validator__validate_contract_files --> hypervisor__contract_registry__schema_validator__validate_file
+    nl2uri__cli__generate --> nl2uri__planner__rule_based_plan
+    nl2uri__cli__generate --> nl2uri__llm_planner__llm_plan
+    nl2uri__cli__generate --> nl2uri__writer__write_uri_tree
+    hypervisor__contract_registry__registry_builder__build_registry_manifest --> hypervisor__contract_registry__loader__load_contract_registry
+    hypervisor__contract_registry__registry_builder__build_registry_manifest --> hypervisor__contract_registry__registry_builder___contract_hash
+    hypervisor__contract_registry__registry_builder__write_registry_manifest --> hypervisor__contract_registry__registry_builder__build_registry_manifest
+    hypervisor__compatibility__checker__classify_registry_change --> hypervisor__contract_registry__loader__load_contract_registry
+    hypervisor__compatibility__checker__classify_registry_change --> hypervisor__compatibility__checker___load_policy
+    nl2uri__llm_planner__llm_plan --> nl2uri__planner__rule_based_plan
+    nl2uri__planner__rule_based_plan --> nl2uri__planner___slug
+    meta_agent__domain_planner__llm_planner___deterministic_weather_plan --> meta_agent__domain_planner__llm_planner___llm_uri_from_env
+    meta_agent__domain_planner__llm_planner___generic_plan --> meta_agent__domain_planner__llm_planner___slug
+    meta_agent__domain_planner__llm_planner___call_openrouter --> meta_agent__domain_planner__llm_planner___extract_json
+    meta_agent__domain_planner__llm_planner__plan_domain_from_prompt --> meta_agent__domain_planner__llm_planner___generic_plan
+    meta_agent__domain_planner__llm_planner__plan_domain_from_prompt --> meta_agent__domain_planner__llm_planner___deterministic_weather_plan
+    meta_agent__domain_planner__llm_planner__plan_domain_from_prompt --> meta_agent__domain_planner__llm_planner___call_openrouter
+    nl2a__cli__generate --> nl2uri__writer__write_uri_tree
+    nl2a__cli__generate --> nl2uri__planner__rule_based_plan
+    nl2a__cli__generate --> nl2uri__llm_planner__llm_plan
+    hypervisor__contract_registry__cross_validator__validate_cross_references --> hypervisor__contract_registry__cross_validator___load_proto_text
+    hypervisor__contract_registry__cross_validator__validate_cross_references --> hypervisor__contract_registry__cross_validator___schema_exists
+    hypervisor__contract_registry__cross_validator__validate_root --> hypervisor__contract_registry__cross_validator__validate_cross_references
+    hypervisor__contract_registry__cross_validator__validate_root --> hypervisor__contract_registry__loader__load_contract_registry
+    hypervisor__core__Hypervisor__from_config --> hypervisor__config__load_config
+    generator__agent_generator__generate_agent --> generator__validate__validate_agent
+    generator__agent_generator__generate_agent --> generator__model__load_agent_spec
+    generator__agent_generator__generate_agent --> generator__hashutil__file_sha256
+    generator__agent_generator__generate_agent --> generator__model__spec_to_plain_dict
+    generator__agent_generator__generate_agent --> generator__agent_generator__render_template
+    generator__agent_generator__main --> generator__agent_generator__expand_paths
+    generator__agent_generator__main --> generator__agent_generator__generate_agent
+    uri3__validators__uri_tree_validator__validate_uri_tree --> uri3__validators__uri_tree_validator__load_yaml
+    meta_agent__orchestrator__save_proposal_from_prompt --> meta_agent__planner__infer_intent
+    meta_agent__orchestrator__save_proposal_from_prompt --> meta_agent__planner__intent_to_agent_spec
+    meta_agent__orchestrator__save_proposal_from_prompt --> meta_agent__planner__package_name
+    meta_agent__orchestrator__validate_repair_generate --> generator__validate__validate_agent
+    meta_agent__orchestrator__validate_repair_generate --> generator__verify__verify_generated
+    meta_agent__orchestrator__validate_repair_generate --> meta_agent__repair__repair_agent_spec
+    meta_agent__orchestrator__validate_repair_generate --> generator__agent_generator__generate_agent
+    meta_agent__orchestrator__pipeline_from_prompt --> meta_agent__orchestrator__save_proposal_from_prompt
+    meta_agent__orchestrator__pipeline_from_prompt --> meta_agent__orchestrator__validate_repair_generate
+    meta_agent__domain_planner__domain_pack_generator___generic_proto --> meta_agent__domain_planner__domain_pack_generator___package
+    meta_agent__domain_planner__domain_pack_generator___merge_main_contracts --> meta_agent__domain_planner__domain_pack_generator___write
+    meta_agent__domain_planner__domain_pack_generator__generate_domain_pack_from_tree --> meta_agent__domain_planner__domain_pack_generator___write
+    meta_agent__domain_planner__domain_pack_generator__generate_domain_pack_from_tree --> meta_agent__domain_planner__domain_pack_generator___merge_main_contracts
+    hypervisor__uri2llm__router__resolve --> hypervisor__uri2llm__env_resolver__resolve_env
+    hypervisor__uri2llm__router__resolve --> hypervisor__uri2llm__llm_resolver__resolve_llm
+    hypervisor__uri2llm__router__resolve --> hypervisor__uri2llm__function_resolver__resolve_python
+    hypervisor__uri2llm__router__resolve --> hypervisor__uri2llm__pypi_resolver__resolve_pypi
+    hypervisor__uri2llm__router__call --> hypervisor__uri2llm__function_resolver__call_python
+    meta_agent__api__proposal_from_prompt --> meta_agent__orchestrator__save_proposal_from_prompt
+    meta_agent__api__validate --> generator__validate__validate_agent
+    meta_agent__api__repair --> meta_agent__repair__repair_agent_spec
+    meta_agent__api__generate --> meta_agent__orchestrator__asdict_result
+    meta_agent__api__generate --> meta_agent__orchestrator__validate_repair_generate
+    meta_agent__api__pipeline --> meta_agent__orchestrator__pipeline_from_prompt
+    meta_agent__api__pipeline --> meta_agent__orchestrator__asdict_result
+    meta_agent__api__verify --> generator__verify__verify_generated
+
+    classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
+    class meta_agent__cli__main,hypervisor__config__load_config,meta_agent__repair__repair_agent_spec,hypervisor__contract_registry__cli__main,hypervisor__contract_registry__validate__validate_registry,hypervisor__contract_registry__cross_validator__validate_cross_references highCC
+    class meta_agent__planner__infer_intent,meta_agent__planner__intent_to_agent_spec,generator__validate__validate_agent,generator__verify__main,uri3__graph__uri_graph__build_graph_from_tree,hypervisor__evolution__cli__main,hypervisor__contract_registry__loader__load_contract_registry,hypervisor__compatibility__checker__classify_registry_change,nl2uri__planner__rule_based_plan,meta_agent__domain_planner__domain_pack_generator___merge_main_contracts,meta_agent__domain_planner__domain_pack_generator__generate_domain_pack_from_tree,hypervisor__uri2llm__router__resolve medCC
