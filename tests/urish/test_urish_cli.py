@@ -11,7 +11,7 @@ from urish.payload import load_payload
 from urish.policy import PolicyOptions, classify_uri, evaluate_policy
 from urish.render import render_result
 from urish.select import select_from_envelope
-from urish.shortcuts import load_shortcuts, resolve_target
+from urish.shortcuts import load_shortcut_specs, load_shortcuts, resolve_target
 
 
 def test_load_payload_from_json():
@@ -49,6 +49,14 @@ def test_render_text_envelope():
 def test_shortcuts_load():
     shortcuts = load_shortcuts()
     assert "wh" in shortcuts or shortcuts == {} or "hwa" in shortcuts
+
+
+def test_shortcut_specs_preserve_payload():
+    specs = load_shortcut_specs()
+    if not specs:
+        return
+    assert specs["dashboard-ui"]["uri"] == "browser://chrome/page/open"
+    assert specs["dashboard-ui"]["payload"] == {"url": "http://localhost:8788/ui"}
 
 
 def test_cli_call_python_mock():
@@ -135,6 +143,50 @@ def test_cli_call_accepts_payload_at_file(tmp_path):
         assert code == 0
         args, _ = mocked.call_args
         assert args[1] == {"text": "from-file"}
+
+
+def test_cli_call_shortcut_uses_default_payload():
+    with patch("urish.backends.call.call_uri") as mocked:
+        mocked.return_value = {
+            "ok": True,
+            "workflow_status": "completed",
+            "execution_status": "completed",
+            "service_result_status": "succeeded",
+            "result_type": "browser",
+            "data": {},
+            "meta": {},
+        }
+        code = main(["call", "dashboard-ui", "--approve", "--json"])
+        assert code == 0
+        args, _ = mocked.call_args
+        assert args[0] == "browser://chrome/page/open"
+        assert args[1] == {"url": "http://localhost:8788/ui"}
+
+
+def test_cli_call_shortcut_explicit_payload_wins():
+    with patch("urish.backends.call.call_uri") as mocked:
+        mocked.return_value = {
+            "ok": True,
+            "workflow_status": "completed",
+            "execution_status": "completed",
+            "service_result_status": "succeeded",
+            "result_type": "browser",
+            "data": {},
+            "meta": {},
+        }
+        code = main(
+            [
+                "call",
+                "dashboard-ui",
+                "--payload",
+                '{"url":"http://localhost:9999/ui"}',
+                "--approve",
+                "--json",
+            ]
+        )
+        assert code == 0
+        args, _ = mocked.call_args
+        assert args[1] == {"url": "http://localhost:9999/ui"}
 
 
 def test_resolve_target_uri_passthrough():

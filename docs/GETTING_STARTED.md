@@ -102,6 +102,23 @@ uri dashboard open
 | 3 Developer | extend system | `uri3 explain`, `uri2run call`, `urigen verify` |
 | 4 Architect | governance | `uri doctor --strict`, `hypervisor artifacts check` |
 
+## Shortcuts hide details
+
+Common aliases live in `config/cli_shortcuts.uri.yaml`. They can include a URI,
+description, and default payload, so a first-day user can run:
+
+```bash
+uri hwa
+uri weather-process
+uri dashboard-ui --approve
+```
+
+The full URI is still available when needed:
+
+```bash
+uri call browser://chrome/page/open --payload '{"url":"http://localhost:8788/ui"}' --approve
+```
+
 ## Golden path (end-to-end)
 
 See [`examples/30_golden_path/README.md`](../examples/30_golden_path/README.md) — weather agent, break, incident, repair, ticket, dashboard.

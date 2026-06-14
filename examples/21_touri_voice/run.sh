@@ -8,10 +8,18 @@ PROMPT="${1:-wygeneruj agenta pogodowego, uruchom go lokalnie i sprawdz health w
 
 export PYTHONPATH="$REGISTRY${PYTHONPATH:+:$PYTHONPATH}"
 source "$ROOT/scripts/examples/cli_fallback.sh"
+PY_BIN="${PY:-}"
+if [[ -z "$PY_BIN" ]]; then
+  if command -v python >/dev/null 2>&1; then
+    PY_BIN="python"
+  else
+    PY_BIN="python3"
+  fi
+fi
 mkdir -p "$OUT_DIR"
 
 json_payload() {
-  PAYLOAD_TEXT="$1" python - <<'PY'
+  PAYLOAD_TEXT="$1" "$PY_BIN" - <<'PY'
 import json
 import os
 
@@ -26,7 +34,7 @@ run_cli touri call stt://mock/transcribe \
   > "$OUT_DIR/stt_result.json"
 
 TRANSCRIPT="$(
-  python - "$OUT_DIR/stt_result.json" <<'PY'
+  "$PY_BIN" - "$OUT_DIR/stt_result.json" <<'PY'
 import json
 import sys
 

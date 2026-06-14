@@ -8,7 +8,7 @@ from typing import Any
 import typer
 
 from urish.payload import load_payload
-from urish.shortcuts import resolve_target
+from urish.shortcuts import resolve_shortcut, resolve_target
 
 
 @dataclass(frozen=True)
@@ -57,7 +57,8 @@ def register_runtime_commands(app: typer.Typer, deps: RuntimeCommandDeps) -> Non
             policy=policy,
         )
         try:
-            uri = resolve_target(target)
+            shortcut = resolve_shortcut(target)
+            uri = str(shortcut["uri"])
         except ValueError as exc:
             result = {"ok": False, "error": str(exc), "not_found": True}
             deps.emit(result, output=output, quiet=quiet, json_out=True)
@@ -75,6 +76,13 @@ def register_runtime_commands(app: typer.Typer, deps: RuntimeCommandDeps) -> Non
             stdin=stdin or stdin_data or stdin_envelope,
             stdin_mode=stdin_mode,
         )
+        if (
+            not body
+            and payload == "{}"
+            and not payload_file
+            and not (stdin or stdin_data or stdin_envelope)
+        ):
+            body = dict(shortcut.get("payload") or {})
         if select and stdin:
             body = {
                 "value": select_from_envelope(

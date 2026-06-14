@@ -8,6 +8,8 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 
 from hypervisor_dashboard_agent.agent_card import AGENT_CARD
+from hypervisor_dashboard_agent.chat_format import format_ask_markdown, format_uri_result_markdown
+from hypervisor_dashboard_agent.paths import repo_www_dir
 from hypervisor_dashboard_agent.policy import decision_for_uri, preview_action
 from hypervisor_dashboard_agent.uri_client import call_system_uri, list_agent_deployments, resolve_view_uri
 
@@ -22,6 +24,19 @@ class UriCallRequest(BaseModel):
     readonly: bool = False
     policy: str = "dev"
     payload: dict[str, Any] = Field(default_factory=dict)
+
+
+class AskRequest(BaseModel):
+    prompt: str = Field(..., min_length=1, description="Natural language prompt")
+    dry_run: bool = True
+    llm: bool = False
+
+
+@router.get("/")
+def root() -> RedirectResponse:
+    if repo_www_dir():
+        return RedirectResponse(url="/www/", status_code=302)
+    return RedirectResponse(url="/ui/agents", status_code=302)
 
 
 @router.get("/health")
@@ -83,6 +98,24 @@ def api_process_view(agent_id: str) -> dict[str, Any]:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
+@router.post("/api/ask")
+def api_ask(body: AskRequest) -> dict[str, Any]:
+    """Natural language → planned URIs and next steps (urish ask backend)."""
+    from urish.backends.ask import ask_prompt
+
+    envelope = ask_prompt(body.prompt, dry_run=body.dry_run, use_llm=body.llm)
+    data = envelope.get("data")
+    if not isinstance(data, dict):
+        raise HTTPException(status_code=500, detail="ask backend returned invalid payload")
+    markdown = format_ask_markdown(data)
+    return {
+        "ok": True,
+        "message_markdown": markdown,
+        "data": data,
+        "envelope": envelope,
+    }
+
+
 @router.post("/api/uri/preview")
 def api_uri_preview(body: UriCallRequest) -> dict[str, Any]:
     return preview_action(body.uri, policy=body.policy)
@@ -122,6 +155,7 @@ def api_uri_call(body: UriCallRequest) -> dict[str, Any]:
         "approved": body.approved,
         "policy": body.policy,
     }
+    result["message_markdown"] = format_uri_result_markdown(result)
     return result
 
 

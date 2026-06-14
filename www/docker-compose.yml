@@ -1,0 +1,13 @@
+services:
+  www-chat:
+    build:
+      context: ..
+      dockerfile: www/Dockerfile
+    image: hypervisor-www-chat:latest
+    container_name: hypervisor-www-chat
+    ports:
+      - "${WWW_PORT:-8788}:8788"
+    volumes:
+      - ../www:/app/www:ro
+      - ../deployments:/app/deployments:ro
+    restart: unless-stopped

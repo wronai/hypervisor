@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import yaml
 from uri3.config.uri_yaml import unwrap_uri_yaml_document
@@ -12,7 +13,7 @@ def shortcuts_path(root: Path | None = None) -> Path:
     return repo / "config" / "cli_shortcuts.uri.yaml"
 
 
-def load_shortcuts(root: Path | None = None) -> dict[str, str]:
+def load_shortcut_specs(root: Path | None = None) -> dict[str, dict[str, Any]]:
     path = shortcuts_path(root)
     if not path.exists():
         return {}
@@ -21,25 +22,48 @@ def load_shortcuts(root: Path | None = None) -> dict[str, str]:
         return {}
     payload = unwrap_uri_yaml_document(payload)
     shortcuts = payload.get("shortcuts") or {}
-    resolved: dict[str, str] = {}
+    resolved: dict[str, dict[str, Any]] = {}
     for name, value in shortcuts.items():
         if isinstance(value, str):
-            resolved[str(name)] = value
+            resolved[str(name)] = {"uri": value, "payload": {}, "description": ""}
         elif isinstance(value, dict):
             if value.get("uri"):
-                resolved[str(name)] = str(value["uri"])
+                payload_value = value.get("payload") or {}
+                resolved[str(name)] = {
+                    "uri": str(value["uri"]),
+                    "payload": payload_value if isinstance(payload_value, dict) else {},
+                    "description": str(value.get("description") or ""),
+                }
             else:
                 for sub_name, sub_uri in value.items():
                     if isinstance(sub_uri, str):
-                        resolved[f"{name}.{sub_name}"] = sub_uri
+                        resolved[f"{name}.{sub_name}"] = {
+                            "uri": sub_uri,
+                            "payload": {},
+                            "description": "",
+                        }
     return resolved
 
 
-def resolve_target(name_or_uri: str, *, root: Path | None = None) -> str:
+def load_shortcuts(root: Path | None = None) -> dict[str, str]:
+    return {name: spec["uri"] for name, spec in load_shortcut_specs(root).items()}
+
+
+def resolve_shortcut(name_or_uri: str, *, root: Path | None = None) -> dict[str, Any]:
     if "://" in name_or_uri:
-        return name_or_uri
-    shortcuts = load_shortcuts(root)
+        return {"uri": name_or_uri, "payload": {}, "shortcut": None}
+    shortcuts = load_shortcut_specs(root)
     if name_or_uri not in shortcuts:
         available = ", ".join(sorted(shortcuts)) or "(none)"
         raise ValueError(f"Unknown shortcut {name_or_uri!r}. Available: {available}")
-    return shortcuts[name_or_uri]
+    spec = shortcuts[name_or_uri]
+    return {
+        "uri": spec["uri"],
+        "payload": dict(spec.get("payload") or {}),
+        "shortcut": name_or_uri,
+        "description": spec.get("description") or "",
+    }
+
+
+def resolve_target(name_or_uri: str, *, root: Path | None = None) -> str:
+    return str(resolve_shortcut(name_or_uri, root=root)["uri"])

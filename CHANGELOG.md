@@ -56,7 +56,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `ARTIFACT_STANDARD`, `AUTONOMY_LOOP`, `DASHBOARD`, `CLI_REFERENCE`.
 - Added `examples/30_golden_path` tutorial script.
 - Improved `urish ask` output: `Name`, `Planned` (filtered URIs), `urish`-prefixed next steps.
-- Extended CLI shortcuts: `weather-status`, `weather-process`, `dashboard`, `repair-weather`.
+- Extended CLI shortcuts: `weather-status`, `weather-process`, `dashboard-ui`, `repair-weather`.
+- Added payload-aware `urish` shortcuts so aliases such as `uri dashboard-ui --approve`
+  can carry the configured `browser://chrome/page/open` payload.
 - Added schemas: `ticket`, `log_event`, `workflow_artifact`, `deployment_registry`, `config/config_base`.
 - Added `docs/EXTERNAL_PACKAGES.md` with the local `semcod/*` and `wronai/*`
   package audit, version snapshot, integration boundary and recommended next
@@ -103,6 +105,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`lifecycle.py` reuses healthy agent when already running).
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
+
+## [0.5.22] - 2026-06-14
+
+### Docs
+- Update README.md
+- Update docs/GETTING_STARTED.md
+- Update docs/URI_COOKBOOK.md
+- Update project/README.md
+- Update project/context.md
+- Update www/README.md
+- Update www/markpact/chat-ui-api.markpact.md
+
+### Test
+- Update tests/examples/catalog.py
+- Update tests/hypervisor/test_chat_www.py
+- Update tests/urish/test_urish_cli.py
+
+### Other
+- Update Makefile
+- Update config/cli_shortcuts.uri.yaml
+- Update examples/21_touri_voice/run.sh
+- Update packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/chat_format.py
+- Update packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/main.py
+- Update packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/paths.py
+- Update packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/routes.py
+- Update packages/urish/urish/cli.py
+- Update packages/urish/urish/commands/runtime.py
+- Update packages/urish/urish/shortcuts.py
+- ... and 35 more files
 
 ## [0.5.21] - 2026-06-14
 

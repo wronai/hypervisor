@@ -12,7 +12,7 @@ from urish.context import CONTEXT_ENV, list_contexts, load_context
 from urish.exit_codes import exit_code_for_result
 from urish.policy import PolicyOptions
 from urish.render import render_result
-from urish.shortcuts import load_shortcuts
+from urish.shortcuts import load_shortcut_specs, load_shortcuts
 
 app = typer.Typer(
     help="urish — unified URI shell (URI + payload + context + policy → envelope)",
@@ -23,6 +23,7 @@ app = typer.Typer(
 agent_app = typer.Typer(help="Agent lifecycle shortcuts (maps to hypervisor:// / repair://)")
 ecosystem_app = typer.Typer(help="Ecosystem generation (urigen backend)")
 dashboard_app = typer.Typer(help="Dashboard system-agent workflow shortcuts")
+www_app = typer.Typer(help="Chat UI in repo www/ (NL + markdown + real API)")
 context_app = typer.Typer(help="Execution context")
 ticket_app = typer.Typer(help="Ticket artifacts and planfile integration")
 repair_app = typer.Typer(help="Self-healing repair supervisor")
@@ -212,7 +213,7 @@ def doctor_cmd(
 @app.command("shortcuts")
 def shortcuts_cmd(json_out: bool = typer.Option(False, "--json")) -> None:
     """List configured URI shortcuts."""
-    payload = {"ok": True, "shortcuts": load_shortcuts(), "result_type": "shortcuts"}
+    payload = {"ok": True, "shortcuts": load_shortcut_specs(), "result_type": "shortcuts"}
     _emit(payload, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
 
 
@@ -460,6 +461,53 @@ def dashboard_open_cmd(
 app.add_typer(dashboard_app, name="dashboard")
 
 
+@www_app.command("serve")
+def www_serve_cmd(
+    host: str = typer.Option("0.0.0.0", "--host"),
+    port: int = typer.Option(8788, "--port"),
+    reload: bool = typer.Option(False, "--reload"),
+) -> None:
+    """Serve www/ chat and dashboard-agent API (uvicorn)."""
+    try:
+        import uvicorn
+    except ImportError as exc:
+        raise typer.BadParameter("Install server extras: pip install hypervisor-dashboard-agent[server]") from exc
+
+    typer.echo(f"Chat UI: http://localhost:{port}/www/")
+    uvicorn.run(
+        "hypervisor_dashboard_agent.main:app",
+        host=host,
+        port=port,
+        reload=reload,
+    )
+
+
+@www_app.command("open")
+def www_open_cmd(
+    host: str = typer.Option("localhost", "--host"),
+    port: int = typer.Option(8788, "--port"),
+    approve: bool = typer.Option(False, "--approve"),
+    dry_run: bool = typer.Option(False, "--dry-run"),
+    json_out: bool = typer.Option(False, "--json"),
+) -> None:
+    """Open www chat in browser (requires running dashboard-agent)."""
+    from urish.backends.call import call_uri
+    from urish.policy import PolicyOptions
+
+    url = f"http://{host}:{port}/www/"
+    result = call_uri(
+        "browser://chrome/page/open",
+        payload={"url": url},
+        dry_run=dry_run,
+        policy_options=PolicyOptions.from_flags(approve=approve, dry_run=dry_run),
+    )
+    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
+    _finish(result)
+
+
+app.add_typer(www_app, name="www")
+
+
 @context_app.command("list")
 def context_list_cmd() -> None:
     for item in list_contexts():
@@ -671,6 +719,7 @@ _KNOWN_COMMANDS = frozenset(
         "shortcuts",
         "agent",
         "dashboard",
+        "www",
         "ecosystem",
         "context",
         "ticket",

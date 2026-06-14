@@ -2,6 +2,11 @@
 .PHONY: uri-tree graph nl2a-weather docker-ssh-up docker-ssh-down scan-http scan-ssh docker-testenv-up docker-testenv-down evolution-check examples run-weather-agent
 .PHONY: uri2flow-test uri2flow-validate uri2flow-expand uri3-flow-dry-run nl2uri-flow-validate example-18 touri-test touri-demo voice-test voice-demo
 .PHONY: architecture-test doctor architecture-gate ci-gate examples-test
+.PHONY: start stop www-test www-smoke www-logs
+
+WWW_PORT ?= 8788
+WWW_COMPOSE = docker compose -f www/docker-compose.yml
+WWW_BASE = http://localhost:$(WWW_PORT)
 
 WEATHER_PROMPT = generuj mape pogody dwa tygodnie do przodu w html
 
@@ -124,3 +129,26 @@ run-weather-agent:
 clean:
 	rm -rf agents/generated/* output/* .pytest_cache
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
+
+start:
+	$(WWW_COMPOSE) up -d --build
+	@echo "Waiting for www chat health on $(WWW_BASE)…"
+	@for i in $$(seq 1 30); do \
+		if curl -fsS "$(WWW_BASE)/health" >/dev/null 2>&1; then break; fi; \
+		if [ "$$i" -eq 30 ]; then echo "timeout waiting for health"; exit 1; fi; \
+		sleep 1; \
+	done
+	@curl -fsS "$(WWW_BASE)/health" | python3 -m json.tool
+	@echo "Chat UI: $(WWW_BASE)/www/"
+
+stop:
+	$(WWW_COMPOSE) down
+
+www-test:
+	pytest tests/hypervisor/test_chat_www.py -q
+
+www-smoke:
+	bash scripts/www/smoke.sh "$(WWW_BASE)"
+
+www-logs:
+	$(WWW_COMPOSE) logs -f --tail=100

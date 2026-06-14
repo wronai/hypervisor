@@ -57,7 +57,7 @@ Quick recipes. Prefer **`uri`** shortcuts where listed; full URIs work everywher
 | Plan dashboard | `uri ask "stwórz web UI hypervisor-dashboard"` |
 | Create (plan only) | `uri dashboard create hypervisor-dashboard --plan-only` |
 | Run dashboard | `uri agent run hypervisor-dashboard.local --wait-healthy --approve` |
-| Open UI | `uri dashboard open` or `uri call dashboard-ui --approve` |
+| Open UI | `uri dashboard open` or `uri dashboard-ui --approve` |
 | Process view | `view://process/agent/weather-map-agent.local/latest` |
 | Incident explain | `view://incident/{incident_id}/explain` |
 
@@ -70,7 +70,7 @@ Quick recipes. Prefer **`uri`** shortcuts where listed; full URIs work everywher
 | `uri wh` | `weather://forecast/Gdansk/14/html` |
 | `uri weather-status` | same as `hwa` |
 | `uri weather-process` | process view for weather agent |
-| `uri dashboard-ui` | open dashboard UI (needs `--approve`) |
+| `uri dashboard-ui --approve` | open dashboard UI with payload from config |
 
 ## Policy reminders
 

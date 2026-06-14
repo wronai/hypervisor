@@ -1,13 +1,13 @@
 # code2llm call graph | /home/tom/github/wronai/hypervisor
-# generated in 0.23s
-# nodes: 411 | edges: 500 | modules: 137
+# generated in 0.25s
+# nodes: 390 | edges: 500 | modules: 134
 # CC̄=3.7
 
 HUBS[20]:
   packages.uri3.uri3.config.repo_root.find_repo_root
-    CC=4  in:59  out:4  total:63
+    CC=4  in:60  out:4  total:64
   uri2ops.operation_registry.models.OperationRegistry.list
-    CC=1  in:59  out:2  total:61
+    CC=1  in:60  out:2  total:62
   packages.uri3.uri3.cli.commands.discovery.register
     CC=1  in:0  out:47  total:47
   examples.23_nl_to_agent_tutorial.run.print
@@ -18,42 +18,42 @@ HUBS[20]:
     CC=18  in:1  out:41  total:42
   packages.uri2run.uri2run.runner.run_backend
     CC=5  in:26  out:15  total:41
+  packages.urish.urish.backends.dashboard.create_dashboard
+    CC=12  in:2  out:37  total:39
   packages.urigen.urigen.cli.build_parser
     CC=1  in:1  out:38  total:39
   packages.uri3.uri3.results.service_result.service_result
     CC=3  in:27  out:10  total:37
-  packages.uri3.uri3.config.llm_profiles.resolve_llm_profile
-    CC=10  in:4  out:32  total:36
-  packages.urigen.urigen.apply.apply_ecosystem
-    CC=19  in:4  out:30  total:34
   packages.uri2ops.uri2ops.server.routes.mcp.mcp_router
     CC=1  in:1  out:33  total:34
+  packages.urigen.urigen.apply.apply_ecosystem
+    CC=19  in:4  out:30  total:34
+  packages.urigen.urigen.apply_executor._merge_deployment_fragment
+    CC=12  in:1  out:32  total:33
   uri3.graph.uri_graph.build_graph_from_tree
     CC=10  in:2  out:28  total:30
+  packages.uri3.uri3.resolvers.explain.explain_uri
+    CC=14  in:8  out:21  total:29
   packages.uri3.uri3.graph.artifacts.write_artifact
     CC=9  in:7  out:22  total:29
   packages.urigen.urigen.apply_planner.build_apply_plan
     CC=13  in:1  out:28  total:29
   packages.uri3.uri3.cli.commands.doctor._check_summary
     CC=16  in:1  out:28  total:29
-  packages.uri3.uri3.resolvers.explain.explain_uri
-    CC=14  in:8  out:21  total:29
   packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri
     CC=12  in:5  out:23  total:28
   packages.urigen.urigen.envelope.stamp_ecosystem
     CC=17  in:1  out:26  total:27
-  packages.uri3.uri3.graph.graph_validator.validate_workflow_graph
-    CC=9  in:13  out:13  total:26
 
 MODULES:
   domains.weather_map.handlers.generate_weather_map  [1 funcs]
     handler  CC=3  out:10
   examples.23_nl_to_agent_tutorial.run  [1 funcs]
     print  CC=0  out:0
-  hypervisor.uri2llm.pypi_resolver  [1 funcs]
-    resolve_pypi  CC=5  out:6
-  packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client  [1 funcs]
-    _repo_root  CC=2  out:1
+  packages.resource-agent-hypervisor.hypervisor.artifacts.gate  [3 funcs]
+    check_artifacts  CC=11  out:7
+    check_lifecycle_coverage  CC=17  out:14
+    check_schemas  CC=5  out:12
   packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle  [1 funcs]
     agent_status  CC=5  out:10
   packages.resource-agent-hypervisor.hypervisor.deployment_registry.run_plans  [1 funcs]
@@ -61,13 +61,17 @@ MODULES:
   packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector  [2 funcs]
     parse_hypervisor_uri  CC=14  out:4
     resolve_deployment  CC=12  out:13
+  packages.resource-agent-hypervisor.hypervisor.evolution.proposal_from_source  [1 funcs]
+    build_repair_proposal_from_incident  CC=8  out:13
+  packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper  [2 funcs]
+    import_tickets_from_planfile  CC=10  out:15
+    propose_from_ticket_path  CC=3  out:8
   packages.resource-agent-hypervisor.hypervisor.repair.supervisor  [2 funcs]
     diagnose_agent  CC=1  out:12
     learn_from_incident  CC=10  out:18
-  packages.touri.touri.loader  [1 funcs]
-    load_registry  CC=1  out:1
-  packages.touri.touri.matcher  [1 funcs]
-    match_uri  CC=3  out:4
+  packages.resource-agent-hypervisor.hypervisor.repair.validator  [2 funcs]
+    read_yaml  CC=2  out:4
+    validate_evolution_proposal_dict  CC=1  out:1
   packages.touri.touri.validator  [1 funcs]
     validate_manifest  CC=3  out:4
   packages.uri2flow.uri2flow.expander  [1 funcs]
@@ -108,6 +112,8 @@ MODULES:
     tasks_router  CC=1  out:11
   packages.uri2run.uri2run.cli  [1 funcs]
     _backend_from_target  CC=23  out:13
+  packages.uri2run.uri2run.doctor  [1 funcs]
+    doctor_transport_dependencies  CC=3  out:10
   packages.uri2run.uri2run.runner  [1 funcs]
     run_backend  CC=5  out:15
   packages.uri2verify.uri2verify.replay  [2 funcs]
@@ -153,46 +159,16 @@ MODULES:
     quick_reference  CC=5  out:5
   packages.uri3.uri3.cli.main  [1 funcs]
     main  CC=2  out:4
-  packages.uri3.uri3.config.cli_shortcuts  [5 funcs]
-    cli_config_path  CC=1  out:1
+  packages.uri3.uri3.config.cli_shortcuts  [2 funcs]
     cli_examples  CC=3  out:3
-    load_cli_config  CC=2  out:3
-    resolve_scan_target  CC=4  out:4
     scan_shortcuts  CC=4  out:6
-  packages.uri3.uri3.config.docker_stacks  [4 funcs]
-    docker_config_path  CC=1  out:1
-    load_docker_config  CC=2  out:3
+  packages.uri3.uri3.config.docker_stacks  [1 funcs]
     resolve_agent_stack  CC=4  out:15
-    resolve_stack  CC=5  out:13
-  packages.uri3.uri3.config.llm_profile_builder  [4 funcs]
-    chosen_profile_name  CC=3  out:2
-    normalize_model_name  CC=2  out:2
-    parse_llm_query  CC=7  out:6
-    resolve_profile_api_key  CC=4  out:4
-  packages.uri3.uri3.config.llm_profiles  [3 funcs]
-    llm_config_path  CC=1  out:1
-    load_llm_config  CC=2  out:3
-    resolve_llm_profile  CC=10  out:32
-  packages.uri3.uri3.config.repo_root  [4 funcs]
-    _walk_up  CC=7  out:6
-    config_repo_root  CC=3  out:4
+  packages.uri3.uri3.config.repo_root  [1 funcs]
     find_repo_root  CC=4  out:4
-    repo_root  CC=1  out:1
-  packages.uri3.uri3.config.ssh_auth  [6 funcs]
-    _password_from_env_file  CC=5  out:4
-    _resolve_password_value  CC=8  out:10
-    load_ssh_config  CC=2  out:3
+  packages.uri3.uri3.config.ssh_auth  [2 funcs]
     resolve_ssh_password  CC=12  out:13
     ssh_auth_hint  CC=3  out:2
-    ssh_config_path  CC=1  out:1
-  packages.uri3.uri3.config.uri_yaml  [7 funcs]
-    _resolve_env_uri  CC=2  out:2
-    _resolve_registered_uri  CC=4  out:4
-    _resolve_scalar_uri  CC=6  out:3
-    is_uri  CC=4  out:3
-    load_uri_yaml  CC=3  out:6
-    resolve_uri_values  CC=7  out:8
-    unwrap_uri_yaml_document  CC=4  out:5
   packages.uri3.uri3.docker.actions.compose  [8 funcs]
     _parse_ps_stdout  CC=4  out:5
     compose_base  CC=3  out:2
@@ -333,75 +309,20 @@ MODULES:
     summarize_logs  CC=6  out:18
   packages.uri3.uri3.logs.writer  [1 funcs]
     append_log  CC=13  out:19
-  packages.uri3.uri3.protocols.schemes.analyze  [3 funcs]
-    _analyze_query  CC=14  out:10
-    analyze_uri  CC=2  out:7
-    describe_uri  CC=2  out:3
   packages.uri3.uri3.protocols.schemes.base  [2 funcs]
     to_dict  CC=4  out:2
     to_dict  CC=2  out:5
-  packages.uri3.uri3.protocols.schemes.instance_parser  [13 funcs]
-    _parse_a2a  CC=1  out:1
-    _parse_docker  CC=1  out:1
-    _parse_env  CC=1  out:1
-    _parse_http  CC=1  out:1
-    _parse_llm  CC=1  out:1
-    _parse_log  CC=1  out:2
-    _parse_mcp  CC=1  out:1
-    _parse_pypi  CC=1  out:1
-    _parse_python  CC=1  out:1
-    _parse_resource  CC=1  out:1
-  packages.uri3.uri3.protocols.schemes.spec_registry  [4 funcs]
-    get_scheme_schema  CC=3  out:5
-    is_concrete_uri  CC=4  out:3
+  packages.uri3.uri3.protocols.schemes.spec_registry  [1 funcs]
     list_schemes  CC=5  out:5
-    query_names  CC=2  out:3
-  packages.uri3.uri3.resolvers.dispatch  [2 funcs]
-    _resolve_docker  CC=1  out:1
-    resolve_target  CC=3  out:4
-  packages.uri3.uri3.resolvers.docker_resolver  [6 funcs]
-    _bool  CC=3  out:2
-    _first  CC=2  out:1
-    _int  CC=3  out:2
+  packages.uri3.uri3.resolvers.docker_resolver  [1 funcs]
     parse_docker_uri  CC=12  out:23
-    resolve_docker  CC=2  out:4
-    resolve_docker_target  CC=1  out:1
-  packages.uri3.uri3.resolvers.env_resolver  [3 funcs]
-    _env_var_name  CC=3  out:3
-    call_env  CC=8  out:17
-    resolve_env  CC=1  out:2
-  packages.uri3.uri3.resolvers.explain  [9 funcs]
-    _find_repo_root  CC=5  out:4
-    _match_hypervisor  CC=8  out:4
-    _match_touri  CC=6  out:7
-    _match_uri2ops  CC=5  out:3
-    _match_uri3  CC=4  out:1
-    default_touri_registry  CC=5  out:6
+  packages.uri3.uri3.resolvers.explain  [1 funcs]
     explain_uri  CC=14  out:21
-    load_touri_config  CC=5  out:7
-    runtime_transport_for_match  CC=9  out:5
-  packages.uri3.uri3.resolvers.explain_verification  [2 funcs]
-    build_verification_hints  CC=9  out:13
-    summarize_fallbacks  CC=6  out:7
   packages.uri3.uri3.resolvers.log_resolver  [1 funcs]
     parse_log_uri  CC=7  out:16
-  packages.uri3.uri3.resolvers.protocol_resolver  [4 funcs]
-    resolve_a2a  CC=2  out:1
-    resolve_http_like  CC=1  out:0
-    resolve_mcp  CC=2  out:1
-    resolve_resource  CC=4  out:4
-  packages.uri3.uri3.resolvers.registry  [1 funcs]
-    build_resolver_registry  CC=1  out:5
-  packages.uri3.uri3.resolvers.router  [1 funcs]
-    __init__  CC=1  out:1
-  packages.uri3.uri3.resolvers.ssh_resolver  [7 funcs]
-    _resolve_ssh_password  CC=1  out:1
-    _ssh_options  CC=2  out:3
-    build_ssh_command  CC=4  out:4
+  packages.uri3.uri3.resolvers.ssh_resolver  [2 funcs]
     parse_ssh_uri  CC=8  out:7
-    resolve_ssh  CC=1  out:6
     run_ssh  CC=1  out:2
-    ssh_transport_option  CC=4  out:7
   packages.uri3.uri3.results.envelope  [18 funcs]
     _enriched_workflow_result  CC=3  out:7
     _resolve_workflow_status  CC=4  out:0
@@ -447,14 +368,24 @@ MODULES:
     validate_uri_tree  CC=2  out:7
   packages.urigen.urigen.apply  [1 funcs]
     apply_ecosystem  CC=19  out:30
-  packages.urigen.urigen.apply_executor  [2 funcs]
+  packages.urigen.urigen.apply_executor  [12 funcs]
+    _copy_file  CC=5  out:19
+    _copy_tree  CC=7  out:25
+    _merge_deployment_fragment  CC=12  out:32
+    _resolve_path  CC=2  out:2
     build_plan_diff  CC=3  out:3
+    execute_action  CC=8  out:16
     execute_apply_plan  CC=11  out:16
+    load_rollback_manifest  CC=5  out:9
+    preview_action_diff  CC=12  out:23
+    rollback_apply  CC=2  out:7
   packages.urigen.urigen.apply_planner  [1 funcs]
     build_apply_plan  CC=13  out:28
   packages.urigen.urigen.apply_validate  [2 funcs]
     _load_schema  CC=2  out:5
     validate_apply_artifact  CC=4  out:5
+  packages.urigen.urigen.artifacts  [1 funcs]
+    repo_path  CC=1  out:0
   packages.urigen.urigen.cli  [9 funcs]
     _emit  CC=2  out:4
     build_parser  CC=1  out:38
@@ -478,16 +409,35 @@ MODULES:
     _flows  CC=6  out:9
     _risks  CC=5  out:5
     explain_ecosystem  CC=2  out:10
-  packages.urigen.urigen.generator  [1 funcs]
+  packages.urigen.urigen.generator  [9 funcs]
+    _copy_agents  CC=4  out:11
+    _copy_application_tree  CC=4  out:9
+    _copy_applications  CC=4  out:7
+    _copy_capabilities  CC=4  out:17
+    _copy_domains  CC=7  out:13
+    _skip_app_artifact  CC=5  out:3
+    _write_deployments  CC=5  out:8
+    _write_flows  CC=5  out:11
     generate_ecosystem  CC=7  out:40
-  packages.urigen.urigen.io  [4 funcs]
+  packages.urigen.urigen.io  [6 funcs]
+    copy_file  CC=1  out:2
     dump_yaml  CC=1  out:1
     load_yaml  CC=3  out:5
+    relative_to  CC=1  out:2
     write_json  CC=1  out:4
     write_yaml  CC=1  out:4
-  packages.urigen.urigen.proposal  [1 funcs]
+  packages.urigen.urigen.models  [5 funcs]
+    normalize_profile  CC=3  out:5
+    repo_root  CC=2  out:3
+    slugify  CC=2  out:3
+    wants_dashboard  CC=3  out:2
+    wants_voice  CC=3  out:2
+  packages.urigen.urigen.proposal  [3 funcs]
+    _dashboard_proposal  CC=1  out:1
+    _default_ecosystem_id  CC=6  out:4
     plan_ecosystem  CC=6  out:12
-  packages.urigen.urigen.schema_check  [1 funcs]
+  packages.urigen.urigen.schema_check  [2 funcs]
+    _check_yaml_file  CC=7  out:16
     schema_check_ecosystem  CC=11  out:23
   packages.urigen.urigen.verify  [7 funcs]
     _check_capabilities  CC=8  out:14
@@ -497,10 +447,27 @@ MODULES:
     _check_result  CC=1  out:0
     _resolve  CC=2  out:2
     verify_ecosystem  CC=8  out:15
+  packages.urigen.urigen.writer  [3 funcs]
+    dashboard_deployment_fragment  CC=1  out:1
+    deployment_fragment  CC=2  out:0
+    render_readme  CC=4  out:10
   packages.urish.urish.backends.agent  [1 funcs]
     agent_action  CC=5  out:9
+  packages.urish.urish.backends.ask  [1 funcs]
+    ask_prompt  CC=11  out:22
   packages.urish.urish.backends.call  [1 funcs]
     call_uri  CC=6  out:7
+  packages.urish.urish.backends.dashboard  [1 funcs]
+    create_dashboard  CC=12  out:37
+  packages.urish.urish.backends.doctor  [2 funcs]
+    _artifact_gate_checks  CC=4  out:12
+    doctor_all  CC=9  out:13
+  packages.urish.urish.backends.evolve  [5 funcs]
+    _wrap  CC=7  out:2
+    evolve_from_incident  CC=6  out:13
+    evolve_from_ticket  CC=7  out:15
+    proposal_apply  CC=3  out:2
+    proposal_verify  CC=4  out:7
   packages.urish.urish.backends.explain  [1 funcs]
     explain_target  CC=2  out:1
   packages.urish.urish.backends.logs  [1 funcs]
@@ -519,6 +486,12 @@ MODULES:
     _stream_ws  CC=3  out:15
     _success  CC=1  out:1
     stream_uri  CC=5  out:8
+  packages.urish.urish.backends.ticket  [5 funcs]
+    import_tickets  CC=5  out:8
+    list_tickets  CC=10  out:15
+    plan_ticket  CC=7  out:14
+    show_ticket  CC=4  out:8
+    tickets_dir  CC=2  out:1
   packages.urish.urish.backends.watch  [4 funcs]
     _event_type  CC=2  out:1
     _normalize_watch_uri  CC=2  out:0
@@ -528,6 +501,17 @@ MODULES:
     context_dir  CC=2  out:1
     list_contexts  CC=3  out:4
     load_context  CC=7  out:7
+  packages.urish.urish.ecosystem_workflow  [7 funcs]
+    _quote  CC=3  out:1
+    build_ecosystem_next_steps  CC=6  out:11
+    build_planned_uris  CC=2  out:2
+    build_planned_uris_display  CC=4  out:2
+    ecosystem_dir  CC=1  out:0
+    ecosystem_file  CC=1  out:1
+    proposal_path  CC=1  out:0
+  packages.urish.urish.intent  [2 funcs]
+    _detect_kind  CC=6  out:5
+    detect_intent  CC=7  out:6
   packages.urish.urish.policy  [2 funcs]
     classify_uri  CC=19  out:6
     evaluate_policy  CC=14  out:1
@@ -540,10 +524,10 @@ MODULES:
   packages.urish.urish.select  [2 funcs]
     select_from_envelope  CC=3  out:5
     select_path  CC=7  out:7
-  packages.urish.urish.shortcuts  [3 funcs]
-    load_shortcuts  CC=11  out:16
-    resolve_target  CC=4  out:4
-    shortcuts_path  CC=2  out:1
+  packages.urish.urish.ticket_workflow  [3 funcs]
+    build_ticket_workflow  CC=8  out:14
+    detect_intent_from_ticket  CC=15  out:18
+    resolve_ticket_path  CC=10  out:13
   uri2ops.operation_registry.dispatcher  [3 funcs]
     _split_python_uri  CC=3  out:4
     call_handler  CC=2  out:4
@@ -574,13 +558,6 @@ MODULES:
     normalize_uri  CC=3  out:4
   uri3.protocols.parser  [1 funcs]
     parse_uri  CC=2  out:4
-  uri3.resolvers.http_resolver  [1 funcs]
-    resolve  CC=1  out:1
-  uri3.resolvers.llm_resolver  [2 funcs]
-    resolve  CC=2  out:4
-    resolve_llm  CC=5  out:5
-  uri3.resolvers.python_resolver  [1 funcs]
-    resolve_python  CC=1  out:1
   uri3.validators.uri_validator  [1 funcs]
     validate_uri  CC=2  out:2
 
@@ -588,6 +565,14 @@ EDGES:
   packages.urish.urish.render.render_result → packages.urish.urish.render._render_table
   packages.urish.urish.render.render_result → packages.urish.urish.render._render_text
   packages.urish.urish.render._render_table → packages.urish.urish.render._render_text
+  packages.urish.urish.ticket_workflow.resolve_ticket_path → packages.uri3.uri3.config.repo_root.find_repo_root
+  packages.urish.urish.ticket_workflow.detect_intent_from_ticket → packages.urigen.urigen.models.wants_dashboard
+  packages.urish.urish.ticket_workflow.detect_intent_from_ticket → packages.urish.urish.intent.detect_intent
+  packages.urish.urish.ticket_workflow.build_ticket_workflow → packages.urish.urish.ticket_workflow.detect_intent_from_ticket
+  packages.urish.urish.ticket_workflow.build_ticket_workflow → packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps
+  packages.urish.urish.intent.detect_intent → packages.urish.urish.intent._detect_kind
+  packages.urish.urish.intent.detect_intent → packages.urigen.urigen.models.wants_dashboard
+  packages.urish.urish.intent.detect_intent → packages.urigen.urigen.models.slugify
   packages.urish.urish.context.context_dir → packages.uri3.uri3.config.repo_root.find_repo_root
   packages.urish.urish.context.load_context → packages.uri3.uri3.config.repo_root.find_repo_root
   packages.urish.urish.context.load_context → packages.urish.urish.context.context_dir
@@ -596,42 +581,34 @@ EDGES:
   packages.urish.urish.select.select_from_envelope → packages.urish.urish.select.select_path
   packages.urish.urish.repl.run_repl → packages.uri3.uri3.graph.adapters.uri2ops_adapter.Uri2OpsAdapter.execute
   packages.urish.urish.repl.run_repl → examples.23_nl_to_agent_tutorial.run.print
-  packages.urish.urish.shortcuts.shortcuts_path → packages.uri3.uri3.config.repo_root.find_repo_root
-  packages.urish.urish.shortcuts.load_shortcuts → packages.urish.urish.shortcuts.shortcuts_path
-  packages.urish.urish.shortcuts.load_shortcuts → packages.uri3.uri3.config.uri_yaml.unwrap_uri_yaml_document
-  packages.urish.urish.shortcuts.resolve_target → packages.urish.urish.shortcuts.load_shortcuts
+  packages.urish.urish.ecosystem_workflow.ecosystem_file → packages.urish.urish.ecosystem_workflow.ecosystem_dir
+  packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps → packages.urish.urish.ecosystem_workflow.proposal_path
+  packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps → packages.urish.urish.ecosystem_workflow.ecosystem_file
+  packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps → packages.urish.urish.ecosystem_workflow._quote
+  packages.urish.urish.ecosystem_workflow.build_planned_uris_display → uri2ops.operation_registry.models.OperationRegistry.list
+  packages.urish.urish.backends.dashboard.create_dashboard → packages.urigen.urigen.proposal.plan_ecosystem
+  packages.urish.urish.backends.dashboard.create_dashboard → packages.urigen.urigen.io.write_yaml
+  packages.urish.urish.backends.dashboard.create_dashboard → packages.urigen.urigen.generator.generate_ecosystem
+  packages.urish.urish.backends.dashboard.create_dashboard → packages.urigen.urigen.verify.verify_ecosystem
   packages.urish.urish.backends.watch.watch_uri → packages.urish.urish.backends.watch._normalize_watch_uri
   packages.urish.urish.backends.watch.watch_uri → packages.urish.urish.backends.watch._poll_once
   packages.urish.urish.backends.watch._poll_once → packages.urish.urish.backends.call.call_uri
   packages.urish.urish.backends.watch._poll_once → packages.urish.urish.backends.logs.read_log_uri
   packages.urish.urish.backends.watch._poll_once → packages.urish.urish.backends.watch._event_type
   packages.urish.urish.backends.explain.explain_target → packages.uri3.uri3.resolvers.explain.explain_uri
+  packages.urish.urish.backends.doctor.doctor_all → packages.uri3.uri3.config.repo_root.find_repo_root
+  packages.urish.urish.backends.doctor.doctor_all → packages.uri2run.uri2run.doctor.doctor_transport_dependencies
+  packages.urish.urish.backends.doctor.doctor_all → packages.uri3.uri3.doctor.runner.run_doctor
+  packages.urish.urish.backends.doctor.doctor_all → packages.urish.urish.backends.doctor._artifact_gate_checks
+  packages.urish.urish.backends.doctor._artifact_gate_checks → packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_schemas
+  packages.urish.urish.backends.doctor._artifact_gate_checks → packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_artifacts
+  packages.urish.urish.backends.doctor._artifact_gate_checks → packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_lifecycle_coverage
+  packages.urish.urish.backends.ask.ask_prompt → packages.urish.urish.intent.detect_intent
+  packages.urish.urish.backends.ask.ask_prompt → packages.urigen.urigen.proposal.plan_ecosystem
+  packages.urish.urish.backends.ask.ask_prompt → packages.urish.urish.ecosystem_workflow.build_planned_uris
+  packages.urish.urish.backends.ask.ask_prompt → packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps
+  packages.urish.urish.backends.ask.ask_prompt → packages.urish.urish.ecosystem_workflow.proposal_path
+  packages.urish.urish.backends.ask.ask_prompt → packages.urish.urish.ecosystem_workflow.ecosystem_dir
   packages.urish.urish.backends.call.call_uri → packages.uri2run.uri2run.cli._backend_from_target
   packages.urish.urish.backends.call.call_uri → packages.uri2run.uri2run.runner.run_backend
   packages.urish.urish.backends.call.call_uri → packages.urish.urish.policy.evaluate_policy
-  packages.urish.urish.backends.call.call_uri → packages.urish.urish.backends.explain.explain_target
-  packages.urish.urish.backends.agent.agent_action → domains.weather_map.handlers.generate_weather_map.handler
-  packages.urish.urish.backends.stream.stream_uri → packages.urish.urish.backends.stream._stream_sse
-  packages.urish.urish.backends.stream.stream_uri → packages.urish.urish.backends.stream._stream_ws
-  packages.urish.urish.backends.stream._stream_sse → packages.urish.urish.backends.stream._success
-  packages.urish.urish.backends.stream._stream_sse → packages.urish.urish.backends.stream._error
-  packages.urish.urish.backends.stream._stream_sse → packages.urish.urish.backends.stream._runtime_event
-  packages.urish.urish.backends.stream._stream_ws → packages.urish.urish.backends.stream._success
-  packages.urish.urish.backends.stream._stream_ws → packages.urish.urish.backends.stream._error
-  packages.urish.urish.backends.stream._stream_ws → packages.urish.urish.backends.stream._runtime_event
-  packages.urish.urish.backends.logs.read_log_uri → packages.uri3.uri3.logs.reader.summarize_logs
-  packages.urish.urish.backends.logs.read_log_uri → packages.uri3.uri3.logs.reader.read_logs_result
-  packages.urish.urish.backends.run.run_target → uri2ops.server.service.OperatorService.run_task
-  packages.urish.urish.backends.run.run_target → packages.uri2flow.uri2flow.expander.expand_flow
-  packages.urish.urish.backends.repair.repair_diagnose → packages.resource-agent-hypervisor.hypervisor.repair.supervisor.diagnose_agent
-  packages.urish.urish.backends.repair.repair_diagnose → packages.urish.urish.backends.repair._wrap
-  packages.urish.urish.backends.repair.repair_apply → packages.urish.urish.backends.repair._wrap
-  packages.urish.urish.backends.repair.repair_learn → packages.resource-agent-hypervisor.hypervisor.repair.supervisor.learn_from_incident
-  packages.urish.urish.backends.repair.repair_learn → packages.urish.urish.backends.repair._wrap
-  packages.urish.urish.backends.repair.repair_learn → packages.uri3.uri3.config.repo_root.find_repo_root
-  packages.urigen.urigen.explain.explain_ecosystem → packages.uri3.uri3.config.repo_root.repo_root
-  packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.io.load_yaml
-  packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._domains
-  packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._agents
-  packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._capabilities
-  packages.urigen.urigen.explain.explain_ecosystem → packages.urigen.urigen.explain._flows

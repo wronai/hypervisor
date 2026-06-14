@@ -1,0 +1,9 @@
+# Example NL commands for Taskinity Chat UI
+
+pokaż proces agenta weather-map-agent.local
+sprawdź health agenta weather-map-agent.local
+zdiagnozuj agenta weather-map-agent.local
+napraw agenta weather-map-agent.local
+utwórz ticket z incydentu inc_20260614_001
+wygeneruj proposal z ticketu PL-1
+pokaż logi agenta weather-map-agent.local

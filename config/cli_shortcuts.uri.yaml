@@ -37,7 +37,7 @@ spec:
       uri: browser://chrome/page/open
       payload:
         url: http://localhost:8788/ui
-      description: Open hypervisor dashboard UI (uri call dashboard-ui --approve)
+      description: Open hypervisor dashboard UI (uri dashboard-ui --approve)
 
     scan:
       http: http://localhost:8101
@@ -49,5 +49,6 @@ spec:
     - uri agent status weather-map-agent.local
     - uri hwa
     - uri weather-process
+    - uri dashboard-ui --approve
     - uri dashboard open
     - uri doctor --strict

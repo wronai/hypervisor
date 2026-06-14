@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.14s
+%% generated in 0.24s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
@@ -12,6 +12,7 @@ flowchart TD
     end
 
     subgraph Core
+        packages__urish__urish__ticket_workflow__detect_intent_from_ticket{{detect_intent_from_ticket CC=15}}
         packages__urish__urish__policy__PolicyOptions__from_flags["from_flags"]
         packages__urish__urish__policy__classify_uri{{classify_uri CC=19}}
         packages__urish__urish__backends__repair__repair_learn["repair_learn"]
@@ -25,9 +26,8 @@ flowchart TD
         packages__urigen__urigen__cli__build_parser["build_parser"]
         packages__urigen__urigen__cli__main["main"]
         packages__urigen__urigen__io___NoAliasSafeDumper__ignore_aliases["ignore_aliases"]
-        packages__urigen__urigen__envelope__stamp_ecosystem{{stamp_ecosystem CC=17}}
-        packages__urigen__urigen__apply__apply_ecosystem{{apply_ecosystem CC=19}}
-        ...["+496 more"]
+        packages__urigen__urigen__apply_executor__RollbackEntry__to_dict["to_dict"]
+        ...["+563 more"]
     end
 
     subgraph Exporters
