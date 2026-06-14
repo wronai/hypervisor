@@ -223,7 +223,13 @@ def enrich_lifecycle_dict(payload: dict[str, Any]) -> dict[str, Any]:
     if isinstance(runtime_state, dict) and runtime_state.get("status"):
         runtime_status = str(runtime_state["status"])
 
-    ok = _lifecycle_ok(body, status, runtime_status)
+    service_status = str(body.get("service_status") or "")
+    if service_status == "healthy":
+        ok = True
+    elif service_status in {"unhealthy", "degraded", "stopped", "blocked"}:
+        ok = False
+    else:
+        ok = _lifecycle_ok(body, status, runtime_status)
     workflow_status, execution_status, service_result_status = derive_statuses(ok)
     body["ok"] = ok
     body["workflow_status"] = workflow_status

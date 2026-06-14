@@ -42,3 +42,25 @@ def test_cli_agent_status_includes_runtime_fields(capsys):
     payload = json.loads(capsys.readouterr().out)
     assert payload["runtime_status"] in {"stopped", "running", "stale"}
     assert "env" in payload
+
+
+def test_cli_run_agent_dry_run_accepts_if_running(capsys):
+    rc = main(["run-agent", "weather-map-agent.local", "--dry-run", "--if-running", "reuse"])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["module"] == "agents.generated.weather_map_agent.main:app"
+
+
+def test_cli_inspect_agent(monkeypatch, capsys):
+    monkeypatch.setattr(
+        "hypervisor.cli.inspect_agent",
+        lambda selector, timeout=2.0, log_limit=20: {
+            "ok": True,
+            "id": selector,
+            "service_status": "healthy",
+        },
+    )
+    rc = main(["inspect-agent", "weather-map-agent.local"])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["service_status"] == "healthy"

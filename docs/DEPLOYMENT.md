@@ -59,10 +59,23 @@ deployments/agent_deployments.yaml
 ```bash
 hypervisor deployments
 hypervisor run-agent weather-map-agent.local --dry-run
+hypervisor run-agent weather-map-agent.local --detach --if-running reuse
+hypervisor run-agent weather-map-agent.local --detach --wait-healthy --supervise-repair auto
 make run-weather-agent
 hypervisor agent-status weather-map-agent.local
+hypervisor inspect-agent weather-map-agent.local
+hypervisor supervise weather-map-agent.local
+hypervisor supervise weather-map-agent.local --repair auto
 hypervisor scan http://localhost:8101/health
 ```
+
+`run-agent --if-running reuse|restart|fail` jawnie steruje zachowaniem przy
+istniejącym procesie, a `--wait-healthy --supervise-repair auto` po starcie
+wykonuje ograniczoną pętlę inspekcji i naprawy. `inspect-agent` raportuje
+`process`, `health`, `card`, `log_errors`, `incidents` i `service_status`, więc
+`running` nie jest mylone ze zdrową usługą. `supervise --repair auto` wykonuje
+ograniczony cykl: inspekcja, sync runtime `health_uri` albo restart, i ponowna
+inspekcja.
 
 Przykład krok po kroku: [`examples/09_run_agent_hypervisor/`](../examples/09_run_agent_hypervisor/README.md).
 

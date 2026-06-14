@@ -40,8 +40,18 @@ def verify_generated_agent(agent_dir: Path) -> list[str]:
 
 
 
+def _agent_dirs(root: Path) -> list[Path]:
+    if not root.exists():
+        return []
+    return [
+        path
+        for path in root.iterdir()
+        if path.is_dir() and not path.name.startswith(".") and path.name != "__pycache__"
+    ]
+
+
 def verify_generated(root: Path) -> list[str]:
-    agent_dirs = [p for p in root.iterdir() if p.is_dir()] if root.exists() else []
+    agent_dirs = _agent_dirs(root)
     errors: list[str] = []
     if not agent_dirs:
         return [f"No generated agents found in {root}"]
@@ -53,7 +63,7 @@ def verify_generated(root: Path) -> list[str]:
 def main(argv: list[str] | None = None) -> int:
     argv = argv or sys.argv[1:]
     root = Path(argv[0] if argv else "agents/generated")
-    agent_dirs = [p for p in root.iterdir() if p.is_dir()] if root.exists() else []
+    agent_dirs = _agent_dirs(root)
     if not agent_dirs:
         print(f"No generated agents found in {root}")
         return 1

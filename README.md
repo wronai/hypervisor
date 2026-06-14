@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.18-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$10.48-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.19-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$11.09-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $10.4766 (17 commits)
-- 👤 **Human dev:** ~$830 (8.3h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $11.0916 (18 commits)
+- 👤 **Human dev:** ~$848 (8.5h @ $100/h, 30min dedup)
 
 Generated on 2026-06-14 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -18,14 +18,16 @@ Monorepo: **uri3**, **nl2uri**, **uri2flow**, **uri2ops**, **hypervisor**, **age
 ## Architektura
 
 ```txt
-uri3       = URI, discovery, routing, skanowanie, graf, workflow executor, log://, schema
+uri3       = URI, discovery, routing, skanowanie, graf, workflow executor, log://, schema, doctor
 nl2uri     = natural language / query → URI plan (single, list, tree, task, graph)
 uri2flow   = compact URI flow → expanded workflow graph (bez wykonania)
 uri2ops    = operation registry + operator adapters + policy + serve (A2A/MCP)
 uri2voice  = STT/TTS/voice command execution (mock MVP; touri manifests)
 uri2pact   = markpact:// README import (capabilities + flows)
-uri2run    = neutral runtime transport layer for python/shell/http/stdio/sse/ws/docker/ssh/mcp/a2a/flow/graph
+uri2run    = neutral runtime transport layer (python/shell/http/stdio/sse/ws/docker/ssh/mcp/a2a/flow/graph)
 uri2verify = data quality gates, workflow replay, regression tests
+urigen     = URI ecosystem generator: proposals, artifacts, verify/explain/apply gates
+touri      = capability matching, fallbacks, data quality → delegates execution to uri2run
 nl2a       = prompt → URI Tree → Domain Pack → agent contract → generated agent
 hypervisor = registry, policy, deployment, lifecycle
 generator  = deterministyczny kod agenta z YAML
@@ -67,9 +69,17 @@ make graph
 make test
 ```
 
+Lub jednym skryptem (pipeline bez pełnego pytest):
+
+```bash
+bash examples/01_quickstart_local/run.sh
+```
+
 Pełny pipeline weather-map (bez LLM):
 
 ```bash
+bash examples/04_nl2a_weather_map/run.sh
+# lub skrót:
 make nl2a-weather
 ```
 
@@ -140,6 +150,30 @@ uri3 doctor --capability-plan --replay-failures
 
 Zobacz [`docs/URI3.md`](docs/URI3.md) · [`packages/uri2verify/README.md`](packages/uri2verify/README.md) · [`docs/PACKAGE_BOUNDARIES.md`](docs/PACKAGE_BOUNDARIES.md).
 
+## urigen — URI Ecosystem Generator
+
+`urigen` generuje izolowany pakiet ekosystemu URI: proposal, `ecosystem.yaml`,
+capability manifests, compact flows, kontrakty, deployment fragment, README
+markpact i test plan. Nie jest runtime'em i nie wykonuje backendów bezpośrednio.
+
+```bash
+urigen plan -p "stworz agenta pogodowego z healthcheckiem" \
+  --out output/proposals/weather.ecosystem.proposal.yaml
+
+urigen generate output/proposals/weather.ecosystem.proposal.yaml \
+  --out output/ecosystems/weather
+
+urigen verify output/ecosystems/weather/ecosystem.yaml
+urigen explain output/ecosystems/weather/ecosystem.yaml
+urigen apply output/ecosystems/weather/ecosystem.yaml --approve
+```
+
+`plan` i `verify` są side-effect safe. `generate` pisze tylko do wskazanego
+`--out`. `apply` jest approval-gated; obecny MVP zwraca idempotentny plan akcji
+bez mutowania rejestrów repozytorium.
+
+Zobacz [`packages/urigen/README.md`](packages/urigen/README.md).
+
 ## uri2run — runtime transports
 
 ```bash
@@ -148,6 +182,22 @@ uri2run call shell://echo --payload '{"args":["hello"]}'
 ```
 
 `touri` keeps capability matching, fallbacks and data quality gates; backend execution is delegated to `uri2run`.
+
+## Testy i CI
+
+```bash
+make architecture-gate   # tests/architecture + uri3 doctor (boundaries, envelope, transports)
+make test                # pełny pytest (~420 testów)
+make examples-test       # integracja examples/* (run.sh + inline demos)
+make ci-gate             # architecture-gate + test + examples-test
+bash scripts/test-all-examples.sh   # 25 przykładów sekwencyjnie (shell smoke)
+```
+
+Integracja examples jest w `tests/examples/` — katalog `catalog.py`, parametryzowane `run.sh`, smoke manifestów touri i importów stacku (`uri2run`, `uri3`, `touri`). CI (`.github/workflows/ci.yml`) uruchamia osobny job **Examples integration** po pełnym pytest.
+
+Markery pytest: `examples`, `docker` (ex03), `slow` (ex23 tutorial). Ex11 (Playwright) wymaga `pip install -e '.[browser]' && playwright install chromium`.
+
+Zobacz [`examples/README.md`](examples/README.md) · [`docs/PACKAGE_BOUNDARIES.md`](docs/PACKAGE_BOUNDARIES.md) · [`docs/CLI_MAP.md`](docs/CLI_MAP.md).
 
 ## uri2ops — operator runtime
 
@@ -172,33 +222,40 @@ Przykładowe prompty i kontrakty: [`examples/`](examples/README.md).
 
 ## Przykłady (`examples/*/*`)
 
-| # | Katalog | Opis |
-|---|---------|------|
-| 01 | [`examples/01_quickstart_local`](examples/01_quickstart_local/) | Lokalny start bez Dockera |
-| 02 | [`examples/02_uri3_scan_http`](examples/02_uri3_scan_http/) | Skan HTTP/A2A-like |
-| 03 | [`examples/03_ssh_remote_agent`](examples/03_ssh_remote_agent/) | Docker + SSH testenv |
-| 04 | [`examples/04_nl2a_weather_map`](examples/04_nl2a_weather_map/) | Prompt weather-map |
-| 05 | [`examples/05_meta_repair`](examples/05_meta_repair/) | Naprawa uszkodzonego kontraktu |
-| 06 | [`examples/06_orders_agent`](examples/06_orders_agent/) | Kontrakt agenta zamówień |
-| 07 | [`examples/07_invoices_agent`](examples/07_invoices_agent/) | Prompt agenta faktur |
-| 08 | [`examples/08_evolution`](examples/08_evolution/) | Evolution proposals |
-| 09 | [`examples/09_run_agent_hypervisor`](examples/09_run_agent_hypervisor/) | run-agent / lifecycle |
-| 10 | [`examples/10_browser_operator`](examples/10_browser_operator/) | uri2ops mock browser |
-| 11 | [`examples/11_playwright_browser`](examples/11_playwright_browser/) | uri2ops Playwright |
-| 12 | [`examples/12_android_operator`](examples/12_android_operator/) | uri2ops Android ADB |
-| 13 | [`examples/13_pcwin_operator`](examples/13_pcwin_operator/) | uri2ops Windows UIA |
-| 13 | [`examples/13_nl2uri_multi_uri_graph`](examples/13_nl2uri_multi_uri_graph/) | nl2uri multi-output |
-| 14 | [`examples/14_uri2ops_serve`](examples/14_uri2ops_serve/) | uri2ops HTTP daemon |
-| 14 | [`examples/14_workflow_executor_mock`](examples/14_workflow_executor_mock/) | uri3 workflow executor |
-| 15 | [`examples/15_compact_uri_flow`](examples/15_compact_uri_flow/) | Skrócony przepływ URI |
-| 15 | [`examples/15_playwright_browser`](examples/15_playwright_browser/) | uri3 Playwright workflow |
-| 16 | [`examples/16_llm_graph_planner`](examples/16_llm_graph_planner/) | LLM graph planner |
-| 17 | [`examples/17_flow_vs_graph`](examples/17_flow_vs_graph/) | Compact flow vs expanded graph |
-| 18 | [`examples/18_llm_flow_planner`](examples/18_llm_flow_planner/) | LLM compact flow planner |
-| 20 | [`examples/20_touri_capabilities`](examples/20_touri_capabilities/) | `touri` capability manifests |
-| 21 | [`examples/21_touri_voice`](examples/21_touri_voice/) | STT/TTS/voice jako capability pack |
-| 22 | [`examples/22_markpact_weather`](examples/22_markpact_weather/) | `markpact://` capability + flow README |
-| 23 | [`examples/23_nl_to_agent_tutorial`](examples/23_nl_to_agent_tutorial/) | **Tutorial NL → URI → wykonanie → agent HTTP** |
+Każdy katalog z `run.sh` można uruchomić bezpośrednio; pełna lista:
+
+```bash
+bash scripts/test-all-examples.sh
+pytest tests/examples -q
+```
+
+| # | Katalog | Opis | Start |
+|---|---------|------|-------|
+| 01 | [`examples/01_quickstart_local`](examples/01_quickstart_local/) | Lokalny start bez Dockera | `bash examples/01_quickstart_local/run.sh` |
+| 02 | [`examples/02_uri3_scan_http`](examples/02_uri3_scan_http/) | Skan HTTP/A2A-like | inline / wymaga agenta |
+| 03 | [`examples/03_ssh_remote_agent`](examples/03_ssh_remote_agent/) | Docker + SSH testenv | `make docker-testenv-up` |
+| 04 | [`examples/04_nl2a_weather_map`](examples/04_nl2a_weather_map/) | Prompt weather-map | `bash examples/04_nl2a_weather_map/run.sh` |
+| 05 | [`examples/05_meta_repair`](examples/05_meta_repair/) | Naprawa uszkodzonego kontraktu | inline |
+| 06 | [`examples/06_orders_agent`](examples/06_orders_agent/) | Kontrakt agenta zamówień | inline |
+| 07 | [`examples/07_invoices_agent`](examples/07_invoices_agent/) | Prompt agenta faktur | inline |
+| 08 | [`examples/08_evolution`](examples/08_evolution/) | Evolution proposals | `make evolution-check` |
+| 09 | [`examples/09_run_agent_hypervisor`](examples/09_run_agent_hypervisor/) | run-agent / lifecycle | `bash examples/09_run_agent_hypervisor/run.sh` |
+| 10 | [`examples/10_browser_operator`](examples/10_browser_operator/) | uri2ops mock browser | `run.sh` |
+| 11 | [`examples/11_playwright_browser`](examples/11_playwright_browser/) | uri2ops Playwright | `run.sh` (+ browser extra) |
+| 12 | [`examples/12_android_operator`](examples/12_android_operator/) | uri2ops Android ADB | `run.sh` |
+| 13 | [`examples/13_pcwin_operator`](examples/13_pcwin_operator/) | uri2ops Windows UIA | `run.sh` |
+| 13 | [`examples/13_nl2uri_multi_uri_graph`](examples/13_nl2uri_multi_uri_graph/) | nl2uri multi-output | `run.sh` |
+| 14 | [`examples/14_uri2ops_serve`](examples/14_uri2ops_serve/) | uri2ops HTTP daemon | `run.sh` |
+| 14 | [`examples/14_workflow_executor_mock`](examples/14_workflow_executor_mock/) | uri3 workflow executor | `run.sh` |
+| 15 | [`examples/15_compact_uri_flow`](examples/15_compact_uri_flow/) | Skrócony przepływ URI | `run.sh` |
+| 15 | [`examples/15_playwright_browser`](examples/15_playwright_browser/) | uri3 Playwright workflow | inline (mock via uri3) |
+| 16 | [`examples/16_llm_graph_planner`](examples/16_llm_graph_planner/) | LLM graph planner | `run.sh` |
+| 17 | [`examples/17_flow_vs_graph`](examples/17_flow_vs_graph/) | Compact flow vs expanded graph | `run.sh` |
+| 18 | [`examples/18_llm_flow_planner`](examples/18_llm_flow_planner/) | LLM compact flow planner | `run.sh` |
+| 20 | [`examples/20_touri_capabilities`](examples/20_touri_capabilities/) | `touri` capability manifests | `run.sh` |
+| 21 | [`examples/21_touri_voice`](examples/21_touri_voice/) | STT/TTS/voice jako capability pack | `run.sh` |
+| 22 | [`examples/22_markpact_weather`](examples/22_markpact_weather/) | `markpact://` capability + flow README | `run.sh` |
+| 23 | [`examples/23_nl_to_agent_tutorial`](examples/23_nl_to_agent_tutorial/) | **Tutorial NL → URI → wykonanie → agent HTTP** | `run.sh` |
 
 Docker + SSH testenv:
 
@@ -215,8 +272,30 @@ Rejestr wdrożeń: [`deployments/agent_deployments.yaml`](deployments/agent_depl
 ```bash
 hypervisor deployments
 hypervisor run-agent weather-map-agent.local --dry-run
+hypervisor run-agent weather-map-agent.local --detach --if-running reuse
+hypervisor inspect-agent weather-map-agent.local
+hypervisor supervise weather-map-agent.local --repair auto
+hypervisor run-agent weather-map-agent.local --detach --wait-healthy --supervise-repair auto
 make run-weather-agent
 ```
+
+`inspect-agent` rozdziela stan procesu od zdrowia usługi (`readiness.process`
+vs `readiness.health`) i dołącza probe agent card oraz ostatnie błędy z `log://`.
+`supervise --repair auto` klasyfikuje incydenty (port/health drift, stale pid)
+i wykonuje ograniczoną pętlę restart / sync_health. `--wait-healthy` na
+`run-agent` kończy się dopiero gdy usługa odpowiada na `/health`, nie tylko gdy PID istnieje.
+
+Ewolucyjny self-healing (`hypervisor repair`):
+
+```bash
+hypervisor repair diagnose weather-map-agent.local
+hypervisor repair apply weather-map-agent.local --safe
+hypervisor supervise weather-map-agent.local --repair auto --learn
+hypervisor repair learn output/incidents/.../inc_*.yaml
+```
+
+Incydenty są artefaktami ze schemą (`schemas/incident.schema.json`); nierozwiązane awarie
+generują propozycję ewolucji w `evolution/proposals/from_incident_*.yaml`.
 
 Zobacz [`examples/09_run_agent_hypervisor/`](examples/09_run_agent_hypervisor/README.md).
 

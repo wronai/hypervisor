@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.04s
+%% generated in 0.08s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
@@ -20,6 +20,14 @@ flowchart TD
     end
 
     subgraph Core
+        packages__urigen__urigen__cli___emit["_emit"]
+        packages__urigen__urigen__cli__cmd_plan["cmd_plan"]
+        packages__urigen__urigen__cli__cmd_generate["cmd_generate"]
+        packages__urigen__urigen__cli__cmd_verify["cmd_verify"]
+        packages__urigen__urigen__cli__cmd_explain["cmd_explain"]
+        packages__urigen__urigen__cli__cmd_apply["cmd_apply"]
+        packages__urigen__urigen__cli__build_parser["build_parser"]
+        packages__urigen__urigen__cli__main["main"]
         uri2ops__operation_registry__models__OperationSpec__from_mapping["from_mapping"]
         uri2ops__operation_registry__models__OperationSpec__to_dict["to_dict"]
         uri2ops__operation_registry__models__OperationRegistry__get["get"]
@@ -27,15 +35,7 @@ flowchart TD
         uri2ops__server__service__OperatorService__registry["registry"]
         uri2ops__server__service__OperatorService__list_operations["list_operations"]
         uri2ops__server__service__OperatorService__describe_operation["describe_operation"]
-        uri2ops__server__service__OperatorService__list_registry_sources["list_registry_sources"]
-        uri2ops__server__service__OperatorService__validate_task["validate_task"]
-        packages__uri3__uri3__graph__dependency_graph__adjacency["adjacency"]
-        packages__uri3__uri3__graph__dependency_graph__reverse_adjacency["reverse_adjacency"]
-        packages__uri3__uri3__graph__dependency_graph___visit_acyclic_nodes["_visit_acyclic_nodes"]
-        packages__uri3__uri3__graph__dependency_graph__dependency_summary["dependency_summary"]
-        uri3__graph__uri_graph__UriGraph__add_node["add_node"]
-        uri3__graph__uri_graph__UriGraph__add_edge["add_edge"]
-        ...["+352 more"]
+        ...["+382 more"]
     end
 
     subgraph Exporters
@@ -44,4 +44,4 @@ flowchart TD
         packages__resource_agent_hypervisor__hypervisor__contract_registry__cli_commands__run_export_md_command["run_export_md_command"]
     end
 
-    class uri2ops__cli___print,uri2ops__cli__operations_cmd,uri2ops__cli__registry_cmd,uri2ops__cli__validate_cmd,uri2ops__cli__plan_cmd,uri2ops__cli__run_cmd,uri2ops__cli__serve_cmd,uri2ops__cli__main,uri2ops__operation_registry__models__OperationSpec__from_mapping,uri2ops__operation_registry__models__OperationSpec__to_dict entry
+    class packages__urigen__urigen__cli___emit,packages__urigen__urigen__cli__cmd_plan,packages__urigen__urigen__cli__cmd_generate,packages__urigen__urigen__cli__cmd_verify,packages__urigen__urigen__cli__cmd_explain,packages__urigen__urigen__cli__cmd_apply,packages__urigen__urigen__cli__build_parser,packages__urigen__urigen__cli__main,uri2ops__cli___print,uri2ops__cli__operations_cmd entry

@@ -1,52 +1,52 @@
-# hypervisor | 1079 func | 292f | 22880L | python | 2026-06-14
+# hypervisor | 1190 func | 313f | 26044L | python | 2026-06-14
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.4  critical=47 (limit:10)  dup=3  cycles=0
+  CC̄=3.5  critical=58 (limit:10)  dup=3  cycles=0
 
 ALERTS[20]:
+  !!! cc_exceeded      build_incident_from_inspection = 29 (limit:15)
+  !!! cc_exceeded      run_agent = 27 (limit:15)
+  !!! cc_exceeded      inspect_agent = 26 (limit:15)
+  !!! high_fan_out     run_agent = 24 (limit:10)
+  !!! high_fan_out     inspect_agent = 22 (limit:10)
+  !!! high_fan_out     generate_ecosystem = 21 (limit:10)
   !!! high_fan_out     main = 20 (limit:10)
   !!! high_fan_out     scan_package_boundaries = 20 (limit:10)
   !!  cc_exceeded      _backend_from_target = 22 (limit:15)
   !!  cc_exceeded      scan_package_boundaries = 20 (limit:15)
-  !!  high_fan_out     PlaywrightBrowserAdapter.execute = 19 (limit:10)
-  !!  high_fan_out     register = 19 (limit:10)
-  !!  high_fan_out     run_uri_flow = 19 (limit:10)
-  !!  high_fan_out     run_uri_graph = 19 (limit:10)
-  !!  high_fan_out     resolve_llm_profile = 18 (limit:10)
-  !!  high_fan_out     mcp_router = 17 (limit:10)
 
-MODULES[489] (top by size):
+MODULES[522] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
+  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/supervisor.py] 475L C:0 F:14 CC↑26 D:4 (python)
   M[packages/nl2uri/nl2uri/graph_planner.py] 322L C:0 F:11 CC↑12 D:4 (python)
   M[packages/nl2uri/nl2uri/graph_repair.py] 315L C:0 F:27 CC↑7 D:2 (python)
-  M[packages/uri3/uri3/resolvers/explain.py] 250L C:0 F:9 CC↑14 D:7 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/cli.py] 311L C:0 F:21 CC↑5 D:0 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py] 292L C:0 F:13 CC↑27 D:5 (python)
+  M[packages/uri3/uri3/resolvers/explain.py] 250L C:0 F:9 CC↑14 D:9 (python)
   M[packages/uri2run/uri2run/runner.py] 249L C:0 F:18 CC↑13 D:9 (python)
   M[packages/nl2uri/nl2uri/cli.py] 246L C:0 F:15 CC↑6 D:0 (python)
   M[tree.txt] 240L C:0 F:0 CC↑0 D:0 (txt)
-  M[packages/uri3/uri3/results/envelope.py] 233L C:0 F:19 CC↑7 D:2 (python)
+  M[packages/uri3/uri3/results/envelope.py] 239L C:0 F:19 CC↑10 D:4 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/repair/supervisor.py] 230L C:0 F:6 CC↑12 D:1 (python)
+  M[packages/urigen/urigen/generator.py] 221L C:0 F:6 CC↑7 D:1 (python)
   M[packages/uri3/uri3/graph/step_runner.py] 219L C:0 F:8 CC↑6 D:1 (python)
-  M[packages/touri/touri/backend_dispatch.py] 216L C:0 F:18 CC↑7 D:2 (python)
-  M[packages/uri2verify/uri2verify/data_quality.py] 208L C:1 F:11 CC↑6 D:0 (python)
-  M[packages/uri2verify/uri2verify/replay.py] 187L C:0 F:13 CC↑7 D:4 (python)
-  M[pyproject.toml] 182L C:0 F:0 CC↑0 D:0 (toml)
-  M[examples/23_nl_to_agent_tutorial/run.sh] 174L C:0 F:2 CC↑0 D:0 (shell)
-  LANGS: python:353/yaml:67/shell:20/json:15/toml:14/other:7/txt:4/proto:3/yml:3/mk:2/j2:1
+  LANGS: python:376/yaml:68/shell:23/json:20/toml:15/other:7/txt:4/proto:3/yml:3/mk:2/j2:1
 
 HOTSPOTS[10]:
+  ★ run_agent fan=24  // Orchestrates 24 calls
+  ★ inspect_agent fan=22  // Inspect process, health, card and recent error logs for one deployment.
+  ★ generate_ecosystem fan=21  // Generate an isolated ecosystem artifact directory from a proposal.
   ★ main fan=20  // Orchestrates 20 calls
   ★ scan_package_boundaries fan=20  // Orchestrates 20 calls
-  ★ PlaywrightBrowserAdapter.execute fan=19  // Orchestrates 19 calls
-  ★ register fan=19  // Orchestrates 19 calls
-  ★ run_uri_flow fan=19  // Orchestrates 19 calls
 
-REFACTOR[9]:
-  [1] H/H Split god module goal.yaml (511L, 0 classes)
-  [2] H/H Split god module planfile.yaml (1319L, 0 classes)
-  [3] M/L Split _render (CC=18)
-  [4] M/L Split _backend_from_target (CC=22)
-  [5] M/L Split _check_summary (CC=16)
+REFACTOR[15]:
+  [1] H/L Split build_incident_from_inspection (CC=29)
+  [2] H/L Split run_agent (CC=27)
+  [3] H/L Split inspect_agent (CC=26)
+  [4] H/H Split god module goal.yaml (511L, 0 classes)
+  [5] H/H Split god module planfile.yaml (1319L, 0 classes)
 
 EVOLUTION:
-  2026-06-14 CC̄=3.4 crit=47 22880L // Automated analysis
+  2026-06-14 CC̄=3.5 crit=58 26044L // Automated analysis

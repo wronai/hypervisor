@@ -18,7 +18,8 @@
         "modify_agent",
         "new_resource",
         "new_projection",
-        "breaking_change"
+        "breaking_change",
+        "add_repair_capability"
       ]
     },
     "reason": {

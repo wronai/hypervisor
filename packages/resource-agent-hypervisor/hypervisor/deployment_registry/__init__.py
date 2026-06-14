@@ -10,10 +10,12 @@ from hypervisor.deployment_registry.runner import (
     agent_logs_uri,
     agent_status,
     build_run_plan,
+    inspect_agent,
     resolve_deployment,
     restart_agent,
     run_agent,
     stop_agent,
+    supervise_agent,
 )
 from hypervisor.deployment_registry.status import (
     deployment_from_uri_tree,
@@ -42,6 +44,7 @@ __all__ = [
     "default_registry_path",
     "deployment_from_uri_tree",
     "get_deployment_for_agent",
+    "inspect_agent",
     "list_deployments",
     "load_deployment_registry",
     "registry_summary",
@@ -52,6 +55,7 @@ __all__ = [
     "run_agent",
     "save_deployment_registry",
     "stop_agent",
+    "supervise_agent",
     "sync_from_uri_tree",
     "upsert_deployment",
     "verify_remote_deployment",

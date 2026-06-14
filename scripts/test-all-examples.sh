@@ -46,12 +46,8 @@ skip() {
   exit 77
 }
 
-# ── 01 quickstart (light subset — full run.sh runs entire test suite) ──
-ex01() {
-  make uri-tree >/dev/null
-  make validate >/dev/null
-  make graph >/dev/null
-}
+# ── 01 quickstart ──
+ex01() { bash examples/01_quickstart_local/run.sh; }
 
 # ── 02 scan HTTP (needs agent on :8101) ──
 ex02() {
@@ -73,7 +69,7 @@ ex03() {
 }
 
 # ── 04 nl2a weather ──
-ex04() { make nl2a-weather >/dev/null; make verify >/dev/null; }
+ex04() { bash examples/04_nl2a_weather_map/run.sh; }
 
 # ── 05 meta repair ──
 ex05() {
@@ -95,10 +91,7 @@ ex07() {
 ex08() { make evolution-check; }
 
 # ── 09 hypervisor lifecycle (dry-run only) ──
-ex09() {
-  hypervisor deployments | grep -q weather-map-agent
-  hypervisor run-agent weather-map-agent.local --dry-run | grep -q uvicorn
-}
+ex09() { bash examples/09_run_agent_hypervisor/run.sh; }
 
 # ── 10-22 with run.sh ──
 run_sh() {

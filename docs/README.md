@@ -2,9 +2,10 @@
 
 ## Start here
 
-- [`README.md`](../README.md) — instalacja, Makefile, przykłady
-- [`examples/README.md`](../examples/README.md) — katalog `examples/*/*`
+- [`README.md`](../README.md) — instalacja, Makefile, przykłady, `make ci-gate`
+- [`examples/README.md`](../examples/README.md) — katalog `examples/*/*`, `scripts/test-all-examples.sh`
 - [`CHANGELOG.md`](../CHANGELOG.md) · [`TODO.md`](../TODO.md)
+- [`CLI_MAP.md`](./CLI_MAP.md) — mapa CLI (`uri3 doctor`, `uri2run`, `touri`, …)
 
 ## v0.6 (aktualne)
 

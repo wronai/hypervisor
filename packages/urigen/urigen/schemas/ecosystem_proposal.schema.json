@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "urigen ecosystem proposal",
+  "type": "object",
+  "required": ["version", "proposal", "intent", "policy", "artifacts_to_generate"],
+  "properties": {
+    "version": { "const": 1 },
+    "proposal": {
+      "type": "object",
+      "required": ["id", "kind", "source_prompt"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "ecosystem" },
+        "source_prompt": { "type": "string" },
+        "profile": { "type": "string" }
+      }
+    },
+    "intent": { "type": "object" },
+    "policy": { "type": "object" },
+    "artifacts_to_generate": { "type": "array", "items": { "type": "string" } }
+  }
+}

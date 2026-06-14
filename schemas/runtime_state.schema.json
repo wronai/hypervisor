@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uri3.io/schemas/runtime_state.schema.json",
+  "title": "RuntimeStateArtifact",
+  "type": "object",
+  "required": ["apiVersion", "kind", "id", "status"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "apiVersion": { "const": "uri3.io/v1" },
+    "kind": { "const": "RuntimeState" },
+    "uri": {
+      "type": "object",
+      "properties": {
+        "self": { "type": "string", "pattern": "^runtime://" }
+      }
+    },
+    "id": { "type": "string" },
+    "agent_ref": { "type": "string" },
+    "status": {
+      "type": "object",
+      "properties": {
+        "process_status": { "type": "string" },
+        "health_status": { "type": "string" }
+      }
+    },
+    "process": {
+      "type": "object",
+      "properties": {
+        "pid": { "type": ["integer", "null"] },
+        "command": { "type": "string" }
+      }
+    },
+    "network": {
+      "type": "object",
+      "properties": {
+        "requested_port": { "type": ["integer", "null"] },
+        "effective_port": { "type": ["integer", "null"] },
+        "effective_health_uri": { "type": "string" }
+      }
+    },
+    "started_at": { "type": "string" },
+    "command": { "type": "string" },
+    "health_uri": { "type": "string" },
+    "log_uri": { "type": "string" },
+    "env": { "type": "object" }
+  },
+  "additionalProperties": true
+}

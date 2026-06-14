@@ -91,32 +91,12 @@ hypervisor deployments | grep -q weather-map-agent.local
 echo "Kontrakt: contracts/agents/weather_map_agent.yaml"
 echo "Kod:     $AGENT_DIR/"
 
-section "5. Uruchomienie agenta pod URL"
+section "5. Uruchomienie agenta pod URL (supervisor: process ≠ healthy)"
 
-agent_health_ok() {
-  local base="$1"
-  curl -sf --max-time 2 "${base}/health" 2>/dev/null \
-    | python -c "import json,sys; d=json.load(sys.stdin); sys.exit(0 if d.get('agent')=='weather-map-agent' and d.get('ok') else 1)" 2>/dev/null
-}
-
-resolve_running_agent_base() {
-  local status_json
-  status_json="$(hypervisor agent-status weather-map-agent.local --no-health 2>/dev/null || true)"
-  [[ -n "$status_json" ]] || return 1
-  printf '%s' "$status_json" | python -c "
-import json
-import sys
-
-data = json.load(sys.stdin)
-state = data.get('runtime_state') or {}
-health = state.get('health_uri') or data.get('health_uri')
-runtime = str(data.get('runtime_status') or '')
-if runtime == 'stale':
-    raise SystemExit(2)
-if not health:
-    raise SystemExit(1)
-print(str(health).rstrip('/'))
-"
+port_8101_in_use_by_other() {
+  curl -sf --max-time 2 "http://localhost:8101/health" >/dev/null 2>&1 \
+    && ! curl -sf --max-time 2 "http://localhost:8101/health" 2>/dev/null \
+      | python -c "import json,sys; d=json.load(sys.stdin); sys.exit(0 if d.get('agent')=='weather-map-agent' and d.get('ok') else 1)" 2>/dev/null
 }
 
 RUNTIME_STATUS="$(hypervisor agent-status weather-map-agent.local --no-health 2>/dev/null \
@@ -127,17 +107,9 @@ if [[ "$RUNTIME_STATUS" == "stale" ]]; then
 fi
 
 AGENT_PORT="${TUTORIAL_AGENT_PORT:-}"
-AGENT_BASE=""
-
-if EXISTING_BASE="$(resolve_running_agent_base 2>/dev/null || true)" && agent_health_ok "$EXISTING_BASE"; then
-  AGENT_BASE="$EXISTING_BASE"
-  echo "Agent weather-map już działa — używam $AGENT_BASE"
-else
-  if [[ -z "$AGENT_PORT" ]]; then
-    if agent_health_ok "http://localhost:8101"; then
-      AGENT_PORT=8101
-    else
-      AGENT_PORT="$(python - <<'PY'
+if [[ -z "$AGENT_PORT" ]]; then
+  if port_8101_in_use_by_other; then
+    AGENT_PORT="$(python - <<'PY'
 import socket
 s = socket.socket()
 s.bind(("127.0.0.1", 0))
@@ -145,30 +117,51 @@ print(s.getsockname()[1])
 s.close()
 PY
 )"
-    fi
-  fi
-  AGENT_BASE="http://localhost:${AGENT_PORT}"
-
-  if agent_health_ok "$AGENT_BASE"; then
-    echo "Agent weather-map już odpowiada na $AGENT_BASE"
-  elif [[ "$AGENT_PORT" != "8101" ]]; then
     echo "Port 8101 zajęty przez inny serwis — używam --port $AGENT_PORT"
-    hypervisor run-agent weather-map-agent.local --detach --port "$AGENT_PORT" | tail -n 20
   else
-    echo "Start w tle: hypervisor run-agent weather-map-agent.local --detach"
-    hypervisor run-agent weather-map-agent.local --detach | tail -n 20
+    AGENT_PORT=8101
   fi
 fi
 
-for _ in $(seq 1 30); do
-  if agent_health_ok "$AGENT_BASE"; then
-    break
-  fi
-  sleep 0.5
-done
+IF_RUNNING="reuse"
+[[ "$AGENT_PORT" != "8101" ]] && IF_RUNNING="restart"
+
+echo "Inspect przed startem (process vs health vs log_errors):"
+hypervisor inspect-agent weather-map-agent.local 2>/dev/null \
+  | python -c "import json,sys; d=json.load(sys.stdin); r=d.get('readiness') or {}; print(json.dumps(r, indent=2, ensure_ascii=False))" \
+  || true
 
 echo
-if agent_health_ok "$AGENT_BASE"; then
+echo "Start + bounded repair loop: hypervisor run-agent --wait-healthy --supervise-repair auto"
+set +e
+hypervisor run-agent weather-map-agent.local \
+  --detach \
+  --port "$AGENT_PORT" \
+  --if-running "$IF_RUNNING" \
+  --wait-healthy \
+  --supervise-repair auto 2>&1 | tail -n 25
+RUN_RC=$?
+set -e
+
+AGENT_BASE=""
+INSPECT_JSON="$(hypervisor inspect-agent weather-map-agent.local 2>/dev/null || true)"
+if [[ -n "$INSPECT_JSON" ]]; then
+  AGENT_BASE="$(printf '%s' "$INSPECT_JSON" | python -c '
+import json, sys
+data = json.load(sys.stdin)
+readiness = data.get("readiness") or {}
+port = readiness.get("effective_port")
+if port:
+    print(f"http://localhost:{port}")
+elif data.get("effective_health_uri"):
+    base = str(data["effective_health_uri"]).rstrip("/")
+    print(base[: -len("/health")] if base.endswith("/health") else base)
+')"
+fi
+AGENT_BASE="${AGENT_BASE:-http://localhost:${AGENT_PORT}}"
+
+echo
+if [[ "$RUN_RC" -eq 0 ]] && printf '%s' "$INSPECT_JSON" | python -c "import json,sys; sys.exit(0 if json.load(sys.stdin).get('ok') else 1)" 2>/dev/null; then
   echo "Health ($AGENT_BASE):"
   curl -sf "${AGENT_BASE}/health" | python -m json.tool
 
@@ -181,8 +174,11 @@ if agent_health_ok "$AGENT_BASE"; then
   curl -sf "${AGENT_BASE}/skills/read_weather_map?place=Gdansk&days=14" | python -m json.tool | head -n 15 \
     || echo "  (skill wymaga działającego RESOURCE_RUNTIME_URL — to normalne w tutorialu)"
 else
-  echo "Nie udało się potwierdzić health agenta na $AGENT_BASE."
-  echo "Sprawdź: hypervisor agent-status weather-map-agent.local"
+  echo "Nie udało się potwierdzić health agenta (supervisor degraded)."
+  echo "Inspect:"
+  printf '%s' "$INSPECT_JSON" | python -m json.tool 2>/dev/null | head -n 40 || true
+  echo "Sprawdź: hypervisor inspect-agent weather-map-agent.local"
+  echo "Naprawa: hypervisor supervise weather-map-agent.local --repair auto"
   echo "Jeśli port 8101 jest zajęty: TUTORIAL_AGENT_PORT=8111 bash examples/23_nl_to_agent_tutorial/run.sh"
 fi
 

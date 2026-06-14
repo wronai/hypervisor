@@ -28,6 +28,7 @@ members = [
     "uri2verify",
     "uri2voice",
     "uri3",
+    "urigen",
 ]
 
 [[package]]
@@ -3262,7 +3263,7 @@ requires-dist = [
 
 [[package]]
 name = "resource-agent-system"
-version = "0.5.18"
+version = "0.5.19"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
@@ -4129,6 +4130,27 @@ requires-dist = [
     { name = "typer", specifier = ">=0.12" },
 ]
 provides-extras = ["browser"]
+
+[[package]]
+name = "urigen"
+version = "0.1.0"
+source = { editable = "packages/urigen" }
+dependencies = [
+    { name = "jinja2" },
+    { name = "pyyaml" },
+    { name = "touri" },
+    { name = "uri2flow" },
+    { name = "uri3" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "jinja2", specifier = ">=3.1" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "touri", editable = "packages/touri" },
+    { name = "uri2flow", editable = "packages/uri2flow" },
+    { name = "uri3", editable = "packages/uri3" },
+]
 
 [[package]]
 name = "urllib3"

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resource-agent-system"
-version = "0.5.18"
+version = "0.5.19"
 description = "WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, touri, hypervisor, agent factory"
 readme = "README.md"
 license = "Apache-2.0"
@@ -53,6 +53,7 @@ uri2flow = "uri2flow.cli:main"
 uri2run = "uri2run.cli:main"
 touri = "touri.cli:main"
 uri2verify = "uri2verify.cli:main"
+urigen = "urigen.cli:main"
 nl2uri = "nl2uri.cli:main"
 nl2a = "nl2a.cli:main"
 
@@ -77,6 +78,7 @@ uri2voice = { workspace = true }
 uri2pact = { workspace = true }
 uri2run = { workspace = true }
 uri2verify = { workspace = true }
+urigen = { workspace = true }
 
 [tool.setuptools.packages.find]
 where = [
@@ -89,6 +91,7 @@ where = [
     "packages/uri2pact",
     "packages/uri2run",
     "packages/uri2verify",
+    "packages/urigen",
     "packages/resource-agent-hypervisor",
     "packages/resource-agent-factory",
     "examples/21_touri_voice",
@@ -100,6 +103,7 @@ include = [
     "uri2run*",
     "uri2verify*",
     "uri2voice*",
+    "urigen*",
     "touri*",
     "touri_examples*",
     "touri_examples_voice*",
@@ -125,10 +129,19 @@ uri2flow = [
 touri = [
     "schemas/*.json",
 ]
+urigen = [
+    "schemas/*.json",
+    "templates/*.j2",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--import-mode=importlib"
+markers = [
+    "examples: integration tests for examples/* demos",
+    "docker: requires docker daemon",
+    "slow: long-running tutorial or full-stack example",
+]
 pythonpath = [
     "packages/uri3",
     "packages/nl2uri",
@@ -139,6 +152,7 @@ pythonpath = [
     "packages/uri2pact",
     "packages/uri2run",
     "packages/uri2verify",
+    "packages/urigen",
     "packages/resource-agent-hypervisor",
     "packages/resource-agent-factory",
     "examples/21_touri_voice",

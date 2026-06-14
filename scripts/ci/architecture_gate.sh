@@ -6,6 +6,15 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
 PY="${PY:-python}"
+PACKAGE_PATHS=()
+for package_dir in "${ROOT}"/packages/*; do
+  if [ -d "$package_dir" ]; then
+    PACKAGE_PATHS+=("$package_dir")
+  fi
+done
+PACKAGE_PYTHONPATH="$(IFS=:; echo "${PACKAGE_PATHS[*]}"):${ROOT}/examples/21_touri_voice"
+export PYTHONPATH="${PACKAGE_PYTHONPATH}${PYTHONPATH:+:${PYTHONPATH}}"
+
 if [ -x "${ROOT}/.venv/bin/pytest" ]; then
   PYTEST="${ROOT}/.venv/bin/pytest"
   URI3="${ROOT}/.venv/bin/uri3"

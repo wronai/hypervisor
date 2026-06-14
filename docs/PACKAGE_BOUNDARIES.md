@@ -120,6 +120,15 @@ tests/uri2run/test_protocol_transports.py
 uri3 runtime_adapter + explain hints for docker/ssh/mcp/a2a
 ```
 
+Sprint B.4 (done in repo):
+
+```txt
+packages/urigen — URI Ecosystem Generator MVP
+urigen plan/generate/verify/explain/apply
+tests/urigen/test_urigen_cycle.py
+boundary rule: urigen cannot import uri2run.transports, uri2ops.server, or low-level hypervisor process runtime
+```
+
 Sprint 4 — Architecture Hardening (done in repo):
 
 ```txt

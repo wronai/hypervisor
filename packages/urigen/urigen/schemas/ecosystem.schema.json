@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "urigen ecosystem",
+  "type": "object",
+  "required": ["version", "ecosystem", "capabilities", "flows", "tests"],
+  "properties": {
+    "version": { "const": 1 },
+    "ecosystem": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string" },
+        "profile": { "type": "string" }
+      }
+    },
+    "capabilities": { "type": "array" },
+    "flows": { "type": "array" },
+    "tests": { "type": "array" }
+  }
+}

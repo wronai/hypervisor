@@ -16,7 +16,8 @@ Quick reference for the hypervisor monorepo CLIs.
 | Execute runtime transport directly | `uri2run call …` | uri2run |
 | Operator task (browser/OS) plan/run | `uri2ops plan`, `uri2ops run` | uri2ops |
 | Data quality / capability test plan / replay checks | `uri2verify …` | uri2verify |
-| Agent lifecycle (local/docker/ssh) | `hypervisor run-agent`, `hypervisor list` | hypervisor |
+| Agent lifecycle (local/docker/ssh) | `hypervisor deployments`, `hypervisor run-agent`, `hypervisor agent-status` | hypervisor |
+| Agent supervision / repair loop | `hypervisor inspect-agent`, `hypervisor supervise` | hypervisor |
 
 ## Typical flows
 
@@ -45,6 +46,20 @@ uri3 doctor --json
 ```
 
 CI (GitHub Actions): `.github/workflows/ci.yml` runs `scripts/ci/architecture_gate.sh` before the full suite.
+
+### Agent supervision
+
+```bash
+hypervisor run-agent weather-map-agent.local --detach --if-running reuse
+hypervisor run-agent weather-map-agent.local --detach --wait-healthy --supervise-repair auto
+hypervisor inspect-agent weather-map-agent.local
+hypervisor supervise weather-map-agent.local --repair auto
+```
+
+`inspect-agent` reports process liveness, health endpoint status, agent card
+probe, recent `log://` errors and incident codes. `supervise` keeps the loop
+bounded: inspect first, optionally sync runtime health URI or restart, inspect
+again.
 
 ## Runtime layering
 

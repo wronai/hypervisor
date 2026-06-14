@@ -15,15 +15,15 @@ pip install -e '.[windows]'   # Windows UIA
 
 | # | Katalog | Typ | Start |
 |---|---------|-----|-------|
-| 01 | [`01_quickstart_local`](./01_quickstart_local/) | pipeline | `make uri-tree` → `make test` |
+| 01 | [`01_quickstart_local`](./01_quickstart_local/) | pipeline | `bash examples/01_quickstart_local/run.sh` |
 | 02 | [`02_uri3_scan_http`](./02_uri3_scan_http/) | skan HTTP | wymaga agenta → [`03`](./03_ssh_remote_agent/) lub [`09`](./09_run_agent_hypervisor/) |
 | 03 | [`03_ssh_remote_agent`](./03_ssh_remote_agent/) | Docker + SSH | `make docker-testenv-up` / `down` |
-| 04 | [`04_nl2a_weather_map`](./04_nl2a_weather_map/) | generacja | `make nl2a-weather` |
+| 04 | [`04_nl2a_weather_map`](./04_nl2a_weather_map/) | generacja | `bash examples/04_nl2a_weather_map/run.sh` |
 | 05 | [`05_meta_repair`](./05_meta_repair/) | naprawa kontraktu | `make meta-repair` |
 | 06 | [`06_orders_agent`](./06_orders_agent/) | wzorzec YAML | walidacja kontraktu |
 | 07 | [`07_invoices_agent`](./07_invoices_agent/) | prompt NL | `meta_agent plan` / `pipeline` |
 | 08 | [`08_evolution`](./08_evolution/) | propozycje | `make evolution-check` |
-| 09 | [`09_run_agent_hypervisor`](./09_run_agent_hypervisor/) | lifecycle | `run-agent` / `stop-agent` / `logs` |
+| 09 | [`09_run_agent_hypervisor`](./09_run_agent_hypervisor/) | lifecycle | `bash examples/09_run_agent_hypervisor/run.sh` |
 
 ## Przegląd — uri2ops operator
 
@@ -43,6 +43,7 @@ pip install -e '.[windows]'   # Windows UIA
 | 14 | [`14_workflow_executor_mock`](./14_workflow_executor_mock/) | uri3 executor | `uri3 run-workflow --dry-run/--approve` |
 | 15 | [`15_compact_uri_flow`](./15_compact_uri_flow/) | uri2flow compact | `uri2flow expand` → `uri3 run-workflow` |
 | 15 | [`15_playwright_browser`](./15_playwright_browser/) | uri3 Playwright | `--browser playwright` |
+| 16 | [`16_llm_graph_planner`](./16_llm_graph_planner/) | LLM graph plan | `bash examples/16_llm_graph_planner/run.sh` |
 | 17 | [`17_flow_vs_graph`](./17_flow_vs_graph/) | flow vs graph | `nl2uri flow`, `uri3 expand-flow/run-flow` |
 | 18 | [`18_llm_flow_planner`](./18_llm_flow_planner/) | LLM compact flow | `nl2uri flow --llm --validate`, `uri3 run-flow` |
 | 20 | [`20_touri_capabilities`](./20_touri_capabilities/) | touri manifests | `touri validate/list/call` |
@@ -75,14 +76,28 @@ make docker-testenv-down
 ## Zasada architektury
 
 ```txt
+nl2uri   -> uri2flow -> uri3 (orchestration, explain, doctor)
+touri    -> uri2run (transport) -> uri2ops / python / shell / http / ...
+uri2verify = data quality, envelope checks (separate from uri2run execution)
+hypervisor = lifecycle, deployment registry
 uri3     = skanowanie, routing, discovery, workflow executor, logi, docker:// call
-nl2uri   = natural language -> URI plan (single, list, tree, flow, task, graph)
 uri2flow = compact URI flow -> expanded workflow graph (no execution)
-touri       -> generic new URI -> reusable capability backend (incl. voice STT/TTS)
-uri2ops     -> OS/UI/browser operations
-hypervisor = registry, policy, lifecycle agentów (run/stop/deploy/verify)
 nl2a     = pipeline prompt -> URI Tree -> Domain Pack -> agent
 ```
+
+## Testy examples
+
+Wszystkie przykłady są objęte integracją CI:
+
+```bash
+bash scripts/test-all-examples.sh   # 25 przykładów sekwencyjnie (PASS/FAIL/SKIP)
+pytest tests/examples -q            # pytest: run.sh + inline + smoke
+make examples-test                  # skrót Makefile
+make ci-gate                        # architecture-gate + pytest + examples-test
+```
+
+Katalog testów: `tests/examples/catalog.py` — każdy `examples/*/run.sh` musi być w katalogu.
+Markery: `@pytest.mark.docker` (ex03), `@pytest.mark.slow` (ex23), Playwright (ex11, wymaga `[browser]`).
 
 ## Najczęstsze komendy
 
@@ -99,5 +114,5 @@ uri3 run-workflow examples/14_workflow_executor_mock/task_graph.yaml --approve
 uri2ops run examples/10_browser_operator/task.health.yaml --adapter mock --approve
 hypervisor run-agent weather-map-agent.local --dry-run
 bash examples/23_nl_to_agent_tutorial/run.sh
-python -m pytest -q
+make ci-gate
 ```

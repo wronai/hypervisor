@@ -39,6 +39,7 @@ python -m uvicorn agents.generated.weather_map_agent.main:app --host 0.0.0.0 --p
 
 ```bash
 hypervisor run-agent weather-map-agent.local --detach
+hypervisor run-agent weather-map-agent.local --detach --wait-healthy --supervise-repair auto
 # foreground + reload:
 hypervisor run-agent weather-map-agent.local --reload
 make run-weather-agent
@@ -54,10 +55,18 @@ output/runtime/agents/weather-map-agent.local/state.json
 
 ```bash
 hypervisor agent-status weather-map-agent.local
+hypervisor inspect-agent weather-map-agent.local
+hypervisor supervise weather-map-agent.local
+hypervisor supervise weather-map-agent.local --repair auto
 uri3 scan http
 hypervisor scan http://localhost:8101
 curl http://localhost:8101/.well-known/agent-card.json
 ```
+
+`agent-status` pokazuje stan lifecycle, a `inspect-agent` rozdziela
+`process.running`, `health.ok`, agent card oraz błędy z `log://`. `supervise`
+uruchamia tę samą inspekcję jako pierwszy krok pętli naprawczej; `--repair auto`
+może zsynchronizować runtime `health_uri` albo wykonać bezpieczny restart.
 
 ## 5. Logi
 
@@ -83,6 +92,8 @@ Gdy plik logu nie istnieje, `uri3 logs` zwraca `exists: false` i `hint` — uruc
 ```bash
 hypervisor stop-agent weather-map-agent.local
 hypervisor restart-agent weather-map-agent.local
+hypervisor run-agent weather-map-agent.local --detach --if-running reuse
+hypervisor run-agent weather-map-agent.local --detach --if-running restart
 hypervisor agent-status weather-map-agent.local
 ```
 

@@ -44,6 +44,13 @@ packages:
       - hypervisor
       - touri.executor
 
+  urigen:
+    root: packages/urigen/urigen
+    forbidden:
+      - uri2run.transports
+      - uri2ops.server
+      - hypervisor.deployment_registry.process
+
   uri3:
     root: packages/uri3/uri3
     forbidden:

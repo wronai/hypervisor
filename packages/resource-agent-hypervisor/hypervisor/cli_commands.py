@@ -16,18 +16,21 @@ from hypervisor.deployment_registry.remote_runner import (
 )
 from hypervisor.deployment_registry.runner import (
     agent_logs_uri,
-    agent_status,
     build_run_plan,
     resolve_deployment,
-    restart_agent,
     run_agent,
-    stop_agent,
 )
 from hypervisor.uri.client import Uri3Client
 
 
 def echo_json(payload) -> None:
-    typer.echo(json.dumps(payload if isinstance(payload, dict) else getattr(payload, "__dict__", str(payload)), indent=2, ensure_ascii=False))
+    typer.echo(
+        json.dumps(
+            payload if isinstance(payload, dict) else getattr(payload, "__dict__", str(payload)),
+            indent=2,
+            ensure_ascii=False,
+        )
+    )
 
 
 def run_local_agent(
@@ -38,6 +41,9 @@ def run_local_agent(
     reload: bool,
     detach: bool,
     dry_run: bool,
+    if_running: str | None = None,
+    wait_healthy: bool = False,
+    supervise_repair: str = "auto",
 ) -> None:
     from hypervisor import Hypervisor
 
@@ -47,7 +53,9 @@ def run_local_agent(
     if dry_run:
         return
     if deployment.target_uri.startswith("ssh://"):
-        typer.echo("SSH targets require --dry-run. Use deploy-agent and verify-agent first.", err=True)
+        typer.echo(
+            "SSH targets require --dry-run. Use deploy-agent and verify-agent first.", err=True
+        )
         raise typer.Exit(1)
     if deployment.target_uri.startswith("docker://"):
         typer.echo("Use hypervisor deploy-agent for docker:// targets.", err=True)
@@ -70,9 +78,20 @@ def run_local_agent(
         )
     except FileNotFoundError:
         pass
-    result = run_agent(selector, port=port, host=host, reload=reload, detach=detach)
+    result = run_agent(
+        selector,
+        port=port,
+        host=host,
+        reload=reload,
+        detach=detach,
+        if_running=if_running,
+        wait_healthy=wait_healthy,
+        supervise_repair=supervise_repair,
+    )
     if detach:
         echo_json({"started": result})
+        if wait_healthy and not result.get("service_healthy", True):
+            raise typer.Exit(1)
 
 
 def deploy_agent(selector: str, *, apply: bool) -> None:

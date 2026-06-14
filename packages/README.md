@@ -12,7 +12,7 @@ Physical Python packages live under `packages/`:
 | `packages/uri2pact/` | `uri2pact` | `uri2pact` |
 | `packages/uri2run/` | `uri2run` | `uri2run` |
 | `packages/uri2verify/` | `uri2verify` | `uri2verify` |
-| `packages/uri2run/` | `uri2run` | `uri2run` |
+| `packages/urigen/` | `urigen` | `urigen` |
 | `packages/touri/` | `touri` | `touri`, `touri_examples` |
 | `packages/resource-agent-hypervisor/` | `resource-agent-hypervisor` | `hypervisor`, `meta_agent`, `runtime_client` |
 | `packages/resource-agent-factory/` | `resource-agent-factory` | `generator` |
@@ -51,7 +51,7 @@ uri2ops --help
 uri2run --help
 touri --help
 uri2verify --help
-uri2run --help
+urigen --help
 ```
 
 Governance:

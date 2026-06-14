@@ -1,0 +1,28 @@
+case:
+  id: health_timeout_after_dynamic_port
+  family:
+    - PORT_CONFLICT
+    - HEALTH_TIMEOUT
+
+symptoms:
+  - runtime_status_running
+  - health_failed
+  - dynamic_port_selected
+  - already_running_true
+
+diagnosis:
+  likely_causes:
+    - stale_process
+    - health_uri_not_updated
+    - uvicorn_started_but_app_failed
+    - wrong_module_path
+
+repair_sequence:
+  - read_logs
+  - sync_health_uri
+  - verify_effective_port
+  - restart_agent
+  - verify_effective_port
+
+regression_test:
+  source: testql-scenarios/repair/health_timeout_after_dynamic_port.testql.toon.yaml

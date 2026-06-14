@@ -20,6 +20,7 @@ _PACKAGE_MODULES = (
     "uri2verify",
     "uri2flow",
     "uri2pact",
+    "urigen",
 )
 
 _LEGACY_TOP_LEVEL = (

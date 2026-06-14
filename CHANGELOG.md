@@ -9,23 +9,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added comprehensive examples integration suite in `tests/examples/`:
+  `catalog.py`, parametrized `run.sh` tests, inline demos (02–08, 15pw), smoke
+  checks for touri manifests and architecture stack imports.
+- Added `scripts/ci/ensure_editable_install.sh` for examples running outside a
+  prepared venv.
+- Added CI job **Examples integration** (`.github/workflows/ci.yml`) with
+  Playwright browser extra.
+- Added pytest markers: `examples`, `docker`, `slow`.
+- Added `make examples-test`; `make ci-gate` now runs architecture + full pytest + examples.
+- Added `hypervisor inspect-agent` readiness block (process/health/card/effective_port).
+- Added `hypervisor supervise --repair auto|restart|sync_health` bounded repair loop.
+- Added `hypervisor run-agent --wait-healthy --supervise-repair auto`.
+- Added evolutionary repair layer `hypervisor/repair/` with schema-valid incidents,
+  error-family classifier, safe playbooks, repair memory, and `hypervisor repair learn`.
+- Added schemas: `incident.schema.json`, `repair_plan.schema.json`, `runtime_state.schema.json`.
+- Added `knowledge/repair_cases/` for deterministic repair sequences.
 - Added `docs/EXTERNAL_PACKAGES.md` with the local `semcod/*` and `wronai/*`
   package audit, version snapshot, integration boundary and recommended next
   package work.
-- Documented that current `markpact://` support in `touri` and `uri2flow`
-  parses README fenced blocks locally and does not require the `markpact`
-  runtime.
 - Completed the `uri2run` MVP runtime package with Python, shell, HTTP,
   `uri_flow`, `uri_graph`, `uri2ops` and mock transport entry points.
-- Added `stdio`, `sse` and `ws` `uri2run` transports plus runtime metadata
-  (`meta.runtime`, `meta.transport`, `meta.duration_ms`) on backend results.
-- Added `docker`, `ssh`, `mcp` and `a2a` `uri2run` protocol transports with
-  CLI/run-target routing.
+- Added `packages/urigen` as the URI Ecosystem Generator MVP with
+  `plan`, `generate`, `verify`, `explain`, and approval-gated `apply`.
 
 ### Changed
 
+- Updated `examples/01_quickstart_local/run.sh` to light smoke (`uri-tree`,
+  `validate`, `graph`) instead of full `make test`.
+- Updated `scripts/test-all-examples.sh` to use `run.sh` for examples 01, 04, 09.
+- Updated root and `examples/README.md` with run commands, example 16, and test/CI
+  instructions.
+- Split `uri3/doctor/checks.py` into `uri3/doctor/checks/` submodules with shared
+  `boundary_scanner`.
 - Updated README with the external package boundary and examples `17`, `18`,
   `20`, `21`, `22`.
+- Documented `urigen` in the root README, package README, package catalog,
+  CHANGELOG and TODO with its generator-only boundary and next roadmap items.
+- Extended `hypervisor run-agent` with `--if-running reuse|restart|fail` so
+  detached lifecycle handling can be explicit and idempotent.
 - Updated `docs/ROADMAP.md` with the `markpact` / `pactown` / `nlp2dsl` /
   `iterun` / `intract` integration sequence.
 - Added manual integration backlog items to `TODO.md` for `pactown`,
@@ -33,6 +55,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Delegated `touri` backend wrappers to `uri2run.run_backend` while preserving
   the existing `ServiceResult` envelope.
 - Extended `uri3 explain` to report `runtime_transport` for `uri2run` backends.
+
+### Fixed
+
+- Fixed `generator.verify` treating `agents/generated/__pycache__` as a generated
+  agent directory.
+- Fixed `examples/04_nl2a_weather_map` and `examples/20_touri_capabilities` for
+  editable install and verify flow.
+- Fixed idempotent `hypervisor run-agent --detach` in tutorial example 23
+  (`lifecycle.py` reuses healthy agent when already running).
+- Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
+- Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
+
+## [0.5.19] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/CLI_MAP.md
+- Update docs/DEPLOYMENT.md
+- Update docs/PACKAGE_BOUNDARIES.md
+- Update docs/PACKAGE_BOUNDARIES.yaml
+- Update docs/README.md
+- Update examples/09_run_agent_hypervisor/README.md
+- Update examples/README.md
+- ... and 4 more files
+
+### Test
+- Update tests/examples/catalog.py
+- Update tests/examples/conftest.py
+- Update tests/examples/test_examples_smoke.py
+- Update tests/examples/test_inline_examples.py
+- Update tests/examples/test_run_sh_examples.py
+- Update tests/generator/test_headers.py
+- Update tests/hypervisor/test_agent_runner.py
+- Update tests/hypervisor/test_hypervisor_cli.py
+- Update tests/hypervisor/test_repair_supervisor.py
+- Update tests/urigen/test_urigen_cycle.py
+
+### Other
+- Update Makefile
+- Update examples/01_quickstart_local/run.sh
+- Update examples/04_nl2a_weather_map/run.sh
+- Update examples/09_run_agent_hypervisor/run.sh
+- Update examples/13_nl2uri_multi_uri_graph/task_plan.yaml
+- Update examples/20_touri_capabilities/run.sh
+- Update examples/23_nl_to_agent_tutorial/run.sh
+- Update knowledge/repair_cases/health_timeout_after_dynamic_port.yaml
+- Update output/contract_registry.resolved.json
+- Update packages/resource-agent-factory/generator/verify.py
+- ... and 60 more files
 
 ## [0.5.18] - 2026-06-14
 
