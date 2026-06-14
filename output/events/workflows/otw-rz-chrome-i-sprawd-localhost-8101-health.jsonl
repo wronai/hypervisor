@@ -1,8 +1,0 @@
-{"at": "2026-06-14T11:30:53+00:00", "type": "WorkflowStarted", "workflow_id": "otw-rz-chrome-i-sprawd-localhost-8101-health", "run_id": "9c9f899da02a", "mode": "dry_run"}
-{"at": "2026-06-14T11:30:53+00:00", "type": "StepStarted", "workflow_id": "otw-rz-chrome-i-sprawd-localhost-8101-health", "step_id": "open_health", "uri": "browser://chrome/page/open", "operation": "open"}
-{"at": "2026-06-14T11:30:53+00:00", "type": "StepCompleted", "workflow_id": "otw-rz-chrome-i-sprawd-localhost-8101-health", "step_id": "open_health", "ok": true}
-{"at": "2026-06-14T11:30:53+00:00", "type": "StepStarted", "workflow_id": "otw-rz-chrome-i-sprawd-localhost-8101-health", "step_id": "extract_body", "uri": "dom://chrome/active/body", "operation": "read"}
-{"at": "2026-06-14T11:30:53+00:00", "type": "StepCompleted", "workflow_id": "otw-rz-chrome-i-sprawd-localhost-8101-health", "step_id": "extract_body", "ok": true}
-{"at": "2026-06-14T11:30:53+00:00", "type": "StepStarted", "workflow_id": "otw-rz-chrome-i-sprawd-localhost-8101-health", "step_id": "verify_ok", "uri": "assertion://contains", "operation": "check"}
-{"at": "2026-06-14T11:30:53+00:00", "type": "StepCompleted", "workflow_id": "otw-rz-chrome-i-sprawd-localhost-8101-health", "step_id": "verify_ok", "ok": true}
-{"at": "2026-06-14T11:30:53+00:00", "type": "WorkflowCompleted", "workflow_id": "otw-rz-chrome-i-sprawd-localhost-8101-health", "ok": true, "mode": "dry_run"}
