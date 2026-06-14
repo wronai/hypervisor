@@ -1,0 +1,14 @@
+deployments:
+  - id: weather-map-agent.local
+    agent_ref: agent://weather-map-agent
+    target_uri: local://agents/generated/weather_map_agent
+    card_uri: http://localhost:8101/.well-known/agent-card.json
+    health_uri: http://localhost:8101/health
+    status: generated
+
+  - id: user-agent.local
+    agent_ref: agent://user-agent
+    target_uri: local://agents/generated/user_agent
+    card_uri: http://localhost:8102/.well-known/agent-card.json
+    health_uri: http://localhost:8102/health
+    status: generated

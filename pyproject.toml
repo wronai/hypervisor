@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hypervisor"
-version = "0.1.1"
+version = "0.1.2"
 description = "WronAI Hypervisor — orchestrator and control plane for AI desktop agents, NLP-to-URI resolution, koru drivers, and virtualized execution"
 readme = "README.md"
 license = "Apache-2.0"

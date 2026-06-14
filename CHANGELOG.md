@@ -111,6 +111,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-06-14
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/meta_agent/__init__.py
+- Update tests/meta_agent/test_repair.py
+- Update tests/test_nl2a_v04.py
+
+### Other
+- Update deployments/agent_deployments.yaml
+- Update hypervisor/deployment_registry/loader.py
+- Update hypervisor/deployment_registry/models.py
+- Update hypervisor/deployment_registry/writer.py
+- Update meta_agent/domain_planner/llm_planner.py
+- Update meta_agent/repair.py
+- Update meta_agent/repair/__init__.py
+- Update meta_agent/repair/loader.py
+- Update meta_agent/repair/pipeline.py
+- Update meta_agent/repair/rules.py
+- ... and 4 more files
+
 ## [0.1.1] - 2026-06-14
 
 ### Docs
