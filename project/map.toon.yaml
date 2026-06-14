@@ -1,11 +1,11 @@
-# hypervisor | 452f 20700L | yaml:66,yml:3,toml:13,txt:4,shell:19,json:15,python:319,proto:3,j2:1,mk:2 | 2026-06-14
+# hypervisor | 459f 21184L | yaml:67,yml:3,txt:4,shell:19,json:15,toml:14,python:324,proto:3,j2:1,mk:2 | 2026-06-14
 # generated in 0.04s
-# stats: 971 func | 0 cls | 452 mod | CC̄=3.3 | critical:1 | cycles:0
-# alerts[5]: fan-out main=20; fan-out PlaywrightBrowserAdapter.execute=19; fan-out register=19; fan-out run_doctor=19; fan-out call_uri_flow_backend=18
-# hotspots[5]: main fan=20; PlaywrightBrowserAdapter.execute fan=19; register fan=19; run_doctor fan=19; resolve_llm_profile fan=18
+# stats: 999 func | 0 cls | 459 mod | CC̄=3.3 | critical:2 | cycles:0
+# alerts[5]: fan-out run_doctor=21; fan-out main=20; CC run_doctor=19; fan-out PlaywrightBrowserAdapter.execute=19; fan-out register=19
+# hotspots[5]: run_doctor fan=21; main fan=20; PlaywrightBrowserAdapter.execute fan=19; register fan=19; resolve_llm_profile fan=18
 # evolution: CC̄ 3.4→3.3 (improved -0.1)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[452]:
+M[459]:
   Dockerfile,13
   Makefile,111
   agents/generated/user_agent/__init__.py,4
@@ -43,6 +43,7 @@ M[452]:
   contracts/views.yaml,52
   deployments/agent_deployments.yaml,29
   docker-compose.yml,18
+  docs/PACKAGE_BOUNDARIES.yaml,58
   domains/weather_map/commands.yaml,8
   domains/weather_map/domain.yaml,9
   domains/weather_map/handlers/generate_weather_map.py,24
@@ -295,18 +296,22 @@ M[452]:
   packages/uri2ops/uri2ops/server/routes/tasks.py,40
   packages/uri2pact/pyproject.toml,15
   packages/uri2pact/uri2pact/__init__.py,20
-  packages/uri2pact/uri2pact/capabilities.py,34
-  packages/uri2pact/uri2pact/core.py,101
-  packages/uri2pact/uri2pact/flows.py,40
+  packages/uri2pact/uri2pact/capabilities.py,29
+  packages/uri2pact/uri2pact/core.py,131
+  packages/uri2pact/uri2pact/flows.py,85
+  packages/uri2run/pyproject.toml,21
+  packages/uri2run/uri2run/__init__.py,5
+  packages/uri2run/uri2run/context.py,22
+  packages/uri2run/uri2run/result.py,13
   packages/uri2verify/pyproject.toml,18
   packages/uri2verify/uri2verify/__init__.py,29
   packages/uri2verify/uri2verify/capability_plan.py,52
   packages/uri2verify/uri2verify/capability_tests.py,15
-  packages/uri2verify/uri2verify/cli.py,99
-  packages/uri2verify/uri2verify/data_quality.py,146
+  packages/uri2verify/uri2verify/cli.py,114
+  packages/uri2verify/uri2verify/data_quality.py,208
   packages/uri2verify/uri2verify/errors.py,22
-  packages/uri2verify/uri2verify/replay.py,183
-  packages/uri2verify/uri2verify/result_checks.py,79
+  packages/uri2verify/uri2verify/replay.py,187
+  packages/uri2verify/uri2verify/result_checks.py,88
   packages/uri2voice/pyproject.toml,21
   packages/uri2voice/uri2voice/__init__.py,7
   packages/uri2voice/uri2voice/artifacts.py,11
@@ -317,8 +322,8 @@ M[452]:
   packages/uri3/pyproject.toml,30
   packages/uri3/uri3/cli/__init__.py,5
   packages/uri3/uri3/cli/commands/discovery.py,79
-  packages/uri3/uri3/cli/commands/doctor.py,71
-  packages/uri3/uri3/cli/commands/explain.py,42
+  packages/uri3/uri3/cli/commands/doctor.py,75
+  packages/uri3/uri3/cli/commands/explain.py,54
   packages/uri3/uri3/cli/commands/flow.py,100
   packages/uri3/uri3/cli/commands/graph.py,23
   packages/uri3/uri3/cli/commands/replay.py,46
@@ -341,9 +346,10 @@ M[452]:
   packages/uri3/uri3/docker/controller.py,36
   packages/uri3/uri3/docker/runner.py,23
   packages/uri3/uri3/doctor/__init__.py,5
-  packages/uri3/uri3/doctor/checks.py,238
+  packages/uri3/uri3/doctor/checks.py,242
+  packages/uri3/uri3/doctor/envelope_migrate.py,42
   packages/uri3/uri3/doctor/registry_index.py,79
-  packages/uri3/uri3/doctor/runner.py,58
+  packages/uri3/uri3/doctor/runner.py,79
   packages/uri3/uri3/graph/__init__.py,57
   packages/uri3/uri3/graph/adapters/__init__.py,3
   packages/uri3/uri3/graph/adapters/base.py,12
@@ -355,11 +361,11 @@ M[452]:
   packages/uri3/uri3/graph/artifacts.py,33
   packages/uri3/uri3/graph/conditions.py,24
   packages/uri3/uri3/graph/dependency_graph.py,116
-  packages/uri3/uri3/graph/event_emitter.py,98
+  packages/uri3/uri3/graph/event_emitter.py,109
   packages/uri3/uri3/graph/event_log.py,20
   packages/uri3/uri3/graph/execution_models.py,135
   packages/uri3/uri3/graph/execution_plan.py,63
-  packages/uri3/uri3/graph/graph_executor.py,85
+  packages/uri3/uri3/graph/graph_executor.py,95
   packages/uri3/uri3/graph/graph_serializer.py,63
   packages/uri3/uri3/graph/graph_validator.py,73
   packages/uri3/uri3/graph/models.py,88
@@ -394,7 +400,8 @@ M[452]:
   packages/uri3/uri3/resolvers/dispatch.py,67
   packages/uri3/uri3/resolvers/docker_resolver.py,154
   packages/uri3/uri3/resolvers/env_resolver.py,94
-  packages/uri3/uri3/resolvers/explain.py,169
+  packages/uri3/uri3/resolvers/explain.py,209
+  packages/uri3/uri3/resolvers/explain_verification.py,60
   packages/uri3/uri3/resolvers/log_query.py,55
   packages/uri3/uri3/resolvers/log_resolver.py,85
   packages/uri3/uri3/resolvers/protocol_resolver.py,27
@@ -415,7 +422,7 @@ M[452]:
   planfile.yaml,1319
   prefact.yaml,97
   project.sh,59
-  pyproject.toml,176
+  pyproject.toml,177
   runtime_client/client.py,0
   schemas/agent_contract.schema.json,79
   schemas/command_contract.schema.json,43
@@ -462,6 +469,10 @@ D:
   packages/uri3/uri3/doctor/runner.py:
     e: run_doctor
     run_doctor()
+  packages/uri3/uri3/cli/commands/explain.py:
+    e: register,_render
+    register(app)
+    _render(payload)
   uri2ops/operation_registry/validator.py:
     e: validate_registry_schema,validate_operation_registry
     validate_registry_schema(data)
@@ -487,21 +498,22 @@ D:
     _analyze_query(uri;spec)
     analyze_uri(uri)
     describe_uri(value)
-  packages/uri3/uri3/resolvers/explain.py:
-    e: _find_repo_root,load_touri_config,default_touri_registry,_match_uri3,_match_touri,_match_uri2ops,_match_hypervisor,explain_uri
-    _find_repo_root(start)
-    load_touri_config(root)
-    default_touri_registry(root)
-    _match_uri3(scheme;uri)
-    _match_touri(uri;registry_root)
-    _match_uri2ops(scheme;uri;root)
-    _match_hypervisor(scheme;uri)
-    explain_uri(uri)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/selector.py:
     e: parse_hypervisor_uri,_prefer_local_deployment,resolve_deployment
     parse_hypervisor_uri(uri)
     _prefer_local_deployment(matches)
     resolve_deployment(selector)
+  packages/uri3/uri3/resolvers/explain.py:
+    e: _find_repo_root,load_touri_config,default_touri_registry,runtime_transport_for_match,_match_uri3,_match_touri,_match_uri2ops,_match_hypervisor,explain_uri
+    _find_repo_root(start)
+    load_touri_config(root)
+    default_touri_registry(root)
+    runtime_transport_for_match(match)
+    _match_uri3(scheme;uri)
+    _match_touri(uri;registry_root)
+    _match_uri2ops(scheme;uri;root)
+    _match_hypervisor(scheme;uri)
+    explain_uri(uri)
   packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_checks/capabilities.py:
     e: validate_capability_cross_refs
     validate_capability_cross_refs(registry)
@@ -516,10 +528,6 @@ D:
     normalize_graph_payload(data)
     task_steps_to_graph(task;steps)
     workflow_manifest(graph)
-  packages/uri3/uri3/cli/commands/explain.py:
-    e: register,_render
-    register(app)
-    _render(payload)
   packages/uri3/uri3/results/service_result.py:
     e: ServiceResult,service_result
     ServiceResult: finalize(0),_default_error_source(0),to_dict(0)
@@ -612,6 +620,18 @@ D:
     list_deployments(registry)
     get_deployment_for_agent(agent_ref)
     registry_summary(registry)
+  packages/uri3/uri3/doctor/checks.py:
+    e: _check,check_config,check_contract_registry,check_touri_registry,check_uri2ops_registry,check_explain_smoke,check_result_envelope,check_recent_workflow_logs,check_capability_plan,check_replay_failures
+    _check(id;ok)
+    check_config(root)
+    check_contract_registry(root)
+    check_touri_registry(root;registry_path)
+    check_uri2ops_registry(root)
+    check_explain_smoke(root;registry_path)
+    check_result_envelope()
+    check_recent_workflow_logs(root)
+    check_capability_plan(root)
+    check_replay_failures(root)
   uri2ops/operation_registry/loader.py:
     e: default_registry_path,registry_schema_path,load_operation_registry
     default_registry_path()
@@ -710,28 +730,6 @@ D:
     verify_generated_agent(agent_dir)
     verify_generated(root)
     main(argv)
-  packages/uri2verify/uri2verify/cli.py:
-    e: replay_cmd,capability_plan_cmd,data_quality_cmd,_render_replay,main
-    replay_cmd(source;json_out;timeline;create_test)
-    capability_plan_cmd(root)
-    data_quality_cmd(registry;uri;payload_json)
-    _render_replay(payload)
-    main(argv)
-  packages/uri2verify/uri2verify/data_quality.py:
-    e: ValidatorRunner,run_validators,check_confidence,apply_data_quality
-    ValidatorRunner(Protocol): __call__(3)
-    run_validators()
-    check_confidence(result)
-    apply_data_quality()
-  packages/uri2pact/uri2pact/core.py:
-    e: is_markpact_registry,find_repo_root,resolve_markpact_ref,extract_markpact_blocks,load_markpact_markdown,parse_markpact_yaml_blocks,_block_id
-    is_markpact_registry(ref)
-    find_repo_root(start)
-    resolve_markpact_ref(ref)
-    extract_markpact_blocks(markdown;block_type)
-    load_markpact_markdown(ref)
-    parse_markpact_yaml_blocks(markdown;block_type)
-    _block_id(block;data;block_type)
   meta_agent/planner.py:
     e: slugify,package_name,singularize,infer_intent,intent_to_agent_spec
     slugify(value)
@@ -762,18 +760,14 @@ D:
     build_deployment_env_map(deployment_id;agent_ref;deployment_env)
     resolve_deployment_env(deployment_id;agent_ref;deployment_env)
     default_log_uri(deployment_id;agent_ref)
-  packages/uri3/uri3/doctor/checks.py:
-    e: _check,check_config,check_contract_registry,check_touri_registry,check_uri2ops_registry,check_explain_smoke,check_result_envelope,check_recent_workflow_logs,check_capability_plan,check_replay_failures
-    _check(id;ok)
-    check_config(root)
-    check_contract_registry(root)
-    check_touri_registry(root;registry_path)
-    check_uri2ops_registry(root)
-    check_explain_smoke(root;registry_path)
-    check_result_envelope()
-    check_recent_workflow_logs(root)
-    check_capability_plan(root)
-    check_replay_failures(root)
+  packages/uri3/uri3/resolvers/explain_verification.py:
+    e: summarize_fallbacks,build_verification_hints
+    summarize_fallbacks(fallbacks)
+    build_verification_hints()
+  packages/uri3/uri3/doctor/envelope_migrate.py:
+    e: migrate_workflow_log,migrate_workflow_logs
+    migrate_workflow_log(path)
+    migrate_workflow_logs(root)
   packages/uri3/uri3/graph/models.py:
     e: GraphNode,GraphEdge,WorkflowGraph
     GraphNode: from_dict(1),to_dict(0)
@@ -843,13 +837,6 @@ D:
     _assign_missing_step_ids(steps)
     _prune_unknown_after_refs(steps)
     ensure_step_ids(steps)
-  packages/uri2verify/uri2verify/result_checks.py:
-    e: data_quality_status_from_result,verification_status_from_result,apply_verification_statuses,enrich_result_dict,technical_vs_business_ok
-    data_quality_status_from_result(result)
-    verification_status_from_result(result)
-    apply_verification_statuses(result)
-    enrich_result_dict(payload)
-    technical_vs_business_ok(payload)
   meta_agent/repair/rules.py:
     e: repair_agent_block,repair_duplicate_capability_names,repair_missing_capability_type,repair_resource_read_capability,repair_command_capability,repair_capabilities
     repair_agent_block(data;path_stem;warnings)
@@ -1023,9 +1010,6 @@ D:
   packages/nl2uri/nl2uri/domain_planner.py:
     e: plan_from_prompt
     plan_from_prompt(prompt;use_llm)
-  packages/uri2pact/uri2pact/flows.py:
-    e: load_markpact_flow_dict
-    load_markpact_flow_dict(ref)
   packages/resource-agent-hypervisor/meta_agent/cli.py:
     e: main
     main()
@@ -1153,6 +1137,15 @@ D:
     graph(prompt;json_out;llm;no_llm;validate;dry_run)
     generate(prompt;out;no_llm;json_out)
     main()
+  packages/nl2uri/nl2uri/flow_extract.py:
+    e: _node_to_compact_step,_nodes_to_compact_steps,_normalize_node_list,_extract_from_flow_do,_extract_from_steps,_extract_from_graph,extract_flow_payload
+    _node_to_compact_step(node)
+    _nodes_to_compact_steps(nodes)
+    _normalize_node_list(nodes)
+    _extract_from_flow_do(body)
+    _extract_from_steps(body)
+    _extract_from_graph(body)
+    extract_flow_payload(raw)
   packages/nl2uri/nl2uri/planner_templates.py:
     e: slug,llm_uri_from_env,is_weather_prompt,deterministic_weather_plan,generic_plan
     slug(text)
@@ -1203,15 +1196,28 @@ D:
     is_process_alive(pid)
     runtime_status(deployment_id;root)
     now_iso()
-  packages/nl2uri/nl2uri/flow_extract.py:
-    e: _node_to_compact_step,_nodes_to_compact_steps,_normalize_node_list,_extract_from_flow_do,_extract_from_steps,_extract_from_graph,extract_flow_payload
-    _node_to_compact_step(node)
-    _nodes_to_compact_steps(nodes)
-    _normalize_node_list(nodes)
-    _extract_from_flow_do(body)
-    _extract_from_steps(body)
-    _extract_from_graph(body)
-    extract_flow_payload(raw)
+  packages/uri2verify/uri2verify/cli.py:
+    e: replay_cmd,capability_plan_cmd,data_quality_cmd,_render_replay,_render_replay_header,_render_replay_events,main
+    replay_cmd(source;json_out;timeline;create_test)
+    capability_plan_cmd(root)
+    data_quality_cmd(registry;uri;payload_json)
+    _render_replay(payload)
+    _render_replay_header(payload)
+    _render_replay_events(name;events;detail_key)
+    main(argv)
+  packages/uri2verify/uri2verify/data_quality.py:
+    e: ValidatorRunner,_validator_payload,_validation_detail,_append_quality_error,_with_verification_statuses,run_validators,check_confidence,check_relevance_required,_quality_settings,_check_result_quality,apply_data_quality
+    ValidatorRunner(Protocol): __call__(3)
+    _validator_payload(result;payload)
+    _validation_detail(validation)
+    _append_quality_error(result)
+    _with_verification_statuses(result)
+    run_validators()
+    check_confidence(result)
+    check_relevance_required(result)
+    _quality_settings(data_quality)
+    _check_result_quality(result;data_quality)
+    apply_data_quality()
   packages/uri3/uri3/graph/execution_plan.py:
     e: build_execution_plan,prepare_workflow,workflow_completion_message
     build_execution_plan(graph)
@@ -1231,6 +1237,10 @@ D:
     _playwright_ready()
     resolve_browser_mode(context)
     cleanup_browser_adapters(context)
+  packages/uri3/uri3/cli/helpers.py:
+    e: quick_reference,list_payload
+    quick_reference()
+    list_payload()
   packages/uri3/uri3/scanner/scanner.py:
     e: scan_log,scan
     scan_log(uri)
@@ -1302,9 +1312,6 @@ D:
     validate_flow_document(data)
     validate_expanded_flow(data)
     repair_and_validate_flow(raw;prompt)
-  packages/uri2pact/uri2pact/capabilities.py:
-    e: load_markpact_capability_dicts
-    load_markpact_capability_dicts(ref)
   packages/resource-agent-hypervisor/hypervisor/cli.py:
     e: call,scan,resolve,status,config_cmd,deployments_list,run_agent_cmd,stop_agent_cmd,restart_agent_cmd,agent_status_cmd,logs_cmd,deploy_agent_cmd,verify_agent_cmd,docker_cmd,replay_failure_cmd,main
     call(uri)
@@ -1379,10 +1386,32 @@ D:
     e: dry_run_workflow,run_workflow
     dry_run_workflow(source)
     run_workflow(source)
-  packages/uri3/uri3/cli/helpers.py:
-    e: quick_reference,list_payload
-    quick_reference()
-    list_payload()
+  packages/uri2verify/uri2verify/result_checks.py:
+    e: _has_data_quality_source,_has_data_quality_payload,data_quality_status_from_result,verification_status_from_result,apply_verification_statuses,enrich_result_dict,technical_vs_business_ok
+    _has_data_quality_source(result)
+    _has_data_quality_payload(result)
+    data_quality_status_from_result(result)
+    verification_status_from_result(result)
+    apply_verification_statuses(result)
+    enrich_result_dict(payload)
+    technical_vs_business_ok(payload)
+  packages/uri2pact/uri2pact/capabilities.py:
+    e: load_markpact_capability_dicts
+    load_markpact_capability_dicts(ref)
+  packages/uri2pact/uri2pact/core.py:
+    e: is_markpact_registry,find_repo_root,resolve_markpact_ref,_split_markpact_target,_resolve_markpact_path,extract_markpact_blocks,load_markpact_markdown,parse_markpact_yaml_blocks,_parse_block_yaml,_matches_fragment,_typed_block_id,_block_id
+    is_markpact_registry(ref)
+    find_repo_root(start)
+    resolve_markpact_ref(ref)
+    _split_markpact_target(ref)
+    _resolve_markpact_path(raw_path)
+    extract_markpact_blocks(markdown;block_type)
+    load_markpact_markdown(ref)
+    parse_markpact_yaml_blocks(markdown;block_type)
+    _parse_block_yaml(block;block_type)
+    _matches_fragment(fragment;block_id;meta_id)
+    _typed_block_id(data;block_type)
+    _block_id(block;data;block_type)
   packages/uri3/uri3/docker/runner.py:
     e: run_command
     run_command(cmd)
@@ -1418,11 +1447,27 @@ D:
     resolve_a2a(uri)
     resolve_mcp(uri)
     resolve_resource(uri)
+  packages/uri3/uri3/doctor/registry_index.py:
+    e: build_capability_index,build_operation_index,build_uri_index,write_registry_indexes
+    build_capability_index(root;registry_path)
+    build_operation_index(root)
+    build_uri_index(root;registry_path)
+    write_registry_indexes(root)
   packages/touri/touri_examples/validators.py:
     e: always_pass,reject_low_confidence,low_confidence_backend
     always_pass(payload;context)
     reject_low_confidence(payload;context)
     low_confidence_backend(payload;context)
+  packages/touri/touri/cli.py:
+    e: _print,cmd_list,cmd_validate,cmd_call,cmd_register,cmd_explain,build_parser,main
+    _print(payload)
+    cmd_list(args)
+    cmd_validate(args)
+    cmd_call(args)
+    cmd_register(args)
+    cmd_explain(args)
+    build_parser()
+    main(argv)
   packages/touri/touri/manifest.py:
     e: _read_yaml,_parse_capability_block,_parse_backend_block,_mapping_block,_list_block,load_manifest_from_dict,load_manifest
     _read_yaml(path)
@@ -1470,6 +1515,12 @@ D:
     build_graph_planner_system_prompt()
     call_graph_planner_llm(prompt)
     plan_graph_with_llm(prompt)
+  packages/uri2verify/uri2verify/capability_plan.py:
+    e: _cap_value,_resource_read_check,_command_check,build_capability_test_plan
+    _cap_value(capability;field)
+    _resource_read_check(capability)
+    _command_check(capability)
+    build_capability_test_plan(capabilities)
   packages/resource-agent-hypervisor/hypervisor/config/defaults.py:
     e: load_yaml_file,embedded_defaults_raw,apply_builtin_defaults,get_default_config
     load_yaml_file(path)
@@ -1529,28 +1580,17 @@ D:
     skill_create_user(payload)
     skill_assign_user_role(payload)
     _uri_allowed(uri;templates)
-  packages/uri3/uri3/doctor/registry_index.py:
-    e: build_capability_index,build_operation_index,build_uri_index,write_registry_indexes
-    build_capability_index(root;registry_path)
-    build_operation_index(root)
-    build_uri_index(root;registry_path)
-    write_registry_indexes(root)
-  packages/touri/touri/cli.py:
-    e: _print,cmd_list,cmd_validate,cmd_call,cmd_register,cmd_explain,build_parser,main
-    _print(payload)
-    cmd_list(args)
-    cmd_validate(args)
-    cmd_call(args)
-    cmd_register(args)
-    cmd_explain(args)
-    build_parser()
-    main(argv)
-  packages/uri2verify/uri2verify/capability_plan.py:
-    e: _cap_value,_resource_read_check,_command_check,build_capability_test_plan
-    _cap_value(capability;field)
-    _resource_read_check(capability)
-    _command_check(capability)
-    build_capability_test_plan(capabilities)
+  packages/uri3/uri3/graph/event_emitter.py:
+    e: redact_step_payload,record_step,record_step_started,record_step_finished,record_workflow_started,record_workflow_completed
+    redact_step_payload(payload)
+    record_step(workflow_id;context;event)
+    record_step_started(node)
+    record_step_finished(step_id)
+    record_workflow_started(workflow_id)
+    record_workflow_completed(workflow_id)
+  packages/uri2run/uri2run/context.py:
+    e: RunContext
+    RunContext: from_mapping(1)
   uri2ops/operation_registry/dispatcher.py:
     e: _split_python_uri,call_handler,dispatch
     _split_python_uri(uri)
@@ -1562,14 +1602,6 @@ D:
   packages/uri3/uri3/logs/writer.py:
     e: append_log
     append_log(stream;message)
-  packages/uri3/uri3/graph/event_emitter.py:
-    e: redact_step_payload,record_step,record_step_started,record_step_finished,record_workflow_started,record_workflow_completed
-    redact_step_payload(payload)
-    record_step(workflow_id;context;event)
-    record_step_started(node)
-    record_step_finished(step_id)
-    record_workflow_started(workflow_id)
-    record_workflow_completed(workflow_id)
   uri3/protocols/normalizer.py:
     e: normalize_uri
     normalize_uri(uri)
@@ -1639,6 +1671,14 @@ Example:
     upsert_deployment(registry;deployment)
     remove_deployment(registry;deployment_id)
     write_deployment_registry(deployments)
+  packages/uri2pact/uri2pact/flows.py:
+    e: _flow_blocks,_require_flow_blocks,_require_fragment_match,_require_unambiguous_flow,_select_flow_block,load_markpact_flow_dict
+    _flow_blocks(markdown;readme_path)
+    _require_flow_blocks(all_blocks)
+    _require_fragment_match(matches)
+    _require_unambiguous_flow(all_blocks)
+    _select_flow_block(all_blocks;matches)
+    load_markpact_flow_dict(ref)
   uri2ops/operation_registry/models.py:
     e: OperationSpec,OperationRegistry
     OperationSpec: from_mapping(3),to_dict(0)
@@ -1681,6 +1721,10 @@ Example:
     e: build_generate_plan,write_generated_compose
     build_generate_plan(ref)
     write_generated_compose(ref)
+  packages/uri3/uri3/cli/main.py:
+    e: main,main_entry
+    main(ctx)
+    main_entry()
   uri3/protocols/parser.py:
     e: ParsedURI,parse_uri
     ParsedURI:
@@ -1777,10 +1821,6 @@ Example:
     ResourceRuntimeClient: __init__(2),read_resource(1),dispatch_command(2)  # Small HTTP client used by generated thin agents.
 
 Expected r...
-  packages/uri3/uri3/cli/main.py:
-    e: main,main_entry
-    main(ctx)
-    main_entry()
   packages/uri2ops/uri2ops/server/routes/mcp.py:
     e: mcp_router
     mcp_router(service)
@@ -1880,9 +1920,6 @@ Expected r...
     e: generate,main
     generate(prompt;no_llm;out_dir)
     main()
-  packages/uri2verify/uri2verify/capability_tests.py:
-    e: capability_test_plan_from_registry
-    capability_test_plan_from_registry(registry)
   meta_agent/models.py:
     e: AgentCreationIntent,RepairResult,PipelineResult,dump_yaml
     AgentCreationIntent:  # Normalized request to create an agent...
@@ -1912,13 +1949,18 @@ Expected r...
   packages/resource-agent-hypervisor/hypervisor/contract_registry/validate.py:
     e: validate_registry
     validate_registry(registry)
+  packages/uri2run/uri2run/result.py:
+    e: with_transport_meta
+    with_transport_meta(result)
+  packages/uri2verify/uri2verify/capability_tests.py:
+    e: capability_test_plan_from_registry
+    capability_test_plan_from_registry(registry)
   goal.yaml:
   manifest.yaml:
   planfile.yaml:
   Makefile:
   docker-compose.yml:
   nlp2uri.yaml:
-  pyproject.toml:
   tree.txt:
   prefact.yaml:
   Dockerfile:
@@ -1935,7 +1977,6 @@ Expected r...
   schemas/views.schema.json:
   schemas/evolution_proposal.schema.json:
   packages/uri2ops/pyproject.toml:
-  packages/uri2ops/uri2ops/__init__.py:
   generator/__init__.py:
   uri2ops/schemas/operation_registry.schema.json:
   uri2ops/schemas/operator_task.schema.json:
@@ -1959,15 +2000,14 @@ Expected r...
   packages/uri3/uri3/config/__init__.py:
   hypervisor/uri2llm/pypi_resolver.py:
   uri3/resolvers/__init__.py:
+  packages/uri3/uri3/doctor/__init__.py:
   packages/uri3/contracts/views.yaml:
   packages/uri3/contracts/resources.yaml:
   domains/weather_map/proto/weather_map.proto:
   contracts/agents/weather_map_agent.yaml:
   packages/uri2flow/pyproject.toml:
-  packages/uri2flow/uri2flow/__init__.py:
   packages/uri2flow/uri2flow/schemas/uri_flow.schema.json:
   packages/uri2flow/uri2flow/loaders/__init__.py:
-  packages/uri2flow/uri2flow/loaders/markpact_loader.py:
   packages/touri/pyproject.toml:
   packages/touri/touri/__init__.py:
   packages/touri/touri/schemas/uri_capability.schema.json:
@@ -1990,7 +2030,6 @@ Expected r...
   packages/resource-agent-factory/agents/generated/user_agent/.generated.yaml:
   packages/nl2uri/pyproject.toml:
   packages/uri2verify/pyproject.toml:
-  packages/uri2verify/uri2verify/__init__.py:
   packages/uri2pact/pyproject.toml:
   packages/uri2pact/uri2pact/__init__.py:
   packages/resource-agent-hypervisor/pyproject.toml:
@@ -2133,4 +2172,11 @@ Expected r...
   integration/uri2flow/Makefile.optional.snippet.mk:
   integration/touri/pyproject.optional.snippet.toml:
   integration/touri/Makefile.optional.snippet.mk:
-  packages/uri3/uri3/doctor/__init__.py:
+  pyproject.toml:
+  packages/uri2ops/uri2ops/__init__.py:
+  packages/uri2flow/uri2flow/__init__.py:
+  packages/uri2flow/uri2flow/loaders/markpact_loader.py:
+  packages/uri2run/pyproject.toml:
+  packages/uri2run/uri2run/__init__.py:
+  packages/uri2verify/uri2verify/__init__.py:
+  docs/PACKAGE_BOUNDARIES.yaml:

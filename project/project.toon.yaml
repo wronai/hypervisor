@@ -1,14 +1,14 @@
-# hypervisor | 971 func | 261f | 20710L | python | 2026-06-14
+# hypervisor | 999 func | 265f | 21184L | python | 2026-06-14
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.3  critical=40 (limit:10)  dup=3  cycles=0
+  CC̄=3.3  critical=41 (limit:10)  dup=3  cycles=0
 
 ALERTS[20]:
+  !!! high_fan_out     run_doctor = 21 (limit:10)
   !!! high_fan_out     main = 20 (limit:10)
   !!  high_fan_out     PlaywrightBrowserAdapter.execute = 19 (limit:10)
   !!  high_fan_out     register = 19 (limit:10)
-  !!  high_fan_out     run_doctor = 19 (limit:10)
   !!  high_fan_out     resolve_llm_profile = 18 (limit:10)
   !!  high_fan_out     call_uri_graph_backend = 18 (limit:10)
   !!  high_fan_out     call_uri_flow_backend = 18 (limit:10)
@@ -16,37 +16,37 @@ ALERTS[20]:
   !!  high_fan_out     generate_agent = 17 (limit:10)
   !!  high_fan_out     infer_intent = 17 (limit:10)
 
-MODULES[452] (top by size):
+MODULES[459] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
   M[packages/nl2uri/nl2uri/graph_planner.py] 322L C:0 F:11 CC↑12 D:4 (python)
   M[packages/nl2uri/nl2uri/graph_repair.py] 315L C:0 F:27 CC↑7 D:2 (python)
   M[packages/nl2uri/nl2uri/cli.py] 246L C:0 F:15 CC↑6 D:0 (python)
-  M[packages/uri3/uri3/doctor/checks.py] 242L C:0 F:10 CC↑9 D:0 (python)
+  M[packages/uri3/uri3/doctor/checks.py] 242L C:0 F:10 CC↑11 D:0 (python)
   M[tree.txt] 240L C:0 F:0 CC↑0 D:0 (txt)
   M[packages/uri3/uri3/results/envelope.py] 233L C:0 F:19 CC↑7 D:2 (python)
   M[packages/uri3/uri3/graph/step_runner.py] 219L C:0 F:8 CC↑6 D:1 (python)
-  M[packages/uri2verify/uri2verify/replay.py] 183L C:0 F:13 CC↑7 D:4 (python)
+  M[packages/uri3/uri3/resolvers/explain.py] 209L C:0 F:9 CC↑14 D:6 (python)
+  M[packages/uri2verify/uri2verify/data_quality.py] 208L C:1 F:11 CC↑6 D:0 (python)
+  M[packages/uri2verify/uri2verify/replay.py] 187L C:0 F:13 CC↑7 D:4 (python)
   M[packages/touri/touri/backend_dispatch.py] 182L C:0 F:16 CC↑7 D:2 (python)
-  M[pyproject.toml] 176L C:0 F:0 CC↑0 D:0 (toml)
+  M[pyproject.toml] 177L C:0 F:0 CC↑0 D:0 (toml)
   M[examples/23_nl_to_agent_tutorial/run.sh] 174L C:0 F:2 CC↑0 D:0 (shell)
-  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py] 172L C:0 F:7 CC↑8 D:8 (python)
-  M[packages/uri3/uri3/resolvers/explain.py] 169L C:0 F:8 CC↑14 D:6 (python)
-  LANGS: python:319/yaml:66/shell:19/json:15/toml:13/other:7/txt:4/proto:3/yml:3/mk:2/j2:1
+  LANGS: python:324/yaml:67/shell:19/json:15/toml:14/other:7/txt:4/proto:3/yml:3/mk:2/j2:1
 
 HOTSPOTS[10]:
+  ★ run_doctor fan=21  // Orchestrates 21 calls
   ★ main fan=20  // Orchestrates 20 calls
   ★ PlaywrightBrowserAdapter.execute fan=19  // Orchestrates 19 calls
   ★ register fan=19  // Orchestrates 19 calls
-  ★ run_doctor fan=19  // Orchestrates 19 calls
   ★ resolve_llm_profile fan=18  // Orchestrates 18 calls
 
-REFACTOR[6]:
+REFACTOR[7]:
   [1] H/H Split god module goal.yaml (511L, 0 classes)
   [2] H/H Split god module planfile.yaml (1319L, 0 classes)
-  [3] M/L Split run_doctor (CC=15)
-  [4] M/M Reduce main fan-out (currently 20)
-  [5] M/M Reduce PlaywrightBrowserAdapter.execute fan-out (currently 19)
+  [3] M/L Split _render (CC=18)
+  [4] M/L Split run_doctor (CC=19)
+  [5] M/M Reduce run_doctor fan-out (currently 21)
 
 EVOLUTION:
-  2026-06-14 CC̄=3.3 crit=40 20710L // Automated analysis
+  2026-06-14 CC̄=3.3 crit=41 21184L // Automated analysis

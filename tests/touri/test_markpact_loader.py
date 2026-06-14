@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
 from touri.cli import main as touri_main
 from touri.executor import call_uri
 from touri.loader import load_registry
@@ -48,6 +49,11 @@ def test_load_registry_from_markpact_fragment(repo_root: Path):
     assert [item.capability.id for item in registry] == ["weather.forecast.markpact"]
 
 
+def test_missing_markpact_capability_fragment_raises(repo_root: Path):
+    with pytest.raises(ValueError, match="matching #missing"):
+        load_registry(_markpact_ref(repo_root, "missing"))
+
+
 def test_call_uri_from_markpact_registry(repo_root: Path):
     result = call_uri("weather://markpact/Gdansk/14/html", _markpact_ref(repo_root))
     payload = result.to_dict()
@@ -63,4 +69,3 @@ def test_touri_list_markpact_registry_cli(repo_root: Path, capsys):
     payload = json.loads(output)
     assert exit_code == 0
     assert payload[0]["capability"]["id"] == "weather.forecast.markpact"
-

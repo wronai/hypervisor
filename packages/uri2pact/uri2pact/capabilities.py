@@ -22,10 +22,8 @@ def load_markpact_capability_dicts(
         fragment=fragment,
         source=str(readme_path),
     )
+    if fragment and not matches:
+        raise ValueError(f"No markpact:capability block matching #{fragment} in {readme_path}")
     if not matches:
         raise ValueError(f"No markpact:capability blocks found in {readme_path}")
-    if fragment and not matches:
-        raise ValueError(
-            f"No markpact:capability block matching #{fragment} in {readme_path}"
-        )
     return [data for _block, data in matches]

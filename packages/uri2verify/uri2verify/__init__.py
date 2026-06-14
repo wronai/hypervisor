@@ -6,8 +6,8 @@ from uri2verify.replay import (
     build_task_payload_from_events,
     create_regression_test,
     load_workflow_events,
-    replay_workflow_events,
     render_regression_test,
+    replay_workflow_events,
 )
 from uri2verify.result_checks import (
     apply_verification_statuses,

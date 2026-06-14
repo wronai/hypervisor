@@ -1,16 +1,20 @@
-# code2llm/evolution | 951 func | 256f | 2026-06-14
+# code2llm/evolution | 979 func | 260f | 2026-06-14
 # generated in 0.00s
 
-NEXT[3] (ranked by impact):
-  [1] !  SPLIT-FUNC      run_doctor  CC=15  fan=19
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 285
+NEXT[4] (ranked by impact):
+  [1] !  SPLIT-FUNC      run_doctor  CC=19  fan=21
+      WHY: CC=19 exceeds 15
+      EFFORT: ~1h  IMPACT: 399
 
-  [2] !! SPLIT           planfile.yaml
+  [2] !  SPLIT-FUNC      _render  CC=18  fan=9
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 162
+
+  [3] !! SPLIT           planfile.yaml
       WHY: 1319L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
-  [3] !! SPLIT           goal.yaml
+  [4] !! SPLIT           goal.yaml
       WHY: 511L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
@@ -21,9 +25,9 @@ RISKS[2]:
 
 METRICS-TARGET:
   CC̄:          3.4 → ≤2.4
-  max-CC:      15 → ≤7
+  max-CC:      19 → ≤9
   god-modules: 2 → 0
-  high-CC(≥15): 1 → ≤0
+  high-CC(≥15): 2 → ≤1
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):

@@ -43,6 +43,8 @@ def _render(payload: dict) -> str:
         if verification.get("fallbacks"):
             for item in verification["fallbacks"]:
                 lines.append(f"  - when={item.get('when')} backend={item.get('backend_type')}")
+    if payload.get("runtime_transport"):
+        lines.append(f"runtime_transport: {payload['runtime_transport']}")
     if payload.get("operations"):
         lines.append(f"uri2ops operations: {', '.join(payload['operations'])}")
     if payload.get("checks"):

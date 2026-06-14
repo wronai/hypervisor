@@ -13,14 +13,23 @@ VERIFICATION_FAILED = "failed"
 VERIFICATION_SKIPPED = "skipped"
 
 
+def _has_data_quality_source(result: ServiceResult) -> bool:
+    return any(
+        error.source.startswith("uri2verify") or "data_quality" in error.source
+        for error in result.errors
+    )
+
+
+def _has_data_quality_payload(result: ServiceResult) -> bool:
+    return any(getattr(error, "data_quality", None) for error in result.errors)
+
+
 def data_quality_status_from_result(result: ServiceResult, *, checked: bool) -> str:
     if not checked:
         return DATA_QUALITY_SKIPPED
     if result.ok:
         return DATA_QUALITY_PASSED
-    if any(error.source.startswith("uri2verify") or "data_quality" in error.source for error in result.errors):
-        return DATA_QUALITY_FAILED
-    if any(getattr(error, "data_quality", None) for error in result.errors):
+    if _has_data_quality_source(result) or _has_data_quality_payload(result):
         return DATA_QUALITY_FAILED
     return DATA_QUALITY_SKIPPED
 

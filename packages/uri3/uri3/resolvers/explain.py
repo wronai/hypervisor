@@ -47,6 +47,20 @@ def default_touri_registry(root: Path | None = None) -> Path:
 OPERATOR_SCHEMES = frozenset({"browser", "dom", "screen", "input", "android", "pcwin"})
 
 
+def runtime_transport_for_match(match: dict[str, Any]) -> str:
+    registry = str(match.get("matched_registry") or "unknown")
+    if registry == "uri2ops":
+        return "uri2ops"
+    if registry == "uri3":
+        return "uri3:built-in"
+    if registry == "hypervisor":
+        return "hypervisor:lifecycle"
+    if registry == "touri":
+        backend_type = str((match.get("backend") or {}).get("type") or "unknown")
+        return f"touri:{backend_type}"
+    return "denied"
+
+
 def _match_uri3(scheme: str, uri: str) -> dict[str, Any] | None:
     if scheme in OPERATOR_SCHEMES:
         return None
@@ -162,21 +176,25 @@ def explain_uri(
             match = _match_uri3(scheme, uri)
             checks.append({"registry": "uri3", "matched": match is not None})
             if match:
+                match["runtime_transport"] = runtime_transport_for_match(match)
                 return {"uri": uri, "resolution_order": order, "checks": checks, **match}
         elif step == "touri":
             match = _match_touri(uri, registry_path)
             checks.append({"registry": "touri", "matched": match is not None, "registry_path": str(registry_path)})
             if match:
+                match["runtime_transport"] = runtime_transport_for_match(match)
                 return {"uri": uri, "resolution_order": order, "checks": checks, **match}
         elif step == "uri2ops":
             match = _match_uri2ops(scheme, uri, repo_root)
             checks.append({"registry": "uri2ops", "matched": match is not None})
             if match:
+                match["runtime_transport"] = runtime_transport_for_match(match)
                 return {"uri": uri, "resolution_order": order, "checks": checks, **match}
         elif step == "hypervisor":
             match = _match_hypervisor(scheme, uri)
             checks.append({"registry": "hypervisor", "matched": match is not None})
             if match:
+                match["runtime_transport"] = runtime_transport_for_match(match)
                 return {"uri": uri, "resolution_order": order, "checks": checks, **match}
         elif step == "denied":
             checks.append({"registry": "denied", "matched": True})

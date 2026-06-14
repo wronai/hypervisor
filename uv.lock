@@ -24,6 +24,7 @@ members = [
     "uri2flow",
     "uri2ops",
     "uri2pact",
+    "uri2run",
     "uri2verify",
     "uri2voice",
     "uri3",
@@ -3261,7 +3262,7 @@ requires-dist = [
 
 [[package]]
 name = "resource-agent-system"
-version = "0.5.15"
+version = "0.5.16"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
@@ -4041,6 +4042,21 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "pyyaml", specifier = ">=6.0" }]
+
+[[package]]
+name = "uri2run"
+version = "0.1.0"
+source = { editable = "packages/uri2run" }
+dependencies = [
+    { name = "httpx" },
+    { name = "pyyaml" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "pyyaml", specifier = ">=6.0" },
+]
 
 [[package]]
 name = "uri2verify"

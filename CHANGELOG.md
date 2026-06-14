@@ -25,6 +25,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added manual integration backlog items to `TODO.md` for `pactown`,
   `nlp2dsl`, `intract`, `iterun` and environment wrapper alignment.
 
+## [0.5.16] - 2026-06-14
+
+### Docs
+- Update README.md
+- Update docs/ARCHITECTURE_RUNTIME_AND_TESTING.md
+- Update docs/PACKAGE_BOUNDARIES.md
+- Update docs/PACKAGE_BOUNDARIES.yaml
+- Update docs/README.md
+- Update docs/ROADMAP.md
+- Update docs/URI2RUN_ARCHITECTURE.md
+- Update packages/README.md
+- Update packages/uri2run/README.md
+- Update packages/uri2verify/README.md
+- ... and 2 more files
+
+### Test
+- Update tests/architecture/envelope_helpers.py
+- Update tests/architecture/import_scanner.py
+- Update tests/architecture/test_doctor_contract.py
+- Update tests/architecture/test_explain_contract.py
+- Update tests/architecture/test_import_boundaries.py
+- Update tests/architecture/test_result_envelope_contract.py
+- Update tests/touri/test_markpact_loader.py
+
+### Other
+- Update packages/uri2pact/uri2pact/capabilities.py
+- Update packages/uri2pact/uri2pact/flows.py
+- Update packages/uri2run/pyproject.toml
+- Update packages/uri2run/uri2run/__init__.py
+- Update packages/uri2run/uri2run/cli.py
+- Update packages/uri2run/uri2run/context.py
+- Update packages/uri2run/uri2run/result.py
+- Update packages/uri2run/uri2run/runner.py
+- Update packages/uri2run/uri2run/transports/__init__.py
+- Update packages/uri2run/uri2run/transports/flow_transport.py
+- ... and 30 more files
+
 ## [0.5.15] - 2026-06-14
 
 ### Docs

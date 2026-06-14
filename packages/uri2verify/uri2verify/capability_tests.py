@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Iterable
+from typing import Any
 
 # Backward-compatible alias used during package extraction.
 from uri2verify.capability_plan import build_capability_test_plan

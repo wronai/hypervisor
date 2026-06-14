@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.15-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$8.34-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-6.6h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.16-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$9.27-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-7.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $8.3388 (14 commits)
-- 👤 **Human dev:** ~$661 (6.6h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $9.2729 (15 commits)
+- 👤 **Human dev:** ~$789 (7.9h @ $100/h, 30min dedup)
 
 Generated on 2026-06-14 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -119,7 +119,25 @@ uri3 validate-workflow examples/14_workflow_executor_mock/task_graph.yaml
 uri3 plan-workflow examples/14_workflow_executor_mock/task_graph.yaml
 uri3 run-workflow examples/14_workflow_executor_mock/task_graph.yaml --dry-run
 uri3 run-workflow examples/14_workflow_executor_mock/task_graph.yaml --approve --browser playwright
+
+# governance (Sprint 4)
+uri3 doctor
+uri3 doctor --build-registry
+uri3 explain weather://forecast/Gdansk/14/html
+touri explain weather://forecast/Gdansk/14/html --registry examples/20_touri_capabilities
+uri2verify replay check-agent-health
 ```
+
+## uri2verify — data quality, replay, verification
+
+```bash
+uri2verify replay check-agent-health
+uri2verify capability-plan .
+uri2verify data-quality examples/20_touri_capabilities weather://forecast/Gdansk/14/html
+uri3 doctor --capability-plan --replay-failures
+```
+
+Zobacz [`docs/URI3.md`](docs/URI3.md) · [`packages/uri2verify/README.md`](packages/uri2verify/README.md) · [`docs/PACKAGE_BOUNDARIES.md`](docs/PACKAGE_BOUNDARIES.md).
 
 ## uri2ops — operator runtime
 

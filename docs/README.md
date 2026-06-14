@@ -26,6 +26,17 @@
 | [`URI3.md`](./URI3.md) | Workflow CLI: `validate/plan/run-workflow` |
 | [`ROADMAP.md`](./ROADMAP.md) | v0.6 done + v0.7 plan |
 | [`PACKAGE_BOUNDARIES.md`](./PACKAGE_BOUNDARIES.md) | Target package split, sprints, duplicate policy |
+| [`PACKAGE_BOUNDARIES.yaml`](./PACKAGE_BOUNDARIES.yaml) | Machine-readable import boundary rules |
+| [`URI2RUN_ARCHITECTURE.md`](./URI2RUN_ARCHITECTURE.md) | Proposed `uri2run` runtime layer + test matrix |
+| [`ARCHITECTURE_RUNTIME_AND_TESTING.md`](./ARCHITECTURE_RUNTIME_AND_TESTING.md) | Runtime roles, deficits, CI test plan |
+| [`URI3.md`](./URI3.md) | uri3 CLI, `doctor`, `explain`, workflow |
+
+## Pakiet uri2verify
+
+| Dokument | Temat |
+|----------|--------|
+| [`../packages/uri2verify/README.md`](../packages/uri2verify/README.md) | data quality, replay, capability plans |
+| [`SERVICE_RESULT.md`](./SERVICE_RESULT.md) | envelope + verification status fields |
 
 ## v0.5
 

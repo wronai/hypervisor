@@ -1,6 +1,6 @@
 # code2llm call graph | /home/tom/github/wronai/hypervisor
 # generated in 0.20s
-# nodes: 406 | edges: 500 | modules: 121
+# nodes: 407 | edges: 500 | modules: 123
 # CC̄=3.3
 
 HUBS[20]:
@@ -9,11 +9,11 @@ HUBS[20]:
   examples.21_touri_voice.run.print
     CC=0  in:43  out:0  total:43
   uri2ops.operation_registry.models.OperationRegistry.list
-    CC=1  in:38  out:2  total:40
-  packages.uri3.uri3.config.llm_profiles.resolve_llm_profile
-    CC=10  in:4  out:32  total:36
+    CC=1  in:40  out:2  total:42
   packages.uri3.uri3.results.service_result.service_result
     CC=3  in:26  out:10  total:36
+  packages.uri3.uri3.config.llm_profiles.resolve_llm_profile
+    CC=10  in:4  out:32  total:36
   packages.uri2ops.uri2ops.server.routes.mcp.mcp_router
     CC=1  in:1  out:33  total:34
   uri3.graph.uri_graph.build_graph_from_tree
@@ -34,16 +34,16 @@ HUBS[20]:
     CC=12  in:2  out:24  total:26
   uri2ops.remote_registry.loader.resolve_operation_registry
     CC=12  in:8  out:18  total:26
-  packages.uri3.uri3.cli.commands.explain._render
-    CC=12  in:1  out:25  total:26
+  packages.uri3.uri3.resolvers.explain.explain_uri
+    CC=14  in:5  out:21  total:26
   packages.uri3.uri3.graph.graph_validator.validate_workflow_graph
     CC=9  in:12  out:13  total:25
   packages.uri3.uri3.logs.reader.summarize_logs
     CC=6  in:6  out:18  total:24
   packages.uri3.uri3.cli.commands.resolve.register
     CC=1  in:0  out:24  total:24
-  packages.uri3.uri3.graph.adapters.browser_playwright.PlaywrightBrowserAdapter.execute
-    CC=11  in:0  out:23  total:23
+  packages.touri.touri.cli.build_parser
+    CC=1  in:1  out:23  total:24
 
 MODULES:
   domains.weather_map.handlers.generate_weather_map  [1 funcs]
@@ -73,14 +73,11 @@ MODULES:
     _call_uri_flow_backend  CC=2  out:4
   packages.touri.touri.backends.mock_backend  [1 funcs]
     call_mock_backend  CC=1  out:1
-  packages.touri.touri.backends.python_backend  [2 funcs]
-    _split_python_uri  CC=3  out:5
+  packages.touri.touri.backends.python_backend  [1 funcs]
     call_python_backend  CC=9  out:25
   packages.touri.touri.backends.shell_backend  [1 funcs]
     call_shell_backend  CC=1  out:2
-  packages.touri.touri.backends.uri2ops_backend  [3 funcs]
-    _build_runtime_context  CC=4  out:11
-    _resolve_root  CC=2  out:3
+  packages.touri.touri.backends.uri2ops_backend  [1 funcs]
     call_uri2ops_backend  CC=7  out:16
   packages.touri.touri.backends.uri_flow_backend  [1 funcs]
     call_uri_flow_backend  CC=9  out:26
@@ -88,6 +85,15 @@ MODULES:
     _execution_options  CC=1  out:9
     _resolve_path  CC=3  out:5
     call_uri_graph_backend  CC=9  out:26
+  packages.touri.touri.cli  [8 funcs]
+    _print  CC=1  out:2
+    build_parser  CC=1  out:23
+    cmd_call  CC=4  out:7
+    cmd_explain  CC=2  out:2
+    cmd_list  CC=2  out:3
+    cmd_register  CC=2  out:3
+    cmd_validate  CC=2  out:2
+    main  CC=1  out:3
   packages.touri.touri.data_quality  [1 funcs]
     apply_data_quality  CC=2  out:2
   packages.touri.touri.executor  [1 funcs]
@@ -178,15 +184,12 @@ MODULES:
   packages.uri2pact.uri2pact.core  [1 funcs]
     is_markpact_registry  CC=1  out:2
   packages.uri2pact.uri2pact.flows  [1 funcs]
-    load_markpact_flow_dict  CC=7  out:9
+    load_markpact_flow_dict  CC=1  out:4
   packages.uri2verify.uri2verify.replay  [2 funcs]
     create_regression_test  CC=7  out:17
     replay_workflow_events  CC=2  out:9
   packages.uri3.uri3.cli.commands.discovery  [1 funcs]
     register  CC=1  out:47
-  packages.uri3.uri3.cli.commands.explain  [2 funcs]
-    _render  CC=12  out:25
-    register  CC=1  out:7
   packages.uri3.uri3.cli.commands.flow  [3 funcs]
     expand_flow_cmd  CC=3  out:9
     register  CC=1  out:11
@@ -199,8 +202,11 @@ MODULES:
     register  CC=1  out:24
   packages.uri3.uri3.cli.commands.workflow  [1 funcs]
     register  CC=1  out:20
-  packages.uri3.uri3.cli.helpers  [1 funcs]
+  packages.uri3.uri3.cli.helpers  [2 funcs]
     list_payload  CC=2  out:3
+    quick_reference  CC=5  out:5
+  packages.uri3.uri3.cli.main  [1 funcs]
+    main  CC=2  out:4
   packages.uri3.uri3.config.cli_shortcuts  [5 funcs]
     cli_config_path  CC=1  out:1
     cli_examples  CC=3  out:3
@@ -260,6 +266,11 @@ MODULES:
     control_docker  CC=11  out:11
   packages.uri3.uri3.docker.runner  [1 funcs]
     run_command  CC=4  out:5
+  packages.uri3.uri3.doctor.registry_index  [4 funcs]
+    build_capability_index  CC=3  out:6
+    build_operation_index  CC=3  out:8
+    build_uri_index  CC=3  out:8
+    write_registry_indexes  CC=4  out:13
   packages.uri3.uri3.graph.adapters.browser_mock  [2 funcs]
     execute  CC=8  out:7
     json_dumps  CC=1  out:1
@@ -302,13 +313,10 @@ MODULES:
     dependency_summary  CC=2  out:6
     detect_cycles  CC=2  out:4
     topological_sort  CC=2  out:6
-  packages.uri3.uri3.graph.event_emitter  [6 funcs]
+  packages.uri3.uri3.graph.event_emitter  [3 funcs]
     record_step  CC=1  out:1
     record_step_finished  CC=3  out:1
     record_step_started  CC=2  out:2
-    record_workflow_completed  CC=1  out:1
-    record_workflow_started  CC=1  out:1
-    redact_step_payload  CC=2  out:1
   packages.uri3.uri3.graph.event_log  [2 funcs]
     append_workflow_event  CC=1  out:6
     workflow_event_path  CC=1  out:0
@@ -321,7 +329,7 @@ MODULES:
     build_execution_plan  CC=3  out:10
     prepare_workflow  CC=5  out:8
   packages.uri3.uri3.graph.graph_executor  [1 funcs]
-    run_workflow  CC=5  out:12
+    run_workflow  CC=5  out:13
   packages.uri3.uri3.graph.graph_serializer  [4 funcs]
     edges_from_depends_on  CC=4  out:5
     normalize_graph_payload  CC=12  out:24
@@ -412,14 +420,9 @@ MODULES:
     _first  CC=2  out:1
     call_env  CC=8  out:17
     resolve_env  CC=1  out:2
-  packages.uri3.uri3.resolvers.explain  [7 funcs]
-    _find_repo_root  CC=5  out:4
-    _match_touri  CC=3  out:3
-    _match_uri2ops  CC=5  out:2
-    _match_uri3  CC=4  out:0
+  packages.uri3.uri3.resolvers.explain  [2 funcs]
     default_touri_registry  CC=5  out:6
-    explain_uri  CC=14  out:17
-    load_touri_config  CC=5  out:6
+    explain_uri  CC=14  out:21
   packages.uri3.uri3.resolvers.log_query  [6 funcs]
     first  CC=2  out:1
     parse_query  CC=3  out:4

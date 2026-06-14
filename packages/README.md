@@ -47,6 +47,16 @@ nl2a --help
 hypervisor --help
 uri2ops --help
 touri --help
+uri2verify --help
+```
+
+Governance:
+
+```bash
+uri3 doctor
+uri3 explain <uri>
+touri explain <uri> --registry examples/20_touri_capabilities
+uri2verify replay <workflow-id>
 ```
 
 ## Capability manifests

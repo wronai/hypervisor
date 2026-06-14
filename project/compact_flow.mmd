@@ -24,10 +24,10 @@ flowchart TD
     packages__touri["packages.touri<br/>77 funcs"]
     packages__uri2flow["packages.uri2flow<br/>31 funcs"]
     packages__uri2ops["packages.uri2ops<br/>8 funcs"]
-    packages__uri2pact["packages.uri2pact<br/>9 funcs"]
-    packages__uri2verify["packages.uri2verify<br/>33 funcs"]
+    packages__uri2pact["packages.uri2pact<br/>19 funcs"]
+    packages__uri2verify["packages.uri2verify<br/>44 funcs"]
     packages__uri2voice["packages.uri2voice<br/>3 funcs"]
-    packages__uri3["packages.uri3<br/>320 funcs"]
+    packages__uri3["packages.uri3<br/>325 funcs"]
     testenv__ssh_agent_host["testenv.ssh_agent_host<br/>3 funcs"]
     uri2ops__cli["uri2ops.cli<br/>8 funcs"]
     uri2ops__operation_registry["uri2ops.operation_registry<br/>13 funcs"]
@@ -40,8 +40,8 @@ flowchart TD
     packages__resource_agent_hypervisor ==>|44| packages__uri3
     packages__touri ==>|42| packages__uri3
     packages__nl2uri ==>|27| packages__uri3
+    packages__uri3 ==>|25| uri2ops__operation_registry
     packages__resource_agent_hypervisor ==>|24| examples__21_touri_voice
-    packages__uri3 ==>|23| uri2ops__operation_registry
     packages__uri3 ==>|15| packages__resource_agent_hypervisor
     packages__uri3 ==>|11| packages__touri
     packages__resource_agent_hypervisor ==>|7| hypervisor__contract_registry
@@ -76,12 +76,10 @@ flowchart TD
     packages__resource_agent_factory -->|2| generator__model
     packages__resource_agent_factory -->|2| examples__21_touri_voice
     packages__nl2uri -->|2| packages__resource_agent_hypervisor
-    packages__uri2verify -->|2| packages__resource_agent_hypervisor
     packages__resource_agent_hypervisor -->|2| generator__validate
     packages__resource_agent_hypervisor -->|2| meta_agent__repair
     packages__resource_agent_hypervisor -->|2| generator__verify
     packages__resource_agent_hypervisor -->|2| packages__uri2verify
-    hypervisor__verifier -->|2| packages__resource_agent_hypervisor
     packages__resource_agent_hypervisor -->|2| hypervisor__evolution
     packages__resource_agent_hypervisor -->|2| hypervisor__deployment_registry
     hypervisor__compatibility -->|2| hypervisor__contract_registry
@@ -96,6 +94,7 @@ flowchart TD
     uri3__resolvers -->|1| packages__uri3
     uri3__resolvers -->|1| uri3__protocols
     packages__uri2flow -->|1| packages__uri3
+    packages__touri -->|1| examples__21_touri_voice
     packages__touri -->|1| packages__uri2flow
     packages__uri2voice -->|1| packages__nl2uri
     generator__validate -->|1| generator__model
@@ -108,8 +107,6 @@ flowchart TD
     packages__nl2uri -->|1| hypervisor__contract_registry
     packages__nl2uri -->|1| generator__verify
     nl2a__cli -->|1| packages__nl2uri
-    packages__uri2verify -->|1| hypervisor__contract_registry
-    packages__uri2verify -->|1| packages__touri
     packages__resource_agent_hypervisor -->|1| packages__uri2flow
     meta_agent__api -->|1| generator__validate
     meta_agent__api -->|1| meta_agent__repair
@@ -117,10 +114,14 @@ flowchart TD
     packages__resource_agent_hypervisor -->|1| packages__resource_agent_factory
     meta_agent__repair -->|1| meta_agent__planner
     hypervisor__verifier -->|1| hypervisor__contract_registry
+    hypervisor__verifier -->|1| packages__resource_agent_hypervisor
+    hypervisor__verifier -->|1| packages__uri2verify
     packages__resource_agent_hypervisor -->|1| hypervisor__config
     hypervisor__config -->|1| uri2ops__operation_registry
     packages__resource_agent_hypervisor -->|1| uri3__graph
     packages__resource_agent_hypervisor -->|1| packages__nl2uri
     hypervisor__deployment_registry -->|1| packages__resource_agent_hypervisor
     testenv__ssh_agent_host -->|1| examples__21_touri_voice
-    packages__touri -->|1| examples__21_touri_voice
+    packages__uri2verify -->|1| hypervisor__contract_registry
+    packages__uri2verify -->|1| packages__resource_agent_hypervisor
+    packages__uri2verify -->|1| packages__touri

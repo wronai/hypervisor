@@ -83,6 +83,28 @@ Implemented:
 - `touri explain <uri>` — delegates to `uri3.resolvers.explain.explain_uri`
 - `WorkflowCompleted` events now include `workflow_status`, `execution_status`, `service_result_status`
 
+## Sprint 5 — `uri2run` + architecture tests (next)
+
+See [`URI2RUN_ARCHITECTURE.md`](./URI2RUN_ARCHITECTURE.md) and [`ARCHITECTURE_RUNTIME_AND_TESTING.md`](./ARCHITECTURE_RUNTIME_AND_TESTING.md).
+
+Sprint A (done in repo):
+
+```txt
+tests/architecture/test_import_boundaries.py
+tests/architecture/test_result_envelope_contract.py
+tests/architecture/test_explain_contract.py
+tests/architecture/test_doctor_contract.py
+docs/PACKAGE_BOUNDARIES.yaml
+```
+
+Sprint B (planned):
+
+```txt
+packages/uri2run — python/shell/http/flow/graph transports
+touri/backend_dispatch -> uri2run.run_backend (wrappers)
+uri3 explain.runtime_transport -> uri2run:* when migrated
+```
+
 ## Result envelope (mandatory standard)
 
 All execution paths should return:

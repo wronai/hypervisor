@@ -65,6 +65,14 @@
 
 - [x] `10_browser_operator` … `16_llm_graph_planner`
 
+### Modularizacja (Sprint 1–4, done)
+
+- [x] Hotspot splits (nl2uri, uri2ops, uri3 graph, touri executor)
+- [x] `uri2voice` — STT/TTS execution handlers
+- [x] `uri2pact` — shared markpact loader
+- [x] `uri2verify` — data quality, replay, capability test plans
+- [x] `uri3 doctor`, extended `uri3 explain`, `touri explain`, `.registry/` indexes
+
 ## v0.7 (planned)
 
 - [ ] uri3 `run-workflow` → uri2ops jako wspólny backend
