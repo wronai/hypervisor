@@ -41,6 +41,19 @@ def test_format_ask_markdown_dashboard():
     assert "proposal://" not in md
 
 
+def test_format_uri_result_dry_run_preview():
+    md = format_uri_result_markdown(
+        {
+            "result_type": "dry_run",
+            "status": "preview",
+            "workflow_status": "planned",
+            "service_result_status": "preview",
+        }
+    )
+    assert "preview" in md
+    assert "failed" not in md.splitlines()[0].lower()
+
+
 def test_format_uri_result_markdown():
     md = format_uri_result_markdown(
         {

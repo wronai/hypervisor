@@ -70,53 +70,51 @@ def _command(raw: dict[str, Any]) -> str:
     return str(raw.get("command") or "")
 
 
-def normalize_runtime_state(raw: dict[str, Any], *, deployment_id: str | None = None) -> dict[str, Any]:
-    """Upgrade legacy flat runtime state to schema artifact while keeping flat accessors."""
-    if raw.get("kind") == "RuntimeState" and isinstance(raw.get("status"), dict):
-        body = dict(raw)
-    else:
-        command = str(raw.get("command") or "")
-        health_uri = str(raw.get("health_uri") or "")
-        effective_port = _port_from_command(command) or _port_from_http_uri(health_uri)
-        dep_id = str(deployment_id or raw.get("id") or "")
-        uri_block: dict[str, Any] = {
-            "self": f"runtime://agent/{dep_id}/state",
-            "deployment": f"hypervisor://local/{dep_id}",
-        }
-        if raw.get("agent_ref"):
-            uri_block["agent"] = raw.get("agent_ref")
-        body = {
-            "$schema": RUNTIME_STATE_SCHEMA,
-            "apiVersion": "uri3.io/v1",
-            "kind": "RuntimeState",
-            "id": dep_id,
-            "agent_ref": raw.get("agent_ref"),
-            "uri": uri_block,
-            "status": {
-                "process_status": str(raw.get("status") or "unknown"),
-                "health_status": str(raw.get("health_status") or "unknown"),
-                "lifecycle_status": str(raw.get("lifecycle_status") or raw.get("status") or "unknown"),
-                "deployment_status": str(raw.get("deployment_status") or "unknown"),
-                "service_result_status": str(raw.get("service_result_status") or "unknown"),
-            },
-            "process": {
-                "pid": raw.get("pid"),
-                "command": command,
-            },
-            "network": {
-                "requested_port": raw.get("requested_port"),
-                "effective_port": effective_port,
-                "effective_health_uri": health_uri,
-                "declared_health_uri": raw.get("declared_health_uri"),
-            },
-            "started_at": raw.get("started_at"),
-            "stopped_at": raw.get("stopped_at"),
+def _legacy_runtime_state(raw: dict[str, Any], *, deployment_id: str | None) -> dict[str, Any]:
+    command = str(raw.get("command") or "")
+    health_uri = str(raw.get("health_uri") or "")
+    effective_port = _port_from_command(command) or _port_from_http_uri(health_uri)
+    dep_id = str(deployment_id or raw.get("id") or "")
+    uri_block: dict[str, Any] = {
+        "self": f"runtime://agent/{dep_id}/state",
+        "deployment": f"hypervisor://local/{dep_id}",
+    }
+    if raw.get("agent_ref"):
+        uri_block["agent"] = raw.get("agent_ref")
+    return {
+        "$schema": RUNTIME_STATE_SCHEMA,
+        "apiVersion": "uri3.io/v1",
+        "kind": "RuntimeState",
+        "id": dep_id,
+        "agent_ref": raw.get("agent_ref"),
+        "uri": uri_block,
+        "status": {
+            "process_status": str(raw.get("status") or "unknown"),
+            "health_status": str(raw.get("health_status") or "unknown"),
+            "lifecycle_status": str(raw.get("lifecycle_status") or raw.get("status") or "unknown"),
+            "deployment_status": str(raw.get("deployment_status") or "unknown"),
+            "service_result_status": str(raw.get("service_result_status") or "unknown"),
+        },
+        "process": {
+            "pid": raw.get("pid"),
             "command": command,
-            "health_uri": health_uri,
-            "log_uri": raw.get("log_uri"),
-            "env": raw.get("env") or {},
-        }
+        },
+        "network": {
+            "requested_port": raw.get("requested_port"),
+            "effective_port": effective_port,
+            "effective_health_uri": health_uri,
+            "declared_health_uri": raw.get("declared_health_uri"),
+        },
+        "started_at": raw.get("started_at"),
+        "stopped_at": raw.get("stopped_at"),
+        "command": command,
+        "health_uri": health_uri,
+        "log_uri": raw.get("log_uri"),
+        "env": raw.get("env") or {},
+    }
 
+
+def _apply_flat_accessors(body: dict[str, Any]) -> dict[str, Any]:
     body["pid"] = _pid(body)
     body["process_status"] = _process_status(body)
     body["status"] = body.get("status") if isinstance(body.get("status"), dict) else {
@@ -125,6 +123,15 @@ def normalize_runtime_state(raw: dict[str, Any], *, deployment_id: str | None = 
     body["command"] = _command(body)
     body["health_uri"] = _health_uri(body)
     return body
+
+
+def normalize_runtime_state(raw: dict[str, Any], *, deployment_id: str | None = None) -> dict[str, Any]:
+    """Upgrade legacy flat runtime state to schema artifact while keeping flat accessors."""
+    if raw.get("kind") == "RuntimeState" and isinstance(raw.get("status"), dict):
+        body = dict(raw)
+    else:
+        body = _legacy_runtime_state(raw, deployment_id=deployment_id)
+    return _apply_flat_accessors(body)
 
 
 def load_runtime_state(deployment_id: str, root: Path | None = None) -> dict[str, Any] | None:

@@ -75,17 +75,22 @@ MUTATION_SCHEMES = {
 }
 
 
+def _path_has_any(path: str, tokens: tuple[str, ...]) -> bool:
+    return any(token in path for token in tokens)
+
+
 def classify_uri(uri: str) -> ActionKind:
     parsed = urlparse(uri)
     scheme = (parsed.scheme or "").lower()
     path = (parsed.path or "").lower()
-    if scheme in {"repair"} or "/repair" in path or "/apply" in path:
+
+    if scheme == "repair" or _path_has_any(path, ("/repair", "/apply")):
         return "repair"
-    if scheme in {"evolution", "ecosystem"} and ("apply" in path or "deploy" in path):
+    if scheme in {"evolution", "ecosystem"} and _path_has_any(path, ("apply", "deploy")):
         return "apply"
-    if scheme in {"hypervisor"} and any(token in path for token in ("/run", "/stop", "/restart")):
+    if scheme == "hypervisor" and _path_has_any(path, ("/run", "/stop", "/restart")):
         return "mutation"
-    if scheme in READ_SCHEMES and not any(token in path for token in ("/apply", "/run", "/create")):
+    if scheme in READ_SCHEMES and not _path_has_any(path, ("/apply", "/run", "/create")):
         if scheme in {"http", "https"} and parsed.query and "method=POST" in parsed.query.upper():
             return "mutation"
         return "read"

@@ -1,94 +1,10 @@
 project: /home/tom/github/wronai/hypervisor
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 362
+  total_nodes: 373
   total_edges: 500
-  modules_count: 112
+  modules_count: 121
 nodes:
-  packages.uri3.uri3.graph.operation_registry.allowed_operations:
-    name: allowed_operations
-    module: packages.uri3.uri3.graph.operation_registry
-    line: 51
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  packages.urish.urish.shortcuts.resolve_target:
-    name: resolve_target
-    module: packages.urish.urish.shortcuts
-    line: 68
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  packages.urish.urish.cli.proposal_verify_cmd:
-    name: proposal_verify_cmd
-    module: packages.urish.urish.cli
-    line: 724
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  packages.urigen.urigen.explain._agents:
-    name: _agents
-    module: packages.urigen.urigen.explain
-    line: 50
-    cyclomatic_complexity: 7
-    calls_out: 9
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.browser_router.resolve_browser_mode:
-    name: resolve_browser_mode
-    module: packages.uri3.uri3.graph.adapters.browser_router
-    line: 39
-    cyclomatic_complexity: 5
-    calls_out: 3
-    calls_in: 1
-  packages.urish.urish.cli.proposal_apply_cmd:
-    name: proposal_apply_cmd
-    module: packages.urish.urish.cli
-    line: 733
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 0
-  packages.urigen.urigen.generator._copy_application_tree:
-    name: _copy_application_tree
-    module: packages.urigen.urigen.generator
-    line: 258
-    cyclomatic_complexity: 4
-    calls_out: 9
-    calls_in: 1
-  packages.urish.urish.cli.repair_diagnose_cmd:
-    name: repair_diagnose_cmd
-    module: packages.urish.urish.cli
-    line: 646
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 0
-  packages.uri2run.uri2run.runner.run_backend:
-    name: run_backend
-    module: packages.uri2run.uri2run.runner
-    line: 191
-    cyclomatic_complexity: 5
-    calls_out: 15
-    calls_in: 26
-  packages.urish.urish.render.render_result:
-    name: render_result
-    module: packages.urish.urish.render
-    line: 9
-    cyclomatic_complexity: 10
-    calls_out: 10
-    calls_in: 2
-  packages.resource-agent-hypervisor.hypervisor.repair.validator.read_yaml:
-    name: read_yaml
-    module: packages.resource-agent-hypervisor.hypervisor.repair.validator
-    line: 47
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 2
-  packages.uri2ops.uri2ops.server.routes.mcp.mcp_router:
-    name: mcp_router
-    module: packages.uri2ops.uri2ops.server.routes.mcp
-    line: 12
-    cyclomatic_complexity: 1
-    calls_out: 33
-    calls_in: 1
   packages.uri2ops.uri2ops.cli.run_cmd:
     name: run_cmd
     module: packages.uri2ops.uri2ops.cli
@@ -96,1455 +12,6 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 4
     calls_in: 0
-  packages.urish.urish.cli.agent_health_cmd:
-    name: agent_health_cmd
-    module: packages.urish.urish.cli
-    line: 230
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  packages.urish.urish.cli.agent_repair_cmd:
-    name: agent_repair_cmd
-    module: packages.urish.urish.cli
-    line: 319
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 0
-  uri2ops.server.service.OperatorService.list_registry_sources:
-    name: list_registry_sources
-    module: uri2ops.server.service
-    line: 30
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  packages.urish.urish.context.context_dir:
-    name: context_dir
-    module: packages.urish.urish.context
-    line: 15
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  packages.urigen.urigen.apply_executor.load_rollback_manifest:
-    name: load_rollback_manifest
-    module: packages.urigen.urigen.apply_executor
-    line: 315
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 1
-  packages.uri2ops.uri2ops.remote_registry.loader._load_source:
-    name: _load_source
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 40
-    cyclomatic_complexity: 14
-    calls_out: 19
-    calls_in: 2
-  packages.urish.urish.backends.watch.watch_uri:
-    name: watch_uri
-    module: packages.urish.urish.backends.watch
-    line: 11
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 2
-  packages.uri3.uri3.graph.dependency_graph.topological_sort:
-    name: topological_sort
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 81
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 3
-  packages.uri3.uri3.artifacts.validator.schema_path:
-    name: schema_path
-    module: packages.uri3.uri3.artifacts.validator
-    line: 18
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.urish.urish.backends.evolve.proposal_apply:
-    name: proposal_apply
-    module: packages.urish.urish.backends.evolve
-    line: 80
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 1
-  packages.uri3.uri3.graph.step_runner.execute_step:
-    name: execute_step
-    module: packages.uri3.uri3.graph.step_runner
-    line: 29
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.runtime_adapter.RuntimeAdapter.execute:
-    name: execute
-    module: packages.uri3.uri3.graph.adapters.runtime_adapter
-    line: 45
-    cyclomatic_complexity: 9
-    calls_out: 11
-    calls_in: 0
-  packages.urigen.urigen.generator._copy_domains:
-    name: _copy_domains
-    module: packages.urigen.urigen.generator
-    line: 179
-    cyclomatic_complexity: 7
-    calls_out: 13
-    calls_in: 1
-  packages.urigen.urigen.verify._resolve:
-    name: _resolve
-    module: packages.urigen.urigen.verify
-    line: 53
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  packages.urish.urish.ecosystem_workflow.proposal_path:
-    name: proposal_path
-    module: packages.urish.urish.ecosystem_workflow
-    line: 18
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 2
-  packages.urigen.urigen.cli.cmd_verify:
-    name: cmd_verify
-    module: packages.urigen.urigen.cli
-    line: 37
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  packages.uri3.uri3.graph.dependency_graph.dependency_summary:
-    name: dependency_summary
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 106
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 0
-  packages.uri3.uri3.graph.adapters.registry.adapter_for_uri:
-    name: adapter_for_uri
-    module: packages.uri3.uri3.graph.adapters.registry
-    line: 116
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 2
-  packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector.resolve_deployment:
-    name: resolve_deployment
-    module: packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector
-    line: 53
-    cyclomatic_complexity: 12
-    calls_out: 13
-    calls_in: 11
-  packages.uri2ops.uri2ops.cli.validate_cmd:
-    name: validate_cmd
-    module: packages.uri2ops.uri2ops.cli
-    line: 56
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  packages.uri2ops.uri2ops.remote_registry.loader.load_registry_config:
-    name: load_registry_config
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 32
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 2
-  packages.uri3.uri3.graph.dependency_graph._leaf_nodes:
-    name: _leaf_nodes
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 98
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  packages.urigen.urigen.models.slugify:
-    name: slugify
-    module: packages.urigen.urigen.models
-    line: 32
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 4
-  packages.urish.urish.backends.ticket.list_tickets:
-    name: list_tickets
-    module: packages.urish.urish.backends.ticket
-    line: 18
-    cyclomatic_complexity: 10
-    calls_out: 15
-    calls_in: 1
-  uri2ops.operation_registry.dispatcher._split_python_uri:
-    name: _split_python_uri
-    module: uri2ops.operation_registry.dispatcher
-    line: 12
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  packages.resource-agent-hypervisor.hypervisor.repair.supervisor.diagnose_agent:
-    name: diagnose_agent
-    module: packages.resource-agent-hypervisor.hypervisor.repair.supervisor
-    line: 31
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 5
-  uri2ops.server.service.OperatorService.registry_export:
-    name: registry_export
-    module: uri2ops.server.service
-    line: 21
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  uri2ops.operation_registry.loader.default_registry_path:
-    name: default_registry_path
-    module: uri2ops.operation_registry.loader
-    line: 11
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  packages.urish.urish.shortcuts.resolve_shortcut:
-    name: resolve_shortcut
-    module: packages.urish.urish.shortcuts
-    line: 52
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 2
-  packages.uri2ops.uri2ops.remote_registry.loader.registry_document:
-    name: registry_document
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 121
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  packages.urish.urish.cli._context_policy:
-    name: _context_policy
-    module: packages.urish.urish.cli
-    line: 56
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  packages.uri3.uri3.graph.dependency_graph._visit_acyclic_nodes:
-    name: _visit_acyclic_nodes
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 36
-    cyclomatic_complexity: 6
-    calls_out: 4
-    calls_in: 1
-  packages.uri3.uri3.artifacts.validator.load_schema:
-    name: load_schema
-    module: packages.uri3.uri3.artifacts.validator
-    line: 22
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  packages.uri2ops.uri2ops.server.routes.registry.operations_router:
-    name: operations_router
-    module: packages.uri2ops.uri2ops.server.routes.registry
-    line: 22
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.registry.HypervisorAdapter.execute:
-    name: execute
-    module: packages.uri3.uri3.graph.adapters.registry
-    line: 45
-    cyclomatic_complexity: 5
-    calls_out: 5
-    calls_in: 0
-  packages.urish.urish.ticket_workflow.detect_intent_from_ticket:
-    name: detect_intent_from_ticket
-    module: packages.urish.urish.ticket_workflow
-    line: 35
-    cyclomatic_complexity: 15
-    calls_out: 18
-    calls_in: 1
-  packages.urish.urish.shortcuts.load_shortcuts:
-    name: load_shortcuts
-    module: packages.urish.urish.shortcuts
-    line: 48
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  packages.urish.urish.cli.agent_run_cmd:
-    name: agent_run_cmd
-    module: packages.urish.urish.cli
-    line: 266
-    cyclomatic_complexity: 6
-    calls_out: 16
-    calls_in: 0
-  uri2ops.operation_registry.models.OperationRegistry.list:
-    name: list
-    module: uri2ops.operation_registry.models
-    line: 66
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 63
-  packages.uri2ops.uri2ops.cli._print:
-    name: _print
-    module: packages.uri2ops.uri2ops.cli
-    line: 18
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 11
-  packages.urigen.urigen.cli.cmd_explain:
-    name: cmd_explain
-    module: packages.urigen.urigen.cli
-    line: 43
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  packages.uri2run.uri2run.cli._backend_from_target:
-    name: _backend_from_target
-    module: packages.uri2run.uri2run.cli
-    line: 42
-    cyclomatic_complexity: 23
-    calls_out: 13
-    calls_in: 2
-  uri2ops.operation_registry.models.OperationSpec.from_mapping:
-    name: from_mapping
-    module: uri2ops.operation_registry.models
-    line: 22
-    cyclomatic_complexity: 1
-    calls_out: 15
-    calls_in: 0
-  packages.uri3.uri3.logs.reader.summarize_logs:
-    name: summarize_logs
-    module: packages.uri3.uri3.logs.reader
-    line: 89
-    cyclomatic_complexity: 6
-    calls_out: 18
-    calls_in: 8
-  packages.urish.urish.backends.ticket.import_tickets:
-    name: import_tickets
-    module: packages.urish.urish.backends.ticket
-    line: 65
-    cyclomatic_complexity: 5
-    calls_out: 8
-    calls_in: 1
-  packages.uri3.uri3.graph.execution_models.new_execution_context:
-    name: new_execution_context
-    module: packages.uri3.uri3.graph.execution_models
-    line: 118
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  packages.uri3.uri3.graph.artifacts.artifact_path:
-    name: artifact_path
-    module: packages.uri3.uri3.graph.artifacts
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 1
-  packages.uri3.uri3.graph.graph_validator._schema_path:
-    name: _schema_path
-    module: packages.uri3.uri3.graph.graph_validator
-    line: 16
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.urigen.urigen.envelope._legacy_fields:
-    name: _legacy_fields
-    module: packages.urigen.urigen.envelope
-    line: 9
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 2
-  packages.urish.urish.ecosystem_workflow._quote:
-    name: _quote
-    module: packages.urish.urish.ecosystem_workflow
-    line: 10
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 1
-  examples.23_nl_to_agent_tutorial.run.print:
-    name: print
-    module: examples.23_nl_to_agent_tutorial.run
-    line: 155
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 54
-  packages.urish.urish.cli.ticket_show_cmd:
-    name: ticket_show_cmd
-    module: packages.urish.urish.cli
-    line: 586
-    cyclomatic_complexity: 10
-    calls_out: 17
-    calls_in: 0
-  packages.urish.urish.cli.agent_create_dashboard_cmd:
-    name: agent_create_dashboard_cmd
-    module: packages.urish.urish.cli
-    line: 239
-    cyclomatic_complexity: 3
-    calls_out: 12
-    calls_in: 0
-  packages.uri3.uri3.graph.event_emitter.record_step_finished:
-    name: record_step_finished
-    module: packages.uri3.uri3.graph.event_emitter
-    line: 49
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 1
-  packages.urigen.urigen.cli.cmd_plan:
-    name: cmd_plan
-    module: packages.urigen.urigen.cli
-    line: 23
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_lifecycle_coverage:
-    name: check_lifecycle_coverage
-    module: packages.resource-agent-hypervisor.hypervisor.artifacts.gate
-    line: 194
-    cyclomatic_complexity: 17
-    calls_out: 14
-    calls_in: 2
-  packages.uri3.uri3.docker.controller.control_docker:
-    name: control_docker
-    module: packages.uri3.uri3.docker.controller
-    line: 12
-    cyclomatic_complexity: 11
-    calls_out: 11
-    calls_in: 8
-  packages.uri3.uri3.graph.step_runner.handle_dependency_failure:
-    name: handle_dependency_failure
-    module: packages.uri3.uri3.graph.step_runner
-    line: 82
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter.cleanup_operator_adapters:
-    name: cleanup_operator_adapters
-    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
-    line: 113
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  packages.urigen.urigen.explain._exists:
-    name: _exists
-    module: packages.urigen.urigen.explain
-    line: 34
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 3
-  packages.urigen.urigen.cli.cmd_apply:
-    name: cmd_apply
-    module: packages.urigen.urigen.cli
-    line: 49
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 0
-  packages.urigen.urigen.generator.generate_ecosystem:
-    name: generate_ecosystem
-    module: packages.urigen.urigen.generator
-    line: 33
-    cyclomatic_complexity: 7
-    calls_out: 40
-    calls_in: 3
-  packages.uri3.uri3.logs.reader._parse_since:
-    name: _parse_since
-    module: packages.uri3.uri3.logs.reader
-    line: 32
-    cyclomatic_complexity: 7
-    calls_out: 14
-    calls_in: 2
-  packages.uri2ops.uri2ops.cli.plan_cmd:
-    name: plan_cmd
-    module: packages.uri2ops.uri2ops.cli
-    line: 65
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  packages.uri3.uri3.graph.adapters.browser_router.BrowserRouterAdapter.execute:
-    name: execute
-    module: packages.uri3.uri3.graph.adapters.browser_router
-    line: 57
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  packages.urigen.urigen.apply_validate._load_schema:
-    name: _load_schema
-    module: packages.urigen.urigen.apply_validate
-    line: 12
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 1
-  packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps:
-    name: build_ecosystem_next_steps
-    module: packages.urish.urish.ecosystem_workflow
-    line: 30
-    cyclomatic_complexity: 6
-    calls_out: 11
-    calls_in: 2
-  packages.urish.urish.cli._print_evolve_summary:
-    name: _print_evolve_summary
-    module: packages.urish.urish.cli
-    line: 73
-    cyclomatic_complexity: 9
-    calls_out: 13
-    calls_in: 2
-  packages.urish.urish.backends.evolve.evolve_from_incident:
-    name: evolve_from_incident
-    module: packages.urish.urish.backends.evolve
-    line: 34
-    cyclomatic_complexity: 6
-    calls_out: 13
-    calls_in: 1
-  packages.urish.urish.backends.logs.read_log_uri:
-    name: read_log_uri
-    module: packages.urish.urish.backends.logs
-    line: 8
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 2
-  packages.urigen.urigen.models.normalize_profile:
-    name: normalize_profile
-    module: packages.urigen.urigen.models
-    line: 37
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 1
-  packages.urigen.urigen.io.load_yaml:
-    name: load_yaml
-    module: packages.urigen.urigen.io
-    line: 16
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 9
-  packages.urish.urish.cli.ecosystem_apply_cmd:
-    name: ecosystem_apply_cmd
-    module: packages.urish.urish.cli
-    line: 387
-    cyclomatic_complexity: 6
-    calls_out: 15
-    calls_in: 0
-  packages.uri3.uri3.graph.execution_models.GraphExecutionResult.to_dict:
-    name: to_dict
-    module: packages.uri3.uri3.graph.execution_models
-    line: 93
-    cyclomatic_complexity: 5
-    calls_out: 2
-    calls_in: 0
-  packages.urish.urish.backends.stream._stream_ws:
-    name: _stream_ws
-    module: packages.urish.urish.backends.stream
-    line: 59
-    cyclomatic_complexity: 3
-    calls_out: 15
-    calls_in: 1
-  packages.urigen.urigen.io.write_json:
-    name: write_json
-    module: packages.urigen.urigen.io
-    line: 34
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 3
-  packages.uri3.uri3.graph.dependency_graph._topological_order:
-    name: _topological_order
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 68
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 1
-  packages.uri3.uri3.docker.actions.compose.control_compose:
-    name: control_compose
-    module: packages.uri3.uri3.docker.actions.compose
-    line: 88
-    cyclomatic_complexity: 6
-    calls_out: 6
-    calls_in: 1
-  packages.urish.urish.cli.ecosystem_generate_cmd:
-    name: ecosystem_generate_cmd
-    module: packages.urish.urish.cli
-    line: 363
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 0
-  packages.urish.urish.backends.stream.stream_uri:
-    name: stream_uri
-    module: packages.urish.urish.backends.stream
-    line: 10
-    cyclomatic_complexity: 5
-    calls_out: 8
-    calls_in: 1
-  packages.urish.urish.select.select_path:
-    name: select_path
-    module: packages.urish.urish.select
-    line: 6
-    cyclomatic_complexity: 7
-    calls_out: 7
-    calls_in: 2
-  packages.uri2ops.uri2ops.remote_registry.loader.list_remote_sources:
-    name: list_remote_sources
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 133
-    cyclomatic_complexity: 4
-    calls_out: 9
-    calls_in: 3
-  packages.urish.urish.backends.repair.repair_learn:
-    name: repair_learn
-    module: packages.urish.urish.backends.repair
-    line: 29
-    cyclomatic_complexity: 3
-    calls_out: 7
-    calls_in: 1
-  packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_artifacts:
-    name: check_artifacts
-    module: packages.resource-agent-hypervisor.hypervisor.artifacts.gate
-    line: 113
-    cyclomatic_complexity: 11
-    calls_out: 7
-    calls_in: 2
-  packages.uri3.uri3.graph.graph_serializer.task_steps_to_graph:
-    name: task_steps_to_graph
-    module: packages.uri3.uri3.graph.graph_serializer
-    line: 50
-    cyclomatic_complexity: 3
-    calls_out: 7
-    calls_in: 2
-  packages.resource-agent-hypervisor.hypervisor.deployment_registry.run_plans.build_run_plan:
-    name: build_run_plan
-    module: packages.resource-agent-hypervisor.hypervisor.deployment_registry.run_plans
-    line: 12
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 6
-  packages.urigen.urigen.verify._check_flows:
-    name: _check_flows
-    module: packages.urigen.urigen.verify
-    line: 73
-    cyclomatic_complexity: 7
-    calls_out: 16
-    calls_in: 1
-  packages.uri3.uri3.artifacts.validator.validate_artifact_file:
-    name: validate_artifact_file
-    module: packages.uri3.uri3.artifacts.validator
-    line: 35
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  packages.urish.urish.select.select_from_envelope:
-    name: select_from_envelope
-    module: packages.urish.urish.select
-    line: 25
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 2
-  packages.urigen.urigen.generator._copy_agents:
-    name: _copy_agents
-    module: packages.urigen.urigen.generator
-    line: 205
-    cyclomatic_complexity: 4
-    calls_out: 11
-    calls_in: 1
-  packages.urish.urish.backends.ticket.show_ticket:
-    name: show_ticket
-    module: packages.urish.urish.backends.ticket
-    line: 43
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 1
-  packages.uri3.uri3.graph.event_emitter.record_step:
-    name: record_step
-    module: packages.uri3.uri3.graph.event_emitter
-    line: 19
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 6
-  packages.urish.urish.cli.ask_cmd:
-    name: ask_cmd
-    module: packages.urish.urish.cli
-    line: 110
-    cyclomatic_complexity: 11
-    calls_out: 34
-    calls_in: 1
-  packages.urish.urish.cli.agent_status_cmd:
-    name: agent_status_cmd
-    module: packages.urish.urish.cli
-    line: 221
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  packages.urigen.urigen.generator._skip_app_artifact:
-    name: _skip_app_artifact
-    module: packages.urigen.urigen.generator
-    line: 276
-    cyclomatic_complexity: 5
-    calls_out: 3
-    calls_in: 1
-  uri2ops.operation_registry.dispatcher.dispatch:
-    name: dispatch
-    module: uri2ops.operation_registry.dispatcher
-    line: 30
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 2
-  packages.urigen.urigen.writer.render_readme:
-    name: render_readme
-    module: packages.urigen.urigen.writer
-    line: 9
-    cyclomatic_complexity: 4
-    calls_out: 10
-    calls_in: 1
-  packages.uri2ops.uri2ops.remote_registry.loader.merge_registry_documents:
-    name: merge_registry_documents
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 68
-    cyclomatic_complexity: 6
-    calls_out: 6
-    calls_in: 1
-  uri2ops.server.a2a_wrapper.build_agent_card:
-    name: build_agent_card
-    module: uri2ops.server.a2a_wrapper
-    line: 9
-    cyclomatic_complexity: 3
-    calls_out: 7
-    calls_in: 1
-  packages.uri3.uri3.graph.dependency_graph._root_nodes:
-    name: _root_nodes
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 90
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_schemas:
-    name: check_schemas
-    module: packages.resource-agent-hypervisor.hypervisor.artifacts.gate
-    line: 258
-    cyclomatic_complexity: 5
-    calls_out: 12
-    calls_in: 2
-  packages.urish.urish.backends.ticket.plan_ticket:
-    name: plan_ticket
-    module: packages.urish.urish.backends.ticket
-    line: 84
-    cyclomatic_complexity: 7
-    calls_out: 14
-    calls_in: 1
-  uri2ops.operation_registry.loader.registry_schema_path:
-    name: registry_schema_path
-    module: uri2ops.operation_registry.loader
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  packages.urish.urish.cli.www_open_cmd:
-    name: www_open_cmd
-    module: packages.urish.urish.cli
-    line: 501
-    cyclomatic_complexity: 2
-    calls_out: 10
-    calls_in: 0
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter._registry_operation:
-    name: _registry_operation
-    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
-    line: 43
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  packages.urigen.urigen.apply_executor.execute_action:
-    name: execute_action
-    module: packages.urigen.urigen.apply_executor
-    line: 232
-    cyclomatic_complexity: 8
-    calls_out: 16
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.browser_playwright._session_state:
-    name: _session_state
-    module: packages.uri3.uri3.graph.adapters.browser_playwright
-    line: 12
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper.propose_from_ticket_path:
-    name: propose_from_ticket_path
-    module: packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper
-    line: 88
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 3
-  packages.uri2flow.uri2flow.validator.validate_flow:
-    name: validate_flow
-    module: packages.uri2flow.uri2flow.validator
-    line: 43
-    cyclomatic_complexity: 11
-    calls_out: 5
-    calls_in: 3
-  uri2ops.operation_registry.validator.validate_registry_schema:
-    name: validate_registry_schema
-    module: uri2ops.operation_registry.validator
-    line: 15
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 2
-  packages.uri2ops.uri2ops.server.routes.health.health_router:
-    name: health_router
-    module: packages.uri2ops.uri2ops.server.routes.health
-    line: 23
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  packages.uri3.uri3.graph.operation_registry.scheme_from_uri:
-    name: scheme_from_uri
-    module: packages.uri3.uri3.graph.operation_registry
-    line: 37
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 6
-  packages.uri2ops.uri2ops.cli.serve_cmd:
-    name: serve_cmd
-    module: packages.uri2ops.uri2ops.cli
-    line: 78
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  packages.uri3.uri3.resolvers.explain.explain_uri:
-    name: explain_uri
-    module: packages.uri3.uri3.resolvers.explain
-    line: 197
-    cyclomatic_complexity: 14
-    calls_out: 21
-    calls_in: 8
-  packages.urigen.urigen.models.repo_root:
-    name: repo_root
-    module: packages.urigen.urigen.models
-    line: 62
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 10
-  packages.urish.urish.backends.repair._wrap:
-    name: _wrap
-    module: packages.urish.urish.backends.repair
-    line: 39
-    cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 3
-  packages.urish.urish.cli.doctor_cmd:
-    name: doctor_cmd
-    module: packages.urish.urish.cli
-    line: 201
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 0
-  packages.urigen.urigen.apply_executor._copy_file:
-    name: _copy_file
-    module: packages.urigen.urigen.apply_executor
-    line: 98
-    cyclomatic_complexity: 5
-    calls_out: 19
-    calls_in: 1
-  packages.urigen.urigen.proposal._dashboard_proposal:
-    name: _dashboard_proposal
-    module: packages.urigen.urigen.proposal
-    line: 68
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.uri3.uri3.artifacts.evolution_source.attach_evolution_source:
-    name: attach_evolution_source
-    module: packages.uri3.uri3.artifacts.evolution_source
-    line: 70
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 1
-  packages.urigen.urigen.apply_executor.rollback_manifest:
-    name: rollback_manifest
-    module: packages.urigen.urigen.apply_executor
-    line: 263
-    cyclomatic_complexity: 13
-    calls_out: 20
-    calls_in: 2
-  packages.uri3.uri3.resolvers.log_resolver.parse_log_uri:
-    name: parse_log_uri
-    module: packages.uri3.uri3.resolvers.log_resolver
-    line: 47
-    cyclomatic_complexity: 7
-    calls_out: 16
-    calls_in: 5
-  packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper.import_tickets_from_planfile:
-    name: import_tickets_from_planfile
-    module: packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper
-    line: 57
-    cyclomatic_complexity: 10
-    calls_out: 15
-    calls_in: 2
-  packages.urish.urish.cli.repair_learn_cmd:
-    name: repair_learn_cmd
-    module: packages.urish.urish.cli
-    line: 679
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 0
-  packages.urigen.urigen.apply_executor._resolve_path:
-    name: _resolve_path
-    module: packages.urigen.urigen.apply_executor
-    line: 42
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 4
-  packages.uri3.uri3.logs.reader.read_logs:
-    name: read_logs
-    module: packages.uri3.uri3.logs.reader
-    line: 50
-    cyclomatic_complexity: 9
-    calls_out: 10
-    calls_in: 5
-  packages.uri3.uri3.logs.parsing.parse_json_entry:
-    name: parse_json_entry
-    module: packages.uri3.uri3.logs.parsing
-    line: 12
-    cyclomatic_complexity: 16
-    calls_out: 23
-    calls_in: 1
-  packages.uri3.uri3.config.repo_root.find_repo_root:
-    name: find_repo_root
-    module: packages.uri3.uri3.config.repo_root
-    line: 25
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 60
-  packages.uri3.uri3.graph.graph_executor.run_workflow:
-    name: run_workflow
-    module: packages.uri3.uri3.graph.graph_executor
-    line: 27
-    cyclomatic_complexity: 5
-    calls_out: 13
-    calls_in: 6
-  packages.urish.urish.backends.evolve._wrap:
-    name: _wrap
-    module: packages.urish.urish.backends.evolve
-    line: 113
-    cyclomatic_complexity: 7
-    calls_out: 2
-    calls_in: 5
-  packages.urigen.urigen.apply_executor.write_rollback_manifest:
-    name: write_rollback_manifest
-    module: packages.urigen.urigen.apply_executor
-    line: 308
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 2
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter._artifact_suffix:
-    name: _artifact_suffix
-    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
-    line: 59
-    cyclomatic_complexity: 9
-    calls_out: 0
-    calls_in: 1
-  www.landing.open:
-    name: open
-    module: www.landing
-    line: 613
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 4
-  packages.uri3.uri3.graph.conditions.evaluate_condition:
-    name: evaluate_condition
-    module: packages.uri3.uri3.graph.conditions
-    line: 8
-    cyclomatic_complexity: 7
-    calls_out: 15
-    calls_in: 1
-  packages.urish.urish.render._render_table:
-    name: _render_table
-    module: packages.urish.urish.render
-    line: 49
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.urish.urish.cli.context_show_cmd:
-    name: context_show_cmd
-    module: packages.urish.urish.cli
-    line: 562
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  packages.uri2ops.uri2ops.server.routes.tasks.run_task_handler:
-    name: run_task_handler
-    module: packages.uri2ops.uri2ops.server.routes.tasks
-    line: 9
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 3
-  packages.uri3.uri3.graph.adapters.browser_playwright.close_playwright_session:
-    name: close_playwright_session
-    module: packages.uri3.uri3.graph.adapters.browser_playwright
-    line: 16
-    cyclomatic_complexity: 5
-    calls_out: 8
-    calls_in: 1
-  packages.urigen.urigen.cli.main:
-    name: main
-    module: packages.urigen.urigen.cli
-    line: 137
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  packages.uri3.uri3.logs.filters.matches_level:
-    name: matches_level
-    module: packages.uri3.uri3.logs.filters
-    line: 29
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  packages.urish.urish.cli.ecosystem_profiles_cmd:
-    name: ecosystem_profiles_cmd
-    module: packages.urish.urish.cli
-    line: 413
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 0
-  packages.urish.urish.cli.ticket_list_cmd:
-    name: ticket_list_cmd
-    module: packages.urish.urish.cli
-    line: 578
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  packages.uri3.uri3.artifacts.validator.validate_artifact:
-    name: validate_artifact
-    module: packages.uri3.uri3.artifacts.validator
-    line: 26
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 10
-  uri2ops.server.service.OperatorService.run_task:
-    name: run_task
-    module: uri2ops.server.service
-    line: 40
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 3
-  packages.urigen.urigen.apply_executor.preview_action_diff:
-    name: preview_action_diff
-    module: packages.urigen.urigen.apply_executor
-    line: 51
-    cyclomatic_complexity: 12
-    calls_out: 23
-    calls_in: 1
-  packages.urigen.urigen.apply_executor._merge_deployment_fragment:
-    name: _merge_deployment_fragment
-    module: packages.urigen.urigen.apply_executor
-    line: 184
-    cyclomatic_complexity: 12
-    calls_out: 32
-    calls_in: 1
-  packages.urish.urish.cli._normalize_argv:
-    name: _normalize_argv
-    module: packages.urish.urish.cli
-    line: 780
-    cyclomatic_complexity: 7
-    calls_out: 2
-    calls_in: 1
-  packages.uri3.uri3.artifacts.validator._schema_repo_root:
-    name: _schema_repo_root
-    module: packages.uri3.uri3.artifacts.validator
-    line: 10
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  packages.urish.urish.cli.evolve_from_incident_cmd:
-    name: evolve_from_incident_cmd
-    module: packages.urish.urish.cli
-    line: 708
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 0
-  packages.uri3.uri3.graph.step_runner.handle_blocked_node:
-    name: handle_blocked_node
-    module: packages.uri3.uri3.graph.step_runner
-    line: 101
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  packages.urigen.urigen.cli.cmd_profiles:
-    name: cmd_profiles
-    module: packages.urigen.urigen.cli
-    line: 67
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector.parse_hypervisor_uri:
-    name: parse_hypervisor_uri
-    module: packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector
-    line: 14
-    cyclomatic_complexity: 14
-    calls_out: 4
-    calls_in: 1
-  packages.urish.urish.ecosystem_workflow.ecosystem_file:
-    name: ecosystem_file
-    module: packages.urish.urish.ecosystem_workflow
-    line: 26
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.urish.urish.cli.repair_apply_cmd:
-    name: repair_apply_cmd
-    module: packages.urish.urish.cli
-    line: 660
-    cyclomatic_complexity: 4
-    calls_out: 11
-    calls_in: 0
-  packages.urish.urish.shortcuts.load_shortcut_specs:
-    name: load_shortcut_specs
-    module: packages.urish.urish.shortcuts
-    line: 16
-    cyclomatic_complexity: 14
-    calls_out: 20
-    calls_in: 3
-  packages.resource-agent-hypervisor.hypervisor.evolution.proposal_from_source.build_repair_proposal_from_incident:
-    name: build_repair_proposal_from_incident
-    module: packages.resource-agent-hypervisor.hypervisor.evolution.proposal_from_source
-    line: 70
-    cyclomatic_complexity: 8
-    calls_out: 13
-    calls_in: 3
-  packages.uri2ops.uri2ops.server.routes.registry.registry_router:
-    name: registry_router
-    module: packages.uri2ops.uri2ops.server.routes.registry
-    line: 8
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  packages.urish.urish.ecosystem_workflow.build_planned_uris:
-    name: build_planned_uris
-    module: packages.urish.urish.ecosystem_workflow
-    line: 61
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  packages.uri3.uri3.graph.artifacts.build_workflow_step_artifact:
-    name: build_workflow_step_artifact
-    module: packages.uri3.uri3.graph.artifacts
-    line: 32
-    cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 1
-  packages.urigen.urigen.io.write_yaml:
-    name: write_yaml
-    module: packages.urigen.urigen.io
-    line: 27
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 12
-  uri2ops.operation_registry.validator.validate_operation_registry:
-    name: validate_operation_registry
-    module: uri2ops.operation_registry.validator
-    line: 23
-    cyclomatic_complexity: 14
-    calls_out: 13
-    calls_in: 3
-  packages.urish.urish.render._render_text:
-    name: _render_text
-    module: packages.urish.urish.render
-    line: 26
-    cyclomatic_complexity: 11
-    calls_out: 19
-    calls_in: 2
-  packages.urish.urish.policy.evaluate_policy:
-    name: evaluate_policy
-    module: packages.urish.urish.policy
-    line: 97
-    cyclomatic_complexity: 14
-    calls_out: 1
-    calls_in: 4
-  packages.uri3.uri3.results.envelope.enrich_workflow_dict:
-    name: enrich_workflow_dict
-    module: packages.uri3.uri3.results.envelope
-    line: 170
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 1
-  packages.uri3.uri3.graph.models.GraphNode.from_dict:
-    name: from_dict
-    module: packages.uri3.uri3.graph.models
-    line: 21
-    cyclomatic_complexity: 5
-    calls_out: 15
-    calls_in: 0
-  packages.uri3.uri3.logs.filters.matches_logger:
-    name: matches_logger
-    module: packages.uri3.uri3.logs.filters
-    line: 35
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  packages.uri3.uri3.graph.execution_models.StepExecutionResult.to_dict:
-    name: to_dict
-    module: packages.uri3.uri3.graph.execution_models
-    line: 45
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 0
-  packages.urish.urish.cli.www_create_cmd:
-    name: www_create_cmd
-    module: packages.urish.urish.cli
-    line: 524
-    cyclomatic_complexity: 2
-    calls_out: 12
-    calls_in: 0
-  packages.uri3.uri3.graph.event_log.append_workflow_event:
-    name: append_workflow_event
-    module: packages.uri3.uri3.graph.event_log
-    line: 14
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 1
-  packages.uri3.uri3.graph.dependency_graph.detect_cycles:
-    name: detect_cycles
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 54
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 3
-  packages.urish.urish.context.load_context:
-    name: load_context
-    module: packages.urish.urish.context
-    line: 20
-    cyclomatic_complexity: 7
-    calls_out: 7
-    calls_in: 6
-  uri2ops.server.service.OperatorService.registry:
-    name: registry
-    module: uri2ops.server.service
-    line: 18
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  packages.urish.urish.cli.ecosystem_plan_cmd:
-    name: ecosystem_plan_cmd
-    module: packages.urish.urish.cli
-    line: 339
-    cyclomatic_complexity: 6
-    calls_out: 15
-    calls_in: 0
-  packages.urigen.urigen.apply_executor.execute_apply_plan:
-    name: execute_apply_plan
-    module: packages.urigen.urigen.apply_executor
-    line: 324
-    cyclomatic_complexity: 11
-    calls_out: 16
-    calls_in: 1
-  packages.uri3.uri3.logs.reader.read_logs_result:
-    name: read_logs_result
-    module: packages.uri3.uri3.logs.reader
-    line: 75
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 4
-  packages.uri2ops.uri2ops.server.routes.tasks.tasks_router:
-    name: tasks_router
-    module: packages.uri2ops.uri2ops.server.routes.tasks
-    line: 21
-    cyclomatic_complexity: 1
-    calls_out: 11
-    calls_in: 1
-  packages.urish.urish.cli.main:
-    name: main
-    module: packages.urish.urish.cli
-    line: 796
-    cyclomatic_complexity: 8
-    calls_out: 8
-    calls_in: 0
-  packages.uri3.uri3.graph.adapters.runtime_adapter.service_result_to_step_payload:
-    name: service_result_to_step_payload
-    module: packages.uri3.uri3.graph.adapters.runtime_adapter
-    line: 10
-    cyclomatic_complexity: 1
-    calls_out: 11
-    calls_in: 1
-  packages.urish.urish.cli.evolve_from_ticket_cmd:
-    name: evolve_from_ticket_cmd
-    module: packages.urish.urish.cli
-    line: 695
-    cyclomatic_complexity: 3
-    calls_out: 7
-    calls_in: 0
-  packages.urish.urish.backends.doctor._artifact_gate_checks:
-    name: _artifact_gate_checks
-    module: packages.urish.urish.backends.doctor
-    line: 41
-    cyclomatic_complexity: 4
-    calls_out: 12
-    calls_in: 1
-  packages.urish.urish.backends.agent.agent_action:
-    name: agent_action
-    module: packages.urish.urish.backends.agent
-    line: 6
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 6
-  packages.urigen.urigen.generator._write_flows:
-    name: _write_flows
-    module: packages.urigen.urigen.generator
-    line: 146
-    cyclomatic_complexity: 5
-    calls_out: 11
-    calls_in: 1
-  packages.uri3.uri3.graph.graph_validator.load_workflow_graph:
-    name: load_workflow_graph
-    module: packages.uri3.uri3.graph.graph_validator
-    line: 20
-    cyclomatic_complexity: 10
-    calls_out: 11
-    calls_in: 9
-  packages.urish.urish.cli.context_list_cmd:
-    name: context_list_cmd
-    module: packages.urish.urish.cli
-    line: 556
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  packages.uri3.uri3.graph.step_runner.run_workflow_node:
-    name: run_workflow_node
-    module: packages.uri3.uri3.graph.step_runner
-    line: 161
-    cyclomatic_complexity: 4
-    calls_out: 12
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter.resolve_operator_adapter:
-    name: resolve_operator_adapter
-    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
-    line: 119
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 0
-  packages.urigen.urigen.envelope.stamp_ecosystem:
-    name: stamp_ecosystem
-    module: packages.urigen.urigen.envelope
-    line: 49
-    cyclomatic_complexity: 17
-    calls_out: 26
-    calls_in: 1
-  packages.uri3.uri3.logs.parsing.empty_entry:
-    name: empty_entry
-    module: packages.uri3.uri3.logs.parsing
-    line: 8
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter._attach_workflow_artifact:
-    name: _attach_workflow_artifact
-    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
-    line: 71
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 1
-  packages.urigen.urigen.artifacts.repo_path:
-    name: repo_path
-    module: packages.urigen.urigen.artifacts
-    line: 107
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 5
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter.Uri2OpsAdapter.execute:
-    name: execute
-    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
-    line: 95
-    cyclomatic_complexity: 3
-    calls_out: 13
-    calls_in: 1
-  packages.urish.urish.backends.run.run_target:
-    name: run_target
-    module: packages.urish.urish.backends.run
-    line: 7
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 2
-  packages.touri.touri.validator.validate_manifest:
-    name: validate_manifest
-    module: packages.touri.touri.validator
-    line: 46
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 4
-  packages.urigen.urigen.schema_check._check_yaml_file:
-    name: _check_yaml_file
-    module: packages.urigen.urigen.schema_check
-    line: 11
-    cyclomatic_complexity: 7
-    calls_out: 16
-    calls_in: 1
-  packages.uri3.uri3.graph.event_emitter.redact_step_payload:
-    name: redact_step_payload
-    module: packages.uri3.uri3.graph.event_emitter
-    line: 10
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  packages.uri3.uri3.graph.graph_validator.validate_workflow_schema:
-    name: validate_workflow_schema
-    module: packages.uri3.uri3.graph.graph_validator
-    line: 47
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  packages.urigen.urigen.apply_executor.rollback_apply:
-    name: rollback_apply
-    module: packages.urigen.urigen.apply_executor
-    line: 378
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  packages.urish.urish.cli._emit:
-    name: _emit
-    module: packages.urish.urish.cli
-    line: 61
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 24
-  packages.uri3.uri3.artifacts.evolution_source._scheme_from_uri:
-    name: _scheme_from_uri
-    module: packages.uri3.uri3.artifacts.evolution_source
-    line: 31
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  packages.urish.urish.policy.classify_uri:
-    name: classify_uri
-    module: packages.urish.urish.policy
-    line: 78
-    cyclomatic_complexity: 19
-    calls_out: 6
-    calls_in: 1
-  packages.urigen.urigen.proposal.plan_ecosystem:
-    name: plan_ecosystem
-    module: packages.urigen.urigen.proposal
-    line: 10
-    cyclomatic_complexity: 6
-    calls_out: 12
-    calls_in: 4
-  packages.uri3.uri3.graph.graph_executor.dry_run_workflow:
-    name: dry_run_workflow
-    module: packages.uri3.uri3.graph.graph_executor
-    line: 23
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 5
-  packages.urigen.urigen.models.profile_catalog:
-    name: profile_catalog
-    module: packages.urigen.urigen.models
-    line: 46
-    cyclomatic_complexity: 6
-    calls_out: 5
-    calls_in: 2
-  packages.uri3.uri3.artifacts.evolution_source.evolution_proposal_uri:
-    name: evolution_proposal_uri
-    module: packages.uri3.uri3.artifacts.evolution_source
-    line: 52
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 2
-  packages.uri2ops.uri2ops.cli.registry_cmd:
-    name: registry_cmd
-    module: packages.uri2ops.uri2ops.cli
-    line: 41
-    cyclomatic_complexity: 4
-    calls_out: 9
-    calls_in: 0
-  packages.uri3.uri3.graph.event_emitter.record_step_started:
-    name: record_step_started
-    module: packages.uri3.uri3.graph.event_emitter
-    line: 27
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  packages.urish.urish.backends.stream._runtime_event:
-    name: _runtime_event
-    module: packages.urish.urish.backends.stream
-    line: 96
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 2
   packages.uri2run.uri2run.doctor.doctor_transport_dependencies:
     name: doctor_transport_dependencies
     module: packages.uri2run.uri2run.doctor
@@ -1552,615 +19,6 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 10
     calls_in: 2
-  packages.urigen.urigen.explain._domains:
-    name: _domains
-    module: packages.urigen.urigen.explain
-    line: 39
-    cyclomatic_complexity: 5
-    calls_out: 8
-    calls_in: 1
-  packages.uri2ops.uri2ops.remote_registry.loader._unwrap_config_document:
-    name: _unwrap_config_document
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 17
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 1
-  packages.urigen.urigen.cli.build_parser:
-    name: build_parser
-    module: packages.urigen.urigen.cli
-    line: 73
-    cyclomatic_complexity: 1
-    calls_out: 41
-    calls_in: 1
-  packages.urish.urish.cli._finish:
-    name: _finish
-    module: packages.urish.urish.cli
-    line: 66
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 27
-  packages.uri3.uri3.graph.dependency_graph._remaining_cycle_nodes:
-    name: _remaining_cycle_nodes
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 49
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  packages.urish.urish.intent.detect_intent:
-    name: detect_intent
-    module: packages.urish.urish.intent
-    line: 20
-    cyclomatic_complexity: 7
-    calls_out: 6
-    calls_in: 3
-  packages.uri3.uri3.doctor.runner.run_doctor:
-    name: run_doctor
-    module: packages.uri3.uri3.doctor.runner
-    line: 67
-    cyclomatic_complexity: 9
-    calls_out: 16
-    calls_in: 3
-  packages.urigen.urigen.generator._copy_capabilities:
-    name: _copy_capabilities
-    module: packages.urigen.urigen.generator
-    line: 114
-    cyclomatic_complexity: 4
-    calls_out: 17
-    calls_in: 1
-  packages.uri3.uri3.graph.operation_registry.effective_kind:
-    name: effective_kind
-    module: packages.uri3.uri3.graph.operation_registry
-    line: 41
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 5
-  packages.urish.urish.backends.stream._error:
-    name: _error
-    module: packages.urish.urish.backends.stream
-    line: 118
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 4
-  packages.urish.urish.backends.repair.repair_apply:
-    name: repair_apply
-    module: packages.urish.urish.backends.repair
-    line: 16
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  packages.urigen.urigen.verify.verify_ecosystem:
-    name: verify_ecosystem
-    module: packages.urigen.urigen.verify
-    line: 17
-    cyclomatic_complexity: 8
-    calls_out: 15
-    calls_in: 5
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter._registry_scheme:
-    name: _registry_scheme
-    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
-    line: 37
-    cyclomatic_complexity: 2
-    calls_out: 0
-    calls_in: 1
-  packages.urigen.urigen.explain._capabilities:
-    name: _capabilities
-    module: packages.urigen.urigen.explain
-    line: 65
-    cyclomatic_complexity: 5
-    calls_out: 11
-    calls_in: 1
-  packages.urish.urish.context.list_contexts:
-    name: list_contexts
-    module: packages.urish.urish.context
-    line: 33
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  packages.urish.urish.backends.ask.ask_prompt:
-    name: ask_prompt
-    module: packages.urish.urish.backends.ask
-    line: 14
-    cyclomatic_complexity: 11
-    calls_out: 22
-    calls_in: 2
-  packages.urish.urish.intent._detect_kind:
-    name: _detect_kind
-    module: packages.urish.urish.intent
-    line: 54
-    cyclomatic_complexity: 9
-    calls_out: 8
-    calls_in: 1
-  packages.urish.urish.backends.dashboard.create_dashboard:
-    name: create_dashboard
-    module: packages.urish.urish.backends.dashboard
-    line: 7
-    cyclomatic_complexity: 12
-    calls_out: 37
-    calls_in: 3
-  packages.uri3.uri3.graph.execution_plan.prepare_workflow:
-    name: prepare_workflow
-    module: packages.uri3.uri3.graph.execution_plan
-    line: 42
-    cyclomatic_complexity: 5
-    calls_out: 8
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.browser_router._playwright_ready:
-    name: _playwright_ready
-    module: packages.uri3.uri3.graph.adapters.browser_router
-    line: 20
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  packages.urish.urish.backends.watch._event_type:
-    name: _event_type
-    module: packages.urish.urish.backends.watch
-    line: 68
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  packages.uri3.uri3.logs.filters.matches_grep:
-    name: matches_grep
-    module: packages.uri3.uri3.logs.filters
-    line: 42
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 1
-  packages.urish.urish.cli._policy_options:
-    name: _policy_options
-    module: packages.urish.urish.cli
-    line: 34
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  uri2ops.server.mcp_wrapper.list_mcp_tools:
-    name: list_mcp_tools
-    module: uri2ops.server.mcp_wrapper
-    line: 8
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  packages.uri3.uri3.graph.dependency_graph._indegree_outgoing:
-    name: _indegree_outgoing
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 25
-    cyclomatic_complexity: 6
-    calls_out: 1
-    calls_in: 2
-  packages.urigen.urigen.apply_executor._copy_tree:
-    name: _copy_tree
-    module: packages.urigen.urigen.apply_executor
-    line: 136
-    cyclomatic_complexity: 7
-    calls_out: 25
-    calls_in: 1
-  packages.urish.urish.shortcuts.shortcuts_path:
-    name: shortcuts_path
-    module: packages.urish.urish.shortcuts
-    line: 11
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  packages.urish.urish.backends.watch._normalize_watch_uri:
-    name: _normalize_watch_uri
-    module: packages.urish.urish.backends.watch
-    line: 41
-    cyclomatic_complexity: 2
-    calls_out: 0
-    calls_in: 1
-  packages.uri3.uri3.docker.compose_generator.write_generated_compose:
-    name: write_generated_compose
-    module: packages.uri3.uri3.docker.compose_generator
-    line: 41
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 1
-  packages.urigen.urigen.proposal._default_ecosystem_id:
-    name: _default_ecosystem_id
-    module: packages.urigen.urigen.proposal
-    line: 108
-    cyclomatic_complexity: 6
-    calls_out: 4
-    calls_in: 1
-  packages.uri3.uri3.results.envelope.enrich_step_dict:
-    name: enrich_step_dict
-    module: packages.uri3.uri3.results.envelope
-    line: 99
-    cyclomatic_complexity: 5
-    calls_out: 15
-    calls_in: 2
-  packages.urish.urish.backends.ticket.tickets_dir:
-    name: tickets_dir
-    module: packages.urish.urish.backends.ticket
-    line: 13
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  packages.uri3.uri3.config.uri_yaml.unwrap_uri_yaml_document:
-    name: unwrap_uri_yaml_document
-    module: packages.uri3.uri3.config.uri_yaml
-    line: 48
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 4
-  packages.urigen.urigen.verify._check_capabilities:
-    name: _check_capabilities
-    module: packages.urigen.urigen.verify
-    line: 58
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 1
-  packages.uri3.uri3.logs.parsing.parse_text_entry:
-    name: parse_text_entry
-    module: packages.uri3.uri3.logs.parsing
-    line: 64
-    cyclomatic_complexity: 5
-    calls_out: 8
-    calls_in: 1
-  packages.uri3.uri3.graph.execution_models.utc_now_iso:
-    name: utc_now_iso
-    module: packages.uri3.uri3.graph.execution_models
-    line: 10
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 3
-  packages.uri3.uri3.graph.operation_registry.requires_approval:
-    name: requires_approval
-    module: packages.uri3.uri3.graph.operation_registry
-    line: 47
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.urigen.urigen.apply_executor.build_plan_diff:
-    name: build_plan_diff
-    module: packages.urigen.urigen.apply_executor
-    line: 94
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  packages.uri3.uri3.artifacts.evolution_source.normalize_evolution_source:
-    name: normalize_evolution_source
-    module: packages.uri3.uri3.artifacts.evolution_source
-    line: 37
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 2
-  packages.uri3.uri3.logs.reader.resolve_log_path:
-    name: resolve_log_path
-    module: packages.uri3.uri3.logs.reader
-    line: 24
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 3
-  packages.uri3.uri3.graph.event_emitter.record_workflow_completed:
-    name: record_workflow_completed
-    module: packages.uri3.uri3.graph.event_emitter
-    line: 87
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  packages.urigen.urigen.io.copy_file:
-    name: copy_file
-    module: packages.urigen.urigen.io
-    line: 48
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 5
-  packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri:
-    name: parse_docker_uri
-    module: packages.uri3.uri3.resolvers.docker_resolver
-    line: 85
-    cyclomatic_complexity: 12
-    calls_out: 23
-    calls_in: 5
-  packages.urish.urish.backends.doctor.doctor_all:
-    name: doctor_all
-    module: packages.urish.urish.backends.doctor
-    line: 9
-    cyclomatic_complexity: 9
-    calls_out: 13
-    calls_in: 1
-  packages.uri3.uri3.validators.uri_tree_validator.validate_uri_tree:
-    name: validate_uri_tree
-    module: packages.uri3.uri3.validators.uri_tree_validator
-    line: 15
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 4
-  packages.uri3.uri3.logs.filters.entry_timestamp:
-    name: entry_timestamp
-    module: packages.uri3.uri3.logs.filters
-    line: 18
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 1
-  uri2ops.server.service.OperatorService.plan_task:
-    name: plan_task
-    module: uri2ops.server.service
-    line: 36
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  packages.uri3.uri3.graph.adapters.browser_mock.json_dumps:
-    name: json_dumps
-    module: packages.uri3.uri3.graph.adapters.browser_mock
-    line: 41
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 4
-  packages.urigen.urigen.generator._write_deployments:
-    name: _write_deployments
-    module: packages.urigen.urigen.generator
-    line: 284
-    cyclomatic_complexity: 5
-    calls_out: 8
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.browser_mock.BrowserMockAdapter.execute:
-    name: execute
-    module: packages.uri3.uri3.graph.adapters.browser_mock
-    line: 14
-    cyclomatic_complexity: 8
-    calls_out: 7
-    calls_in: 0
-  packages.urish.urish.ecosystem_workflow.ecosystem_dir:
-    name: ecosystem_dir
-    module: packages.urish.urish.ecosystem_workflow
-    line: 22
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 3
-  packages.uri3.uri3.graph.dependency_graph._raise_if_cycles:
-    name: _raise_if_cycles
-    module: packages.uri3.uri3.graph.dependency_graph
-    line: 62
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  packages.urigen.urigen.models.wants_dashboard:
-    name: wants_dashboard
-    module: packages.urigen.urigen.models
-    line: 73
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 4
-  packages.uri3.uri3.graph.graph_validator.validate_workflow_graph:
-    name: validate_workflow_graph
-    module: packages.uri3.uri3.graph.graph_validator
-    line: 53
-    cyclomatic_complexity: 9
-    calls_out: 13
-    calls_in: 13
-  packages.uri3.uri3.graph.step_runner.handle_completed_node:
-    name: handle_completed_node
-    module: packages.uri3.uri3.graph.step_runner
-    line: 127
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 1
-  packages.uri3.uri3.graph.execution_plan.build_execution_plan:
-    name: build_execution_plan
-    module: packages.uri3.uri3.graph.execution_plan
-    line: 18
-    cyclomatic_complexity: 3
-    calls_out: 10
-    calls_in: 4
-  packages.uri3.uri3.graph.step_runner.handle_skipped_node:
-    name: handle_skipped_node
-    module: packages.uri3.uri3.graph.step_runner
-    line: 63
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.urigen.urigen.explain.explain_ecosystem:
-    name: explain_ecosystem
-    module: packages.urigen.urigen.explain
-    line: 13
-    cyclomatic_complexity: 2
-    calls_out: 10
-    calls_in: 1
-  packages.urish.urish.cli.shell_cmd:
-    name: shell_cmd
-    module: packages.urish.urish.cli
-    line: 193
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  packages.urish.urish.backends.watch._poll_once:
-    name: _poll_once
-    module: packages.urish.urish.backends.watch
-    line: 47
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 1
-  packages.uri3.uri3.logs.filters.level_rank:
-    name: level_rank
-    module: packages.uri3.uri3.logs.filters
-    line: 9
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 2
-  packages.uri3.uri3.graph.adapters.browser_playwright.PlaywrightBrowserAdapter.execute:
-    name: execute
-    module: packages.uri3.uri3.graph.adapters.browser_playwright
-    line: 33
-    cyclomatic_complexity: 11
-    calls_out: 23
-    calls_in: 0
-  uri3.protocols.parser.parse_uri:
-    name: parse_uri
-    module: uri3.protocols.parser
-    line: 13
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 4
-  packages.uri3.uri3.graph.artifacts.write_artifact:
-    name: write_artifact
-    module: packages.uri3.uri3.graph.artifacts
-    line: 66
-    cyclomatic_complexity: 9
-    calls_out: 22
-    calls_in: 7
-  packages.urish.urish.backends.evolve.evolve_from_ticket:
-    name: evolve_from_ticket
-    module: packages.urish.urish.backends.evolve
-    line: 13
-    cyclomatic_complexity: 7
-    calls_out: 15
-    calls_in: 1
-  packages.urigen.urigen.generator._copy_applications:
-    name: _copy_applications
-    module: packages.urigen.urigen.generator
-    line: 231
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 1
-  packages.urish.urish.exit_codes.exit_code_for_result:
-    name: exit_code_for_result
-    module: packages.urish.urish.exit_codes
-    line: 6
-    cyclomatic_complexity: 8
-    calls_out: 6
-    calls_in: 1
-  packages.uri3.uri3.artifacts.writer.write_yaml_artifact:
-    name: write_yaml_artifact
-    module: packages.uri3.uri3.artifacts.writer
-    line: 30
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 3
-  packages.urish.urish.ticket_workflow.build_ticket_workflow:
-    name: build_ticket_workflow
-    module: packages.urish.urish.ticket_workflow
-    line: 80
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 3
-  packages.uri3.uri3.graph.policy.can_execute_step:
-    name: can_execute_step
-    module: packages.uri3.uri3.graph.policy
-    line: 7
-    cyclomatic_complexity: 6
-    calls_out: 2
-    calls_in: 1
-  packages.urigen.urigen.schema_check.schema_check_ecosystem:
-    name: schema_check_ecosystem
-    module: packages.urigen.urigen.schema_check
-    line: 44
-    cyclomatic_complexity: 11
-    calls_out: 23
-    calls_in: 1
-  packages.uri3.uri3.logs.filters.matches_filters:
-    name: matches_filters
-    module: packages.uri3.uri3.logs.filters
-    line: 62
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  packages.uri2ops.uri2ops.remote_registry.loader.resolve_operation_registry:
-    name: resolve_operation_registry
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 96
-    cyclomatic_complexity: 12
-    calls_out: 18
-    calls_in: 8
-  packages.urigen.urigen.models.wants_voice:
-    name: wants_voice
-    module: packages.urigen.urigen.models
-    line: 66
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 2
-  packages.uri2ops.uri2ops.cli.operations_cmd:
-    name: operations_cmd
-    module: packages.uri2ops.uri2ops.cli
-    line: 22
-    cyclomatic_complexity: 6
-    calls_out: 11
-    calls_in: 0
-  packages.uri3.uri3.graph.artifacts.artifact_uri:
-    name: artifact_uri
-    module: packages.uri3.uri3.graph.artifacts
-    line: 28
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 2
-  packages.urish.urish.cli.dashboard_create_cmd:
-    name: dashboard_create_cmd
-    module: packages.urish.urish.cli
-    line: 429
-    cyclomatic_complexity: 3
-    calls_out: 12
-    calls_in: 0
-  packages.urish.urish.ecosystem_workflow.build_planned_uris_display:
-    name: build_planned_uris_display
-    module: packages.urish.urish.ecosystem_workflow
-    line: 68
-    cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 1
-  packages.uri3.uri3.artifacts.writer.write_json_artifact:
-    name: write_json_artifact
-    module: packages.uri3.uri3.artifacts.writer
-    line: 50
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 1
-  packages.uri3.uri3.graph.graph_serializer.workflow_manifest:
-    name: workflow_manifest
-    module: packages.uri3.uri3.graph.graph_serializer
-    line: 62
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  packages.urish.urish.cli.nl_cmd:
-    name: nl_cmd
-    module: packages.urish.urish.cli
-    line: 162
-    cyclomatic_complexity: 3
-    calls_out: 10
-    calls_in: 0
-  packages.uri2ops.uri2ops.remote_registry.loader.registry_config_path:
-    name: registry_config_path
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 27
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  packages.urigen.urigen.envelope.stamp_proposal:
-    name: stamp_proposal
-    module: packages.urigen.urigen.envelope
-    line: 13
-    cyclomatic_complexity: 11
-    calls_out: 19
-    calls_in: 2
-  packages.uri3.uri3.logs.writer.append_log:
-    name: append_log
-    module: packages.uri3.uri3.logs.writer
-    line: 24
-    cyclomatic_complexity: 13
-    calls_out: 19
-    calls_in: 5
-  packages.uri3.uri3.graph.graph_serializer.normalize_graph_payload:
-    name: normalize_graph_payload
-    module: packages.uri3.uri3.graph.graph_serializer
-    line: 21
-    cyclomatic_complexity: 12
-    calls_out: 24
-    calls_in: 2
-  packages.urigen.urigen.apply_planner.build_apply_plan:
-    name: build_apply_plan
-    module: packages.urigen.urigen.apply_planner
-    line: 16
-    cyclomatic_complexity: 13
-    calls_out: 28
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.browser_router.cleanup_browser_adapters:
-    name: cleanup_browser_adapters
-    module: packages.uri3.uri3.graph.adapters.browser_router
-    line: 69
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 0
   packages.urigen.urigen.explain._risks:
     name: _risks
     module: packages.urigen.urigen.explain
@@ -2168,138 +26,26 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 5
     calls_in: 1
-  uri2ops.operation_registry.dispatcher.call_handler:
-    name: call_handler
-    module: uri2ops.operation_registry.dispatcher
-    line: 23
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 2
-  packages.uri3.uri3.validators.uri_tree_validator.load_yaml:
-    name: load_yaml
-    module: packages.uri3.uri3.validators.uri_tree_validator
-    line: 10
+  uri2ops.operation_registry.models.OperationSpec.from_mapping:
+    name: from_mapping
+    module: uri2ops.operation_registry.models
+    line: 22
     cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  packages.urigen.urigen.verify._check_doctor:
-    name: _check_doctor
-    module: packages.urigen.urigen.verify
-    line: 127
-    cyclomatic_complexity: 5
-    calls_out: 10
-    calls_in: 1
-  packages.urigen.urigen.apply.apply_ecosystem:
-    name: apply_ecosystem
-    module: packages.urigen.urigen.apply
-    line: 18
-    cyclomatic_complexity: 19
-    calls_out: 30
-    calls_in: 4
-  packages.urish.urish.cli.ticket_import_cmd:
-    name: ticket_import_cmd
-    module: packages.urish.urish.cli
-    line: 607
-    cyclomatic_complexity: 2
-    calls_out: 7
+    calls_out: 15
     calls_in: 0
-  packages.urigen.urigen.apply_validate.validate_apply_artifact:
-    name: validate_apply_artifact
-    module: packages.urigen.urigen.apply_validate
-    line: 19
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 3
-  packages.uri3.uri3.graph.event_log.workflow_event_path:
-    name: workflow_event_path
-    module: packages.uri3.uri3.graph.event_log
-    line: 10
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 2
-  packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle.agent_status:
-    name: agent_status
-    module: packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle
-    line: 330
-    cyclomatic_complexity: 5
-    calls_out: 10
-    calls_in: 2
-  packages.urish.urish.cli.ecosystem_verify_cmd:
-    name: ecosystem_verify_cmd
+  packages.urish.urish.cli.nl_cmd:
+    name: nl_cmd
     module: packages.urish.urish.cli
-    line: 377
-    cyclomatic_complexity: 2
-    calls_out: 7
+    line: 162
+    cyclomatic_complexity: 3
+    calls_out: 10
     calls_in: 0
-  uri2ops.operation_registry.loader.load_operation_registry:
-    name: load_operation_registry
-    module: uri2ops.operation_registry.loader
-    line: 19
-    cyclomatic_complexity: 10
-    calls_out: 13
-    calls_in: 1
-  packages.uri3.uri3.logs.parsing.parse_log_line:
-    name: parse_log_line
-    module: packages.uri3.uri3.logs.parsing
-    line: 82
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 1
-  packages.uri3.uri3.graph.step_runner.dependencies_ok:
-    name: dependencies_ok
-    module: packages.uri3.uri3.graph.step_runner
-    line: 14
-    cyclomatic_complexity: 6
-    calls_out: 1
-    calls_in: 1
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter._runtime_context:
-    name: _runtime_context
-    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
-    line: 47
+  packages.urish.urish.cli.shell_cmd:
+    name: shell_cmd
+    module: packages.urish.urish.cli
+    line: 193
     cyclomatic_complexity: 1
     calls_out: 3
-    calls_in: 1
-  packages.uri2flow.uri2flow.expander.expand_flow:
-    name: expand_flow
-    module: packages.uri2flow.uri2flow.expander
-    line: 43
-    cyclomatic_complexity: 6
-    calls_out: 8
-    calls_in: 8
-  packages.urigen.urigen.io.dump_yaml:
-    name: dump_yaml
-    module: packages.urigen.urigen.io
-    line: 23
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 14
-  packages.resource-agent-hypervisor.hypervisor.repair.validator.validate_evolution_proposal_dict:
-    name: validate_evolution_proposal_dict
-    module: packages.resource-agent-hypervisor.hypervisor.repair.validator
-    line: 33
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  packages.urish.urish.cli.select_cmd:
-    name: select_cmd
-    module: packages.urish.urish.cli
-    line: 177
-    cyclomatic_complexity: 4
-    calls_out: 11
-    calls_in: 0
-  packages.urigen.urigen.writer.deployment_fragment:
-    name: deployment_fragment
-    module: packages.urigen.urigen.writer
-    line: 36
-    cyclomatic_complexity: 2
-    calls_out: 0
-    calls_in: 2
-  packages.urish.urish.cli.dashboard_open_cmd:
-    name: dashboard_open_cmd
-    module: packages.urish.urish.cli
-    line: 455
-    cyclomatic_complexity: 2
-    calls_out: 9
     calls_in: 0
   packages.uri2ops.uri2ops.server.app.create_app:
     name: create_app
@@ -2308,6 +54,34 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 10
     calls_in: 1
+  packages.urigen.urigen.schema_check.schema_check_ecosystem:
+    name: schema_check_ecosystem
+    module: packages.urigen.urigen.schema_check
+    line: 44
+    cyclomatic_complexity: 11
+    calls_out: 23
+    calls_in: 1
+  packages.urish.urish.context.list_contexts:
+    name: list_contexts
+    module: packages.urish.urish.context
+    line: 33
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  packages.uri3.uri3.graph.adapters.runtime_adapter.service_result_to_step_payload:
+    name: service_result_to_step_payload
+    module: packages.uri3.uri3.graph.adapters.runtime_adapter
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 11
+    calls_in: 1
+  packages.urish.urish.backends.stream._success:
+    name: _success
+    module: packages.urish.urish.backends.stream
+    line: 106
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
   packages.uri3.uri3.docker.actions.container.handles_container_action:
     name: handles_container_action
     module: packages.uri3.uri3.docker.actions.container
@@ -2315,53 +89,235 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 1
     calls_in: 1
-  packages.urish.urish.repl.run_repl:
-    name: run_repl
-    module: packages.urish.urish.repl
-    line: 10
-    cyclomatic_complexity: 10
-    calls_out: 20
-    calls_in: 1
-  packages.urish.urish.ticket_workflow.resolve_ticket_path:
-    name: resolve_ticket_path
-    module: packages.urish.urish.ticket_workflow
-    line: 12
-    cyclomatic_complexity: 10
-    calls_out: 13
-    calls_in: 3
-  packages.urish.urish.backends.repair.repair_diagnose:
-    name: repair_diagnose
-    module: packages.urish.urish.backends.repair
-    line: 9
-    cyclomatic_complexity: 1
-    calls_out: 2
+  packages.uri2run.uri2run.cli._backend_from_target:
+    name: _backend_from_target
+    module: packages.uri2run.uri2run.cli
+    line: 81
+    cyclomatic_complexity: 3
+    calls_out: 3
     calls_in: 2
-  packages.urish.urish.backends.call.call_uri:
-    name: call_uri
-    module: packages.urish.urish.backends.call
-    line: 9
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 8
-  packages.urigen.urigen.io.relative_to:
-    name: relative_to
-    module: packages.urigen.urigen.io
-    line: 54
+  packages.urigen.urigen.cli.build_parser:
+    name: build_parser
+    module: packages.urigen.urigen.cli
+    line: 73
     cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 13
-  packages.uri3.uri3.logs.filters.matches_time_window:
-    name: matches_time_window
-    module: packages.uri3.uri3.logs.filters
-    line: 49
-    cyclomatic_complexity: 7
+    calls_out: 41
+    calls_in: 1
+  packages.uri3.uri3.graph.dependency_graph._leaf_nodes:
+    name: _leaf_nodes
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 98
+    cyclomatic_complexity: 4
     calls_out: 1
     calls_in: 1
-  packages.urigen.urigen.explain._flows:
-    name: _flows
-    module: packages.urigen.urigen.explain
-    line: 86
+  packages.uri3.uri3.graph.adapters.browser_playwright.close_playwright_session:
+    name: close_playwright_session
+    module: packages.uri3.uri3.graph.adapters.browser_playwright
+    line: 16
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 1
+  packages.urish.urish.ecosystem_workflow.proposal_path:
+    name: proposal_path
+    module: packages.urish.urish.ecosystem_workflow
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 2
+  packages.uri3.uri3.cli.commands.graph.register:
+    name: register
+    module: packages.uri3.uri3.cli.commands.graph
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 0
+  packages.uri3.uri3.config.repo_root.find_repo_root:
+    name: find_repo_root
+    module: packages.uri3.uri3.config.repo_root
+    line: 25
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 60
+  packages.uri3.uri3.graph.step_runner.dependencies_ok:
+    name: dependencies_ok
+    module: packages.uri3.uri3.graph.step_runner
+    line: 14
     cyclomatic_complexity: 6
+    calls_out: 1
+    calls_in: 1
+  uri2ops.operation_registry.validator.validate_operation_registry:
+    name: validate_operation_registry
+    module: uri2ops.operation_registry.validator
+    line: 23
+    cyclomatic_complexity: 14
+    calls_out: 13
+    calls_in: 3
+  packages.urish.urish.cli.context_show_cmd:
+    name: context_show_cmd
+    module: packages.urish.urish.cli
+    line: 562
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  packages.urigen.urigen.cli.cmd_generate:
+    name: cmd_generate
+    module: packages.urigen.urigen.cli
+    line: 31
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  packages.urish.urish.cli._emit:
+    name: _emit
+    module: packages.urish.urish.cli
+    line: 61
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 24
+  packages.resource-agent-hypervisor.hypervisor.repair.validator.read_yaml:
+    name: read_yaml
+    module: packages.resource-agent-hypervisor.hypervisor.repair.validator
+    line: 47
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 2
+  packages.uri3.uri3.graph.step_runner.handle_blocked_node:
+    name: handle_blocked_node
+    module: packages.uri3.uri3.graph.step_runner
+    line: 101
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  packages.uri3.uri3.graph.execution_models.new_execution_context:
+    name: new_execution_context
+    module: packages.uri3.uri3.graph.execution_models
+    line: 118
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  packages.urigen.urigen.verify._check_flows:
+    name: _check_flows
+    module: packages.urigen.urigen.verify
+    line: 73
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 1
+  packages.uri2ops.uri2ops.remote_registry.loader.registry_document:
+    name: registry_document
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 121
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  packages.uri3.uri3.graph.adapters.browser_mock.BrowserMockAdapter.execute:
+    name: execute
+    module: packages.uri3.uri3.graph.adapters.browser_mock
+    line: 14
+    cyclomatic_complexity: 8
+    calls_out: 7
+    calls_in: 0
+  packages.uri3.uri3.graph.event_emitter.record_step:
+    name: record_step
+    module: packages.uri3.uri3.graph.event_emitter
+    line: 19
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 6
+  packages.urigen.urigen.verify._resolve:
+    name: _resolve
+    module: packages.urigen.urigen.verify
+    line: 53
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.run_plans.build_run_plan:
+    name: build_run_plan
+    module: packages.resource-agent-hypervisor.hypervisor.deployment_registry.run_plans
+    line: 12
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 6
+  packages.urish.urish.cli.agent_create_dashboard_cmd:
+    name: agent_create_dashboard_cmd
+    module: packages.urish.urish.cli
+    line: 239
+    cyclomatic_complexity: 3
+    calls_out: 12
+    calls_in: 0
+  packages.urish.urish.cli.ticket_show_cmd:
+    name: ticket_show_cmd
+    module: packages.urish.urish.cli
+    line: 586
+    cyclomatic_complexity: 10
+    calls_out: 17
+    calls_in: 0
+  packages.uri3.uri3.graph.step_runner.handle_completed_node:
+    name: handle_completed_node
+    module: packages.uri3.uri3.graph.step_runner
+    line: 127
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  uri2ops.operation_registry.validator.validate_registry_schema:
+    name: validate_registry_schema
+    module: uri2ops.operation_registry.validator
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 2
+  packages.urigen.urigen.explain.explain_ecosystem:
+    name: explain_ecosystem
+    module: packages.urigen.urigen.explain
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 10
+    calls_in: 1
+  packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_schemas:
+    name: check_schemas
+    module: packages.resource-agent-hypervisor.hypervisor.artifacts.gate
+    line: 276
+    cyclomatic_complexity: 5
+    calls_out: 12
+    calls_in: 2
+  packages.uri3.uri3.graph.operation_registry.validate_node_operation:
+    name: validate_node_operation
+    module: packages.uri3.uri3.graph.operation_registry
+    line: 55
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 2
+  packages.urigen.urigen.proposal._dashboard_proposal:
+    name: _dashboard_proposal
+    module: packages.urigen.urigen.proposal
+    line: 68
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.uri3.uri3.graph.graph_executor.run_workflow:
+    name: run_workflow
+    module: packages.uri3.uri3.graph.graph_executor
+    line: 27
+    cyclomatic_complexity: 5
+    calls_out: 13
+    calls_in: 6
+  packages.urigen.urigen.generator._copy_capabilities:
+    name: _copy_capabilities
+    module: packages.urigen.urigen.generator
+    line: 114
+    cyclomatic_complexity: 4
+    calls_out: 17
+    calls_in: 1
+  packages.uri3.uri3.cli.main.main:
+    name: main
+    module: packages.uri3.uri3.cli.main
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  packages.urigen.urigen.apply_executor.load_rollback_manifest:
+    name: load_rollback_manifest
+    module: packages.urigen.urigen.apply_executor
+    line: 315
+    cyclomatic_complexity: 5
     calls_out: 9
     calls_in: 1
   packages.uri3.uri3.graph.graph_serializer.edges_from_depends_on:
@@ -2371,167 +327,34 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 5
     calls_in: 2
-  packages.urish.urish.cli.ticket_plan_cmd:
-    name: ticket_plan_cmd
-    module: packages.urish.urish.cli
-    line: 620
-    cyclomatic_complexity: 11
-    calls_out: 19
-    calls_in: 0
-  packages.urish.urish.backends.explain.explain_target:
-    name: explain_target
-    module: packages.urish.urish.backends.explain
-    line: 8
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  packages.uri2ops.uri2ops.remote_registry.loader.registry_from_document:
-    name: registry_from_document
-    module: packages.uri2ops.uri2ops.remote_registry.loader
-    line: 78
-    cyclomatic_complexity: 8
-    calls_out: 9
-    calls_in: 1
-  packages.urigen.urigen.verify._check_explain:
-    name: _check_explain
-    module: packages.urigen.urigen.verify
-    line: 99
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 1
-  packages.uri2ops.uri2ops.server.routes.a2a.a2a_router:
-    name: a2a_router
-    module: packages.uri2ops.uri2ops.server.routes.a2a
-    line: 11
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 1
-  packages.uri3.uri3.graph.operation_registry.validate_node_operation:
-    name: validate_node_operation
-    module: packages.uri3.uri3.graph.operation_registry
-    line: 55
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 2
-  packages.urish.urish.backends.stream._stream_sse:
-    name: _stream_sse
-    module: packages.urish.urish.backends.stream
-    line: 25
-    cyclomatic_complexity: 12
-    calls_out: 15
-    calls_in: 1
-  packages.resource-agent-hypervisor.hypervisor.repair.supervisor.learn_from_incident:
-    name: learn_from_incident
-    module: packages.resource-agent-hypervisor.hypervisor.repair.supervisor
-    line: 199
-    cyclomatic_complexity: 10
-    calls_out: 18
-    calls_in: 2
-  domains.weather_map.handlers.generate_weather_map.handler:
-    name: handler
-    module: domains.weather_map.handlers.generate_weather_map
+  packages.urish.urish.backends.dashboard.create_dashboard:
+    name: create_dashboard
+    module: packages.urish.urish.backends.dashboard
     line: 7
-    cyclomatic_complexity: 3
-    calls_out: 10
-    calls_in: 7
-  packages.urigen.urigen.explain._deployments:
-    name: _deployments
-    module: packages.urigen.urigen.explain
-    line: 102
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  packages.uri3.uri3.docker.actions.container.control_container:
-    name: control_container
-    module: packages.uri3.uri3.docker.actions.container
+    cyclomatic_complexity: 12
+    calls_out: 37
+    calls_in: 3
+  packages.uri3.uri3.graph.graph_validator.load_workflow_graph:
+    name: load_workflow_graph
+    module: packages.uri3.uri3.graph.graph_validator
     line: 20
-    cyclomatic_complexity: 8
-    calls_out: 9
-    calls_in: 1
-  packages.uri3.uri3.graph.event_emitter.record_workflow_started:
-    name: record_workflow_started
-    module: packages.uri3.uri3.graph.event_emitter
-    line: 68
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  uri3.validators.uri_validator.validate_uri:
-    name: validate_uri
-    module: uri3.validators.uri_validator
-    line: 5
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  packages.urigen.urigen.cli._emit:
-    name: _emit
-    module: packages.urigen.urigen.cli
-    line: 18
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 7
-  packages.urish.urish.backends.stream._success:
-    name: _success
-    module: packages.urish.urish.backends.stream
-    line: 106
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  packages.urish.urish.backends.evolve.proposal_verify:
-    name: proposal_verify
-    module: packages.urish.urish.backends.evolve
-    line: 56
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 1
-  packages.uri3.uri3.graph.step_runner.step_result:
-    name: step_result
-    module: packages.uri3.uri3.graph.step_runner
-    line: 40
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 4
-  packages.uri3.uri3.graph.adapters.registry._operator_adapter:
-    name: _operator_adapter
-    module: packages.uri3.uri3.graph.adapters.registry
-    line: 102
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  packages.urish.urish.cli.shortcuts_cmd:
-    name: shortcuts_cmd
-    module: packages.urish.urish.cli
-    line: 214
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  packages.urigen.urigen.cli.cmd_schema_check:
-    name: cmd_schema_check
-    module: packages.urigen.urigen.cli
-    line: 61
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 0
-  packages.urigen.urigen.verify._check_result:
-    name: _check_result
+    cyclomatic_complexity: 10
+    calls_out: 11
+    calls_in: 9
+  packages.urigen.urigen.verify._check_doctor:
+    name: _check_doctor
     module: packages.urigen.urigen.verify
-    line: 49
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 5
-  packages.urigen.urigen.writer.dashboard_deployment_fragment:
-    name: dashboard_deployment_fragment
-    module: packages.urigen.urigen.writer
-    line: 52
-    cyclomatic_complexity: 1
-    calls_out: 1
+    line: 127
+    cyclomatic_complexity: 5
+    calls_out: 10
     calls_in: 1
-  packages.urigen.urigen.cli.cmd_generate:
-    name: cmd_generate
-    module: packages.urigen.urigen.cli
-    line: 31
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
+  packages.urigen.urigen.io.write_yaml:
+    name: write_yaml
+    module: packages.urigen.urigen.io
+    line: 27
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 12
   packages.uri3.uri3.graph.adapters.uri2ops_adapter._use_legacy_browser_adapter:
     name: _use_legacy_browser_adapter
     module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
@@ -2539,6 +362,2260 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 3
+  uri3.validators.uri_validator.validate_uri:
+    name: validate_uri
+    module: uri3.validators.uri_validator
+    line: 5
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  packages.uri2ops.uri2ops.remote_registry.loader.merge_registry_documents:
+    name: merge_registry_documents
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 68
+    cyclomatic_complexity: 6
+    calls_out: 6
+    calls_in: 1
+  packages.uri3.uri3.artifacts.validator.validate_artifact_file:
+    name: validate_artifact_file
+    module: packages.uri3.uri3.artifacts.validator
+    line: 35
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  packages.uri3.uri3.docker.actions.compose.control_compose_logs:
+    name: control_compose_logs
+    module: packages.uri3.uri3.docker.actions.compose
+    line: 82
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  packages.urish.urish.backends.evolve.proposal_apply:
+    name: proposal_apply
+    module: packages.urish.urish.backends.evolve
+    line: 80
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  packages.urish.urish.backends.evolve.proposal_verify:
+    name: proposal_verify
+    module: packages.urish.urish.backends.evolve
+    line: 56
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  packages.urish.urish.cli.ticket_list_cmd:
+    name: ticket_list_cmd
+    module: packages.urish.urish.cli
+    line: 578
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  packages.uri3.uri3.graph.execution_models.StepExecutionResult.to_dict:
+    name: to_dict
+    module: packages.uri3.uri3.graph.execution_models
+    line: 45
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 0
+  packages.urigen.urigen.explain._agents:
+    name: _agents
+    module: packages.urigen.urigen.explain
+    line: 50
+    cyclomatic_complexity: 7
+    calls_out: 9
+    calls_in: 1
+  packages.urigen.urigen.apply_executor._copy_tree:
+    name: _copy_tree
+    module: packages.urigen.urigen.apply_executor
+    line: 136
+    cyclomatic_complexity: 7
+    calls_out: 25
+    calls_in: 1
+  packages.urigen.urigen.artifacts.repo_path:
+    name: repo_path
+    module: packages.urigen.urigen.artifacts
+    line: 107
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 5
+  uri2ops.operation_registry.loader.load_operation_registry:
+    name: load_operation_registry
+    module: uri2ops.operation_registry.loader
+    line: 19
+    cyclomatic_complexity: 10
+    calls_out: 13
+    calls_in: 1
+  packages.urigen.urigen.apply_executor.rollback_manifest:
+    name: rollback_manifest
+    module: packages.urigen.urigen.apply_executor
+    line: 263
+    cyclomatic_complexity: 13
+    calls_out: 20
+    calls_in: 2
+  packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper.propose_from_ticket_path:
+    name: propose_from_ticket_path
+    module: packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper
+    line: 88
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 3
+  uri2ops.operation_registry.dispatcher.dispatch:
+    name: dispatch
+    module: uri2ops.operation_registry.dispatcher
+    line: 30
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  packages.urish.urish.cli._print_evolve_summary:
+    name: _print_evolve_summary
+    module: packages.urish.urish.cli
+    line: 73
+    cyclomatic_complexity: 9
+    calls_out: 13
+    calls_in: 2
+  packages.uri3.uri3.graph.dependency_graph._root_nodes:
+    name: _root_nodes
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 90
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  packages.urish.urish.ecosystem_workflow.build_planned_uris_display:
+    name: build_planned_uris_display
+    module: packages.urish.urish.ecosystem_workflow
+    line: 68
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  packages.urigen.urigen.explain._deployments:
+    name: _deployments
+    module: packages.urigen.urigen.explain
+    line: 102
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  packages.urigen.urigen.cli._emit:
+    name: _emit
+    module: packages.urigen.urigen.cli
+    line: 18
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 7
+  packages.uri3.uri3.graph.artifacts.artifact_uri:
+    name: artifact_uri
+    module: packages.uri3.uri3.graph.artifacts
+    line: 28
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 2
+  packages.urigen.urigen.generator._write_deployments:
+    name: _write_deployments
+    module: packages.urigen.urigen.generator
+    line: 284
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 1
+  packages.urish.urish.cli.evolve_from_incident_cmd:
+    name: evolve_from_incident_cmd
+    module: packages.urish.urish.cli
+    line: 708
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  packages.uri2ops.uri2ops.remote_registry.loader.registry_config_path:
+    name: registry_config_path
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 27
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.graph.execution_plan.build_execution_plan:
+    name: build_execution_plan
+    module: packages.uri3.uri3.graph.execution_plan
+    line: 18
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 4
+  packages.uri2ops.uri2ops.remote_registry.loader.resolve_operation_registry:
+    name: resolve_operation_registry
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 96
+    cyclomatic_complexity: 12
+    calls_out: 18
+    calls_in: 8
+  packages.urish.urish.repl.run_repl:
+    name: run_repl
+    module: packages.urish.urish.repl
+    line: 10
+    cyclomatic_complexity: 10
+    calls_out: 20
+    calls_in: 1
+  packages.uri3.uri3.graph.event_emitter.record_step_finished:
+    name: record_step_finished
+    module: packages.uri3.uri3.graph.event_emitter
+    line: 49
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 1
+  packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper.import_tickets_from_planfile:
+    name: import_tickets_from_planfile
+    module: packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper
+    line: 57
+    cyclomatic_complexity: 10
+    calls_out: 15
+    calls_in: 2
+  packages.uri3.uri3.graph.dependency_graph.detect_cycles:
+    name: detect_cycles
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 54
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 3
+  packages.urish.urish.cli.proposal_verify_cmd:
+    name: proposal_verify_cmd
+    module: packages.urish.urish.cli
+    line: 724
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  packages.uri3.uri3.resolvers.explain.explain_uri:
+    name: explain_uri
+    module: packages.uri3.uri3.resolvers.explain
+    line: 197
+    cyclomatic_complexity: 14
+    calls_out: 21
+    calls_in: 8
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter._runtime_context:
+    name: _runtime_context
+    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
+    line: 47
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  packages.urish.urish.cli.ecosystem_generate_cmd:
+    name: ecosystem_generate_cmd
+    module: packages.urish.urish.cli
+    line: 363
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 0
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter.cleanup_operator_adapters:
+    name: cleanup_operator_adapters
+    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
+    line: 113
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  packages.urish.urish.cli.ticket_plan_cmd:
+    name: ticket_plan_cmd
+    module: packages.urish.urish.cli
+    line: 620
+    cyclomatic_complexity: 11
+    calls_out: 19
+    calls_in: 0
+  uri2ops.operation_registry.loader.default_registry_path:
+    name: default_registry_path
+    module: uri2ops.operation_registry.loader
+    line: 11
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  packages.uri3.uri3.graph.step_runner.handle_dependency_failure:
+    name: handle_dependency_failure
+    module: packages.uri3.uri3.graph.step_runner
+    line: 82
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  packages.urish.urish.cli.context_list_cmd:
+    name: context_list_cmd
+    module: packages.urish.urish.cli
+    line: 556
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  packages.uri3.uri3.graph.adapters.browser_router._playwright_ready:
+    name: _playwright_ready
+    module: packages.uri3.uri3.graph.adapters.browser_router
+    line: 20
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  packages.uri3.uri3.graph.event_emitter.record_step_started:
+    name: record_step_started
+    module: packages.uri3.uri3.graph.event_emitter
+    line: 27
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.graph.artifacts.write_artifact:
+    name: write_artifact
+    module: packages.uri3.uri3.graph.artifacts
+    line: 66
+    cyclomatic_complexity: 9
+    calls_out: 22
+    calls_in: 7
+  packages.uri3.uri3.validators.uri_tree_validator.validate_uri_tree:
+    name: validate_uri_tree
+    module: packages.uri3.uri3.validators.uri_tree_validator
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 4
+  packages.uri3.uri3.graph.event_log.append_workflow_event:
+    name: append_workflow_event
+    module: packages.uri3.uri3.graph.event_log
+    line: 14
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  packages.uri3.uri3.graph.graph_serializer.workflow_manifest:
+    name: workflow_manifest
+    module: packages.uri3.uri3.graph.graph_serializer
+    line: 62
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.uri3.uri3.graph.adapters.registry._operator_adapter:
+    name: _operator_adapter
+    module: packages.uri3.uri3.graph.adapters.registry
+    line: 102
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  packages.uri3.uri3.graph.adapters.registry.adapter_for_uri:
+    name: adapter_for_uri
+    module: packages.uri3.uri3.graph.adapters.registry
+    line: 116
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 2
+  packages.urigen.urigen.apply_executor._copy_file:
+    name: _copy_file
+    module: packages.urigen.urigen.apply_executor
+    line: 98
+    cyclomatic_complexity: 5
+    calls_out: 19
+    calls_in: 1
+  packages.uri3.uri3.graph.event_emitter.record_workflow_completed:
+    name: record_workflow_completed
+    module: packages.uri3.uri3.graph.event_emitter
+    line: 87
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  packages.urish.urish.backends.repair.repair_apply:
+    name: repair_apply
+    module: packages.urish.urish.backends.repair
+    line: 16
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter._registry_scheme:
+    name: _registry_scheme
+    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
+    line: 37
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  packages.urish.urish.cli.main:
+    name: main
+    module: packages.urish.urish.cli
+    line: 796
+    cyclomatic_complexity: 8
+    calls_out: 8
+    calls_in: 0
+  packages.urigen.urigen.generator._copy_application_tree:
+    name: _copy_application_tree
+    module: packages.urigen.urigen.generator
+    line: 258
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 1
+  packages.urigen.urigen.verify._check_result:
+    name: _check_result
+    module: packages.urigen.urigen.verify
+    line: 49
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 5
+  packages.urish.urish.cli._policy_options:
+    name: _policy_options
+    module: packages.urish.urish.cli
+    line: 34
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  packages.uri3.uri3.artifacts.evolution_source.evolution_proposal_uri:
+    name: evolution_proposal_uri
+    module: packages.uri3.uri3.artifacts.evolution_source
+    line: 52
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 2
+  packages.urish.urish.context.load_context:
+    name: load_context
+    module: packages.urish.urish.context
+    line: 20
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 6
+  packages.uri3.uri3.protocols.schemes.spec_registry.list_schemes:
+    name: list_schemes
+    module: packages.uri3.uri3.protocols.schemes.spec_registry
+    line: 64
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 2
+  packages.uri3.uri3.graph.policy.can_execute_step:
+    name: can_execute_step
+    module: packages.uri3.uri3.graph.policy
+    line: 7
+    cyclomatic_complexity: 6
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.graph.operation_registry.effective_kind:
+    name: effective_kind
+    module: packages.uri3.uri3.graph.operation_registry
+    line: 41
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 5
+  packages.uri3.uri3.logs.filters.entry_timestamp:
+    name: entry_timestamp
+    module: packages.uri3.uri3.logs.filters
+    line: 18
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  packages.urigen.urigen.io.relative_to:
+    name: relative_to
+    module: packages.urigen.urigen.io
+    line: 54
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 13
+  packages.urish.urish.ticket_workflow.build_ticket_workflow:
+    name: build_ticket_workflow
+    module: packages.urish.urish.ticket_workflow
+    line: 90
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 3
+  packages.uri3.uri3.graph.dependency_graph.dependency_summary:
+    name: dependency_summary
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 106
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_artifacts:
+    name: check_artifacts
+    module: packages.resource-agent-hypervisor.hypervisor.artifacts.gate
+    line: 113
+    cyclomatic_complexity: 11
+    calls_out: 7
+    calls_in: 2
+  packages.urigen.urigen.apply_executor.rollback_apply:
+    name: rollback_apply
+    module: packages.urigen.urigen.apply_executor
+    line: 378
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  packages.uri3.uri3.graph.dependency_graph._remaining_cycle_nodes:
+    name: _remaining_cycle_nodes
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 49
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  uri2ops.server.a2a_wrapper.build_agent_card:
+    name: build_agent_card
+    module: uri2ops.server.a2a_wrapper
+    line: 9
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 1
+  uri3.graph.uri_graph.build_graph_from_tree:
+    name: build_graph_from_tree
+    module: uri3.graph.uri_graph
+    line: 29
+    cyclomatic_complexity: 10
+    calls_out: 28
+    calls_in: 2
+  packages.uri3.uri3.logs.filters.matches_level:
+    name: matches_level
+    module: packages.uri3.uri3.logs.filters
+    line: 29
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  packages.urigen.urigen.writer.render_readme:
+    name: render_readme
+    module: packages.urigen.urigen.writer
+    line: 9
+    cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 1
+  packages.uri2ops.uri2ops.remote_registry.loader._unwrap_config_document:
+    name: _unwrap_config_document
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 17
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  packages.uri3.uri3.graph.operation_registry.allowed_operations:
+    name: allowed_operations
+    module: packages.uri3.uri3.graph.operation_registry
+    line: 51
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  packages.urish.urish.backends.ticket.show_ticket:
+    name: show_ticket
+    module: packages.urish.urish.backends.ticket
+    line: 43
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 1
+  packages.uri2ops.uri2ops.cli.serve_cmd:
+    name: serve_cmd
+    module: packages.uri2ops.uri2ops.cli
+    line: 78
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  packages.uri3.uri3.graph.operation_registry.requires_approval:
+    name: requires_approval
+    module: packages.uri3.uri3.graph.operation_registry
+    line: 47
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.uri3.uri3.artifacts.validator._schema_repo_root:
+    name: _schema_repo_root
+    module: packages.uri3.uri3.artifacts.validator
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  packages.urish.urish.backends.logs.read_log_uri:
+    name: read_log_uri
+    module: packages.urish.urish.backends.logs
+    line: 8
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 2
+  packages.uri3.uri3.docker.controller.control_docker:
+    name: control_docker
+    module: packages.uri3.uri3.docker.controller
+    line: 12
+    cyclomatic_complexity: 11
+    calls_out: 11
+    calls_in: 8
+  packages.uri3.uri3.artifacts.validator.validate_artifact:
+    name: validate_artifact
+    module: packages.uri3.uri3.artifacts.validator
+    line: 26
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 10
+  packages.urigen.urigen.proposal.plan_ecosystem:
+    name: plan_ecosystem
+    module: packages.urigen.urigen.proposal
+    line: 10
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 4
+  packages.uri3.uri3.artifacts.evolution_source._scheme_from_uri:
+    name: _scheme_from_uri
+    module: packages.uri3.uri3.artifacts.evolution_source
+    line: 31
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  packages.urish.urish.backends.watch._normalize_watch_uri:
+    name: _normalize_watch_uri
+    module: packages.urish.urish.backends.watch
+    line: 41
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  packages.uri3.uri3.docker.actions.compose.control_compose_lifecycle:
+    name: control_compose_lifecycle
+    module: packages.uri3.uri3.docker.actions.compose
+    line: 73
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  packages.urish.urish.render.render_result:
+    name: render_result
+    module: packages.urish.urish.render
+    line: 9
+    cyclomatic_complexity: 10
+    calls_out: 10
+    calls_in: 2
+  packages.uri3.uri3.graph.dependency_graph._visit_acyclic_nodes:
+    name: _visit_acyclic_nodes
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 36
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 1
+  packages.urish.urish.backends.doctor.doctor_all:
+    name: doctor_all
+    module: packages.urish.urish.backends.doctor
+    line: 9
+    cyclomatic_complexity: 9
+    calls_out: 13
+    calls_in: 1
+  uri2ops.server.service.OperatorService.run_task:
+    name: run_task
+    module: uri2ops.server.service
+    line: 40
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 3
+  packages.uri2ops.uri2ops.server.routes.registry.operations_router:
+    name: operations_router
+    module: packages.uri2ops.uri2ops.server.routes.registry
+    line: 22
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 1
+  packages.urish.urish.backends.ask.ask_prompt:
+    name: ask_prompt
+    module: packages.urish.urish.backends.ask
+    line: 14
+    cyclomatic_complexity: 16
+    calls_out: 28
+    calls_in: 2
+  packages.urish.urish.backends.call.call_uri:
+    name: call_uri
+    module: packages.urish.urish.backends.call
+    line: 9
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 8
+  packages.urish.urish.cli.ecosystem_verify_cmd:
+    name: ecosystem_verify_cmd
+    module: packages.urish.urish.cli
+    line: 377
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 0
+  packages.uri3.uri3.graph.artifacts.artifact_path:
+    name: artifact_path
+    module: packages.uri3.uri3.graph.artifacts
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  packages.uri2ops.uri2ops.server.routes.tasks.tasks_router:
+    name: tasks_router
+    module: packages.uri2ops.uri2ops.server.routes.tasks
+    line: 21
+    cyclomatic_complexity: 1
+    calls_out: 11
+    calls_in: 1
+  packages.uri3.uri3.cli.commands.resolve.register:
+    name: register
+    module: packages.uri3.uri3.cli.commands.resolve
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 24
+    calls_in: 0
+  www.landing.open:
+    name: open
+    module: www.landing
+    line: 613
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 4
+  packages.urish.urish.cli.proposal_apply_cmd:
+    name: proposal_apply_cmd
+    module: packages.urish.urish.cli
+    line: 733
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 0
+  examples.23_nl_to_agent_tutorial.run.print:
+    name: print
+    module: examples.23_nl_to_agent_tutorial.run
+    line: 155
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 54
+  packages.urish.urish.backends.stream._runtime_event:
+    name: _runtime_event
+    module: packages.urish.urish.backends.stream
+    line: 96
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 2
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter._artifact_suffix:
+    name: _artifact_suffix
+    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
+    line: 59
+    cyclomatic_complexity: 9
+    calls_out: 0
+    calls_in: 1
+  packages.urigen.urigen.models.normalize_profile:
+    name: normalize_profile
+    module: packages.urigen.urigen.models
+    line: 37
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  packages.urigen.urigen.apply_planner.build_apply_plan:
+    name: build_apply_plan
+    module: packages.urigen.urigen.apply_planner
+    line: 16
+    cyclomatic_complexity: 13
+    calls_out: 28
+    calls_in: 1
+  packages.urigen.urigen.cli.main:
+    name: main
+    module: packages.urigen.urigen.cli
+    line: 137
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  packages.uri3.uri3.validators.uri_tree_validator.load_yaml:
+    name: load_yaml
+    module: packages.uri3.uri3.validators.uri_tree_validator
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.graph.dependency_graph._topological_order:
+    name: _topological_order
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 68
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 1
+  packages.uri3.uri3.graph.adapters.browser_router.BrowserRouterAdapter.execute:
+    name: execute
+    module: packages.uri3.uri3.graph.adapters.browser_router
+    line: 57
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  packages.urigen.urigen.explain._capabilities:
+    name: _capabilities
+    module: packages.urigen.urigen.explain
+    line: 65
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 1
+  packages.urish.urish.backends.doctor._artifact_gate_checks:
+    name: _artifact_gate_checks
+    module: packages.urish.urish.backends.doctor
+    line: 41
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 1
+  packages.urigen.urigen.cli.cmd_apply:
+    name: cmd_apply
+    module: packages.urigen.urigen.cli
+    line: 49
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  packages.urish.urish.cli.agent_repair_cmd:
+    name: agent_repair_cmd
+    module: packages.urish.urish.cli
+    line: 319
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  packages.urish.urish.backends.watch._poll_once:
+    name: _poll_once
+    module: packages.urish.urish.backends.watch
+    line: 47
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 1
+  packages.uri3.uri3.docker.actions.container._container_name:
+    name: _container_name
+    module: packages.uri3.uri3.docker.actions.container
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_lifecycle_coverage:
+    name: check_lifecycle_coverage
+    module: packages.resource-agent-hypervisor.hypervisor.artifacts.gate
+    line: 237
+    cyclomatic_complexity: 10
+    calls_out: 8
+    calls_in: 2
+  packages.urish.urish.render._render_text:
+    name: _render_text
+    module: packages.urish.urish.render
+    line: 26
+    cyclomatic_complexity: 11
+    calls_out: 19
+    calls_in: 2
+  packages.urigen.urigen.apply_executor.build_plan_diff:
+    name: build_plan_diff
+    module: packages.urigen.urigen.apply_executor
+    line: 94
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  packages.uri3.uri3.artifacts.validator.load_schema:
+    name: load_schema
+    module: packages.uri3.uri3.artifacts.validator
+    line: 22
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  packages.uri2ops.uri2ops.cli.operations_cmd:
+    name: operations_cmd
+    module: packages.uri2ops.uri2ops.cli
+    line: 22
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 0
+  packages.uri3.uri3.docker.runner.run_command:
+    name: run_command
+    module: packages.uri3.uri3.docker.runner
+    line: 7
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 9
+  packages.uri2ops.uri2ops.server.routes.a2a.a2a_router:
+    name: a2a_router
+    module: packages.uri2ops.uri2ops.server.routes.a2a
+    line: 11
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  packages.uri3.uri3.logs.filters.matches_filters:
+    name: matches_filters
+    module: packages.uri3.uri3.logs.filters
+    line: 62
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  packages.urish.urish.backends.repair.repair_learn:
+    name: repair_learn
+    module: packages.urish.urish.backends.repair
+    line: 29
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 1
+  packages.uri3.uri3.artifacts.evolution_source.normalize_evolution_source:
+    name: normalize_evolution_source
+    module: packages.uri3.uri3.artifacts.evolution_source
+    line: 37
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 2
+  packages.uri3.uri3.logs.filters.level_rank:
+    name: level_rank
+    module: packages.uri3.uri3.logs.filters
+    line: 9
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 2
+  packages.uri3.uri3.cli.helpers.list_payload:
+    name: list_payload
+    module: packages.uri3.uri3.cli.helpers
+    line: 43
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  uri2ops.server.service.OperatorService.registry_export:
+    name: registry_export
+    module: uri2ops.server.service
+    line: 21
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  packages.uri2ops.uri2ops.server.routes.tasks.run_task_handler:
+    name: run_task_handler
+    module: packages.uri2ops.uri2ops.server.routes.tasks
+    line: 9
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 3
+  packages.urish.urish.cli.www_open_cmd:
+    name: www_open_cmd
+    module: packages.urish.urish.cli
+    line: 501
+    cyclomatic_complexity: 2
+    calls_out: 10
+    calls_in: 0
+  packages.urigen.urigen.apply_executor.write_rollback_manifest:
+    name: write_rollback_manifest
+    module: packages.urigen.urigen.apply_executor
+    line: 308
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 2
+  packages.urish.urish.cli._normalize_argv:
+    name: _normalize_argv
+    module: packages.urish.urish.cli
+    line: 780
+    cyclomatic_complexity: 7
+    calls_out: 2
+    calls_in: 1
+  packages.urish.urish.ticket_workflow.resolve_ticket_path:
+    name: resolve_ticket_path
+    module: packages.urish.urish.ticket_workflow
+    line: 12
+    cyclomatic_complexity: 10
+    calls_out: 13
+    calls_in: 3
+  packages.urish.urish.ecosystem_workflow._quote:
+    name: _quote
+    module: packages.urish.urish.ecosystem_workflow
+    line: 10
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 1
+  packages.uri3.uri3.logs.parsing.parse_log_line:
+    name: parse_log_line
+    module: packages.uri3.uri3.logs.parsing
+    line: 91
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  packages.uri2ops.uri2ops.server.routes.health.health_router:
+    name: health_router
+    module: packages.uri2ops.uri2ops.server.routes.health
+    line: 23
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.logs.reader._parse_since:
+    name: _parse_since
+    module: packages.uri3.uri3.logs.reader
+    line: 32
+    cyclomatic_complexity: 7
+    calls_out: 14
+    calls_in: 2
+  packages.urish.urish.backends.repair.repair_diagnose:
+    name: repair_diagnose
+    module: packages.urish.urish.backends.repair
+    line: 9
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  packages.uri3.uri3.graph.execution_plan.prepare_workflow:
+    name: prepare_workflow
+    module: packages.uri3.uri3.graph.execution_plan
+    line: 42
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 1
+  packages.urish.urish.cli.evolve_from_ticket_cmd:
+    name: evolve_from_ticket_cmd
+    module: packages.urish.urish.cli
+    line: 695
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 0
+  packages.urish.urish.backends.agent.agent_action:
+    name: agent_action
+    module: packages.urish.urish.backends.agent
+    line: 6
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 6
+  packages.urish.urish.cli.repair_apply_cmd:
+    name: repair_apply_cmd
+    module: packages.urish.urish.cli
+    line: 660
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 0
+  packages.uri3.uri3.graph.graph_validator.validate_workflow_schema:
+    name: validate_workflow_schema
+    module: packages.uri3.uri3.graph.graph_validator
+    line: 47
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  packages.urigen.urigen.io.load_yaml:
+    name: load_yaml
+    module: packages.urigen.urigen.io
+    line: 16
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 9
+  packages.uri3.uri3.graph.artifacts.build_workflow_step_artifact:
+    name: build_workflow_step_artifact
+    module: packages.uri3.uri3.graph.artifacts
+    line: 32
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.graph.event_emitter.redact_step_payload:
+    name: redact_step_payload
+    module: packages.uri3.uri3.graph.event_emitter
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  packages.urish.urish.policy.evaluate_policy:
+    name: evaluate_policy
+    module: packages.urish.urish.policy
+    line: 102
+    cyclomatic_complexity: 14
+    calls_out: 1
+    calls_in: 4
+  packages.urish.urish.cli.ecosystem_apply_cmd:
+    name: ecosystem_apply_cmd
+    module: packages.urish.urish.cli
+    line: 387
+    cyclomatic_complexity: 6
+    calls_out: 15
+    calls_in: 0
+  packages.uri2ops.uri2ops.server.routes.registry.registry_router:
+    name: registry_router
+    module: packages.uri2ops.uri2ops.server.routes.registry
+    line: 8
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  packages.urish.urish.cli.repair_learn_cmd:
+    name: repair_learn_cmd
+    module: packages.urish.urish.cli
+    line: 679
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 0
+  packages.urish.urish.cli.doctor_cmd:
+    name: doctor_cmd
+    module: packages.urish.urish.cli
+    line: 201
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  packages.uri3.uri3.docker.actions.compose.control_compose:
+    name: control_compose
+    module: packages.uri3.uri3.docker.actions.compose
+    line: 88
+    cyclomatic_complexity: 6
+    calls_out: 6
+    calls_in: 1
+  packages.touri.touri.validator.validate_manifest:
+    name: validate_manifest
+    module: packages.touri.touri.validator
+    line: 46
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 4
+  packages.urigen.urigen.io.copy_file:
+    name: copy_file
+    module: packages.urigen.urigen.io
+    line: 48
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 5
+  packages.uri3.uri3.graph.graph_executor.dry_run_workflow:
+    name: dry_run_workflow
+    module: packages.uri3.uri3.graph.graph_executor
+    line: 23
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 5
+  packages.uri3.uri3.logs.filters.matches_grep:
+    name: matches_grep
+    module: packages.uri3.uri3.logs.filters
+    line: 42
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  packages.urigen.urigen.apply_executor.preview_action_diff:
+    name: preview_action_diff
+    module: packages.urigen.urigen.apply_executor
+    line: 51
+    cyclomatic_complexity: 12
+    calls_out: 23
+    calls_in: 1
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter.Uri2OpsAdapter.execute:
+    name: execute
+    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
+    line: 95
+    cyclomatic_complexity: 3
+    calls_out: 13
+    calls_in: 1
+  uri2ops.operation_registry.models.OperationRegistry.list:
+    name: list
+    module: uri2ops.operation_registry.models
+    line: 66
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 63
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector.resolve_deployment:
+    name: resolve_deployment
+    module: packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector
+    line: 53
+    cyclomatic_complexity: 12
+    calls_out: 13
+    calls_in: 11
+  packages.urish.urish.cli.shortcuts_cmd:
+    name: shortcuts_cmd
+    module: packages.urish.urish.cli
+    line: 214
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  packages.urish.urish.backends.stream._stream_ws:
+    name: _stream_ws
+    module: packages.urish.urish.backends.stream
+    line: 59
+    cyclomatic_complexity: 3
+    calls_out: 15
+    calls_in: 1
+  packages.urigen.urigen.schema_check._check_yaml_file:
+    name: _check_yaml_file
+    module: packages.urigen.urigen.schema_check
+    line: 11
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 1
+  packages.urigen.urigen.writer.deployment_fragment:
+    name: deployment_fragment
+    module: packages.urigen.urigen.writer
+    line: 36
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 2
+  packages.uri3.uri3.logs.writer.append_log:
+    name: append_log
+    module: packages.uri3.uri3.logs.writer
+    line: 24
+    cyclomatic_complexity: 13
+    calls_out: 19
+    calls_in: 5
+  packages.resource-agent-hypervisor.hypervisor.repair.supervisor.learn_from_incident:
+    name: learn_from_incident
+    module: packages.resource-agent-hypervisor.hypervisor.repair.supervisor
+    line: 199
+    cyclomatic_complexity: 10
+    calls_out: 18
+    calls_in: 2
+  packages.urish.urish.backends.evolve.evolve_from_ticket:
+    name: evolve_from_ticket
+    module: packages.urish.urish.backends.evolve
+    line: 13
+    cyclomatic_complexity: 7
+    calls_out: 15
+    calls_in: 1
+  packages.urish.urish.cli.dashboard_open_cmd:
+    name: dashboard_open_cmd
+    module: packages.urish.urish.cli
+    line: 455
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 0
+  packages.urish.urish.backends.evolve._wrap:
+    name: _wrap
+    module: packages.urish.urish.backends.evolve
+    line: 113
+    cyclomatic_complexity: 7
+    calls_out: 2
+    calls_in: 5
+  packages.uri2ops.uri2ops.cli._print:
+    name: _print
+    module: packages.uri2ops.uri2ops.cli
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 11
+  packages.urigen.urigen.explain._flows:
+    name: _flows
+    module: packages.urigen.urigen.explain
+    line: 86
+    cyclomatic_complexity: 6
+    calls_out: 9
+    calls_in: 1
+  packages.uri3.uri3.artifacts.writer.write_json_artifact:
+    name: write_json_artifact
+    module: packages.uri3.uri3.artifacts.writer
+    line: 50
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 1
+  packages.urigen.urigen.proposal._default_ecosystem_id:
+    name: _default_ecosystem_id
+    module: packages.urigen.urigen.proposal
+    line: 108
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 1
+  packages.urish.urish.backends.watch._event_type:
+    name: _event_type
+    module: packages.urish.urish.backends.watch
+    line: 68
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  packages.uri3.uri3.graph.dependency_graph._raise_if_cycles:
+    name: _raise_if_cycles
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 62
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.config.cli_shortcuts.scan_shortcuts:
+    name: scan_shortcuts
+    module: packages.uri3.uri3.config.cli_shortcuts
+    line: 21
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 4
+  packages.uri3.uri3.graph.step_runner.step_result:
+    name: step_result
+    module: packages.uri3.uri3.graph.step_runner
+    line: 40
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 4
+  packages.uri3.uri3.graph.adapters.runtime_adapter.RuntimeAdapter.execute:
+    name: execute
+    module: packages.uri3.uri3.graph.adapters.runtime_adapter
+    line: 45
+    cyclomatic_complexity: 9
+    calls_out: 11
+    calls_in: 0
+  packages.uri3.uri3.docker.actions.compose._parse_ps_stdout:
+    name: _parse_ps_stdout
+    module: packages.uri3.uri3.docker.actions.compose
+    line: 19
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  packages.urish.urish.backends.stream.stream_uri:
+    name: stream_uri
+    module: packages.urish.urish.backends.stream
+    line: 10
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 1
+  packages.uri3.uri3.graph.adapters.registry.HypervisorAdapter.execute:
+    name: execute
+    module: packages.uri3.uri3.graph.adapters.registry
+    line: 45
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 0
+  packages.uri3.uri3.cli.helpers.quick_reference:
+    name: quick_reference
+    module: packages.uri3.uri3.cli.helpers
+    line: 9
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 3
+  packages.urish.urish.cli._context_policy:
+    name: _context_policy
+    module: packages.urish.urish.cli
+    line: 56
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  uri3.protocols.parser.parse_uri:
+    name: parse_uri
+    module: uri3.protocols.parser
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 4
+  packages.urish.urish.backends.ticket.import_tickets:
+    name: import_tickets
+    module: packages.urish.urish.backends.ticket
+    line: 65
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 1
+  packages.urigen.urigen.apply_executor._resolve_path:
+    name: _resolve_path
+    module: packages.urigen.urigen.apply_executor
+    line: 42
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 4
+  packages.uri3.uri3.graph.operation_registry.scheme_from_uri:
+    name: scheme_from_uri
+    module: packages.uri3.uri3.graph.operation_registry
+    line: 37
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 6
+  packages.resource-agent-hypervisor.hypervisor.repair.validator.validate_evolution_proposal_dict:
+    name: validate_evolution_proposal_dict
+    module: packages.resource-agent-hypervisor.hypervisor.repair.validator
+    line: 33
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  packages.urish.urish.backends.ticket.tickets_dir:
+    name: tickets_dir
+    module: packages.urish.urish.backends.ticket
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  packages.uri2flow.uri2flow.expander.expand_flow:
+    name: expand_flow
+    module: packages.uri2flow.uri2flow.expander
+    line: 43
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 8
+  packages.urish.urish.cli.ticket_import_cmd:
+    name: ticket_import_cmd
+    module: packages.urish.urish.cli
+    line: 607
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 0
+  packages.uri3.uri3.results.envelope.enrich_workflow_dict:
+    name: enrich_workflow_dict
+    module: packages.uri3.uri3.results.envelope
+    line: 170
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 1
+  packages.uri2ops.uri2ops.cli.validate_cmd:
+    name: validate_cmd
+    module: packages.uri2ops.uri2ops.cli
+    line: 56
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  packages.urigen.urigen.apply_executor._merge_deployment_fragment:
+    name: _merge_deployment_fragment
+    module: packages.urigen.urigen.apply_executor
+    line: 184
+    cyclomatic_complexity: 12
+    calls_out: 32
+    calls_in: 1
+  packages.urish.urish.shortcuts.load_shortcut_specs:
+    name: load_shortcut_specs
+    module: packages.urish.urish.shortcuts
+    line: 16
+    cyclomatic_complexity: 14
+    calls_out: 20
+    calls_in: 3
+  packages.urish.urish.backends.stream._stream_sse:
+    name: _stream_sse
+    module: packages.urish.urish.backends.stream
+    line: 25
+    cyclomatic_complexity: 12
+    calls_out: 15
+    calls_in: 1
+  packages.resource-agent-hypervisor.hypervisor.evolution.proposal_from_source.build_repair_proposal_from_incident:
+    name: build_repair_proposal_from_incident
+    module: packages.resource-agent-hypervisor.hypervisor.evolution.proposal_from_source
+    line: 70
+    cyclomatic_complexity: 8
+    calls_out: 13
+    calls_in: 3
+  packages.urish.urish.shortcuts.shortcuts_path:
+    name: shortcuts_path
+    module: packages.urish.urish.shortcuts
+    line: 11
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle.agent_status:
+    name: agent_status
+    module: packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle
+    line: 330
+    cyclomatic_complexity: 5
+    calls_out: 10
+    calls_in: 2
+  packages.urish.urish.cli.www_create_cmd:
+    name: www_create_cmd
+    module: packages.urish.urish.cli
+    line: 524
+    cyclomatic_complexity: 2
+    calls_out: 12
+    calls_in: 0
+  packages.uri3.uri3.logs.filters.matches_time_window:
+    name: matches_time_window
+    module: packages.uri3.uri3.logs.filters
+    line: 49
+    cyclomatic_complexity: 7
+    calls_out: 1
+    calls_in: 1
+  packages.urigen.urigen.cli.cmd_profiles:
+    name: cmd_profiles
+    module: packages.urigen.urigen.cli
+    line: 67
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  packages.urish.urish.ecosystem_workflow.ecosystem_dir:
+    name: ecosystem_dir
+    module: packages.urish.urish.ecosystem_workflow
+    line: 22
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 3
+  packages.uri3.uri3.graph.step_runner.run_workflow_node:
+    name: run_workflow_node
+    module: packages.uri3.uri3.graph.step_runner
+    line: 161
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 1
+  packages.urigen.urigen.cli.cmd_explain:
+    name: cmd_explain
+    module: packages.urigen.urigen.cli
+    line: 43
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  packages.urigen.urigen.explain._domains:
+    name: _domains
+    module: packages.urigen.urigen.explain
+    line: 39
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 1
+  packages.urish.urish.cli.select_cmd:
+    name: select_cmd
+    module: packages.urish.urish.cli
+    line: 177
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 0
+  packages.uri3.uri3.graph.adapters.browser_playwright._session_state:
+    name: _session_state
+    module: packages.uri3.uri3.graph.adapters.browser_playwright
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.uri3.uri3.resolvers.log_resolver.parse_log_uri:
+    name: parse_log_uri
+    module: packages.uri3.uri3.resolvers.log_resolver
+    line: 47
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 5
+  packages.resource-agent-hypervisor.hypervisor.repair.supervisor.diagnose_agent:
+    name: diagnose_agent
+    module: packages.resource-agent-hypervisor.hypervisor.repair.supervisor
+    line: 31
+    cyclomatic_complexity: 1
+    calls_out: 12
+    calls_in: 5
+  packages.uri3.uri3.logs.reader.resolve_log_path:
+    name: resolve_log_path
+    module: packages.uri3.uri3.logs.reader
+    line: 24
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 3
+  uri2ops.server.service.OperatorService.list_registry_sources:
+    name: list_registry_sources
+    module: uri2ops.server.service
+    line: 30
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  packages.urigen.urigen.cli.cmd_verify:
+    name: cmd_verify
+    module: packages.urigen.urigen.cli
+    line: 37
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  packages.urish.urish.shortcuts.resolve_shortcut:
+    name: resolve_shortcut
+    module: packages.urish.urish.shortcuts
+    line: 52
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 2
+  packages.urish.urish.cli._finish:
+    name: _finish
+    module: packages.urish.urish.cli
+    line: 66
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 27
+  packages.urigen.urigen.cli.cmd_schema_check:
+    name: cmd_schema_check
+    module: packages.urigen.urigen.cli
+    line: 61
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  packages.uri3.uri3.config.docker_stacks.resolve_agent_stack:
+    name: resolve_agent_stack
+    module: packages.uri3.uri3.config.docker_stacks
+    line: 41
+    cyclomatic_complexity: 4
+    calls_out: 15
+    calls_in: 2
+  packages.uri3.uri3.graph.event_log.workflow_event_path:
+    name: workflow_event_path
+    module: packages.uri3.uri3.graph.event_log
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 2
+  packages.uri3.uri3.logs.reader.summarize_logs:
+    name: summarize_logs
+    module: packages.uri3.uri3.logs.reader
+    line: 89
+    cyclomatic_complexity: 6
+    calls_out: 18
+    calls_in: 8
+  packages.uri3.uri3.docker.actions.container.control_container:
+    name: control_container
+    module: packages.uri3.uri3.docker.actions.container
+    line: 20
+    cyclomatic_complexity: 8
+    calls_out: 9
+    calls_in: 1
+  packages.urish.urish.cli.agent_status_cmd:
+    name: agent_status_cmd
+    module: packages.urish.urish.cli
+    line: 221
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  packages.urigen.urigen.models.repo_root:
+    name: repo_root
+    module: packages.urigen.urigen.models
+    line: 62
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 10
+  packages.uri3.uri3.graph.execution_models.GraphExecutionResult.to_dict:
+    name: to_dict
+    module: packages.uri3.uri3.graph.execution_models
+    line: 93
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 0
+  packages.uri3.uri3.docker.compose_generator.write_generated_compose:
+    name: write_generated_compose
+    module: packages.uri3.uri3.docker.compose_generator
+    line: 41
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  packages.urish.urish.select.select_path:
+    name: select_path
+    module: packages.urish.urish.select
+    line: 6
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 2
+  domains.weather_map.handlers.generate_weather_map.handler:
+    name: handler
+    module: domains.weather_map.handlers.generate_weather_map
+    line: 7
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 8
+  packages.urish.urish.backends.ticket.list_tickets:
+    name: list_tickets
+    module: packages.urish.urish.backends.ticket
+    line: 18
+    cyclomatic_complexity: 10
+    calls_out: 15
+    calls_in: 1
+  packages.uri3.uri3.graph.graph_serializer.task_steps_to_graph:
+    name: task_steps_to_graph
+    module: packages.uri3.uri3.graph.graph_serializer
+    line: 50
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 2
+  packages.urigen.urigen.models.slugify:
+    name: slugify
+    module: packages.urigen.urigen.models
+    line: 32
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 4
+  packages.urish.urish.shortcuts.load_shortcuts:
+    name: load_shortcuts
+    module: packages.urish.urish.shortcuts
+    line: 48
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  uri2ops.server.service.OperatorService.registry:
+    name: registry
+    module: uri2ops.server.service
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  packages.urigen.urigen.verify.verify_ecosystem:
+    name: verify_ecosystem
+    module: packages.urigen.urigen.verify
+    line: 17
+    cyclomatic_complexity: 8
+    calls_out: 15
+    calls_in: 5
+  packages.urish.urish.shortcuts.resolve_target:
+    name: resolve_target
+    module: packages.urish.urish.shortcuts
+    line: 68
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  packages.urish.urish.exit_codes.exit_code_for_result:
+    name: exit_code_for_result
+    module: packages.urish.urish.exit_codes
+    line: 6
+    cyclomatic_complexity: 8
+    calls_out: 6
+    calls_in: 1
+  packages.uri3.uri3.graph.adapters.browser_playwright.PlaywrightBrowserAdapter.execute:
+    name: execute
+    module: packages.uri3.uri3.graph.adapters.browser_playwright
+    line: 33
+    cyclomatic_complexity: 11
+    calls_out: 23
+    calls_in: 0
+  packages.urigen.urigen.apply.apply_ecosystem:
+    name: apply_ecosystem
+    module: packages.urigen.urigen.apply
+    line: 108
+    cyclomatic_complexity: 5
+    calls_out: 21
+    calls_in: 4
+  packages.uri3.uri3.graph.graph_validator._schema_path:
+    name: _schema_path
+    module: packages.uri3.uri3.graph.graph_validator
+    line: 16
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector.parse_hypervisor_uri:
+    name: parse_hypervisor_uri
+    module: packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector
+    line: 14
+    cyclomatic_complexity: 14
+    calls_out: 4
+    calls_in: 1
+  packages.urigen.urigen.cli.cmd_plan:
+    name: cmd_plan
+    module: packages.urigen.urigen.cli
+    line: 23
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  packages.uri2ops.uri2ops.remote_registry.loader.registry_from_document:
+    name: registry_from_document
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 78
+    cyclomatic_complexity: 8
+    calls_out: 9
+    calls_in: 1
+  packages.urish.urish.render._render_table:
+    name: _render_table
+    module: packages.urish.urish.render
+    line: 49
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.uri3.uri3.graph.graph_validator.validate_workflow_graph:
+    name: validate_workflow_graph
+    module: packages.uri3.uri3.graph.graph_validator
+    line: 53
+    cyclomatic_complexity: 9
+    calls_out: 13
+    calls_in: 13
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter._registry_operation:
+    name: _registry_operation
+    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
+    line: 43
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  packages.uri3.uri3.graph.adapters.browser_router.cleanup_browser_adapters:
+    name: cleanup_browser_adapters
+    module: packages.uri3.uri3.graph.adapters.browser_router
+    line: 69
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  packages.urish.urish.cli.repair_diagnose_cmd:
+    name: repair_diagnose_cmd
+    module: packages.urish.urish.cli
+    line: 646
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 0
+  packages.urish.urish.backends.evolve.evolve_from_incident:
+    name: evolve_from_incident
+    module: packages.urish.urish.backends.evolve
+    line: 34
+    cyclomatic_complexity: 6
+    calls_out: 13
+    calls_in: 1
+  packages.urigen.urigen.io.dump_yaml:
+    name: dump_yaml
+    module: packages.urigen.urigen.io
+    line: 23
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 14
+  packages.urigen.urigen.verify._check_capabilities:
+    name: _check_capabilities
+    module: packages.urigen.urigen.verify
+    line: 58
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 1
+  packages.urigen.urigen.apply_executor.execute_apply_plan:
+    name: execute_apply_plan
+    module: packages.urigen.urigen.apply_executor
+    line: 324
+    cyclomatic_complexity: 11
+    calls_out: 16
+    calls_in: 1
+  packages.uri3.uri3.graph.execution_models.utc_now_iso:
+    name: utc_now_iso
+    module: packages.uri3.uri3.graph.execution_models
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 3
+  packages.uri3.uri3.config.uri_yaml.unwrap_uri_yaml_document:
+    name: unwrap_uri_yaml_document
+    module: packages.uri3.uri3.config.uri_yaml
+    line: 48
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 4
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter._attach_workflow_artifact:
+    name: _attach_workflow_artifact
+    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
+    line: 71
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 1
+  packages.urigen.urigen.generator._write_flows:
+    name: _write_flows
+    module: packages.urigen.urigen.generator
+    line: 146
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 1
+  packages.uri3.uri3.graph.dependency_graph._indegree_outgoing:
+    name: _indegree_outgoing
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 25
+    cyclomatic_complexity: 6
+    calls_out: 1
+    calls_in: 2
+  packages.urigen.urigen.generator._copy_domains:
+    name: _copy_domains
+    module: packages.urigen.urigen.generator
+    line: 179
+    cyclomatic_complexity: 7
+    calls_out: 13
+    calls_in: 1
+  uri2ops.operation_registry.loader.registry_schema_path:
+    name: registry_schema_path
+    module: uri2ops.operation_registry.loader
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.artifacts.writer.write_yaml_artifact:
+    name: write_yaml_artifact
+    module: packages.uri3.uri3.artifacts.writer
+    line: 30
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 3
+  uri2ops.operation_registry.dispatcher.call_handler:
+    name: call_handler
+    module: uri2ops.operation_registry.dispatcher
+    line: 23
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 2
+  packages.uri3.uri3.results.envelope.enrich_step_dict:
+    name: enrich_step_dict
+    module: packages.uri3.uri3.results.envelope
+    line: 99
+    cyclomatic_complexity: 5
+    calls_out: 15
+    calls_in: 2
+  packages.urish.urish.backends.watch.watch_uri:
+    name: watch_uri
+    module: packages.urish.urish.backends.watch
+    line: 11
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 2
+  packages.urigen.urigen.models.profile_catalog:
+    name: profile_catalog
+    module: packages.urigen.urigen.models
+    line: 46
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 2
+  packages.urigen.urigen.apply_validate._load_schema:
+    name: _load_schema
+    module: packages.urigen.urigen.apply_validate
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 1
+  packages.uri3.uri3.config.cli_shortcuts.cli_examples:
+    name: cli_examples
+    module: packages.uri3.uri3.config.cli_shortcuts
+    line: 38
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 2
+  packages.urish.urish.context.context_dir:
+    name: context_dir
+    module: packages.urish.urish.context
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  packages.uri3.uri3.graph.conditions.evaluate_condition:
+    name: evaluate_condition
+    module: packages.uri3.uri3.graph.conditions
+    line: 8
+    cyclomatic_complexity: 7
+    calls_out: 15
+    calls_in: 1
+  packages.urigen.urigen.generator._skip_app_artifact:
+    name: _skip_app_artifact
+    module: packages.urigen.urigen.generator
+    line: 276
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  packages.urigen.urigen.generator._copy_agents:
+    name: _copy_agents
+    module: packages.urigen.urigen.generator
+    line: 205
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 1
+  packages.uri3.uri3.graph.step_runner.handle_skipped_node:
+    name: handle_skipped_node
+    module: packages.uri3.uri3.graph.step_runner
+    line: 63
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.urigen.urigen.apply_executor.execute_action:
+    name: execute_action
+    module: packages.urigen.urigen.apply_executor
+    line: 232
+    cyclomatic_complexity: 8
+    calls_out: 16
+    calls_in: 1
+  packages.urish.urish.backends.ticket.plan_ticket:
+    name: plan_ticket
+    module: packages.urish.urish.backends.ticket
+    line: 84
+    cyclomatic_complexity: 7
+    calls_out: 14
+    calls_in: 1
+  packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps:
+    name: build_ecosystem_next_steps
+    module: packages.urish.urish.ecosystem_workflow
+    line: 30
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 2
+  packages.uri3.uri3.graph.adapters.browser_mock.json_dumps:
+    name: json_dumps
+    module: packages.uri3.uri3.graph.adapters.browser_mock
+    line: 41
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 4
+  packages.urish.urish.cli.dashboard_create_cmd:
+    name: dashboard_create_cmd
+    module: packages.urish.urish.cli
+    line: 429
+    cyclomatic_complexity: 3
+    calls_out: 12
+    calls_in: 0
+  packages.urish.urish.intent.detect_intent:
+    name: detect_intent
+    module: packages.urish.urish.intent
+    line: 80
+    cyclomatic_complexity: 12
+    calls_out: 11
+    calls_in: 3
+  packages.uri3.uri3.artifacts.validator.schema_path:
+    name: schema_path
+    module: packages.uri3.uri3.artifacts.validator
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.urish.urish.cli.agent_health_cmd:
+    name: agent_health_cmd
+    module: packages.urish.urish.cli
+    line: 230
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  packages.urish.urish.cli.ecosystem_plan_cmd:
+    name: ecosystem_plan_cmd
+    module: packages.urish.urish.cli
+    line: 339
+    cyclomatic_complexity: 6
+    calls_out: 15
+    calls_in: 0
+  packages.uri3.uri3.logs.reader.read_logs_result:
+    name: read_logs_result
+    module: packages.uri3.uri3.logs.reader
+    line: 75
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 4
+  packages.uri2ops.uri2ops.remote_registry.loader.load_registry_config:
+    name: load_registry_config
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 32
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 2
+  packages.uri2ops.uri2ops.remote_registry.loader._load_source:
+    name: _load_source
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 40
+    cyclomatic_complexity: 14
+    calls_out: 19
+    calls_in: 2
+  packages.urigen.urigen.generator.generate_ecosystem:
+    name: generate_ecosystem
+    module: packages.urigen.urigen.generator
+    line: 33
+    cyclomatic_complexity: 7
+    calls_out: 40
+    calls_in: 3
+  packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri:
+    name: parse_docker_uri
+    module: packages.uri3.uri3.resolvers.docker_resolver
+    line: 85
+    cyclomatic_complexity: 12
+    calls_out: 23
+    calls_in: 5
+  packages.urigen.urigen.models.wants_voice:
+    name: wants_voice
+    module: packages.urigen.urigen.models
+    line: 66
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 2
+  packages.urish.urish.backends.repair._wrap:
+    name: _wrap
+    module: packages.urish.urish.backends.repair
+    line: 39
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 3
+  packages.uri3.uri3.graph.graph_serializer.normalize_graph_payload:
+    name: normalize_graph_payload
+    module: packages.uri3.uri3.graph.graph_serializer
+    line: 21
+    cyclomatic_complexity: 12
+    calls_out: 24
+    calls_in: 2
+  packages.urigen.urigen.models.wants_dashboard:
+    name: wants_dashboard
+    module: packages.urigen.urigen.models
+    line: 73
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 4
+  packages.uri3.uri3.graph.dependency_graph.topological_sort:
+    name: topological_sort
+    module: packages.uri3.uri3.graph.dependency_graph
+    line: 81
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 3
+  packages.uri3.uri3.logs.reader.read_logs:
+    name: read_logs
+    module: packages.uri3.uri3.logs.reader
+    line: 50
+    cyclomatic_complexity: 9
+    calls_out: 10
+    calls_in: 5
+  packages.uri2flow.uri2flow.validator.validate_flow:
+    name: validate_flow
+    module: packages.uri2flow.uri2flow.validator
+    line: 43
+    cyclomatic_complexity: 11
+    calls_out: 5
+    calls_in: 3
+  packages.urish.urish.cli.ask_cmd:
+    name: ask_cmd
+    module: packages.urish.urish.cli
+    line: 110
+    cyclomatic_complexity: 11
+    calls_out: 34
+    calls_in: 1
+  packages.urish.urish.backends.stream._error:
+    name: _error
+    module: packages.urish.urish.backends.stream
+    line: 118
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 4
+  packages.urigen.urigen.writer.dashboard_deployment_fragment:
+    name: dashboard_deployment_fragment
+    module: packages.urigen.urigen.writer
+    line: 52
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.uri2ops.uri2ops.server.routes.mcp.mcp_router:
+    name: mcp_router
+    module: packages.uri2ops.uri2ops.server.routes.mcp
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 33
+    calls_in: 1
+  packages.uri2ops.uri2ops.cli.registry_cmd:
+    name: registry_cmd
+    module: packages.uri2ops.uri2ops.cli
+    line: 41
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 0
+  packages.uri3.uri3.graph.step_runner.execute_step:
+    name: execute_step
+    module: packages.uri3.uri3.graph.step_runner
+    line: 29
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  packages.uri3.uri3.docker.compose_generator.build_generate_plan:
+    name: build_generate_plan
+    module: packages.uri3.uri3.docker.compose_generator
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 3
+  packages.uri3.uri3.docker.actions.compose.compose_base:
+    name: compose_base
+    module: packages.uri3.uri3.docker.actions.compose
+    line: 10
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 5
+  packages.urigen.urigen.verify._check_explain:
+    name: _check_explain
+    module: packages.urigen.urigen.verify
+    line: 99
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 1
+  packages.urigen.urigen.apply_validate.validate_apply_artifact:
+    name: validate_apply_artifact
+    module: packages.urigen.urigen.apply_validate
+    line: 19
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 3
+  packages.urigen.urigen.generator._copy_applications:
+    name: _copy_applications
+    module: packages.urigen.urigen.generator
+    line: 231
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  uri2ops.operation_registry.dispatcher._split_python_uri:
+    name: _split_python_uri
+    module: uri2ops.operation_registry.dispatcher
+    line: 12
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  packages.uri3.uri3.graph.models.GraphNode.from_dict:
+    name: from_dict
+    module: packages.uri3.uri3.graph.models
+    line: 21
+    cyclomatic_complexity: 5
+    calls_out: 15
+    calls_in: 0
+  uri2ops.server.service.OperatorService.plan_task:
+    name: plan_task
+    module: uri2ops.server.service
+    line: 36
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  uri2ops.server.mcp_wrapper.list_mcp_tools:
+    name: list_mcp_tools
+    module: uri2ops.server.mcp_wrapper
+    line: 8
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  packages.uri3.uri3.logs.filters.matches_logger:
+    name: matches_logger
+    module: packages.uri3.uri3.logs.filters
+    line: 35
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  packages.urish.urish.ecosystem_workflow.ecosystem_file:
+    name: ecosystem_file
+    module: packages.urish.urish.ecosystem_workflow
+    line: 26
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.uri2ops.uri2ops.remote_registry.loader.list_remote_sources:
+    name: list_remote_sources
+    module: packages.uri2ops.uri2ops.remote_registry.loader
+    line: 133
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 3
+  packages.uri3.uri3.artifacts.evolution_source.attach_evolution_source:
+    name: attach_evolution_source
+    module: packages.uri3.uri3.artifacts.evolution_source
+    line: 70
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 1
+  packages.uri3.uri3.docker.actions.compose.control_compose_up:
+    name: control_compose_up
+    module: packages.uri3.uri3.docker.actions.compose
+    line: 39
+    cyclomatic_complexity: 9
+    calls_out: 8
+    calls_in: 1
+  packages.urish.urish.select.select_from_envelope:
+    name: select_from_envelope
+    module: packages.urish.urish.select
+    line: 25
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 2
+  packages.uri2run.uri2run.runner.run_backend:
+    name: run_backend
+    module: packages.uri2run.uri2run.runner
+    line: 191
+    cyclomatic_complexity: 5
+    calls_out: 15
+    calls_in: 26
+  packages.urigen.urigen.envelope.stamp_proposal:
+    name: stamp_proposal
+    module: packages.urigen.urigen.envelope
+    line: 13
+    cyclomatic_complexity: 11
+    calls_out: 19
+    calls_in: 2
+  packages.urigen.urigen.explain._exists:
+    name: _exists
+    module: packages.urigen.urigen.explain
+    line: 34
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 3
+  packages.urish.urish.cli.ecosystem_profiles_cmd:
+    name: ecosystem_profiles_cmd
+    module: packages.urish.urish.cli
+    line: 413
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 0
+  packages.uri3.uri3.doctor.runner.run_doctor:
+    name: run_doctor
+    module: packages.uri3.uri3.doctor.runner
+    line: 67
+    cyclomatic_complexity: 9
+    calls_out: 16
+    calls_in: 3
+  packages.urish.urish.backends.run.run_target:
+    name: run_target
+    module: packages.urish.urish.backends.run
+    line: 7
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 2
+  packages.urish.urish.cli.agent_run_cmd:
+    name: agent_run_cmd
+    module: packages.urish.urish.cli
+    line: 266
+    cyclomatic_complexity: 6
+    calls_out: 16
+    calls_in: 0
+  packages.uri3.uri3.graph.event_emitter.record_workflow_started:
+    name: record_workflow_started
+    module: packages.uri3.uri3.graph.event_emitter
+    line: 68
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  packages.urish.urish.backends.explain.explain_target:
+    name: explain_target
+    module: packages.urish.urish.backends.explain
+    line: 8
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  packages.uri3.uri3.graph.adapters.browser_router.resolve_browser_mode:
+    name: resolve_browser_mode
+    module: packages.uri3.uri3.graph.adapters.browser_router
+    line: 39
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  packages.uri2ops.uri2ops.cli.plan_cmd:
+    name: plan_cmd
+    module: packages.uri2ops.uri2ops.cli
+    line: 65
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  packages.uri3.uri3.docker.actions.compose.control_compose_ps:
+    name: control_compose_ps
+    module: packages.uri3.uri3.docker.actions.compose
+    line: 31
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  packages.uri3.uri3.docker.actions.compose.control_compose_down:
+    name: control_compose_down
+    module: packages.uri3.uri3.docker.actions.compose
+    line: 65
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  packages.urigen.urigen.io.write_json:
+    name: write_json
+    module: packages.urigen.urigen.io
+    line: 34
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 3
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter.resolve_operator_adapter:
+    name: resolve_operator_adapter
+    module: packages.uri3.uri3.graph.adapters.uri2ops_adapter
+    line: 119
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 0
 edges:
 - caller: packages.urish.urish.render.render_result
   callee: packages.urish.urish.render._render_table
@@ -2813,30 +2890,6 @@ edges:
 - caller: packages.urish.urish.cli.main
   callee: uri2ops.operation_registry.models.OperationRegistry.list
   call_type: resolved
-- caller: packages.urish.urish.ticket_workflow.resolve_ticket_path
-  callee: packages.uri3.uri3.config.repo_root.find_repo_root
-  call_type: resolved
-- caller: packages.urish.urish.ticket_workflow.detect_intent_from_ticket
-  callee: packages.urigen.urigen.models.wants_dashboard
-  call_type: resolved
-- caller: packages.urish.urish.ticket_workflow.detect_intent_from_ticket
-  callee: packages.urish.urish.intent.detect_intent
-  call_type: resolved
-- caller: packages.urish.urish.ticket_workflow.build_ticket_workflow
-  callee: packages.urish.urish.ticket_workflow.detect_intent_from_ticket
-  call_type: resolved
-- caller: packages.urish.urish.ticket_workflow.build_ticket_workflow
-  callee: packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps
-  call_type: resolved
-- caller: packages.urish.urish.intent.detect_intent
-  callee: packages.urish.urish.intent._detect_kind
-  call_type: resolved
-- caller: packages.urish.urish.intent.detect_intent
-  callee: packages.urigen.urigen.models.wants_dashboard
-  call_type: resolved
-- caller: packages.urish.urish.intent.detect_intent
-  callee: packages.urigen.urigen.models.slugify
-  call_type: resolved
 - caller: packages.urish.urish.context.context_dir
   callee: packages.uri3.uri3.config.repo_root.find_repo_root
   call_type: resolved
@@ -2848,9 +2901,6 @@ edges:
   call_type: resolved
 - caller: packages.urish.urish.context.list_contexts
   callee: packages.urish.urish.context.context_dir
-  call_type: resolved
-- caller: packages.urish.urish.policy.evaluate_policy
-  callee: packages.urish.urish.policy.classify_uri
   call_type: resolved
 - caller: packages.urish.urish.select.select_from_envelope
   callee: packages.urish.urish.select.select_path
@@ -2944,24 +2994,6 @@ edges:
   call_type: resolved
 - caller: packages.urish.urish.backends.doctor._artifact_gate_checks
   callee: packages.resource-agent-hypervisor.hypervisor.artifacts.gate.check_lifecycle_coverage
-  call_type: resolved
-- caller: packages.urish.urish.backends.ask.ask_prompt
-  callee: packages.urish.urish.intent.detect_intent
-  call_type: resolved
-- caller: packages.urish.urish.backends.ask.ask_prompt
-  callee: packages.urigen.urigen.proposal.plan_ecosystem
-  call_type: resolved
-- caller: packages.urish.urish.backends.ask.ask_prompt
-  callee: packages.urish.urish.ecosystem_workflow.build_planned_uris
-  call_type: resolved
-- caller: packages.urish.urish.backends.ask.ask_prompt
-  callee: packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps
-  call_type: resolved
-- caller: packages.urish.urish.backends.ask.ask_prompt
-  callee: packages.urish.urish.ecosystem_workflow.proposal_path
-  call_type: resolved
-- caller: packages.urish.urish.backends.ask.ask_prompt
-  callee: packages.urish.urish.ecosystem_workflow.ecosystem_dir
   call_type: resolved
 - caller: packages.urish.urish.backends.call.call_uri
   callee: packages.uri2run.uri2run.cli._backend_from_target
@@ -3371,36 +3403,6 @@ edges:
 - caller: packages.urigen.urigen.apply_executor.rollback_apply
   callee: packages.urigen.urigen.io.write_json
   call_type: resolved
-- caller: packages.urigen.urigen.envelope.stamp_proposal
-  callee: packages.urigen.urigen.envelope._legacy_fields
-  call_type: resolved
-- caller: packages.urigen.urigen.envelope.stamp_ecosystem
-  callee: packages.urigen.urigen.envelope._legacy_fields
-  call_type: resolved
-- caller: packages.urigen.urigen.apply.apply_ecosystem
-  callee: packages.urigen.urigen.models.repo_root
-  call_type: resolved
-- caller: packages.urigen.urigen.apply.apply_ecosystem
-  callee: packages.urigen.urigen.io.load_yaml
-  call_type: resolved
-- caller: packages.urigen.urigen.apply.apply_ecosystem
-  callee: packages.urigen.urigen.apply_planner.build_apply_plan
-  call_type: resolved
-- caller: packages.urigen.urigen.apply.apply_ecosystem
-  callee: packages.urigen.urigen.apply_validate.validate_apply_artifact
-  call_type: resolved
-- caller: packages.urigen.urigen.apply.apply_ecosystem
-  callee: packages.urigen.urigen.io.write_yaml
-  call_type: resolved
-- caller: packages.urigen.urigen.apply.apply_ecosystem
-  callee: packages.urigen.urigen.apply_executor.build_plan_diff
-  call_type: resolved
-- caller: packages.urigen.urigen.apply.apply_ecosystem
-  callee: packages.urigen.urigen.verify.verify_ecosystem
-  call_type: resolved
-- caller: packages.urigen.urigen.apply.apply_ecosystem
-  callee: packages.urigen.urigen.apply_executor.execute_apply_plan
-  call_type: resolved
 - caller: packages.urigen.urigen.models.repo_root
   callee: packages.uri3.uri3.config.repo_root.find_repo_root
   call_type: resolved
@@ -3610,15 +3612,6 @@ edges:
   call_type: resolved
 - caller: packages.uri2ops.uri2ops.remote_registry.loader.list_remote_sources
   callee: packages.uri2ops.uri2ops.remote_registry.loader.load_registry_config
-  call_type: resolved
-- caller: packages.uri3.uri3.logs.parsing.parse_log_line
-  callee: packages.uri3.uri3.logs.parsing.empty_entry
-  call_type: resolved
-- caller: packages.uri3.uri3.logs.parsing.parse_log_line
-  callee: packages.uri3.uri3.logs.parsing.parse_json_entry
-  call_type: resolved
-- caller: packages.uri3.uri3.logs.parsing.parse_log_line
-  callee: packages.uri3.uri3.logs.parsing.parse_text_entry
   call_type: resolved
 - caller: packages.uri3.uri3.logs.filters.matches_level
   callee: packages.uri3.uri3.logs.filters.level_rank
@@ -4040,6 +4033,90 @@ edges:
 - caller: packages.uri3.uri3.docker.controller.control_docker
   callee: packages.uri3.uri3.docker.actions.compose.control_compose
   call_type: resolved
+- caller: packages.uri3.uri3.docker.compose_generator.build_generate_plan
+  callee: packages.uri3.uri3.config.docker_stacks.resolve_agent_stack
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.compose_generator.write_generated_compose
+  callee: packages.uri3.uri3.docker.compose_generator.build_generate_plan
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.container.control_container
+  callee: packages.uri3.uri3.docker.actions.container._container_name
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.container.control_container
+  callee: packages.uri3.uri3.docker.runner.run_command
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_ps
+  callee: packages.uri3.uri3.docker.actions.compose.compose_base
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_ps
+  callee: packages.uri3.uri3.docker.runner.run_command
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_ps
+  callee: packages.uri3.uri3.docker.actions.compose._parse_ps_stdout
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_up
+  callee: packages.uri3.uri3.docker.actions.compose.compose_base
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_up
+  callee: packages.uri3.uri3.docker.runner.run_command
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_down
+  callee: packages.uri3.uri3.docker.actions.compose.compose_base
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_down
+  callee: packages.uri3.uri3.docker.runner.run_command
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_lifecycle
+  callee: packages.uri3.uri3.docker.actions.compose.compose_base
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_lifecycle
+  callee: packages.uri3.uri3.docker.runner.run_command
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_logs
+  callee: packages.uri3.uri3.docker.actions.compose.compose_base
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose_logs
+  callee: packages.uri3.uri3.docker.runner.run_command
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose
+  callee: packages.uri3.uri3.docker.actions.compose.control_compose_ps
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose
+  callee: packages.uri3.uri3.docker.actions.compose.control_compose_up
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose
+  callee: packages.uri3.uri3.docker.actions.compose.control_compose_down
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose
+  callee: packages.uri3.uri3.docker.actions.compose.control_compose_lifecycle
+  call_type: resolved
+- caller: packages.uri3.uri3.docker.actions.compose.control_compose
+  callee: packages.uri3.uri3.docker.actions.compose.control_compose_logs
+  call_type: resolved
+- caller: packages.uri3.uri3.cli.helpers.quick_reference
+  callee: packages.uri3.uri3.config.cli_shortcuts.scan_shortcuts
+  call_type: resolved
+- caller: packages.uri3.uri3.cli.helpers.quick_reference
+  callee: packages.uri3.uri3.config.cli_shortcuts.cli_examples
+  call_type: resolved
+- caller: packages.uri3.uri3.cli.helpers.list_payload
+  callee: packages.uri3.uri3.config.cli_shortcuts.cli_examples
+  call_type: resolved
+- caller: packages.uri3.uri3.cli.helpers.list_payload
+  callee: packages.uri3.uri3.protocols.schemes.spec_registry.list_schemes
+  call_type: resolved
+- caller: packages.uri3.uri3.cli.helpers.list_payload
+  callee: packages.uri3.uri3.config.cli_shortcuts.scan_shortcuts
+  call_type: resolved
+- caller: packages.uri3.uri3.cli.main.main
+  callee: packages.uri3.uri3.cli.helpers.quick_reference
+  call_type: resolved
+- caller: packages.uri3.uri3.cli.commands.graph.register
+  callee: uri3.graph.uri_graph.build_graph_from_tree
+  call_type: resolved
+- caller: packages.uri3.uri3.cli.commands.resolve.register
+  callee: uri3.validators.uri_validator.validate_uri
+  call_type: resolved
 modules:
   domains.weather_map.handlers.generate_weather_map:
   - domains.weather_map.handlers.generate_weather_map.handler
@@ -4125,19 +4202,44 @@ modules:
   packages.uri3.uri3.artifacts.writer:
   - packages.uri3.uri3.artifacts.writer.write_json_artifact
   - packages.uri3.uri3.artifacts.writer.write_yaml_artifact
+  packages.uri3.uri3.cli.commands.graph:
+  - packages.uri3.uri3.cli.commands.graph.register
+  packages.uri3.uri3.cli.commands.resolve:
+  - packages.uri3.uri3.cli.commands.resolve.register
+  packages.uri3.uri3.cli.helpers:
+  - packages.uri3.uri3.cli.helpers.list_payload
+  - packages.uri3.uri3.cli.helpers.quick_reference
+  packages.uri3.uri3.cli.main:
+  - packages.uri3.uri3.cli.main.main
+  packages.uri3.uri3.config.cli_shortcuts:
+  - packages.uri3.uri3.config.cli_shortcuts.cli_examples
+  - packages.uri3.uri3.config.cli_shortcuts.scan_shortcuts
+  packages.uri3.uri3.config.docker_stacks:
+  - packages.uri3.uri3.config.docker_stacks.resolve_agent_stack
   packages.uri3.uri3.config.repo_root:
   - packages.uri3.uri3.config.repo_root.find_repo_root
   packages.uri3.uri3.config.uri_yaml:
   - packages.uri3.uri3.config.uri_yaml.unwrap_uri_yaml_document
   packages.uri3.uri3.docker.actions.compose:
+  - packages.uri3.uri3.docker.actions.compose._parse_ps_stdout
+  - packages.uri3.uri3.docker.actions.compose.compose_base
   - packages.uri3.uri3.docker.actions.compose.control_compose
+  - packages.uri3.uri3.docker.actions.compose.control_compose_down
+  - packages.uri3.uri3.docker.actions.compose.control_compose_lifecycle
+  - packages.uri3.uri3.docker.actions.compose.control_compose_logs
+  - packages.uri3.uri3.docker.actions.compose.control_compose_ps
+  - packages.uri3.uri3.docker.actions.compose.control_compose_up
   packages.uri3.uri3.docker.actions.container:
+  - packages.uri3.uri3.docker.actions.container._container_name
   - packages.uri3.uri3.docker.actions.container.control_container
   - packages.uri3.uri3.docker.actions.container.handles_container_action
   packages.uri3.uri3.docker.compose_generator:
+  - packages.uri3.uri3.docker.compose_generator.build_generate_plan
   - packages.uri3.uri3.docker.compose_generator.write_generated_compose
   packages.uri3.uri3.docker.controller:
   - packages.uri3.uri3.docker.controller.control_docker
+  packages.uri3.uri3.docker.runner:
+  - packages.uri3.uri3.docker.runner.run_command
   packages.uri3.uri3.doctor.runner:
   - packages.uri3.uri3.doctor.runner.run_doctor
   packages.uri3.uri3.graph.adapters.browser_mock:
@@ -4246,10 +4348,7 @@ modules:
   - packages.uri3.uri3.logs.filters.matches_logger
   - packages.uri3.uri3.logs.filters.matches_time_window
   packages.uri3.uri3.logs.parsing:
-  - packages.uri3.uri3.logs.parsing.empty_entry
-  - packages.uri3.uri3.logs.parsing.parse_json_entry
   - packages.uri3.uri3.logs.parsing.parse_log_line
-  - packages.uri3.uri3.logs.parsing.parse_text_entry
   packages.uri3.uri3.logs.reader:
   - packages.uri3.uri3.logs.reader._parse_since
   - packages.uri3.uri3.logs.reader.read_logs
@@ -4258,6 +4357,8 @@ modules:
   - packages.uri3.uri3.logs.reader.summarize_logs
   packages.uri3.uri3.logs.writer:
   - packages.uri3.uri3.logs.writer.append_log
+  packages.uri3.uri3.protocols.schemes.spec_registry:
+  - packages.uri3.uri3.protocols.schemes.spec_registry.list_schemes
   packages.uri3.uri3.resolvers.docker_resolver:
   - packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri
   packages.uri3.uri3.resolvers.explain:
@@ -4304,8 +4405,6 @@ modules:
   - packages.urigen.urigen.cli.cmd_verify
   - packages.urigen.urigen.cli.main
   packages.urigen.urigen.envelope:
-  - packages.urigen.urigen.envelope._legacy_fields
-  - packages.urigen.urigen.envelope.stamp_ecosystem
   - packages.urigen.urigen.envelope.stamp_proposal
   packages.urigen.urigen.explain:
   - packages.urigen.urigen.explain._agents
@@ -4453,7 +4552,6 @@ modules:
   packages.urish.urish.ecosystem_workflow:
   - packages.urish.urish.ecosystem_workflow._quote
   - packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps
-  - packages.urish.urish.ecosystem_workflow.build_planned_uris
   - packages.urish.urish.ecosystem_workflow.build_planned_uris_display
   - packages.urish.urish.ecosystem_workflow.ecosystem_dir
   - packages.urish.urish.ecosystem_workflow.ecosystem_file
@@ -4461,10 +4559,8 @@ modules:
   packages.urish.urish.exit_codes:
   - packages.urish.urish.exit_codes.exit_code_for_result
   packages.urish.urish.intent:
-  - packages.urish.urish.intent._detect_kind
   - packages.urish.urish.intent.detect_intent
   packages.urish.urish.policy:
-  - packages.urish.urish.policy.classify_uri
   - packages.urish.urish.policy.evaluate_policy
   packages.urish.urish.render:
   - packages.urish.urish.render._render_table
@@ -4483,7 +4579,6 @@ modules:
   - packages.urish.urish.shortcuts.shortcuts_path
   packages.urish.urish.ticket_workflow:
   - packages.urish.urish.ticket_workflow.build_ticket_workflow
-  - packages.urish.urish.ticket_workflow.detect_intent_from_ticket
   - packages.urish.urish.ticket_workflow.resolve_ticket_path
   uri2ops.operation_registry.dispatcher:
   - uri2ops.operation_registry.dispatcher._split_python_uri
@@ -4509,6 +4604,8 @@ modules:
   - uri2ops.server.service.OperatorService.registry
   - uri2ops.server.service.OperatorService.registry_export
   - uri2ops.server.service.OperatorService.run_task
+  uri3.graph.uri_graph:
+  - uri3.graph.uri_graph.build_graph_from_tree
   uri3.protocols.parser:
   - uri3.protocols.parser.parse_uri
   uri3.validators.uri_validator:
@@ -4607,6 +4704,15 @@ entry_points:
 - packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.static.dashboard.res
 - packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.static.dashboard.submitUriCall
 - packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.static.dashboard.uri
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._health_request
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._is_health_request
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._is_repair_request
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._is_runtime_request
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._is_view_request
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._log_request
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._repair_request
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._runtime_request
+- packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client._view_request
 - packages.nl2uri.nl2uri.cli.classify
 - packages.nl2uri.nl2uri.cli.flow
 - packages.nl2uri.nl2uri.cli.generate
@@ -4958,6 +5064,7 @@ entry_points:
 - scripts.test-all-examples.run_example
 - scripts.test-all-examples.run_sh
 - scripts.test-all-examples.skip
+- scripts.www.install-cron.current_crontab
 - scripts.www.install-cron.is_placeholder_webhook
 - scripts.www.install-cron.prepare_log_file
 - scripts.www.install-cron.usage
@@ -5018,7 +5125,6 @@ entry_points:
 - www.app.lastIndex
 - www.app.lines
 - www.app.markdown
-- www.app.matches
 - www.app.md
 - www.app.messagesEl
 - www.app.original

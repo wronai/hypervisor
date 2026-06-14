@@ -3,54 +3,69 @@ from __future__ import annotations
 from typing import Any
 
 
-def format_ask_markdown(data: dict[str, Any]) -> str:
-    """Turn urish ask payload into chat-friendly markdown."""
-    lines: list[str] = []
+def _header_lines(data: dict[str, Any]) -> list[str]:
     subtype = data.get("detected_subtype")
     kind = data.get("detected_kind") or "unknown"
-
     if subtype:
-        lines.append(f"## Wykryto: `{subtype}`")
-        lines.append(f"Typ: **{kind}**")
-    else:
-        lines.append(f"## Wykryto: **{kind}**")
+        return [f"## Wykryto: `{subtype}`", f"Typ: **{kind}**"]
+    return [f"## Wykryto: **{kind}**"]
 
+
+def _identity_lines(data: dict[str, Any]) -> list[str]:
+    lines: list[str] = []
     if data.get("ecosystem_id"):
         lines.append(f"\n**Nazwa:** `{data['ecosystem_id']}`")
     if data.get("profile"):
         lines.append(f"**Profil:** `{data['profile']}`")
     if data.get("agent_id"):
         lines.append(f"**Agent:** `agent://{data['agent_id']}`")
-
+    if data.get("deployment_id"):
+        lines.append(f"**Deployment:** `{data['deployment_id']}`")
     generated = data.get("generated") or {}
     if generated.get("proposal_path"):
         lines.append(f"\n**Proposal:** `{generated['proposal_path']}`")
+    return lines
 
+
+def _planned_lines(data: dict[str, Any]) -> list[str]:
     planned = data.get("planned_uris") or data.get("uris") or []
-    display_planned = _display_planned(planned, subtype)
-    if display_planned:
-        lines.append("\n### Planowane URI")
-        for uri in display_planned:
-            lines.append(f"- `{uri}`")
+    display_planned = _display_planned(planned, data.get("detected_subtype"))
+    if not display_planned:
+        return []
+    lines = ["\n### Planowane URI"]
+    lines.extend(f"- `{uri}`" for uri in display_planned)
+    return lines
 
+
+def _next_step_lines(data: dict[str, Any]) -> list[str]:
     next_steps = data.get("next_steps") or []
-    if next_steps:
-        lines.append("\n### Następne kroki")
-        lines.append("Możesz skopiować komendę lub kliknąć **Uruchom** (dry-run domyślnie).")
-        for step in next_steps:
-            lines.append(f"\n```bash\n{step}\n```")
-
     if not next_steps:
-        lines.append("\n_Nie wykryto dalszych kroków — spróbuj doprecyzować prompt._")
+        return ["\n_Nie wykryto dalszych kroków — spróbuj doprecyzować prompt._"]
+    lines = [
+        "\n### Następne kroki",
+        "Możesz skopiować komendę lub kliknąć **Uruchom** (dry-run domyślnie).",
+    ]
+    lines.extend(f"\n```bash\n{step}\n```" for step in next_steps)
+    return lines
 
+
+def format_ask_markdown(data: dict[str, Any]) -> str:
+    """Turn urish ask payload into chat-friendly markdown."""
+    lines = _header_lines(data)
+    lines.extend(_identity_lines(data))
+    lines.extend(_planned_lines(data))
+    lines.extend(_next_step_lines(data))
     return "\n".join(lines).strip()
 
 
 def format_uri_result_markdown(result: dict[str, Any]) -> str:
     """Compact markdown summary for URI call / execution envelopes."""
-    ok = bool(result.get("ok"))
-    status = result.get("service_result_status") or ("succeeded" if ok else "failed")
     result_type = result.get("result_type") or "result"
+    if result_type == "dry_run" or result.get("status") == "preview":
+        status = "preview"
+    else:
+        ok = bool(result.get("ok"))
+        status = result.get("service_result_status") or ("succeeded" if ok else "failed")
     lines = [
         f"## URI: {status}",
         f"Typ: `{result_type}` · workflow: `{result.get('workflow_status', '—')}`",

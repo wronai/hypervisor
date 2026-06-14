@@ -29,6 +29,96 @@ def incident_storage_path(repo_root: Path, agent_id: str, incident_id: str) -> P
     return repo_root / "output" / "incidents" / day / agent_id / f"{incident_id}.yaml"
 
 
+def _symptom_from_item(item: dict[str, Any], *, default_code: str, severity: str) -> Symptom:
+    code = str(item.get("code") or default_code)
+    message = str(item.get("detail") or item.get("code") or default_code.lower())
+    return Symptom(code=code, message=message, severity=severity)
+
+
+def _symptoms_from_inspection(inspection: dict[str, Any]) -> list[Symptom]:
+    symptoms = [
+        _symptom_from_item(item, default_code="UNKNOWN", severity="error")
+        for item in inspection.get("incidents") or []
+    ]
+    symptoms.extend(
+        _symptom_from_item(item, default_code="WARNING", severity="warning")
+        for item in inspection.get("warnings") or []
+    )
+    if not symptoms:
+        symptoms.append(
+            Symptom(
+                code="SERVICE_UNHEALTHY",
+                message="Agent inspection reported degraded service status.",
+                severity="error",
+            )
+        )
+    return symptoms
+
+
+def _incident_uri_block(agent_id: str, metadata_id: str, inspection: dict[str, Any]) -> dict[str, str]:
+    agent_ref = inspection.get("agent_ref") or f"agent://{agent_id.split('.')[0]}"
+    return {
+        "self": incident_uri(agent_id, metadata_id),
+        "subject": str(agent_ref),
+        "deployment": f"hypervisor://local/{agent_id}",
+        "runtime_state": f"runtime://agent/{agent_id}/state",
+        "health": f"health://agent/{agent_id}",
+        "logs": str(inspection.get("log_uri") or f"log://hypervisor?grep={agent_id}"),
+    }
+
+
+def _incident_status_block(
+    inspection: dict[str, Any], readiness: dict[str, Any], health: dict[str, Any]
+) -> dict[str, str]:
+    ok = bool(inspection.get("ok"))
+    return {
+        "lifecycle_status": str(
+            inspection.get("runtime_status") or readiness.get("process") or "unknown"
+        ),
+        "health_status": "ok" if health.get("ok") else "failed",
+        "workflow_status": "completed" if ok else "failed",
+        "execution_status": "completed",
+        "service_result_status": "succeeded" if ok else "failed",
+    }
+
+
+def _incident_evidence(
+    inspection: dict[str, Any],
+    *,
+    agent_id: str,
+    readiness: dict[str, Any],
+    process: dict[str, Any],
+    health: dict[str, Any],
+    logs: dict[str, Any],
+) -> dict[str, Any]:
+    runtime_state = inspection.get("runtime_state") or {}
+    return {
+        "runtime": {
+            "pid": process.get("pid"),
+            "running": process.get("running"),
+            "effective_port": readiness.get("effective_port"),
+            "declared_health_uri": readiness.get("declared_health_uri"),
+            "effective_health_uri": readiness.get("effective_health_uri"),
+            "runtime_state_path": str(
+                find_repo_root() / "output" / "runtime" / "agents" / agent_id / "state.json"
+            ),
+            "command": runtime_state.get("command"),
+            "stored_health_uri": runtime_state.get("health_uri"),
+        },
+        "health_check": {
+            "uri": health.get("uri"),
+            "ok": health.get("ok"),
+            "status_code": health.get("status_code"),
+            "error": health.get("error"),
+        },
+        "logs": {
+            "uri": logs.get("uri") or inspection.get("log_uri"),
+            "error_count": logs.get("error_count", 0),
+            "entries": (logs.get("entries") or [])[:5],
+        },
+    }
+
+
 def build_incident_from_inspection(
     inspection: dict[str, Any],
     *,
@@ -43,82 +133,23 @@ def build_incident_from_inspection(
     health = inspection.get("health") or {}
     logs = inspection.get("log_errors") or {}
 
-    symptoms: list[Symptom] = []
-    for item in inspection.get("incidents") or []:
-        symptoms.append(
-            Symptom(
-                code=str(item.get("code") or "UNKNOWN"),
-                message=str(item.get("detail") or item.get("code") or "incident"),
-                severity="error",
-            )
-        )
-    for item in inspection.get("warnings") or []:
-        symptoms.append(
-            Symptom(
-                code=str(item.get("code") or "WARNING"),
-                message=str(item.get("detail") or item.get("code") or "warning"),
-                severity="warning",
-            )
-        )
-    if not symptoms:
-        symptoms.append(
-            Symptom(
-                code="SERVICE_UNHEALTHY",
-                message="Agent inspection reported degraded service status.",
-                severity="error",
-            )
-        )
-
-    runtime_state = inspection.get("runtime_state") or {}
     return IncidentArtifact(
         metadata_id=metadata_id,
         agent_id=agent_id,
         created_at=_now_iso(),
         created_by=created_by,
         source=source or f"hypervisor://agent/{agent_id}/supervise",
-        uri={
-            "self": incident_uri(agent_id, metadata_id),
-            "subject": str(inspection.get("agent_ref") or f"agent://{agent_id.split('.')[0]}"),
-            "deployment": f"hypervisor://local/{agent_id}",
-            "runtime_state": f"runtime://agent/{agent_id}/state",
-            "health": f"health://agent/{agent_id}",
-            "logs": str(inspection.get("log_uri") or f"log://hypervisor?grep={agent_id}"),
-        },
-        status={
-            "lifecycle_status": str(
-                inspection.get("runtime_status") or readiness.get("process") or "unknown"
-            ),
-            "health_status": "ok" if health.get("ok") else "failed",
-            "workflow_status": "failed" if not inspection.get("ok") else "completed",
-            "execution_status": "completed",
-            "service_result_status": "failed" if not inspection.get("ok") else "succeeded",
-        },
-        symptoms=symptoms,
-        evidence={
-            "runtime": {
-                "pid": process.get("pid"),
-                "running": process.get("running"),
-                "effective_port": readiness.get("effective_port"),
-                "declared_health_uri": readiness.get("declared_health_uri"),
-                "effective_health_uri": readiness.get("effective_health_uri"),
-                "runtime_state_path": str(
-                    find_repo_root() / "output" / "runtime" / "agents" / agent_id / "state.json"
-                ),
-                "command": runtime_state.get("command"),
-                "stored_health_uri": runtime_state.get("health_uri"),
-            },
-            "health_check": {
-                "uri": health.get("uri"),
-                "ok": health.get("ok"),
-                "status_code": health.get("status_code"),
-                "error": health.get("error"),
-            },
-            "logs": {
-                "uri": logs.get("uri") or inspection.get("log_uri"),
-                "error_count": logs.get("error_count", 0),
-                "entries": (logs.get("entries") or [])[:5],
-            },
-        },
+        uri=_incident_uri_block(agent_id, metadata_id, inspection),
+        status=_incident_status_block(inspection, readiness, health),
+        symptoms=_symptoms_from_inspection(inspection),
+        evidence=_incident_evidence(
+            inspection,
+            agent_id=agent_id,
+            readiness=readiness,
+            process=process,
+            health=health,
+            logs=logs,
+        ),
         classification=classification or {},
     )
 

@@ -18,6 +18,53 @@ def test_detect_dashboard_agent_intent():
     assert intent["profile"] == "dashboard-agent"
 
 
+def test_detect_agent_process_view_intent():
+    intent = detect_intent("pokaż proces agenta weather-map-agent.local")
+    assert intent["kind"] == "agent"
+    assert intent["subtype"] == "process_view"
+    assert intent["deployment_id"] == "weather-map-agent.local"
+    assert intent["uri"] == "view://process/agent/weather-map-agent.local/latest"
+
+
+def test_detect_agent_diagnose_intent():
+    intent = detect_intent("zdiagnozuj agenta invoices-agent.local")
+    assert intent["kind"] == "agent"
+    assert intent["subtype"] == "diagnose"
+    assert intent["deployment_id"] == "invoices-agent.local"
+    assert intent["uri"] == "repair://agent/invoices-agent.local/diagnose"
+
+
+def test_detect_agent_health_intent():
+    intent = detect_intent("pokaż health agenta user-agent.local")
+    assert intent["kind"] == "agent"
+    assert intent["subtype"] == "health"
+    assert intent["uri"] == "health://agent/user-agent.local"
+
+
+def test_ask_agent_process_view_plans_hypervisor_uri():
+    result = ask_prompt("pokaż proces agenta weather-map-agent.local")
+    data = result["data"]
+    assert data["detected_kind"] == "agent"
+    assert data["detected_subtype"] == "process_view"
+    assert data["planned_uris"] == ["view://process/agent/weather-map-agent.local/latest"]
+    assert any("inspect-agent weather-map-agent.local" in step for step in data["next_steps"])
+
+
+def test_ask_agent_diagnose_plans_repair_uri():
+    result = ask_prompt("zdiagnozuj agenta weather-map-agent.local i pokaż plan naprawy")
+    data = result["data"]
+    assert data["detected_kind"] == "agent"
+    assert data["detected_subtype"] == "diagnose"
+    assert data["planned_uris"] == ["repair://agent/weather-map-agent.local/diagnose"]
+
+
+def test_screenshot_prompt_uses_workflow_not_domain():
+    intent = detect_intent(
+        "rob rzuty ekranów stron softreck.com prototypowanie.pl www co 5 minut do folderu usera ~/images/"
+    )
+    assert intent["kind"] == "workflow"
+
+
 def test_detect_www_chat_dashboard_intent_without_agent_word():
     intent = detect_intent(
         "stwórz prosty web UI hypervisora jako chat markdown połączony z API systemu"

@@ -9,6 +9,48 @@ import httpx
 from hypervisor.deployment_registry.port_utils import foreign_service_detail
 
 
+def _probe_payload_ok(
+    payload: Any,
+    *,
+    response_ok: bool,
+    expected_agent: str | None,
+) -> bool:
+    if not response_ok:
+        return False
+    if not isinstance(payload, dict):
+        return True
+    if payload.get("ok") is False:
+        return False
+    if not expected_agent:
+        return True
+    agent_name = payload.get("agent")
+    if agent_name is not None and str(agent_name) != expected_agent:
+        return False
+    if agent_name is None and response_ok and payload.get("service"):
+        return False
+    return True
+
+
+def _probe_response(uri: str, response: httpx.Response, *, expected_agent: str | None) -> dict[str, Any]:
+    content_type = response.headers.get("content-type", "")
+    payload = response.json() if "json" in content_type else None
+    json_ok = payload.get("ok") if isinstance(payload, dict) else None
+    agent_name = payload.get("agent") if isinstance(payload, dict) else None
+    ok = _probe_payload_ok(payload, response_ok=response.is_success, expected_agent=expected_agent)
+    foreign = None
+    if not ok and isinstance(payload, dict):
+        foreign = foreign_service_detail({"payload": payload})
+    return {
+        "uri": uri,
+        "ok": ok,
+        "status_code": response.status_code,
+        "json_ok": json_ok,
+        "agent": agent_name,
+        "payload": payload if isinstance(payload, dict) else None,
+        "foreign_service": foreign,
+    }
+
+
 def probe_http(
     uri: str | None,
     *,
@@ -19,28 +61,7 @@ def probe_http(
         return {"uri": uri, "ok": False, "skipped": True, "reason": "missing http uri"}
     try:
         response = httpx.get(uri, timeout=timeout)
-        content_type = response.headers.get("content-type", "")
-        payload = response.json() if "json" in content_type else None
-        json_ok = payload.get("ok") if isinstance(payload, dict) else None
-        agent_name = payload.get("agent") if isinstance(payload, dict) else None
-        ok = response.is_success and (json_ok is not False)
-        if expected_agent and isinstance(payload, dict):
-            if agent_name is not None and str(agent_name) != expected_agent:
-                ok = False
-            elif agent_name is None and response.is_success and payload.get("service"):
-                ok = False
-        foreign = None
-        if not ok and isinstance(payload, dict):
-            foreign = foreign_service_detail({"payload": payload})
-        return {
-            "uri": uri,
-            "ok": ok,
-            "status_code": response.status_code,
-            "json_ok": json_ok,
-            "agent": agent_name,
-            "payload": payload if isinstance(payload, dict) else None,
-            "foreign_service": foreign,
-        }
+        return _probe_response(uri, response, expected_agent=expected_agent)
     except Exception as exc:
         return {"uri": uri, "ok": False, "error": str(exc)}
 

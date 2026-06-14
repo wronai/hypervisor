@@ -27,6 +27,83 @@ def _port_from_http_uri(uri: str | None) -> int | None:
     return parsed.port
 
 
+def _port_conflict_incident(
+    *,
+    effective_port: int | None,
+    health: dict[str, Any],
+    expected_agent: str | None,
+) -> dict[str, Any] | None:
+    if not effective_port or is_port_free(effective_port):
+        return None
+    if health_matches_agent(health, expected_agent=expected_agent):
+        return None
+    foreign = health.get("foreign_service")
+    detail = f"port {effective_port} is in use by another service"
+    if foreign:
+        detail += f" ({foreign})"
+    return {
+        "code": "PORT_OCCUPIED",
+        "detail": detail,
+        "effective_port": effective_port,
+        "foreign_service": foreign,
+    }
+
+
+def _foreign_service_incident(
+    *, health: dict[str, Any], effective_port: int | None
+) -> dict[str, Any] | None:
+    if not health.get("foreign_service"):
+        return None
+    return {
+        "code": "FOREIGN_SERVICE_ON_PORT",
+        "detail": f"health probe matched foreign service: {health.get('foreign_service')}",
+        "uri": health.get("uri"),
+        "effective_port": effective_port,
+    }
+
+
+def _runtime_incidents(*, runtime: str, process_alive: bool) -> list[dict[str, Any]]:
+    incidents: list[dict[str, Any]] = []
+    if runtime == "stale":
+        incidents.append(
+            {"code": "RUNTIME_STATE_STALE", "detail": "runtime state points to a dead process"}
+        )
+    if runtime == "running" and not process_alive:
+        incidents.append(
+            {
+                "code": "PROCESS_NOT_ALIVE",
+                "detail": "runtime status is running but pid is not alive",
+            }
+        )
+    return incidents
+
+
+def _health_incidents(
+    *,
+    process_alive: bool,
+    health: dict[str, Any],
+    effective_port: int | None,
+) -> list[dict[str, Any]]:
+    if process_alive and not health.get("ok"):
+        return [
+            {
+                "code": "PROCESS_RUNNING_BUT_UNHEALTHY",
+                "detail": "process is alive but HTTP health probe failed",
+                "uri": health.get("uri"),
+                "effective_port": effective_port,
+            }
+        ]
+    if health.get("ok"):
+        return []
+    return [
+        {
+            "code": "HEALTH_FAILED",
+            "detail": health.get("error") or f"health returned {health.get('status_code')}",
+            "uri": health.get("uri"),
+        }
+    ]
+
+
 def classify_incidents(
     *,
     runtime: str,
@@ -40,43 +117,22 @@ def classify_incidents(
     logs: dict[str, Any],
     expected_agent: str | None = None,
 ) -> list[dict[str, Any]]:
-    incidents: list[dict[str, Any]] = []
     stored_port = _port_from_http_uri(stored_health_uri)
     effective_port = _port_from_http_uri(effective_health_uri)
-    if effective_port and not is_port_free(effective_port) and not health_matches_agent(
-        health, expected_agent=expected_agent
+    incidents: list[dict[str, Any]] = []
+
+    for builder in (
+        lambda: _port_conflict_incident(
+            effective_port=effective_port, health=health, expected_agent=expected_agent
+        ),
+        lambda: _foreign_service_incident(health=health, effective_port=effective_port),
     ):
-        incidents.append(
-            {
-                "code": "PORT_OCCUPIED",
-                "detail": (
-                    f"port {effective_port} is in use by another service"
-                    + (f" ({health.get('foreign_service')})" if health.get("foreign_service") else "")
-                ),
-                "effective_port": effective_port,
-                "foreign_service": health.get("foreign_service"),
-            }
-        )
-    if health.get("foreign_service"):
-        incidents.append(
-            {
-                "code": "FOREIGN_SERVICE_ON_PORT",
-                "detail": f"health probe matched foreign service: {health.get('foreign_service')}",
-                "uri": health.get("uri"),
-                "effective_port": effective_port,
-            }
-        )
-    if runtime == "stale":
-        incidents.append(
-            {"code": "RUNTIME_STATE_STALE", "detail": "runtime state points to a dead process"}
-        )
-    if runtime == "running" and not process_alive:
-        incidents.append(
-            {
-                "code": "PROCESS_NOT_ALIVE",
-                "detail": "runtime status is running but pid is not alive",
-            }
-        )
+        item = builder()
+        if item:
+            incidents.append(item)
+
+    incidents.extend(_runtime_incidents(runtime=runtime, process_alive=process_alive))
+
     if command_port is not None and stored_port is not None and command_port != stored_port:
         incidents.append(
             {
@@ -87,11 +143,7 @@ def classify_incidents(
                 "severity": "error",
             }
         )
-    if (
-        deployment_health_uri
-        and effective_health_uri
-        and deployment_health_uri != effective_health_uri
-    ):
+    if deployment_health_uri and effective_health_uri and deployment_health_uri != effective_health_uri:
         incidents.append(
             {
                 "code": "HEALTH_URI_DRIFT",
@@ -101,23 +153,15 @@ def classify_incidents(
                 "severity": "warning",
             }
         )
-    if process_alive and not health.get("ok"):
-        incidents.append(
-            {
-                "code": "PROCESS_RUNNING_BUT_UNHEALTHY",
-                "detail": "process is alive but HTTP health probe failed",
-                "uri": health.get("uri"),
-                "effective_port": effective_port,
-            }
+
+    incidents.extend(
+        _health_incidents(
+            process_alive=process_alive,
+            health=health,
+            effective_port=effective_port,
         )
-    elif not health.get("ok"):
-        incidents.append(
-            {
-                "code": "HEALTH_FAILED",
-                "detail": health.get("error") or f"health returned {health.get('status_code')}",
-                "uri": health.get("uri"),
-            }
-        )
+    )
+
     if card.get("uri") and not card.get("ok"):
         incidents.append(
             {

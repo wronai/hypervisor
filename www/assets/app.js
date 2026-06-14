@@ -154,29 +154,42 @@ function addAssistantFromResult(title, result, uri) {
   scrollMessages();
 }
 
-function humanizeResult(result) {
-  const d = result.data || {};
-  if (result.result_type === "process_view") {
+const HUMANIZE_HANDLERS = {
+  process_view(result) {
+    const d = result.data || {};
     return `${d.what_happened || "Zbudowano widok procesu"} Dlaczego to ważne: ${d.why_it_matters || "Status procesu trzeba odróżnić od health usługi."}`;
-  }
-  if (result.result_type === "health") {
-    return result.ok ? "Health check przeszedł poprawnie. Agent odpowiada." : `Health check nie przeszedł. ${d.message || "Usługa nie odpowiada."}`;
-  }
-  if (result.result_type === "diagnosis") {
+  },
+  health(result) {
+    const d = result.data || {};
+    return result.ok
+      ? "Health check przeszedł poprawnie. Agent odpowiada."
+      : `Health check nie przeszedł. ${d.message || "Usługa nie odpowiada."}`;
+  },
+  diagnosis(result) {
+    const d = result.data || {};
     return `Diagnoza: ${(d.classification || []).join(", ")}. Pewność: ${d.confidence || "n/a"}.`;
-  }
-  if (result.result_type === "repair_result") {
-    return result.ok ? "Naprawa została wykonana. Sprawdź health, aby potwierdzić stan." : "Naprawa nie powiodła się.";
-  }
-  if (result.result_type === "ticket") {
+  },
+  repair_result(result) {
+    return result.ok
+      ? "Naprawa została wykonana. Sprawdź health, aby potwierdzić stan."
+      : "Naprawa nie powiodła się.";
+  },
+  ticket(result) {
+    const d = result.data || {};
     return `Utworzono lub zaplanowano ticket: ${d.uri || d.id || "ticket"}.`;
-  }
-  if (result.result_type === "evolution_proposal") {
-    return `Utworzono proposal zmiany. Wymaga weryfikacji i approval.`;
-  }
-  if (result.result_type === "api_error") {
+  },
+  evolution_proposal() {
+    return "Utworzono proposal zmiany. Wymaga weryfikacji i approval.";
+  },
+  api_error(result) {
+    const d = result.data || {};
     return d.hint || d.error || "Błąd połączenia z API.";
-  }
+  },
+};
+
+function humanizeResult(result) {
+  const handler = HUMANIZE_HANDLERS[result.result_type];
+  if (handler) return handler(result);
   return result.ok ? "Operacja zakończona poprawnie." : "Operacja zakończyła się błędem.";
 }
 

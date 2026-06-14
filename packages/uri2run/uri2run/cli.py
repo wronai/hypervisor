@@ -39,57 +39,55 @@ def call_cmd(
         raise typer.Exit(code=1)
 
 
-def _backend_from_target(target: str, *, backend_type: str) -> dict[str, Any]:
-    from uri2run.voice_resolver import resolve_voice_backend
+_PREFIX_KINDS: tuple[tuple[str, str], ...] = (
+    ("python://", "python"),
+    ("shell://", "shell"),
+    ("stdio://", "stdio"),
+    ("sse://", "sse"),
+    ("docker://", "docker"),
+    ("ssh://", "ssh"),
+    ("mcp://", "mcp"),
+    ("a2a://", "a2a"),
+)
 
-    if backend_type:
-        kind = backend_type
-    elif target.startswith("python://"):
-        kind = "python"
-    elif target.startswith("shell://"):
-        kind = "shell"
-    elif target.startswith(("http://", "https://")):
-        kind = "http"
-    elif target.startswith("stdio://"):
-        kind = "stdio"
-    elif target.startswith("sse://"):
-        kind = "sse"
-    elif target.startswith(("ws://", "wss://")):
-        kind = "ws"
-    elif target.startswith("docker://"):
-        kind = "docker"
-    elif target.startswith("ssh://"):
-        kind = "ssh"
-    elif target.startswith("mcp://"):
-        kind = "mcp"
-    elif target.startswith("a2a://"):
-        kind = "a2a"
-    else:
-        voice_backend = resolve_voice_backend(target)
-        if voice_backend is not None:
-            return voice_backend
-        kind = "shell"
+
+def _build_backend(kind: str, target: str) -> dict[str, Any]:
     if kind == "python":
         return {"type": "python", "target": target}
     if kind == "http":
         return {"type": "http", "url": target}
     if kind == "stdio":
         return {"type": "stdio", "command": target.removeprefix("stdio://")}
-    if kind == "sse":
-        return {"type": "sse", "url": target}
-    if kind == "ws":
-        return {"type": "ws", "url": target}
-    if kind == "docker":
-        return {"type": "docker", "target": target}
-    if kind == "ssh":
-        return {"type": "ssh", "target": target}
-    if kind == "mcp":
-        return {"type": "mcp", "target": target}
-    if kind == "a2a":
-        return {"type": "a2a", "target": target}
+    if kind in {"sse", "ws"}:
+        return {"type": kind, "url": target}
     if kind == "shell":
         return {"type": "shell", "command": target.removeprefix("shell://")}
     return {"type": kind, "target": target}
+
+
+def _infer_backend_kind(target: str, *, backend_type: str) -> str:
+    if backend_type:
+        return backend_type
+    for prefix, kind in _PREFIX_KINDS:
+        if target.startswith(prefix):
+            return kind
+    if target.startswith(("http://", "https://")):
+        return "http"
+    if target.startswith(("ws://", "wss://")):
+        return "ws"
+    return ""
+
+
+def _backend_from_target(target: str, *, backend_type: str) -> dict[str, Any]:
+    from uri2run.voice_resolver import resolve_voice_backend
+
+    kind = _infer_backend_kind(target, backend_type=backend_type)
+    if not kind:
+        voice_backend = resolve_voice_backend(target)
+        if voice_backend is not None:
+            return voice_backend
+        kind = "shell"
+    return _build_backend(kind, target)
 
 
 @app.command("doctor")

@@ -114,6 +114,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
 
+## [0.5.26] - 2026-06-14
+
+### Docs
+- Update README.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/hypervisor/test_chat_www.py
+- Update tests/urish/test_ask_dashboard.py
+
+### Other
+- Update packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/chat_format.py
+- Update packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py
+- Update packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/view_builder.py
+- Update packages/resource-agent-hypervisor/hypervisor/artifacts/gate.py
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/incidents.py
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/probe.py
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py
+- Update packages/resource-agent-hypervisor/hypervisor/repair/classifier.py
+- Update packages/resource-agent-hypervisor/hypervisor/repair/incident.py
+- ... and 32 more files
+
 ## [0.5.25] - 2026-06-14
 
 ### Docs

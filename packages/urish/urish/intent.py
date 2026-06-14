@@ -16,10 +16,83 @@ DASHBOARD_PLANNED_URIS = [
     "ticket://bug/from-incident/{incident_id}",
 ]
 
+_AGENT_ID_PATTERNS: tuple[re.Pattern[str], ...] = (
+    re.compile(r"agent://([\w.-]+)", re.I),
+    re.compile(r"\b([\w][\w-]*-agent\.local)\b", re.I),
+    re.compile(r"\b(hypervisor-dashboard(?:\.local)?)\b", re.I),
+    re.compile(r"\b(?:agent|agenta)\s+([\w][\w.-]+(?:\.local)?)\b", re.I),
+    re.compile(r"\b([\w][\w-]*\.local)\b", re.I),
+)
+
+
+def extract_agent_id(prompt: str) -> str | None:
+    text = prompt.strip()
+    for pattern in _AGENT_ID_PATTERNS:
+        match = pattern.search(text)
+        if not match:
+            continue
+        agent_id = match.group(1).strip(".")
+        if agent_id == "hypervisor-dashboard":
+            return "hypervisor-dashboard.local"
+        if agent_id.endswith(".local"):
+            return agent_id
+        if "-agent" in agent_id or agent_id.endswith("-agent"):
+            return f"{agent_id}.local"
+        return agent_id
+    return None
+
+
+def _detect_agent_action(prompt: str) -> str | None:
+    lower = prompt.lower()
+    agent_id = extract_agent_id(prompt)
+    mentions_agent = bool(agent_id) or bool(re.search(r"\b(agent|agenta|deployment)\b", lower))
+    if not mentions_agent:
+        return None
+    if re.search(r"\b(zdiagnozuj|diagnoza|diagnose|diagnosis)\b", lower):
+        return "diagnose"
+    if re.search(r"\b(napraw|repair\s+apply|apply\s+repair)\b", lower):
+        return "repair"
+    if re.search(r"\b(health|healthcheck|zdrow)\b", lower):
+        return "health"
+    if re.search(r"\b(log|logi)\b", lower):
+        return "logs"
+    if re.search(r"\b(runtime|stan\s+runtime)\b", lower):
+        return "runtime"
+    if re.search(r"\b(proces|process|pokaż|pokaz|show|view|status)\b", lower):
+        return "process_view"
+    if agent_id:
+        return "process_view"
+    return None
+
+
+def agent_uri(agent_id: str, action: str) -> str:
+    routes = {
+        "process_view": f"view://process/agent/{agent_id}/latest",
+        "health": f"health://agent/{agent_id}",
+        "diagnose": f"repair://agent/{agent_id}/diagnose",
+        "repair": f"repair://agent/{agent_id}/apply",
+        "logs": f"log://hypervisor?grep={agent_id}",
+        "runtime": f"runtime://agent/{agent_id}/state",
+    }
+    return routes.get(action, routes["process_view"])
+
 
 def detect_intent(prompt: str) -> dict[str, Any]:
     text = prompt.strip()
     kind = _detect_kind(text)
+    if kind == "agent":
+        action = _detect_agent_action(text) or "process_view"
+        agent_id = extract_agent_id(text)
+        return {
+            "kind": "agent",
+            "subtype": action,
+            "profile": None,
+            "agent_id": agent_id.split(".")[0] if agent_id and agent_id.endswith(".local") else agent_id,
+            "deployment_id": agent_id,
+            "ecosystem_id": None,
+            "dashboard_port": None,
+            "uri": agent_uri(agent_id, action) if agent_id else None,
+        }
     if kind == "ecosystem" and wants_dashboard(text, "minimal"):
         return {
             "kind": "ecosystem",
@@ -61,9 +134,17 @@ def _detect_kind(prompt: str) -> str:
     if re.search(r"\b(stw[oó]rz|zbuduj|generuj)\b.*\b(agent|agenta)\b", prompt, re.I):
         return "ecosystem"
     if re.search(r"\b(agent|agenta)\b", prompt, re.I) and re.search(
-        r"\b(stw[oó]rz|zbuduj|generuj|healthcheck|health)\b", prompt, re.I
+        r"\b(stw[oó]rz|zbuduj|generuj|healthcheck)\b", prompt, re.I
     ):
         return "ecosystem"
+    if _detect_agent_action(prompt):
+        return "agent"
+    if re.search(
+        r"\b(rzut(?:y|ów|y\s+ekran)|screenshot|zrzut\s+ekran|monitor(?:uj|owanie)?\s+stron)\b",
+        prompt,
+        re.I,
+    ):
+        return "workflow"
     if re.search(r"\b(flow|workflow|graf|health|chrome|localhost|napraw|repair)\b", prompt, re.I):
         return "workflow"
     return "domain"

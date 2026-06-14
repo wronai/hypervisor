@@ -56,26 +56,30 @@ def _render(payload: dict) -> str:
     return "\n".join(lines)
 
 
+_CHECK_SUMMARY_FORMATTERS: dict[str, Any] = {
+    "touri.registry": lambda check: f" ({check.get('manifests', 0)} manifests)",
+    "uri2ops.registry": lambda check: f" ({check.get('operations', 0)} operations)",
+    "contract_registry": lambda check: (
+        f" (capabilities={(check.get('counts') or {}).get('capabilities', 0)})"
+    ),
+    "explain.smoke": lambda check: (
+        f" ({check.get('checked', 0)} checked, {len(check.get('mismatches') or [])} mismatches)"
+    ),
+    "envelope.recent_logs": lambda check: (
+        f" ({check.get('logs', 0)} logs, {check.get('missing_fields', 0)} missing fields)"
+    ),
+    "uri2verify.capability_plan": lambda check: f" ({check.get('tests', 0)} tests)",
+    "uri2verify.replay_failures": lambda check: (
+        f" ({len(check.get('failures') or [])} failing workflows)"
+    ),
+    "boundaries.imports": lambda check: f" ({check.get('violation_count', 0)} violations)",
+    "runtime.uri2run_transports": lambda check: (
+        f" ({len(check.get('checked') or [])} transports, {len(check.get('failures') or [])} failures)"
+    ),
+    "runtime.browser_delegation": lambda check: f" (adapter={check.get('adapter')})",
+}
+
+
 def _check_summary(check: dict) -> str:
-    if check.get("id") == "touri.registry":
-        return f" ({check.get('manifests', 0)} manifests)"
-    if check.get("id") == "uri2ops.registry":
-        return f" ({check.get('operations', 0)} operations)"
-    if check.get("id") == "contract_registry":
-        counts = check.get("counts") or {}
-        return f" (capabilities={counts.get('capabilities', 0)})"
-    if check.get("id") == "explain.smoke":
-        return f" ({check.get('checked', 0)} checked, {len(check.get('mismatches') or [])} mismatches)"
-    if check.get("id") == "envelope.recent_logs":
-        return f" ({check.get('logs', 0)} logs, {check.get('missing_fields', 0)} missing fields)"
-    if check.get("id") == "uri2verify.capability_plan":
-        return f" ({check.get('tests', 0)} tests)"
-    if check.get("id") == "uri2verify.replay_failures":
-        return f" ({len(check.get('failures') or [])} failing workflows)"
-    if check.get("id") == "boundaries.imports":
-        return f" ({check.get('violation_count', 0)} violations)"
-    if check.get("id") == "runtime.uri2run_transports":
-        return f" ({len(check.get('checked') or [])} transports, {len(check.get('failures') or [])} failures)"
-    if check.get("id") == "runtime.browser_delegation":
-        return f" (adapter={check.get('adapter')})"
-    return ""
+    formatter = _CHECK_SUMMARY_FORMATTERS.get(str(check.get("id") or ""))
+    return formatter(check) if formatter else ""

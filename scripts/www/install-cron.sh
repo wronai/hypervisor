@@ -26,6 +26,10 @@ prepare_log_file() {
   touch "${LOG}"
 }
 
+current_crontab() {
+  crontab -l 2>/dev/null || true
+}
+
 usage() {
   cat <<EOF
 Usage: bash scripts/www/install-cron.sh [options]
@@ -127,7 +131,7 @@ prepare_log_file
 
 if crontab -l 2>/dev/null | grep -q "${MARKER}"; then
   if [[ "${UPDATE}" -eq 1 ]]; then
-    crontab -l 2>/dev/null | grep -v "${MARKER}" | { cat; echo "${CRON_LINE}"; } | crontab -
+    current_crontab | grep -v "${MARKER}" | { cat; echo "${CRON_LINE}"; } | crontab -
     echo "Updated cron entry."
     crontab -l | grep "${MARKER}"
     echo "Log file ready: ${LOG}"
@@ -140,7 +144,7 @@ if crontab -l 2>/dev/null | grep -q "${MARKER}"; then
   exit 0
 fi
 
-(crontab -l 2>/dev/null; echo "${CRON_LINE}") | crontab -
+{ current_crontab; echo "${CRON_LINE}"; } | crontab -
 echo "Installed cron entry."
 crontab -l | grep "${MARKER}"
 echo "Log file ready: ${LOG}"

@@ -191,6 +191,49 @@ def _artifact_lifecycle_result(
     )
 
 
+def _collect_lifecycle_results(
+    repo_root: Path,
+) -> list[ArtifactLifecycleResult]:
+    seen: set[Path] = set()
+    results: list[ArtifactLifecycleResult] = []
+    for category, patterns in LIFECYCLE_ARTIFACT_SCANS:
+        for pattern in patterns:
+            for path in sorted(repo_root.glob(pattern)):
+                if not path.is_file() or path in seen:
+                    continue
+                seen.add(path)
+                results.append(_artifact_lifecycle_result(path, repo_root, category))
+    return results
+
+
+def _lifecycle_summary(results: list[ArtifactLifecycleResult]) -> dict[str, dict[str, int]]:
+    summary: dict[str, dict[str, int]] = {}
+    for item in results:
+        by_category = summary.setdefault(item.category, {})
+        by_category[item.status] = by_category.get(item.status, 0) + 1
+    return summary
+
+
+def _lifecycle_samples(
+    noncanonical: list[ArtifactLifecycleResult],
+    *,
+    sample_limit: int,
+) -> list[dict[str, Any]]:
+    return [
+        {
+            "path": item.path,
+            "category": item.category,
+            "status": item.status,
+            "missing": item.missing,
+            "schema": item.schema,
+            "kind": item.kind,
+            "uri_self": item.uri_self,
+            "error": item.error,
+        }
+        for item in noncanonical[:sample_limit]
+    ]
+
+
 def check_lifecycle_coverage(
     repo_root: Path,
     *,
@@ -203,20 +246,8 @@ def check_lifecycle_coverage(
     validates known schema-backed locations, while this report shows where YAML/JSON
     lifecycle files still lack `$schema`, `apiVersion`, `kind`, or `uri.self`.
     """
-    seen: set[Path] = set()
-    results: list[ArtifactLifecycleResult] = []
-    for category, patterns in LIFECYCLE_ARTIFACT_SCANS:
-        for pattern in patterns:
-            for path in sorted(repo_root.glob(pattern)):
-                if not path.is_file() or path in seen:
-                    continue
-                seen.add(path)
-                results.append(_artifact_lifecycle_result(path, repo_root, category))
-
-    summary: dict[str, dict[str, int]] = {}
-    for item in results:
-        by_category = summary.setdefault(item.category, {})
-        by_category[item.status] = by_category.get(item.status, 0) + 1
+    results = _collect_lifecycle_results(repo_root)
+    summary = _lifecycle_summary(results)
 
     noncanonical_statuses = {
         "loose",
@@ -228,7 +259,6 @@ def check_lifecycle_coverage(
     loose = [item for item in results if item.status == "loose"]
     unreadable = [item for item in results if item.status == "unreadable"]
     failing = noncanonical if strict else unreadable
-    samples = noncanonical[:sample_limit]
     return {
         "ok": not failing,
         "strict": strict,
@@ -239,19 +269,7 @@ def check_lifecycle_coverage(
         "unreadable": len(unreadable),
         "summary": summary,
         "sample_limit": sample_limit,
-        "samples": [
-            {
-                "path": item.path,
-                "category": item.category,
-                "status": item.status,
-                "missing": item.missing,
-                "schema": item.schema,
-                "kind": item.kind,
-                "uri_self": item.uri_self,
-                "error": item.error,
-            }
-            for item in samples
-        ],
+        "samples": _lifecycle_samples(noncanonical, sample_limit=sample_limit),
     }
 
 

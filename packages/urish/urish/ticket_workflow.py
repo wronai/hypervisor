@@ -32,31 +32,29 @@ def resolve_ticket_path(target: str, *, root: Path | None = None) -> Path:
     raise FileNotFoundError(f"ticket not found: {target}")
 
 
-def detect_intent_from_ticket(ticket: dict[str, Any]) -> dict[str, Any]:
-    from urigen.models import wants_dashboard
+def _dashboard_intent() -> dict[str, Any]:
+    return {
+        "kind": "ecosystem",
+        "subtype": "dashboard-agent",
+        "profile": "dashboard-agent",
+        "ecosystem_id": "hypervisor-dashboard",
+        "agent_id": "hypervisor-dashboard",
+        "deployment_id": "hypervisor-dashboard.local",
+        "dashboard_port": 8788,
+    }
 
+
+def _ticket_prompt(ticket: dict[str, Any]) -> str:
     spec = ticket.get("spec") or {}
-    text = " ".join(
-        str(spec.get(key) or "")
-        for key in ("title", "description", "type")
-    ).strip()
+    text = " ".join(str(spec.get(key) or "") for key in ("title", "description", "type")).strip()
     scope = ticket.get("scope") or {}
     affected = scope.get("affected_uris") or []
     if affected:
         text = f"{text} {' '.join(str(item) for item in affected)}"
-    if wants_dashboard(text, "minimal"):
-        return {
-            "kind": "ecosystem",
-            "subtype": "dashboard-agent",
-            "profile": "dashboard-agent",
-            "ecosystem_id": "hypervisor-dashboard",
-            "agent_id": "hypervisor-dashboard",
-            "deployment_id": "hypervisor-dashboard.local",
-            "dashboard_port": 8788,
-        }
-    intent = detect_intent(text or str((ticket.get("metadata") or {}).get("id") or ""))
-    if intent.get("kind") == "ecosystem":
-        return intent
+    return text
+
+
+def _evolution_intent(ticket: dict[str, Any]) -> dict[str, Any]:
     metadata = ticket.get("metadata") or {}
     ticket_id = str(metadata.get("id") or "ticket")
     return {
@@ -67,6 +65,18 @@ def detect_intent_from_ticket(ticket: dict[str, Any]) -> dict[str, Any]:
         "ecosystem_id": None,
         "agent_id": None,
     }
+
+
+def detect_intent_from_ticket(ticket: dict[str, Any]) -> dict[str, Any]:
+    from urigen.models import wants_dashboard
+
+    text = _ticket_prompt(ticket)
+    if wants_dashboard(text, "minimal"):
+        return _dashboard_intent()
+    intent = detect_intent(text or str((ticket.get("metadata") or {}).get("id") or ""))
+    if intent.get("kind") == "ecosystem":
+        return intent
+    return _evolution_intent(ticket)
 
 
 def build_evolution_next_steps(*, ticket_target: str, proposal_path: str) -> list[str]:

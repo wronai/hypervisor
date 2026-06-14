@@ -1,9 +1,9 @@
-# hypervisor | 639f 37472L | yaml:81,yml:4,txt:5,shell:30,json:32,toml:17,python:448,proto:4,javascript:6,j2:1,mk:2 | 2026-06-14
-# generated in 0.06s
-# stats: 1714 func | 0 cls | 639 mod | CC̄=3.6 | critical:22 | cycles:0
-# alerts[5]: fan-out register_runtime_commands=30; CC build_incident_from_inspection=29; fan-out run_agent=27; CC call_system_uri=25; fan-out generate_ecosystem=23
-# hotspots[5]: register_runtime_commands fan=30; run_agent fan=27; generate_ecosystem fan=23; _merge_deployment_fragment fan=21; apply_ecosystem fan=20
-# evolution: CC̄ 3.7→3.6 (improved -0.1)
+# hypervisor | 639f 38050L | yaml:81,yml:4,txt:5,shell:30,json:32,toml:17,python:448,proto:4,javascript:6,j2:1,mk:2 | 2026-06-14
+# generated in 0.07s
+# stats: 1785 func | 0 cls | 639 mod | CC̄=3.5 | critical:4 | cycles:0
+# alerts[5]: fan-out register_runtime_commands=30; fan-out run_agent=27; fan-out generate_ecosystem=23; fan-out _merge_deployment_fragment=21; fan-out main=20
+# hotspots[5]: register_runtime_commands fan=30; run_agent fan=27; generate_ecosystem fan=23; _merge_deployment_fragment fan=21; main fan=20
+# evolution: CC̄ 3.6→3.5 (improved -0.1)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[639]:
   Dockerfile,13
@@ -170,15 +170,15 @@ M[639]:
   nl2uri/writer.py,0
   nlp2uri.yaml,8
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/agent_card.py,74
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/chat_format.py,77
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/chat_format.py,92
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/main.py,24
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/models.py,81
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/paths.py,14
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/policy.py,52
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/routes.py,180
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/static/dashboard.js,40
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py,151
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/view_builder.py,81
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py,271
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/view_builder.py,109
   packages/hypervisor-dashboard-agent/pyproject.toml,29
   packages/nl2uri/nl2uri/cli.py,246
   packages/nl2uri/nl2uri/domain_planner.py,33
@@ -216,7 +216,7 @@ M[639]:
   packages/resource-agent-factory/generator/verify.py,83
   packages/resource-agent-factory/pyproject.toml,25
   packages/resource-agent-hypervisor/hypervisor/artifacts/__init__.py,3
-  packages/resource-agent-hypervisor/hypervisor/artifacts/gate.py,274
+  packages/resource-agent-hypervisor/hypervisor/artifacts/gate.py,292
   packages/resource-agent-hypervisor/hypervisor/cli.py,419
   packages/resource-agent-hypervisor/hypervisor/cli_commands.py,147
   packages/resource-agent-hypervisor/hypervisor/config/config_checks.py,50
@@ -246,9 +246,9 @@ M[639]:
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/env_merge.py,31
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/health_uri.py,42
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/__init__.py,13
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/incidents.py,141
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/incidents.py,185
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/pipeline.py,191
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/probe.py,77
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/probe.py,98
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/readiness.py,88
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py,369
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/loader.py,87
@@ -261,7 +261,7 @@ M[639]:
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/run_executor.py,191
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/run_plans.py,33
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/runner.py,35
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py,202
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py,209
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/selector.py,77
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_deploy.py,95
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_helpers.py,14
@@ -288,14 +288,14 @@ M[639]:
   packages/resource-agent-hypervisor/hypervisor/integrations/planfile/ticket_mapper.py,95
   packages/resource-agent-hypervisor/hypervisor/paths.py,5
   packages/resource-agent-hypervisor/hypervisor/repair/__init__.py,15
-  packages/resource-agent-hypervisor/hypervisor/repair/classifier.py,117
-  packages/resource-agent-hypervisor/hypervisor/repair/incident.py,150
+  packages/resource-agent-hypervisor/hypervisor/repair/classifier.py,135
+  packages/resource-agent-hypervisor/hypervisor/repair/incident.py,181
   packages/resource-agent-hypervisor/hypervisor/repair/models.py,63
   packages/resource-agent-hypervisor/hypervisor/repair/plan_builder.py,78
   packages/resource-agent-hypervisor/hypervisor/repair/playbooks.py,67
   packages/resource-agent-hypervisor/hypervisor/repair/policy.py,71
   packages/resource-agent-hypervisor/hypervisor/repair/proposal_builder.py,35
-  packages/resource-agent-hypervisor/hypervisor/repair/registry.py,51
+  packages/resource-agent-hypervisor/hypervisor/repair/registry.py,58
   packages/resource-agent-hypervisor/hypervisor/repair/sandbox.py,49
   packages/resource-agent-hypervisor/hypervisor/repair/supervisor.py,236
   packages/resource-agent-hypervisor/hypervisor/repair/validator.py,51
@@ -363,7 +363,7 @@ M[639]:
   packages/uri2pact/uri2pact/flows.py,85
   packages/uri2run/pyproject.toml,21
   packages/uri2run/uri2run/__init__.py,5
-  packages/uri2run/uri2run/cli.py,114
+  packages/uri2run/uri2run/cli.py,112
   packages/uri2run/uri2run/context.py,22
   packages/uri2run/uri2run/doctor.py,33
   packages/uri2run/uri2run/result.py,46
@@ -410,8 +410,8 @@ M[639]:
   packages/uri3/uri3/artifacts/writer.py,64
   packages/uri3/uri3/cli/__init__.py,5
   packages/uri3/uri3/cli/commands/discovery.py,79
-  packages/uri3/uri3/cli/commands/doctor.py,81
-  packages/uri3/uri3/cli/commands/explain.py,63
+  packages/uri3/uri3/cli/commands/doctor.py,85
+  packages/uri3/uri3/cli/commands/explain.py,87
   packages/uri3/uri3/cli/commands/flow.py,100
   packages/uri3/uri3/cli/commands/graph.py,23
   packages/uri3/uri3/cli/commands/replay.py,46
@@ -434,7 +434,7 @@ M[639]:
   packages/uri3/uri3/docker/controller.py,36
   packages/uri3/uri3/docker/runner.py,23
   packages/uri3/uri3/doctor/__init__.py,5
-  packages/uri3/uri3/doctor/boundary_scanner.py,85
+  packages/uri3/uri3/doctor/boundary_scanner.py,114
   packages/uri3/uri3/doctor/checks/__init__.py,37
   packages/uri3/uri3/doctor/checks/_helpers.py,9
   packages/uri3/uri3/doctor/checks/boundaries.py,159
@@ -472,7 +472,7 @@ M[639]:
   packages/uri3/uri3/graph/step_runner.py,219
   packages/uri3/uri3/logs/__init__.py,3
   packages/uri3/uri3/logs/filters.py,73
-  packages/uri3/uri3/logs/parsing.py,91
+  packages/uri3/uri3/logs/parsing.py,100
   packages/uri3/uri3/logs/reader.py,104
   packages/uri3/uri3/logs/writer.py,76
   packages/uri3/uri3/paths.py,5
@@ -518,13 +518,13 @@ M[639]:
   packages/uri3/uri3/validators/uri_tree_validator.py,20
   packages/urigen/pyproject.toml,27
   packages/urigen/urigen/__init__.py,17
-  packages/urigen/urigen/apply.py,130
+  packages/urigen/urigen/apply.py,190
   packages/urigen/urigen/apply_executor.py,394
   packages/urigen/urigen/apply_planner.py,111
   packages/urigen/urigen/apply_validate.py,26
   packages/urigen/urigen/artifacts.py,108
   packages/urigen/urigen/cli.py,144
-  packages/urigen/urigen/envelope.py,97
+  packages/urigen/urigen/envelope.py,109
   packages/urigen/urigen/explain.py,122
   packages/urigen/urigen/generator.py,315
   packages/urigen/urigen/io.py,55
@@ -538,7 +538,7 @@ M[639]:
   packages/urish/pyproject.toml,31
   packages/urish/urish/__init__.py,3
   packages/urish/urish/backends/agent.py,37
-  packages/urish/urish/backends/ask.py,81
+  packages/urish/urish/backends/ask.py,101
   packages/urish/urish/backends/call.py,59
   packages/urish/urish/backends/dashboard.py,128
   packages/urish/urish/backends/doctor.py,75
@@ -556,14 +556,14 @@ M[639]:
   packages/urish/urish/context.py,37
   packages/urish/urish/ecosystem_workflow.py,72
   packages/urish/urish/exit_codes.py,21
-  packages/urish/urish/intent.py,69
+  packages/urish/urish/intent.py,150
   packages/urish/urish/payload.py,42
-  packages/urish/urish/policy.py,136
+  packages/urish/urish/policy.py,141
   packages/urish/urish/render.py,50
   packages/urish/urish/repl.py,34
   packages/urish/urish/select.py,30
   packages/urish/urish/shortcuts.py,69
-  packages/urish/urish/ticket_workflow.py,108
+  packages/urish/urish/ticket_workflow.py,118
   planfile.yaml,1319
   prefact.yaml,97
   project.sh,59
@@ -598,7 +598,7 @@ M[639]:
   scripts/ci/ensure_editable_install.sh,19
   scripts/examples/cli_fallback.sh,61
   scripts/test-all-examples.sh,154
-  scripts/www/install-cron.sh,146
+  scripts/www/install-cron.sh,150
   scripts/www/monitor_landing.py,133
   scripts/www/monitor_notify.py,89
   scripts/www/monitor_url.py,83
@@ -637,7 +637,7 @@ M[639]:
   www/api-bridge/bridge.py,226
   www/app.js,520
   www/assets/api-client.js,215
-  www/assets/app.js,247
+  www/assets/app.js,260
   www/assets/config.js,13
   www/contracts/chat_ui_agent.yaml,55
   www/contracts/openapi.yaml,75
@@ -646,117 +646,6 @@ M[639]:
   www/landing.js,641
   www/schemas/agent_contract.schema.json,36
 D:
-  packages/resource-agent-hypervisor/hypervisor/repair/incident.py:
-    e: _now_iso,_incident_id,incident_uri,incident_storage_path,build_incident_from_inspection,write_incident,load_incident
-    _now_iso()
-    _incident_id()
-    incident_uri(agent_id;incident_id)
-    incident_storage_path(repo_root;agent_id;incident_id)
-    build_incident_from_inspection(inspection)
-    write_incident(incident)
-    load_incident(path)
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py:
-    e: _repo_root,_uri_path_parts,list_agent_deployments,resolve_view_uri,_normalize_view_uri,call_system_uri
-    _repo_root(root)
-    _uri_path_parts(uri)
-    list_agent_deployments()
-    resolve_view_uri(view_uri)
-    _normalize_view_uri(uri)
-    call_system_uri(uri)
-  packages/uri2run/uri2run/cli.py:
-    e: root,_json_payload,call_cmd,_backend_from_target,doctor_cmd,main
-    root()
-    _json_payload(raw)
-    call_cmd(target;backend_type;payload_json;timeout)
-    _backend_from_target(target)
-    doctor_cmd()
-    main(argv)
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/incidents.py:
-    e: _port_from_http_uri,classify_incidents,blocking_incidents
-    _port_from_http_uri(uri)
-    classify_incidents()
-    blocking_incidents(incidents)
-  www/assets/app.js:
-    e: client,init,prompt,result,updateApiLabels,mock,addAssistantWelcome,handlePrompt,planResult,plan,uri,callResult,addUserMessage,msg,addAssistantMessage,msg,addAssistantFromResult,data,text,msg,target,r,humanizeResult,d,actionButtons,d,renderResult,uri,renderGraph,rows,graphForUri,scrollMessages,escapeHtml
-    client()
-    init()
-    prompt()
-    result()
-    updateApiLabels()
-    mock()
-    addAssistantWelcome()
-    handlePrompt()
-    planResult()
-    plan()
-    uri()
-    callResult()
-    addUserMessage()
-    msg()
-    addAssistantMessage()
-    msg()
-    addAssistantFromResult()
-    data()
-    text()
-    msg()
-    target()
-    r()
-    humanizeResult()
-    d()
-    actionButtons()
-    d()
-    renderResult()
-    uri()
-    renderGraph()
-    rows()
-    graphForUri()
-    scrollMessages()
-    escapeHtml()
-  packages/uri3/uri3/doctor/boundary_scanner.py:
-    e: load_boundary_rules,_module_imports,_matches_forbidden,_allowed,scan_package_boundaries
-    load_boundary_rules(path)
-    _module_imports(path)
-    _matches_forbidden(import_name;forbidden)
-    _allowed(import_name;allowed_prefixes)
-    scan_package_boundaries(rules)
-  packages/urish/urish/policy.py:
-    e: PolicyOptions,classify_uri,evaluate_policy
-    PolicyOptions: from_flags(0)
-    classify_uri(uri)
-    evaluate_policy(uri)
-  packages/urigen/urigen/apply.py:
-    e: apply_ecosystem
-    apply_ecosystem(ecosystem_path)
-  packages/uri3/uri3/cli/commands/explain.py:
-    e: register,_render
-    register(app)
-    _render(payload)
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/view_builder.py:
-    e: _human_title,build_process_view,render_process_html
-    _human_title(agent_ref;agent_id)
-    build_process_view(agent_id)
-    render_process_html(model)
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py:
-    e: runtime_root,state_path,_port_from_http_uri,_port_from_command,_process_status,_health_uri,_pid,_command,normalize_runtime_state,load_runtime_state,save_runtime_state,clear_runtime_state,is_process_alive,runtime_status,now_iso
-    runtime_root(root)
-    state_path(deployment_id;root)
-    _port_from_http_uri(uri)
-    _port_from_command(command)
-    _process_status(raw)
-    _health_uri(raw)
-    _pid(raw)
-    _command(raw)
-    normalize_runtime_state(raw)
-    load_runtime_state(deployment_id;root)
-    save_runtime_state(deployment_id;state;root)
-    clear_runtime_state(deployment_id;root)
-    is_process_alive(pid)
-    runtime_status(deployment_id;root)
-    now_iso()
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/probe.py:
-    e: probe_http,log_uri_with_filters,read_error_logs
-    probe_http(uri)
-    log_uri_with_filters(log_uri)
-    read_error_logs(log_uri)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py:
     e: _lifecycle_payload,_repo_root,_safe_stop_plan,_state_pid,_state_command,_state_health_uri,_candidate_stop_ports,_terminate_matching_agent_processes,run_agent,stop_agent,restart_agent,agent_status,agent_logs_uri
     _lifecycle_payload(payload)
@@ -772,55 +661,9 @@ D:
     restart_agent(selector)
     agent_status(selector)
     agent_logs_uri(selector)
-  packages/urigen/urigen/envelope.py:
-    e: _legacy_fields,stamp_proposal,stamp_ecosystem
-    _legacy_fields(payload)
-    stamp_proposal(payload)
-    stamp_ecosystem(payload)
-  packages/resource-agent-hypervisor/hypervisor/artifacts/gate.py:
-    e: ArtifactCheckResult,ArtifactLifecycleResult,validate_config_dict,_validate_path,check_artifacts,_read_structured_mapping,_artifact_lifecycle_result,check_lifecycle_coverage,check_schemas
-    ArtifactCheckResult:
-    ArtifactLifecycleResult:
-    validate_config_dict(data;repo_root)
-    _validate_path(path;repo_root;schema;validator)
-    check_artifacts(repo_root)
-    _read_structured_mapping(path)
-    _artifact_lifecycle_result(path;repo_root;category)
-    check_lifecycle_coverage(repo_root)
-    check_schemas(repo_root)
-  packages/resource-agent-hypervisor/hypervisor/repair/classifier.py:
-    e: ErrorFamily,_collect_text,classify_inspection
-    ErrorFamily:
-    _collect_text(inspection;log_payload)
-    classify_inspection(inspection)
-  packages/uri3/uri3/logs/parsing.py:
-    e: empty_entry,parse_json_entry,parse_text_entry,parse_log_line
-    empty_entry(line;line_no)
-    parse_json_entry(line;line_no)
-    parse_text_entry(line;line_no)
-    parse_log_line(line;line_no)
-  packages/uri3/uri3/cli/commands/doctor.py:
-    e: register,_render,_check_summary
-    register(app)
-    _render(payload)
-    _check_summary(check)
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/chat_format.py:
-    e: format_ask_markdown,format_uri_result_markdown,_display_planned
-    format_ask_markdown(data)
-    format_uri_result_markdown(result)
-    _display_planned(planned;subtype)
-  packages/urish/urish/ticket_workflow.py:
-    e: resolve_ticket_path,detect_intent_from_ticket,build_evolution_next_steps,build_ticket_workflow
-    resolve_ticket_path(target)
-    detect_intent_from_ticket(ticket)
-    build_evolution_next_steps()
-    build_ticket_workflow(ticket)
-  packages/resource-agent-hypervisor/hypervisor/repair/registry.py:
-    e: repair_cases_dir,list_repair_cases,load_repair_case,find_matching_case
-    repair_cases_dir(repo_root)
-    list_repair_cases(repo_root)
-    load_repair_case(path)
-    find_matching_case(classification;inspection)
+  packages/urish/urish/backends/ask.py:
+    e: ask_prompt
+    ask_prompt(prompt)
   www/landing.js:
     e: SLIDE_DURATION_MS,currentStep,autoTimer,paused,progressRAF,progressStart,stageEl,captionTitle,captionText,progressBar,countEl,stepButtons,btnPrev,btnNext,btnPlay,btnCopyChat,scenarioTabs,scenarioTerminal,scenarioResult,scenarioReplay,systemMapNodes,escapeHtml,buildSlidePrompt,mockShell,sidebar,buildSlidePlan,html,buildSlideAgents,agentRunCard,buildSlideFailure,buildSlideRepair,buildSlideProof,copyTourChat,slide,messages,label,clone,text,flashTourCopy,original,clearScenarioTimers,getScenario,renderScenarioResult,setSystemMapFocus,active,key,appendScenarioLine,row,renderScenario,scenario,animate,timer,initScenarioLab,id,selected,active,renderStep,step,slide,resetProgress,tick,elapsed,pct,stopAuto,startAuto,goToStep,initTour,tourSection,initReveal,els,done,failSafeTimer,revealAll,obs,initFaq,btn,open,initSmoothAnchors,id,target
     SLIDE_DURATION_MS()
@@ -903,6 +746,12 @@ D:
     initSmoothAnchors()
     id()
     target()
+  packages/urish/urish/policy.py:
+    e: PolicyOptions,_path_has_any,classify_uri,evaluate_policy
+    PolicyOptions: from_flags(0)
+    _path_has_any(path;tokens)
+    classify_uri(uri)
+    evaluate_policy(uri)
   packages/urish/urish/payload.py:
     e: load_payload
     load_payload(raw)
@@ -990,6 +839,39 @@ D:
     gather_inspection_context(deployment)
     probe_agent_endpoints(context)
     build_inspection_report(context)
+  packages/resource-agent-hypervisor/hypervisor/artifacts/gate.py:
+    e: ArtifactCheckResult,ArtifactLifecycleResult,validate_config_dict,_validate_path,check_artifacts,_read_structured_mapping,_artifact_lifecycle_result,_collect_lifecycle_results,_lifecycle_summary,_lifecycle_samples,check_lifecycle_coverage,check_schemas
+    ArtifactCheckResult:
+    ArtifactLifecycleResult:
+    validate_config_dict(data;repo_root)
+    _validate_path(path;repo_root;schema;validator)
+    check_artifacts(repo_root)
+    _read_structured_mapping(path)
+    _artifact_lifecycle_result(path;repo_root;category)
+    _collect_lifecycle_results(repo_root)
+    _lifecycle_summary(results)
+    _lifecycle_samples(noncanonical)
+    check_lifecycle_coverage(repo_root)
+    check_schemas(repo_root)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py:
+    e: runtime_root,state_path,_port_from_http_uri,_port_from_command,_process_status,_health_uri,_pid,_command,_legacy_runtime_state,_apply_flat_accessors,normalize_runtime_state,load_runtime_state,save_runtime_state,clear_runtime_state,is_process_alive,runtime_status,now_iso
+    runtime_root(root)
+    state_path(deployment_id;root)
+    _port_from_http_uri(uri)
+    _port_from_command(command)
+    _process_status(raw)
+    _health_uri(raw)
+    _pid(raw)
+    _command(raw)
+    _legacy_runtime_state(raw)
+    _apply_flat_accessors(body)
+    normalize_runtime_state(raw)
+    load_runtime_state(deployment_id;root)
+    save_runtime_state(deployment_id;state;root)
+    clear_runtime_state(deployment_id;root)
+    is_process_alive(pid)
+    runtime_status(deployment_id;root)
+    now_iso()
   packages/urigen/urigen/apply_planner.py:
     e: _repo_relative,build_apply_plan
     _repo_relative(path;repo)
@@ -1026,6 +908,20 @@ D:
   www/assets/api-client.js:
     e: TaskinityApiClient
     TaskinityApiClient: setBaseUrl(-1),useMock(-1),isMock(-1),health(-1),res(-1),data(-1),call(-1),res(-1),data(-1),ask(-1),plan(-1),res(-1),data(-1),safeJson(-1),text(-1),mockEnvelope(-1),nlToUri(-1),p(-1),agent(-1),inc(-1),ticket(-1),extractAgent(-1),m(-1),extractIncident(-1),m(-1),extractTicket(-1),m(-1),mockRoute(-1)
+  packages/uri3/uri3/cli/commands/doctor.py:
+    e: register,_render,_check_summary
+    register(app)
+    _render(payload)
+    _check_summary(check)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/incidents.py:
+    e: _port_from_http_uri,_port_conflict_incident,_foreign_service_incident,_runtime_incidents,_health_incidents,classify_incidents,blocking_incidents
+    _port_from_http_uri(uri)
+    _port_conflict_incident()
+    _foreign_service_incident()
+    _runtime_incidents()
+    _health_incidents()
+    classify_incidents()
+    blocking_incidents(incidents)
   packages/urish/urish/backends/dashboard.py:
     e: create_dashboard
     create_dashboard(name)
@@ -1114,6 +1010,13 @@ D:
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_verify.py:
     e: verify_remote_deployment
     verify_remote_deployment(deployment)
+  packages/urish/urish/intent.py:
+    e: extract_agent_id,_detect_agent_action,agent_uri,detect_intent,_detect_kind
+    extract_agent_id(prompt)
+    _detect_agent_action(prompt)
+    agent_uri(agent_id;action)
+    detect_intent(prompt)
+    _detect_kind(prompt)
   packages/urish/urish/render.py:
     e: render_result,_render_text,_render_table
     render_result(result)
@@ -1164,9 +1067,6 @@ D:
     proposal_apply_cmd(path;approve;sandbox;json_out)
     _normalize_argv(argv)
     main(argv)
-  packages/urish/urish/backends/ask.py:
-    e: ask_prompt
-    ask_prompt(prompt)
   packages/urigen/urigen/schema_check.py:
     e: _check_yaml_file,_repo_relative,schema_check_ecosystem
     _check_yaml_file(path;repo)
@@ -1221,18 +1121,6 @@ D:
     build_evolution_proposal(source)
     build_repair_proposal_from_incident(incident)
     build_evolution_proposal_from_ticket(ticket)
-  www/api-bridge/bridge.py:
-    e: UriCall,AskCall,envelope,run_cmd,health,call_uri,preview_uri,agents,events,ask
-    UriCall(BaseModel):
-    AskCall(BaseModel):
-    envelope(ok;result_type;data)
-    run_cmd(args;timeout)
-    health()
-    call_uri(body)
-    preview_uri(body)
-    agents()
-    events(limit)
-    ask(body)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/status.py:
     e: infer_port,deployment_id_for_agent,infer_health_uri,infer_card_uri,deployment_from_uri_tree,sync_from_uri_tree,resolve_status,list_deployments,get_deployment_for_agent,registry_summary
     infer_port(deployment)
@@ -1245,6 +1133,52 @@ D:
     list_deployments(registry)
     get_deployment_for_agent(agent_ref)
     registry_summary(registry)
+  www/api-bridge/bridge.py:
+    e: UriCall,AskCall,envelope,run_cmd,health,call_uri,preview_uri,agents,events,ask
+    UriCall(BaseModel):
+    AskCall(BaseModel):
+    envelope(ok;result_type;data)
+    run_cmd(args;timeout)
+    health()
+    call_uri(body)
+    preview_uri(body)
+    agents()
+    events(limit)
+    ask(body)
+  packages/urigen/urigen/envelope.py:
+    e: _legacy_fields,stamp_proposal,_default_lifecycle,_ecosystem_metadata,_ecosystem_spec,stamp_ecosystem
+    _legacy_fields(payload)
+    stamp_proposal(payload)
+    _default_lifecycle(lifecycle)
+    _ecosystem_metadata(body;eco;eco_id)
+    _ecosystem_spec(body)
+    stamp_ecosystem(payload)
+  packages/uri3/uri3/logs/parsing.py:
+    e: empty_entry,_json_event_message,_json_entry_fields,parse_json_entry,parse_text_entry,parse_log_line
+    empty_entry(line;line_no)
+    _json_event_message(data;event;stripped)
+    _json_entry_fields(data)
+    parse_json_entry(line;line_no)
+    parse_text_entry(line;line_no)
+    parse_log_line(line;line_no)
+  packages/uri3/uri3/doctor/boundary_scanner.py:
+    e: load_boundary_rules,_module_imports,_matches_forbidden,_allowed,_validate_package_spec,_scan_python_file,scan_package_boundaries
+    load_boundary_rules(path)
+    _module_imports(path)
+    _matches_forbidden(import_name;forbidden)
+    _allowed(import_name;allowed_prefixes)
+    _validate_package_spec(package_name;spec)
+    _scan_python_file(path)
+    scan_package_boundaries(rules)
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/chat_format.py:
+    e: _header_lines,_identity_lines,_planned_lines,_next_step_lines,format_ask_markdown,format_uri_result_markdown,_display_planned
+    _header_lines(data)
+    _identity_lines(data)
+    _planned_lines(data)
+    _next_step_lines(data)
+    format_ask_markdown(data)
+    format_uri_result_markdown(result)
+    _display_planned(planned;subtype)
   packages/urish/urish/repl.py:
     e: run_repl
     run_repl()
@@ -1440,10 +1374,29 @@ D:
     md()
     renderQuickPrompts()
     button()
-  packages/urish/urish/intent.py:
-    e: detect_intent,_detect_kind
-    detect_intent(prompt)
-    _detect_kind(prompt)
+  packages/urish/urish/ticket_workflow.py:
+    e: resolve_ticket_path,_dashboard_intent,_ticket_prompt,_evolution_intent,detect_intent_from_ticket,build_evolution_next_steps,build_ticket_workflow
+    resolve_ticket_path(target)
+    _dashboard_intent()
+    _ticket_prompt(ticket)
+    _evolution_intent(ticket)
+    detect_intent_from_ticket(ticket)
+    build_evolution_next_steps()
+    build_ticket_workflow(ticket)
+  packages/resource-agent-hypervisor/hypervisor/repair/registry.py:
+    e: repair_cases_dir,list_repair_cases,load_repair_case,_case_matches_symptoms,find_matching_case
+    repair_cases_dir(repo_root)
+    list_repair_cases(repo_root)
+    load_repair_case(path)
+    _case_matches_symptoms(case_doc;readiness)
+    find_matching_case(classification;inspection)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/probe.py:
+    e: _probe_payload_ok,_probe_response,probe_http,log_uri_with_filters,read_error_logs
+    _probe_payload_ok(payload)
+    _probe_response(uri;response)
+    probe_http(uri)
+    log_uri_with_filters(log_uri)
+    read_error_logs(log_uri)
   packages/urish/urish/backends/doctor.py:
     e: doctor_all,_artifact_gate_checks
     doctor_all()
@@ -1544,6 +1497,15 @@ D:
     apply_docker_deploy(deployment)
     stop_docker_deployment(deployment)
     verify_docker_deployment(deployment)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/process_discovery.py:
+    e: _iter_proc_pids,_listening_socket_inodes,pids_listening_on_port,command_line,command_matches_plan,terminate_pid,_pid_alive
+    _iter_proc_pids()
+    _listening_socket_inodes(port)
+    pids_listening_on_port(port)
+    command_line(pid)
+    command_matches_plan(pid;plan)
+    terminate_pid(pid)
+    _pid_alive(pid)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/env.py:
     e: build_deployment_env_map,resolve_deployment_env,default_log_uri
     build_deployment_env_map(deployment_id;agent_ref;deployment_env)
@@ -1554,15 +1516,30 @@ D:
     readiness_summary()
     recommended_action_from_incidents(incident_codes)
     build_agent_readiness_report()
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/process_discovery.py:
-    e: _iter_proc_pids,_listening_socket_inodes,pids_listening_on_port,command_line,command_matches_plan,terminate_pid,_pid_alive
-    _iter_proc_pids()
-    _listening_socket_inodes(port)
-    pids_listening_on_port(port)
-    command_line(pid)
-    command_matches_plan(pid;plan)
-    terminate_pid(pid)
-    _pid_alive(pid)
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py:
+    e: _SystemUriRequest,_repo_root,_uri_path_parts,list_agent_deployments,resolve_view_uri,_normalize_view_uri,_handle_view_uri,_handle_runtime_uri,_handle_health_uri,_handle_repair_uri,_handle_log_uri,_is_view_request,_is_runtime_request,_is_health_request,_is_repair_request,_view_request,_runtime_request,_health_request,_repair_request,_log_request,_select_system_uri_handler,call_system_uri
+    _SystemUriRequest:
+    _repo_root(root)
+    _uri_path_parts(uri)
+    list_agent_deployments()
+    resolve_view_uri(view_uri)
+    _normalize_view_uri(uri)
+    _handle_view_uri(uri)
+    _handle_runtime_uri(parts)
+    _handle_health_uri(parts)
+    _handle_repair_uri(parts)
+    _handle_log_uri(uri)
+    _is_view_request(request)
+    _is_runtime_request(request)
+    _is_health_request(request)
+    _is_repair_request(request)
+    _view_request(request)
+    _runtime_request(request)
+    _health_request(request)
+    _repair_request(request)
+    _log_request(request)
+    _select_system_uri_handler(request)
+    call_system_uri(uri)
   packages/urish/urish/exit_codes.py:
     e: exit_code_for_result
     exit_code_for_result(result)
@@ -1672,6 +1649,69 @@ D:
     e: _load_policy,classify_registry_change
     _load_policy(root)
     classify_registry_change(old_root;new_root)
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/view_builder.py:
+    e: _human_title,_related_uris,_process_actions,_process_view_context,_process_status_fields,build_process_view,render_process_html
+    _human_title(agent_ref;agent_id)
+    _related_uris(agent_id;inspection)
+    _process_actions(agent_id;related)
+    _process_view_context(agent_id)
+    _process_status_fields(inspection;readiness;summary)
+    build_process_view(agent_id)
+    render_process_html(model)
+  packages/resource-agent-hypervisor/hypervisor/repair/incident.py:
+    e: _now_iso,_incident_id,incident_uri,incident_storage_path,_symptom_from_item,_symptoms_from_inspection,_incident_uri_block,_incident_status_block,_incident_evidence,build_incident_from_inspection,write_incident,load_incident
+    _now_iso()
+    _incident_id()
+    incident_uri(agent_id;incident_id)
+    incident_storage_path(repo_root;agent_id;incident_id)
+    _symptom_from_item(item)
+    _symptoms_from_inspection(inspection)
+    _incident_uri_block(agent_id;metadata_id;inspection)
+    _incident_status_block(inspection;readiness;health)
+    _incident_evidence(inspection)
+    build_incident_from_inspection(inspection)
+    write_incident(incident)
+    load_incident(path)
+  www/assets/app.js:
+    e: client,init,prompt,result,updateApiLabels,mock,addAssistantWelcome,handlePrompt,planResult,plan,uri,callResult,addUserMessage,msg,addAssistantMessage,msg,addAssistantFromResult,data,text,msg,target,r,d,d,d,d,d,humanizeResult,handler,actionButtons,d,renderResult,uri,renderGraph,rows,graphForUri,scrollMessages,escapeHtml
+    client()
+    init()
+    prompt()
+    result()
+    updateApiLabels()
+    mock()
+    addAssistantWelcome()
+    handlePrompt()
+    planResult()
+    plan()
+    uri()
+    callResult()
+    addUserMessage()
+    msg()
+    addAssistantMessage()
+    msg()
+    addAssistantFromResult()
+    data()
+    text()
+    msg()
+    target()
+    r()
+    d()
+    d()
+    d()
+    d()
+    d()
+    humanizeResult()
+    handler()
+    actionButtons()
+    d()
+    renderResult()
+    uri()
+    renderGraph()
+    rows()
+    graphForUri()
+    scrollMessages()
+    escapeHtml()
   packages/urish/urish/context.py:
     e: context_dir,load_context,list_contexts
     context_dir(root)
@@ -1942,6 +1982,14 @@ D:
     is_supported_webhook(url)
     emit_alert(event;message)
     post_webhook(url;payload)
+  packages/resource-agent-hypervisor/hypervisor/repair/classifier.py:
+    e: ErrorFamily,_incident_text,_warning_text,_log_text,_collect_text,classify_inspection
+    ErrorFamily:
+    _incident_text(inspection)
+    _warning_text(inspection)
+    _log_text(log_payload)
+    _collect_text(inspection;log_payload)
+    classify_inspection(inspection)
   packages/urish/urish/ecosystem_workflow.py:
     e: _quote,proposal_path,ecosystem_dir,ecosystem_file,build_ecosystem_next_steps,build_planned_uris,build_planned_uris_display
     _quote(text)
@@ -2158,6 +2206,16 @@ D:
     health_uri_for_port(port)
     resolve_effective_health_uri(state;plan)
     command_port_from_runtime(state;plan)
+  packages/uri2run/uri2run/cli.py:
+    e: root,_json_payload,call_cmd,_build_backend,_infer_backend_kind,_backend_from_target,doctor_cmd,main
+    root()
+    _json_payload(raw)
+    call_cmd(target;backend_type;payload_json;timeout)
+    _build_backend(kind;target)
+    _infer_backend_kind(target)
+    _backend_from_target(target)
+    doctor_cmd()
+    main(argv)
   packages/urish/urish/backends/agent.py:
     e: agent_action
     agent_action(action;selector)
@@ -2402,6 +2460,23 @@ D:
     e: fetch,main
     fetch(url;timeout)
     main()
+  packages/urigen/urigen/apply.py:
+    e: _ecosystem_meta,_planned_response,_verify_before_apply,_update_lifecycle,_build_apply_result,apply_ecosystem
+    _ecosystem_meta(ecosystem)
+    _planned_response()
+    _verify_before_apply(ecosystem_file)
+    _update_lifecycle(ecosystem)
+    _build_apply_result()
+    apply_ecosystem(ecosystem_path)
+  packages/uri3/uri3/cli/commands/explain.py:
+    e: register,_header_lines,_backend_line,_json_field_lines,_verification_lines,_checks_lines,_render
+    register(app)
+    _header_lines(payload)
+    _backend_line(payload)
+    _json_field_lines(payload;key;label)
+    _verification_lines(payload)
+    _checks_lines(payload)
+    _render(payload)
   packages/urish/urish/backends/repair.py:
     e: repair_diagnose,repair_apply,repair_learn,_wrap
     repair_diagnose(selector)
@@ -3085,6 +3160,7 @@ Expected r...
   goal.yaml:
   manifest.yaml:
   planfile.yaml:
+  Makefile:
   docker-compose.yml:
   nlp2uri.yaml:
   tree.txt:
@@ -3255,6 +3331,7 @@ Expected r...
   examples/13_nl2uri_multi_uri_graph/prompt.txt:
   evolution/proposals/add_invoices_agent.yaml:
   evolution/proposals/add_orders_agent.yaml:
+  examples/16_www_landing_monitor/task_graph.yaml:
   examples/11_playwright_browser/run.sh:
     e: Handler,do_GET,log_message
     Handler:
@@ -3284,6 +3361,7 @@ Expected r...
   examples/16_llm_graph_planner/run.sh:
   examples/10_browser_operator/run.sh:
   examples/10_browser_operator/task.health.yaml:
+  deployments/agent_deployments.yaml:
   scripts/test-all-examples.sh:
     e: run_example,skip,ex02,ex03,ex05,ex06,ex07,run_sh,ex15pw,ex11
     run_example()
@@ -3299,6 +3377,16 @@ Expected r...
   scripts/examples/cli_fallback.sh:
     e: run_cli
     run_cli()
+  scripts/www/run_monitors.sh:
+    e: run_step
+    run_step()
+  scripts/www/verify_agents.sh:
+  scripts/www/test_monitors.sh:
+    e: Handler,do_POST,log_message
+    Handler:
+    do_POST()
+    log_message()
+  scripts/www/smoke.sh:
   scripts/ci/architecture_gate.sh:
     e: print
     print()
@@ -3356,34 +3444,22 @@ Expected r...
   agents/generated/user_agent/main.py:
   agents/generated/user_agent/Dockerfile:
   agents/generated/user_agent/.generated.yaml:
-  integration/uri2flow/pyproject.optional.snippet.toml:
-  integration/uri2flow/Makefile.optional.snippet.mk:
-  integration/touri/pyproject.optional.snippet.toml:
-  integration/touri/Makefile.optional.snippet.mk:
-  Makefile:
-  pyproject.toml:
-  packages/urish/urish/__init__.py:
-  packages/uri2ops/uri2ops/__init__.py:
-  packages/uri2flow/uri2flow/__init__.py:
-  examples/16_www_landing_monitor/task_graph.yaml:
-  deployments/agent_deployments.yaml:
-  scripts/www/run_monitors.sh:
-    e: run_step
-    run_step()
-  scripts/www/verify_agents.sh:
-  scripts/www/install-cron.sh:
-    e: is_placeholder_webhook,prepare_log_file,usage
-    is_placeholder_webhook()
-    prepare_log_file()
-    usage()
-  scripts/www/test_monitors.sh:
-    e: Handler,do_POST,log_message
-    Handler:
-    do_POST()
-    log_message()
-  scripts/www/smoke.sh:
   agents/generated/invoices_agent/__init__.py:
   agents/generated/invoices_agent/agent_card.py:
   agents/generated/invoices_agent/main.py:
   agents/generated/invoices_agent/Dockerfile:
   agents/generated/invoices_agent/.generated.yaml:
+  integration/uri2flow/pyproject.optional.snippet.toml:
+  integration/uri2flow/Makefile.optional.snippet.mk:
+  integration/touri/pyproject.optional.snippet.toml:
+  integration/touri/Makefile.optional.snippet.mk:
+  pyproject.toml:
+  packages/urish/urish/__init__.py:
+  packages/uri2ops/uri2ops/__init__.py:
+  packages/uri2flow/uri2flow/__init__.py:
+  scripts/www/install-cron.sh:
+    e: is_placeholder_webhook,prepare_log_file,current_crontab,usage
+    is_placeholder_webhook()
+    prepare_log_file()
+    current_crontab()
+    usage()

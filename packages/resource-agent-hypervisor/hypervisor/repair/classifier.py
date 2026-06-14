@@ -77,22 +77,40 @@ ERROR_FAMILIES: tuple[ErrorFamily, ...] = (
 )
 
 
-def _collect_text(inspection: dict[str, Any], log_payload: dict[str, Any] | None) -> str:
+def _incident_text(inspection: dict[str, Any]) -> list[str]:
     chunks: list[str] = []
-    for incident in inspection.get("incidents") or []:
-        chunks.append(str(incident.get("code") or ""))
-        chunks.append(str(incident.get("detail") or ""))
-    for warning in inspection.get("warnings") or []:
-        chunks.append(str(warning.get("code") or ""))
-        chunks.append(str(warning.get("detail") or ""))
+    for item in inspection.get("incidents") or []:
+        chunks.append(str(item.get("code") or ""))
+        chunks.append(str(item.get("detail") or ""))
+    return chunks
+
+
+def _warning_text(inspection: dict[str, Any]) -> list[str]:
+    chunks: list[str] = []
+    for item in inspection.get("warnings") or []:
+        chunks.append(str(item.get("code") or ""))
+        chunks.append(str(item.get("detail") or ""))
+    return chunks
+
+
+def _log_text(log_payload: dict[str, Any] | None) -> list[str]:
+    if not log_payload:
+        return []
+    chunks: list[str] = []
+    for entry in log_payload.get("entries") or []:
+        if isinstance(entry, dict):
+            chunks.append(str(entry.get("message") or entry.get("raw") or ""))
+        else:
+            chunks.append(str(entry))
+    return chunks
+
+
+def _collect_text(inspection: dict[str, Any], log_payload: dict[str, Any] | None) -> str:
     health = inspection.get("health") or {}
+    chunks = _incident_text(inspection)
+    chunks.extend(_warning_text(inspection))
     chunks.append(str(health.get("error") or ""))
-    if log_payload:
-        for entry in log_payload.get("entries") or []:
-            if isinstance(entry, dict):
-                chunks.append(str(entry.get("message") or entry.get("raw") or ""))
-            else:
-                chunks.append(str(entry))
+    chunks.extend(_log_text(log_payload))
     return "\n".join(chunks).lower()
 
 

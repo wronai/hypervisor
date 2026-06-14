@@ -122,6 +122,156 @@ def _terminate_matching_agent_processes(
     return {"terminated_pids": terminated, "failed_pids": failed, "skipped": skipped}
 
 
+def _validate_run_agent_options(
+    *,
+    if_running: str | None,
+    wait_healthy: bool,
+    supervise_repair: str,
+) -> None:
+    if if_running not in {None, "reuse", "restart", "fail"}:
+        raise ValueError("--if-running must be one of: reuse, restart, fail")
+    if wait_healthy and supervise_repair not in {"auto", "restart", "reuse", "sync_health"}:
+        raise ValueError("--supervise-repair must be one of: auto, restart, reuse, sync_health")
+
+
+def _finalize_run_plan(
+    plan_dict: dict[str, Any],
+    *,
+    selector: str,
+    repo: Path,
+    port: int | None,
+    wait_healthy: bool,
+    detach: bool,
+    dry_run: bool,
+    supervise_repair: str,
+) -> dict[str, Any]:
+    payload = _lifecycle_payload(plan_dict)
+    if not (wait_healthy and detach and not dry_run):
+        return payload
+
+    from hypervisor.deployment_registry.supervisor import ensure_agent_healthy
+
+    supervision = ensure_agent_healthy(
+        selector,
+        root=repo,
+        port=port,
+        repair=supervise_repair,
+    )
+    payload["supervision"] = supervision
+    payload["service_healthy"] = supervision.get("ok")
+    if not supervision.get("ok"):
+        payload["ok"] = False
+        payload["service_result_status"] = "failed"
+    return payload
+
+
+def _load_active_runtime_state(selector: str, deployment, *, repo: Path) -> dict[str, Any] | None:
+    existing = load_or_clear_runtime_state(deployment.id, repo)
+    if existing and not is_process_alive(existing.get("pid")):
+        stop_agent(selector, root=repo)
+        clear_runtime_state(deployment.id, repo)
+        return None
+    return existing
+
+
+def _sync_reused_runtime_state(
+    deployment_id: str,
+    existing: dict[str, Any],
+    plan: dict[str, Any],
+    *,
+    repo: Path,
+) -> None:
+    if plan["health_uri"] == existing.get("health_uri"):
+        return
+    save_runtime_state(
+        deployment_id,
+        sync_runtime_health_uri(existing, plan["health_uri"]),
+        repo,
+    )
+
+
+def _resolve_running_process(
+    selector: str,
+    deployment,
+    existing: dict[str, Any] | None,
+    plan: dict[str, Any],
+    *,
+    repo: Path,
+    if_running: str | None,
+    detach: bool,
+    port: int | None,
+) -> tuple[dict[str, Any] | None, dict[str, Any], dict[str, Any] | None]:
+    if not existing or not is_process_alive(existing.get("pid")):
+        return existing, plan, None
+
+    running_mode = resolve_running_mode(
+        if_running=if_running,
+        detach=detach,
+        port=port,
+        existing=existing,
+        plan=plan,
+        deployment_id=deployment.id,
+    )
+    if running_mode == "restart":
+        stop_agent(selector, root=repo)
+        clear_runtime_state(deployment.id, repo)
+        return None, plan, None
+    if running_mode == "reuse":
+        reused_plan = reuse_existing_process_plan(existing, plan, port=port)
+        _sync_reused_runtime_state(deployment.id, existing, reused_plan, repo=repo)
+        return existing, reused_plan, reused_plan
+    if running_mode == "fail":
+        raise RuntimeError(
+            f"Agent {deployment.id} already running with pid {existing['pid']}. "
+            "Use hypervisor stop-agent first or --if-running reuse|restart."
+        )
+    raise ValueError("--if-running must be one of: reuse, restart, fail")
+
+
+def _run_non_local_target(deployment, *, repo: Path) -> dict[str, Any] | None:
+    if deployment.target_uri.startswith("ssh://"):
+        raise ValueError(
+            "SSH targets support dry-run plans only. "
+            "Use hypervisor deploy-agent and verify-agent, then start the agent on the remote host."
+        )
+    if deployment.target_uri.startswith("docker://"):
+        from hypervisor.deployment_registry.docker_runner import apply_docker_deploy
+
+        return apply_docker_deploy(deployment, root=repo)
+    return None
+
+
+def _start_local_process(
+    deployment,
+    plan: dict[str, Any],
+    *,
+    repo: Path,
+    host: str,
+    port: int | None,
+    detach: bool,
+) -> dict[str, Any]:
+    runtime_env = prepare_runtime_env(deployment, repo=repo)
+    process = start_process(plan, root=repo, detach=detach, runtime_env=runtime_env)
+    if not (detach and process is not None):
+        return plan
+    if not verify_process_alive(process.pid):
+        return process_start_failure_payload(deployment.id, process_pid=process.pid, plan=plan)
+    write_runtime_state_after_start(
+        deployment,
+        plan,
+        process_pid=process.pid,
+        runtime_env=runtime_env,
+        host=host,
+        requested_port=port,
+        repo=repo,
+    )
+    return attach_started_process(plan, process.pid)
+
+
+def _is_process_start_failure(payload: dict[str, Any]) -> bool:
+    return payload.get("ok") is False and payload.get("result_type") == "lifecycle"
+
+
 def run_agent(
     selector: str,
     *,
@@ -135,96 +285,53 @@ def run_agent(
     wait_healthy: bool = False,
     supervise_repair: str = "auto",
 ) -> dict[str, Any]:
-    if if_running not in {None, "reuse", "restart", "fail"}:
-        raise ValueError("--if-running must be one of: reuse, restart, fail")
-    if wait_healthy and supervise_repair not in {"auto", "restart", "reuse", "sync_health"}:
-        raise ValueError("--supervise-repair must be one of: auto, restart, reuse, sync_health")
+    _validate_run_agent_options(
+        if_running=if_running,
+        wait_healthy=wait_healthy,
+        supervise_repair=supervise_repair,
+    )
     repo = _repo_root(root)
     deployment = resolve_deployment(selector, root=repo)
 
-    def _finalize(plan_dict: dict[str, Any]) -> dict[str, Any]:
-        payload = _lifecycle_payload(plan_dict)
-        if wait_healthy and detach and not dry_run:
-            from hypervisor.deployment_registry.supervisor import ensure_agent_healthy
-
-            supervision = ensure_agent_healthy(
-                selector,
-                root=repo,
-                port=port,
-                repair=supervise_repair,
-            )
-            payload["supervision"] = supervision
-            payload["service_healthy"] = supervision.get("ok")
-            if not supervision.get("ok"):
-                payload["ok"] = False
-                payload["service_result_status"] = "failed"
-        return payload
-
-    existing = load_or_clear_runtime_state(deployment.id, repo)
-    if existing and not is_process_alive(existing.get("pid")):
-        stop_agent(selector, root=repo)
-        clear_runtime_state(deployment.id, repo)
-        existing = None
-    plan = build_agent_run_plan(deployment, repo=repo, port=port, host=host, reload=reload)
-    if existing and is_process_alive(existing.get("pid")):
-        running_mode = resolve_running_mode(
-            if_running=if_running,
-            detach=detach,
+    def finalize(plan_dict: dict[str, Any]) -> dict[str, Any]:
+        return _finalize_run_plan(
+            plan_dict,
+            selector=selector,
+            repo=repo,
             port=port,
-            existing=existing,
-            plan=plan,
-            deployment_id=deployment.id,
+            wait_healthy=wait_healthy,
+            detach=detach,
+            dry_run=dry_run,
+            supervise_repair=supervise_repair,
         )
-        if running_mode == "restart":
-            stop_agent(selector, root=repo)
-            clear_runtime_state(deployment.id, repo)
-            existing = None
-        elif running_mode == "reuse":
-            plan = reuse_existing_process_plan(existing, plan, port=port)
-            if plan["health_uri"] != existing.get("health_uri"):
-                save_runtime_state(
-                    deployment.id,
-                    sync_runtime_health_uri(existing, plan["health_uri"]),
-                    repo,
-                )
-            return _finalize(plan)
-        elif running_mode == "fail":
-            raise RuntimeError(
-                f"Agent {deployment.id} already running with pid {existing['pid']}. "
-                "Use hypervisor stop-agent first or --if-running reuse|restart."
-            )
-        else:
-            raise ValueError("--if-running must be one of: reuse, restart, fail")
+
+    existing = _load_active_runtime_state(selector, deployment, repo=repo)
+    plan = build_agent_run_plan(deployment, repo=repo, port=port, host=host, reload=reload)
+    _, plan, ready_plan = _resolve_running_process(
+        selector,
+        deployment,
+        existing,
+        plan,
+        repo=repo,
+        if_running=if_running,
+        detach=detach,
+        port=port,
+    )
+    if ready_plan is not None:
+        return finalize(ready_plan)
+
     plan = rebind_plan_port_if_busy(deployment, plan, repo=repo, host=host, reload=reload)
     if dry_run:
         return _lifecycle_payload(plan)
-    if deployment.target_uri.startswith("ssh://"):
-        raise ValueError(
-            "SSH targets support dry-run plans only. "
-            "Use hypervisor deploy-agent and verify-agent, then start the agent on the remote host."
-        )
-    if deployment.target_uri.startswith("docker://"):
-        from hypervisor.deployment_registry.docker_runner import apply_docker_deploy
 
-        return apply_docker_deploy(deployment, root=repo)
-    runtime_env = prepare_runtime_env(deployment, repo=repo)
-    process = start_process(plan, root=repo, detach=detach, runtime_env=runtime_env)
-    if detach and process is not None:
-        if not verify_process_alive(process.pid):
-            return _lifecycle_payload(
-                process_start_failure_payload(deployment.id, process_pid=process.pid, plan=plan)
-            )
-        write_runtime_state_after_start(
-            deployment,
-            plan,
-            process_pid=process.pid,
-            runtime_env=runtime_env,
-            host=host,
-            requested_port=port,
-            repo=repo,
-        )
-        plan = attach_started_process(plan, process.pid)
-    return _finalize(plan)
+    target_result = _run_non_local_target(deployment, repo=repo)
+    if target_result is not None:
+        return target_result
+
+    plan = _start_local_process(deployment, plan, repo=repo, host=host, port=port, detach=detach)
+    if _is_process_start_failure(plan):
+        return _lifecycle_payload(plan)
+    return finalize(plan)
 
 
 def stop_agent(

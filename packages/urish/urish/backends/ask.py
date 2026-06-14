@@ -8,7 +8,7 @@ from urish.ecosystem_workflow import (
     ecosystem_dir,
     proposal_path,
 )
-from urish.intent import detect_intent
+from urish.intent import agent_uri, detect_intent
 
 
 def ask_prompt(
@@ -40,6 +40,25 @@ def ask_prompt(
         generated.setdefault("intent_meta", intent)
         generated["proposal_path"] = proposal_path(eco_id)
         generated["ecosystem_dir"] = ecosystem_dir(eco_id)
+    elif kind == "agent":
+        action = intent.get("subtype") or "process_view"
+        agent_id = intent.get("deployment_id")
+        if not agent_id:
+            generated = {"error": "missing agent deployment id in prompt"}
+            uris = []
+            next_steps = ["Podaj deployment id, np. weather-map-agent.local"]
+        else:
+            uri = agent_uri(agent_id, action)
+            generated = {"agent_id": agent_id, "action": action, "uri": uri}
+            uris = [uri]
+            next_steps = [
+                f"hypervisor inspect-agent {agent_id}",
+                f"uri call {uri}",
+            ]
+            if action == "diagnose":
+                next_steps.append(f"hypervisor repair apply {agent_id} --dry-run")
+            elif action == "process_view":
+                next_steps.append(f"health://agent/{agent_id}")
     elif kind == "workflow":
         from nl2uri.flow_planner import plan_flow
 
@@ -70,6 +89,7 @@ def ask_prompt(
             "detected_subtype": intent.get("subtype"),
             "profile": intent.get("profile"),
             "agent_id": intent.get("agent_id"),
+            "deployment_id": intent.get("deployment_id"),
             "ecosystem_id": intent.get("ecosystem_id"),
             "generated": generated,
             "uris": uris,

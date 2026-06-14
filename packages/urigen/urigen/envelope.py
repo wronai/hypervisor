@@ -46,32 +46,54 @@ def stamp_proposal(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def stamp_ecosystem(
-    payload: dict[str, Any], *, lifecycle: dict[str, Any] | None = None
-) -> dict[str, Any]:
-    eco = dict(payload.get("ecosystem") or {})
-    eco_id = str(eco.get("id") or "generated-ecosystem")
-    body = dict(payload)
-    default_lifecycle = {
+def _default_lifecycle(lifecycle: dict[str, Any] | None) -> dict[str, Any]:
+    default = {
         "generated": True,
         "verified": False,
         "explained": False,
         "applied": False,
         "active": False,
     }
+    return {**default, **(lifecycle or {})}
+
+
+def _ecosystem_metadata(body: dict[str, Any], eco: dict[str, Any], eco_id: str) -> dict[str, Any]:
+    return deepcopy(
+        body.get("metadata")
+        or {
+            "id": eco_id,
+            "description": eco.get("description", ""),
+            "source_prompt": eco.get("source_prompt", ""),
+            "profile": eco.get("profile", "minimal"),
+        }
+    )
+
+
+def _ecosystem_spec(body: dict[str, Any]) -> dict[str, Any]:
+    return deepcopy(
+        body.get("spec")
+        or {
+            "domains": body.get("domains") or [],
+            "agents": body.get("agents") or [],
+            "capabilities": body.get("capabilities") or [],
+            "flows": body.get("flows") or [],
+            "deployments": body.get("deployments") or [],
+            "tests": body.get("tests") or [],
+        }
+    )
+
+
+def stamp_ecosystem(
+    payload: dict[str, Any], *, lifecycle: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    eco = dict(payload.get("ecosystem") or {})
+    eco_id = str(eco.get("id") or "generated-ecosystem")
+    body = dict(payload)
     return {
         "$schema": body.get("$schema") or "packages/urigen/urigen/schemas/ecosystem.schema.json",
         "apiVersion": body.get("apiVersion") or "uri3.io/v1",
         "kind": body.get("kind") or "Ecosystem",
-        "metadata": deepcopy(
-            body.get("metadata")
-            or {
-                "id": eco_id,
-                "description": eco.get("description", ""),
-                "source_prompt": eco.get("source_prompt", ""),
-                "profile": eco.get("profile", "minimal"),
-            }
-        ),
+        "metadata": _ecosystem_metadata(body, eco, eco_id),
         "uri": deepcopy(
             body.get("uri")
             or {
@@ -79,19 +101,9 @@ def stamp_ecosystem(
                 "proposal": f"proposal://ecosystem/{eco_id}",
             }
         ),
-        "spec": deepcopy(
-            body.get("spec")
-            or {
-                "domains": body.get("domains") or [],
-                "agents": body.get("agents") or [],
-                "capabilities": body.get("capabilities") or [],
-                "flows": body.get("flows") or [],
-                "deployments": body.get("deployments") or [],
-                "tests": body.get("tests") or [],
-            }
-        ),
+        "spec": _ecosystem_spec(body),
         **_legacy_fields(body),
         "status": deepcopy(
-            body.get("status") or {"lifecycle": {**default_lifecycle, **(lifecycle or {})}}
+            body.get("status") or {"lifecycle": _default_lifecycle(lifecycle)}
         ),
     }

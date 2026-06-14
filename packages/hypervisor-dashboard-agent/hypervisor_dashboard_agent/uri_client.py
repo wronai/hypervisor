@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from urllib.parse import urlparse
 
 from hypervisor.deployment_registry.loader import load_deployment_registry
@@ -12,6 +13,20 @@ from hypervisor.repair.supervisor import diagnose_agent, repair_apply
 
 from hypervisor_dashboard_agent.models import ViewEnvelope
 from hypervisor_dashboard_agent.view_builder import build_process_view, render_process_html
+
+
+@dataclass(frozen=True)
+class _SystemUriRequest:
+    uri: str
+    repo: Path
+    approved: bool
+    dry_run: bool
+    payload: dict[str, Any] | None
+    scheme: str
+    parts: list[str]
+
+
+_SystemUriHandler = Callable[[_SystemUriRequest], dict[str, Any]]
 
 
 def _repo_root(root: Path | None = None) -> Path:
@@ -84,6 +99,141 @@ def _normalize_view_uri(uri: str) -> str | None:
     return None
 
 
+def _handle_view_uri(
+    uri: str,
+    *,
+    repo: Path,
+    approved: bool,
+    dry_run: bool,
+    payload: dict[str, Any] | None,
+) -> dict[str, Any]:
+    normalized = _normalize_view_uri(uri)
+    if normalized and normalized.startswith("repair://"):
+        return call_system_uri(normalized, root=repo, approved=approved, dry_run=dry_run, payload=payload)
+    if normalized:
+        return resolve_view_uri(normalized, root=repo).to_dict()
+    raise ValueError(f"unsupported dashboard resource URI: {uri}")
+
+
+def _handle_runtime_uri(parts: list[str], *, repo: Path) -> dict[str, Any]:
+    agent_id = parts[1]
+    state = load_runtime_state(agent_id, repo) or {}
+    return {"result_type": "runtime_state", "agent_id": agent_id, "state": state}
+
+
+def _handle_health_uri(parts: list[str], *, repo: Path) -> dict[str, Any]:
+    agent_id = parts[1]
+    inspection = inspect_agent(agent_id, root=repo)
+    return {
+        "result_type": "health",
+        "agent_id": agent_id,
+        "ok": inspection.get("health", {}).get("ok"),
+        "health": inspection.get("health"),
+        "service_status": inspection.get("service_status"),
+    }
+
+
+def _handle_repair_uri(
+    parts: list[str],
+    *,
+    repo: Path,
+    approved: bool,
+    dry_run: bool,
+) -> dict[str, Any]:
+    agent_id = parts[1]
+    action = parts[2]
+    if action == "diagnose":
+        return diagnose_agent(agent_id, root=repo)
+    if action == "apply":
+        if dry_run:
+            diagnosis = diagnose_agent(agent_id, root=repo)
+            return {
+                "result_type": "repair",
+                "dry_run": True,
+                "diagnosis": diagnosis,
+                "repair_plan": diagnosis.get("repair_plan"),
+            }
+        return repair_apply(agent_id, root=repo, approved=approved, safe=True)
+    raise ValueError(f"unsupported repair action: {action}")
+
+
+def _handle_log_uri(uri: str, *, repo: Path) -> dict[str, Any]:
+    from uri3.logs.reader import read_logs_result
+
+    entries = read_logs_result(uri, root=repo)
+    return {"result_type": "logs", "uri": uri, "entries": entries}
+
+
+def _is_view_request(request: _SystemUriRequest) -> bool:
+    return request.scheme == "view" or (
+        request.scheme == "resource" and bool(request.parts) and request.parts[0] == "dashboard"
+    )
+
+
+def _is_runtime_request(request: _SystemUriRequest) -> bool:
+    return (
+        request.scheme == "runtime"
+        and len(request.parts) >= 3
+        and request.parts[0] == "agent"
+        and request.parts[2] == "state"
+    )
+
+
+def _is_health_request(request: _SystemUriRequest) -> bool:
+    return request.scheme == "health" and len(request.parts) >= 2 and request.parts[0] == "agent"
+
+
+def _is_repair_request(request: _SystemUriRequest) -> bool:
+    return request.scheme == "repair" and len(request.parts) >= 3 and request.parts[0] == "agent"
+
+
+def _view_request(request: _SystemUriRequest) -> dict[str, Any]:
+    return _handle_view_uri(
+        request.uri,
+        repo=request.repo,
+        approved=request.approved,
+        dry_run=request.dry_run,
+        payload=request.payload,
+    )
+
+
+def _runtime_request(request: _SystemUriRequest) -> dict[str, Any]:
+    return _handle_runtime_uri(request.parts, repo=request.repo)
+
+
+def _health_request(request: _SystemUriRequest) -> dict[str, Any]:
+    return _handle_health_uri(request.parts, repo=request.repo)
+
+
+def _repair_request(request: _SystemUriRequest) -> dict[str, Any]:
+    return _handle_repair_uri(
+        request.parts,
+        repo=request.repo,
+        approved=request.approved,
+        dry_run=request.dry_run,
+    )
+
+
+def _log_request(request: _SystemUriRequest) -> dict[str, Any]:
+    return _handle_log_uri(request.uri, repo=request.repo)
+
+
+_SYSTEM_URI_DISPATCH: tuple[tuple[Callable[[_SystemUriRequest], bool], _SystemUriHandler], ...] = (
+    (_is_view_request, _view_request),
+    (_is_runtime_request, _runtime_request),
+    (_is_health_request, _health_request),
+    (_is_repair_request, _repair_request),
+    (lambda request: request.scheme == "log", _log_request),
+)
+
+
+def _select_system_uri_handler(request: _SystemUriRequest) -> _SystemUriHandler | None:
+    for matches, handler in _SYSTEM_URI_DISPATCH:
+        if matches(request):
+            return handler
+    return None
+
+
 def call_system_uri(
     uri: str,
     *,
@@ -94,58 +244,28 @@ def call_system_uri(
 ) -> dict[str, Any]:
     repo = _repo_root(root)
     parsed = urlparse(uri)
-    scheme = parsed.scheme
-    parts = _uri_path_parts(uri)
-
-    if scheme == "view" or (scheme == "resource" and parts and parts[0] == "dashboard"):
-        normalized = _normalize_view_uri(uri)
-        if normalized and normalized.startswith("repair://"):
-            return call_system_uri(normalized, root=repo, approved=approved, dry_run=dry_run, payload=payload)
-        if normalized:
-            envelope = resolve_view_uri(normalized, root=repo)
-            return envelope.to_dict()
-        raise ValueError(f"unsupported dashboard resource URI: {uri}")
-
-    if scheme == "runtime" and len(parts) >= 3 and parts[0] == "agent" and parts[2] == "state":
-        agent_id = parts[1]
-        state = load_runtime_state(agent_id, repo) or {}
-        return {"result_type": "runtime_state", "agent_id": agent_id, "state": state}
-
-    if scheme == "health" and len(parts) >= 2 and parts[0] == "agent":
-        agent_id = parts[1]
-        inspection = inspect_agent(agent_id, root=repo)
-        return {
-            "result_type": "health",
-            "agent_id": agent_id,
-            "ok": inspection.get("health", {}).get("ok"),
-            "health": inspection.get("health"),
-            "service_status": inspection.get("service_status"),
-        }
-
-    if scheme == "repair" and len(parts) >= 3 and parts[0] == "agent":
-        agent_id = parts[1]
-        action = parts[2]
-        if action == "diagnose":
-            return diagnose_agent(agent_id, root=repo)
-        if action == "apply":
-            if dry_run:
-                diagnosis = diagnose_agent(agent_id, root=repo)
-                return {
-                    "result_type": "repair",
-                    "dry_run": True,
-                    "diagnosis": diagnosis,
-                    "repair_plan": diagnosis.get("repair_plan"),
-                }
-            return repair_apply(agent_id, root=repo, approved=approved, safe=True)
-        raise ValueError(f"unsupported repair action: {action}")
-
-    if scheme == "log":
-        from uri3.logs.reader import read_logs_result
-
-        entries = read_logs_result(uri, root=repo)
-        return {"result_type": "logs", "uri": uri, "entries": entries}
+    request = _SystemUriRequest(
+        uri=uri,
+        repo=repo,
+        approved=approved,
+        dry_run=dry_run,
+        payload=payload,
+        scheme=parsed.scheme,
+        parts=_uri_path_parts(uri),
+    )
+    handler = _select_system_uri_handler(request)
+    if handler:
+        return handler(request)
 
     if dry_run:
-        return {"result_type": "dry_run", "uri": uri, "payload": payload or {}, "status": "preview"}
+        return {
+            "ok": True,
+            "result_type": "dry_run",
+            "uri": uri,
+            "payload": payload or {},
+            "status": "preview",
+            "service_result_status": "preview",
+            "workflow_status": "planned",
+        }
 
     raise ValueError(f"unsupported or unimplemented URI: {uri}")
