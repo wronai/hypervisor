@@ -1,6 +1,6 @@
 # nl2a domain pack generation
 
-`nl2a generate` tworzy URI Tree, Domain Pack, kontrakt agenta i wygenerowany kod.
+`nl2a` tworzy URI Tree, Domain Pack, kontrakt agenta i wygenerowany kod.
 
 ```txt
 prompt
@@ -18,7 +18,7 @@ Logika domenowa nie jest w rdzeniu hypervisora — powstaje w `domains/<domain_i
 ## Przykład
 
 ```bash
-nl2a generate --no-llm -p "generuj mape pogody dwa tygodnie do przodu w oparciu o miejscowosc i odpowiedni model przewidujacy pogode, generuj widok w formie html pod adresem url"
+nl2a --no-llm -p "generuj mape pogody dwa tygodnie do przodu w oparciu o miejscowosc i odpowiedni model przewidujacy pogode, generuj widok w formie html pod adresem url"
 ```
 
 Skrót:

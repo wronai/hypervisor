@@ -3,17 +3,15 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.8-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.44-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-3.2h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.9-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.99-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-3.4h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $2.4358 (7 commits)
-- 👤 **Human dev:** ~$324 (3.2h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $2.9911 (8 commits)
+- 👤 **Human dev:** ~$337 (3.4h @ $100/h, 30min dedup)
 
 Generated on 2026-06-14 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
-
-
 
 Monorepo: **uri3**, **nl2uri**, **hypervisor**, **agent factory** — contract-first thin agents z pipeline `prompt → URI Tree → Domain Pack → generated agent`.
 
@@ -57,11 +55,11 @@ make nl2a-weather
 Ręcznie krok po kroku:
 
 ```bash
-nl2uri generate --no-llm -p "generuj mape pogody dwa tygodnie do przodu w html" \
+nl2uri -p "generuj mape pogody dwa tygodnie do przodu w html" \
   --out domains/weather_map/uri_tree.yaml
 uri3 validate-tree domains/weather_map/uri_tree.yaml
 uri3 graph domains/weather_map/uri_tree.yaml
-nl2a generate --no-llm -p "generuj mape pogody dwa tygodnie do przodu w html"
+nl2a -p "generuj mape pogody dwa tygodnie do przodu w html"
 ```
 
 ## uri3 — skanowanie, logi, schema
@@ -110,8 +108,12 @@ make docker-ssh-down
 Rejestr wdrożeń: [`deployments/agent_deployments.yaml`](deployments/agent_deployments.yaml)
 
 ```bash
-make evolution-check
+hypervisor deployments
+hypervisor run-agent weather-map-agent.local --dry-run
+make run-weather-agent
 ```
+
+Zobacz [`examples/09_run_agent_hypervisor/`](examples/09_run_agent_hypervisor/README.md).
 
 ## Ważna zasada
 
@@ -121,9 +123,14 @@ Nie edytuj `agents/generated/` ręcznie. Zmieniaj `contracts/agents/*.yaml` lub 
 
 Pełny indeks: [`docs/README.md`](docs/README.md)
 
+Przepływ generacji i uruchomienia agenta: [`docs/HYPERVISOR_WORKFLOW.md`](docs/HYPERVISOR_WORKFLOW.md)
+
+Konfiguracja URI: [`docs/CONFIG_URI_YAML.md`](docs/CONFIG_URI_YAML.md) · [`config/llm.uri.yaml`](config/llm.uri.yaml)
+
 ### Aktualne (v0.5)
 
-- [`docs/ARCHITECTURE_V0_5.md`](docs/ARCHITECTURE_V0_5.md) — podział odpowiedzialności
+- [`docs/HYPERVISOR_WORKFLOW.md`](docs/HYPERVISOR_WORKFLOW.md) — generacja + uruchomienie przez hypervisor
+- [`docs/CONFIG_URI_YAML.md`](docs/CONFIG_URI_YAML.md) — konwencja `*.uri.yaml`
 - [`docs/URI3.md`](docs/URI3.md) — uri3 CLI i schematy URI
 - [`docs/NL2URI.md`](docs/NL2URI.md) — prompt → URI Tree
 - [`docs/NL2A_DOMAIN_PACKS.md`](docs/NL2A_DOMAIN_PACKS.md) — Domain Pack pipeline

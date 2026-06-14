@@ -22,6 +22,22 @@ JSON Schema validates YAML/JSON contracts:
 
 Schemas live in `schemas/`.
 
+## URI configuration (`*.uri.yaml`)
+
+Files ending in `.uri.yaml` contain URI-valued fields resolved by `uri3` (no `_uri` field suffix inside these files).
+
+```txt
+config/llm.uri.yaml
+```
+
+Rules:
+
+- use `env://` or future `secret://` for secrets — never raw API keys in YAML
+- resolve with `uri3.config.uri_yaml.load_uri_yaml`
+- select LLM profile via `DEFAULT_LLM_PROFILE`
+
+See [`CONFIG_URI_YAML.md`](./CONFIG_URI_YAML.md).
+
 ## A2A Agent Card
 
 Generated agents expose public capability metadata through Agent Card. The canonical path is `/.well-known/agent-card.json`, with `/.well-known/agent.json` as an alias.

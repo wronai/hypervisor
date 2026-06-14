@@ -1,4 +1,11 @@
 deployments:
+- id: weather-map-agent.docker
+  agent_ref: agent://weather-map-agent
+  target_uri: docker://stack/weather-map-agent
+  status: planned
+  health_uri: http://localhost:8101/health
+  env:
+    RESOURCE_RUNTIME_URL: http://host.docker.internal:8000
 - id: weather-map-agent.local
   agent_ref: agent://weather-map-agent
   target_uri: local://agents/generated/weather_map_agent
@@ -13,6 +20,8 @@ deployments:
   target_uri: local://agents/generated/weather_map_agent
   status: planned
   health_uri: http://localhost:8101/health
+  env:
+    RESOURCE_RUNTIME_URL: http://localhost:8000
 - id: weather-map-agent.ssh-dev
   agent_ref: agent://weather-map-agent
   target_uri: ssh://deploy@localhost:2222/opt/agents/weather-map-agent

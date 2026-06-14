@@ -2,7 +2,7 @@
 
 app {
   name: resource-agent-system;
-  version: 0.5.7;
+  version: 0.5.8;
 }
 
 dependencies {
@@ -51,6 +51,21 @@ workflow[name="test"] {
   step-1: run cmd=pytest -q;
 }
 
+workflow[name="uri-tree"] {
+  trigger: manual;
+  step-1: run cmd=python -m nl2uri.cli --no-llm -p "$(WEATHER_PROMPT)" --out domains/weather_map/uri_tree.yaml;
+}
+
+workflow[name="graph"] {
+  trigger: manual;
+  step-1: run cmd=python -m uri3.cli graph domains/weather_map/uri_tree.yaml;
+}
+
+workflow[name="nl2a-weather"] {
+  trigger: manual;
+  step-1: run cmd=python -m nl2a.cli --no-llm -p "$(WEATHER_PROMPT)";
+}
+
 workflow[name="run-user-agent"] {
   trigger: manual;
   step-1: run cmd=uvicorn agents.generated.user_agent.main:app --reload --port 8101;
@@ -73,7 +88,57 @@ workflow[name="meta-pipeline"] {
 
 workflow[name="meta-repair"] {
   trigger: manual;
-  step-1: run cmd=python -m meta_agent.cli repair examples/broken_agent.yaml --write;
+  step-1: run cmd=python -m meta_agent.cli repair examples/05_meta_repair/broken_agent.yaml --write;
+}
+
+workflow[name="docker-ssh-up"] {
+  trigger: manual;
+  step-1: run cmd=python -m hypervisor.cli call 'docker://stack/ssh-testenv?action=up&build=1';
+}
+
+workflow[name="docker-ssh-down"] {
+  trigger: manual;
+  step-1: run cmd=python -m hypervisor.cli call 'docker://stack/ssh-testenv?action=down&remove_volumes=1';
+}
+
+workflow[name="docker-testenv-up"] {
+  trigger: manual;
+  step-1: depend target=docker-ssh-up;
+}
+
+workflow[name="docker-testenv-down"] {
+  trigger: manual;
+  step-1: depend target=docker-ssh-down;
+}
+
+workflow[name="scan-http"] {
+  trigger: manual;
+  step-1: run cmd=python -m uri3.cli scan http;
+}
+
+workflow[name="scan-ssh"] {
+  trigger: manual;
+  step-1: run cmd=HYPERVISOR_SSH_PASSWORD=$${HYPERVISOR_SSH_PASSWORD:-deploy} python -m uri3.cli scan ssh;
+}
+
+workflow[name="scan-all"] {
+  trigger: manual;
+  step-1: run cmd=HYPERVISOR_SSH_PASSWORD=$${HYPERVISOR_SSH_PASSWORD:-deploy} python -m uri3.cli scan --all;
+}
+
+workflow[name="evolution-check"] {
+  trigger: manual;
+  step-1: run cmd=python -m hypervisor.evolution.cli examples/08_evolution/proposals/add_orders_agent.yaml examples/08_evolution/proposals/add_invoices_agent.yaml;
+}
+
+workflow[name="examples"] {
+  trigger: manual;
+  step-1: run cmd=echo "See examples/README.md for the full catalog (01–09).";
+}
+
+workflow[name="run-weather-agent"] {
+  trigger: manual;
+  step-1: run cmd=python -m hypervisor.cli run-agent weather-map-agent.local;
 }
 
 workflow[name="clean"] {
@@ -87,7 +152,7 @@ tests {
 }
 
 env_vars {
-  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, RESOURCE_RUNTIME_URL;
+  keys: OPENROUTER_API_KEY, LLM_MODEL, LLM_BASE_URL, LLM_TEMPERATURE, LLM_MAX_TOKENS, RESOURCE_RUNTIME_URL, HYPERVISOR_SSH_PASSWORD;
 }
 
 deploy {
@@ -100,6 +165,6 @@ environment[name="local"] {
   env_file: .env;
   template_file: .env.example;
   python_version: >=3.10;
-  vars: LLM_BASE_URL, LLM_MAX_TOKENS, LLM_MODEL, LLM_TEMPERATURE, OPENROUTER_API_KEY, RESOURCE_RUNTIME_URL;
+  vars: HYPERVISOR_SSH_PASSWORD, LLM_BASE_URL, LLM_MAX_TOKENS, LLM_MODEL, LLM_TEMPERATURE, OPENROUTER_API_KEY, RESOURCE_RUNTIME_URL;
   runtime_llm: OPENROUTER_API_KEY;
 }

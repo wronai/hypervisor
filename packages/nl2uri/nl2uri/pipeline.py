@@ -52,6 +52,26 @@ def run_generate_pipeline(
 
     files = generate_domain_pack(tree_path, domain_dir, root=Path(root))
     deployment = sync_from_uri_tree(tree, root=root)
+    try:
+        from uri3.logs.writer import append_log
+
+        append_log(
+            "nl2a",
+            "Domain pack generated",
+            logger="nl2uri.pipeline",
+            domain_id=tree.get("domain", {}).get("id"),
+            deployment_id=deployment.id if deployment else None,
+            root=Path(root),
+        )
+        append_log(
+            "hypervisor",
+            "Deployment registry synced",
+            logger="hypervisor.deployment_registry",
+            deployment_id=deployment.id if deployment else None,
+            root=Path(root),
+        )
+    except FileNotFoundError:
+        pass
     return PipelineResult(
         domain_dir=domain_dir,
         tree_path=Path(tree_path),
@@ -82,6 +102,26 @@ def run_full_pipeline(
     verify_errors = verify_generated_agent(generated_agent_dir)
     if verify_errors:
         raise ValueError("Agent verification failed: " + "; ".join(verify_errors))
+
+    try:
+        from uri3.logs.writer import append_log
+
+        append_log(
+            "nl2a",
+            "Full pipeline completed",
+            logger="nl2uri.pipeline",
+            agent_dir=str(generated_agent_dir),
+            root=Path(root),
+        )
+        append_log(
+            "factory",
+            "Agent generated and verified",
+            logger="generator.verify",
+            agent_dir=str(generated_agent_dir),
+            root=Path(root),
+        )
+    except FileNotFoundError:
+        pass
 
     return FullPipelineResult(
         domain_dir=base.domain_dir,

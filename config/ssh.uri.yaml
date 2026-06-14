@@ -1,0 +1,15 @@
+# SSH auth for remote deployments and uri3 scan.
+# Never store raw passwords here — use env:// only.
+
+version: 1
+
+defaults:
+  password: env://HYPERVISOR_SSH_PASSWORD
+
+profiles:
+  docker_testenv:
+    match:
+      user: deploy
+      host: localhost
+      port: 2222
+    password: env://HYPERVISOR_SSH_PASSWORD

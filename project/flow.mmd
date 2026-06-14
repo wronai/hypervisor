@@ -1,45 +1,38 @@
 flowchart TD
-%% generated in 0.01s
+%% generated in 0.02s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph CLI
-        nl2uri__cli__generate["generate"]
-        nl2uri__cli__main["main"]
         nl2a__cli__generate["generate"]
         nl2a__cli__main["main"]
         meta_agent__cli__main["main"]
-        hypervisor__cli__scan["scan"]
-        hypervisor__cli__resolve["resolve"]
-        hypervisor__cli__status["status"]
-        hypervisor__cli__config_cmd["config_cmd"]
-        hypervisor__cli__main["main"]
         runtime_client__client__ResourceRuntimeClient__read_resource["read_resource"]
         runtime_client__client__ResourceRuntimeClient__dispatch_command["dispatch_command"]
     end
 
     subgraph Core
-        packages__uri3__uri3__paths__find_repo_root["find_repo_root"]
-        packages__uri3__uri3__paths__repo_root["repo_root"]
-        packages__uri3__uri3__logs__reader___parse_entry{{_parse_entry CC=17}}
-        packages__uri3__uri3__logs__reader___matches_filters{{_matches_filters CC=16}}
+        packages__uri3__uri3__cli___quick_reference["_quick_reference"]
+        packages__uri3__uri3__cli___list_payload["_list_payload"]
+        packages__uri3__uri3__cli__main["main"]
+        packages__uri3__uri3__cli__list_cmd["list_cmd"]
+        packages__uri3__uri3__cli__validate["validate"]
+        packages__uri3__uri3__cli__validate_tree["validate_tree"]
+        packages__uri3__uri3__cli__graph["graph"]
+        packages__uri3__uri3__cli__resolve["resolve"]
+        packages__uri3__uri3__cli__call["call"]
+        packages__uri3__uri3__cli__scan["scan"]
+        packages__uri3__uri3__cli__logs["logs"]
+        packages__uri3__uri3__cli__schema["schema"]
         uri3__graph__uri_graph__UriGraph__add_node["add_node"]
         uri3__graph__uri_graph__UriGraph__add_edge["add_edge"]
         packages__uri3__uri3__scanner__scanner__scan["scan"]
-        uri3__protocols__normalizer__normalize_uri["normalize_uri"]
-        uri3__resolvers__http_resolver__HttpResolver__resolve["resolve"]
-        uri3__resolvers__http_resolver__HttpResolver__fetch["fetch"]
-        uri3__resolvers__llm_resolver__LLMResolver__resolve["resolve"]
-        packages__uri3__uri3__resolvers__router__resolve["resolve"]
-        packages__uri3__uri3__resolvers__router__call["call"]
-        uri3__resolvers__env_resolver__EnvResolver__resolve["resolve"]
-        uri3__resolvers__python_resolver__PythonResolver__resolve["resolve"]
-        ...["+88 more"]
+        ...["+136 more"]
     end
 
     subgraph Exporters
         hypervisor__contract_registry__registry_exporter__export_json["export_json"]
     end
 
-    class uri3__graph__uri_graph__UriGraph__add_node,uri3__graph__uri_graph__UriGraph__add_edge,packages__uri3__uri3__scanner__scanner__scan,uri3__protocols__normalizer__normalize_uri,uri3__resolvers__http_resolver__HttpResolver__resolve,uri3__resolvers__http_resolver__HttpResolver__fetch,uri3__resolvers__llm_resolver__LLMResolver__resolve,packages__uri3__uri3__resolvers__router__resolve,packages__uri3__uri3__resolvers__router__call,uri3__resolvers__env_resolver__EnvResolver__resolve entry
+    class packages__uri3__uri3__cli___quick_reference,packages__uri3__uri3__cli___list_payload,packages__uri3__uri3__cli__main,packages__uri3__uri3__cli__list_cmd,packages__uri3__uri3__cli__validate,packages__uri3__uri3__cli__validate_tree,packages__uri3__uri3__cli__graph,packages__uri3__uri3__cli__resolve,packages__uri3__uri3__cli__call,packages__uri3__uri3__cli__scan entry

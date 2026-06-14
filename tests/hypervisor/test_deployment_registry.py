@@ -25,7 +25,9 @@ def test_load_default_deployments():
     assert len(registry.deployments) >= 2
     weather = get_deployment_for_agent("agent://weather-map-agent", registry=registry)
     assert weather is not None
-    assert weather.target_uri.startswith("local://")
+    local = registry.by_id("weather-map-agent.local")
+    assert local is not None
+    assert local.target_uri.startswith("local://")
 
 
 def test_deployment_from_weather_uri_tree():

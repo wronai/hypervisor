@@ -16,14 +16,14 @@ inputs:
   days:
     uri: input://weather-map/days
     type: integer
-    default: 14
+    default: 7
   forecast_model:
     uri: input://weather-map/forecast-model
     type: string
     default: auto
 llm:
   planner:
-    uri: llm://openrouter/qwen/qwen3-coder-next
+    uri: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
     api_key_uri: env://OPENROUTER_API_KEY
 commands:
   generate_weather_map:

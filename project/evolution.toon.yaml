@@ -1,44 +1,40 @@
-# code2llm/evolution | 265 func | 76f | 2026-06-14
+# code2llm/evolution | 418 func | 122f | 2026-06-14
 # generated in 0.00s
 
-NEXT[10] (ranked by impact):
-  [1] !  SPLIT-FUNC      main  CC=16  fan=16
+NEXT[9] (ranked by impact):
+  [1] !  SPLIT-FUNC      resolve_llm_profile  CC=16  fan=23
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 368
+
+  [2] !  SPLIT-FUNC      main  CC=16  fan=16
       WHY: CC=16 exceeds 15
       EFFORT: ~1h  IMPACT: 256
 
-  [2] !  SPLIT-FUNC      main  CC=20  fan=11
+  [3] !  SPLIT-FUNC      resolve_deployment_env  CC=15  fan=15
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 225
+
+  [4] !  SPLIT-FUNC      main  CC=20  fan=11
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 220
 
-  [3] !  SPLIT-FUNC      parse_log_uri  CC=17  fan=11
+  [5] !  SPLIT-FUNC      validate_config  CC=17  fan=11
       WHY: CC=17 exceeds 15
       EFFORT: ~1h  IMPACT: 187
 
-  [4] !  SPLIT-FUNC      validate_config  CC=17  fan=11
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 187
-
-  [5] !  SPLIT-FUNC      analyze_uri  CC=15  fan=12
+  [6] !  SPLIT-FUNC      analyze_uri  CC=15  fan=12
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 180
-
-  [6] !  SPLIT-FUNC      _parse_entry  CC=17  fan=10
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 170
 
   [7] !  SPLIT-FUNC      validate_registry  CC=20  fan=8
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 160
 
-  [8] !  SPLIT-FUNC      _matches_filters  CC=16  fan=9
-      WHY: CC=16 exceeds 15
-      EFFORT: ~1h  IMPACT: 144
-
-  [9] !! SPLIT           planfile.yaml
+  [8] !! SPLIT           planfile.yaml
       WHY: 1319L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
-  [10] !! SPLIT           goal.yaml
+  [9] !! SPLIT           goal.yaml
       WHY: 511L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
@@ -48,10 +44,10 @@ RISKS[2]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          3.5 → ≤2.4
+  CC̄:          3.6 → ≤2.5
   max-CC:      22 → ≤11
   god-modules: 2 → 0
-  high-CC(≥15): 9 → ≤4
+  high-CC(≥15): 8 → ≤4
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -79,4 +75,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.5 → now CC̄=3.5
+  prev CC̄=3.9 → now CC̄=3.6

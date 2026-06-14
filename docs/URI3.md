@@ -6,12 +6,33 @@ Hypervisor korzysta z `uri3` przez cienki adapter (`hypervisor.uri.client.Uri3Cl
 
 ## CLI
 
+Bez argumentów lub przez `uri3 list` — szybka ściągawka ze skrótami:
+
+```bash
+uri3
+uri3 list
+uri3 list --json
+uri3 list --schemes
+```
+
+Skanowanie po nazwie skrótu (z `config/uri3.uri.yaml`) lub pełnym URI:
+
+```bash
+uri3 scan http
+uri3 scan ssh
+uri3 scan docker
+uri3 scan --all
+uri3 scan http://localhost:8101
+```
+
+Pozostałe komendy:
+
 ```bash
 uri3 validate <uri>
 uri3 validate-tree domains/weather_map/uri_tree.yaml
 uri3 graph domains/weather_map/uri_tree.yaml
 uri3 resolve <uri>
-uri3 scan http://localhost:8101
+uri3 call 'docker://stack/ssh-testenv?action=up'
 uri3 logs 'log://hypervisor?level=ERROR&grep=deployment&limit=100'
 uri3 logs 'log://hypervisor' --summary
 uri3 schema 'log://'
@@ -53,7 +74,22 @@ Skaner HTTP sprawdza m.in.:
 
 Skaner `log://` zwraca metadane pliku i liczbę dopasowanych wpisów.
 
-> **Uwaga:** `uri3 scan ssh://...` nie jest jeszcze zaimplementowany. SSH testenv opisano w [`examples/03_ssh_remote_agent/`](../examples/03_ssh_remote_agent/README.md).
+Skaner `ssh://` sprawdza connectivity i katalog zdalny. Skaner `docker://` zwraca status stacka compose lub kontenera.
+
+## docker://
+
+Sterowanie Dockerem (generowanie compose, up/down, start/stop, ps, logs):
+
+```bash
+uri3 call 'docker://generate/weather-map-agent?action=generate'
+uri3 call 'docker://stack/ssh-testenv?action=up'
+uri3 call 'docker://stack/ssh-testenv?action=down&remove_volumes=1'
+uri3 scan docker://stack/ssh-testenv
+```
+
+Profile stacków: `config/docker.uri.yaml`. Hypervisor: `hypervisor docker 'docker://...'`, `hypervisor deploy-agent weather-map-agent.docker --apply`.
+
+Szczegóły SSH/Docker testenv: [`examples/03_ssh_remote_agent/`](../examples/03_ssh_remote_agent/README.md).
 
 ## Python API
 

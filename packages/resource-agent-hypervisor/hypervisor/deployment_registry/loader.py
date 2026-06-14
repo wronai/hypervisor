@@ -27,6 +27,7 @@ def _parse_deployment(item: dict[str, Any]) -> AgentDeployment:
         card_uri=item.get("card_uri"),
         health_uri=item.get("health_uri"),
         status=str(item.get("status", "generated")),
+        env=dict(item.get("env") or {}),
         metadata=dict(item.get("metadata") or {}),
     )
 

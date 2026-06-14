@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import warnings
 
 import pytest
@@ -60,6 +61,29 @@ def test_resource_uri_resolution():
 def test_python_call():
     result = call("python://copy:deepcopy", {"prompt": "weather map"})
     assert result == {"prompt": "weather map"}
+
+
+def test_env_call_set_persists_to_dotenv(tmp_path, monkeypatch):
+    monkeypatch.delenv("HYPERVISOR_SSH_PASSWORD", raising=False)
+    env_path = tmp_path / ".env"
+    monkeypatch.setattr("uri3.resolvers.env_resolver._repo_root", lambda root=None: tmp_path)
+    result = call(f"env://HYPERVISOR_SSH_PASSWORD?action=set&value=deploy&persist={env_path.name}")
+    assert result["action"] == "set"
+    assert result["persisted"] is True
+    assert os.environ["HYPERVISOR_SSH_PASSWORD"] == "deploy"
+    assert "HYPERVISOR_SSH_PASSWORD=deploy" in env_path.read_text(encoding="utf-8")
+
+
+def test_env_call_set_updates_existing_key(tmp_path, monkeypatch):
+    env_path = tmp_path / ".env"
+    env_path.write_text("HYPERVISOR_SSH_PASSWORD=old\nOTHER=1\n", encoding="utf-8")
+    monkeypatch.setattr("uri3.resolvers.env_resolver._repo_root", lambda root=None: tmp_path)
+    result = call(f"env://HYPERVISOR_SSH_PASSWORD?action=set&value=new&persist={env_path.name}")
+    assert result["persisted"] is True
+    text = env_path.read_text(encoding="utf-8")
+    assert "HYPERVISOR_SSH_PASSWORD=new" in text
+    assert "HYPERVISOR_SSH_PASSWORD=old" not in text
+    assert "OTHER=1" in text
 
 
 def test_router_resolve_returns_uri_resolution():

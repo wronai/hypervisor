@@ -17,7 +17,7 @@ uvicorn agents.generated.user_agent.main:app --reload --port 8101
 ## Pipeline nl2a
 
 ```bash
-nl2a generate --no-llm -p "generuj mape pogody dwa tygodnie do przodu w html"
+nl2a --no-llm -p "generuj mape pogody dwa tygodnie do przodu w html"
 make verify
 make test
 ```
@@ -53,6 +53,18 @@ Szczegóły: [`examples/03_ssh_remote_agent/`](../examples/03_ssh_remote_agent/R
 ```txt
 deployments/agent_deployments.yaml
 ```
+
+### Uruchomienie agenta przez hypervisor
+
+```bash
+hypervisor deployments
+hypervisor run-agent weather-map-agent.local --dry-run
+make run-weather-agent
+hypervisor agent-status weather-map-agent.local
+hypervisor scan http://localhost:8101/health
+```
+
+Przykład krok po kroku: [`examples/09_run_agent_hypervisor/`](../examples/09_run_agent_hypervisor/README.md).
 
 Przykładowe targety:
 

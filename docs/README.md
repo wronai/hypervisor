@@ -10,11 +10,13 @@
 
 | Dokument | Temat |
 |----------|--------|
+| [`HYPERVISOR_WORKFLOW.md`](./HYPERVISOR_WORKFLOW.md) | Generacja + run-agent + logi |
+| [`CONFIG_URI_YAML.md`](./CONFIG_URI_YAML.md) | Konwencja `*.uri.yaml` |
 | [`ARCHITECTURE_V0_5.md`](./ARCHITECTURE_V0_5.md) | Podział uri3 / nl2uri / hypervisor |
 | [`URI3.md`](./URI3.md) | CLI uri3, log://, schema |
 | [`NL2URI.md`](./NL2URI.md) | prompt → URI Tree |
 | [`NL2A_DOMAIN_PACKS.md`](./NL2A_DOMAIN_PACKS.md) | Domain Pack pipeline |
-| [`DEPLOYMENT.md`](./DEPLOYMENT.md) | Lokalnie, Docker, SSH testenv |
+| [`DEPLOYMENT.md`](./DEPLOYMENT.md) | Lokalnie, Docker, hypervisor `run-agent` |
 | [`META_AGENT.md`](./META_AGENT.md) | Meta-agent CLI/API |
 | [`EVOLUTION.md`](./EVOLUTION.md) | Evolution proposals |
 | [`AUTO_EVOLUTION_PIPELINE.md`](./AUTO_EVOLUTION_PIPELINE.md) | Kontrolowana autoewolucja |
@@ -50,4 +52,5 @@ make validate generate verify
 make meta-repair meta-pipeline
 make docker-ssh-up scan-http docker-ssh-down
 make evolution-check
+make run-weather-agent
 ```

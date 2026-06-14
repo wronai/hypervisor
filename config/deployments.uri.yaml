@@ -1,0 +1,18 @@
+# Deployment registry defaults and shared env for local agents.
+
+version: 1
+
+defaults:
+  env:
+    RESOURCE_RUNTIME_URL: http://localhost:8000
+
+deployments:
+  weather-map-agent.local:
+    env:
+      RESOURCE_RUNTIME_URL: http://localhost:8000
+      OPENROUTER_API_KEY: env://OPENROUTER_API_KEY
+  weather-map-agent.ssh-dev:
+    env:
+      RESOURCE_RUNTIME_URL: http://localhost:8000
+    ssh:
+      password: env://HYPERVISOR_SSH_PASSWORD

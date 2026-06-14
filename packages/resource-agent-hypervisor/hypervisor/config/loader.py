@@ -12,7 +12,9 @@ from hypervisor.config.defaults import (
 )
 from hypervisor.config.env import apply_env_overrides
 from hypervisor.config.models import HypervisorConfig
+from hypervisor.config.uri_config import apply_uri_yaml_configs
 from hypervisor.config.validators import merge_config, validate_config
+from hypervisor.paths import find_repo_root
 
 
 def config_search_paths(
@@ -73,6 +75,10 @@ def load_config(
         cfg["_config_path"] = "<embedded-defaults>"
 
     apply_builtin_defaults(cfg)
+    try:
+        apply_uri_yaml_configs(cfg, root=find_repo_root())
+    except FileNotFoundError:
+        pass
     apply_env_overrides(cfg)
     return cfg
 

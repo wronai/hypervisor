@@ -50,14 +50,12 @@ class Hypervisor:
             return
         self.running = True
         # TODO: initialize event bus, load plugins, start agent supervisors, etc.
-        print(f"[hypervisor] started (profile={self.profile}, max_agents={self.max_agents})")
 
     def stop(self) -> None:
         """Stop the hypervisor and release resources (stub)."""
         if not self.running:
             return
         self.running = False
-        print("[hypervisor] stopped")
 
     def register_agent(self, name: str) -> None:
         """Register a new agent / driver under management."""

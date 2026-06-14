@@ -16,6 +16,16 @@ DEFAULT_AGENT_PORTS = {
 }
 
 
+def infer_port(deployment: AgentDeployment) -> int:
+    health_uri = deployment.health_uri
+    if health_uri:
+        parsed = urlparse(health_uri)
+        if parsed.port:
+            return parsed.port
+    agent_id = deployment.agent_ref.removeprefix("agent://")
+    return DEFAULT_AGENT_PORTS.get(agent_id, 8101)
+
+
 def deployment_id_for_agent(agent_id: str, *, suffix: str = "local") -> str:
     return f"{agent_id}.{suffix}"
 
@@ -26,6 +36,10 @@ def infer_health_uri(target_uri: str, agent_id: str) -> str | None:
         base = target_uri.rstrip("/")
         return f"{base}/health"
     if parsed.scheme == "local":
+        port = DEFAULT_AGENT_PORTS.get(agent_id)
+        if port:
+            return f"http://localhost:{port}/health"
+    if parsed.scheme == "docker":
         port = DEFAULT_AGENT_PORTS.get(agent_id)
         if port:
             return f"http://localhost:{port}/health"
@@ -128,6 +142,7 @@ def registry_summary(registry: DeploymentRegistry | None = None, *, root: str | 
             "id": item.id,
             "agent_ref": item.agent_ref,
             "target_uri": item.target_uri,
+            "target_scheme": urlparse(item.target_uri).scheme or None,
             "status": item.status,
             "card_uri": item.card_uri,
             "health_uri": item.health_uri,

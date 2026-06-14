@@ -1,23 +1,23 @@
-# redup/duplication | 6 groups | 120f 4928L | 2026-06-14
+# redup/duplication | 8 groups | 159f 7322L | 2026-06-14
 
 SUMMARY:
-  files_scanned: 120
-  total_lines:   4928
-  dup_groups:    6
-  dup_fragments: 15
-  saved_lines:   141
-  scan_ms:       2338
+  files_scanned: 159
+  total_lines:   7322
+  dup_groups:    8
+  dup_fragments: 20
+  saved_lines:   155
+  scan_ms:       2406
 
 HOTSPOTS[7] (files with most duplication):
-  packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py  dup=76L  groups=1  frags=3  (1.5%)
-  packages/uri3/uri3/protocols/scheme_registry.py  dup=48L  groups=2  frags=4  (1.0%)
-  packages/resource-agent-factory/generator/header.py  dup=18L  groups=1  frags=3  (0.4%)
-  packages/resource-agent-hypervisor/hypervisor/paths.py  dup=9L  groups=1  frags=1  (0.2%)
-  packages/resource-agent-factory/generator/paths.py  dup=8L  groups=1  frags=1  (0.2%)
-  packages/uri3/uri3/paths.py  dup=8L  groups=1  frags=1  (0.2%)
-  packages/uri3/uri3/resolvers/protocol_resolver.py  dup=6L  groups=1  frags=2  (0.1%)
+  packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py  dup=76L  groups=1  frags=3  (1.0%)
+  packages/resource-agent-factory/generator/header.py  dup=18L  groups=1  frags=3  (0.2%)
+  packages/uri3/uri3/protocols/schemes/a2a.py  dup=12L  groups=1  frags=1  (0.2%)
+  packages/uri3/uri3/protocols/schemes/mcp.py  dup=12L  groups=1  frags=1  (0.2%)
+  packages/uri3/uri3/resolvers/docker_resolver.py  dup=10L  groups=2  frags=2  (0.1%)
+  packages/uri3/uri3/resolvers/log_resolver.py  dup=10L  groups=2  frags=2  (0.1%)
+  packages/resource-agent-hypervisor/hypervisor/paths.py  dup=9L  groups=1  frags=1  (0.1%)
 
-DUPLICATES[6] (ranked by impact):
+DUPLICATES[8] (ranked by impact):
   [49d1d03e6ce392a1] ! STRU  weather_proto  L=43 N=3 saved=86 sim=1.00
       packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py:36-78  (weather_proto)
       packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py:81-106  (weather_handler)
@@ -26,37 +26,50 @@ DUPLICATES[6] (ranked by impact):
       packages/resource-agent-factory/generator/paths.py:6-13  (find_repo_root)
       packages/resource-agent-hypervisor/hypervisor/paths.py:6-14  (find_repo_root)
       packages/uri3/uri3/paths.py:6-13  (find_repo_root)
+  [befef45cfb21329b]   STRU  _repo_root  L=8 N=3 saved=16 sim=1.00
+      packages/uri3/uri3/config/cli_shortcuts.py:9-16  (_repo_root)
+      packages/uri3/uri3/config/docker_stacks.py:9-16  (_repo_root)
+      packages/uri3/uri3/config/ssh_auth.py:10-17  (_repo_root)
   [277a3a34943f29ee]   STRU  python_file_header  L=6 N=3 saved=12 sim=1.00
       packages/resource-agent-factory/generator/header.py:21-26  (python_file_header)
       packages/resource-agent-factory/generator/header.py:29-34  (dockerfile_header)
       packages/resource-agent-factory/generator/header.py:37-42  (markdown_generated_banner)
-  [89ebc2e80c754394]   STRU  _env_spec  L=12 N=2 saved=12 sim=1.00
-      packages/uri3/uri3/protocols/scheme_registry.py:146-157  (_env_spec)
-      packages/uri3/uri3/protocols/scheme_registry.py:192-203  (_pypi_spec)
-  [71dc3d2f70a63bf5]   STRU  _a2a_spec  L=12 N=2 saved=12 sim=1.00
-      packages/uri3/uri3/protocols/scheme_registry.py:220-231  (_a2a_spec)
-      packages/uri3/uri3/protocols/scheme_registry.py:234-245  (_mcp_spec)
+  [71dc3d2f70a63bf5]   STRU  spec  L=12 N=2 saved=12 sim=1.00
+      packages/uri3/uri3/protocols/schemes/a2a.py:4-15  (spec)
+      packages/uri3/uri3/protocols/schemes/mcp.py:4-15  (spec)
+  [603bddb5515ef0cd]   EXAC  _first  L=5 N=2 saved=5 sim=1.00
+      packages/uri3/uri3/resolvers/docker_resolver.py:59-63  (_first)
+      packages/uri3/uri3/resolvers/log_resolver.py:45-49  (_first)
+  [e83b50c620326a75]   EXAC  _bool  L=5 N=2 saved=5 sim=1.00
+      packages/uri3/uri3/resolvers/docker_resolver.py:66-70  (_bool)
+      packages/uri3/uri3/resolvers/log_resolver.py:62-66  (_bool)
   [bc6d855bfb035b8b]   STRU  resolve_a2a  L=3 N=2 saved=3 sim=1.00
       packages/uri3/uri3/resolvers/protocol_resolver.py:10-12  (resolve_a2a)
       packages/uri3/uri3/resolvers/protocol_resolver.py:15-17  (resolve_mcp)
 
-REFACTOR[6] (ranked by priority):
+REFACTOR[8] (ranked by priority):
   [1] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/domain_pack/utils/weather_proto.py
       WHY: 3 occurrences of 43-line block across 1 files — saves 86 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py
   [2] ○ extract_function   → packages/utils/find_repo_root.py
       WHY: 3 occurrences of 8-line block across 3 files — saves 16 lines
       FILES: packages/resource-agent-factory/generator/paths.py, packages/resource-agent-hypervisor/hypervisor/paths.py, packages/uri3/uri3/paths.py
-  [3] ○ extract_function   → packages/resource-agent-factory/generator/utils/python_file_header.py
+  [3] ○ extract_function   → packages/uri3/uri3/config/utils/_repo_root.py
+      WHY: 3 occurrences of 8-line block across 3 files — saves 16 lines
+      FILES: packages/uri3/uri3/config/cli_shortcuts.py, packages/uri3/uri3/config/docker_stacks.py, packages/uri3/uri3/config/ssh_auth.py
+  [4] ○ extract_function   → packages/resource-agent-factory/generator/utils/python_file_header.py
       WHY: 3 occurrences of 6-line block across 1 files — saves 12 lines
       FILES: packages/resource-agent-factory/generator/header.py
-  [4] ○ extract_function   → packages/uri3/uri3/protocols/utils/_env_spec.py
-      WHY: 2 occurrences of 12-line block across 1 files — saves 12 lines
-      FILES: packages/uri3/uri3/protocols/scheme_registry.py
-  [5] ○ extract_function   → packages/uri3/uri3/protocols/utils/_a2a_spec.py
-      WHY: 2 occurrences of 12-line block across 1 files — saves 12 lines
-      FILES: packages/uri3/uri3/protocols/scheme_registry.py
-  [6] ○ extract_function   → packages/uri3/uri3/resolvers/utils/resolve_a2a.py
+  [5] ○ extract_function   → packages/uri3/uri3/protocols/schemes/utils/spec.py
+      WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
+      FILES: packages/uri3/uri3/protocols/schemes/a2a.py, packages/uri3/uri3/protocols/schemes/mcp.py
+  [6] ○ extract_function   → packages/uri3/uri3/resolvers/utils/_first.py
+      WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
+      FILES: packages/uri3/uri3/resolvers/docker_resolver.py, packages/uri3/uri3/resolvers/log_resolver.py
+  [7] ○ extract_function   → packages/uri3/uri3/resolvers/utils/_bool.py
+      WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
+      FILES: packages/uri3/uri3/resolvers/docker_resolver.py, packages/uri3/uri3/resolvers/log_resolver.py
+  [8] ○ extract_function   → packages/uri3/uri3/resolvers/utils/resolve_a2a.py
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
       FILES: packages/uri3/uri3/resolvers/protocol_resolver.py
 
@@ -65,21 +78,23 @@ QUICK_WINS[5] (low risk, high savings — do first):
       FILES: templates.py
   [2] extract_function   saved=16L  → packages/utils/find_repo_root.py
       FILES: paths.py, paths.py, paths.py
-  [3] extract_function   saved=12L  → packages/resource-agent-factory/generator/utils/python_file_header.py
+  [3] extract_function   saved=16L  → packages/uri3/uri3/config/utils/_repo_root.py
+      FILES: cli_shortcuts.py, docker_stacks.py, ssh_auth.py
+  [4] extract_function   saved=12L  → packages/resource-agent-factory/generator/utils/python_file_header.py
       FILES: header.py
-  [4] extract_function   saved=12L  → packages/uri3/uri3/protocols/utils/_env_spec.py
-      FILES: scheme_registry.py
-  [5] extract_function   saved=12L  → packages/uri3/uri3/protocols/utils/_a2a_spec.py
-      FILES: scheme_registry.py
+  [5] extract_function   saved=12L  → packages/uri3/uri3/protocols/schemes/utils/spec.py
+      FILES: a2a.py, mcp.py
 
-EFFORT_ESTIMATE (total ≈ 6.1h):
+EFFORT_ESTIMATE (total ≈ 6.6h):
   hard   weather_proto                       saved=86L  ~258min
   medium find_repo_root                      saved=16L  ~32min
+  medium _repo_root                          saved=16L  ~32min
   easy   python_file_header                  saved=12L  ~24min
-  easy   _env_spec                           saved=12L  ~24min
-  easy   _a2a_spec                           saved=12L  ~24min
+  easy   spec                                saved=12L  ~24min
+  easy   _first                              saved=5L  ~10min
+  easy   _bool                               saved=5L  ~10min
   easy   resolve_a2a                         saved=3L  ~6min
 
 METRICS-TARGET:
-  dup_groups:  6 → 0
-  saved_lines: 141 lines recoverable
+  dup_groups:  8 → 0
+  saved_lines: 155 lines recoverable

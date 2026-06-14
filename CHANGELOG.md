@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-06-14
 
 ### Fixed
+- Fix string-concat issues (ticket-0df86be1)
+- Fix unused-imports issues (ticket-845746ab)
+- Fix magic-numbers issues (ticket-8fe1ea3e)
+
+## [0.1.10] - 2026-06-14
+
+### Fixed
 - Fix unused-imports issues (ticket-690b4c67)
 - Fix magic-numbers issues (ticket-25bdd7ff)
 - Fix smart-return-type issues (ticket-e9652153)
@@ -355,6 +362,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix smart-return-type issues (ticket-780e8124)
 
 ## [Unreleased]
+
+## [0.5.9] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/CONFIG_URI_YAML.md
+- Update docs/DEPLOYMENT.md
+- Update docs/EVOLUTION.md
+- Update docs/HYPERVISOR_WORKFLOW.md
+- Update docs/NL2A_DOMAIN_PACKS.md
+- ... and 17 more files
+
+### Test
+- Update tests/hypervisor/test_agent_runner.py
+- Update tests/hypervisor/test_config.py
+- Update tests/hypervisor/test_deployment_registry.py
+- Update tests/hypervisor/test_docker_runner.py
+- Update tests/hypervisor/test_hypervisor_cli.py
+- Update tests/hypervisor/test_remote_runner.py
+- Update tests/hypervisor/test_runtime_state.py
+- Update tests/nl2uri/test_domain_planner.py
+- Update tests/test_hypervisor.py
+- Update tests/uri3/test_cli.py
+- ... and 9 more files
+
+### Other
+- Update .gitignore
+- Update Makefile
+- Update app.doql.less
+- Update config/deployments.uri.yaml
+- Update config/docker.uri.yaml
+- Update config/llm.uri.yaml
+- Update config/runtime.uri.yaml
+- Update config/ssh.uri.yaml
+- Update config/uri3.uri.yaml
+- Update deployments/agent_deployments.yaml
+- ... and 95 more files
 
 ## [0.5.8] - 2026-06-14
 

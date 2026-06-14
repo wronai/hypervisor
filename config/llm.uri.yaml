@@ -1,0 +1,43 @@
+# Values in *.uri.yaml files are URI addresses resolved by uri3.
+# Never store raw secrets here — use env:// or secret:// only.
+
+version: 1
+
+defaults:
+  profile: default
+
+profiles:
+  default:
+    model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=8000
+    api_key: env://OPENROUTER_API_KEY
+    provider: openrouter
+    purpose: general
+    enabled: true
+
+  domain_planner:
+    model: llm://openrouter/qwen/qwen3-coder-next?temp=0.1&max_tokens=12000&format=json
+    api_key: env://OPENROUTER_API_KEY
+    provider: openrouter
+    purpose: nl2uri
+    enabled: true
+
+  repair:
+    model: llm://openrouter/qwen/qwen3-coder-next?temp=0&max_tokens=8000
+    api_key: env://OPENROUTER_API_KEY
+    provider: openrouter
+    purpose: repair
+    enabled: true
+
+  validator:
+    model: llm://openrouter/qwen/qwen3-coder-next?temp=0&max_tokens=4000&format=json
+    api_key: env://OPENROUTER_API_KEY
+    provider: openrouter
+    purpose: validator
+    enabled: true
+
+  local_fast:
+    model: llm://localhost:11434/qwen3-coder?temp=0.1
+    api_key: null
+    provider: ollama
+    purpose: local_dev
+    enabled: true

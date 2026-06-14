@@ -19,4 +19,9 @@ def resolve_mcp(uri: str) -> dict[str, str]:
 
 def resolve_resource(uri: str) -> dict[str, str]:
     parsed = urlparse(uri)
+    if parsed.scheme == "ssh":
+        from uri3.resolvers.ssh_resolver import resolve_ssh
+
+        data = resolve_ssh(uri)
+        return {key: str(value) for key, value in data.items() if value is not None}
     return {"scheme": parsed.scheme, "namespace": parsed.netloc, "path": parsed.path}

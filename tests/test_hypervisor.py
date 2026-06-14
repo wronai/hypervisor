@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import tempfile
 from pathlib import Path
 
@@ -70,8 +71,9 @@ def test_cli_status_runs(capsys):
     rc = main(["status"])
     assert rc == 0
     out = capsys.readouterr().out
-    assert "hypervisor" in out
-    assert "profile" in out or "agents" in out
+    payload = json.loads(out)
+    assert payload["profile"] in ("normal", "fast", "full")
+    assert "max_agents" in payload
 
 
 def test_cli_config_path(capsys):

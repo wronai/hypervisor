@@ -1,0 +1,12 @@
+# Runtime defaults for local agent execution.
+# Values may use URI semantics (env://, http://, …).
+
+version: 1
+
+defaults:
+  resource_runtime_url: http://localhost:8000
+  log_stream: hypervisor
+
+agents:
+  weather-map-agent:
+    log_stream: hypervisor

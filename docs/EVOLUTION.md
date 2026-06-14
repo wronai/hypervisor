@@ -31,7 +31,7 @@ Walidacja:
 ```bash
 make evolution-check
 # lub
-python -m hypervisor.evolution.cli examples/08_evolution/proposals/*.yaml
+python -m hypervisor.evolution.cli examples/08_evolution/proposals/add_orders_agent.yaml examples/08_evolution/proposals/add_invoices_agent.yaml
 ```
 
 Zobacz [`examples/08_evolution/README.md`](../examples/08_evolution/README.md).

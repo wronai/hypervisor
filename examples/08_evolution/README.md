@@ -1,25 +1,40 @@
 # Example 08 — evolution proposals
 
-Przykładowe propozycje autoewolucji agentów walidowane przez `hypervisor.evolution`.
+Walidacja propozycji autoewolucji agentów przez `hypervisor.evolution`.
 
-Katalog:
+## Pliki
 
 ```txt
-examples/08_evolution/proposals/*.yaml
+examples/08_evolution/proposals/add_orders_agent.yaml
+examples/08_evolution/proposals/add_invoices_agent.yaml
 ```
 
-Walidacja:
+## Uruchomienie
 
 ```bash
-python -m hypervisor.evolution.cli examples/08_evolution/proposals/*.yaml
+make evolution-check
 ```
 
-Pliki:
+Równoważnie:
 
-- [`proposals/add_orders_agent.yaml`](./proposals/add_orders_agent.yaml) — dodanie agenta zamówień
-- [`proposals/add_invoices_agent.yaml`](./proposals/add_invoices_agent.yaml) — dodanie agenta faktur z promptem i approval gate
+```bash
+python -m hypervisor.evolution.cli \
+  examples/08_evolution/proposals/add_orders_agent.yaml \
+  examples/08_evolution/proposals/add_invoices_agent.yaml
+```
 
-Powiązane przykłady:
+## Oczekiwany wynik
 
-- [`../06_orders_agent/`](../06_orders_agent/) — przykładowy kontrakt orders
-- [`../07_invoices_agent/`](../07_invoices_agent/) — prompt invoices
+```txt
+Valid proposal: add-orders-agent
+Valid proposal: add-invoices-agent
+```
+
+## Powiązane przykłady
+
+| Proposal | Źródło |
+|----------|--------|
+| `add_orders_agent` | [`../06_orders_agent/`](../06_orders_agent/) |
+| `add_invoices_agent` | [`../07_invoices_agent/`](../07_invoices_agent/) |
+
+Brak runtime — tylko **walidacja propozycji**, nie deploy agentów.

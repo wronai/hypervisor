@@ -251,19 +251,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-ed0a608d
-    name: Fix string-concat issues
-    description: Resolve 1 string-concat issues in packages/nl2uri/nl2uri/llm_planner.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - packages/nl2uri/nl2uri/llm_planner.py
-    rule_id: string-concat
-    count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-a8b52d89
     name: Fix smart-return-type issues
     description: Resolve 1 smart-return-type issues in packages/nl2uri/nl2uri/writer.py
@@ -274,19 +261,6 @@ sprints:
     - packages/nl2uri/nl2uri/writer.py
     rule_id: smart-return-type
     count: 1
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-865c12d0
-    name: Fix magic-numbers issues
-    description: Resolve 2 magic-numbers issues in packages/nl2uri/nl2uri/planner.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - packages/nl2uri/nl2uri/planner.py
-    rule_id: magic-numbers
-    count: 2
     model_hints:
       planning: balanced
       implementation: balanced
@@ -1278,19 +1252,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-6bb46fa8
-    name: Fix smart-return-type issues
-    description: Resolve 8 smart-return-type issues in packages/uri3/uri3/cli.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - packages/uri3/uri3/cli.py
-    rule_id: smart-return-type
-    count: 8
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-daa55462
     name: Fix unused-imports issues
     description: Resolve 4 unused-imports issues in packages/uri3/uri3/cli.py
@@ -1314,6 +1275,45 @@ sprints:
     - packages/uri3/uri3/cli.py
     rule_id: ai-boilerplate
     count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0df86be1
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in packages/nl2uri/nl2uri/domain_planner.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - packages/nl2uri/nl2uri/domain_planner.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-845746ab
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in packages/resource-agent-hypervisor/hypervisor/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - packages/resource-agent-hypervisor/hypervisor/cli.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8fe1ea3e
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in packages/resource-agent-hypervisor/hypervisor/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - packages/resource-agent-hypervisor/hypervisor/cli.py
+    rule_id: magic-numbers
+    count: 1
     model_hints:
       planning: balanced
       implementation: balanced

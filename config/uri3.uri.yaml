@@ -1,0 +1,17 @@
+# uri3 CLI shortcuts — names for common URIs (see: uri3 list)
+
+version: 1
+
+shortcuts:
+  scan:
+    http: http://localhost:8101
+    ssh: ssh://deploy@localhost:2222/opt/agents/weather-map-agent
+    docker: docker://stack/ssh-testenv
+
+examples:
+  - uri3 list
+  - uri3 scan http
+  - uri3 scan --all
+  - uri3 call 'env://HYPERVISOR_SSH_PASSWORD?action=set&value=deploy&persist=1'
+  - uri3 call 'docker://stack/ssh-testenv?action=up'
+  - uri3 schema ssh://

@@ -5,11 +5,32 @@
 ## CLI
 
 ```bash
-nl2uri generate --no-llm -p "generuj mape pogody dwa tygodnie do przodu w html" \
+nl2uri --no-llm -p "generuj mape pogody dwa tygodnie do przodu w html" \
   --out domains/weather_map/uri_tree.yaml
 ```
 
 Bez `--out` wypisuje YAML/JSON na stdout.
+
+### LLM vs deterministyczny planner
+
+`nl2uri` i `nl2a` używają tego samego `domain_planner.plan_from_prompt()`:
+
+| Tryb | Źródło |
+|------|--------|
+| `--no-llm` | deterministyczny szablon (weather_map ma pełny URI Tree) |
+| z LLM | OpenRouter, ale wynik jest **walidowany** |
+
+Dla promptów pogodowych (`pogod`, `weather`, `forecast`, `map`) LLM **nie może zastąpić** uproszczonym drzewem list URI — jeśli zwróci np.:
+
+```yaml
+domain: domain://weather
+commands:
+  - command://...
+```
+
+to planner automatycznie użyje kanonicznego szablonu `weather_map` i doda `planner_warning`.
+
+Bez `--no-llm` wymagany jest `OPENROUTER_API_KEY` (lub fallback deterministyczny przy błędzie API).
 
 ## Zachowanie
 

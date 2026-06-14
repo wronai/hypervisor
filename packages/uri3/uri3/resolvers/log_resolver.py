@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
-from urllib.parse import parse_qs, urlparse
 
 
 LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
@@ -42,64 +41,24 @@ class LogRef:
         }
 
 
-def _first(query: dict[str, list[str]], key: str, default: str | None = None) -> str | None:
-    values = query.get(key)
-    if not values:
-        return default
-    return values[0]
-
-
-def _int(query: dict[str, list[str]], key: str, default: int) -> int:
-    raw = _first(query, key)
-    if raw is None:
-        return default
-    try:
-        return max(0, int(raw))
-    except ValueError:
-        return default
-
-
-def _bool(query: dict[str, list[str]], key: str, default: bool = False) -> bool:
-    raw = (_first(query, key) or "").lower()
-    if not raw:
-        return default
-    return raw in {"1", "true", "yes", "on"}
+from uri3.resolvers.log_query import first, parse_query, query_bool, query_int, resolve_level
 
 
 def parse_log_uri(uri: str) -> LogRef:
-    parsed = urlparse(uri)
-    if parsed.scheme != "log":
-        raise ValueError(f"Not a log URI: {uri}")
-
-    query = parse_qs(parsed.query)
-    stream = parsed.netloc or "hypervisor"
-    path: Path | None = None
-
-    if stream == "file":
-        file_path = parsed.path or ""
-        if not file_path or file_path == "/":
-            raise ValueError("log://file/ requires a path, e.g. log://file/output/logs/hypervisor.log")
-        path = Path(file_path.lstrip("/"))
-    elif parsed.path and parsed.path not in {"", "/"}:
-        path = Path(parsed.path.lstrip("/"))
-
-    level = _first(query, "level") or _first(query, "min_level")
-    if level:
-        level = level.upper()
-
+    stream, path, query = parse_query(uri)
     return LogRef(
         uri=uri,
         stream=stream,
         path=path,
-        level=level,
-        grep=_first(query, "grep") or _first(query, "q") or _first(query, "contain"),
-        logger=_first(query, "logger") or _first(query, "component"),
-        since=_first(query, "since") or _first(query, "from"),
-        until=_first(query, "until") or _first(query, "to"),
-        limit=_int(query, "limit", 100),
-        offset=_int(query, "offset", 0),
-        tail=_bool(query, "tail", False),
-        format=_first(query, "format", "auto") or "auto",
+        level=resolve_level(query),
+        grep=first(query, "grep") or first(query, "q") or first(query, "contain"),
+        logger=first(query, "logger") or first(query, "component"),
+        since=first(query, "since") or first(query, "from"),
+        until=first(query, "until") or first(query, "to"),
+        limit=query_int(query, "limit", 100),
+        offset=query_int(query, "offset", 0),
+        tail=query_bool(query, "tail", False),
+        format=first(query, "format", "auto") or "auto",
         query=query,
     )
 

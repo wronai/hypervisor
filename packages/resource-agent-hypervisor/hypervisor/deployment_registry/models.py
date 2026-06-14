@@ -15,6 +15,7 @@ class AgentDeployment:
     card_uri: str | None = None
     health_uri: str | None = None
     status: str = "generated"
+    env: dict[str, Any] = field(default_factory=dict)
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -28,6 +29,8 @@ class AgentDeployment:
             payload["card_uri"] = self.card_uri
         if self.health_uri:
             payload["health_uri"] = self.health_uri
+        if self.env:
+            payload["env"] = self.env
         if self.metadata:
             payload["metadata"] = self.metadata
         return payload

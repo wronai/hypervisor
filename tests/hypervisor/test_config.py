@@ -71,3 +71,11 @@ def test_load_hypervisor_config_model():
     assert model.registry.output.endswith("contract_registry.resolved.json")
     roundtrip = model.to_dict()
     assert roundtrip["deployment"]["registry"] == "deployments/agent_deployments.yaml"
+
+
+def test_load_config_merges_llm_uri_yaml():
+    cfg = load_config()
+    assert str(cfg["llm"].get("uri_config", "")).endswith("config/llm.uri.yaml")
+    assert cfg["llm"]["model"].startswith("llm://")
+    assert cfg["llm"]["api_key"].startswith("env://")
+    assert "domain_planner" in cfg["llm"]["uri_profiles"]

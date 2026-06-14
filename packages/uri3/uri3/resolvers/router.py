@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 from urllib.parse import urlparse
 
-from uri3.resolvers.env_resolver import resolve_env
+from uri3.resolvers.env_resolver import call_env, resolve_env
 from uri3.resolvers.log_resolver import resolve_log
 from uri3.resolvers.llm_resolver import resolve_llm
 from uri3.resolvers.python_resolver import call_python, resolve_python
@@ -47,7 +47,11 @@ def resolve(uri: str) -> UriResolution:
         return UriResolution(uri, scheme, "a2a", resolve_a2a(uri), {})
     if scheme == "mcp":
         return UriResolution(uri, scheme, "mcp", resolve_mcp(uri), {})
-    if scheme in {"resource", "domain", "artifact", "command", "event", "input"}:
+    if scheme == "docker":
+        from uri3.resolvers.docker_resolver import resolve_docker
+
+        return UriResolution(uri, scheme, "docker", resolve_docker(uri), {})
+    if scheme in {"resource", "domain", "artifact", "command", "event", "input", "agent", "local", "ssh", "git"}:
         return UriResolution(uri, scheme, scheme, resolve_resource(uri), {})
     raise ValueError(f"Unsupported URI scheme: {scheme}")
 
@@ -56,6 +60,12 @@ def call(uri: str, payload: dict[str, Any] | None = None) -> Any:
     parsed = urlparse(uri)
     if parsed.scheme == "python":
         return call_python(uri, payload or {})
+    if parsed.scheme == "env":
+        return call_env(uri, payload)
+    if parsed.scheme == "docker":
+        from uri3.docker.controller import control_docker
+
+        return control_docker(uri, payload=payload)
     if parsed.scheme == "log":
         from uri3.logs.reader import read_logs, summarize_logs
 
