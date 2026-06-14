@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-
 from uri2flow import expand_flow, load_flow
 from uri2flow.cli import main as uri2flow_main
 from uri2flow.loaders.markpact_loader import (

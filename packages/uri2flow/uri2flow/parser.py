@@ -80,7 +80,12 @@ def parse_flow(data: dict[str, Any]) -> FlowDocument:
     source_prompt = flow_meta.get("source_prompt") or source_prompt
 
     steps = [_parse_step(item) for item in do]
-    return FlowDocument(id=flow_id, description=description, source_prompt=source_prompt, steps=steps)
+    return FlowDocument(
+        id=flow_id,
+        description=description,
+        source_prompt=source_prompt,
+        steps=steps,
+    )
 
 
 def load_flow(path: str | Path) -> FlowDocument:
