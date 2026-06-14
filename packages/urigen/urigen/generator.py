@@ -11,6 +11,7 @@ from urigen.artifacts import (
     FLOW_SOURCES,
     repo_path,
 )
+from urigen.envelope import stamp_ecosystem
 from urigen.io import copy_file, load_yaml, relative_to, write_text, write_yaml
 from urigen.models import repo_root
 from urigen.writer import deployment_fragment, render_readme, test_plan, voice_flow
@@ -39,29 +40,32 @@ def generate_ecosystem(
     agents = _copy_agents(intent, repo, out_dir, files)
     deployments = _write_deployments(out_dir, files)
 
-    ecosystem = {
-        "version": 1,
-        "ecosystem": {
-            "id": ecosystem_id,
-            "description": f"Generated URI ecosystem for: {proposal_meta.get('source_prompt', '')}",
-            "source_prompt": proposal_meta.get("source_prompt", ""),
-            "profile": proposal_meta.get("profile", "minimal"),
+    ecosystem = stamp_ecosystem(
+        {
+            "version": 1,
+            "ecosystem": {
+                "id": ecosystem_id,
+                "description": f"Generated URI ecosystem for: {proposal_meta.get('source_prompt', '')}",
+                "source_prompt": proposal_meta.get("source_prompt", ""),
+                "profile": proposal_meta.get("profile", "minimal"),
+            },
+            "domains": domains,
+            "agents": agents,
+            "capabilities": capabilities,
+            "flows": flows,
+            "deployments": deployments,
+            "tests": [
+                {"id": "capability-plan", "type": "urigen.capability_contract"},
+                {"id": "explain-sample-uris", "type": "uri3.explain"},
+                {"id": "workflow-dry-run", "type": "uri3.validate-workflow"},
+                {"id": "doctor", "type": "uri3.doctor"},
+            ],
+            "publishing": {
+                "markpact_readme": "README.md",
+            },
         },
-        "domains": domains,
-        "agents": agents,
-        "capabilities": capabilities,
-        "flows": flows,
-        "deployments": deployments,
-        "tests": [
-            {"id": "capability-plan", "type": "urigen.capability_contract"},
-            {"id": "explain-sample-uris", "type": "uri3.explain"},
-            {"id": "workflow-dry-run", "type": "uri3.validate-workflow"},
-            {"id": "doctor", "type": "uri3.doctor"},
-        ],
-        "publishing": {
-            "markpact_readme": "README.md",
-        },
-    }
+        lifecycle={"generated": True},
+    )
 
     ecosystem_path = write_yaml(out_dir / "ecosystem.yaml", ecosystem)
     files.append(relative_to(ecosystem_path, out_dir))

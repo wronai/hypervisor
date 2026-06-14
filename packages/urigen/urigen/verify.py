@@ -19,6 +19,7 @@ def verify_ecosystem(
     *,
     root: str | Path | None = None,
     write_report: bool = True,
+    skip_doctor: bool = False,
 ) -> dict[str, Any]:
     """Verify an ecosystem without mutating repository registries or deployments."""
     path = Path(ecosystem_path)
@@ -30,11 +31,12 @@ def verify_ecosystem(
         _check_capabilities(ecosystem, base),
         _check_flows(ecosystem, base),
         _check_explain(ecosystem, registry, repo),
-        _check_doctor(repo, registry),
     ]
+    if not skip_doctor:
+        checks.append(_check_doctor(repo, registry))
     payload = {
         "ok": all(item["ok"] for item in checks),
-        "ecosystem": (ecosystem.get("ecosystem") or {}).get("id"),
+        "ecosystem": (ecosystem.get("metadata") or ecosystem.get("ecosystem") or {}).get("id"),
         "checks": checks,
         "warnings": [warning for item in checks for warning in item.get("warnings", [])],
     }

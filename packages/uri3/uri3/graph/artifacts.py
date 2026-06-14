@@ -2,8 +2,14 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
+
+import yaml
 
 from uri3.graph.execution_models import ExecutionContext
+from uri3.results.statuses import EXECUTION_COMPLETED, SERVICE_SUCCEEDED
+
+WORKFLOW_ARTIFACT_SCHEMA = "schemas/workflow_artifact.schema.json"
 
 
 def artifact_path(context: ExecutionContext, step_id: str, suffix: str) -> Path:
@@ -20,14 +26,82 @@ def artifact_path(context: ExecutionContext, step_id: str, suffix: str) -> Path:
 
 
 def artifact_uri(context: ExecutionContext, step_id: str, suffix: str) -> str:
-    return f"artifact://operator/workflows/{context.workflow_id}/{context.run_id}/{step_id}/{suffix}"
+    return f"artifact://workflow/{context.workflow_id}/{context.run_id}/{step_id}/{suffix}"
 
 
-def write_artifact(context: ExecutionContext, step_id: str, suffix: str, content: bytes | str) -> tuple[Path, str]:
+def build_workflow_step_artifact(
+    context: ExecutionContext,
+    step_id: str,
+    suffix: str,
+    *,
+    payload: dict[str, Any] | None = None,
+    ok: bool = True,
+) -> dict[str, Any]:
+    artifact_id = suffix.rsplit(".", 1)[0]
+    return {
+        "$schema": WORKFLOW_ARTIFACT_SCHEMA,
+        "apiVersion": "uri3.io/v1",
+        "kind": "WorkflowStepArtifact",
+        "metadata": {
+            "workflow_id": context.workflow_id,
+            "step_id": step_id,
+            "run_id": context.run_id,
+            "artifact_id": artifact_id,
+        },
+        "uri": {
+            "self": artifact_uri(context, step_id, suffix),
+            "source_step": f"workflow://{context.workflow_id}/step/{step_id}",
+        },
+        "result": {
+            "ok": ok,
+            "execution_status": EXECUTION_COMPLETED,
+            "service_result_status": SERVICE_SUCCEEDED if ok else "failed",
+            "workflow_status": "completed" if ok else "failed",
+            "result_type": "artifact",
+        },
+        "payload": payload or {},
+    }
+
+
+def write_artifact(
+    context: ExecutionContext,
+    step_id: str,
+    suffix: str,
+    content: bytes | str | dict[str, Any],
+    *,
+    structured: bool = False,
+    validate: bool = False,
+) -> tuple[Path, str]:
     path = artifact_path(context, step_id, suffix)
     path.parent.mkdir(parents=True, exist_ok=True)
+    uri = artifact_uri(context, step_id, suffix)
+
+    if structured or isinstance(content, dict):
+        payload = content if isinstance(content, dict) else build_workflow_step_artifact(
+            context,
+            step_id,
+            suffix,
+            payload={"text": str(content)},
+        )
+        if validate:
+            from uri3.artifacts.writer import write_yaml_artifact
+
+            write_yaml_artifact(
+                path.with_suffix(".yaml") if not str(path).endswith(".yaml") else path,
+                payload,
+                repo_root=context.root,
+                schema_relative=WORKFLOW_ARTIFACT_SCHEMA,
+                validate=True,
+            )
+            final_path = path.with_suffix(".yaml") if not str(path).endswith(".yaml") else path
+            return final_path, uri
+        text = yaml.safe_dump(payload, sort_keys=False, allow_unicode=True)
+        path = path.with_suffix(".yaml") if not str(path).endswith(".yaml") else path
+        path.write_text(text, encoding="utf-8")
+        return path, uri
+
     if isinstance(content, str):
         path.write_text(content, encoding="utf-8")
     else:
         path.write_bytes(content)
-    return path, artifact_uri(context, step_id, suffix)
+    return path, uri

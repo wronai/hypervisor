@@ -79,7 +79,9 @@ def serve_cmd(args) -> int:
     try:
         import uvicorn
     except ImportError as exc:
-        raise SystemExit("uvicorn is required for uri2ops serve: pip install uvicorn") from exc
+        raise SystemExit(
+            'uvicorn is required for uri2ops serve: pip install -e "packages/uri2ops[server]"'
+        ) from exc
     from uri2ops.server.app import create_app
 
     base_url = f"http://{args.host}:{args.port}"

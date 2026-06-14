@@ -177,16 +177,29 @@ def run_agent(
     )
     process = start_process(plan, root=repo, detach=detach, runtime_env=runtime_env)
     if detach and process is not None:
+        effective_port = plan.get("port")
+        declared_health = deployment.health_uri or plan.get("health_uri")
         state = {
             "id": deployment.id,
             "agent_ref": deployment.agent_ref,
             "pid": process.pid,
             "status": "running",
+            "health_status": "unknown",
+            "lifecycle_status": "running",
             "started_at": now_iso(),
             "command": plan["command_string"],
             "health_uri": plan["health_uri"],
             "log_uri": plan["log_uri"],
             "env": runtime_env,
+            "requested_port": port,
+            "declared_health_uri": declared_health,
+            "network": {
+                "host": host,
+                "requested_port": port,
+                "effective_port": effective_port,
+                "effective_health_uri": plan["health_uri"],
+                "declared_health_uri": declared_health,
+            },
         }
         save_runtime_state(deployment.id, state, repo)
         plan["pid"] = process.pid

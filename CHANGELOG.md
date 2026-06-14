@@ -25,6 +25,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   error-family classifier, safe playbooks, repair memory, and `hypervisor repair learn`.
 - Added schemas: `incident.schema.json`, `repair_plan.schema.json`, `runtime_state.schema.json`.
 - Added `knowledge/repair_cases/` for deterministic repair sequences.
+- Added artifact standardization layer (`uri3/artifacts/`): schema validation on write,
+  runtime state envelope, LogEvent JSONL, workflow step artifacts, ticket/evolution source URIs.
+- Added `hypervisor artifacts check|schemas`, `hypervisor ticket import`, `hypervisor evolution propose-from-*`.
+- Added `hypervisor artifacts lifecycle` coverage report for `$schema` / `apiVersion`
+  / `kind` / `uri.self` across configs, deployments, contracts, runtime state and outputs.
+- Added schemas: `ticket`, `log_event`, `workflow_artifact`, `deployment_registry`, `config/config_base`.
 - Added `docs/EXTERNAL_PACKAGES.md` with the local `semcod/*` and `wronai/*`
   package audit, version snapshot, integration boundary and recommended next
   package work.
@@ -66,6 +72,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`lifecycle.py` reuses healthy agent when already running).
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
+
+## [0.5.20] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/architecture/test_uri2run_envelope.py
+- Update tests/ecosystems/weather-demo/test_explain_uris.yaml
+- Update tests/ecosystems/weather-demo/test_plan.yaml
+- Update tests/ecosystems/weather-demo/test_workflow_dry_run.yaml
+- Update tests/hypervisor/test_artifact_standards.py
+- Update tests/hypervisor/test_repair_supervisor.py
+- Update tests/urigen/test_urigen_cycle.py
+
+### Other
+- Update deployments/agent_deployments.yaml
+- Update examples/13_nl2uri_multi_uri_graph/task_plan.yaml
+- Update output/contract_registry.resolved.json
+- Update packages/resource-agent-hypervisor/hypervisor/artifacts/__init__.py
+- Update packages/resource-agent-hypervisor/hypervisor/artifacts/gate.py
+- Update packages/resource-agent-hypervisor/hypervisor/cli.py
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/loader.py
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/models.py
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py
+- ... and 67 more files
 
 ## [0.5.19] - 2026-06-14
 

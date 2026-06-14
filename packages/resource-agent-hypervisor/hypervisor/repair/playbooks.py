@@ -3,8 +3,6 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 from hypervisor.deployment_registry.lifecycle import (
     command_port_from_runtime,
     restart_agent,
@@ -42,7 +40,7 @@ def apply_playbook(
         plan = {"command_string": state.get("command", "")}
         port = command_port_from_runtime(state, plan)
         return restart_agent(selector, root=repo, detach=True, port=port)
-    if playbook == "verify_effective_port" or playbook == "read_logs" or playbook == "check_process":
+    if playbook in {"verify_effective_port", "read_logs", "check_process"}:
         return inspect_agent(selector, root=repo)
     if playbook in {"regenerate_agent", "modify_deployment_registry", "register_repair_capability"}:
         if not approved:
@@ -65,7 +63,5 @@ def apply_playbook_sequence(
 ) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
     for playbook in playbooks:
-        results.append(
-            apply_playbook(playbook, selector=selector, root=root, approved=approved)
-        )
+        results.append(apply_playbook(playbook, selector=selector, root=root, approved=approved))
     return results

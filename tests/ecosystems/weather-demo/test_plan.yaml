@@ -1,0 +1,12 @@
+version: 1
+test_plan:
+  id: weather-demo.test-plan
+  checks:
+  - id: capabilities
+    type: touri.validate
+  - id: flows
+    type: uri2flow.validate
+  - id: explain
+    type: uri3.explain
+  - id: doctor
+    type: uri3.doctor

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resource-agent-system"
-version = "0.5.19"
+version = "0.5.20"
 description = "WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, touri, hypervisor, agent factory"
 readme = "README.md"
 license = "Apache-2.0"
@@ -51,6 +51,8 @@ uri3 = "uri3.cli:main"
 uri2ops = "uri2ops.cli:main"
 uri2flow = "uri2flow.cli:main"
 uri2run = "uri2run.cli:main"
+uri = "urish.cli:main"
+urish = "urish.cli:main"
 touri = "touri.cli:main"
 uri2verify = "uri2verify.cli:main"
 urigen = "urigen.cli:main"
@@ -77,6 +79,7 @@ touri = { workspace = true }
 uri2voice = { workspace = true }
 uri2pact = { workspace = true }
 uri2run = { workspace = true }
+urish = { workspace = true }
 uri2verify = { workspace = true }
 urigen = { workspace = true }
 

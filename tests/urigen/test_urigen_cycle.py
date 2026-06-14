@@ -45,18 +45,35 @@ def test_plan_generate_verify_explain_cycle(tmp_path: Path):
     assert weather["backend"]["type"] == "python"
 
 
-def test_apply_is_approval_gated(tmp_path: Path):
-    proposal_path = write_yaml(tmp_path / "proposal.yaml", plan_ecosystem("agent pogodowy"))
-    generated = generate_ecosystem(proposal_path, out=tmp_path / "ecosystem")
+def test_apply_plan_and_transaction(tmp_path: Path, repo_root: Path):
+    (tmp_path / "deployments").mkdir()
+    (tmp_path / "deployments" / "agent_deployments.yaml").write_text("deployments: []\n", encoding="utf-8")
+    (tmp_path / "contracts" / "agents").mkdir(parents=True)
+    (tmp_path / "examples" / "20_touri_capabilities").mkdir(parents=True)
+    (tmp_path / "tests" / "ecosystems").mkdir(parents=True)
 
-    blocked = apply_ecosystem(generated["ecosystem_file"])
+    proposal_path = write_yaml(tmp_path / "proposal.yaml", plan_ecosystem("agent pogodowy"))
+    generated = generate_ecosystem(proposal_path, out=tmp_path / "ecosystem", root=repo_root)
+
+    planned = apply_ecosystem(generated["ecosystem_file"], plan_only=True, root=tmp_path)
+    assert planned["status"] == "planned"
+    assert Path(planned["plan_path"]).is_file()
+
+    blocked = apply_ecosystem(generated["ecosystem_file"], root=tmp_path)
     assert blocked["ok"] is False
     assert blocked["status"] == "blocked"
 
-    approved = apply_ecosystem(generated["ecosystem_file"], approve=True)
+    approved = apply_ecosystem(generated["ecosystem_file"], approve=True, root=tmp_path)
     assert approved["ok"] is True
-    assert approved["status"] == "skipped"
-    assert {item["status"] for item in approved["actions"]} == {"skipped"}
+    assert approved["status"] == "applied"
+    assert Path(approved["result_path"]).is_file()
+    assert (tmp_path / "contracts" / "agents" / "weather_map_agent.yaml").is_file()
+
+
+def test_proposal_and_ecosystem_have_envelope():
+    proposal = plan_ecosystem("agent pogodowy z healthcheckiem")
+    assert proposal["kind"] == "EcosystemProposal"
+    assert proposal["uri"]["self"].startswith("proposal://ecosystem/")
 
 
 def test_plan_and_verify_do_not_touch_repo_roots(tmp_path: Path, repo_root: Path):

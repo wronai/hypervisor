@@ -1,0 +1,4 @@
+uris:
+- weather://forecast/Gdansk/14/html
+- workflow://flow/weather/dry-run
+- workflow://graph/check-agent-health/dry-run

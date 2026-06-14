@@ -47,4 +47,10 @@ for item in failed:
 sys.exit(1)
 PY
 
+echo "== artifact schemas =="
+"$PY" -m hypervisor.cli artifacts schemas
+
+echo "== artifact lifecycle coverage =="
+"$PY" -m hypervisor.cli artifacts lifecycle --report-only --sample-limit 20
+
 echo "architecture gate: ok"

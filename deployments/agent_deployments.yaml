@@ -3,6 +3,10 @@ deployments:
   agent_ref: agent://weather-map-agent
   target_uri: docker://stack/weather-map-agent
   status: planned
+  declared:
+    target_uri: docker://stack/weather-map-agent
+    preferred_port: 8101
+    health_uri: http://localhost:8101/health
   health_uri: http://localhost:8101/health
   env:
     RESOURCE_RUNTIME_URL: http://host.docker.internal:8000
@@ -10,15 +14,25 @@ deployments:
   agent_ref: agent://weather-map-agent
   target_uri: local://agents/generated/weather_map_agent
   status: generated
+  declared:
+    target_uri: local://agents/generated/weather_map_agent
+    preferred_port: 8101
+    health_uri: http://localhost:8101/health
+    card_uri: http://localhost:8101/.well-known/agent-card.json
   card_uri: http://localhost:8101/.well-known/agent-card.json
   health_uri: http://localhost:8101/health
   metadata:
     source: uri_tree
     domain_id: weather_map
+  if_running: reuse
 - id: weather-map-agent.local-dev
   agent_ref: agent://weather-map-agent
   target_uri: local://agents/generated/weather_map_agent
   status: planned
+  declared:
+    target_uri: local://agents/generated/weather_map_agent
+    preferred_port: 8101
+    health_uri: http://localhost:8101/health
   health_uri: http://localhost:8101/health
   env:
     RESOURCE_RUNTIME_URL: http://localhost:8000
@@ -26,4 +40,8 @@ deployments:
   agent_ref: agent://weather-map-agent
   target_uri: ssh://deploy@localhost:2222/opt/agents/weather-map-agent
   status: planned
+  declared:
+    target_uri: ssh://deploy@localhost:2222/opt/agents/weather-map-agent
+    preferred_port: 8101
+    health_uri: http://localhost:8101/health
   health_uri: http://localhost:8101/health

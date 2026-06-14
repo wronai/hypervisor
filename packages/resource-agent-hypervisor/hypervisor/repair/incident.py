@@ -70,7 +70,6 @@ def build_incident_from_inspection(
         )
 
     runtime_state = inspection.get("runtime_state") or {}
-    effective_health = str(inspection.get("effective_health_uri") or "")
     return IncidentArtifact(
         metadata_id=metadata_id,
         agent_id=agent_id,
@@ -86,7 +85,9 @@ def build_incident_from_inspection(
             "logs": str(inspection.get("log_uri") or f"log://hypervisor?grep={agent_id}"),
         },
         status={
-            "lifecycle_status": str(inspection.get("runtime_status") or readiness.get("process") or "unknown"),
+            "lifecycle_status": str(
+                inspection.get("runtime_status") or readiness.get("process") or "unknown"
+            ),
             "health_status": "ok" if health.get("ok") else "failed",
             "workflow_status": "failed" if not inspection.get("ok") else "completed",
             "execution_status": "completed",
@@ -101,7 +102,7 @@ def build_incident_from_inspection(
                 "declared_health_uri": readiness.get("declared_health_uri"),
                 "effective_health_uri": readiness.get("effective_health_uri"),
                 "runtime_state_path": str(
-                    (find_repo_root() / "output" / "runtime" / "agents" / agent_id / "state.json")
+                    find_repo_root() / "output" / "runtime" / "agents" / agent_id / "state.json"
                 ),
                 "command": runtime_state.get("command"),
                 "stored_health_uri": runtime_state.get("health_uri"),

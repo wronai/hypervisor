@@ -1,28 +1,21 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any
 
 import yaml
-from jsonschema import Draft202012Validator
+from uri3.artifacts.validator import validate_artifact, validate_artifact_file
 
-
-def schema_path(repo_root: Path, relative: str) -> Path:
-    return repo_root / relative
-
-
-def load_schema(repo_root: Path, relative: str) -> dict[str, Any]:
-    return json.loads(schema_path(repo_root, relative).read_text(encoding="utf-8"))
-
-
-def validate_artifact(data: dict[str, Any], repo_root: Path, schema_relative: str) -> list[str]:
-    schema = load_schema(repo_root, schema_relative)
-    validator = Draft202012Validator(schema)
-    return [
-        f"{'.'.join(map(str, error.path)) or '<root>'}: {error.message}"
-        for error in validator.iter_errors(data)
-    ]
+__all__ = [
+    "read_yaml",
+    "validate_artifact",
+    "validate_artifact_file",
+    "validate_incident_dict",
+    "validate_repair_plan_dict",
+    "validate_evolution_proposal_dict",
+    "validate_runtime_state_dict",
+    "validate_ticket_dict",
+]
 
 
 def validate_incident_dict(data: dict[str, Any], repo_root: Path) -> list[str]:
@@ -35,6 +28,20 @@ def validate_repair_plan_dict(data: dict[str, Any], repo_root: Path) -> list[str
     from hypervisor.repair.models import REPAIR_PLAN_SCHEMA
 
     return validate_artifact(data, repo_root, REPAIR_PLAN_SCHEMA)
+
+
+def validate_evolution_proposal_dict(data: dict[str, Any], repo_root: Path) -> list[str]:
+    return validate_artifact(data, repo_root, "schemas/evolution_proposal.schema.json")
+
+
+def validate_runtime_state_dict(data: dict[str, Any], repo_root: Path) -> list[str]:
+    from hypervisor.deployment_registry.runtime_state import RUNTIME_STATE_SCHEMA
+
+    return validate_artifact(data, repo_root, RUNTIME_STATE_SCHEMA)
+
+
+def validate_ticket_dict(data: dict[str, Any], repo_root: Path) -> list[str]:
+    return validate_artifact(data, repo_root, "schemas/ticket.schema.json")
 
 
 def read_yaml(path: Path) -> dict[str, Any]:

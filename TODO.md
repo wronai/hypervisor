@@ -39,6 +39,10 @@
 - [x] Schema-valid incidents (`schemas/incident.schema.json`) under `output/incidents/{date}/{agent}/`.
 - [x] Repair memory: `knowledge/repair_cases/` + `hypervisor repair diagnose|apply|learn`.
 - [x] Evolution proposals from unresolved incidents (`evolution/proposals/from_incident_*.yaml`).
+- [x] Artifact standardization foundation: `uri3/artifacts/`, runtime state schema on save, LogEvent JSONL.
+- [x] Ticket-driven evolution: `ticket://` schema, planfile import, `evolution propose-from-ticket`.
+- [x] CI schema gate: `hypervisor artifacts schemas` in architecture_gate.sh.
+- [x] Artifact lifecycle coverage report: `hypervisor artifacts lifecycle --report-only|--strict`.
 - [ ] Add port conflict classifier using socket/lsof probes without killing unrelated processes.
 - [ ] Add safe deployment registry update proposal when effective runtime port differs from declared `health_uri`.
 - [ ] Add `health://agent/{deployment}` and `repair://agent/{deployment}/auto` URI schemes or resolver aliases.

@@ -29,6 +29,7 @@ members = [
     "uri2voice",
     "uri3",
     "urigen",
+    "urish",
 ]
 
 [[package]]
@@ -3263,7 +3264,7 @@ requires-dist = [
 
 [[package]]
 name = "resource-agent-system"
-version = "0.5.19"
+version = "0.5.20"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
@@ -4150,6 +4151,35 @@ requires-dist = [
     { name = "touri", editable = "packages/touri" },
     { name = "uri2flow", editable = "packages/uri2flow" },
     { name = "uri3", editable = "packages/uri3" },
+]
+
+[[package]]
+name = "urish"
+version = "0.1.0"
+source = { editable = "packages/urish" }
+dependencies = [
+    { name = "httpx" },
+    { name = "pyyaml" },
+    { name = "resource-agent-hypervisor" },
+    { name = "typer" },
+    { name = "uri2flow" },
+    { name = "uri2ops" },
+    { name = "uri2run" },
+    { name = "uri3" },
+    { name = "urigen" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "resource-agent-hypervisor", editable = "packages/resource-agent-hypervisor" },
+    { name = "typer", specifier = ">=0.12" },
+    { name = "uri2flow", editable = "packages/uri2flow" },
+    { name = "uri2ops", editable = "packages/uri2ops" },
+    { name = "uri2run", editable = "packages/uri2run" },
+    { name = "uri3", editable = "packages/uri3" },
+    { name = "urigen", editable = "packages/urigen" },
 ]
 
 [[package]]

@@ -19,16 +19,34 @@ def parse_json_entry(line: str, line_no: int) -> dict[str, Any] | None:
         return None
     if not isinstance(data, dict):
         return None
+    event = data.get("event") if isinstance(data.get("event"), dict) else {}
     return {
         "line": line_no,
         "timestamp": data.get("timestamp") or data.get("time") or data.get("@timestamp"),
         "level": str(data.get("level") or data.get("severity") or "INFO").upper(),
         "logger": data.get("logger") or data.get("component") or data.get("name"),
-        "message": data.get("message") or data.get("msg") or stripped,
+        "message": data.get("message") or event.get("message") or data.get("msg") or stripped,
+        "event_code": event.get("code"),
+        "uri": data.get("uri"),
+        "correlation": data.get("correlation"),
         "fields": {
             key: value
             for key, value in data.items()
-            if key not in {"timestamp", "time", "level", "logger", "message", "msg"}
+            if key
+            not in {
+                "timestamp",
+                "time",
+                "level",
+                "logger",
+                "message",
+                "msg",
+                "event",
+                "uri",
+                "correlation",
+                "$schema",
+                "apiVersion",
+                "kind",
+            }
         },
         "raw": line,
     }

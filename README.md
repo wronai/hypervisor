@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.19-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$11.09-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.20-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$11.94-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.9h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $11.0916 (18 commits)
-- 👤 **Human dev:** ~$848 (8.5h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $11.9400 (19 commits)
+- 👤 **Human dev:** ~$893 (8.9h @ $100/h, 30min dedup)
 
 Generated on 2026-06-14 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -296,6 +296,25 @@ hypervisor repair learn output/incidents/.../inc_*.yaml
 
 Incydenty są artefaktami ze schemą (`schemas/incident.schema.json`); nierozwiązane awarie
 generują propozycję ewolucji w `evolution/proposals/from_incident_*.yaml`.
+
+Standaryzacja artefaktów (URI3 Artifact YAML):
+
+```bash
+hypervisor artifacts schemas          # walidacja schemas/*.schema.json
+hypervisor artifacts check            # walidacja output/incidents, evolution/proposals, runtime state
+hypervisor artifacts lifecycle        # raport pokrycia $schema/apiVersion/kind/uri.self
+hypervisor artifacts lifecycle --strict
+hypervisor ticket import planfile.yaml
+hypervisor evolution propose-from-ticket PL-1
+hypervisor evolution propose-from-incident output/incidents/.../inc_*.yaml
+```
+
+Runtime state (`output/runtime/agents/*/state.json`) i logi (`log://`) używają wspólnego
+envelope (`apiVersion`, `kind`, `$schema`). Tickety planfile (`ticket://feature/PL-1`) i
+incydenty (`incident://...`) są dwoma źródłami ewolucji przez `evolution://proposal/from-*`.
+`artifacts lifecycle` skanuje configi, deploymenty, kontrakty, domain packi, runtime state,
+workflow outputs, incydenty, tickety i propozycje, żeby pokazać, które pliki nadal są legacy
+albo luźnymi JSON/YAML bez stabilnego URI.
 
 Zobacz [`examples/09_run_agent_hypervisor/`](examples/09_run_agent_hypervisor/README.md).
 

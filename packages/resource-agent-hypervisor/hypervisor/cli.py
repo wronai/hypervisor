@@ -1,6 +1,7 @@
 import json
 import sys
 from collections.abc import Sequence
+from pathlib import Path
 
 import typer
 
@@ -26,6 +27,12 @@ from hypervisor.uri.client import Uri3Client
 app = typer.Typer(help="Hypervisor CLI — deployment registry, agent lifecycle, uri3 adapter")
 repair_app = typer.Typer(help="Evolutionary self-healing: diagnose, apply, learn from incidents")
 app.add_typer(repair_app, name="repair")
+artifacts_app = typer.Typer(help="Validate schema-backed runtime artifacts")
+app.add_typer(artifacts_app, name="artifacts")
+evolution_app = typer.Typer(help="Evolution proposals from incidents, tickets, and tests")
+app.add_typer(evolution_app, name="evolution")
+ticket_app = typer.Typer(help="Ticket artifacts and planfile import")
+app.add_typer(ticket_app, name="ticket")
 
 
 @app.command()
@@ -237,6 +244,107 @@ def repair_learn_cmd(
     echo_json(payload)
     if not payload.get("ok"):
         raise typer.Exit(1)
+
+
+@artifacts_app.command("check")
+def artifacts_check_cmd(
+    path: str = typer.Option("", "--path", help="Optional glob root under repo"),
+):
+    """Validate schema-backed artifacts under output/ and evolution/."""
+    from hypervisor.artifacts.gate import check_artifacts
+    from hypervisor.paths import find_repo_root
+
+    repo = find_repo_root()
+    payload = check_artifacts(repo)
+    echo_json(payload)
+    if not payload.get("ok"):
+        raise typer.Exit(1)
+
+
+@artifacts_app.command("schemas")
+def artifacts_schemas_cmd():
+    """Validate JSON Schema documents under schemas/."""
+    from hypervisor.artifacts.gate import check_schemas
+    from hypervisor.paths import find_repo_root
+
+    payload = check_schemas(find_repo_root())
+    echo_json(payload)
+    if not payload.get("ok"):
+        raise typer.Exit(1)
+
+
+@artifacts_app.command("lifecycle")
+def artifacts_lifecycle_cmd(
+    strict: bool = typer.Option(
+        False,
+        "--strict/--report-only",
+        help="Fail when lifecycle YAML/JSON files lack artifact envelope keys",
+    ),
+    sample_limit: int = typer.Option(20, "--sample-limit", help="Number of noncanonical samples"),
+):
+    """Report artifact-envelope coverage across configs, contracts, runtime and outputs."""
+    from hypervisor.artifacts.gate import check_lifecycle_coverage
+    from hypervisor.paths import find_repo_root
+
+    payload = check_lifecycle_coverage(
+        find_repo_root(),
+        strict=strict,
+        sample_limit=sample_limit,
+    )
+    echo_json(payload)
+    if strict and not payload.get("ok"):
+        raise typer.Exit(1)
+
+
+@ticket_app.command("import")
+def ticket_import_cmd(
+    strategy: str = typer.Argument(..., help="Path to planfile/strategy YAML"),
+    sprint: str = typer.Option("", "--sprint", help="Import only this sprint id"),
+):
+    """Import planfile tasks as schema-valid ticket:// artifacts."""
+    from hypervisor.integrations.planfile import import_tickets_from_planfile
+    from hypervisor.paths import find_repo_root
+
+    repo = find_repo_root()
+    payload = import_tickets_from_planfile(
+        repo / strategy if not strategy.startswith("/") else Path(strategy),
+        repo_root=repo,
+        sprint_id=sprint or None,
+    )
+    echo_json(payload)
+
+
+@evolution_app.command("propose-from-ticket")
+def evolution_propose_from_ticket_cmd(
+    ticket_path: str = typer.Argument(
+        ..., help="Path to ticket YAML or ticket id under output/tickets"
+    ),
+):
+    """Generate evolution://proposal/from-ticket/* from a Ticket artifact."""
+    from hypervisor.integrations.planfile import propose_from_ticket_path
+    from hypervisor.paths import find_repo_root
+
+    repo = find_repo_root()
+    path = Path(ticket_path)
+    if not path.exists():
+        path = repo / "output" / "tickets" / f"{ticket_path}.yaml"
+    payload = propose_from_ticket_path(path, repo_root=repo)
+    echo_json(payload)
+
+
+@evolution_app.command("propose-from-incident")
+def evolution_propose_from_incident_cmd(
+    incident_path: str = typer.Argument(..., help="Path to incident.yaml"),
+):
+    """Generate evolution://proposal/from-incident/* from an Incident artifact."""
+    from hypervisor.evolution.proposal_from_source import build_repair_proposal_from_incident
+    from hypervisor.paths import find_repo_root
+    from hypervisor.repair.validator import read_yaml
+
+    repo = find_repo_root()
+    incident = read_yaml(Path(incident_path))
+    payload = build_repair_proposal_from_incident(incident, repo_root=repo)
+    echo_json(payload)
 
 
 @app.command("logs")

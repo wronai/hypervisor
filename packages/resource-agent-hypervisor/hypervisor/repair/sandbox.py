@@ -18,7 +18,8 @@ def simulate_playbook(
         "mode": "simulate",
         "playbook": playbook,
         "selector": selector,
-        "would_apply": playbook in {
+        "would_apply": playbook
+        in {
             "sync_health_uri",
             "restart_agent",
             "clear_stale_runtime",
@@ -43,8 +44,6 @@ def test_repair_plan_in_sandbox(
         if name in {"regenerate_agent", "register_repair_capability"}:
             results.append(simulate_playbook(name, selector=selector, root=root))
         else:
-            results.append(
-                apply_playbook(name, selector=selector, root=root, approved=False)
-            )
+            results.append(apply_playbook(name, selector=selector, root=root, approved=False))
     ok = all(item.get("ok") is not False for item in results)
     return {"ok": ok, "mode": "sandbox", "results": results}

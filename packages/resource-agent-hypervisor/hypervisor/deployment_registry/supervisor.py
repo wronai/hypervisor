@@ -20,6 +20,34 @@ from hypervisor.deployment_registry.runtime_state import (
     load_runtime_state,
     runtime_status,
 )
+
+
+def _state_pid(state: dict[str, Any]) -> int | None:
+    process = state.get("process") or {}
+    if isinstance(process, dict) and process.get("pid") is not None:
+        return process.get("pid")
+    return state.get("pid")
+
+
+def _state_command(state: dict[str, Any]) -> str:
+    process = state.get("process") or {}
+    if isinstance(process, dict) and process.get("command"):
+        return str(process["command"])
+    return str(state.get("command") or "")
+
+
+def _state_health_uri(state: dict[str, Any]) -> str:
+    network = state.get("network") or {}
+    if isinstance(network, dict) and network.get("effective_health_uri"):
+        return str(network["effective_health_uri"])
+    return str(state.get("health_uri") or "")
+
+
+def _runtime_command_port(state: dict[str, Any], plan: dict[str, Any]) -> int | None:
+    runtime_command = _state_command(state)
+    if runtime_command:
+        return command_port_from_runtime({"command": runtime_command}, plan)
+    return None
 from hypervisor.deployment_registry.selector import resolve_deployment
 from hypervisor.paths import find_repo_root
 
@@ -141,12 +169,12 @@ def inspect_agent(
     except (FileNotFoundError, ValueError):
         run_plan = None
 
-    pid = state.get("pid")
+    pid = _state_pid(state)
     process_alive = is_process_alive(pid if isinstance(pid, int) else None)
     runtime = runtime_status(deployment.id, repo)
     plan_dict = run_plan or {}
     stored_health_uri = str(
-        state.get("health_uri") or plan_dict.get("health_uri") or deployment.health_uri or ""
+        _state_health_uri(state) or plan_dict.get("health_uri") or deployment.health_uri or ""
     )
     effective_health_uri = resolve_effective_health_uri(state, plan_dict)
     effective_port = _port_from_http_uri(effective_health_uri)
@@ -235,7 +263,7 @@ def _classify_incidents(
     logs: dict[str, Any],
 ) -> list[dict[str, Any]]:
     incidents: list[dict[str, Any]] = []
-    command_port = command_port_from_runtime(state, plan)
+    command_port = _runtime_command_port(state, plan)
     stored_port = _port_from_http_uri(stored_health_uri)
     effective_port = _port_from_http_uri(effective_health_uri)
     if runtime == "stale":
@@ -331,7 +359,7 @@ def _auto_repair_plan(inspection: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     all_codes = codes | warning_codes
     state = inspection.get("runtime_state") or {}
     plan = inspection.get("run_plan") or {}
-    port = command_port_from_runtime(state, plan) or plan.get("port")
+    port = _runtime_command_port(state, plan) or command_port_from_runtime(state, plan) or plan.get("port")
 
     if all_codes & {"RUNTIME_STATE_STALE", "PROCESS_NOT_ALIVE"}:
         return "restart", {"port": port} if port else {}

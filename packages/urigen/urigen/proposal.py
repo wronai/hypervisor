@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from urigen.artifacts import DEFAULT_ARTIFACTS, PROFILE_INCLUDES
+from urigen.envelope import stamp_proposal
 from urigen.models import normalize_profile, slugify, wants_operator, wants_voice
 
 
@@ -25,34 +26,36 @@ def plan_ecosystem(
         capabilities.extend(["stt.mock.transcribe", "tts.mock.speak", "voice.command.from_text"])
         flows.append("voice-command-health")
 
-    return {
-        "version": 1,
-        "proposal": {
-            "id": eco_id,
-            "source_prompt": prompt,
-            "kind": "ecosystem",
-            "profile": selected_profile,
-        },
-        "intent": {
-            "domains": ["weather_map"],
-            "agents": ["weather-map-agent"],
-            "capabilities": capabilities,
-            "flows": flows,
-            "deployments": ["weather-map-agent.local"],
-            "operator": wants_operator(prompt, selected_profile),
-            "voice": wants_voice(prompt, selected_profile),
-        },
-        "profile": {
-            "name": selected_profile,
-            "include": PROFILE_INCLUDES[selected_profile],
-        },
-        "policy": {
-            "requires_approval": True,
-            "side_effects": ["generate_files", "create_deployment_config"],
-            "execution_allowed": False,
-        },
-        "artifacts_to_generate": list(DEFAULT_ARTIFACTS),
-    }
+    return stamp_proposal(
+        {
+            "version": 1,
+            "proposal": {
+                "id": eco_id,
+                "source_prompt": prompt,
+                "kind": "ecosystem",
+                "profile": selected_profile,
+            },
+            "intent": {
+                "domains": ["weather_map"],
+                "agents": ["weather-map-agent"],
+                "capabilities": capabilities,
+                "flows": flows,
+                "deployments": ["weather-map-agent.local"],
+                "operator": wants_operator(prompt, selected_profile),
+                "voice": wants_voice(prompt, selected_profile),
+            },
+            "profile": {
+                "name": selected_profile,
+                "include": PROFILE_INCLUDES[selected_profile],
+            },
+            "policy": {
+                "requires_approval": True,
+                "side_effects": ["generate_files", "create_deployment_config"],
+                "execution_allowed": False,
+            },
+            "artifacts_to_generate": list(DEFAULT_ARTIFACTS),
+        }
+    )
 
 
 def _default_ecosystem_id(prompt: str, profile: str) -> str:

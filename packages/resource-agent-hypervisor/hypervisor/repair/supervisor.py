@@ -8,7 +8,7 @@ from hypervisor.deployment_registry.supervisor import ensure_agent_healthy, insp
 from hypervisor.paths import find_repo_root
 from hypervisor.repair.classifier import classify_inspection
 from hypervisor.repair.incident import build_incident_from_inspection, load_incident, write_incident
-from hypervisor.repair.playbooks import apply_playbook, apply_playbook_sequence
+from hypervisor.repair.playbooks import apply_playbook
 from hypervisor.repair.policy import is_playbook_allowed, playbook_requires_approval
 from hypervisor.repair.proposal_builder import build_repair_proposal, link_proposal_to_incident
 from hypervisor.repair.registry import find_matching_case
@@ -137,7 +137,9 @@ def supervise_with_repair(
             }
         )
 
-    after = healed.get("after") or inspect_agent(selector, root=repo, timeout=timeout, log_limit=log_limit)
+    after = healed.get("after") or inspect_agent(
+        selector, root=repo, timeout=timeout, log_limit=log_limit
+    )
     classification = classify_inspection(after, log_payload=after.get("log_errors"))
     incident = build_incident_from_inspection(
         after,
@@ -202,7 +204,9 @@ def learn_from_incident(
     incident = load_incident(incident_path, repo_root=repo)
     metadata = incident.get("metadata") or {}
     agent_id = str(metadata.get("agent_id") or "")
-    classification = incident.get("classification") or classify_inspection({"incidents": incident.get("symptoms") or []})
+    classification = incident.get("classification") or classify_inspection(
+        {"incidents": incident.get("symptoms") or []}
+    )
     proposal = build_repair_proposal(incident, repo_root=repo)
     link_proposal_to_incident(Path(incident_path), proposal)
 

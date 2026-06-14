@@ -5,7 +5,7 @@
     "schema_version": 1,
     "description": "Central index for resources, capabilities, schemas, events and projections."
   },
-  "contract_hash": "sha256:784d36a056fed1a5a77bbe9aa1d3a141d3af32514b572dbdb7bd858008a57e68",
+  "contract_hash": "sha256:4f5dd0ca32396dab6f416c49af33d7e128ec5e63d5a9eeb5de2c7741dfa30cbf",
   "resources": [
     {
       "uri": "resource://users/{user_id}",

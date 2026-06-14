@@ -10,6 +10,7 @@ from urigen.explain import explain_ecosystem
 from urigen.generator import generate_ecosystem
 from urigen.io import dump_yaml, write_yaml
 from urigen.proposal import plan_ecosystem
+from urigen.schema_check import schema_check_ecosystem
 from urigen.verify import verify_ecosystem
 
 
@@ -45,7 +46,18 @@ def cmd_explain(args: argparse.Namespace) -> int:
 
 
 def cmd_apply(args: argparse.Namespace) -> int:
-    payload = apply_ecosystem(args.ecosystem, approve=args.approve)
+    payload = apply_ecosystem(
+        args.ecosystem,
+        approve=args.approve,
+        plan_only=args.plan,
+        root=args.root or None,
+    )
+    _emit(payload, json_out=args.json)
+    return 0 if payload.get("ok") else 1
+
+
+def cmd_schema_check(args: argparse.Namespace) -> int:
+    payload = schema_check_ecosystem(args.path, root=args.root or None)
     _emit(payload, json_out=args.json)
     return 0 if payload.get("ok") else 1
 
@@ -82,8 +94,18 @@ def build_parser() -> argparse.ArgumentParser:
     apply_cmd = sub.add_parser("apply", help="approval-gated apply plan")
     apply_cmd.add_argument("ecosystem")
     apply_cmd.add_argument("--approve", action="store_true")
+    apply_cmd.add_argument("--plan", action="store_true", help="Generate apply_plan.yaml without mutating repo")
+    apply_cmd.add_argument("--root", default="", help="Repository root for apply targets")
     apply_cmd.add_argument("--json", action="store_true")
     apply_cmd.set_defaults(func=cmd_apply)
+
+    schema = sub.add_parser("schema", help="Check ecosystem YAML artifact envelopes")
+    schema_sub = schema.add_subparsers(dest="schema_cmd", required=True)
+    schema_check = schema_sub.add_parser("check", help="Check $schema/kind/apiVersion/uri.self in ecosystem dir")
+    schema_check.add_argument("path")
+    schema_check.add_argument("--root", default="")
+    schema_check.add_argument("--json", action="store_true")
+    schema_check.set_defaults(func=cmd_schema_check)
 
     return parser
 

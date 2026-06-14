@@ -87,6 +87,14 @@ def _backend_from_target(target: str, *, backend_type: str) -> dict[str, Any]:
     return {"type": kind, "target": target}
 
 
+@app.command("doctor")
+def doctor_cmd() -> None:
+    """Check uri2run transport dependencies."""
+    from uri2run.doctor import doctor_transport_dependencies
+
+    typer.echo(json.dumps(doctor_transport_dependencies(), indent=2, ensure_ascii=False))
+
+
 def main(argv: list[str] | None = None) -> int:
     try:
         app(prog_name="uri2run", args=argv or sys.argv[1:], standalone_mode=False)

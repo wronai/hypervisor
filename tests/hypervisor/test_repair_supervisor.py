@@ -5,8 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-import yaml
-
 from hypervisor.repair.classifier import classify_inspection
 from hypervisor.repair.incident import build_incident_from_inspection, load_incident, write_incident
 from hypervisor.repair.registry import find_matching_case
@@ -53,7 +51,10 @@ def test_incident_artifact_has_schema_and_uri(tmp_path: Path, monkeypatch: pytes
         "incidents": [{"code": "PROCESS_RUNNING_BUT_UNHEALTHY", "detail": "health failed"}],
         "log_uri": "log://hypervisor?grep=weather-map-agent.local",
         "log_errors": {"error_count": 0, "entries": []},
-        "runtime_state": {"command": "uvicorn --port 40061", "health_uri": "http://localhost:8101/health"},
+        "runtime_state": {
+            "command": "uvicorn --port 40061",
+            "health_uri": "http://localhost:8101/health",
+        },
     }
     incident = build_incident_from_inspection(
         inspection,
