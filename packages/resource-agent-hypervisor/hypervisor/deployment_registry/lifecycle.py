@@ -272,6 +272,53 @@ def _is_process_start_failure(payload: dict[str, Any]) -> bool:
     return payload.get("ok") is False and payload.get("result_type") == "lifecycle"
 
 
+def _resolve_initial_run_plan(
+    selector: str,
+    deployment,
+    *,
+    repo: Path,
+    port: int | None,
+    host: str,
+    reload: bool,
+    if_running: str | None,
+    detach: bool,
+) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    existing = _load_active_runtime_state(selector, deployment, repo=repo)
+    plan = build_agent_run_plan(deployment, repo=repo, port=port, host=host, reload=reload)
+    _, plan, ready_plan = _resolve_running_process(
+        selector,
+        deployment,
+        existing,
+        plan,
+        repo=repo,
+        if_running=if_running,
+        detach=detach,
+        port=port,
+    )
+    if ready_plan is not None:
+        return ready_plan, plan
+    return None, rebind_plan_port_if_busy(deployment, plan, repo=repo, host=host, reload=reload)
+
+
+def _execute_run_agent_plan(
+    deployment,
+    plan: dict[str, Any],
+    finalize,
+    *,
+    repo: Path,
+    host: str,
+    port: int | None,
+    detach: bool,
+) -> dict[str, Any]:
+    target_result = _run_non_local_target(deployment, repo=repo)
+    if target_result is not None:
+        return target_result
+    plan = _start_local_process(deployment, plan, repo=repo, host=host, port=port, detach=detach)
+    if _is_process_start_failure(plan):
+        return _lifecycle_payload(plan)
+    return finalize(plan)
+
+
 def run_agent(
     selector: str,
     *,
@@ -305,33 +352,29 @@ def run_agent(
             supervise_repair=supervise_repair,
         )
 
-    existing = _load_active_runtime_state(selector, deployment, repo=repo)
-    plan = build_agent_run_plan(deployment, repo=repo, port=port, host=host, reload=reload)
-    _, plan, ready_plan = _resolve_running_process(
+    ready_plan, plan = _resolve_initial_run_plan(
         selector,
         deployment,
-        existing,
-        plan,
         repo=repo,
+        port=port,
+        host=host,
+        reload=reload,
         if_running=if_running,
         detach=detach,
-        port=port,
     )
     if ready_plan is not None:
         return finalize(ready_plan)
-
-    plan = rebind_plan_port_if_busy(deployment, plan, repo=repo, host=host, reload=reload)
     if dry_run:
         return _lifecycle_payload(plan)
-
-    target_result = _run_non_local_target(deployment, repo=repo)
-    if target_result is not None:
-        return target_result
-
-    plan = _start_local_process(deployment, plan, repo=repo, host=host, port=port, detach=detach)
-    if _is_process_start_failure(plan):
-        return _lifecycle_payload(plan)
-    return finalize(plan)
+    return _execute_run_agent_plan(
+        deployment,
+        plan,
+        finalize,
+        repo=repo,
+        host=host,
+        port=port,
+        detach=detach,
+    )
 
 
 def stop_agent(

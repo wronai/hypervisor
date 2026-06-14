@@ -79,23 +79,52 @@ def _path_has_any(path: str, tokens: tuple[str, ...]) -> bool:
     return any(token in path for token in tokens)
 
 
+def _classify_repair(scheme: str, path: str) -> ActionKind | None:
+    if scheme == "repair" or _path_has_any(path, ("/repair", "/apply")):
+        return "repair"
+    return None
+
+
+def _classify_apply(scheme: str, path: str) -> ActionKind | None:
+    if scheme in {"evolution", "ecosystem"} and _path_has_any(path, ("apply", "deploy")):
+        return "apply"
+    return None
+
+
+def _classify_hypervisor_mutation(scheme: str, path: str) -> ActionKind | None:
+    if scheme == "hypervisor" and _path_has_any(path, ("/run", "/stop", "/restart")):
+        return "mutation"
+    return None
+
+
+def _classify_read(scheme: str, path: str, parsed) -> ActionKind | None:
+    if scheme not in READ_SCHEMES or _path_has_any(path, ("/apply", "/run", "/create")):
+        return None
+    if scheme in {"http", "https"} and parsed.query and "method=POST" in parsed.query.upper():
+        return "mutation"
+    return "read"
+
+
+def _classify_mutation_scheme(scheme: str, path: str) -> ActionKind | None:
+    if scheme in MUTATION_SCHEMES:
+        return "mutation"
+    return None
+
+
 def classify_uri(uri: str) -> ActionKind:
     parsed = urlparse(uri)
     scheme = (parsed.scheme or "").lower()
     path = (parsed.path or "").lower()
-
-    if scheme == "repair" or _path_has_any(path, ("/repair", "/apply")):
-        return "repair"
-    if scheme in {"evolution", "ecosystem"} and _path_has_any(path, ("apply", "deploy")):
-        return "apply"
-    if scheme == "hypervisor" and _path_has_any(path, ("/run", "/stop", "/restart")):
-        return "mutation"
-    if scheme in READ_SCHEMES and not _path_has_any(path, ("/apply", "/run", "/create")):
-        if scheme in {"http", "https"} and parsed.query and "method=POST" in parsed.query.upper():
-            return "mutation"
-        return "read"
-    if scheme in MUTATION_SCHEMES:
-        return "mutation"
+    for classifier in (
+        lambda: _classify_repair(scheme, path),
+        lambda: _classify_apply(scheme, path),
+        lambda: _classify_hypervisor_mutation(scheme, path),
+        lambda: _classify_read(scheme, path, parsed),
+        lambda: _classify_mutation_scheme(scheme, path),
+    ):
+        result = classifier()
+        if result is not None:
+            return result
     return "read"
 
 

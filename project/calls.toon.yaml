@@ -1,7 +1,7 @@
 # code2llm call graph | /home/tom/github/wronai/hypervisor
-# generated in 0.22s
-# nodes: 373 | edges: 500 | modules: 121
-# CC̄=3.5
+# generated in 0.35s
+# nodes: 368 | edges: 500 | modules: 112
+# CC̄=3.4
 
 HUBS[20]:
   uri2ops.operation_registry.models.OperationRegistry.list
@@ -26,24 +26,24 @@ HUBS[20]:
     CC=12  in:1  out:32  total:33
   packages.urish.urish.cli._finish
     CC=3  in:27  out:4  total:31
-  uri3.graph.uri_graph.build_graph_from_tree
-    CC=10  in:2  out:28  total:30
-  packages.urish.urish.backends.ask.ask_prompt
-    CC=16  in:2  out:28  total:30
-  packages.uri3.uri3.resolvers.explain.explain_uri
-    CC=14  in:8  out:21  total:29
   packages.uri3.uri3.graph.artifacts.write_artifact
     CC=9  in:7  out:22  total:29
+  packages.uri3.uri3.resolvers.explain.explain_uri
+    CC=14  in:8  out:21  total:29
   packages.urigen.urigen.apply_planner.build_apply_plan
     CC=13  in:1  out:28  total:29
   packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri
     CC=12  in:5  out:23  total:28
-  packages.urish.urish.cli._emit
-    CC=2  in:24  out:2  total:26
+  packages.uri3.uri3.logs.reader.summarize_logs
+    CC=6  in:8  out:18  total:26
   packages.urigen.urigen.apply_executor._copy_tree
     CC=7  in:1  out:25  total:26
+  packages.uri3.uri3.graph.graph_serializer.normalize_graph_payload
+    CC=12  in:2  out:24  total:26
   packages.uri2ops.uri2ops.remote_registry.loader.resolve_operation_registry
     CC=12  in:8  out:18  total:26
+  packages.uri3.uri3.graph.graph_validator.validate_workflow_graph
+    CC=9  in:13  out:13  total:26
 
 MODULES:
   domains.weather_map.handlers.generate_weather_map  [1 funcs]
@@ -130,44 +130,19 @@ MODULES:
   packages.uri3.uri3.artifacts.writer  [2 funcs]
     write_json_artifact  CC=3  out:6
     write_yaml_artifact  CC=3  out:6
-  packages.uri3.uri3.cli.commands.graph  [1 funcs]
-    register  CC=1  out:5
-  packages.uri3.uri3.cli.commands.resolve  [1 funcs]
-    register  CC=1  out:24
-  packages.uri3.uri3.cli.helpers  [2 funcs]
-    list_payload  CC=2  out:3
-    quick_reference  CC=5  out:5
-  packages.uri3.uri3.cli.main  [1 funcs]
-    main  CC=2  out:4
-  packages.uri3.uri3.config.cli_shortcuts  [2 funcs]
-    cli_examples  CC=3  out:3
-    scan_shortcuts  CC=4  out:6
-  packages.uri3.uri3.config.docker_stacks  [1 funcs]
-    resolve_agent_stack  CC=4  out:15
   packages.uri3.uri3.config.repo_root  [1 funcs]
     find_repo_root  CC=4  out:4
   packages.uri3.uri3.config.uri_yaml  [1 funcs]
     unwrap_uri_yaml_document  CC=4  out:5
-  packages.uri3.uri3.docker.actions.compose  [8 funcs]
-    _parse_ps_stdout  CC=4  out:5
-    compose_base  CC=3  out:2
+  packages.uri3.uri3.docker.actions.compose  [1 funcs]
     control_compose  CC=6  out:6
-    control_compose_down  CC=2  out:3
-    control_compose_lifecycle  CC=1  out:2
-    control_compose_logs  CC=1  out:3
-    control_compose_ps  CC=3  out:4
-    control_compose_up  CC=9  out:8
-  packages.uri3.uri3.docker.actions.container  [3 funcs]
-    _container_name  CC=2  out:0
+  packages.uri3.uri3.docker.actions.container  [2 funcs]
     control_container  CC=8  out:9
     handles_container_action  CC=3  out:1
-  packages.uri3.uri3.docker.compose_generator  [2 funcs]
-    build_generate_plan  CC=2  out:9
+  packages.uri3.uri3.docker.compose_generator  [1 funcs]
     write_generated_compose  CC=1  out:6
   packages.uri3.uri3.docker.controller  [1 funcs]
     control_docker  CC=11  out:11
-  packages.uri3.uri3.docker.runner  [1 funcs]
-    run_command  CC=4  out:5
   packages.uri3.uri3.doctor.runner  [1 funcs]
     run_doctor  CC=9  out:16
   packages.uri3.uri3.graph.adapters.browser_mock  [2 funcs]
@@ -275,8 +250,12 @@ MODULES:
     matches_level  CC=2  out:3
     matches_logger  CC=3  out:4
     matches_time_window  CC=7  out:1
-  packages.uri3.uri3.logs.parsing  [1 funcs]
+  packages.uri3.uri3.logs.parsing  [5 funcs]
+    _json_event_message  CC=4  out:4
+    empty_entry  CC=1  out:0
+    parse_json_entry  CC=11  out:21
     parse_log_line  CC=4  out:5
+    parse_text_entry  CC=5  out:8
   packages.uri3.uri3.logs.reader  [5 funcs]
     _parse_since  CC=7  out:14
     read_logs  CC=9  out:10
@@ -285,8 +264,6 @@ MODULES:
     summarize_logs  CC=6  out:18
   packages.uri3.uri3.logs.writer  [1 funcs]
     append_log  CC=13  out:19
-  packages.uri3.uri3.protocols.schemes.spec_registry  [1 funcs]
-    list_schemes  CC=5  out:5
   packages.uri3.uri3.resolvers.docker_resolver  [1 funcs]
     parse_docker_uri  CC=12  out:23
   packages.uri3.uri3.resolvers.explain  [1 funcs]
@@ -299,7 +276,10 @@ MODULES:
   packages.uri3.uri3.validators.uri_tree_validator  [2 funcs]
     load_yaml  CC=1  out:2
     validate_uri_tree  CC=2  out:7
-  packages.urigen.urigen.apply  [1 funcs]
+  packages.urigen.urigen.apply  [4 funcs]
+    _build_apply_result  CC=3  out:1
+    _ecosystem_meta  CC=4  out:4
+    _verify_before_apply  CC=2  out:3
     apply_ecosystem  CC=5  out:21
   packages.urigen.urigen.apply_executor  [12 funcs]
     _copy_file  CC=5  out:19
@@ -330,7 +310,11 @@ MODULES:
     cmd_schema_check  CC=3  out:3
     cmd_verify  CC=2  out:3
     main  CC=1  out:4
-  packages.urigen.urigen.envelope  [1 funcs]
+  packages.urigen.urigen.envelope  [5 funcs]
+    _ecosystem_metadata  CC=2  out:5
+    _ecosystem_spec  CC=8  out:8
+    _legacy_fields  CC=3  out:1
+    stamp_ecosystem  CC=8  out:16
     stamp_proposal  CC=11  out:19
   packages.urigen.urigen.explain  [8 funcs]
     _agents  CC=7  out:9
@@ -387,7 +371,7 @@ MODULES:
   packages.urish.urish.backends.agent  [1 funcs]
     agent_action  CC=5  out:9
   packages.urish.urish.backends.ask  [1 funcs]
-    ask_prompt  CC=16  out:28
+    ask_prompt  CC=1  out:5
   packages.urish.urish.backends.call  [1 funcs]
     call_uri  CC=6  out:7
   packages.urish.urish.backends.dashboard  [1 funcs]
@@ -473,8 +457,12 @@ MODULES:
     resolve_shortcut  CC=6  out:7
     resolve_target  CC=1  out:2
     shortcuts_path  CC=2  out:1
-  packages.urish.urish.ticket_workflow  [2 funcs]
+  packages.urish.urish.ticket_workflow  [6 funcs]
+    _dashboard_intent  CC=1  out:0
+    _evolution_intent  CC=3  out:3
+    _ticket_prompt  CC=8  out:9
     build_ticket_workflow  CC=8  out:14
+    detect_intent_from_ticket  CC=6  out:9
     resolve_ticket_path  CC=10  out:13
   uri2ops.operation_registry.dispatcher  [3 funcs]
     _split_python_uri  CC=3  out:4
@@ -500,8 +488,6 @@ MODULES:
     registry  CC=1  out:1
     registry_export  CC=1  out:2
     run_task  CC=1  out:3
-  uri3.graph.uri_graph  [1 funcs]
-    build_graph_from_tree  CC=10  out:28
   uri3.protocols.parser  [1 funcs]
     parse_uri  CC=2  out:4
   uri3.validators.uri_validator  [1 funcs]

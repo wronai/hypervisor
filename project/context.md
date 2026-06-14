@@ -7,20 +7,20 @@
 - **Primary Language**: python
 - **Languages**: python: 448, yaml: 81, json: 32, shell: 30, toml: 17
 - **Analysis Mode**: static
-- **Total Functions**: 1785
+- **Total Functions**: 1810
 - **Total Classes**: 113
 - **Modules**: 639
-- **Entry Points**: 617
+- **Entry Points**: 620
 
 ## Architecture by Module
+
+### www.landing
+- **Functions**: 85
+- **File**: `landing.js`
 
 ### www.app
 - **Functions**: 81
 - **File**: `app.js`
-
-### www.landing
-- **Functions**: 80
-- **File**: `landing.js`
 
 ### packages.urish.urish.cli
 - **Functions**: 43
@@ -42,6 +42,10 @@
 ### packages.resource-agent-hypervisor.hypervisor.cli
 - **Functions**: 27
 - **File**: `cli.py`
+
+### packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle
+- **Functions**: 23
+- **File**: `lifecycle.py`
 
 ### packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client
 - **Functions**: 21
@@ -94,10 +98,6 @@
 ### packages.uri2verify.uri2verify.replay
 - **Functions**: 13
 - **File**: `replay.py`
-
-### packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle
-- **Functions**: 13
-- **File**: `lifecycle.py`
 
 ## Key Entry Points
 
@@ -177,14 +177,14 @@ Main execution flows into the system:
 ### packages.uri3.uri3.graph.models.GraphNode.from_dict
 - **Calls**: cls, str, str, str, data.get, data.get, dict, uri2ops.operation_registry.models.OperationRegistry.list
 
+### packages.uri3.uri3.cli.commands.doctor.register
+- **Calls**: app.command, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+
 ### packages.nl2uri.nl2uri.cli.task
 - **Calls**: app.command, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, uri2ops.server.service.OperatorService.plan_task
 
 ### packages.nl2uri.nl2uri.cli.graph
 - **Calls**: app.command, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, packages.nl2uri.nl2uri.graph_planner.plan_workflow_graph
-
-### packages.uri3.uri3.cli.commands.doctor.register
-- **Calls**: app.command, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
 
 ### www.assets.app.init
 - **Calls**: www.assets.app.updateApiLabels, www.assets.app.addAssistantWelcome, www.assets.app.addEventListener, www.assets.app.preventDefault, www.assets.app.trim, www.assets.app.handlePrompt, www.assets.app.querySelectorAll, www.assets.app.forEach
@@ -386,6 +386,15 @@ Key functions that process and transform data:
 ### uri2ops.server.service.OperatorService.validate_task
 - **Output to**: validate_task_data, self.registry
 
+### packages.uri3.uri3.logs.parsing.parse_json_entry
+- **Output to**: line.strip, json.loads, isinstance, isinstance, data.get
+
+### packages.uri3.uri3.logs.parsing.parse_text_entry
+- **Output to**: line.strip, _TEXT_LOG_RE.match, match.groupdict, groups.get, None.upper
+
+### packages.uri3.uri3.logs.parsing.parse_log_line
+- **Output to**: line.strip, packages.uri3.uri3.logs.parsing.empty_entry, packages.uri3.uri3.logs.parsing.parse_json_entry, packages.uri3.uri3.logs.parsing.parse_text_entry, line.strip
+
 ### packages.uri3.uri3.logs.reader._parse_since
 - **Output to**: value.strip, datetime.now, value.endswith, value.endswith, value.endswith
 
@@ -433,15 +442,6 @@ Key functions that process and transform data:
 
 ### packages.uri3.uri3.protocols.schemes.instance_parser._parse_http
 - **Output to**: packages.uri3.uri3.resolvers.protocol_resolver.resolve_http_like
-
-### packages.uri3.uri3.protocols.schemes.instance_parser._parse_a2a
-- **Output to**: packages.uri3.uri3.resolvers.protocol_resolver.resolve_a2a
-
-### packages.uri3.uri3.protocols.schemes.instance_parser._parse_mcp
-- **Output to**: packages.uri3.uri3.resolvers.protocol_resolver.resolve_mcp
-
-### packages.uri3.uri3.protocols.schemes.instance_parser._parse_docker
-- **Output to**: packages.uri3.uri3.resolvers.docker_resolver.resolve_docker
 
 ## Behavioral Patterns
 
@@ -493,7 +493,6 @@ Functions exposed as public API (no underscore prefix):
 - `packages.uri3.uri3.cli.commands.discovery.register` - 47 calls
 - `packages.urigen.urigen.cli.build_parser` - 41 calls
 - `packages.urigen.urigen.generator.generate_ecosystem` - 40 calls
-- `packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle.run_agent` - 40 calls
 - `packages.urish.urish.backends.dashboard.create_dashboard` - 37 calls
 - `packages.urish.urish.cli.ask_cmd` - 34 calls
 - `packages.uri2ops.uri2ops.cli.main` - 33 calls
@@ -505,7 +504,6 @@ Functions exposed as public API (no underscore prefix):
 - `packages.nl2uri.nl2uri.flow_planner.plan_flow` - 29 calls
 - `packages.urigen.urigen.apply_planner.build_apply_plan` - 28 calls
 - `uri3.graph.uri_graph.build_graph_from_tree` - 28 calls
-- `packages.urish.urish.backends.ask.ask_prompt` - 28 calls
 - `packages.uri2run.uri2run.runner.run_target` - 27 calls
 - `packages.uri2run.uri2run.transports.flow_transport.run_uri_flow` - 26 calls
 - `packages.uri2run.uri2run.transports.graph_transport.run_uri_graph` - 26 calls
@@ -526,9 +524,11 @@ Functions exposed as public API (no underscore prefix):
 - `packages.uri2run.uri2run.transports.a2a_transport.run_a2a` - 23 calls
 - `packages.uri3.uri3.graph.artifacts.write_artifact` - 22 calls
 - `packages.uri2run.uri2run.transports.mcp_transport.run_mcp` - 22 calls
-- `packages.uri3.uri3.resolvers.explain.explain_uri` - 21 calls
-- `packages.resource-agent-hypervisor.hypervisor.repair.supervisor.repair_apply` - 21 calls
 - `packages.urigen.urigen.apply.apply_ecosystem` - 21 calls
+- `packages.uri3.uri3.logs.parsing.parse_json_entry` - 21 calls
+- `packages.uri3.uri3.resolvers.explain.explain_uri` - 21 calls
+- `packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.chat_format.format_uri_result_markdown` - 21 calls
+- `packages.resource-agent-hypervisor.hypervisor.repair.supervisor.repair_apply` - 21 calls
 
 ## System Interactions
 

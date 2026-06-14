@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.18s
+%% generated in 0.22s
     domains__weather_map["domains.weather_map<br/>1 funcs"]
     examples__23_nl_to_agent_tutorial["examples.23_nl_to_agent_tutorial<br/>3 funcs"]
     generator__hashutil["generator.hashutil<br/>1 funcs"]
@@ -20,7 +20,7 @@ flowchart TD
     packages__hypervisor_dashboard_agent["packages.hypervisor-dashboard-agent<br/>62 funcs"]
     packages__nl2uri["packages.nl2uri<br/>132 funcs"]
     packages__resource_agent_factory["packages.resource-agent-factory<br/>14 funcs"]
-    packages__resource_agent_hypervisor["packages.resource-agent-hypervisor<br/>327 funcs"]
+    packages__resource_agent_hypervisor["packages.resource-agent-hypervisor<br/>337 funcs"]
     packages__touri["packages.touri<br/>69 funcs"]
     packages__uri2flow["packages.uri2flow<br/>31 funcs"]
     packages__uri2ops["packages.uri2ops<br/>25 funcs"]
@@ -30,7 +30,7 @@ flowchart TD
     packages__uri2voice["packages.uri2voice<br/>7 funcs"]
     packages__uri3["packages.uri3<br/>366 funcs"]
     packages__urigen["packages.urigen<br/>92 funcs"]
-    packages__urish["packages.urish<br/>117 funcs"]
+    packages__urish["packages.urish<br/>127 funcs"]
     scripts__www["scripts.www<br/>19 funcs"]
     testenv__ssh_agent_host["testenv.ssh_agent_host<br/>3 funcs"]
     uri2ops__operation_registry["uri2ops.operation_registry<br/>13 funcs"]
@@ -40,24 +40,25 @@ flowchart TD
     uri3__resolvers["uri3.resolvers<br/>9 funcs"]
     uri3__validators["uri3.validators<br/>1 funcs"]
     www__app["www.app<br/>71 funcs"]
-    www__landing["www.landing<br/>77 funcs"]
-    packages__resource_agent_hypervisor ==>|74| packages__uri3
+    www__landing["www.landing<br/>82 funcs"]
+    packages__resource_agent_hypervisor ==>|76| packages__uri3
     packages__uri2run ==>|42| packages__uri3
     packages__uri3 ==>|29| uri2ops__operation_registry
     packages__nl2uri ==>|27| packages__uri3
     packages__resource_agent_hypervisor ==>|24| examples__23_nl_to_agent_tutorial
     packages__urish ==>|22| packages__urigen
     packages__urish ==>|19| packages__uri3
-    packages__uri3 ==>|15| packages__resource_agent_hypervisor
     packages__touri ==>|13| packages__uri2run
     packages__resource_agent_hypervisor ==>|13| uri2ops__operation_registry
     packages__urish ==>|11| packages__resource_agent_hypervisor
     packages__uri3 ==>|10| packages__touri
+    packages__uri3 ==>|9| packages__hypervisor_dashboard_agent
     packages__touri ==>|9| packages__uri3
     packages__uri2ops ==>|7| uri2ops__operation_registry
+    packages__hypervisor_dashboard_agent ==>|7| packages__resource_agent_hypervisor
     packages__resource_agent_hypervisor ==>|7| hypervisor__contract_registry
     scripts__www ==>|7| examples__23_nl_to_agent_tutorial
-    packages__hypervisor_dashboard_agent ==>|7| packages__resource_agent_hypervisor
+    packages__uri3 ==>|6| packages__resource_agent_hypervisor
     packages__uri3 ==>|6| packages__uri2verify
     packages__resource_agent_factory ==>|6| examples__23_nl_to_agent_tutorial
     packages__nl2uri ==>|6| uri2ops__operation_registry
@@ -82,6 +83,7 @@ flowchart TD
     packages__uri3 -->|3| www__landing
     packages__uri3 -->|3| hypervisor__contract_registry
     packages__hypervisor_dashboard_agent -->|3| packages__urish
+    packages__hypervisor_dashboard_agent -->|3| uri2ops__operation_registry
     packages__uri2flow -->|3| examples__23_nl_to_agent_tutorial
     packages__touri -->|3| packages__uri2pact
     packages__nl2uri -->|3| nl2uri__writer
@@ -89,7 +91,6 @@ flowchart TD
     packages__resource_agent_hypervisor -->|3| packages__resource_agent_factory
     meta_agent__repair -->|3| generator__validate
     hypervisor__verifier -->|3| examples__23_nl_to_agent_tutorial
-    packages__hypervisor_dashboard_agent -->|3| uri2ops__operation_registry
     packages__uri3 -->|2| uri3__validators
     packages__uri3 -->|2| packages__urish
     packages__uri3 -->|2| packages__uri2flow
@@ -121,6 +122,8 @@ flowchart TD
     uri3__resolvers -->|1| packages__uri3
     uri3__resolvers -->|1| uri3__protocols
     packages__uri3 -->|1| packages__uri2run
+    packages__hypervisor_dashboard_agent -->|1| www__app
+    packages__hypervisor_dashboard_agent -->|1| domains__weather_map
     packages__touri -->|1| examples__23_nl_to_agent_tutorial
     packages__touri -->|1| packages__urish
     packages__touri -->|1| uri2ops__operation_registry
@@ -154,5 +157,3 @@ flowchart TD
     packages__resource_agent_hypervisor -->|1| packages__nl2uri
     hypervisor__deployment_registry -->|1| packages__resource_agent_hypervisor
     testenv__ssh_agent_host -->|1| examples__23_nl_to_agent_tutorial
-    packages__hypervisor_dashboard_agent -->|1| www__app
-    packages__hypervisor_dashboard_agent -->|1| domains__weather_map

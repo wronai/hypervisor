@@ -114,6 +114,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
 
+## [0.5.27] - 2026-06-14
+
+### Docs
+- Update README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update examples/13_nl2uri_multi_uri_graph/task_plan.yaml
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py
+- Update packages/urish/urish/backends/ask.py
+- Update packages/urish/urish/policy.py
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- ... and 13 more files
+
 ## [0.5.26] - 2026-06-14
 
 ### Docs

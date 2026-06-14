@@ -173,19 +173,6 @@ flowchart TD
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__routes__api_uri_call["api_uri_call"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__routes__api_agents["api_agents"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__routes__api_events["api_events"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__policy__decision_for_uri["decision_for_uri"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__policy__preview_action["preview_action"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__paths__repo_www_dir["repo_www_dir"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__models__UriAction__to_dict["to_dict"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__models__ProcessViewModel__to_dict["to_dict"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__models__ViewEnvelope__to_dict["to_dict"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__callReadUri["callReadUri"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__res["res"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__data["data"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__previewUri["previewUri"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__submitUriCall["submitUriCall"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__uri["uri"]
-        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__approve["approve"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__chat_format___header_lines["_header_lines"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__chat_format___identity_lines["_identity_lines"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__chat_format___planned_lines["_planned_lines"]
@@ -193,6 +180,8 @@ flowchart TD
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__chat_format__format_ask_markdown["format_ask_markdown"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__chat_format__format_uri_result_markdown("format_uri_result_markdown CC=11")
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__chat_format___display_planned["_display_planned"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__policy__decision_for_uri["decision_for_uri"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__policy__preview_action["preview_action"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__view_builder___human_title["_human_title"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__view_builder___related_uris["_related_uris"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__view_builder___process_actions["_process_actions"]
@@ -200,6 +189,10 @@ flowchart TD
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__view_builder___process_status_fields("_process_status_fields CC=8")
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__view_builder__build_process_view["build_process_view"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__view_builder__render_process_html["render_process_html"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__paths__repo_www_dir["repo_www_dir"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__models__UriAction__to_dict["to_dict"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__models__ProcessViewModel__to_dict["to_dict"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__models__ViewEnvelope__to_dict["to_dict"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__uri_client___repo_root["_repo_root"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__uri_client___uri_path_parts["_uri_path_parts"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__uri_client__list_agent_deployments["list_agent_deployments"]
@@ -219,6 +212,13 @@ flowchart TD
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__uri_client___health_request["_health_request"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__uri_client___repair_request["_repair_request"]
         packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__uri_client___log_request["_log_request"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__uri_client___select_system_uri_handler["_select_system_uri_handler"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__uri_client__call_system_uri["call_system_uri"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__callReadUri["callReadUri"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__res["res"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__data["data"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__previewUri["previewUri"]
+        packages__hypervisor_dashboard_agent__hypervisor_dashboard_agent__static__dashboard__submitUriCall["submitUriCall"]
     end
     subgraph packages__nl2uri
         packages__nl2uri__nl2uri__cli___default_use_llm["_default_use_llm"]
@@ -504,6 +504,14 @@ flowchart TD
         packages__uri2pact__uri2pact__core___block_id["_block_id"]
     end
     subgraph packages__uri2run
+        packages__uri2run__uri2run__cli__root["root"]
+        packages__uri2run__uri2run__cli___json_payload["_json_payload"]
+        packages__uri2run__uri2run__cli__call_cmd["call_cmd"]
+        packages__uri2run__uri2run__cli___build_backend["_build_backend"]
+        packages__uri2run__uri2run__cli___infer_backend_kind["_infer_backend_kind"]
+        packages__uri2run__uri2run__cli___backend_from_target["_backend_from_target"]
+        packages__uri2run__uri2run__cli__doctor_cmd["doctor_cmd"]
+        packages__uri2run__uri2run__cli__main["main"]
         packages__uri2run__uri2run__doctor__doctor_transport_dependencies["doctor_transport_dependencies"]
         packages__uri2run__uri2run__runner__unsupported_backend["unsupported_backend"]
         packages__uri2run__uri2run__runner___backend_target["_backend_target"]
@@ -556,14 +564,6 @@ flowchart TD
         packages__uri2run__uri2run__transports__shell_transport___argv["_argv"]
         packages__uri2run__uri2run__transports__shell_transport___env["_env"]
         packages__uri2run__uri2run__transports__shell_transport__run_shell["run_shell"]
-        packages__uri2run__uri2run__transports__shell_transport__run_shell_transport["run_shell_transport"]
-        packages__uri2run__uri2run__transports__graph_transport___load_graph["_load_graph"]
-        packages__uri2run__uri2run__transports__graph_transport__run_uri_graph("run_uri_graph CC=9")
-        packages__uri2run__uri2run__transports__graph_transport__run_graph_transport["run_graph_transport"]
-        packages__uri2run__uri2run__transports__python_transport__split_python_uri["split_python_uri"]
-        packages__uri2run__uri2run__transports__python_transport__run_python["run_python"]
-        packages__uri2run__uri2run__transports__python_transport__run_python_transport["run_python_transport"]
-        packages__uri2run__uri2run__transports__paths__resolve_path["resolve_path"]
     end
     subgraph packages__uri2verify
         packages__uri2verify__uri2verify__cli__replay_cmd["replay_cmd"]
@@ -621,6 +621,12 @@ flowchart TD
         packages__uri2voice__uri2voice__tts__speak["speak"]
     end
     subgraph packages__uri3
+        packages__uri3__uri3__logs__parsing__empty_entry["empty_entry"]
+        packages__uri3__uri3__logs__parsing___json_event_message["_json_event_message"]
+        packages__uri3__uri3__logs__parsing___json_entry_fields["_json_entry_fields"]
+        packages__uri3__uri3__logs__parsing__parse_json_entry("parse_json_entry CC=11")
+        packages__uri3__uri3__logs__parsing__parse_text_entry["parse_text_entry"]
+        packages__uri3__uri3__logs__parsing__parse_log_line["parse_log_line"]
         packages__uri3__uri3__logs__filters__level_rank["level_rank"]
         packages__uri3__uri3__logs__filters__entry_timestamp["entry_timestamp"]
         packages__uri3__uri3__logs__filters__matches_level["matches_level"]
@@ -675,12 +681,6 @@ flowchart TD
         packages__uri3__uri3__graph__event_emitter__record_workflow_started["record_workflow_started"]
         packages__uri3__uri3__graph__event_emitter__record_workflow_completed["record_workflow_completed"]
         packages__uri3__uri3__graph__models__GraphNode__from_dict["from_dict"]
-        packages__uri3__uri3__graph__models__GraphNode__to_dict("to_dict CC=8")
-        packages__uri3__uri3__graph__models__GraphEdge__to_dict["to_dict"]
-        packages__uri3__uri3__graph__models__WorkflowGraph__add_node["add_node"]
-        packages__uri3__uri3__graph__models__WorkflowGraph__to_dict["to_dict"]
-        packages__uri3__uri3__graph__graph_executor__dry_run_workflow["dry_run_workflow"]
-        packages__uri3__uri3__graph__graph_executor__run_workflow["run_workflow"]
     end
     subgraph packages__urigen
         packages__urigen__urigen__artifacts__repo_path["repo_path"]
@@ -741,8 +741,8 @@ flowchart TD
         packages__urigen__urigen__apply_executor__load_rollback_manifest["load_rollback_manifest"]
         packages__urigen__urigen__apply_executor__execute_apply_plan("execute_apply_plan CC=11")
         packages__urigen__urigen__apply_executor__rollback_apply["rollback_apply"]
-        packages__urigen__urigen__models__slugify["slugify"]
-        packages__urigen__urigen__models__normalize_profile["normalize_profile"]
+        packages__urigen__urigen__envelope___legacy_fields["_legacy_fields"]
+        packages__urigen__urigen__envelope__stamp_proposal("stamp_proposal CC=11")
     end
     subgraph packages__urish
         packages__urish__urish__render__render_result("render_result CC=10")
@@ -791,6 +791,13 @@ flowchart TD
         packages__urish__urish__cli__proposal_apply_cmd["proposal_apply_cmd"]
         packages__urish__urish__cli___normalize_argv["_normalize_argv"]
         packages__urish__urish__cli__main("main CC=8")
+        packages__urish__urish__ticket_workflow__resolve_ticket_path("resolve_ticket_path CC=10")
+        packages__urish__urish__ticket_workflow___dashboard_intent["_dashboard_intent"]
+        packages__urish__urish__ticket_workflow___ticket_prompt("_ticket_prompt CC=8")
+        packages__urish__urish__ticket_workflow___evolution_intent["_evolution_intent"]
+        packages__urish__urish__ticket_workflow__detect_intent_from_ticket["detect_intent_from_ticket"]
+        packages__urish__urish__ticket_workflow__build_evolution_next_steps["build_evolution_next_steps"]
+        packages__urish__urish__ticket_workflow__build_ticket_workflow("build_ticket_workflow CC=8")
         packages__urish__urish__payload__load_payload("load_payload CC=14")
         packages__urish__urish__context__context_dir["context_dir"]
         packages__urish__urish__context__load_context["load_context"]
@@ -798,13 +805,6 @@ flowchart TD
         packages__urish__urish__select__select_path["select_path"]
         packages__urish__urish__select__select_from_envelope["select_from_envelope"]
         packages__urish__urish__repl__run_repl("run_repl CC=10")
-        packages__urish__urish__shortcuts__shortcuts_path["shortcuts_path"]
-        packages__urish__urish__shortcuts__load_shortcut_specs("load_shortcut_specs CC=14")
-        packages__urish__urish__shortcuts__load_shortcuts["load_shortcuts"]
-        packages__urish__urish__shortcuts__resolve_shortcut["resolve_shortcut"]
-        packages__urish__urish__shortcuts__resolve_target["resolve_target"]
-        packages__urish__urish__ecosystem_workflow___quote["_quote"]
-        packages__urish__urish__ecosystem_workflow__proposal_path["proposal_path"]
     end
     subgraph runtime_client__client
         runtime_client__client__ResourceRuntimeClient____init__["__init__"]
@@ -843,12 +843,12 @@ flowchart TD
         scripts__www__monitor_notify__is_supported_webhook["is_supported_webhook"]
         scripts__www__monitor_notify__emit_alert["emit_alert"]
         scripts__www__monitor_notify__post_webhook["post_webhook"]
-        scripts__www__test_monitors__do_POST["do_POST"]
-        scripts__www__test_monitors__log_message["log_message"]
         scripts__www__install_cron__is_placeholder_webhook["is_placeholder_webhook"]
         scripts__www__install_cron__prepare_log_file["prepare_log_file"]
         scripts__www__install_cron__current_crontab["current_crontab"]
         scripts__www__install_cron__usage["usage"]
+        scripts__www__test_monitors__do_POST["do_POST"]
+        scripts__www__test_monitors__log_message["log_message"]
     end
     subgraph testenv__ssh_agent_host
         testenv__ssh_agent_host__mock_agent_server__Handler___json["_json"]
@@ -1197,6 +1197,15 @@ flowchart TD
     packages__urish__urish__cli___normalize_argv --> packages__urish__urish__shortcuts__load_shortcuts
     packages__urish__urish__cli__main --> packages__urish__urish__cli___normalize_argv
     packages__urish__urish__cli__main --> uri2ops__operation_registry__models__OperationRegistry__list
+    packages__urish__urish__ticket_workflow__resolve_ticket_path --> packages__uri3__uri3__config__repo_root__find_repo_root
+    packages__urish__urish__ticket_workflow__detect_intent_from_ticket --> packages__urish__urish__ticket_workflow___ticket_prompt
+    packages__urish__urish__ticket_workflow__detect_intent_from_ticket --> packages__urigen__urigen__models__wants_dashboard
+    packages__urish__urish__ticket_workflow__detect_intent_from_ticket --> packages__urish__urish__intent__detect_intent
+    packages__urish__urish__ticket_workflow__detect_intent_from_ticket --> packages__urish__urish__ticket_workflow___evolution_intent
+    packages__urish__urish__ticket_workflow__detect_intent_from_ticket --> packages__urish__urish__ticket_workflow___dashboard_intent
+    packages__urish__urish__ticket_workflow__build_ticket_workflow --> packages__urish__urish__ticket_workflow__detect_intent_from_ticket
+    packages__urish__urish__ticket_workflow__build_ticket_workflow --> packages__urish__urish__ecosystem_workflow__build_ecosystem_next_steps
+    packages__urish__urish__ticket_workflow__build_ticket_workflow --> packages__urish__urish__ticket_workflow__build_evolution_next_steps
     packages__urish__urish__context__context_dir --> packages__uri3__uri3__config__repo_root__find_repo_root
     packages__urish__urish__context__load_context --> packages__uri3__uri3__config__repo_root__find_repo_root
     packages__urish__urish__context__load_context --> packages__urish__urish__context__context_dir
@@ -1382,6 +1391,26 @@ flowchart TD
     packages__urigen__urigen__apply_executor__rollback_apply --> packages__urigen__urigen__apply_executor__load_rollback_manifest
     packages__urigen__urigen__apply_executor__rollback_apply --> packages__urigen__urigen__apply_executor__rollback_manifest
     packages__urigen__urigen__apply_executor__rollback_apply --> packages__urigen__urigen__io__write_json
+    packages__urigen__urigen__envelope__stamp_proposal --> packages__urigen__urigen__envelope___legacy_fields
+    packages__urigen__urigen__envelope__stamp_ecosystem --> packages__urigen__urigen__envelope___ecosystem_metadata
+    packages__urigen__urigen__envelope__stamp_ecosystem --> packages__urigen__urigen__envelope___ecosystem_spec
+    packages__urigen__urigen__envelope__stamp_ecosystem --> packages__urigen__urigen__envelope___legacy_fields
+    packages__urigen__urigen__apply___verify_before_apply --> packages__urigen__urigen__verify__verify_ecosystem
+    packages__urigen__urigen__apply___verify_before_apply --> packages__urigen__urigen__models__repo_root
+    packages__urigen__urigen__apply___build_apply_result --> packages__urigen__urigen__apply_validate__validate_apply_artifact
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__models__repo_root
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__io__load_yaml
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply___ecosystem_meta
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply_planner__build_apply_plan
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply_validate__validate_apply_artifact
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__io__write_yaml
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply_executor__build_plan_diff
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply___verify_before_apply
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply_executor__execute_apply_plan
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply___update_lifecycle
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply___build_apply_result
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__io__write_json
+    packages__urigen__urigen__apply__apply_ecosystem --> packages__urigen__urigen__apply_executor__rollback_apply
     packages__urigen__urigen__models__repo_root --> packages__uri3__uri3__config__repo_root__find_repo_root
     packages__urigen__urigen__verify__verify_ecosystem --> packages__urigen__urigen__models__repo_root
     packages__urigen__urigen__verify__verify_ecosystem --> packages__urigen__urigen__io__load_yaml
@@ -1455,6 +1484,11 @@ flowchart TD
     packages__uri2ops__uri2ops__remote_registry__loader__resolve_operation_registry --> packages__uri2ops__uri2ops__remote_registry__loader___load_source
     packages__uri2ops__uri2ops__remote_registry__loader__resolve_operation_registry --> uri2ops__operation_registry__loader__default_registry_path
     packages__uri2ops__uri2ops__remote_registry__loader__list_remote_sources --> packages__uri2ops__uri2ops__remote_registry__loader__load_registry_config
+    packages__uri3__uri3__logs__parsing__parse_json_entry --> packages__uri3__uri3__logs__parsing___json_event_message
+    packages__uri3__uri3__logs__parsing__parse_json_entry --> packages__uri3__uri3__logs__parsing___json_entry_fields
+    packages__uri3__uri3__logs__parsing__parse_log_line --> packages__uri3__uri3__logs__parsing__empty_entry
+    packages__uri3__uri3__logs__parsing__parse_log_line --> packages__uri3__uri3__logs__parsing__parse_json_entry
+    packages__uri3__uri3__logs__parsing__parse_log_line --> packages__uri3__uri3__logs__parsing__parse_text_entry
     packages__uri3__uri3__logs__filters__matches_level --> packages__uri3__uri3__logs__filters__level_rank
     packages__uri3__uri3__logs__filters__matches_time_window --> packages__uri3__uri3__logs__filters__entry_timestamp
     packages__uri3__uri3__logs__filters__matches_filters --> packages__uri3__uri3__logs__filters__matches_level
@@ -1629,6 +1663,14 @@ flowchart TD
     packages__uri3__uri3__cli__helpers__list_payload --> packages__uri3__uri3__protocols__schemes__spec_registry__list_schemes
     packages__uri3__uri3__cli__helpers__list_payload --> packages__uri3__uri3__config__cli_shortcuts__scan_shortcuts
     packages__uri3__uri3__cli__main__main --> packages__uri3__uri3__cli__helpers__quick_reference
+    packages__uri3__uri3__cli__commands__explain__register --> packages__uri3__uri3__resolvers__explain__explain_uri
+    packages__uri3__uri3__cli__commands__explain__register --> packages__uri3__uri3__cli__commands__explain___render
+    packages__uri3__uri3__cli__commands__explain___render --> packages__uri3__uri3__cli__commands__explain___header_lines
+    packages__uri3__uri3__cli__commands__explain___render --> packages__uri3__uri3__cli__commands__explain___backend_line
+    packages__uri3__uri3__cli__commands__explain___render --> packages__uri3__uri3__cli__commands__explain___json_field_lines
+    packages__uri3__uri3__cli__commands__doctor__register --> packages__uri3__uri3__doctor__runner__run_doctor
+    packages__uri3__uri3__cli__commands__doctor__register --> packages__uri3__uri3__cli__commands__doctor___render
+    packages__uri3__uri3__cli__commands__doctor___render --> packages__uri3__uri3__cli__commands__doctor___check_summary
     packages__uri3__uri3__cli__commands__graph__register --> uri3__graph__uri_graph__build_graph_from_tree
     packages__uri3__uri3__cli__commands__resolve__register --> uri3__validators__uri_validator__validate_uri
     packages__uri3__uri3__cli__commands__resolve__register --> packages__uri3__uri3__validators__uri_tree_validator__validate_uri_tree
@@ -1653,50 +1695,7 @@ flowchart TD
     packages__uri3__uri3__scanner__http_scanner___probe --> packages__uri3__uri3__scanner__http_scanner___status_for
     packages__uri3__uri3__scanner__http_scanner__scan_http --> packages__uri3__uri3__scanner__http_scanner___origin
     packages__uri3__uri3__scanner__http_scanner__scan_http --> packages__uri3__uri3__scanner__http_scanner___probe
-    packages__uri3__uri3__scanner__ssh_scanner___connectivity_item --> packages__uri3__uri3__resolvers__ssh_resolver__run_ssh
-    packages__uri3__uri3__scanner__ssh_scanner___connectivity_item --> packages__uri3__uri3__config__ssh_auth__ssh_auth_hint
-    packages__uri3__uri3__scanner__ssh_scanner___connectivity_item --> packages__uri3__uri3__config__ssh_auth__resolve_ssh_password
-    packages__uri3__uri3__scanner__ssh_scanner___remote_path_item --> packages__uri3__uri3__resolvers__ssh_resolver__run_ssh
-    packages__uri3__uri3__scanner__ssh_scanner___remote_listing_item --> packages__uri3__uri3__resolvers__ssh_resolver__run_ssh
-    packages__uri3__uri3__scanner__ssh_scanner__scan_ssh --> packages__uri3__uri3__scanner__ssh_scanner___connectivity_item
-    packages__uri3__uri3__scanner__ssh_scanner__scan_ssh --> packages__uri3__uri3__scanner__ssh_scanner___remote_item_uri
-    packages__uri3__uri3__scanner__ssh_scanner__scan_ssh --> packages__uri3__uri3__resolvers__ssh_resolver__parse_ssh_uri
-    packages__uri3__uri3__scanner__ssh_scanner__scan_ssh --> packages__uri3__uri3__scanner__ssh_scanner___remote_path_item
-    packages__uri3__uri3__scanner__ssh_scanner__scan_ssh --> packages__uri3__uri3__scanner__ssh_scanner___remote_listing_item
-    packages__uri3__uri3__scanner__ssh_scanner__scan_ssh --> packages__uri3__uri3__scanner__ssh_scanner___invalid_ssh_item
-    packages__uri3__uri3__scanner__docker_scanner__scan_container --> packages__uri3__uri3__scanner__docker_scanner___inspect_container
-    packages__uri3__uri3__scanner__docker_scanner__scan_compose_stack --> packages__uri3__uri3__scanner__docker_scanner___compose_ps
-    packages__uri3__uri3__scanner__docker_scanner__scan_docker --> packages__uri3__uri3__resolvers__docker_resolver__parse_docker_uri
-    packages__uri3__uri3__scanner__docker_scanner__scan_docker --> packages__uri3__uri3__scanner__docker_scanner__scan_container
-    packages__uri3__uri3__scanner__docker_scanner__scan_docker --> packages__uri3__uri3__scanner__docker_scanner__scan_compose_stack
-    packages__uri3__uri3__scanner__scanner__scan_log --> packages__uri3__uri3__resolvers__log_resolver__parse_log_uri
-    packages__uri3__uri3__scanner__scanner__scan_log --> packages__uri3__uri3__logs__reader__resolve_log_path
-    packages__uri3__uri3__scanner__scanner__scan_log --> packages__uri3__uri3__logs__reader__summarize_logs
-    packages__uri3__uri3__scanner__scanner__scan --> uri3__protocols__parser__parse_uri
-    packages__uri3__uri3__scanner__scanner__scan --> packages__uri3__uri3__scanner__http_scanner__scan_http
-    packages__uri3__uri3__scanner__scanner__scan --> packages__uri3__uri3__scanner__ssh_scanner__scan_ssh
-    packages__uri3__uri3__scanner__scanner__scan --> packages__uri3__uri3__scanner__docker_scanner__scan_docker
-    packages__uri3__uri3__scanner__scanner__scan --> packages__uri3__uri3__scanner__scanner__scan_log
-    packages__uri3__uri3__results__envelope___workflow_service_failed --> packages__uri3__uri3__results__envelope___step_has_service_failure
-    packages__uri3__uri3__results__envelope__workflow_aggregate_statuses --> packages__uri3__uri3__results__envelope___workflow_service_failed
-    packages__uri3__uri3__results__envelope__workflow_aggregate_statuses --> packages__uri3__uri3__results__envelope___workflow_execution_failed
-    packages__uri3__uri3__results__envelope__workflow_aggregate_statuses --> packages__uri3__uri3__results__envelope___resolve_workflow_status
-    packages__uri3__uri3__results__envelope__workflow_aggregate_statuses --> packages__uri3__uri3__results__envelope___workflow_execution_status
-    packages__uri3__uri3__results__envelope__workflow_aggregate_statuses --> packages__uri3__uri3__results__envelope___workflow_service_result_status
-    packages__uri3__uri3__results__envelope__enrich_step_dict --> packages__uri3__uri3__results__envelope__step_execution_status
-    packages__uri3__uri3__results__envelope__enrich_step_dict --> packages__uri3__uri3__results__envelope__step_service_result_status
-    packages__uri3__uri3__results__envelope__enrich_step_dict --> packages__uri3__uri3__results__statuses__derive_statuses
-    packages__uri3__uri3__results__envelope___workflow_step_error --> packages__uri3__uri3__results__errors__normalize_error
-    packages__uri3__uri3__results__envelope___workflow_step_error --> packages__uri3__uri3__results__envelope___workflow_step_error_code
-    packages__uri3__uri3__results__envelope___workflow_step_error --> packages__uri3__uri3__results__envelope___workflow_step_error_detail
-    packages__uri3__uri3__results__envelope___workflow_step_errors --> packages__uri3__uri3__results__envelope___workflow_step_error
-    packages__uri3__uri3__results__envelope___enriched_workflow_result --> packages__uri3__uri3__results__envelope__workflow_aggregate_statuses
-    packages__uri3__uri3__results__envelope___enriched_workflow_result --> packages__uri3__uri3__results__envelope___workflow_failed_nodes
-    packages__uri3__uri3__results__envelope___enriched_workflow_result --> packages__uri3__uri3__results__envelope___workflow_step_errors
-    packages__uri3__uri3__results__envelope___enriched_workflow_result --> uri2ops__operation_registry__models__OperationRegistry__list
-    packages__uri3__uri3__results__envelope__enrich_workflow_dict --> packages__uri3__uri3__results__envelope___enriched_workflow_result
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class packages__resource_agent_hypervisor__hypervisor__deployment_registry__lifecycle__run_agent,www__landing__initTour,packages__urish__urish__policy__classify_uri,packages__urish__urish__backends__ask__ask_prompt highCC
-    class packages__urish__urish__render__render_result,packages__urish__urish__render___render_text,packages__urish__urish__cli___print_evolve_summary,packages__urish__urish__cli__ask_cmd,packages__urish__urish__cli__ticket_show_cmd,packages__urish__urish__cli__ticket_plan_cmd,packages__urish__urish__cli__main,packages__urish__urish__payload__load_payload,packages__urish__urish__repl__run_repl,packages__urish__urish__shortcuts__load_shortcut_specs,packages__urish__urish__exit_codes__exit_code_for_result,packages__urish__urish__backends__dashboard__create_dashboard,packages__urish__urish__backends__doctor__doctor_all,packages__urish__urish__backends__ticket__list_tickets,packages__urish__urish__backends__stream___stream_sse,packages__urish__urish__backends__run__run_target,packages__urigen__urigen__apply_planner__build_apply_plan,packages__urigen__urigen__apply_executor__preview_action_diff,packages__urigen__urigen__apply_executor___merge_deployment_fragment,packages__urigen__urigen__apply_executor__execute_action,packages__urigen__urigen__apply_executor__rollback_manifest,packages__urigen__urigen__apply_executor__execute_apply_plan,packages__urigen__urigen__verify__verify_ecosystem,packages__urigen__urigen__verify___check_capabilities,packages__urigen__urigen__verify___check_explain,packages__urigen__urigen__schema_check__schema_check_ecosystem,uri2ops__operation_registry__validator__validate_operation_registry,uri2ops__operation_registry__loader__load_operation_registry,packages__uri2ops__uri2ops__remote_registry__loader___load_source,packages__uri2ops__uri2ops__remote_registry__loader__registry_from_document medCC
+    class packages__urish__urish__render__render_result,packages__urish__urish__render___render_text,packages__urish__urish__cli___print_evolve_summary,packages__urish__urish__cli__ask_cmd,packages__urish__urish__cli__ticket_show_cmd,packages__urish__urish__cli__ticket_plan_cmd,packages__urish__urish__cli__main,packages__urish__urish__ticket_workflow__resolve_ticket_path,packages__urish__urish__ticket_workflow___ticket_prompt,packages__urish__urish__ticket_workflow__build_ticket_workflow,packages__urish__urish__payload__load_payload,packages__urish__urish__repl__run_repl,packages__urish__urish__shortcuts__load_shortcut_specs,packages__urish__urish__exit_codes__exit_code_for_result,packages__urish__urish__backends__dashboard__create_dashboard,packages__urish__urish__backends__doctor__doctor_all,packages__urish__urish__backends__ticket__list_tickets,packages__urish__urish__backends__stream___stream_sse,packages__urish__urish__backends__run__run_target,packages__urigen__urigen__apply_planner__build_apply_plan,packages__urigen__urigen__apply_executor__preview_action_diff,packages__urigen__urigen__apply_executor___merge_deployment_fragment,packages__urigen__urigen__apply_executor__execute_action,packages__urigen__urigen__apply_executor__rollback_manifest,packages__urigen__urigen__apply_executor__execute_apply_plan,packages__urigen__urigen__envelope__stamp_proposal,packages__urigen__urigen__envelope___ecosystem_spec,packages__urigen__urigen__envelope__stamp_ecosystem,packages__urigen__urigen__verify__verify_ecosystem,packages__urigen__urigen__verify___check_capabilities medCC

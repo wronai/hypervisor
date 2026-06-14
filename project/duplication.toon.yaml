@@ -1,12 +1,12 @@
-# redup/duplication | 69 groups | 497f 30959L | 2026-06-14
+# redup/duplication | 69 groups | 497f 31075L | 2026-06-14
 
 SUMMARY:
   files_scanned: 497
-  total_lines:   30959
+  total_lines:   31075
   dup_groups:    69
   dup_fragments: 185
   saved_lines:   856
-  scan_ms:       3955
+  scan_ms:       4796
 
 HOTSPOTS[7] (files with most duplication):
   packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py  dup=76L  groups=1  frags=3  (0.2%)

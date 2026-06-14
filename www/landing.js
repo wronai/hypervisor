@@ -517,45 +517,46 @@ repair:  none</pre>`;
     if (!paused) startAuto();
   }
 
-  function initTour() {
-    if (!stageEl) return;
+  function pauseTourPlayback() {
+    paused = true;
+    if (btnPlay) btnPlay.textContent = "▶ Odtwórz";
+    stopAuto();
+  }
 
+  function bindTourStepButtons() {
     stepButtons.forEach((btn, i) => {
       btn.addEventListener("click", () => {
-        paused = true;
-        if (btnPlay) btnPlay.textContent = "▶ Odtwórz";
-        stopAuto();
+        pauseTourPlayback();
         goToStep(i);
       });
     });
+  }
 
+  function bindTourNavButtons() {
     btnPrev?.addEventListener("click", () => {
-      paused = true;
-      if (btnPlay) btnPlay.textContent = "▶ Odtwórz";
-      stopAuto();
+      pauseTourPlayback();
       goToStep((currentStep - 1 + STEPS.length) % STEPS.length);
     });
-
     btnNext?.addEventListener("click", () => {
-      paused = true;
-      if (btnPlay) btnPlay.textContent = "▶ Odtwórz";
-      stopAuto();
+      pauseTourPlayback();
       goToStep((currentStep + 1) % STEPS.length);
     });
+  }
 
+  function bindTourPlayButton() {
     btnPlay?.addEventListener("click", () => {
       paused = !paused;
       btnPlay.textContent = paused ? "▶ Odtwórz" : "⏸ Pauza";
       if (paused) {
         stopAuto();
-      } else {
-        resetProgress();
-        startAuto();
+        return;
       }
+      resetProgress();
+      startAuto();
     });
+  }
 
-    btnCopyChat?.addEventListener("click", copyTourChat);
-
+  function bindTourHoverPause() {
     const tourSection = document.getElementById("tour");
     tourSection?.addEventListener("mouseenter", () => {
       paused = true;
@@ -568,7 +569,15 @@ repair:  none</pre>`;
         startAuto();
       }
     });
+  }
 
+  function initTour() {
+    if (!stageEl) return;
+    bindTourStepButtons();
+    bindTourNavButtons();
+    bindTourPlayButton();
+    btnCopyChat?.addEventListener("click", copyTourChat);
+    bindTourHoverPause();
     renderStep(0);
     startAuto();
   }
