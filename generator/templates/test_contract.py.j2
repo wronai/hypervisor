@@ -1,0 +1,18 @@
+# AUTO-GENERATED FILE. DO NOT EDIT.
+# Source: {{ spec.source_path }}
+# Contract hash: {{ contract_hash }}
+
+from agents.generated.{{ spec.python_package }}.agent_card import AGENT_CARD
+
+
+def test_agent_card_has_expected_name():
+    assert AGENT_CARD["name"] == "{{ spec.name }}"
+
+
+def test_agent_card_has_capabilities():
+    names = {cap["name"] for cap in AGENT_CARD["capabilities"]}
+    assert names == {{ capability_names | tojson }}
+
+
+def test_agent_card_has_contract_hash():
+    assert AGENT_CARD["generated_from"]["contract_hash"] == "{{ contract_hash }}"

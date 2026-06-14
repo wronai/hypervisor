@@ -1,0 +1,18 @@
+services:
+  meta-agent:
+    build: .
+    command: uvicorn meta_agent.api:app --host 0.0.0.0 --port 8200
+    ports:
+      - "8200:8200"
+    environment:
+      RESOURCE_RUNTIME_URL: http://host.docker.internal:8000
+    volumes:
+      - .:/app
+
+  user-agent:
+    build: .
+    command: uvicorn agents.generated.user_agent.main:app --host 0.0.0.0 --port 8101
+    ports:
+      - "8101:8101"
+    environment:
+      RESOURCE_RUNTIME_URL: http://host.docker.internal:8000

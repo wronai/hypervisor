@@ -1,155 +1,120 @@
-# hypervisor
+# Resource Agent Meta-Factory v0.1
 
 
 ## AI Cost Tracking
 
 ![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.03-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.43-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $0.0301 (1 commits)
+- 🤖 **LLM usage:** $0.4309 (2 commits)
 - 👤 **Human dev:** ~$200 (2.0h @ $100/h, 30min dedup)
 
 Generated on 2026-06-14 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
 
-**WronAI Hypervisor** — centralny orchestrator i warstwa kontrolna (control plane) dla AI-powered desktop automation, pipeline'ów NLP-to-URI / NLP-to-action, flot agentów (koru, proxeen, tellm) oraz zwirtualizowanych środowisk wykonawczych.
 
-> Repozytorium: https://github.com/wronai/hypervisor
 
-## 🚀 Główne cechy (v0.1)
+Generator, validator and repairer for contract-first thin agents.
 
-- Konfiguracja zunifikowana wokół `nlp2uri.yaml` (desktop URI compiler + rozszerzenia hypervisora)
-- `Hypervisor` jako główny obiekt sterujący (start/stop, rejestracja agentów, status)
-- Wbudowane domyślne konfiguracje + wyszukiwanie w XDG + nadpisywanie ENV
-- CLI `hypervisor` z komendami: `status`, `config`, `start`, `stop`, `agent`
-- Przygotowany pod event sourcing, pluginy i multi-agent supervision (stub w 0.1)
-- Pełna kompatybilność z ekosystemem wronai (koru, nlp2uri, proxeen, vdisplay, iterun itp.)
+This package extends the earlier `resource-agent-factory` with a **meta-agent** that can create agent specifications from prompts, validate them, repair common mistakes and generate working FastAPI agents.
 
-## 📦 Instalacja
+## Core idea
+
+```text
+Prompt / request
+      ↓
+Meta-agent
+      ↓
+contracts/agents/*.yaml
+      ↓
+Validator + safe repair
+      ↓
+Agent Factory
+      ↓
+agents/generated/<agent>/
+      ↓
+Tests + contract hash verification
+```
+
+The LLM or user creates the **contract proposal**. The deterministic generator creates the code.
+
+## Quick start
+
+Install dependencies:
 
 ```bash
-# z repo (editable)
-pip install -e ".[dev]"
-
-# po publikacji na PyPI
-pip install hypervisor
+pip install -e '.[dev]'
 ```
 
-## Szybki start
+Validate existing contracts:
 
 ```bash
-# wersja
-hypervisor --version
-
-# status
-hypervisor status
-
-# pełna konfiguracja (efektywna)
-hypervisor config
-
-# tylko ścieżka do configu
-hypervisor config --path
-
-# uruchom (stub — blokuje do Ctrl+C)
-hypervisor start
-
-# zarejestruj agenta (w pamięci)
-hypervisor agent register koru-desktop-01
-hypervisor status
+make validate
 ```
 
-### Python API
-
-```python
-from hypervisor import Hypervisor, get_config, load_config
-
-hv = Hypervisor()
-print(hv)
-# Hypervisor(running=False, profile='normal', agents=0/8, ...)
-
-hv.register_agent("proxeen-main")
-hv.start()
-print(hv.status())
-
-# z własnym configiem
-hv2 = Hypervisor.from_config("./my-nlp2uri.yaml")
-```
-
-## Konfiguracja
-
-Hypervisor dziedziczy i rozszerza format `nlp2uri.yaml`:
-
-```yaml
-platform: auto
-host_platform: linux
-dry_run: false
-capture_dir: /tmp/nlp2uri-captures
-
-hypervisor:
-  log_level: INFO
-  max_agents: 8
-  default_profile: normal          # fast | normal | full
-  enable_event_sourcing: true
-```
-
-Kolejność precedencji (od najwyższej):
-1. `--config /ścieżka/do/pliku.yaml`
-2. `./nlp2uri.yaml` (bieżący katalog)
-3. `~/.config/hypervisor/nlp2uri.yaml` (lub `$XDG_CONFIG_HOME`)
-4. Wbudowane wartości domyślne pakietu
-
-Nadpisania przez zmienne środowiskowe:
-- `NLP2URI_PLATFORM`, `NLP2URI_DRY_RUN`, `NLP2URI_CAPTURE_DIR` itd.
-- `HYPERVISOR_LOG_LEVEL`, `HYPERVISOR_MAX_AGENTS`, `HYPERVISOR_DEFAULT_PROFILE`
-
-## Struktura projektu
-
-```
-hypervisor/
-├── hypervisor/
-│   ├── __init__.py
-│   ├── cli.py
-│   ├── config.py
-│   ├── core.py
-│   ├── data/
-│   │   └── nlp2uri.yaml          # embedded defaults
-│   └── py.typed
-├── tests/
-├── pyproject.toml
-├── LICENSE
-└── README.md
-```
-
-## Rozwój
+Generate agents:
 
 ```bash
-# instalacja w trybie deweloperskim
-pip install -e ".[dev]"
-
-# testy
-pytest -v
-
-# lint
-ruff check .
-
-# uruchom CLI bezpośrednio
-python -m hypervisor.cli status
+make generate
 ```
 
-## Powiązane projekty (wronai)
+Verify generated agents:
 
-- [proxeen](https://github.com/wronai/proxeen) — AI Desktop Assistant (screen + voice + agents)
-- [fraq](https://github.com/wronai/fraq) — Fractal Query Data Library + NLP2CMD
-- [tellm](https://github.com/wronai/tellm) — voice / LLM components
-- koru / nlp2uri / iterun / vdisplay — warstwa sterowania desktopem i URI
+```bash
+make verify
+```
 
-## Licencja
+Run tests:
 
-Apache-2.0 — patrz [LICENSE](LICENSE)
+```bash
+make test
+```
 
-## Status
+## Meta-agent workflow
 
-Alpha (0.1.x). API i komendy CLI mogą się jeszcze zmieniać do wersji 0.2 / 1.0.
+Create a new agent from a prompt:
 
-Pull requesty i issue mile widziane.
+```bash
+python -m meta_agent.cli pipeline "Stwórz agenta do obsługi zamówień z odczytem zamówienia, historią i tworzeniem zamówienia"
+```
+
+Run the meta-agent HTTP API:
+
+```bash
+make run-meta-agent
+```
+
+Then call:
+
+```bash
+curl -X POST http://localhost:8200/pipeline/from-prompt \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"Stwórz agenta do obsługi faktur z odczytem faktury, historią i tworzeniem faktury"}'
+```
+
+## Important rule
+
+Do not edit `agents/generated/` manually.
+
+Change:
+
+```text
+contracts/agents/*.yaml
+```
+
+Then regenerate.
+
+## Documentation
+
+- `docs/META_AGENT.md` — meta-agent usage.
+- `docs/ARCHITECTURE_META_FACTORY.md` — architecture.
+- `docs/AUTO_EVOLUTION_PIPELINE.md` — controlled auto-evolution.
+- `docs/CONTRACTS.md` — YAML contract format.
+- `docs/GENERATOR.md` — generator details.
+- `docs/DEPLOYMENT.md` — deployment notes.
+
+
+## License
+
+Licensed under Apache-2.0.

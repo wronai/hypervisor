@@ -1,0 +1,18 @@
+proposal_id: add-invoices-agent
+type: new_agent
+status: draft
+reason: Potrzebny osobny cienki agent do obsługi faktur przez wspólny Resource Runtime.
+input_prompt: >
+  Stwórz agenta do obsługi faktur. Ma odczytywać fakturę, historię faktury i umożliwiać utworzenie faktury.
+expected_output:
+  agent_contract: contracts/agents/invoices_agent.yaml
+  generated_agent: agents/generated/invoices_agent
+checks:
+  - validate_agent_spec
+  - auto_repair_if_safe
+  - generate_agent
+  - verify_contract_hash
+  - run_tests
+approval:
+  required: true
+  approver: human_or_policy_gate

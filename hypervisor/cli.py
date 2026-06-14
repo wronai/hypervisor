@@ -41,11 +41,13 @@ def main(argv: list[str] | None = None) -> int:
     # status
     p_status = sub.add_parser("status", help="Show hypervisor status")
     p_status.add_argument("--agents", action="store_true", help="Include registered agents")
+    p_status.add_argument("--json", action="store_true", help="Emit machine-readable JSON")
 
     # config
     p_config = sub.add_parser("config", help="Inspect or dump configuration")
     p_config.add_argument("--show", action="store_true", default=True, help="Print effective config")
     p_config.add_argument("--path", action="store_true", help="Only print resolved config file path")
+    p_config.add_argument("--json", action="store_true", help="Emit machine-readable JSON")
 
     # start / stop (stubs for now)
     sub.add_parser("start", help="Start the hypervisor (foreground stub)")

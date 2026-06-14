@@ -1,0 +1,14 @@
+agent:
+  name: broken-agent
+
+capabilities:
+  - name: read_thing
+    type: resource_read
+    uri: resource://things/{thing_id}
+
+  - name: read_thing
+    type: resource_read
+    uri: resource://things/{thing_id}/events
+
+  - name: create_thing
+    type: command

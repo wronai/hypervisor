@@ -1,0 +1,27 @@
+agent:
+  name: orders-agent
+  python_package: orders_agent
+  version: 0.1.0
+  description: Example agent for orders.
+  runtime_url_env: RESOURCE_RUNTIME_URL
+  runtime_url_default: http://localhost:8000
+
+capabilities:
+  - name: read_order
+    type: resource_read
+    uri: resource://orders/{order_id}
+    output_schema: app.orders.v1.OrderView
+    renderer: detail
+
+  - name: read_order_events
+    type: resource_read
+    uri: resource://orders/{order_id}/events
+    output_schema: app.orders.v1.OrderEventsView
+    renderer: timeline
+
+  - name: create_order
+    type: command
+    command: CreateOrder
+    input_schema: app.orders.v1.CreateOrderCommand
+    emits:
+      - OrderCreated

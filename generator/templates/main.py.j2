@@ -1,0 +1,16 @@
+# AUTO-GENERATED FILE. DO NOT EDIT.
+# Source: {{ spec.source_path }}
+# Contract hash: {{ contract_hash }}
+
+from __future__ import annotations
+
+from fastapi import FastAPI
+
+from .routes import router
+
+app = FastAPI(
+    title="{{ spec.name }}",
+    version="{{ spec.version }}",
+    description="{{ spec.description }}",
+)
+app.include_router(router)

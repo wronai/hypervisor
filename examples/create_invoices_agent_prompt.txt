@@ -1,0 +1,1 @@
+Stwórz agenta do obsługi faktur. Ma odczytywać fakturę, historię faktury i umożliwiać utworzenie faktury.
