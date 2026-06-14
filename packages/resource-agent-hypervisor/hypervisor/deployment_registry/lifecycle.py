@@ -45,7 +45,17 @@ def run_agent(
     repo = _repo_root(root)
     deployment = resolve_deployment(selector, root=repo)
     existing = load_runtime_state(deployment.id, repo)
+    if existing and not is_process_alive(existing.get("pid")):
+        clear_runtime_state(deployment.id, repo)
+        existing = None
     if existing and is_process_alive(existing.get("pid")):
+        if detach:
+            plan = build_run_plan(deployment, root=repo, port=port, host=host, reload=reload)
+            plan["pid"] = existing.get("pid")
+            plan["health_uri"] = existing.get("health_uri") or plan.get("health_uri")
+            plan["runtime_status"] = "running"
+            plan["already_running"] = True
+            return _lifecycle_payload(plan)
         raise RuntimeError(
             f"Agent {deployment.id} already running with pid {existing['pid']}. "
             "Use hypervisor stop-agent first."

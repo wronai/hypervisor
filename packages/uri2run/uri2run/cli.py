@@ -54,6 +54,14 @@ def _backend_from_target(target: str, *, backend_type: str) -> dict[str, Any]:
         kind = "sse"
     elif target.startswith(("ws://", "wss://")):
         kind = "ws"
+    elif target.startswith("docker://"):
+        kind = "docker"
+    elif target.startswith("ssh://"):
+        kind = "ssh"
+    elif target.startswith("mcp://"):
+        kind = "mcp"
+    elif target.startswith("a2a://"):
+        kind = "a2a"
     else:
         kind = "shell"
     if kind == "python":
@@ -66,6 +74,14 @@ def _backend_from_target(target: str, *, backend_type: str) -> dict[str, Any]:
         return {"type": "sse", "url": target}
     if kind == "ws":
         return {"type": "ws", "url": target}
+    if kind == "docker":
+        return {"type": "docker", "target": target}
+    if kind == "ssh":
+        return {"type": "ssh", "target": target}
+    if kind == "mcp":
+        return {"type": "mcp", "target": target}
+    if kind == "a2a":
+        return {"type": "a2a", "target": target}
     if kind == "shell":
         return {"type": "shell", "command": target.removeprefix("shell://")}
     return {"type": kind, "target": target}

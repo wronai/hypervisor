@@ -137,8 +137,8 @@ def test_touri_delegates_python_backend_to_uri2run(repo_root: Path):
 
 
 def test_unsupported_transport():
-    result = run_backend({"type": "docker"}, {}, {})
+    result = run_backend({"type": "grpc"}, {}, {})
     assert result.ok is False
     assert result.errors[0].code == "BACKEND_UNSUPPORTED"
     assert result.meta["runtime"] == "uri2run"
-    assert result.meta["transport"] == "docker"
+    assert result.meta["transport"] == "grpc"

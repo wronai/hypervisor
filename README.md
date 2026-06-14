@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.17-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$9.86-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.18-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$10.48-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $9.8592 (16 commits)
-- 👤 **Human dev:** ~$799 (8.0h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $10.4766 (17 commits)
+- 👤 **Human dev:** ~$830 (8.3h @ $100/h, 30min dedup)
 
 Generated on 2026-06-14 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -24,7 +24,7 @@ uri2flow   = compact URI flow → expanded workflow graph (bez wykonania)
 uri2ops    = operation registry + operator adapters + policy + serve (A2A/MCP)
 uri2voice  = STT/TTS/voice command execution (mock MVP; touri manifests)
 uri2pact   = markpact:// README import (capabilities + flows)
-uri2run    = neutral runtime transport layer for python/shell/http/stdio/sse/ws/flow/graph
+uri2run    = neutral runtime transport layer for python/shell/http/stdio/sse/ws/docker/ssh/mcp/a2a/flow/graph
 uri2verify = data quality gates, workflow replay, regression tests
 nl2a       = prompt → URI Tree → Domain Pack → agent contract → generated agent
 hypervisor = registry, policy, deployment, lifecycle

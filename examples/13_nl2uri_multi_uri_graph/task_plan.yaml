@@ -1,9 +1,9 @@
 workflow_result:
   id: otw-rz-chrome-i-sprawd-localhost-8101-health
-  run_id: 890a27c977a9
+  run_id: ba405ea98389
   ok: true
-  started_at: '2026-06-14T13:21:24+00:00'
-  completed_at: '2026-06-14T13:21:24+00:00'
+  started_at: '2026-06-14T15:03:55+00:00'
+  completed_at: '2026-06-14T15:03:55+00:00'
   mode: dry_run
   message: Dry-run completed without side effects
   workflow_status: completed

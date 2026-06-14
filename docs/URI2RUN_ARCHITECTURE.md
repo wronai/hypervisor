@@ -1,7 +1,8 @@
 # URI Runtime / `uri2run` — miejsce w architekturze, deficyty i testy architektoniczne
 
-Status 2026-06-14: MVP istnieje w `packages/uri2run` i obsługuje
-`python`, `shell`, `http`, `uri_flow`, `uri_graph`, `uri2ops` oraz `mock`.
+Status 2026-06-14: MVP istnieje w `packages/uri2run` i obsługuje `python`,
+`shell`, `http`, `stdio`, `sse`, `ws`, `docker`, `ssh`, `mcp`, `a2a`,
+`uri_flow`, `uri_graph`, `uri2ops` oraz `mock`.
 `touri` deleguje wykonanie backendów do `uri2run` przez wrappery kompatybilności.
 
 ## 1. Cel dokumentu

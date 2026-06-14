@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `uri_flow`, `uri_graph`, `uri2ops` and mock transport entry points.
 - Added `stdio`, `sse` and `ws` `uri2run` transports plus runtime metadata
   (`meta.runtime`, `meta.transport`, `meta.duration_ms`) on backend results.
+- Added `docker`, `ssh`, `mcp` and `a2a` `uri2run` protocol transports with
+  CLI/run-target routing.
 
 ### Changed
 
@@ -31,6 +33,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Delegated `touri` backend wrappers to `uri2run.run_backend` while preserving
   the existing `ServiceResult` envelope.
 - Extended `uri3 explain` to report `runtime_transport` for `uri2run` backends.
+
+## [0.5.18] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/CLI_MAP.md
+- Update docs/PACKAGE_BOUNDARIES.md
+- Update docs/URI2RUN_ARCHITECTURE.md
+- Update packages/uri2run/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/architecture/import_scanner.py
+- Update tests/architecture/test_doctor_contract.py
+- Update tests/architecture/test_doctor_gate.py
+- Update tests/architecture/test_result_envelope_contract.py
+- Update tests/architecture/test_technical_ok_business_fail.py
+- Update tests/architecture/test_uri2run_envelope.py
+- Update tests/hypervisor/test_agent_runner.py
+- Update tests/uri2run/test_protocol_transports.py
+- Update tests/uri2run/test_transport_matrix.py
+- Update tests/uri3/test_explain_extended.py
+
+### Other
+- Update .gitignore
+- Update Makefile
+- Update domains/weather_map/uri_tree.yaml
+- Update examples/13_nl2uri_multi_uri_graph/task_plan.yaml
+- Update examples/20_touri_capabilities/run.sh
+- Update examples/23_nl_to_agent_tutorial/run.sh
+- Update packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py
+- Update packages/touri/touri/backend_dispatch.py
+- Update packages/touri/touri/validator.py
+- Update packages/uri2run/uri2run/cli.py
+- ... and 42 more files
 
 ## [0.5.17] - 2026-06-14
 

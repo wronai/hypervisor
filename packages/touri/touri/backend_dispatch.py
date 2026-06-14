@@ -10,7 +10,21 @@ from touri.models import ServiceResult, service_result
 from touri.runtime_adapter import backend_to_dict
 
 _URI2RUN_TYPES = frozenset(
-    {"python", "shell", "http", "https", "stdio", "sse", "ws", "uri_flow", "uri_graph"}
+    {
+        "python",
+        "shell",
+        "http",
+        "https",
+        "stdio",
+        "sse",
+        "ws",
+        "docker",
+        "ssh",
+        "mcp",
+        "a2a",
+        "uri_flow",
+        "uri_graph",
+    }
 )
 
 
@@ -109,6 +123,10 @@ _BACKEND_HANDLERS: dict[
     "stdio": lambda backend, payload, context: _dispatch_uri2run(backend, payload, context),
     "sse": lambda backend, payload, context: _dispatch_uri2run(backend, payload, context),
     "ws": lambda backend, payload, context: _dispatch_uri2run(backend, payload, context),
+    "docker": lambda backend, payload, context: _dispatch_uri2run(backend, payload, context),
+    "ssh": lambda backend, payload, context: _dispatch_uri2run(backend, payload, context),
+    "mcp": lambda backend, payload, context: _dispatch_uri2run(backend, payload, context),
+    "a2a": lambda backend, payload, context: _dispatch_uri2run(backend, payload, context),
     "mock": lambda _backend, payload, context: call_mock_backend(payload, context),
     "uri_flow": _call_uri_flow_backend,
     "uri_graph": _call_uri_graph_backend,

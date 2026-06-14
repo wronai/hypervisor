@@ -68,3 +68,26 @@ def test_ssh_target_cannot_start_without_dry_run():
         from hypervisor.deployment_registry.runner import run_agent
 
         run_agent("weather-map-agent.ssh-dev", dry_run=False)
+
+
+def test_run_agent_detach_idempotent_when_already_running(monkeypatch: pytest.MonkeyPatch):
+    existing = {
+        "pid": 4242,
+        "status": "running",
+        "health_uri": "http://localhost:8101/health",
+    }
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.load_runtime_state",
+        lambda _deployment_id, _root=None: existing,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.lifecycle.is_process_alive",
+        lambda pid: pid == 4242,
+    )
+
+    from hypervisor.deployment_registry.runner import run_agent
+
+    result = run_agent("weather-map-agent.local", detach=True)
+    assert result.get("already_running") is True
+    assert result["pid"] == 4242
+    assert result["health_uri"] == "http://localhost:8101/health"

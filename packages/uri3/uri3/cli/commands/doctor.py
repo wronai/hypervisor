@@ -72,4 +72,10 @@ def _check_summary(check: dict) -> str:
         return f" ({check.get('tests', 0)} tests)"
     if check.get("id") == "uri2verify.replay_failures":
         return f" ({len(check.get('failures') or [])} failing workflows)"
+    if check.get("id") == "boundaries.imports":
+        return f" ({check.get('violation_count', 0)} violations)"
+    if check.get("id") == "runtime.uri2run_transports":
+        return f" ({len(check.get('checked') or [])} transports, {len(check.get('failures') or [])} failures)"
+    if check.get("id") == "runtime.browser_delegation":
+        return f" (adapter={check.get('adapter')})"
     return ""

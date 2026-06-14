@@ -1,6 +1,7 @@
 .PHONY: validate generate verify test clean run-user-agent run-meta-agent meta-plan meta-pipeline meta-repair
 .PHONY: uri-tree graph nl2a-weather docker-ssh-up docker-ssh-down scan-http scan-ssh docker-testenv-up docker-testenv-down evolution-check examples run-weather-agent
 .PHONY: uri2flow-test uri2flow-validate uri2flow-expand uri3-flow-dry-run nl2uri-flow-validate example-18 touri-test touri-demo voice-test voice-demo
+.PHONY: architecture-test doctor architecture-gate ci-gate
 
 WEATHER_PROMPT = generuj mape pogody dwa tygodnie do przodu w html
 
@@ -15,6 +16,17 @@ verify:
 
 test:
 	pytest -q
+
+architecture-test:
+	pytest tests/architecture -q
+
+doctor:
+	uri3 doctor --json
+
+architecture-gate:
+	bash scripts/ci/architecture_gate.sh
+
+ci-gate: architecture-gate test
 
 uri2flow-test:
 	pytest tests/uri2flow -q

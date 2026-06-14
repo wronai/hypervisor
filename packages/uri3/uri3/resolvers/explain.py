@@ -46,7 +46,22 @@ def default_touri_registry(root: Path | None = None) -> Path:
 
 OPERATOR_SCHEMES = frozenset({"browser", "dom", "screen", "input", "android", "pcwin"})
 _URI2RUN_BACKEND_TYPES = frozenset(
-    {"python", "shell", "http", "https", "stdio", "sse", "ws", "uri_flow", "uri_graph"}
+    {
+        "python",
+        "shell",
+        "http",
+        "https",
+        "stdio",
+        "sse",
+        "ws",
+        "docker",
+        "ssh",
+        "mcp",
+        "a2a",
+        "uri_flow",
+        "uri_graph",
+        "uri2ops",
+    }
 )
 
 
@@ -95,6 +110,18 @@ def _match_touri(uri: str, registry_root: Path) -> dict[str, Any] | None:
     if match is None:
         return None
     manifest = match.manifest
+    backend = {
+        "type": manifest.backend.type,
+        "target": manifest.backend.target,
+        "command": manifest.backend.command,
+        "method": manifest.backend.method,
+        "url": manifest.backend.url,
+        "operation": manifest.backend.operation,
+        "flow": manifest.backend.flow,
+        "graph": manifest.backend.graph,
+    }
+    backend = {key: value for key, value in backend.items() if value}
+    backend.update(manifest.backend.extra or {})
     return {
         "matched_registry": "touri",
         "uri": uri,
@@ -102,10 +129,7 @@ def _match_touri(uri: str, registry_root: Path) -> dict[str, Any] | None:
         "scheme": manifest.capability.scheme,
         "operation": manifest.capability.operation,
         "kind": manifest.capability.kind,
-        "backend": {
-            "type": manifest.backend.type,
-            "target": manifest.backend.target,
-        },
+        "backend": backend,
         "policy": manifest.policy,
         "data_quality": manifest.data_quality,
         "fallbacks": summarize_fallbacks(manifest.fallbacks),

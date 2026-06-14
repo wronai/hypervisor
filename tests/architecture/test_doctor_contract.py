@@ -15,6 +15,11 @@ REQUIRED_CHECKS = frozenset(
         "explain.smoke",
         "envelope.exports",
         "envelope.recent_logs",
+        "boundaries.imports",
+        "imports.package_roots",
+        "imports.legacy_top_level",
+        "runtime.browser_delegation",
+        "runtime.uri2run_transports",
     }
 )
 

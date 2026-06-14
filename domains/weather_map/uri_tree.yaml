@@ -83,5 +83,3 @@ dependencies:
 - pypi://httpx
 - pypi://jinja2
 - pypi://pydantic
-planner_warning: 'LLM planner failed, deterministic fallback used: OPENROUTER_API_KEY
-  is missing'

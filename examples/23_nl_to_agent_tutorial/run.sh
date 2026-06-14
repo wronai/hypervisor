@@ -99,12 +99,45 @@ agent_health_ok() {
     | python -c "import json,sys; d=json.load(sys.stdin); sys.exit(0 if d.get('agent')=='weather-map-agent' and d.get('ok') else 1)" 2>/dev/null
 }
 
+resolve_running_agent_base() {
+  local status_json
+  status_json="$(hypervisor agent-status weather-map-agent.local --no-health 2>/dev/null || true)"
+  [[ -n "$status_json" ]] || return 1
+  printf '%s' "$status_json" | python -c "
+import json
+import sys
+
+data = json.load(sys.stdin)
+state = data.get('runtime_state') or {}
+health = state.get('health_uri') or data.get('health_uri')
+runtime = str(data.get('runtime_status') or '')
+if runtime == 'stale':
+    raise SystemExit(2)
+if not health:
+    raise SystemExit(1)
+print(str(health).rstrip('/'))
+"
+}
+
+RUNTIME_STATUS="$(hypervisor agent-status weather-map-agent.local --no-health 2>/dev/null \
+  | python -c "import json,sys; print(json.load(sys.stdin).get('runtime_status',''))" 2>/dev/null || true)"
+if [[ "$RUNTIME_STATUS" == "stale" ]]; then
+  echo "Czyszczenie nieaktualnego runtime state (stale)…"
+  hypervisor stop-agent weather-map-agent.local >/dev/null 2>&1 || true
+fi
+
 AGENT_PORT="${TUTORIAL_AGENT_PORT:-}"
-if [[ -z "$AGENT_PORT" ]]; then
-  if agent_health_ok "http://localhost:8101"; then
-    AGENT_PORT=8101
-  else
-    AGENT_PORT="$(python - <<'PY'
+AGENT_BASE=""
+
+if EXISTING_BASE="$(resolve_running_agent_base 2>/dev/null || true)" && agent_health_ok "$EXISTING_BASE"; then
+  AGENT_BASE="$EXISTING_BASE"
+  echo "Agent weather-map już działa — używam $AGENT_BASE"
+else
+  if [[ -z "$AGENT_PORT" ]]; then
+    if agent_health_ok "http://localhost:8101"; then
+      AGENT_PORT=8101
+    else
+      AGENT_PORT="$(python - <<'PY'
 import socket
 s = socket.socket()
 s.bind(("127.0.0.1", 0))
@@ -112,18 +145,19 @@ print(s.getsockname()[1])
 s.close()
 PY
 )"
+    fi
   fi
-fi
-AGENT_BASE="http://localhost:${AGENT_PORT}"
+  AGENT_BASE="http://localhost:${AGENT_PORT}"
 
-if agent_health_ok "$AGENT_BASE"; then
-  echo "Agent weather-map już działa na $AGENT_BASE"
-elif [[ "$AGENT_PORT" != "8101" ]]; then
-  echo "Port 8101 zajęty przez inny serwis — używam --port $AGENT_PORT"
-  hypervisor run-agent weather-map-agent.local --detach --port "$AGENT_PORT"
-else
-  echo "Start w tle: hypervisor run-agent weather-map-agent.local --detach"
-  hypervisor run-agent weather-map-agent.local --detach
+  if agent_health_ok "$AGENT_BASE"; then
+    echo "Agent weather-map już odpowiada na $AGENT_BASE"
+  elif [[ "$AGENT_PORT" != "8101" ]]; then
+    echo "Port 8101 zajęty przez inny serwis — używam --port $AGENT_PORT"
+    hypervisor run-agent weather-map-agent.local --detach --port "$AGENT_PORT" | tail -n 20
+  else
+    echo "Start w tle: hypervisor run-agent weather-map-agent.local --detach"
+    hypervisor run-agent weather-map-agent.local --detach | tail -n 20
+  fi
 fi
 
 for _ in $(seq 1 30); do

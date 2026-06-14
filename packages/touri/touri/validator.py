@@ -13,6 +13,10 @@ _BACKEND_REQUIRED_FIELDS: dict[str, tuple[str, str]] = {
     "stdio": ("command", "stdio backend requires backend.command"),
     "sse": ("url", "sse backend requires backend.url"),
     "ws": ("url", "ws backend requires backend.url"),
+    "docker": ("target", "docker backend requires backend.target"),
+    "ssh": ("target", "ssh backend requires backend.target"),
+    "mcp": ("target", "mcp backend requires backend.target"),
+    "a2a": ("target", "a2a backend requires backend.target"),
     "uri_flow": ("flow", "uri_flow backend requires backend.flow"),
     "uri_graph": ("graph", "uri_graph backend requires backend.graph"),
 }

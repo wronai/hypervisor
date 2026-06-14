@@ -3,6 +3,10 @@
 .idea/
 operator/
 workflows/
+!/.github/
+!/.github/workflows/
+!/.github/workflows/*.yml
+!/.github/workflows/*.yaml
 output/
 .env.example
 __pycache__/

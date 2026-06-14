@@ -76,4 +76,9 @@ def write_registry_indexes(root: Path, *, registry_path: Path | None = None) -> 
         path = out_dir / name
         path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         written.append(str(path))
-    return {"ok": True, "directory": str(out_dir), "files": written, "counts": {name: payload.get("count", 0) for name, payload in indexes.items()}}
+    return {
+        "ok": True,
+        "directory": str(out_dir),
+        "files": written,
+        "counts": {name: payload.get("count", 0) for name, payload in indexes.items()},
+    }

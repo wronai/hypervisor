@@ -5,10 +5,13 @@ from __future__ import annotations
 from pathlib import Path
 
 import yaml
-
-from tests.architecture.envelope_helpers import assert_service_result_shape, assert_workflow_result_shape
 from touri.executor import call_uri
 from uri3.graph import run_workflow
+
+from tests.architecture.envelope_helpers import (
+    assert_service_result_shape,
+    assert_workflow_result_shape,
+)
 
 
 def test_touri_call_envelope(repo_root: Path):

@@ -340,8 +340,6 @@ flowchart TD
         packages__touri__touri__loaders__file_loader__iter_manifest_paths["iter_manifest_paths"]
         packages__touri__touri__loaders__file_loader__load_file_registry["load_file_registry"]
         packages__touri__touri__loaders__markpact_loader__load_markpact_capabilities["load_markpact_capabilities"]
-        packages__touri__touri__validator___validate_backend["_validate_backend"]
-        packages__touri__touri__validator__validate_manifest["validate_manifest"]
         packages__touri__touri__backend_dispatch__invalid_backend["invalid_backend"]
         packages__touri__touri__backend_dispatch__unsupported_backend["unsupported_backend"]
         packages__touri__touri__backend_dispatch__backend_error["backend_error"]
@@ -352,6 +350,8 @@ flowchart TD
         packages__touri__touri__backend_dispatch___call_uri_graph_backend["_call_uri_graph_backend"]
         packages__touri__touri__backend_dispatch___call_uri2ops_fallback["_call_uri2ops_fallback"]
         packages__touri__touri__backend_dispatch__call_backend["call_backend"]
+        packages__touri__touri__backend_dispatch___call_primary_python["_call_primary_python"]
+        packages__touri__touri__backend_dispatch___call_primary_shell["_call_primary_shell"]
     end
     subgraph packages__uri2flow
         packages__uri2flow__uri2flow__validator__validate_flow_document("validate_flow_document CC=10")
@@ -428,8 +428,16 @@ flowchart TD
         packages__uri2run__uri2run__transports__uri2ops_transport___build_runtime_context["_build_runtime_context"]
         packages__uri2run__uri2run__transports__uri2ops_transport__run_uri2ops["run_uri2ops"]
         packages__uri2run__uri2run__transports__uri2ops_transport__run_uri2ops_transport("run_uri2ops_transport CC=9")
+        packages__uri2run__uri2run__transports__ws_transport__run_ws["run_ws"]
+        packages__uri2run__uri2run__transports__ws_transport__run_ws_transport["run_ws_transport"]
         packages__uri2run__uri2run__transports__flow_transport__run_uri_flow("run_uri_flow CC=9")
         packages__uri2run__uri2run__transports__flow_transport__run_flow_transport["run_flow_transport"]
+        packages__uri2run__uri2run__transports__shell_transport___command_with_args["_command_with_args"]
+        packages__uri2run__uri2run__transports__shell_transport___extra_args["_extra_args"]
+        packages__uri2run__uri2run__transports__shell_transport___argv["_argv"]
+        packages__uri2run__uri2run__transports__shell_transport___env["_env"]
+        packages__uri2run__uri2run__transports__shell_transport__run_shell["run_shell"]
+        packages__uri2run__uri2run__transports__shell_transport__run_shell_transport["run_shell_transport"]
         packages__uri2run__uri2run__transports__graph_transport___load_graph["_load_graph"]
         packages__uri2run__uri2run__transports__graph_transport__run_uri_graph("run_uri_graph CC=9")
         packages__uri2run__uri2run__transports__graph_transport__run_graph_transport["run_graph_transport"]
@@ -438,12 +446,29 @@ flowchart TD
         packages__uri2run__uri2run__transports__python_transport__run_python_transport["run_python_transport"]
         packages__uri2run__uri2run__transports__paths__resolve_path["resolve_path"]
         packages__uri2run__uri2run__transports__paths__execution_options["execution_options"]
+        packages__uri2run__uri2run__transports__http_transport___response_data["_response_data"]
+        packages__uri2run__uri2run__transports__http_transport___mapping["_mapping"]
+        packages__uri2run__uri2run__transports__http_transport__run_http("run_http CC=12")
+        packages__uri2run__uri2run__transports__http_transport__run_http_transport["run_http_transport"]
         packages__uri2run__uri2run__transports__mock_transport__run_mock["run_mock"]
+        packages__uri2run__uri2run__transports__stdio_transport__run_stdio["run_stdio"]
+        packages__uri2run__uri2run__transports__stdio_transport__service_result_ok["service_result_ok"]
+        packages__uri2run__uri2run__transports__stdio_transport__run_stdio_transport["run_stdio_transport"]
+        packages__uri2run__uri2run__transports__sse_transport___parse_sse_line["_parse_sse_line"]
+        packages__uri2run__uri2run__transports__sse_transport__run_sse["run_sse"]
+        packages__uri2run__uri2run__transports__sse_transport__run_sse_transport["run_sse_transport"]
+        packages__uri2run__uri2run__transports__docker_transport___docker_ok["_docker_ok"]
+        packages__uri2run__uri2run__transports__docker_transport__run_docker["run_docker"]
+        packages__uri2run__uri2run__transports__docker_transport__run_docker_transport["run_docker_transport"]
+        packages__uri2run__uri2run__transports__protocol_url__protocol_to_http_url["protocol_to_http_url"]
         packages__uri2run__uri2run__cli__root["root"]
         packages__uri2run__uri2run__cli___json_payload["_json_payload"]
         packages__uri2run__uri2run__cli__call_cmd["call_cmd"]
-        packages__uri2run__uri2run__cli___backend_from_target("_backend_from_target CC=14")
+        packages__uri2run__uri2run__cli___backend_from_target{{_backend_from_target CC=22}}
         packages__uri2run__uri2run__cli__main["main"]
+        packages__uri2run__uri2run__transports__a2a_transport___a2a_endpoint("_a2a_endpoint CC=9")
+        packages__uri2run__uri2run__transports__a2a_transport__run_a2a("run_a2a CC=12")
+        packages__uri2run__uri2run__transports__a2a_transport__run_a2a_transport["run_a2a_transport"]
         packages__uri2run__uri2run__runner__unsupported_backend["unsupported_backend"]
         packages__uri2run__uri2run__runner___backend_target["_backend_target"]
         packages__uri2run__uri2run__runner___run_python["_run_python"]
@@ -453,29 +478,6 @@ flowchart TD
         packages__uri2run__uri2run__runner___run_graph["_run_graph"]
         packages__uri2run__uri2run__runner___run_uri2ops("_run_uri2ops CC=9")
         packages__uri2run__uri2run__runner___run_stdio["_run_stdio"]
-        packages__uri2run__uri2run__runner___run_sse["_run_sse"]
-        packages__uri2run__uri2run__runner___run_ws["_run_ws"]
-        packages__uri2run__uri2run__runner__run_backend["run_backend"]
-        packages__uri2run__uri2run__runner___stamp_runtime_meta["_stamp_runtime_meta"]
-        packages__uri2run__uri2run__runner__run_target("run_target CC=9")
-        packages__uri2run__uri2run__transports__ws_transport__run_ws["run_ws"]
-        packages__uri2run__uri2run__transports__ws_transport__run_ws_transport["run_ws_transport"]
-        packages__uri2run__uri2run__transports__shell_transport___command_with_args["_command_with_args"]
-        packages__uri2run__uri2run__transports__shell_transport___extra_args["_extra_args"]
-        packages__uri2run__uri2run__transports__shell_transport___argv["_argv"]
-        packages__uri2run__uri2run__transports__shell_transport___env["_env"]
-        packages__uri2run__uri2run__transports__shell_transport__run_shell["run_shell"]
-        packages__uri2run__uri2run__transports__shell_transport__run_shell_transport["run_shell_transport"]
-        packages__uri2run__uri2run__transports__http_transport___response_data["_response_data"]
-        packages__uri2run__uri2run__transports__http_transport___mapping["_mapping"]
-        packages__uri2run__uri2run__transports__http_transport__run_http("run_http CC=12")
-        packages__uri2run__uri2run__transports__http_transport__run_http_transport["run_http_transport"]
-        packages__uri2run__uri2run__transports__stdio_transport__run_stdio["run_stdio"]
-        packages__uri2run__uri2run__transports__stdio_transport__service_result_ok["service_result_ok"]
-        packages__uri2run__uri2run__transports__stdio_transport__run_stdio_transport["run_stdio_transport"]
-        packages__uri2run__uri2run__transports__sse_transport___parse_sse_line["_parse_sse_line"]
-        packages__uri2run__uri2run__transports__sse_transport__run_sse["run_sse"]
-        packages__uri2run__uri2run__transports__sse_transport__run_sse_transport["run_sse_transport"]
     end
     subgraph packages__uri2verify
         packages__uri2verify__uri2verify__cli__replay_cmd["replay_cmd"]
@@ -594,6 +596,9 @@ flowchart TD
         runtime_client__client__ResourceRuntimeClient____init__["__init__"]
         runtime_client__client__ResourceRuntimeClient__read_resource["read_resource"]
         runtime_client__client__ResourceRuntimeClient__dispatch_command["dispatch_command"]
+    end
+    subgraph scripts__ci
+        scripts__ci__architecture_gate__print["print"]
     end
     subgraph scripts__test_all_examples
         scripts__test_all_examples__run_example["run_example"]
@@ -844,6 +849,11 @@ flowchart TD
     packages__uri3__uri3__graph__adapters__uri2ops_adapter__resolve_operator_adapter --> packages__uri3__uri3__graph__adapters__uri2ops_adapter___use_legacy_browser_adapter
     packages__uri3__uri3__graph__adapters__browser_mock__BrowserMockAdapter__execute --> packages__uri3__uri3__graph__artifacts__write_artifact
     packages__uri3__uri3__graph__adapters__browser_mock__BrowserMockAdapter__execute --> packages__uri3__uri3__graph__adapters__browser_mock__json_dumps
+    packages__uri3__uri3__graph__adapters__registry__HypervisorAdapter__execute --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__selector__parse_hypervisor_uri
+    packages__uri3__uri3__graph__adapters__registry__HypervisorAdapter__execute --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__selector__resolve_deployment
+    packages__uri3__uri3__graph__adapters__registry__HypervisorAdapter__execute --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__run_plans__build_run_plan
+    packages__uri3__uri3__graph__adapters__registry__HypervisorAdapter__execute --> packages__resource_agent_hypervisor__hypervisor__deployment_registry__lifecycle__agent_status
+    packages__uri3__uri3__graph__adapters__registry___operator_adapter --> packages__uri3__uri3__graph__adapters__uri2ops_adapter___use_legacy_browser_adapter
     packages__uri3__uri3__graph__adapters__browser_playwright__PlaywrightBrowserAdapter__execute --> packages__uri3__uri3__graph__adapters__browser_playwright___session_state
     packages__uri3__uri3__graph__adapters__browser_playwright__PlaywrightBrowserAdapter__execute --> packages__uri3__uri3__graph__artifacts__write_artifact
     packages__uri3__uri3__graph__adapters__browser_router__resolve_browser_mode --> packages__uri3__uri3__graph__adapters__browser_router___playwright_ready
@@ -884,9 +894,8 @@ flowchart TD
     packages__uri3__uri3__cli__helpers__list_payload --> packages__uri3__uri3__protocols__schemes__spec_registry__list_schemes
     packages__uri3__uri3__cli__helpers__list_payload --> packages__uri3__uri3__config__cli_shortcuts__scan_shortcuts
     packages__uri3__uri3__cli__main__main --> packages__uri3__uri3__cli__helpers__quick_reference
-    packages__uri3__uri3__cli__commands__doctor__register --> packages__uri3__uri3__doctor__runner__run_doctor
-    packages__uri3__uri3__cli__commands__doctor__register --> packages__uri3__uri3__cli__commands__doctor___render
-    packages__uri3__uri3__cli__commands__doctor___render --> packages__uri3__uri3__cli__commands__doctor___check_summary
+    packages__uri3__uri3__cli__commands__explain__register --> packages__uri3__uri3__resolvers__explain__explain_uri
+    packages__uri3__uri3__cli__commands__explain__register --> packages__uri3__uri3__cli__commands__explain___render
     packages__uri3__uri3__cli__commands__graph__register --> uri3__graph__uri_graph__build_graph_from_tree
     packages__uri3__uri3__cli__commands__resolve__register --> uri3__validators__uri_validator__validate_uri
     packages__uri3__uri3__cli__commands__resolve__register --> packages__uri3__uri3__validators__uri_tree_validator__validate_uri_tree
@@ -1087,9 +1096,6 @@ flowchart TD
     packages__uri3__uri3__resolvers__log_resolver__LogResolver__resolve --> packages__uri3__uri3__resolvers__log_resolver__resolve_log
     packages__uri3__uri3__resolvers__log_resolver__LogResolver__read --> packages__uri3__uri3__logs__reader__read_logs
     packages__uri3__uri3__resolvers__log_resolver__LogResolver__read --> packages__uri3__uri3__logs__reader__summarize_logs
-    packages__uri3__uri3__doctor__runner__run_doctor --> packages__uri3__uri3__config__repo_root__find_repo_root
-    packages__uri3__uri3__doctor__runner__run_doctor --> packages__uri3__uri3__resolvers__explain__default_touri_registry
-    packages__uri3__uri3__doctor__runner__run_doctor --> packages__uri3__uri3__doctor__envelope_migrate__migrate_workflow_logs
     packages__uri3__uri3__doctor__envelope_migrate__migrate_workflow_log --> packages__uri3__uri3__results__statuses__derive_statuses
     packages__uri3__uri3__doctor__envelope_migrate__migrate_workflow_logs --> packages__uri3__uri3__doctor__envelope_migrate__migrate_workflow_log
     packages__uri3__uri3__doctor__envelope_migrate__migrate_workflow_logs --> uri2ops__operation_registry__models__OperationRegistry__list
@@ -1102,37 +1108,6 @@ flowchart TD
     packages__uri3__uri3__doctor__registry_index__write_registry_indexes --> packages__uri3__uri3__doctor__registry_index__build_capability_index
     packages__uri3__uri3__doctor__registry_index__write_registry_indexes --> packages__uri3__uri3__doctor__registry_index__build_operation_index
     packages__uri3__uri3__doctor__registry_index__write_registry_indexes --> packages__uri3__uri3__doctor__registry_index__build_uri_index
-    packages__uri3__uri3__doctor__checks__check_config --> packages__uri3__uri3__resolvers__explain__load_touri_config
-    packages__uri3__uri3__doctor__checks__check_config --> packages__uri3__uri3__resolvers__explain__default_touri_registry
-    packages__uri3__uri3__doctor__checks__check_config --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_config --> uri2ops__operation_registry__models__OperationRegistry__list
-    packages__uri3__uri3__doctor__checks__check_contract_registry --> hypervisor__contract_registry__schema_validator__validate_contract_files
-    packages__uri3__uri3__doctor__checks__check_contract_registry --> hypervisor__contract_registry__loader__load_contract_registry
-    packages__uri3__uri3__doctor__checks__check_contract_registry --> packages__resource_agent_hypervisor__hypervisor__contract_registry__validate__validate_registry
-    packages__uri3__uri3__doctor__checks__check_contract_registry --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_touri_registry --> packages__touri__touri__loader__load_registry
-    packages__uri3__uri3__doctor__checks__check_touri_registry --> packages__touri__touri__loader__iter_manifest_paths
-    packages__uri3__uri3__doctor__checks__check_touri_registry --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_touri_registry --> packages__touri__touri__validator__validate_manifest
-    packages__uri3__uri3__doctor__checks__check_uri2ops_registry --> uri2ops__remote_registry__loader__resolve_operation_registry
-    packages__uri3__uri3__doctor__checks__check_uri2ops_registry --> uri2ops__operation_registry__validator__validate_operation_registry
-    packages__uri3__uri3__doctor__checks__check_uri2ops_registry --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_uri2ops_registry --> uri2ops__remote_registry__loader__list_remote_sources
-    packages__uri3__uri3__doctor__checks__check_explain_smoke --> packages__touri__touri__loader__load_registry
-    packages__uri3__uri3__doctor__checks__check_explain_smoke --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_explain_smoke --> packages__touri__touri__register__sample_uri_from_template
-    packages__uri3__uri3__doctor__checks__check_explain_smoke --> packages__uri3__uri3__resolvers__explain__explain_uri
-    packages__uri3__uri3__doctor__checks__check_result_envelope --> packages__uri3__uri3__results__service_result__service_result
-    packages__uri3__uri3__doctor__checks__check_result_envelope --> packages__uri2verify__uri2verify__result_checks__enrich_result_dict
-    packages__uri3__uri3__doctor__checks__check_result_envelope --> packages__uri2verify__uri2verify__result_checks__technical_vs_business_ok
-    packages__uri3__uri3__doctor__checks__check_result_envelope --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_recent_workflow_logs --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_capability_plan --> hypervisor__contract_registry__loader__load_contract_registry
-    packages__uri3__uri3__doctor__checks__check_capability_plan --> packages__resource_agent_hypervisor__hypervisor__contract_registry__validate__validate_registry
-    packages__uri3__uri3__doctor__checks__check_capability_plan --> packages__uri2verify__uri2verify__capability_tests__capability_test_plan_from_registry
-    packages__uri3__uri3__doctor__checks__check_capability_plan --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_replay_failures --> packages__uri3__uri3__doctor__checks___check
-    packages__uri3__uri3__doctor__checks__check_replay_failures --> packages__uri2verify__uri2verify__replay__replay_workflow_events
     packages__uri2flow__uri2flow__validator__validate_flow_document --> packages__uri2flow__uri2flow__parser__parse_flow
     packages__uri2flow__uri2flow__validator__validate_expanded_flow --> packages__uri2flow__uri2flow__validator__validate_flow_document
     packages__uri2flow__uri2flow__validator__validate_expanded_flow --> packages__uri3__uri3__graph__graph_validator__validate_workflow_graph
@@ -1250,6 +1225,11 @@ flowchart TD
     packages__uri2run__uri2run__transports__uri2ops_transport__run_uri2ops --> uri2ops__operation_registry__dispatcher__dispatch
     packages__uri2run__uri2run__transports__uri2ops_transport__run_uri2ops_transport --> packages__uri2run__uri2run__transports__uri2ops_transport__run_uri2ops
     packages__uri2run__uri2run__transports__uri2ops_transport__run_uri2ops_transport --> packages__uri2run__uri2run__result__error_result
+    packages__uri2run__uri2run__transports__ws_transport__run_ws --> packages__uri3__uri3__results__service_result__service_result
+    packages__uri2run__uri2run__transports__ws_transport__run_ws --> packages__uri2run__uri2run__result__result_from_output
+    packages__uri2run__uri2run__transports__ws_transport__run_ws --> packages__uri2run__uri2run__result__error_result
+    packages__uri2run__uri2run__transports__ws_transport__run_ws_transport --> packages__uri2run__uri2run__transports__ws_transport__run_ws
+    packages__uri2run__uri2run__transports__ws_transport__run_ws_transport --> packages__uri2run__uri2run__result__error_result
     packages__uri2run__uri2run__transports__flow_transport__run_uri_flow --> packages__uri3__uri3__resolvers__log_query__resolve_path
     packages__uri2run__uri2run__transports__flow_transport__run_uri_flow --> packages__uri2run__uri2run__transports__paths__execution_options
     packages__uri2run__uri2run__transports__flow_transport__run_uri_flow --> packages__uri3__uri3__graph__graph_validator__validate_workflow_graph
@@ -1261,6 +1241,14 @@ flowchart TD
     packages__uri2run__uri2run__transports__flow_transport__run_uri_flow --> packages__uri3__uri3__graph__graph_executor__dry_run_workflow
     packages__uri2run__uri2run__transports__flow_transport__run_flow_transport --> packages__uri2run__uri2run__transports__flow_transport__run_uri_flow
     packages__uri2run__uri2run__transports__flow_transport__run_flow_transport --> packages__uri2run__uri2run__result__error_result
+    packages__uri2run__uri2run__transports__shell_transport___argv --> packages__uri2run__uri2run__transports__shell_transport___extra_args
+    packages__uri2run__uri2run__transports__shell_transport__run_shell --> packages__uri3__uri3__results__service_result__service_result
+    packages__uri2run__uri2run__transports__shell_transport__run_shell --> packages__uri2run__uri2run__transports__shell_transport___command_with_args
+    packages__uri2run__uri2run__transports__shell_transport__run_shell --> packages__uri2run__uri2run__transports__shell_transport___argv
+    packages__uri2run__uri2run__transports__shell_transport__run_shell --> packages__uri2run__uri2run__result__error_result
+    packages__uri2run__uri2run__transports__shell_transport__run_shell --> packages__uri2run__uri2run__transports__shell_transport___env
+    packages__uri2run__uri2run__transports__shell_transport__run_shell_transport --> packages__uri2run__uri2run__transports__shell_transport__run_shell
+    packages__uri2run__uri2run__transports__shell_transport__run_shell_transport --> packages__uri2run__uri2run__result__error_result
     packages__uri2run__uri2run__transports__graph_transport__run_uri_graph --> packages__uri3__uri3__resolvers__log_query__resolve_path
     packages__uri2run__uri2run__transports__graph_transport__run_uri_graph --> packages__uri2run__uri2run__transports__paths__execution_options
     packages__uri2run__uri2run__transports__graph_transport__run_uri_graph --> packages__uri3__uri3__graph__graph_validator__validate_workflow_graph
@@ -1278,7 +1266,23 @@ flowchart TD
     packages__uri2run__uri2run__transports__python_transport__run_python_transport --> packages__uri2run__uri2run__transports__python_transport__run_python
     packages__uri2run__uri2run__transports__python_transport__run_python_transport --> packages__uri2run__uri2run__result__error_result
     packages__uri2run__uri2run__transports__paths__resolve_path --> packages__uri3__uri3__config__repo_root__find_repo_root
+    packages__uri2run__uri2run__transports__http_transport__run_http --> packages__uri2run__uri2run__transports__http_transport___mapping
+    packages__uri2run__uri2run__transports__http_transport__run_http --> packages__uri3__uri3__results__service_result__service_result
+    packages__uri2run__uri2run__transports__http_transport__run_http --> packages__uri2run__uri2run__result__error_result
+    packages__uri2run__uri2run__transports__http_transport__run_http_transport --> packages__uri2run__uri2run__transports__http_transport__run_http
+    packages__uri2run__uri2run__transports__http_transport__run_http_transport --> packages__uri2run__uri2run__result__error_result
     packages__uri2run__uri2run__transports__mock_transport__run_mock --> packages__uri3__uri3__results__service_result__service_result
+    packages__uri2run__uri2run__transports__stdio_transport__run_stdio --> packages__uri2run__uri2run__result__result_from_output
+    packages__uri2run__uri2run__transports__stdio_transport__run_stdio --> packages__uri2run__uri2run__result__error_result
+    packages__uri2run__uri2run__transports__stdio_transport__run_stdio --> packages__uri2run__uri2run__transports__stdio_transport__service_result_ok
+    packages__uri2run__uri2run__transports__stdio_transport__service_result_ok --> packages__uri3__uri3__results__service_result__service_result
+    packages__uri2run__uri2run__transports__stdio_transport__run_stdio_transport --> packages__uri2run__uri2run__transports__stdio_transport__run_stdio
+    packages__uri2run__uri2run__transports__stdio_transport__run_stdio_transport --> packages__uri2run__uri2run__result__error_result
+    packages__uri2run__uri2run__transports__sse_transport__run_sse --> packages__uri3__uri3__results__service_result__service_result
+    packages__uri2run__uri2run__transports__sse_transport__run_sse --> packages__uri2run__uri2run__result__error_result
+    packages__uri2run__uri2run__transports__sse_transport__run_sse --> packages__uri2run__uri2run__transports__sse_transport___parse_sse_line
+    packages__uri2run__uri2run__transports__sse_transport__run_sse_transport --> packages__uri2run__uri2run__transports__sse_transport__run_sse
+    packages__uri2run__uri2run__transports__sse_transport__run_sse_transport --> packages__uri2run__uri2run__result__error_result
     generator__validate__validate_agent --> generator__model__load_agent_spec
     generator__validate__main --> generator__validate__iter_agent_specs
     generator__validate__main --> examples__21_touri_voice__run__print
@@ -1286,8 +1290,9 @@ flowchart TD
     packages__resource_agent_factory__generator__header__contract_source_ref --> packages__resource_agent_factory__generator__paths__project_root
     packages__resource_agent_factory__generator__paths__project_root --> packages__uri3__uri3__config__repo_root__find_repo_root
     packages__resource_agent_factory__generator__agent_generator__generate_agent --> generator__validate__validate_agent
+    packages__resource_agent_factory__generator__agent_generator__generate_agent --> generator__model__load_agent_spec
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class packages__uri3__uri3__doctor__runner__run_doctor,packages__uri3__uri3__cli__commands__explain___render highCC
-    class uri2ops__operation_registry__validator__validate_operation_registry,uri2ops__operation_registry__loader__load_operation_registry,uri2ops__remote_registry__loader___load_source,uri2ops__remote_registry__loader__registry_from_document,uri2ops__remote_registry__loader__resolve_operation_registry,packages__uri3__uri3__logs__parsing__parse_json_entry,packages__uri3__uri3__logs__reader__read_logs,packages__uri3__uri3__graph__graph_serializer__normalize_graph_payload,uri3__graph__uri_graph__build_graph_from_tree,packages__uri3__uri3__graph__models__GraphNode__to_dict,packages__uri3__uri3__graph__graph_validator__load_workflow_graph,packages__uri3__uri3__graph__graph_validator__validate_workflow_graph,packages__uri3__uri3__graph__adapters__uri2ops_adapter___artifact_suffix,packages__uri3__uri3__graph__adapters__browser_mock__BrowserMockAdapter__execute,packages__uri3__uri3__graph__adapters__browser_playwright__PlaywrightBrowserAdapter__execute,packages__uri3__uri3__docker__controller__control_docker,packages__uri3__uri3__docker__actions__container__control_container,packages__uri3__uri3__docker__actions__compose__control_compose_up,packages__uri3__uri3__cli__commands__doctor___render,packages__uri3__uri3__cli__commands__doctor___check_summary,packages__uri3__uri3__cli__commands__replay___render,packages__uri3__uri3__scanner__ssh_scanner___connectivity_item,packages__uri3__uri3__results__errors__normalize_error,packages__uri3__uri3__results__service_result__ServiceResult__finalize,packages__uri3__uri3__results__service_result__ServiceResult__to_dict,packages__uri3__uri3__protocols__schemes__analyze___analyze_query,packages__uri3__uri3__config__ssh_auth___resolve_password_value,packages__uri3__uri3__config__ssh_auth__resolve_ssh_password,packages__uri3__uri3__config__llm_profiles__resolve_llm_profile,packages__uri3__uri3__resolvers__ssh_resolver__parse_ssh_uri medCC
+    class packages__uri3__uri3__cli__commands__explain___render,packages__uri2run__uri2run__cli___backend_from_target,packages__uri3__uri3__cli__commands__doctor___check_summary,packages__uri3__uri3__doctor__boundary_scanner__scan_package_boundaries highCC
+    class uri2ops__operation_registry__validator__validate_operation_registry,uri2ops__operation_registry__loader__load_operation_registry,uri2ops__remote_registry__loader___load_source,uri2ops__remote_registry__loader__registry_from_document,uri2ops__remote_registry__loader__resolve_operation_registry,packages__uri3__uri3__logs__parsing__parse_json_entry,packages__uri3__uri3__logs__reader__read_logs,packages__uri3__uri3__graph__graph_serializer__normalize_graph_payload,uri3__graph__uri_graph__build_graph_from_tree,packages__uri3__uri3__graph__models__GraphNode__to_dict,packages__uri3__uri3__graph__graph_validator__load_workflow_graph,packages__uri3__uri3__graph__graph_validator__validate_workflow_graph,packages__uri3__uri3__graph__adapters__uri2ops_adapter___artifact_suffix,packages__uri3__uri3__graph__adapters__browser_mock__BrowserMockAdapter__execute,packages__uri3__uri3__graph__adapters__registry__AssertionAdapter__execute,packages__uri3__uri3__graph__adapters__browser_playwright__PlaywrightBrowserAdapter__execute,packages__uri3__uri3__docker__controller__control_docker,packages__uri3__uri3__docker__actions__container__control_container,packages__uri3__uri3__docker__actions__compose__control_compose_up,packages__uri3__uri3__cli__commands__replay___render,packages__uri3__uri3__scanner__ssh_scanner___connectivity_item,packages__uri3__uri3__results__errors__normalize_error,packages__uri3__uri3__results__service_result__ServiceResult__finalize,packages__uri3__uri3__results__service_result__ServiceResult__to_dict,packages__uri3__uri3__protocols__schemes__analyze___analyze_query,packages__uri3__uri3__config__ssh_auth___resolve_password_value,packages__uri3__uri3__config__ssh_auth__resolve_ssh_password,packages__uri3__uri3__config__llm_profiles__resolve_llm_profile,packages__uri3__uri3__resolvers__ssh_resolver__parse_ssh_uri,packages__uri3__uri3__resolvers__docker_resolver__parse_docker_uri medCC

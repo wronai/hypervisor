@@ -24,9 +24,23 @@ def service_result_to_step_payload(result: ServiceResult) -> dict[str, Any]:
 
 
 class RuntimeAdapter:
-    """Delegate python/shell/http runtime URIs to uri2run."""
+    """Delegate executable runtime URI schemes to uri2run."""
 
-    schemes = frozenset({"python", "shell", "http", "https", "stdio", "ws", "sse"})
+    schemes = frozenset(
+        {
+            "python",
+            "shell",
+            "http",
+            "https",
+            "stdio",
+            "ws",
+            "sse",
+            "docker",
+            "ssh",
+            "mcp",
+            "a2a",
+        }
+    )
 
     def execute(self, node: GraphNode, context: ExecutionContext) -> dict[str, Any]:
         if context.dry_run:
@@ -54,5 +68,7 @@ class RuntimeAdapter:
         if not step_payload.get("ok") and not step_payload.get("error"):
             errors = step_payload.get("errors") or []
             if errors:
-                step_payload["error"] = errors[0].get("detail") if isinstance(errors[0], dict) else str(errors[0])
+                step_payload["error"] = (
+                    errors[0].get("detail") if isinstance(errors[0], dict) else str(errors[0])
+                )
         return step_payload

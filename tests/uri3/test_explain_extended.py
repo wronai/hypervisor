@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import yaml
-
 from uri3.resolvers.explain import explain_uri
 
 
@@ -28,7 +27,10 @@ def test_explain_includes_fallbacks_and_data_quality(tmp_path: Path):
             "operation": "read",
             "kind": "query",
         },
-        "backend": {"type": "python", "target": "python://touri_examples.validators:low_confidence_backend"},
+        "backend": {
+            "type": "python",
+            "target": "python://touri_examples.validators:low_confidence_backend",
+        },
         "data_quality": {
             "failure_code": "PRICE_RESULT_NOT_RELEVANT",
             "validators": ["python://touri_examples.validators:reject_low_confidence"],
@@ -42,3 +44,28 @@ def test_explain_includes_fallbacks_and_data_quality(tmp_path: Path):
     assert payload["verification"]["fallback_count"] == 1
     assert payload["fallbacks"][0]["backend_type"] == "mock"
     assert payload["verification"]["data_quality"]["failure_code"] == "PRICE_RESULT_NOT_RELEVANT"
+
+
+def test_explain_runtime_transport_for_stdio_backend(tmp_path: Path):
+    command = "python -c 'print({\"ok\": true})'"
+    manifest = {
+        "version": 1,
+        "capability": {
+            "id": "demo.stdio",
+            "scheme": "demo",
+            "uri_template": "demo://stdio/{name}",
+            "operation": "call",
+            "kind": "command",
+        },
+        "backend": {
+            "type": "stdio",
+            "command": command,
+        },
+    }
+    path = tmp_path / "demo_stdio.uri.capability.yaml"
+    path.write_text(yaml.safe_dump(manifest, sort_keys=False), encoding="utf-8")
+
+    payload = explain_uri("demo://stdio/item", registry_root=tmp_path)
+
+    assert payload["runtime_transport"] == "uri2run:stdio"
+    assert payload["backend"]["command"] == command

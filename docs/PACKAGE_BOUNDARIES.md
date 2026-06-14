@@ -109,7 +109,32 @@ tests/uri2run/test_uri2run.py — transport matrix + touri delegation smoke
 Still planned:
 
 ```txt
-docker, ssh, mcp, a2a transports
+CI hook with uri3 doctor in architecture gate
+```
+
+Sprint B.3 (done in repo):
+
+```txt
+docker, ssh, mcp, a2a transports in uri2run
+tests/uri2run/test_protocol_transports.py
+uri3 runtime_adapter + explain hints for docker/ssh/mcp/a2a
+```
+
+Sprint 4 — Architecture Hardening (done in repo):
+
+```txt
+uri3/doctor/boundary_scanner.py — shared with tests/architecture
+uri3/doctor/hardening_checks.py — boundaries, import roots, legacy dirs, browser delegation, uri2run smoke
+uri3 doctor — 5 new checks wired into run_doctor
+tests/architecture/test_technical_ok_business_fail.py
+tests/architecture/test_uri2run_envelope.py
+docs/CLI_MAP.md
+examples/20_touri_capabilities/run.sh — workspace deps fix (uri2pact)
+scripts/ci/architecture_gate.sh — local + CI gate (pytest tests/architecture + uri3 doctor)
+.github/workflows/ci.yml — GitHub Actions: architecture-gate job, then full pytest
+Makefile targets: architecture-test, doctor, architecture-gate, ci-gate
+uri3/doctor/checks/ — config, registry, explain, envelope, verify, boundaries
+uri3/doctor/runner.py — _standard_checks, _hardening_checks, _optional_checks
 ```
 
 Sprint B.2 (done in repo):

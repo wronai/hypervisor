@@ -8,11 +8,15 @@ from uri3.results import ServiceResult
 
 from uri2run.result import error_result
 from uri2run.transports import (
+    run_a2a,
+    run_docker,
     run_http,
+    run_mcp,
     run_mock,
     run_python,
     run_shell,
     run_sse,
+    run_ssh,
     run_stdio,
     run_uri2ops,
     run_uri_flow,
@@ -115,6 +119,34 @@ def _run_ws(backend: dict[str, Any], payload: dict[str, Any], context: dict[str,
     return run_ws(str(target), payload, context)
 
 
+def _run_docker(backend: dict[str, Any], payload: dict[str, Any], context: dict[str, Any]):
+    target = backend.get("target") or backend.get("url")
+    if not target:
+        return error_result("BACKEND_INVALID", "docker backend missing target/url")
+    return run_docker(str(target), payload, context)
+
+
+def _run_ssh(backend: dict[str, Any], payload: dict[str, Any], context: dict[str, Any]):
+    target = backend.get("target") or backend.get("url")
+    if not target:
+        return error_result("BACKEND_INVALID", "ssh backend missing target/url")
+    return run_ssh(str(target), payload, context)
+
+
+def _run_mcp(backend: dict[str, Any], payload: dict[str, Any], context: dict[str, Any]):
+    target = backend.get("target") or backend.get("url")
+    if not target:
+        return error_result("BACKEND_INVALID", "mcp backend missing target/url")
+    return run_mcp(str(target), payload, context)
+
+
+def _run_a2a(backend: dict[str, Any], payload: dict[str, Any], context: dict[str, Any]):
+    target = backend.get("target") or backend.get("url")
+    if not target:
+        return error_result("BACKEND_INVALID", "a2a backend missing target/url")
+    return run_a2a(str(target), payload, context)
+
+
 _BACKEND_HANDLERS: dict[
     str, Callable[[dict[str, Any], dict[str, Any], dict[str, Any]], ServiceResult]
 ] = {
@@ -125,6 +157,10 @@ _BACKEND_HANDLERS: dict[
     "stdio": _run_stdio,
     "sse": _run_sse,
     "ws": _run_ws,
+    "docker": _run_docker,
+    "ssh": _run_ssh,
+    "mcp": _run_mcp,
+    "a2a": _run_a2a,
     "mock": lambda _backend, payload, context: run_mock(payload, context),
     "uri_flow": _run_flow,
     "uri_graph": _run_graph,
@@ -202,4 +238,12 @@ def run_target(
         return run_backend({"type": "sse", "url": target}, payload, context)
     if target.startswith("ws://") or target.startswith("wss://"):
         return run_backend({"type": "ws", "url": target}, payload, context)
+    if target.startswith("docker://"):
+        return run_backend({"type": "docker", "target": target}, payload, context)
+    if target.startswith("ssh://"):
+        return run_backend({"type": "ssh", "target": target}, payload, context)
+    if target.startswith("mcp://"):
+        return run_backend({"type": "mcp", "target": target}, payload, context)
+    if target.startswith("a2a://"):
+        return run_backend({"type": "a2a", "target": target}, payload, context)
     return unsupported_backend(target.split(":", 1)[0] if ":" in target else target)

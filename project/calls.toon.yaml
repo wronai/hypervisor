@@ -1,65 +1,80 @@
 # code2llm call graph | /home/tom/github/wronai/hypervisor
-# generated in 0.21s
-# nodes: 403 | edges: 500 | modules: 123
-# CC̄=3.3
+# generated in 0.24s
+# nodes: 409 | edges: 500 | modules: 130
+# CC̄=3.4
 
 HUBS[20]:
   packages.uri3.uri3.cli.commands.discovery.register
     CC=1  in:0  out:47  total:47
+  uri2ops.operation_registry.models.OperationRegistry.list
+    CC=1  in:43  out:2  total:45
   examples.21_touri_voice.run.print
     CC=0  in:43  out:0  total:43
-  hypervisor.contract_registry.loader.load_contract_registry
-    CC=9  in:9  out:33  total:42
-  uri2ops.operation_registry.models.OperationRegistry.list
-    CC=1  in:39  out:2  total:41
+  packages.uri3.uri3.cli.commands.explain._render
+    CC=18  in:1  out:41  total:42
+  packages.uri2run.uri2run.runner.run_backend
+    CC=5  in:24  out:15  total:39
+  packages.uri3.uri3.results.service_result.service_result
+    CC=3  in:27  out:10  total:37
   packages.uri3.uri3.config.llm_profiles.resolve_llm_profile
     CC=10  in:4  out:32  total:36
   packages.uri2ops.uri2ops.server.routes.mcp.mcp_router
     CC=1  in:1  out:33  total:34
-  packages.uri3.uri3.doctor.runner.run_doctor
-    CC=19  in:1  out:31  total:32
-  packages.uri3.uri3.results.service_result.service_result
-    CC=3  in:21  out:10  total:31
-  packages.uri2flow.uri2flow.parser._parse_step
-    CC=10  in:1  out:29  total:30
+  packages.uri3.uri3.config.repo_root.find_repo_root
+    CC=4  in:26  out:4  total:30
   uri3.graph.uri_graph.build_graph_from_tree
     CC=10  in:2  out:28  total:30
+  packages.uri2flow.uri2flow.parser._parse_step
+    CC=10  in:1  out:29  total:30
   packages.uri3.uri3.resolvers.docker_resolver.parse_docker_uri
     CC=12  in:5  out:23  total:28
-  packages.uri3.uri3.config.repo_root.find_repo_root
-    CC=4  in:24  out:4  total:28
   uri2ops.remote_registry.loader.resolve_operation_registry
     CC=12  in:8  out:18  total:26
-  packages.uri3.uri3.resolvers.explain.explain_uri
-    CC=14  in:5  out:21  total:26
   packages.uri3.uri3.graph.graph_serializer.normalize_graph_payload
     CC=12  in:2  out:24  total:26
+  packages.uri3.uri3.resolvers.explain.explain_uri
+    CC=14  in:5  out:21  total:26
   packages.uri3.uri3.graph.graph_validator.validate_workflow_graph
     CC=9  in:12  out:13  total:25
-  packages.touri.touri.cli.build_parser
-    CC=1  in:1  out:23  total:24
   packages.uri3.uri3.cli.commands.resolve.register
     CC=1  in:0  out:24  total:24
   packages.uri3.uri3.logs.reader.summarize_logs
     CC=6  in:6  out:18  total:24
+  packages.touri.touri.cli.build_parser
+    CC=1  in:1  out:23  total:24
   packages.uri3.uri3.graph.adapters.browser_playwright.PlaywrightBrowserAdapter.execute
     CC=11  in:0  out:23  total:23
 
 MODULES:
   examples.21_touri_voice.run  [1 funcs]
     print  CC=0  out:0
-  hypervisor.contract_registry.loader  [1 funcs]
-    load_contract_registry  CC=9  out:33
-  hypervisor.contract_registry.schema_validator  [1 funcs]
-    validate_contract_files  CC=6  out:13
+  examples.21_touri_voice.touri_examples_voice.stt  [2 funcs]
+    _default_transcript  CC=1  out:0
+    transcribe  CC=5  out:8
   hypervisor.uri2llm.pypi_resolver  [1 funcs]
     resolve_pypi  CC=5  out:6
-  packages.resource-agent-hypervisor.hypervisor.contract_registry.validate  [1 funcs]
-    validate_registry  CC=1  out:3
-  packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle  [1 funcs]
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle  [2 funcs]
     _repo_root  CC=2  out:3
-  packages.touri.touri.backend_dispatch  [1 funcs]
+    agent_status  CC=5  out:10
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.run_plans  [1 funcs]
+    build_run_plan  CC=5  out:7
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.selector  [2 funcs]
+    parse_hypervisor_uri  CC=14  out:4
+    resolve_deployment  CC=12  out:13
+  packages.touri.touri.backend_dispatch  [2 funcs]
     call_backend  CC=4  out:6
+    call_primary_backend  CC=2  out:3
+  packages.touri.touri.backends.mock_backend  [1 funcs]
+    call_mock_backend  CC=1  out:1
+  packages.touri.touri.backends.python_backend  [1 funcs]
+    call_python_backend  CC=1  out:1
+  packages.touri.touri.backends.shell_backend  [1 funcs]
+    call_shell_backend  CC=1  out:1
+  packages.touri.touri.backends.uri2ops_backend  [1 funcs]
+    call_uri2ops_backend  CC=2  out:1
+  packages.touri.touri.backends.uri_flow_backend  [2 funcs]
+    call_uri_flow_backend  CC=2  out:1
+    call_uri_graph_backend  CC=2  out:1
   packages.touri.touri.cli  [8 funcs]
     _print  CC=1  out:2
     build_parser  CC=1  out:23
@@ -73,15 +88,22 @@ MODULES:
     apply_data_quality  CC=2  out:2
   packages.touri.touri.executor  [1 funcs]
     call_uri  CC=2  out:9
-  packages.touri.touri.fallbacks  [5 funcs]
+  packages.touri.touri.fallbacks  [6 funcs]
     apply_fallbacks  CC=8  out:8
     decorate_fallback_result  CC=2  out:2
     error_codes  CC=5  out:5
     fallback_entry_matches  CC=3  out:3
     fallback_matches  CC=3  out:1
-  packages.touri.touri.loader  [2 funcs]
-    iter_manifest_paths  CC=1  out:1
+    payload_from_params  CC=2  out:2
+  packages.touri.touri.loader  [1 funcs]
     load_registry  CC=1  out:1
+  packages.touri.touri.loaders.file_loader  [2 funcs]
+    iter_manifest_paths  CC=2  out:4
+    load_file_registry  CC=2  out:2
+  packages.touri.touri.loaders.markpact_loader  [1 funcs]
+    load_markpact_capabilities  CC=6  out:7
+  packages.touri.touri.loaders.registry_loader  [1 funcs]
+    load_registry  CC=2  out:4
   packages.touri.touri.manifest  [7 funcs]
     _list_block  CC=2  out:2
     _mapping_block  CC=2  out:1
@@ -90,9 +112,13 @@ MODULES:
     _read_yaml  CC=3  out:4
     load_manifest  CC=1  out:4
     load_manifest_from_dict  CC=4  out:13
-  packages.touri.touri.matcher  [2 funcs]
+  packages.touri.touri.matcher  [3 funcs]
     match_uri  CC=3  out:4
+    require_match  CC=2  out:2
     template_to_regex  CC=1  out:3
+  packages.touri.touri.redaction  [2 funcs]
+    apply_redaction  CC=7  out:8
+    should_redact  CC=2  out:1
   packages.touri.touri.register  [2 funcs]
     register_capability  CC=6  out:13
     sample_uri_from_template  CC=1  out:3
@@ -151,24 +177,23 @@ MODULES:
   packages.uri2ops.uri2ops.server.routes.tasks  [2 funcs]
     run_task_handler  CC=2  out:3
     tasks_router  CC=1  out:11
-  packages.uri2pact.uri2pact.core  [1 funcs]
+  packages.uri2pact.uri2pact.capabilities  [1 funcs]
+    load_markpact_capability_dicts  CC=5  out:5
+  packages.uri2pact.uri2pact.core  [2 funcs]
     is_markpact_registry  CC=1  out:2
+    resolve_markpact_ref  CC=4  out:9
   packages.uri2pact.uri2pact.flows  [1 funcs]
     load_markpact_flow_dict  CC=1  out:4
-  packages.uri2verify.uri2verify.capability_tests  [1 funcs]
-    capability_test_plan_from_registry  CC=1  out:1
+  packages.uri2run.uri2run.runner  [1 funcs]
+    run_backend  CC=5  out:15
   packages.uri2verify.uri2verify.replay  [2 funcs]
     create_regression_test  CC=7  out:17
     replay_workflow_events  CC=2  out:9
-  packages.uri2verify.uri2verify.result_checks  [2 funcs]
-    enrich_result_dict  CC=4  out:1
-    technical_vs_business_ok  CC=3  out:5
   packages.uri3.uri3.cli.commands.discovery  [1 funcs]
     register  CC=1  out:47
-  packages.uri3.uri3.cli.commands.doctor  [3 funcs]
-    _check_summary  CC=11  out:19
-    _render  CC=13  out:19
-    register  CC=1  out:15
+  packages.uri3.uri3.cli.commands.explain  [2 funcs]
+    _render  CC=18  out:41
+    register  CC=1  out:8
   packages.uri3.uri3.cli.commands.flow  [3 funcs]
     expand_flow_cmd  CC=3  out:9
     register  CC=1  out:11
@@ -245,17 +270,6 @@ MODULES:
     control_docker  CC=11  out:11
   packages.uri3.uri3.docker.runner  [1 funcs]
     run_command  CC=4  out:5
-  packages.uri3.uri3.doctor.checks  [10 funcs]
-    _check  CC=1  out:1
-    check_capability_plan  CC=3  out:8
-    check_config  CC=4  out:10
-    check_contract_registry  CC=5  out:8
-    check_explain_smoke  CC=4  out:11
-    check_recent_workflow_logs  CC=11  out:12
-    check_replay_failures  CC=9  out:16
-    check_result_envelope  CC=5  out:8
-    check_touri_registry  CC=6  out:13
-    check_uri2ops_registry  CC=3  out:7
   packages.uri3.uri3.doctor.envelope_migrate  [2 funcs]
     migrate_workflow_log  CC=9  out:16
     migrate_workflow_logs  CC=4  out:10
@@ -264,8 +278,6 @@ MODULES:
     build_operation_index  CC=3  out:8
     build_uri_index  CC=3  out:8
     write_registry_indexes  CC=4  out:13
-  packages.uri3.uri3.doctor.runner  [1 funcs]
-    run_doctor  CC=19  out:31
   packages.uri3.uri3.graph.adapters.browser_mock  [2 funcs]
     execute  CC=8  out:7
     json_dumps  CC=1  out:1
@@ -278,7 +290,9 @@ MODULES:
     _playwright_ready  CC=3  out:5
     cleanup_browser_adapters  CC=2  out:2
     resolve_browser_mode  CC=5  out:3
-  packages.uri3.uri3.graph.adapters.registry  [1 funcs]
+  packages.uri3.uri3.graph.adapters.registry  [3 funcs]
+    execute  CC=5  out:5
+    _operator_adapter  CC=2  out:3
     adapter_for_uri  CC=3  out:1
   packages.uri3.uri3.graph.adapters.uri2ops_adapter  [9 funcs]
     execute  CC=3  out:13
@@ -418,10 +432,9 @@ MODULES:
     _first  CC=2  out:1
     call_env  CC=8  out:17
     resolve_env  CC=1  out:2
-  packages.uri3.uri3.resolvers.explain  [3 funcs]
+  packages.uri3.uri3.resolvers.explain  [2 funcs]
     default_touri_registry  CC=5  out:6
     explain_uri  CC=14  out:21
-    load_touri_config  CC=5  out:6
   packages.uri3.uri3.resolvers.explain_verification  [2 funcs]
     build_verification_hints  CC=9  out:13
     summarize_fallbacks  CC=6  out:7

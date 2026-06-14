@@ -13,7 +13,10 @@
 - [x] Delegate `touri` backend wrappers to `uri2run.run_backend`.
 - [x] Add `uri2run` stream transports: `stdio`, `sse`, `ws`.
 - [x] Surface `uri2run` runtime transport hints in `uri3 explain`.
-- [ ] Add next `uri2run` transports: `mcp`, `a2a`, `docker`, `ssh`.
+- [x] Add `uri2run` protocol transports: `docker`, `ssh`, `mcp`, `a2a`.
+- [x] Sprint 4 architecture hardening: doctor boundary checks, envelope tests, CLI_MAP.
+- [x] CI gate: `scripts/ci/architecture_gate.sh`, `.github/workflows/ci.yml`, `make architecture-gate`.
+- [x] Split `uri3/doctor/checks.py` into `uri3/doctor/checks/` submodules.
 
 ## ✅ Completed Tasks
 
