@@ -8,6 +8,7 @@ Physical Python packages live under `packages/`:
 | `packages/nl2uri/` | `nl2uri` | `nl2uri`, `nl2a` |
 | `packages/uri2flow/` | `uri2flow` | `uri2flow` |
 | `packages/uri2ops/` | `uri2ops` | `uri2ops` |
+| `packages/touri/` | `touri` | `touri`, `touri_examples` |
 | `packages/resource-agent-hypervisor/` | `resource-agent-hypervisor` | `hypervisor`, `meta_agent`, `runtime_client` |
 | `packages/resource-agent-factory/` | `resource-agent-factory` | `generator` |
 
@@ -42,7 +43,17 @@ nl2uri --help
 nl2a --help
 hypervisor --help
 uri2ops --help
+touri --help
 ```
+
+## Capability manifests
+
+```txt
+examples/*/*.uri.capability.yaml
+packages/touri/touri/schemas/uri_capability.schema.json
+```
+
+See [`docs/TOURI.md`](../docs/TOURI.md).
 
 ## Operator config
 
@@ -53,4 +64,4 @@ config/extra_operator_registry.yaml
 packages/uri2ops/uri2ops/operation_registry/registry.yaml
 ```
 
-See [`README.md`](../README.md), [`docs/URI2FLOW.md`](../docs/URI2FLOW.md), [`docs/URI2OPS.md`](../docs/URI2OPS.md), and [`examples/README.md`](../examples/README.md).
+See [`README.md`](../README.md), [`docs/TOURI.md`](../docs/TOURI.md), [`docs/URI2FLOW.md`](../docs/URI2FLOW.md), [`docs/URI2OPS.md`](../docs/URI2OPS.md), and [`examples/README.md`](../examples/README.md).

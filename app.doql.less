@@ -2,7 +2,7 @@
 
 app {
   name: resource-agent-system;
-  version: 0.5.11;
+  version: 0.5.12;
 }
 
 dependencies {
@@ -32,6 +32,9 @@ interface[type="cli"] page[name="uri2ops"] {
 }
 interface[type="cli"] page[name="uri2flow"] {
   entry: uri2flow.cli:main;
+}
+interface[type="cli"] page[name="touri"] {
+  entry: touri.cli:main;
 }
 interface[type="cli"] page[name="nl2uri"] {
   entry: nl2uri.cli:main;
@@ -74,6 +77,21 @@ workflow[name="uri2flow-expand"] {
   trigger: manual;
   step-1: run cmd=mkdir -p output;
   step-2: run cmd=uri2flow expand examples/15_compact_uri_flow/weather.uri.flow.yaml --out output/weather.uri.graph.yaml;
+}
+
+workflow[name="uri3-flow-dry-run"] {
+  trigger: manual;
+  step-1: run cmd=uri3 run-flow examples/17_flow_vs_graph/weather.uri.flow.yaml --dry-run;
+}
+
+workflow[name="nl2uri-flow-validate"] {
+  trigger: manual;
+  step-1: run cmd=nl2uri flow -p "wygeneruj agenta pogodowego, uruchom go lokalnie i sprawdź health w Chrome" --validate;
+}
+
+workflow[name="example-18"] {
+  trigger: manual;
+  step-1: run cmd=bash examples/18_llm_flow_planner/run.sh;
 }
 
 workflow[name="uri-tree"] {

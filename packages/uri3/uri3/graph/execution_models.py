@@ -43,6 +43,8 @@ class StepExecutionResult:
     artifact_uri: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
+        from uri3.results.envelope import enrich_step_dict
+
         payload: dict[str, Any] = {
             "id": self.id,
             "uri": self.uri,
@@ -57,7 +59,7 @@ class StepExecutionResult:
             payload["error"] = self.error
         if self.artifact_uri:
             payload["artifact_uri"] = self.artifact_uri
-        return payload
+        return enrich_step_dict(payload)
 
 
 @dataclass
@@ -88,18 +90,23 @@ class GraphExecutionResult:
     message: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
-            "workflow_result": {
-                "id": self.id,
-                "ok": self.ok,
-                "started_at": self.started_at,
-                "completed_at": self.completed_at,
-                "mode": self.mode,
-                **({"message": self.message} if self.message else {}),
-                **({"pending_approval": self.pending_approval} if self.pending_approval else {}),
+        from uri3.results.envelope import enrich_workflow_dict
+
+        return enrich_workflow_dict(
+            {
+                "workflow_result": {
+                    "id": self.id,
+                    "ok": self.ok,
+                    "started_at": self.started_at,
+                    "completed_at": self.completed_at,
+                    "mode": self.mode,
+                    **({"message": self.message} if self.message else {}),
+                    **({"pending_approval": self.pending_approval} if self.pending_approval else {}),
+                },
+                "steps": [step.to_dict() for step in self.steps],
             },
-            "steps": [step.to_dict() for step in self.steps],
-        }
+            dry_run=self.mode == "dry_run",
+        )
 
 
 def new_execution_context(

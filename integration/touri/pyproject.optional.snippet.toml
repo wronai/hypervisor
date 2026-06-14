@@ -1,0 +1,5 @@
+# Optional root pyproject snippets
+# Add to [project.optional-dependencies] or development docs as needed:
+# touri = ["touri @ file:///${PROJECT_ROOT}/packages/touri"]
+
+# If using setuptools package discovery from root, include packages/touri in package-dir rules.

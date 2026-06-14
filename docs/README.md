@@ -13,6 +13,9 @@
 | [`FLOW_FORMAT.md`](./FLOW_FORMAT.md) | Compact URI flow — format wejściowy |
 | [`URI2FLOW.md`](./URI2FLOW.md) | Kompilator compact flow → workflow graph |
 | [`URI2OPS.md`](./URI2OPS.md) | Operator runtime, adaptery, `uri2ops serve` |
+| [`TOURI.md`](./TOURI.md) | Capability manifests `*.uri.capability.yaml`, backend routing |
+| [`SERVICE_RESULT.md`](./SERVICE_RESULT.md) | Shared result envelope (`workflow_status`, `ErrorEnvelope`) |
+| [`ANTI_TELLM.md`](./ANTI_TELLM.md) | Safeguards vs tellm-style LLM/provider failures |
 | [`OPERATOR_RUNTIME.md`](./OPERATOR_RUNTIME.md) | Przepływ validate → plan → run |
 | [`URI_OPERATION_REGISTRY.md`](./URI_OPERATION_REGISTRY.md) | Format operation registry |
 | [`OPERATOR_SECURITY.md`](./OPERATOR_SECURITY.md) | Polityka, redaction, artifact URIs |
@@ -49,6 +52,14 @@
 | [`../packages/uri2ops/README.md`](../packages/uri2ops/README.md) | CLI, adaptery, przykłady |
 | [`../packages/uri2ops/CHANGELOG.md`](../packages/uri2ops/CHANGELOG.md) | Historia v0.1–v0.5 |
 | [`../packages/uri2ops/TODO.md`](../packages/uri2ops/TODO.md) | Roadmapa pakietu |
+
+## Pakiet touri
+
+| Dokument | Temat |
+|----------|--------|
+| [`TOURI.md`](./TOURI.md) | Manifesty `*.uri.capability.yaml`, backend routing |
+| [`../packages/touri/README.md`](../packages/touri/README.md) | CLI, install, demo |
+| [`../packages/touri/CHANGELOG.md`](../packages/touri/CHANGELOG.md) | Historia v0.1 |
 
 ## Kontrakty i generator
 

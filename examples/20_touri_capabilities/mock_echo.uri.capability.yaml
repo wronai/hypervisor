@@ -1,0 +1,12 @@
+version: 1
+capability:
+  id: echo.mock
+  scheme: echo
+  uri_template: echo://{name}
+  operation: read
+  kind: query
+backend:
+  type: mock
+policy:
+  side_effects: false
+  requires_approval: false

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "touri URI Capability Manifest",
+  "type": "object",
+  "required": ["version", "capability", "backend"],
+  "properties": {
+    "version": {"type": "integer"},
+    "capability": {
+      "type": "object",
+      "required": ["id", "scheme", "uri_template"],
+      "properties": {
+        "id": {"type": "string"},
+        "scheme": {"type": "string"},
+        "uri_template": {"type": "string"},
+        "operation": {"type": "string"},
+        "kind": {"enum": ["query", "command", "artifact", "assertion"]},
+        "description": {"type": "string"}
+      }
+    },
+    "backend": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {"enum": ["python", "shell", "http", "docker", "mcp", "a2a", "uri_flow", "uri_graph", "uri2ops", "mock"]},
+        "target": {"type": "string"},
+        "command": {"type": "string"},
+        "method": {"type": "string"},
+        "url": {"type": "string"},
+        "operation": {"type": "string"},
+        "flow": {"type": "string"},
+        "graph": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "input": {"type": "object"},
+    "output": {"type": "object"},
+    "policy": {"type": "object"},
+    "events": {"type": "object"},
+    "data_quality": {"type": "object"},
+    "fallbacks": {"type": "array"}
+  }
+}

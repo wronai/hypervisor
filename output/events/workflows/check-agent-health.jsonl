@@ -218,3 +218,80 @@
 {"at": "2026-06-14T12:12:58+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "3ec07476dbca", "mode": "execute"}
 {"at": "2026-06-14T12:12:58+00:00", "type": "StepBlocked", "workflow_id": "check-agent-health", "step_id": "open_health", "reason": "command node 'open_health' requires --approve"}
 {"at": "2026-06-14T12:12:58+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": false, "mode": "execute"}
+{"at": "2026-06-14T12:14:51+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "53032c0a32a0", "mode": "dry_run"}
+{"at": "2026-06-14T12:14:51+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "open_health", "uri": "browser://chrome/page/open", "operation": "open"}
+{"at": "2026-06-14T12:14:51+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "open_health", "ok": true}
+{"at": "2026-06-14T12:14:51+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "extract_body", "uri": "dom://chrome/active/body", "operation": "read"}
+{"at": "2026-06-14T12:14:51+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "extract_body", "ok": true}
+{"at": "2026-06-14T12:14:51+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "uri": "assertion://contains", "operation": "check"}
+{"at": "2026-06-14T12:14:51+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "ok": true}
+{"at": "2026-06-14T12:14:51+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": true, "mode": "dry_run"}
+{"at": "2026-06-14T12:14:51+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "672686a60b4e", "mode": "execute"}
+{"at": "2026-06-14T12:14:51+00:00", "type": "StepBlocked", "workflow_id": "check-agent-health", "step_id": "open_health", "reason": "command node 'open_health' requires --approve"}
+{"at": "2026-06-14T12:14:51+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": false, "mode": "execute"}
+{"at": "2026-06-14T12:15:21+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "11c8a1014c09", "mode": "dry_run"}
+{"at": "2026-06-14T12:15:21+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "open_health", "uri": "browser://chrome/page/open", "operation": "open"}
+{"at": "2026-06-14T12:15:21+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "open_health", "ok": true}
+{"at": "2026-06-14T12:15:21+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "extract_body", "uri": "dom://chrome/active/body", "operation": "read"}
+{"at": "2026-06-14T12:15:21+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "extract_body", "ok": true}
+{"at": "2026-06-14T12:15:21+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "uri": "assertion://contains", "operation": "check"}
+{"at": "2026-06-14T12:15:21+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "ok": true}
+{"at": "2026-06-14T12:15:21+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": true, "mode": "dry_run"}
+{"at": "2026-06-14T12:15:21+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "8cb897102e1a", "mode": "execute"}
+{"at": "2026-06-14T12:15:21+00:00", "type": "StepBlocked", "workflow_id": "check-agent-health", "step_id": "open_health", "reason": "command node 'open_health' requires --approve"}
+{"at": "2026-06-14T12:15:21+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": false, "mode": "execute"}
+{"at": "2026-06-14T12:19:12+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "d10becae03f4", "mode": "dry_run"}
+{"at": "2026-06-14T12:19:12+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "open_health", "uri": "browser://chrome/page/open", "operation": "open"}
+{"at": "2026-06-14T12:19:12+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "open_health", "ok": true}
+{"at": "2026-06-14T12:19:12+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "extract_body", "uri": "dom://chrome/active/body", "operation": "read"}
+{"at": "2026-06-14T12:19:12+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "extract_body", "ok": true}
+{"at": "2026-06-14T12:19:12+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "uri": "assertion://contains", "operation": "check"}
+{"at": "2026-06-14T12:19:12+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "ok": true}
+{"at": "2026-06-14T12:19:12+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": true, "mode": "dry_run"}
+{"at": "2026-06-14T12:19:12+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "2dc78eee8202", "mode": "execute"}
+{"at": "2026-06-14T12:19:12+00:00", "type": "StepBlocked", "workflow_id": "check-agent-health", "step_id": "open_health", "reason": "command node 'open_health' requires --approve"}
+{"at": "2026-06-14T12:19:12+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": false, "mode": "execute"}
+{"at": "2026-06-14T12:24:11+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "ca3be6d879c5", "mode": "dry_run"}
+{"at": "2026-06-14T12:24:11+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "open_health", "uri": "browser://chrome/page/open", "operation": "open"}
+{"at": "2026-06-14T12:24:11+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "open_health", "ok": true}
+{"at": "2026-06-14T12:24:11+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "extract_body", "uri": "dom://chrome/active/body", "operation": "read"}
+{"at": "2026-06-14T12:24:11+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "extract_body", "ok": true}
+{"at": "2026-06-14T12:24:11+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "uri": "assertion://contains", "operation": "check"}
+{"at": "2026-06-14T12:24:11+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "ok": true}
+{"at": "2026-06-14T12:24:11+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": true, "mode": "dry_run"}
+{"at": "2026-06-14T12:24:11+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "93b946324ab9", "mode": "execute"}
+{"at": "2026-06-14T12:24:11+00:00", "type": "StepBlocked", "workflow_id": "check-agent-health", "step_id": "open_health", "reason": "command node 'open_health' requires --approve"}
+{"at": "2026-06-14T12:24:11+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": false, "mode": "execute"}
+{"at": "2026-06-14T12:24:19+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "fc710d458cb4", "mode": "dry_run"}
+{"at": "2026-06-14T12:24:19+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "open_health", "uri": "browser://chrome/page/open", "operation": "open"}
+{"at": "2026-06-14T12:24:19+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "open_health", "ok": true}
+{"at": "2026-06-14T12:24:19+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "extract_body", "uri": "dom://chrome/active/body", "operation": "read"}
+{"at": "2026-06-14T12:24:19+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "extract_body", "ok": true}
+{"at": "2026-06-14T12:24:19+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "uri": "assertion://contains", "operation": "check"}
+{"at": "2026-06-14T12:24:19+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "ok": true}
+{"at": "2026-06-14T12:24:19+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": true, "mode": "dry_run"}
+{"at": "2026-06-14T12:24:19+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "efce4cf7eb69", "mode": "execute"}
+{"at": "2026-06-14T12:24:19+00:00", "type": "StepBlocked", "workflow_id": "check-agent-health", "step_id": "open_health", "reason": "command node 'open_health' requires --approve"}
+{"at": "2026-06-14T12:24:19+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": false, "mode": "execute"}
+{"at": "2026-06-14T12:25:42+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "0b0f6ea08552", "mode": "dry_run"}
+{"at": "2026-06-14T12:25:42+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "open_health", "uri": "browser://chrome/page/open", "operation": "open"}
+{"at": "2026-06-14T12:25:42+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "open_health", "ok": true}
+{"at": "2026-06-14T12:25:42+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "extract_body", "uri": "dom://chrome/active/body", "operation": "read"}
+{"at": "2026-06-14T12:25:42+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "extract_body", "ok": true}
+{"at": "2026-06-14T12:25:42+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "uri": "assertion://contains", "operation": "check"}
+{"at": "2026-06-14T12:25:42+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "ok": true}
+{"at": "2026-06-14T12:25:42+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": true, "mode": "dry_run"}
+{"at": "2026-06-14T12:25:42+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "a0e04675c7bc", "mode": "execute"}
+{"at": "2026-06-14T12:25:42+00:00", "type": "StepBlocked", "workflow_id": "check-agent-health", "step_id": "open_health", "reason": "command node 'open_health' requires --approve"}
+{"at": "2026-06-14T12:25:42+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": false, "mode": "execute"}
+{"at": "2026-06-14T12:26:27+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "823456435401", "mode": "dry_run"}
+{"at": "2026-06-14T12:26:27+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "open_health", "uri": "browser://chrome/page/open", "operation": "open"}
+{"at": "2026-06-14T12:26:27+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "open_health", "ok": true}
+{"at": "2026-06-14T12:26:27+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "extract_body", "uri": "dom://chrome/active/body", "operation": "read"}
+{"at": "2026-06-14T12:26:27+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "extract_body", "ok": true}
+{"at": "2026-06-14T12:26:27+00:00", "type": "StepStarted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "uri": "assertion://contains", "operation": "check"}
+{"at": "2026-06-14T12:26:27+00:00", "type": "StepCompleted", "workflow_id": "check-agent-health", "step_id": "verify_ok", "ok": true}
+{"at": "2026-06-14T12:26:27+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": true, "mode": "dry_run"}
+{"at": "2026-06-14T12:26:27+00:00", "type": "WorkflowStarted", "workflow_id": "check-agent-health", "run_id": "615bd6b6230e", "mode": "execute"}
+{"at": "2026-06-14T12:26:27+00:00", "type": "StepBlocked", "workflow_id": "check-agent-health", "step_id": "open_health", "reason": "command node 'open_health' requires --approve"}
+{"at": "2026-06-14T12:26:27+00:00", "type": "WorkflowCompleted", "workflow_id": "check-agent-health", "ok": false, "mode": "execute"}

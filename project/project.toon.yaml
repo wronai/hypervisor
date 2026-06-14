@@ -1,47 +1,47 @@
-# hypervisor | 620 func | 186f | 14813L | python | 2026-06-14
+# hypervisor | 709 func | 214f | 16247L | python | 2026-06-14
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.6  critical=40 (limit:10)  dup=2  cycles=0
+  CC̄=3.7  critical=55 (limit:10)  dup=2  cycles=0
 
 ALERTS[20]:
   !!! high_fan_out     create_app = 28 (limit:10)
   !!! high_fan_out     run_workflow = 24 (limit:10)
   !!! high_fan_out     main = 20 (limit:10)
+  !!  cc_exceeded      classify_output_kind = 23 (limit:15)
   !!  cc_exceeded      run_workflow = 21 (limit:15)
-  !!  cc_exceeded      default_operation_for_uri = 21 (limit:15)
-  !!  cc_exceeded      classify_output_kind = 20 (limit:15)
+  !!  cc_exceeded      extract_flow_payload = 20 (limit:15)
   !!  high_fan_out     PlaywrightBrowserAdapter.execute = 19 (limit:10)
+  !!  high_fan_out     register = 19 (limit:10)
   !!  high_fan_out     resolve_llm_profile = 18 (limit:10)
   !!  high_fan_out     generate_agent = 17 (limit:10)
-  !!  high_fan_out     infer_intent = 17 (limit:10)
 
-MODULES[337] (top by size):
+MODULES[384] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
-  M[packages/nl2uri/nl2uri/graph_planner.py] 318L C:0 F:11 CC↑12 D:3 (python)
-  M[packages/uri3/uri3/graph/graph_executor.py] 250L C:0 F:5 CC↑21 D:2 (python)
-  M[packages/uri3/uri3/cli.py] 247L C:0 F:15 CC↑8 D:1 (python)
+  M[packages/nl2uri/nl2uri/graph_planner.py] 322L C:0 F:11 CC↑12 D:4 (python)
+  M[packages/uri3/uri3/graph/graph_executor.py] 250L C:0 F:5 CC↑21 D:3 (python)
+  M[packages/nl2uri/nl2uri/cli.py] 246L C:0 F:15 CC↑6 D:0 (python)
   M[tree.txt] 240L C:0 F:0 CC↑0 D:0 (txt)
-  M[packages/nl2uri/nl2uri/cli.py] 200L C:0 F:13 CC↑5 D:0 (python)
-  M[packages/nl2uri/nl2uri/graph_repair.py] 195L C:0 F:8 CC↑16 D:1 (python)
+  M[packages/nl2uri/nl2uri/flow_repair.py] 229L C:0 F:13 CC↑20 D:2 (python)
+  M[packages/nl2uri/nl2uri/graph_repair.py] 195L C:0 F:8 CC↑16 D:2 (python)
+  M[packages/uri3/uri3/resolvers/explain.py] 169L C:0 F:8 CC↑14 D:1 (python)
   M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py] 166L C:0 F:6 CC↑8 D:8 (python)
+  M[pyproject.toml] 160L C:0 F:0 CC↑0 D:0 (toml)
   M[packages/uri3/uri3/resolvers/docker_resolver.py] 154L C:1 F:7 CC↑12 D:5 (python)
   M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/status.py] 151L C:0 F:10 CC↑11 D:5 (python)
-  M[pyproject.toml] 150L C:0 F:0 CC↑0 D:0 (toml)
   M[packages/resource-agent-hypervisor/hypervisor/cli.py] 148L C:0 F:15 CC↑4 D:0 (python)
   M[packages/nl2uri/nl2uri/graph_planner_llm.py] 147L C:0 F:3 CC↑4 D:1 (python)
-  M[packages/nl2uri/nl2uri/pipeline.py] 141L C:2 F:4 CC↑4 D:1 (python)
-  LANGS: python:235/yaml:51/json:14/shell:12/other:7/toml:7/txt:4/yml:3/proto:2/j2:1/mk:1
+  LANGS: python:267/yaml:57/shell:15/json:15/toml:10/other:7/txt:5/yml:3/proto:2/mk:2/j2:1
 
 HOTSPOTS[10]:
   ★ create_app fan=28  // Orchestrates 28 calls
   ★ run_workflow fan=24  // Orchestrates 24 calls
   ★ main fan=20  // Orchestrates 20 calls
   ★ PlaywrightBrowserAdapter.execute fan=19  // Orchestrates 19 calls
-  ★ resolve_llm_profile fan=18  // Orchestrates 18 calls
+  ★ register fan=19  // Orchestrates 19 calls
 
-REFACTOR[11]:
+REFACTOR[15]:
   [1] H/H Split god module goal.yaml (511L, 0 classes)
   [2] H/H Split god module planfile.yaml (1319L, 0 classes)
   [3] M/L Split detect_cycles (CC=15)
@@ -49,4 +49,4 @@ REFACTOR[11]:
   [5] M/L Split resolve_uri_values (CC=15)
 
 EVOLUTION:
-  2026-06-14 CC̄=3.6 crit=40 14813L // Automated analysis
+  2026-06-14 CC̄=3.7 crit=55 16247L // Automated analysis

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "touri"
+version = "0.1.0"
+description = "Generic URI-to-capability manifest runtime for reusable URI backends."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["pyyaml>=6.0"]
+
+[project.scripts]
+touri = "touri.cli:main"
+
+[tool.setuptools]
+packages = ["touri", "touri.backends", "touri_examples"]
+
+[tool.setuptools.package-data]
+touri = ["schemas/*.json"]

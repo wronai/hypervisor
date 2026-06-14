@@ -51,6 +51,7 @@ def list_payload(*, schemes_only: bool = False) -> dict[str, Any]:
         {"name": "scan", "summary": "Probe http/ssh/docker; use shortcut name or full URI"},
         {"name": "schema", "summary": "Describe a scheme or URI (alias: uri3 list --schemes)"},
         {"name": "resolve", "summary": "Resolve URI to structured payload"},
+        {"name": "explain", "summary": "Show registry match and execution path for a URI"},
         {"name": "call", "summary": "Execute callable URI actions"},
         {"name": "validate", "summary": "Validate URI syntax"},
         {"name": "logs", "summary": "Read filtered logs via log:// URI"},
@@ -60,5 +61,6 @@ def list_payload(*, schemes_only: bool = False) -> dict[str, Any]:
         {"name": "validate-workflow", "summary": "Validate task/workflow graph YAML"},
         {"name": "plan-workflow", "summary": "Topological execution plan for workflow graph"},
         {"name": "run-workflow", "summary": "Execute workflow (mock adapters); command nodes need --approve"},
+        {"name": "replay", "summary": "Summarize workflow JSONL event log for debugging"},
     ]
     return payload

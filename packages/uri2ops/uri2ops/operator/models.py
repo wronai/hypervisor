@@ -34,16 +34,20 @@ class StepResult:
     error: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
-            "id": self.id,
-            "uri": self.uri,
-            "operation": self.operation,
-            "kind": self.kind,
-            "status": self.status,
-            "ok": self.ok,
-            "result": self.result,
-            "error": self.error,
-        }
+        from uri3.results.envelope import enrich_step_dict
+
+        return enrich_step_dict(
+            {
+                "id": self.id,
+                "uri": self.uri,
+                "operation": self.operation,
+                "kind": self.kind,
+                "status": self.status,
+                "ok": self.ok,
+                "result": self.result,
+                "error": self.error,
+            }
+        )
 
 
 @dataclass
@@ -54,11 +58,16 @@ class TaskResult:
     steps: list[StepResult]
 
     def to_dict(self) -> dict[str, Any]:
-        return {
-            "workflow_result": {
-                "id": self.id,
-                "ok": self.ok,
-                "dry_run": self.dry_run,
+        from uri3.results.envelope import enrich_workflow_dict
+
+        return enrich_workflow_dict(
+            {
+                "workflow_result": {
+                    "id": self.id,
+                    "ok": self.ok,
+                    "dry_run": self.dry_run,
+                },
+                "steps": [s.to_dict() for s in self.steps],
             },
-            "steps": [s.to_dict() for s in self.steps],
-        }
+            dry_run=self.dry_run,
+        )

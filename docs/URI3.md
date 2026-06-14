@@ -71,6 +71,8 @@ Pełny operator runtime (browser/android/pcwin, policy, serve): [`docs/URI2OPS.m
 
 Compact flow authoring: [`docs/FLOW_FORMAT.md`](./FLOW_FORMAT.md) — `uri2flow expand` / `uri3 expand-flow` przed `validate-workflow`.
 
+CLI commands live under `uri3/cli/commands/` (`discovery`, `resolve`, `graph`, `workflow`, `flow`).
+
 ## Obsługiwane schematy
 
 ```txt

@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-06-14
 
 ### Fixed
+- Fix unused-imports issues (ticket-88df7d99)
+- Fix magic-numbers issues (ticket-465f8054)
+
+## [0.1.10] - 2026-06-14
+
+### Fixed
 - Fix unused-imports issues (ticket-87d349be)
 - Fix unused-imports issues (ticket-7beb6f42)
 - Fix unused-imports issues (ticket-1bfcaeeb)
@@ -376,10 +382,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **touri v0.1** — generic URI-to-capability manifest runtime (`validate`, `list`, `call`); package at `packages/touri/`, example `20_touri_capabilities`, docs `TOURI.md`.
+- **ServiceResult envelope** — shared `uri3.results` with `workflow_status` / `execution_status` / `service_result_status`, `ErrorEnvelope`, touri `data_quality` validators; `uri3 explain` for resolution order diagnostics; docs `SERVICE_RESULT.md`, `ANTI_TELLM.md`.
 - **v0.6.1 flow as primary input** — `nl2uri flow`, `uri3 expand-flow` / `run-flow`, `config/flow_defaults.uri.yaml`, `examples/17_flow_vs_graph/`, `docs/FLOW_FORMAT.md`.
 - **v0.6.2 flow defaults registry** — `default_operation_for_uri` reads only `config/flow_defaults.uri.yaml` (scheme defaults, patterns, fallback); expanded patterns for dom/screen/input/hypervisor browser ops.
 - **v0.6.3 uri3 → uri2ops delegation** — workflow executor delegates `browser://`, `dom://`, `screen://`, `input://` to uri2ops; uri3 browser adapters deprecated (`URI3_USE_LEGACY_BROWSER=1` escape hatch).
 - **v0.6.4 LLM compact flow** — `nl2uri flow --llm` uses dedicated flow planner (`flow_planner_llm`), `flow_repair`, and `validate_expanded_flow`; CLI flags `--repair`, `--validate`, `--expand`.
+- **uri3 CLI refactor** — commands split into `uri3/cli/commands/` (`discovery`, `resolve`, `graph`, `workflow`, `flow`); example `18_llm_flow_planner`.
 - **uri2flow v0.1** — compact URI flow compiler (`validate`, `expand`, `print`); package at `packages/uri2flow/`, example `15_compact_uri_flow`.
 - **v0.6 workflow layer** — uri3: `validate-workflow`, `plan-workflow`, `run-workflow` with mock/Playwright browser adapters and JSONL event log.
 - **nl2uri multi-output** — CLI: `plan`, `classify`, `single`, `list`, `tree`, `task`, `graph`; LLM graph planner (`--llm`) with registry injection and graph repair.
@@ -390,6 +399,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - `load_workflow_graph()` accepts in-memory `WorkflowGraph` objects (fixes `uri3 run-workflow` TypeError).
 - `pcwin_uri` parsing for netloc+path form (`pcwin://window/Notepad/focus`).
+
+## [0.5.13] - 2026-06-14
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/ANTI_TELLM.md
+- Update docs/README.md
+- Update docs/SERVICE_RESULT.md
+- Update docs/TOURI.md
+- Update docs/URI3.md
+- ... and 9 more files
+
+### Test
+- Update tests/touri/test_data_quality.py
+- Update tests/touri/test_touri.py
+- Update tests/uri3/test_cli.py
+- Update tests/uri3/test_explain_uri.py
+- Update tests/uri3/test_service_result.py
+
+### Other
+- Update Makefile
+- Update app.doql.less
+- Update config/touri.uri.yaml
+- Update examples/18_llm_flow_planner/prompt.txt
+- Update examples/18_llm_flow_planner/run.sh
+- Update examples/20_touri_capabilities/mock_echo.uri.capability.yaml
+- Update examples/20_touri_capabilities/run.sh
+- Update examples/20_touri_capabilities/weather_forecast.uri.capability.yaml
+- Update integration/touri/Makefile.optional.snippet.mk
+- Update integration/touri/pyproject.optional.snippet.toml
+- ... and 52 more files
 
 ## [0.5.12] - 2026-06-14
 

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resource-agent-system"
-version = "0.5.12"
-description = "WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, hypervisor, agent factory"
+version = "0.5.13"
+description = "WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, touri, hypervisor, agent factory"
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.10"
@@ -50,6 +50,7 @@ hypervisor = "hypervisor.cli:main"
 uri3 = "uri3.cli:main"
 uri2ops = "uri2ops.cli:main"
 uri2flow = "uri2flow.cli:main"
+touri = "touri.cli:main"
 nl2uri = "nl2uri.cli:main"
 nl2a = "nl2a.cli:main"
 
@@ -69,6 +70,7 @@ resource-agent-hypervisor = { workspace = true }
 resource-agent-factory = { workspace = true }
 uri2flow = { workspace = true }
 uri2ops = { workspace = true }
+touri = { workspace = true }
 
 [tool.setuptools.packages.find]
 where = [
@@ -76,12 +78,15 @@ where = [
     "packages/nl2uri",
     "packages/uri2flow",
     "packages/uri2ops",
+    "packages/touri",
     "packages/resource-agent-hypervisor",
     "packages/resource-agent-factory",
 ]
 include = [
     "uri2ops*",
     "uri2flow*",
+    "touri*",
+    "touri_examples*",
     "uri3*",
     "nl2uri*",
     "nl2a*",
@@ -101,6 +106,9 @@ uri2ops = [
 uri2flow = [
     "schemas/*.json",
 ]
+touri = [
+    "schemas/*.json",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -109,6 +117,7 @@ pythonpath = [
     "packages/nl2uri",
     "packages/uri2flow",
     "packages/uri2ops",
+    "packages/touri",
     "packages/resource-agent-hypervisor",
     "packages/resource-agent-factory",
 ]

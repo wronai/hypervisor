@@ -44,6 +44,8 @@ pip install -e '.[windows]'   # Windows UIA
 | 15 | [`15_compact_uri_flow`](./15_compact_uri_flow/) | uri2flow compact | `uri2flow expand` → `uri3 run-workflow` |
 | 15 | [`15_playwright_browser`](./15_playwright_browser/) | uri3 Playwright | `--browser playwright` |
 | 17 | [`17_flow_vs_graph`](./17_flow_vs_graph/) | flow vs graph | `nl2uri flow`, `uri3 expand-flow/run-flow` |
+| 18 | [`18_llm_flow_planner`](./18_llm_flow_planner/) | LLM compact flow | `nl2uri flow --llm --validate`, `uri3 run-flow` |
+| 20 | [`20_touri_capabilities`](./20_touri_capabilities/) | touri manifests | `touri validate/list/call` |
 
 > **Uwaga:** numery 13–15 są współdzielone między ścieżkami (operator vs workflow) — używaj pełnej nazwy katalogu.
 
@@ -71,9 +73,10 @@ make docker-testenv-down
 
 ```txt
 uri3     = skanowanie, routing, discovery, workflow executor, logi, docker:// call
-nl2uri   = natural language -> URI plan (single, list, tree, task, graph)
+nl2uri   = natural language -> URI plan (single, list, tree, flow, task, graph)
 uri2flow = compact URI flow -> expanded workflow graph (no execution)
-uri2ops  = operation registry + adapters + policy + serve
+touri       -> generic new URI -> reusable capability backend
+uri2ops     -> OS/UI/browser operations
 hypervisor = registry, policy, lifecycle agentów (run/stop/deploy/verify)
 nl2a     = pipeline prompt -> URI Tree -> Domain Pack -> agent
 ```

@@ -13,4 +13,4 @@ __all__ = [
     "validate_flow_document",
     "validate_expanded_flow",
 ]
-__version__ = "0.5.12"
+__version__ = "0.5.13"

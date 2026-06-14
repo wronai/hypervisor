@@ -1226,32 +1226,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-daa55462
-    name: Fix unused-imports issues
-    description: Resolve 4 unused-imports issues in packages/uri3/uri3/cli.py
-    task_type: prefactor
-    priority: medium
-    estimate: 2d
-    files:
-    - packages/uri3/uri3/cli.py
-    rule_id: unused-imports
-    count: 4
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-f022b5e6
-    name: Fix ai-boilerplate issues
-    description: Resolve 2 ai-boilerplate issues in packages/uri3/uri3/cli.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - packages/uri3/uri3/cli.py
-    rule_id: ai-boilerplate
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-8fe1ea3e
     name: Fix magic-numbers issues
     description: Resolve 1 magic-numbers issues in packages/resource-agent-hypervisor/hypervisor/cli.py
@@ -1314,6 +1288,32 @@ sprints:
     - packages/nl2uri/nl2uri/graph_repair.py
     rule_id: unused-imports
     count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-88df7d99
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in packages/nl2uri/nl2uri/flow_planner.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - packages/nl2uri/nl2uri/flow_planner.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-465f8054
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in packages/nl2uri/nl2uri/flow_planner.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - packages/nl2uri/nl2uri/flow_planner.py
+    rule_id: magic-numbers
+    count: 1
     model_hints:
       planning: balanced
       implementation: balanced

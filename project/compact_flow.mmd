@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.03s
+%% generated in 0.02s
     generator__hashutil["generator.hashutil<br/>1 funcs"]
     generator__model["generator.model<br/>2 funcs"]
     generator__validate["generator.validate<br/>3 funcs"]
@@ -19,28 +19,39 @@ flowchart TD
     packages__nl2uri["packages.nl2uri<br/>76 funcs"]
     packages__resource_agent_factory["packages.resource-agent-factory<br/>10 funcs"]
     packages__resource_agent_hypervisor["packages.resource-agent-hypervisor<br/>159 funcs"]
+    packages__touri["packages.touri<br/>26 funcs"]
     packages__uri2flow["packages.uri2flow<br/>31 funcs"]
-    packages__uri2ops["packages.uri2ops<br/>42 funcs"]
-    packages__uri3["packages.uri3<br/>240 funcs"]
+    packages__uri3["packages.uri3<br/>262 funcs"]
+    uri2ops__cli["uri2ops.cli<br/>8 funcs"]
+    uri2ops__operation_registry["uri2ops.operation_registry<br/>13 funcs"]
+    uri2ops__remote_registry["uri2ops.remote_registry<br/>8 funcs"]
+    uri2ops__server["uri2ops.server<br/>13 funcs"]
     uri3__graph["uri3.graph<br/>3 funcs"]
     uri3__protocols["uri3.protocols<br/>2 funcs"]
     uri3__resolvers["uri3.resolvers<br/>9 funcs"]
     uri3__validators["uri3.validators<br/>1 funcs"]
     packages__resource_agent_hypervisor ==>|43| packages__uri3
     packages__nl2uri ==>|27| packages__uri3
-    packages__uri3 ==>|18| packages__uri2ops
+    packages__uri3 ==>|21| uri2ops__operation_registry
     packages__uri3 ==>|12| packages__resource_agent_hypervisor
-    packages__nl2uri ==>|9| packages__uri2ops
+    packages__touri ==>|12| packages__uri3
+    packages__nl2uri ==>|9| uri2ops__operation_registry
     packages__resource_agent_hypervisor ==>|7| hypervisor__contract_registry
     packages__uri3 ==>|5| uri3__resolvers
-    meta_agent__api ==>|5| packages__resource_agent_hypervisor
     packages__nl2uri ==>|5| packages__uri2flow
+    meta_agent__api ==>|5| packages__resource_agent_hypervisor
+    uri2ops__remote_registry ==>|4| uri2ops__operation_registry
     packages__uri3 ==>|4| packages__uri2flow
+    uri2ops__cli -->|3| uri2ops__remote_registry
+    uri2ops__cli -->|3| uri2ops__server
+    uri2ops__server -->|3| uri2ops__remote_registry
     packages__nl2uri -->|3| nl2uri__writer
     packages__resource_agent_hypervisor -->|3| meta_agent__planner
     meta_agent__repair -->|3| generator__validate
-    packages__resource_agent_hypervisor -->|3| packages__uri2ops
+    packages__resource_agent_hypervisor -->|3| uri2ops__operation_registry
+    uri2ops__cli -->|2| uri2ops__operation_registry
     packages__uri3 -->|2| uri3__validators
+    packages__uri3 -->|2| uri2ops__remote_registry
     packages__resource_agent_factory -->|2| generator__model
     packages__nl2uri -->|2| packages__resource_agent_hypervisor
     packages__resource_agent_hypervisor -->|2| generator__validate
@@ -49,17 +60,23 @@ flowchart TD
     packages__resource_agent_hypervisor -->|2| hypervisor__evolution
     packages__resource_agent_hypervisor -->|2| hypervisor__deployment_registry
     hypervisor__compatibility -->|2| hypervisor__contract_registry
-    packages__uri2ops -->|2| packages__resource_agent_hypervisor
+    packages__touri -->|2| uri2ops__operation_registry
+    packages__uri3 -->|2| packages__touri
+    uri2ops__operation_registry -->|1| uri2ops__remote_registry
+    uri2ops__server -->|1| uri2ops__operation_registry
     uri3__validators -->|1| uri3__protocols
+    packages__uri3 -->|1| uri3__graph
     packages__uri3 -->|1| uri3__protocols
     packages__uri3 -->|1| hypervisor__uri2llm
     uri3__resolvers -->|1| packages__uri3
     uri3__resolvers -->|1| uri3__protocols
+    packages__uri2flow -->|1| packages__uri3
     generator__validate -->|1| generator__model
     packages__resource_agent_factory -->|1| packages__uri3
     packages__resource_agent_factory -->|1| generator__validate
     packages__resource_agent_factory -->|1| generator__hashutil
     generator__verify -->|1| generator__hashutil
+    packages__nl2uri -->|1| uri2ops__server
     packages__nl2uri -->|1| packages__resource_agent_factory
     packages__nl2uri -->|1| hypervisor__contract_registry
     packages__nl2uri -->|1| generator__verify
@@ -73,10 +90,7 @@ flowchart TD
     hypervisor__verifier -->|1| hypervisor__contract_registry
     hypervisor__verifier -->|1| packages__resource_agent_hypervisor
     packages__resource_agent_hypervisor -->|1| hypervisor__config
-    hypervisor__config -->|1| packages__uri2ops
+    hypervisor__config -->|1| uri2ops__operation_registry
     packages__resource_agent_hypervisor -->|1| uri3__graph
     packages__resource_agent_hypervisor -->|1| packages__nl2uri
     hypervisor__deployment_registry -->|1| packages__resource_agent_hypervisor
-    packages__uri3 -->|1| uri3__graph
-    packages__uri2flow -->|1| packages__uri3
-    packages__uri2ops -->|1| packages__nl2uri

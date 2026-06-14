@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('hypervisor', '0.5.11', 'python').
+project_metadata('hypervisor', '0.5.12', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('agents/__init__.py', 1, 'python').
@@ -15,7 +15,7 @@ project_file('agents/generated/weather_map_agent/agent_card.py', 40, 'python').
 project_file('agents/generated/weather_map_agent/main.py', 16, 'python').
 project_file('agents/generated/weather_map_agent/routes.py', 85, 'python').
 project_file('agents/generated/weather_map_agent/tests/test_contract.py', 18, 'python').
-project_file('app.doql.less', 196, 'less').
+project_file('app.doql.less', 214, 'less').
 project_file('domains/__init__.py', 1, 'python').
 project_file('domains/weather_map/__init__.py', 1, 'python').
 project_file('domains/weather_map/handlers/__init__.py', 1, 'python').
@@ -30,16 +30,22 @@ project_file('examples/14_uri2ops_serve/run.sh', 21, 'shell').
 project_file('examples/14_workflow_executor_mock/run.sh', 39, 'shell').
 project_file('examples/15_compact_uri_flow/run.sh', 8, 'shell').
 project_file('examples/16_llm_graph_planner/run.sh', 18, 'shell').
+project_file('examples/17_flow_vs_graph/run.sh', 18, 'shell').
+project_file('examples/18_llm_flow_planner/run.sh', 32, 'shell').
+project_file('examples/20_touri_capabilities/run.sh', 8, 'shell').
 project_file('packages/nl2uri/nl2a/__init__.py', 1, 'python').
 project_file('packages/nl2uri/nl2a/cli.py', 26, 'python').
 project_file('packages/nl2uri/nl2uri/__init__.py', 1, 'python').
-project_file('packages/nl2uri/nl2uri/cli.py', 201, 'python').
+project_file('packages/nl2uri/nl2uri/cli.py', 247, 'python').
 project_file('packages/nl2uri/nl2uri/domain_planner.py', 34, 'python').
-project_file('packages/nl2uri/nl2uri/graph_planner.py', 319, 'python').
+project_file('packages/nl2uri/nl2uri/flow_planner.py', 107, 'python').
+project_file('packages/nl2uri/nl2uri/flow_planner_llm.py', 113, 'python').
+project_file('packages/nl2uri/nl2uri/flow_repair.py', 230, 'python').
+project_file('packages/nl2uri/nl2uri/graph_planner.py', 323, 'python').
 project_file('packages/nl2uri/nl2uri/graph_planner_llm.py', 148, 'python').
 project_file('packages/nl2uri/nl2uri/graph_repair.py', 196, 'python').
 project_file('packages/nl2uri/nl2uri/llm_planner.py', 9, 'python').
-project_file('packages/nl2uri/nl2uri/output_classifier.py', 64, 'python').
+project_file('packages/nl2uri/nl2uri/output_classifier.py', 79, 'python').
 project_file('packages/nl2uri/nl2uri/pipeline.py', 142, 'python').
 project_file('packages/nl2uri/nl2uri/planner.py', 14, 'python').
 project_file('packages/nl2uri/nl2uri/planner_llm.py', 60, 'python').
@@ -169,14 +175,27 @@ project_file('packages/resource-agent-hypervisor/meta_agent/repair/pipeline.py',
 project_file('packages/resource-agent-hypervisor/meta_agent/repair/rules.py', 83, 'python').
 project_file('packages/resource-agent-hypervisor/runtime_client/__init__.py', 1, 'python').
 project_file('packages/resource-agent-hypervisor/runtime_client/client.py', 48, 'python').
-project_file('packages/uri2flow/uri2flow/__init__.py', 8, 'python').
+project_file('packages/touri/touri/__init__.py', 18, 'python').
+project_file('packages/touri/touri/backends/__init__.py', 6, 'python').
+project_file('packages/touri/touri/backends/mock_backend.py', 10, 'python').
+project_file('packages/touri/touri/backends/python_backend.py', 37, 'python').
+project_file('packages/touri/touri/backends/shell_backend.py', 16, 'python').
+project_file('packages/touri/touri/cli.py', 72, 'python').
+project_file('packages/touri/touri/executor.py', 46, 'python').
+project_file('packages/touri/touri/loader.py', 66, 'python').
+project_file('packages/touri/touri/matcher.py', 36, 'python').
+project_file('packages/touri/touri/models.py', 63, 'python').
+project_file('packages/touri/touri/validator.py', 24, 'python').
+project_file('packages/touri/touri_examples/__init__.py', 1, 'python').
+project_file('packages/touri/touri_examples/weather.py', 15, 'python').
+project_file('packages/uri2flow/uri2flow/__init__.py', 17, 'python').
 project_file('packages/uri2flow/uri2flow/cli.py', 67, 'python').
 project_file('packages/uri2flow/uri2flow/expander.py', 82, 'python').
 project_file('packages/uri2flow/uri2flow/models.py', 48, 'python').
 project_file('packages/uri2flow/uri2flow/parser.py', 91, 'python').
-project_file('packages/uri2flow/uri2flow/resolver.py', 67, 'python').
+project_file('packages/uri2flow/uri2flow/resolver.py', 108, 'python').
 project_file('packages/uri2flow/uri2flow/utils.py', 39, 'python').
-project_file('packages/uri2flow/uri2flow/validator.py', 24, 'python').
+project_file('packages/uri2flow/uri2flow/validator.py', 65, 'python').
 project_file('packages/uri2ops/uri2ops/__init__.py', 4, 'python').
 project_file('packages/uri2ops/uri2ops/cli.py', 136, 'python').
 project_file('packages/uri2ops/uri2ops/operation_registry/__init__.py', 1, 'python').
@@ -196,7 +215,15 @@ project_file('packages/uri3/domains/weather_map/__init__.py', 1, 'python').
 project_file('packages/uri3/domains/weather_map/handlers/__init__.py', 1, 'python').
 project_file('packages/uri3/domains/weather_map/handlers/generate_weather_map.py', 25, 'python').
 project_file('packages/uri3/uri3/__init__.py', 1, 'python').
-project_file('packages/uri3/uri3/cli.py', 248, 'python').
+project_file('packages/uri3/uri3/cli/__init__.py', 6, 'python').
+project_file('packages/uri3/uri3/cli/commands/__init__.py', 1, 'python').
+project_file('packages/uri3/uri3/cli/commands/discovery.py', 80, 'python').
+project_file('packages/uri3/uri3/cli/commands/flow.py', 101, 'python').
+project_file('packages/uri3/uri3/cli/commands/graph.py', 24, 'python').
+project_file('packages/uri3/uri3/cli/commands/resolve.py', 37, 'python').
+project_file('packages/uri3/uri3/cli/commands/workflow.py', 46, 'python').
+project_file('packages/uri3/uri3/cli/helpers.py', 65, 'python').
+project_file('packages/uri3/uri3/cli/main.py', 30, 'python').
 project_file('packages/uri3/uri3/config/__init__.py', 13, 'python').
 project_file('packages/uri3/uri3/config/cli_shortcuts.py', 42, 'python').
 project_file('packages/uri3/uri3/config/docker_stacks.py', 58, 'python').
@@ -218,8 +245,9 @@ project_file('packages/uri3/uri3/graph/adapters/__init__.py', 4, 'python').
 project_file('packages/uri3/uri3/graph/adapters/base.py', 13, 'python').
 project_file('packages/uri3/uri3/graph/adapters/browser_mock.py', 45, 'python').
 project_file('packages/uri3/uri3/graph/adapters/browser_playwright.py', 78, 'python').
-project_file('packages/uri3/uri3/graph/adapters/browser_router.py', 59, 'python').
-project_file('packages/uri3/uri3/graph/adapters/registry.py', 94, 'python').
+project_file('packages/uri3/uri3/graph/adapters/browser_router.py', 67, 'python').
+project_file('packages/uri3/uri3/graph/adapters/registry.py', 114, 'python').
+project_file('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', 123, 'python').
 project_file('packages/uri3/uri3/graph/artifacts.py', 34, 'python').
 project_file('packages/uri3/uri3/graph/conditions.py', 25, 'python').
 project_file('packages/uri3/uri3/graph/dependency_graph.py', 83, 'python').
@@ -287,6 +315,7 @@ project_file('project.sh', 59, 'shell').
 project_file('testenv/ssh_agent_host/entrypoint.sh', 8, 'shell').
 project_file('testenv/ssh_agent_host/mock_agent_server.py', 58, 'python').
 project_file('tests/__init__.py', 1, 'python').
+project_file('tests/conftest.py', 15, 'python').
 project_file('tests/domain_pack/__init__.py', 2, 'python').
 project_file('tests/domain_pack/test_generator.py', 84, 'python').
 project_file('tests/generator/__init__.py', 2, 'python').
@@ -300,10 +329,15 @@ project_file('tests/hypervisor/test_hypervisor_cli.py', 45, 'python').
 project_file('tests/hypervisor/test_remote_runner.py', 64, 'python').
 project_file('tests/hypervisor/test_runtime_state.py', 51, 'python').
 project_file('tests/integration/__init__.py', 2, 'python').
+project_file('tests/integration/test_flow_to_workflow_execution.py', 39, 'python').
 project_file('tests/integration/test_nl2a_e2e.py', 93, 'python').
+project_file('tests/integration/test_uri3_uri2ops_delegation.py', 43, 'python').
 project_file('tests/meta_agent/__init__.py', 2, 'python').
 project_file('tests/meta_agent/test_repair.py', 80, 'python').
 project_file('tests/nl2uri/test_domain_planner.py', 32, 'python').
+project_file('tests/nl2uri/test_flow_planner.py', 50, 'python').
+project_file('tests/nl2uri/test_flow_planner_llm.py', 70, 'python').
+project_file('tests/nl2uri/test_flow_repair.py', 97, 'python').
 project_file('tests/nl2uri/test_graph_planner.py', 60, 'python').
 project_file('tests/nl2uri/test_graph_planner_llm.py', 119, 'python').
 project_file('tests/test_capability_tests.py', 11, 'python').
@@ -330,10 +364,12 @@ project_file('tests/test_uri2ops_v01.py', 64, 'python').
 project_file('tests/test_uri3.py', 12, 'python').
 project_file('tests/test_uri_tree_validator.py', 5, 'python').
 project_file('tests/test_validate.py', 9, 'python').
+project_file('tests/touri/test_touri.py', 38, 'python').
 project_file('tests/uri2flow/conftest.py', 15, 'python').
 project_file('tests/uri2flow/test_cli.py', 13, 'python').
 project_file('tests/uri2flow/test_expand_branching_flow.py', 14, 'python').
 project_file('tests/uri2flow/test_expand_linear_flow.py', 15, 'python').
+project_file('tests/uri2flow/test_flow_defaults.py', 58, 'python').
 project_file('tests/uri2flow/test_parser_forms.py', 16, 'python').
 project_file('tests/uri3/__init__.py', 2, 'python').
 project_file('tests/uri3/test_browser_adapter.py', 109, 'python').
@@ -367,17 +403,40 @@ python_function('packages/nl2uri/nl2a/cli.py', 'main', 0, 1, 1).
 python_function('packages/nl2uri/nl2uri/cli.py', '_default_use_llm', 0, 1, 1).
 python_function('packages/nl2uri/nl2uri/cli.py', '_resolve_use_llm', 0, 5, 2).
 python_function('packages/nl2uri/nl2uri/cli.py', '_emit', 1, 2, 3).
-python_function('packages/nl2uri/nl2uri/cli.py', '_plan_command', 1, 5, 5).
-python_function('packages/nl2uri/nl2uri/cli.py', 'plan', 5, 5, 8).
+python_function('packages/nl2uri/nl2uri/cli.py', '_validate_flow_payload', 1, 2, 4).
+python_function('packages/nl2uri/nl2uri/cli.py', '_plan_command', 1, 6, 6).
+python_function('packages/nl2uri/nl2uri/cli.py', 'plan', 5, 6, 9).
 python_function('packages/nl2uri/nl2uri/cli.py', 'classify', 2, 1, 4).
 python_function('packages/nl2uri/nl2uri/cli.py', 'single', 3, 1, 3).
 python_function('packages/nl2uri/nl2uri/cli.py', 'list_cmd', 3, 1, 3).
 python_function('packages/nl2uri/nl2uri/cli.py', 'tree', 4, 4, 9).
+python_function('packages/nl2uri/nl2uri/cli.py', 'flow', 7, 6, 10).
 python_function('packages/nl2uri/nl2uri/cli.py', 'task', 6, 5, 9).
 python_function('packages/nl2uri/nl2uri/cli.py', 'graph', 6, 5, 9).
 python_function('packages/nl2uri/nl2uri/cli.py', 'generate', 4, 4, 9).
 python_function('packages/nl2uri/nl2uri/cli.py', 'main', 0, 1, 1).
 python_function('packages/nl2uri/nl2uri/domain_planner.py', 'plan_from_prompt', 2, 7, 8).
+python_function('packages/nl2uri/nl2uri/flow_planner.py', '_compact_step', 2, 2, 0).
+python_function('packages/nl2uri/nl2uri/flow_planner.py', 'plan_flow', 1, 12, 12).
+python_function('packages/nl2uri/nl2uri/flow_planner.py', '_detect_agent_slug', 1, 3, 2).
+python_function('packages/nl2uri/nl2uri/flow_planner.py', '_detect_local_agent_slug', 1, 3, 2).
+python_function('packages/nl2uri/nl2uri/flow_planner.py', '_last_step_id', 1, 4, 4).
+python_function('packages/nl2uri/nl2uri/flow_planner_llm.py', 'build_flow_planner_system_prompt', 0, 1, 4).
+python_function('packages/nl2uri/nl2uri/flow_planner_llm.py', 'call_flow_planner_llm', 1, 4, 9).
+python_function('packages/nl2uri/nl2uri/flow_planner_llm.py', 'plan_flow_with_llm', 1, 3, 5).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', '_slug', 1, 2, 3).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', '_supported_scheme', 1, 2, 2).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', '_normalize_step_raw', 1, 10, 9).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', '_node_to_compact_step', 1, 13, 5).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', '_nodes_to_compact_steps', 1, 4, 3).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', 'extract_flow_payload', 1, 20, 7).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', 'sanitize_flow_step', 1, 18, 8).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', '_needs_explicit_ids', 1, 4, 3).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', '_ensure_step_ids', 1, 19, 11).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', 'repair_flow_body', 2, 8, 14).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', 'validate_flow_document', 1, 1, 1).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', 'validate_expanded_flow', 1, 1, 1).
+python_function('packages/nl2uri/nl2uri/flow_repair.py', 'repair_and_validate_flow', 2, 2, 4).
 python_function('packages/nl2uri/nl2uri/graph_planner.py', '_slug', 1, 2, 3).
 python_function('packages/nl2uri/nl2uri/graph_planner.py', '_detect_agent_id', 1, 3, 2).
 python_function('packages/nl2uri/nl2uri/graph_planner.py', '_detect_health_uri', 1, 4, 3).
@@ -388,7 +447,7 @@ python_function('packages/nl2uri/nl2uri/graph_planner.py', 'plan_tree', 1, 9, 5)
 python_function('packages/nl2uri/nl2uri/graph_planner.py', 'plan_task', 1, 3, 7).
 python_function('packages/nl2uri/nl2uri/graph_planner.py', 'plan_workflow_graph', 1, 12, 9).
 python_function('packages/nl2uri/nl2uri/graph_planner.py', 'plan_auto', 1, 1, 2).
-python_function('packages/nl2uri/nl2uri/graph_planner.py', 'plan_by_kind', 1, 1, 2).
+python_function('packages/nl2uri/nl2uri/graph_planner.py', 'plan_by_kind', 1, 2, 3).
 python_function('packages/nl2uri/nl2uri/graph_planner_llm.py', 'build_graph_planner_system_prompt', 0, 2, 4).
 python_function('packages/nl2uri/nl2uri/graph_planner_llm.py', 'call_graph_planner_llm', 1, 4, 9).
 python_function('packages/nl2uri/nl2uri/graph_planner_llm.py', 'plan_graph_with_llm', 1, 4, 6).
@@ -401,7 +460,7 @@ python_function('packages/nl2uri/nl2uri/graph_repair.py', '_sanitize_nodes', 1, 
 python_function('packages/nl2uri/nl2uri/graph_repair.py', 'repair_graph_body', 2, 12, 12).
 python_function('packages/nl2uri/nl2uri/graph_repair.py', 'repair_and_validate_graph', 2, 13, 8).
 python_function('packages/nl2uri/nl2uri/llm_planner.py', 'llm_plan', 1, 2, 4).
-python_function('packages/nl2uri/nl2uri/output_classifier.py', 'classify_output_kind', 1, 20, 5).
+python_function('packages/nl2uri/nl2uri/output_classifier.py', 'classify_output_kind', 1, 23, 5).
 python_function('packages/nl2uri/nl2uri/pipeline.py', 'generate_tree', 1, 1, 1).
 python_function('packages/nl2uri/nl2uri/pipeline.py', '_append_pipeline_logs', 0, 2, 2).
 python_function('packages/nl2uri/nl2uri/pipeline.py', 'run_generate_pipeline', 1, 4, 10).
@@ -637,6 +696,28 @@ python_function('packages/resource-agent-hypervisor/meta_agent/repair/rules.py',
 python_function('packages/resource-agent-hypervisor/meta_agent/repair/rules.py', 'repair_resource_read_capability', 2, 8, 6).
 python_function('packages/resource-agent-hypervisor/meta_agent/repair/rules.py', 'repair_command_capability', 2, 4, 5).
 python_function('packages/resource-agent-hypervisor/meta_agent/repair/rules.py', 'repair_capabilities', 2, 6, 7).
+python_function('packages/touri/touri/backends/mock_backend.py', 'call_mock_backend', 2, 1, 1).
+python_function('packages/touri/touri/backends/python_backend.py', '_split_python_uri', 1, 3, 4).
+python_function('packages/touri/touri/backends/python_backend.py', 'call_python_backend', 3, 5, 10).
+python_function('packages/touri/touri/backends/shell_backend.py', 'call_shell_backend', 3, 1, 2).
+python_function('packages/touri/touri/cli.py', '_print', 1, 1, 2).
+python_function('packages/touri/touri/cli.py', 'cmd_list', 1, 2, 3).
+python_function('packages/touri/touri/cli.py', 'cmd_validate', 1, 2, 2).
+python_function('packages/touri/touri/cli.py', 'cmd_call', 1, 4, 6).
+python_function('packages/touri/touri/cli.py', 'build_parser', 0, 1, 5).
+python_function('packages/touri/touri/cli.py', 'main', 1, 1, 3).
+python_function('packages/touri/touri/executor.py', '_payload_from_params', 2, 2, 2).
+python_function('packages/touri/touri/executor.py', 'call_uri', 4, 7, 9).
+python_function('packages/touri/touri/loader.py', '_read_yaml', 1, 3, 4).
+python_function('packages/touri/touri/loader.py', 'load_manifest', 1, 13, 10).
+python_function('packages/touri/touri/loader.py', 'iter_manifest_paths', 1, 2, 4).
+python_function('packages/touri/touri/loader.py', 'load_registry', 1, 2, 2).
+python_function('packages/touri/touri/matcher.py', 'template_to_regex', 1, 1, 3).
+python_function('packages/touri/touri/matcher.py', 'match_uri', 2, 3, 4).
+python_function('packages/touri/touri/matcher.py', 'require_match', 2, 2, 2).
+python_function('packages/touri/touri/models.py', 'service_result', 2, 1, 1).
+python_function('packages/touri/touri/validator.py', 'validate_manifest', 1, 9, 3).
+python_function('packages/touri/touri_examples/weather.py', 'handler', 2, 1, 2).
 python_function('packages/uri2flow/uri2flow/cli.py', 'cmd_validate', 1, 2, 4).
 python_function('packages/uri2flow/uri2flow/cli.py', 'cmd_expand', 1, 3, 7).
 python_function('packages/uri2flow/uri2flow/cli.py', 'cmd_print', 1, 1, 4).
@@ -650,12 +731,23 @@ python_function('packages/uri2flow/uri2flow/parser.py', '_as_list', 1, 5, 4).
 python_function('packages/uri2flow/uri2flow/parser.py', '_parse_step', 1, 10, 11).
 python_function('packages/uri2flow/uri2flow/parser.py', 'parse_flow', 1, 12, 7).
 python_function('packages/uri2flow/uri2flow/parser.py', 'load_flow', 1, 3, 6).
-python_function('packages/uri2flow/uri2flow/resolver.py', 'default_operation_for_uri', 1, 21, 3).
+python_function('packages/uri2flow/uri2flow/resolver.py', '_find_repo_root', 1, 7, 6).
+python_function('packages/uri2flow/uri2flow/resolver.py', '_pattern_to_regex', 1, 4, 7).
+python_function('packages/uri2flow/uri2flow/resolver.py', '_match_pattern', 2, 2, 3).
+python_function('packages/uri2flow/uri2flow/resolver.py', '_load_flow_defaults_config', 0, 4, 6).
+python_function('packages/uri2flow/uri2flow/resolver.py', '_defaults_from_entry', 1, 3, 4).
+python_function('packages/uri2flow/uri2flow/resolver.py', '_defaults_from_scheme', 1, 3, 4).
+python_function('packages/uri2flow/uri2flow/resolver.py', '_defaults_from_patterns', 1, 7, 6).
+python_function('packages/uri2flow/uri2flow/resolver.py', '_fallback_defaults', 0, 4, 5).
+python_function('packages/uri2flow/uri2flow/resolver.py', 'default_operation_for_uri', 1, 3, 4).
+python_function('packages/uri2flow/uri2flow/resolver.py', 'clear_defaults_cache', 0, 1, 1).
 python_function('packages/uri2flow/uri2flow/utils.py', 'slugify', 1, 2, 3).
 python_function('packages/uri2flow/uri2flow/utils.py', 'scheme_of', 1, 1, 1).
 python_function('packages/uri2flow/uri2flow/utils.py', 'path_parts', 1, 4, 4).
 python_function('packages/uri2flow/uri2flow/utils.py', 'node_id_from_uri', 2, 5, 7).
-python_function('packages/uri2flow/uri2flow/validator.py', 'validate_flow', 1, 9, 6).
+python_function('packages/uri2flow/uri2flow/validator.py', 'validate_flow_document', 1, 10, 7).
+python_function('packages/uri2flow/uri2flow/validator.py', 'validate_expanded_flow', 1, 2, 5).
+python_function('packages/uri2flow/uri2flow/validator.py', 'validate_flow', 1, 11, 4).
 python_function('packages/uri2ops/uri2ops/cli.py', '_print', 1, 1, 2).
 python_function('packages/uri2ops/uri2ops/cli.py', 'operations_cmd', 1, 6, 7).
 python_function('packages/uri2ops/uri2ops/cli.py', 'registry_cmd', 1, 4, 7).
@@ -685,22 +777,17 @@ python_function('packages/uri2ops/uri2ops/server/app.py', 'create_app', 0, 1, 24
 python_function('packages/uri2ops/uri2ops/server/mcp_wrapper.py', 'list_mcp_tools', 1, 2, 2).
 python_function('packages/uri2ops/uri2ops/server/mcp_wrapper.py', 'mcp_tool_name_for_operation', 2, 1, 0).
 python_function('packages/uri3/domains/weather_map/handlers/generate_weather_map.py', 'handler', 1, 3, 7).
-python_function('packages/uri3/uri3/cli.py', '_quick_reference', 0, 5, 4).
-python_function('packages/uri3/uri3/cli.py', '_list_payload', 0, 2, 3).
-python_function('packages/uri3/uri3/cli.py', 'main', 1, 1, 4).
-python_function('packages/uri3/uri3/cli.py', 'list_cmd', 2, 4, 7).
-python_function('packages/uri3/uri3/cli.py', 'validate', 1, 1, 3).
-python_function('packages/uri3/uri3/cli.py', 'validate_tree', 1, 3, 4).
-python_function('packages/uri3/uri3/cli.py', 'graph', 1, 3, 5).
-python_function('packages/uri3/uri3/cli.py', 'validate_workflow', 1, 3, 4).
-python_function('packages/uri3/uri3/cli.py', 'plan_workflow', 1, 1, 5).
-python_function('packages/uri3/uri3/cli.py', 'run_workflow_cmd', 4, 2, 8).
-python_function('packages/uri3/uri3/cli.py', 'resolve', 1, 2, 8).
-python_function('packages/uri3/uri3/cli.py', 'call', 1, 2, 8).
-python_function('packages/uri3/uri3/cli.py', 'scan', 2, 8, 12).
-python_function('packages/uri3/uri3/cli.py', 'logs', 2, 2, 6).
-python_function('packages/uri3/uri3/cli.py', 'schema', 3, 4, 8).
-python_function('packages/uri3/uri3/cli.py', 'main', 0, 1, 1).
+python_function('packages/uri3/uri3/cli/commands/discovery.py', 'register', 1, 1, 19).
+python_function('packages/uri3/uri3/cli/commands/flow.py', 'expand_flow_cmd', 1, 3, 8).
+python_function('packages/uri3/uri3/cli/commands/flow.py', 'run_flow_cmd', 1, 6, 15).
+python_function('packages/uri3/uri3/cli/commands/flow.py', 'register', 1, 1, 4).
+python_function('packages/uri3/uri3/cli/commands/graph.py', 'register', 1, 1, 5).
+python_function('packages/uri3/uri3/cli/commands/resolve.py', 'register', 1, 1, 12).
+python_function('packages/uri3/uri3/cli/commands/workflow.py', 'register', 1, 1, 10).
+python_function('packages/uri3/uri3/cli/helpers.py', 'quick_reference', 0, 5, 4).
+python_function('packages/uri3/uri3/cli/helpers.py', 'list_payload', 0, 2, 3).
+python_function('packages/uri3/uri3/cli/main.py', 'main', 1, 2, 4).
+python_function('packages/uri3/uri3/cli/main.py', 'main_entry', 0, 1, 1).
 python_function('packages/uri3/uri3/config/cli_shortcuts.py', 'cli_config_path', 1, 1, 1).
 python_function('packages/uri3/uri3/config/cli_shortcuts.py', 'load_cli_config', 1, 2, 3).
 python_function('packages/uri3/uri3/config/cli_shortcuts.py', 'scan_shortcuts', 1, 4, 4).
@@ -752,7 +839,16 @@ python_function('packages/uri3/uri3/graph/adapters/browser_playwright.py', 'clos
 python_function('packages/uri3/uri3/graph/adapters/browser_router.py', '_playwright_ready', 0, 3, 5).
 python_function('packages/uri3/uri3/graph/adapters/browser_router.py', 'resolve_browser_mode', 1, 5, 3).
 python_function('packages/uri3/uri3/graph/adapters/browser_router.py', 'cleanup_browser_adapters', 1, 2, 2).
+python_function('packages/uri3/uri3/graph/adapters/registry.py', '_operator_adapter', 0, 2, 3).
 python_function('packages/uri3/uri3/graph/adapters/registry.py', 'adapter_for_uri', 1, 3, 1).
+python_function('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', '_use_legacy_browser_adapter', 0, 1, 2).
+python_function('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', '_registry_scheme', 1, 2, 0).
+python_function('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', '_registry_operation', 2, 1, 1).
+python_function('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', '_runtime_context', 1, 1, 2).
+python_function('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', '_artifact_suffix', 2, 9, 0).
+python_function('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', '_attach_workflow_artifact', 3, 3, 6).
+python_function('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', 'cleanup_operator_adapters', 1, 2, 3).
+python_function('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', 'resolve_operator_adapter', 1, 2, 1).
 python_function('packages/uri3/uri3/graph/artifacts.py', 'artifact_path', 3, 1, 0).
 python_function('packages/uri3/uri3/graph/artifacts.py', 'artifact_uri', 3, 1, 0).
 python_function('packages/uri3/uri3/graph/artifacts.py', 'write_artifact', 4, 2, 6).
@@ -900,6 +996,7 @@ python_function('packages/uri3/uri3/scanner/ssh_scanner.py', 'scan_ssh', 1, 3, 6
 python_function('packages/uri3/uri3/validators/uri_tree_validator.py', 'load_yaml', 1, 1, 2).
 python_function('packages/uri3/uri3/validators/uri_tree_validator.py', 'validate_uri_tree', 1, 2, 7).
 python_function('packages/uri3/uri3/validators/uri_validator.py', 'validate_uri', 1, 2, 2).
+python_function('tests/conftest.py', 'repo_root', 0, 4, 6).
 python_function('tests/domain_pack/test_generator.py', '_weather_tree', 0, 1, 0).
 python_function('tests/domain_pack/test_generator.py', 'test_derive_domain_model', 0, 3, 3).
 python_function('tests/domain_pack/test_generator.py', 'test_generate_proto_weather', 0, 2, 4).
@@ -941,9 +1038,14 @@ python_function('tests/hypervisor/test_remote_runner.py', 'test_verify_remote_de
 python_function('tests/hypervisor/test_runtime_state.py', 'test_build_run_plan_includes_env_and_runtime_paths', 0, 5, 3).
 python_function('tests/hypervisor/test_runtime_state.py', 'test_resolve_deployment_env_merges_uri_yaml', 2, 3, 4).
 python_function('tests/hypervisor/test_runtime_state.py', 'test_runtime_state_roundtrip', 1, 4, 4).
+python_function('tests/integration/test_flow_to_workflow_execution.py', 'test_compact_flow_to_dry_run', 1, 4, 5).
+python_function('tests/integration/test_flow_to_workflow_execution.py', 'test_branching_flow_has_expected_edges', 1, 5, 1).
+python_function('tests/integration/test_flow_to_workflow_execution.py', 'test_nl2uri_flow_expands_and_validates', 0, 3, 4).
 python_function('tests/integration/test_nl2a_e2e.py', 'isolated_project', 2, 3, 7).
 python_function('tests/integration/test_nl2a_e2e.py', 'test_nl2a_full_pipeline_weather_map', 1, 20, 9).
 python_function('tests/integration/test_nl2a_e2e.py', 'test_nl2a_cli_generate_no_llm', 1, 8, 4).
+python_function('tests/integration/test_uri3_uri2ops_delegation.py', 'test_default_operator_adapter_is_uri2ops', 0, 2, 2).
+python_function('tests/integration/test_uri3_uri2ops_delegation.py', 'test_uri2ops_delegation_mock_browser_workflow', 1, 5, 4).
 python_function('tests/meta_agent/test_repair.py', 'test_repair_agent_block_fills_metadata', 0, 5, 1).
 python_function('tests/meta_agent/test_repair.py', 'test_repair_resource_read_fills_renderer_and_schema', 0, 3, 1).
 python_function('tests/meta_agent/test_repair.py', 'test_repair_command_fills_fields', 0, 3, 1).
@@ -951,6 +1053,23 @@ python_function('tests/meta_agent/test_repair.py', 'test_repair_capabilities_ded
 python_function('tests/meta_agent/test_repair.py', 'test_repair_agent_spec_integration', 1, 4, 6).
 python_function('tests/nl2uri/test_domain_planner.py', 'test_normalize_bad_llm_weather_tree_uses_deterministic_template', 0, 6, 2).
 python_function('tests/nl2uri/test_domain_planner.py', 'test_plan_from_prompt_weather_no_llm_full_tree', 0, 6, 1).
+python_function('tests/nl2uri/test_flow_planner.py', 'test_classify_uri_flow_for_sequential_process', 0, 2, 1).
+python_function('tests/nl2uri/test_flow_planner.py', 'test_classify_task_prompt_as_uri_flow', 0, 2, 1).
+python_function('tests/nl2uri/test_flow_planner.py', 'test_classify_condition_stays_workflow_graph', 0, 2, 1).
+python_function('tests/nl2uri/test_flow_planner.py', 'test_plan_flow_weather_prompt', 0, 8, 2).
+python_function('tests/nl2uri/test_flow_planner.py', 'test_plan_auto_prefers_uri_flow_for_weather', 0, 2, 1).
+python_function('tests/nl2uri/test_flow_planner.py', 'test_flow_expands_to_valid_workflow_graph', 0, 4, 2).
+python_function('tests/nl2uri/test_flow_planner_llm.py', 'test_build_flow_planner_system_prompt_includes_compact_shape', 0, 5, 1).
+python_function('tests/nl2uri/test_flow_planner_llm.py', 'test_plan_flow_with_llm_validates_compact_output', 1, 4, 2).
+python_function('tests/nl2uri/test_flow_planner_llm.py', 'test_plan_flow_with_llm_converts_graph_nodes', 1, 3, 3).
+python_function('tests/nl2uri/test_flow_planner_llm.py', 'test_plan_flow_with_llm_fallback_on_invalid', 1, 4, 2).
+python_function('tests/nl2uri/test_flow_planner_llm.py', 'test_plan_flow_use_llm_flag', 1, 2, 3).
+python_function('tests/nl2uri/test_flow_repair.py', 'test_extract_flow_payload_from_graph_nodes', 0, 4, 3).
+python_function('tests/nl2uri/test_flow_repair.py', 'test_sanitize_flow_step_drops_unknown_scheme', 0, 3, 1).
+python_function('tests/nl2uri/test_flow_repair.py', 'test_repair_flow_body_from_task_steps', 0, 4, 2).
+python_function('tests/nl2uri/test_flow_repair.py', 'test_validate_expanded_flow_accepts_weather_flow', 0, 2, 2).
+python_function('tests/nl2uri/test_flow_repair.py', 'test_repair_and_validate_flow_branching', 0, 4, 2).
+python_function('tests/nl2uri/test_flow_repair.py', 'test_repair_and_validate_flow_rejects_empty', 0, 1, 2).
 python_function('tests/nl2uri/test_graph_planner.py', 'test_classify_resource_tree', 0, 2, 1).
 python_function('tests/nl2uri/test_graph_planner.py', 'test_classify_task_graph', 0, 2, 1).
 python_function('tests/nl2uri/test_graph_planner.py', 'test_classify_workflow_graph', 0, 2, 1).
@@ -1036,10 +1155,23 @@ python_function('tests/test_uri3.py', 'test_validate_uri', 0, 3, 1).
 python_function('tests/test_uri3.py', 'test_graph_weather_tree', 0, 3, 3).
 python_function('tests/test_uri_tree_validator.py', 'test_uri_tree_schema_ok', 0, 2, 1).
 python_function('tests/test_validate.py', 'test_user_agent_contract_is_valid', 0, 2, 2).
+python_function('tests/touri/test_touri.py', 'test_load_registry', 1, 4, 1).
+python_function('tests/touri/test_touri.py', 'test_match_weather_uri', 1, 3, 2).
+python_function('tests/touri/test_touri.py', 'test_call_mock_uri', 1, 3, 1).
+python_function('tests/touri/test_touri.py', 'test_call_python_weather_uri', 1, 5, 1).
 python_function('tests/uri2flow/conftest.py', 'repo_root', 0, 4, 6).
 python_function('tests/uri2flow/test_cli.py', 'test_cli_expand', 2, 4, 3).
 python_function('tests/uri2flow/test_expand_branching_flow.py', 'test_expand_branching_flow', 1, 6, 1).
 python_function('tests/uri2flow/test_expand_linear_flow.py', 'test_expand_linear_flow', 1, 7, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'setup_function', 0, 1, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'test_pattern_match_hypervisor_run', 0, 4, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'test_pattern_match_hypervisor_restart', 0, 3, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'test_pattern_match_browser_open', 0, 3, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'test_pattern_match_dom_extract', 0, 3, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'test_pattern_match_screen_observe', 0, 3, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'test_pattern_match_input_type', 0, 4, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'test_scheme_default_for_http', 0, 3, 1).
+python_function('tests/uri2flow/test_flow_defaults.py', 'test_fallback_for_unknown_scheme', 0, 3, 1).
 python_function('tests/uri2flow/test_parser_forms.py', 'test_accepts_string_and_mapping_forms', 0, 4, 2).
 python_function('tests/uri3/test_browser_adapter.py', 'test_resolve_browser_mode_mock', 0, 2, 2).
 python_function('tests/uri3/test_browser_adapter.py', 'test_mock_adapter_writes_artifact_files', 1, 5, 4).
@@ -1195,6 +1327,13 @@ python_class('packages/resource-agent-hypervisor/runtime_client/client.py', 'Res
 python_method('ResourceRuntimeClient', '__init__', 2, 1, 1).
 python_method('ResourceRuntimeClient', 'read_resource', 1, 2, 4).
 python_method('ResourceRuntimeClient', 'dispatch_command', 2, 2, 4).
+python_class('packages/touri/touri/matcher.py', 'MatchResult').
+python_class('packages/touri/touri/models.py', 'CapabilityRef').
+python_class('packages/touri/touri/models.py', 'BackendRef').
+python_class('packages/touri/touri/models.py', 'CapabilityManifest').
+python_method('CapabilityManifest', 'to_dict', 0, 1, 1).
+python_class('packages/touri/touri/models.py', 'ServiceResult').
+python_method('ServiceResult', 'to_dict', 0, 1, 1).
 python_class('packages/uri2flow/uri2flow/models.py', 'FlowStep').
 python_class('packages/uri2flow/uri2flow/models.py', 'FlowDocument').
 python_method('FlowDocument', 'to_dict', 0, 11, 2).
@@ -1229,11 +1368,15 @@ python_class('packages/uri3/uri3/graph/adapters/browser_playwright.py', 'Playwri
 python_method('PlaywrightBrowserAdapter', 'execute', 2, 11, 18).
 python_class('packages/uri3/uri3/graph/adapters/browser_router.py', 'BrowserRouterAdapter').
 python_method('BrowserRouterAdapter', '__init__', 0, 1, 2).
-python_method('BrowserRouterAdapter', 'execute', 2, 2, 2).
+python_method('BrowserRouterAdapter', 'execute', 2, 2, 3).
 python_class('packages/uri3/uri3/graph/adapters/registry.py', 'AssertionAdapter').
-python_method('AssertionAdapter', 'execute', 2, 11, 6).
+python_method('AssertionAdapter', 'execute', 2, 1, 6).
 python_class('packages/uri3/uri3/graph/adapters/registry.py', 'HypervisorAdapter').
-python_method('HypervisorAdapter', 'execute', 2, 11, 6).
+python_method('HypervisorAdapter', 'execute', 2, 1, 6).
+python_class('packages/uri3/uri3/graph/adapters/registry.py', 'LegacyBrowserRouterAdapter').
+python_method('LegacyBrowserRouterAdapter', 'execute', 2, 1, 3).
+python_class('packages/uri3/uri3/graph/adapters/uri2ops_adapter.py', 'Uri2OpsAdapter').
+python_method('Uri2OpsAdapter', 'execute', 2, 3, 12).
 python_class('packages/uri3/uri3/graph/execution_models.py', 'ExecutionContext').
 python_method('ExecutionContext', 'resolve_ref', 1, 2, 2).
 python_class('packages/uri3/uri3/graph/execution_models.py', 'StepExecutionResult').
@@ -1300,6 +1443,11 @@ makefile_target('test', '').
 makefile_target('uri2flow-test', '').
 makefile_target('uri2flow-validate', '').
 makefile_target('uri2flow-expand', '').
+makefile_target('uri3-flow-dry-run', '').
+makefile_target('nl2uri-flow-validate', '').
+makefile_target('example-18', '').
+makefile_target('touri-test', '').
+makefile_target('touri-demo', '').
 makefile_target('uri-tree', '').
 makefile_target('graph', '').
 makefile_target('nl2a-weather', '').
@@ -1352,6 +1500,7 @@ sumd_interface('cli', '').
 sumd_interface('cli', '').
 sumd_interface('cli', '').
 sumd_interface('cli', '').
+sumd_interface('cli', '').
 sumd_workflow('validate', 'manual').
 sumd_workflow_step('validate', 1, 'python -m generator.validate contracts').
 sumd_workflow('generate', 'manual').
@@ -1367,6 +1516,12 @@ sumd_workflow_step('uri2flow-validate', 1, 'uri2flow validate examples/15_compac
 sumd_workflow('uri2flow-expand', 'manual').
 sumd_workflow_step('uri2flow-expand', 1, 'mkdir -p output').
 sumd_workflow_step('uri2flow-expand', 2, 'uri2flow expand examples/15_compact_uri_flow/weather.uri.flow.yaml --out output/weather.uri.graph.yaml').
+sumd_workflow('uri3-flow-dry-run', 'manual').
+sumd_workflow_step('uri3-flow-dry-run', 1, 'uri3 run-flow examples/17_flow_vs_graph/weather.uri.flow.yaml --dry-run').
+sumd_workflow('nl2uri-flow-validate', 'manual').
+sumd_workflow_step('nl2uri-flow-validate', 1, 'nl2uri flow -p "wygeneruj agenta pogodowego, uruchom go lokalnie i sprawdź health w Chrome" --validate').
+sumd_workflow('example-18', 'manual').
+sumd_workflow_step('example-18', 1, 'bash examples/18_llm_flow_planner/run.sh').
 sumd_workflow('uri-tree', 'manual').
 sumd_workflow_step('uri-tree', 1, 'python -m nl2uri.cli --no-llm -p "$(WEATHER_PROMPT)" --out domains/weather_map/uri_tree.yaml').
 sumd_workflow('graph', 'manual').

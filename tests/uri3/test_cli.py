@@ -54,7 +54,7 @@ def test_cli_no_args_shows_quick_reference(runner: CliRunner):
 
 
 def test_cli_scan_without_args_shows_help(runner: CliRunner, monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setattr("uri3.cli.scan_uri", lambda uri: [])
+    monkeypatch.setattr("uri3.cli.commands.discovery.scan_uri", lambda uri: [])
     result = runner.invoke(app, ["scan"])
     assert result.exit_code == 1
     assert "uri3 scan http" in result.stdout
@@ -62,7 +62,7 @@ def test_cli_scan_without_args_shows_help(runner: CliRunner, monkeypatch: pytest
 
 def test_cli_scan_shortcut_name(runner: CliRunner, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(
-        "uri3.cli.scan_uri",
+        "uri3.cli.commands.discovery.scan_uri",
         lambda uri: [type("Item", (), {"__dict__": {"uri": uri, "kind": "health", "status": "ok", "metadata": {}}})()],
     )
     result = runner.invoke(app, ["scan", "http"])
@@ -72,7 +72,7 @@ def test_cli_scan_shortcut_name(runner: CliRunner, monkeypatch: pytest.MonkeyPat
 
 
 def test_cli_scan_all(runner: CliRunner, monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setattr("uri3.cli.scan_uri", lambda uri: [])
+    monkeypatch.setattr("uri3.cli.commands.discovery.scan_uri", lambda uri: [])
     result = runner.invoke(app, ["scan", "--all"])
     assert result.exit_code == 0
     payload = json.loads(result.stdout)

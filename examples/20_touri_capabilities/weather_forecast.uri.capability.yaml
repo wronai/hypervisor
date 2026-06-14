@@ -1,0 +1,40 @@
+version: 1
+
+capability:
+  id: weather.forecast.html
+  scheme: weather
+  uri_template: weather://forecast/{place}/{days}/html
+  operation: generate
+  kind: command
+  description: Generate demo weather HTML artifact result.
+
+input:
+  params:
+    place:
+      type: string
+    days:
+      type: integer
+      default: 14
+
+output:
+  result_type: artifact
+  schema:
+    type: object
+    properties:
+      html_url:
+        type: string
+      artifact_uri:
+        type: string
+
+backend:
+  type: python
+  target: python://touri_examples.weather:handler
+
+policy:
+  side_effects: true
+  requires_approval: false
+
+events:
+  emits:
+    - WeatherForecastRequested
+    - WeatherForecastGenerated

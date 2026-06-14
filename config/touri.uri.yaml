@@ -1,0 +1,11 @@
+version: 1
+
+registry:
+  path: examples/20_touri_capabilities
+
+resolution_order:
+  - uri3
+  - touri
+  - uri2ops
+  - hypervisor
+  - denied
