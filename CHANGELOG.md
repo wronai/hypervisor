@@ -188,6 +188,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
 
+## [0.5.30] - 2026-06-15
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+
+### Other
+- Update scripts/ci/ensure_editable_install.sh
+- Update scripts/examples/audit_agent_reports.py
+- Update scripts/examples/cli_fallback.sh
+- Update scripts/www/install-cron.sh
+- Update scripts/www/monitor_landing.py
+- Update scripts/www/monitor_notify.py
+- Update scripts/www/monitor_url.py
+- Update scripts/www/run_monitors.sh
+
 ## [0.5.29] - 2026-06-15
 
 ### Docs

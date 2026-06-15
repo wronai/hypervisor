@@ -1,4 +1,4 @@
-# Resource Agent System v0.6
+# TellMesh v0.6
 
 SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorization
 

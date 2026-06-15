@@ -1,4 +1,4 @@
-# Resource Agent System v0.6
+# TellMesh v0.6
 
 WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, touri, hypervisor, agent factory
 
