@@ -47,6 +47,12 @@ jobs:
       - name: pytest
         run: pytest -q
 
+      - name: Check www docs examples are up to date
+        run: |
+          pip install markdown
+          python3 scripts/www/build_examples_docs.py --check
+          python3 scripts/www/check_examples_links.py
+
   examples:
     name: Examples integration
     runs-on: ubuntu-latest

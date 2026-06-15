@@ -2,3 +2,5 @@ auto_generated: 'true'
 source: contracts/agents/weather_map_agent.yaml
 contract_hash: sha256:47b69e7e4fc1b3b3e56e5778021526be07db596966aac1362c0782a766ca2485
 generator: resource-agent-factory
+generation_command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator contracts/agents/weather_map_agent.yaml
+markpact_readme: README.md

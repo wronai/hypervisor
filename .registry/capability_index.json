@@ -1,7 +1,29 @@
 {
   "registry": "/home/tom/github/wronai/hypervisor/examples/20_touri_capabilities",
-  "count": 5,
+  "count": 14,
   "capabilities": [
+    {
+      "id": "workflow.bank.batch_transfer",
+      "scheme": "workflow",
+      "uri_template": "workflow://bank/batch-transfer",
+      "operation": "run",
+      "kind": "command",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.bank.batch_transfer.dry_run",
+      "scheme": "workflow",
+      "uri_template": "workflow://bank/batch-transfer/dry-run",
+      "operation": "plan",
+      "kind": "query",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
     {
       "id": "browser.open.page",
       "scheme": "browser",
@@ -25,12 +47,89 @@
       "fallbacks": 0
     },
     {
+      "id": "workflow.invoices.batch.dry_run",
+      "scheme": "workflow",
+      "uri_template": "workflow://invoices/batch/dry-run",
+      "operation": "plan",
+      "kind": "query",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
       "id": "echo.mock",
       "scheme": "echo",
       "uri_template": "echo://{name}",
       "operation": "read",
       "kind": "query",
       "backend_type": "mock",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.office.day_marta.dry_run",
+      "scheme": "workflow",
+      "uri_template": "workflow://office/day-marta/dry-run",
+      "operation": "plan",
+      "kind": "query",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.office.supplier_report.monthly",
+      "scheme": "workflow",
+      "uri_template": "workflow://office/supplier-report/monthly",
+      "operation": "run",
+      "kind": "command",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.order.woocommerce_to_erp",
+      "scheme": "workflow",
+      "uri_template": "workflow://order/woocommerce-to-erp",
+      "operation": "run",
+      "kind": "command",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.order.woocommerce_to_erp.dry_run",
+      "scheme": "workflow",
+      "uri_template": "workflow://order/woocommerce-to-erp/dry-run",
+      "operation": "plan",
+      "kind": "query",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.portal.zus_form",
+      "scheme": "workflow",
+      "uri_template": "workflow://portal/zus-form",
+      "operation": "run",
+      "kind": "command",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.portal.zus_form.dry_run",
+      "scheme": "workflow",
+      "uri_template": "workflow://portal/zus-form/dry-run",
+      "operation": "plan",
+      "kind": "query",
+      "backend_type": "uri_graph",
       "backend_target": null,
       "has_data_quality": false,
       "fallbacks": 0

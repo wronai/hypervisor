@@ -68,7 +68,9 @@ def dispatch_command(request: CommandRequest) -> dict[str, Any]:
 
 @router.get("/skills/read_weather_map")
 def skill_read_weather_map(place: str, days: str) -> dict[str, Any]:
-    uri = "resource://weather/maps/{place}/forecast/{days}".replace("{place}", place).replace("{days}", days)
+    uri = "resource://weather/maps/{place}/forecast/{days}"
+    uri = uri.replace("{place}", place)
+    uri = uri.replace("{days}", days)
     return client.read_resource(uri)
 
 @router.post("/skills/generate_weather_map")

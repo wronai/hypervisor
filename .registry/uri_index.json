@@ -1,6 +1,18 @@
 {
-  "count": 5,
+  "count": 14,
   "entries": [
+    {
+      "uri": "workflow://bank/batch-transfer",
+      "capability": "workflow.bank.batch_transfer",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
+    },
+    {
+      "uri": "workflow://bank/batch-transfer/dry-run",
+      "capability": "workflow.bank.batch_transfer.dry_run",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
+    },
     {
       "uri": "browser://touri/mock/page/open",
       "capability": "browser.open.page",
@@ -14,10 +26,52 @@
       "backend_type": "uri_graph"
     },
     {
+      "uri": "workflow://invoices/batch/dry-run",
+      "capability": "workflow.invoices.batch.dry_run",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
+    },
+    {
       "uri": "echo://sample",
       "capability": "echo.mock",
       "matched_registry": "touri",
       "backend_type": "mock"
+    },
+    {
+      "uri": "workflow://office/day-marta/dry-run",
+      "capability": "workflow.office.day_marta.dry_run",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
+    },
+    {
+      "uri": "workflow://office/supplier-report/monthly",
+      "capability": "workflow.office.supplier_report.monthly",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
+    },
+    {
+      "uri": "workflow://order/woocommerce-to-erp",
+      "capability": "workflow.order.woocommerce_to_erp",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
+    },
+    {
+      "uri": "workflow://order/woocommerce-to-erp/dry-run",
+      "capability": "workflow.order.woocommerce_to_erp.dry_run",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
+    },
+    {
+      "uri": "workflow://portal/zus-form",
+      "capability": "workflow.portal.zus_form",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
+    },
+    {
+      "uri": "workflow://portal/zus-form/dry-run",
+      "capability": "workflow.portal.zus_form.dry_run",
+      "matched_registry": "touri",
+      "backend_type": "uri_graph"
     },
     {
       "uri": "workflow://flow/weather/dry-run",
