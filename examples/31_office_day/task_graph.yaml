@@ -1,0 +1,72 @@
+task:
+  id: office-day-marta
+  description: >
+    Pilot biurowy — portal WWW (raport), podgląd faktur (mock browser),
+    przygotowanie banku (STOP przed 2FA), screenshot Android (token).
+
+steps:
+  - id: portal_open
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    payload:
+      url: https://portal.example.local/raport-vat
+
+  - id: portal_body
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - portal_open
+
+  - id: portal_ok
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - portal_body
+    payload:
+      actual_from: portal_body.text
+      expected: ok
+
+  - id: invoices_health_page
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    depends_on:
+      - portal_ok
+    payload:
+      url: http://localhost:8122/health
+
+  - id: invoices_body
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - invoices_health_page
+
+  - id: bank_prepare
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    depends_on:
+      - invoices_body
+    payload:
+      url: https://bank.example.local/transfer/batch
+
+  - id: bank_body
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - bank_prepare
+
+  - id: bank_stop_checkpoint
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - bank_body
+    payload:
+      actual_from: bank_body.text
+      expected: ok

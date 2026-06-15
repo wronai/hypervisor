@@ -1,0 +1,19 @@
+version: 1
+
+capability:
+  id: workflow.office.supplier_report.monthly
+  scheme: workflow
+  uri_template: workflow://office/supplier-report/monthly
+  operation: run
+  kind: command
+  description: Supplier portal monthly CSV report (mock browser workflow).
+
+backend:
+  type: uri_graph
+  graph: examples/33_office_workflows/supplier_report_monthly.yaml
+  dry_run: false
+  browser: mock
+
+policy:
+  side_effects: true
+  requires_approval: true

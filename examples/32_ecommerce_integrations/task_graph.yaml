@@ -1,0 +1,72 @@
+task:
+  id: order-woocommerce-to-erp
+  description: >
+    E-commerce integration mock — WooCommerce webhook, BaseLinker sync check,
+    ERP handoff checkpoint (dry-run friendly).
+
+steps:
+  - id: woo_webhook
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    payload:
+      url: https://shop.example.local/wp-json/wc/v3/orders?status=processing
+
+  - id: woo_body
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - woo_webhook
+
+  - id: woo_ok
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - woo_body
+    payload:
+      actual_from: woo_body.text
+      expected: ok
+
+  - id: baselinker_sync
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    depends_on:
+      - woo_ok
+    payload:
+      url: https://panel.baselinker.example/orders/sync
+
+  - id: baselinker_body
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - baselinker_sync
+
+  - id: erp_handoff
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    depends_on:
+      - baselinker_body
+    payload:
+      url: https://erp.example.local/api/orders/import
+
+  - id: erp_body
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - erp_handoff
+
+  - id: erp_ok
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - erp_body
+    payload:
+      actual_from: erp_body.text
+      expected: ok

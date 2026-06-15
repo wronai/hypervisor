@@ -1,0 +1,19 @@
+version: 1
+
+capability:
+  id: workflow.order.woocommerce_to_erp.dry_run
+  scheme: workflow
+  uri_template: workflow://order/woocommerce-to-erp/dry-run
+  operation: plan
+  kind: query
+  description: Dry-run plan for WooCommerce → BaseLinker → ERP order sync.
+
+backend:
+  type: uri_graph
+  graph: examples/32_ecommerce_integrations/task_graph.yaml
+  dry_run: true
+  browser: mock
+
+policy:
+  side_effects: false
+  requires_approval: false

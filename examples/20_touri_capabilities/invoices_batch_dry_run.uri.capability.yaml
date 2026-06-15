@@ -1,0 +1,19 @@
+version: 1
+
+capability:
+  id: workflow.invoices.batch.dry_run
+  scheme: workflow
+  uri_template: workflow://invoices/batch/dry-run
+  operation: plan
+  kind: query
+  description: Invoice batch preview before send (mock browser steps).
+
+backend:
+  type: uri_graph
+  graph: examples/31_office_day/task_graph.yaml
+  dry_run: true
+  browser: mock
+
+policy:
+  side_effects: false
+  requires_approval: false

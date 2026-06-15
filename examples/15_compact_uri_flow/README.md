@@ -54,6 +54,12 @@ do:
 bash examples/15_compact_uri_flow/run.sh
 ```
 
+## Port drift
+
+Flow YAML may hardcode `localhost:8101` while hypervisor rebinds the agent to another port (e.g. `8118`).
+`health://agent/weather-map-agent.local` uses the **effective** port from inspect.
+See [`docs/CHAT_AND_WORKFLOWS.md`](../../docs/CHAT_AND_WORKFLOWS.md#agent-ports-and-health-uri-drift).
+
 ## Pipeline
 
 ```txt

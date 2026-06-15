@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
-python - <<'PY'
+"${PYTHON:-python3}" - <<'PY'
 import http.server
 import socket
 import tempfile

@@ -48,8 +48,11 @@ bash examples/13_nl2uri_multi_uri_graph/run.sh
 
 Generuje m.in.:
 
-- `workflow_graph.yaml` — workflow z node'ami `generate_*`, `run_*`, `open_health`, `verify_ok`, `read_logs_if_failed`
-- `task_plan.yaml` — dry-run plan z uri3 (`nl2uri task --dry-run`)
+- `output/examples/13_nl2uri_multi_uri_graph/workflow_graph.yaml` — workflow z node'ami `generate_*`, `run_*`, `open_health`, `verify_ok`, `read_logs_if_failed`
+- `output/examples/13_nl2uri_multi_uri_graph/task_plan.yaml` — dry-run plan z uri3 (`nl2uri task --dry-run`)
+
+Statyczne pliki `workflow_graph.yaml` i `task_plan.yaml` w katalogu przykładu są referencją
+dla dokumentacji; skrypt demo ich nie nadpisuje.
 
 ## Schematy
 

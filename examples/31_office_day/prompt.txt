@@ -1,0 +1,1 @@
+Pobierz raport CSV z portalu dostawcy, sprawdź faktury w ERP, przygotuj przelewy w banku, zatrzymaj się przed wysyłką i pokaż telefon z tokenem Android do akceptacji.

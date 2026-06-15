@@ -1,0 +1,28 @@
+task:
+  id: portal-zus-form
+  description: Client portal — login, fill ZUS form, stop before submit (human preview).
+
+steps:
+  - id: open_portal
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    payload:
+      url: https://portal.example.local/zus/form
+
+  - id: read_form
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - open_portal
+
+  - id: preview_checkpoint
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - read_form
+    payload:
+      actual_from: read_form.text
+      expected: ok

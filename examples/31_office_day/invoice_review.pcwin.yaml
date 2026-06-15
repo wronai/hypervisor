@@ -1,0 +1,28 @@
+task:
+  id: office-invoice-review
+  description: Focus the ERP invoice window and stop on invoice preview before issuing.
+
+steps:
+  - id: focus_invoice_erp
+    uri: pcwin://window/FakturyERP/focus
+    operation: focus
+    kind: command
+    payload:
+      title: FakturyERP
+
+  - id: click_invoice_preview
+    uri: pcwin://control/InvoicePreviewButton/click
+    operation: click
+    kind: command
+    depends_on:
+      - focus_invoice_erp
+
+  - id: verify_invoice_window
+    uri: assertion://contains
+    operation: check
+    kind: query
+    depends_on:
+      - click_invoice_preview
+    payload:
+      actual_from: focus_invoice_erp.title
+      expected: FakturyERP

@@ -1,0 +1,19 @@
+version: 1
+
+capability:
+  id: workflow.office.day_marta.dry_run
+  scheme: workflow
+  uri_template: workflow://office/day-marta/dry-run
+  operation: plan
+  kind: query
+  description: Office day pilot — portal, invoices health, bank checkpoint (dry-run).
+
+backend:
+  type: uri_graph
+  graph: examples/31_office_day/task_graph.yaml
+  dry_run: true
+  browser: mock
+
+policy:
+  side_effects: false
+  requires_approval: false

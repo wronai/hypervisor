@@ -1,0 +1,28 @@
+task:
+  id: bank-batch-transfer
+  description: Online bank — prepare batch transfers, STOP before 2FA authorization.
+
+steps:
+  - id: open_bank
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    payload:
+      url: https://bank.example.local/transfer/batch
+
+  - id: read_batch
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - open_bank
+
+  - id: stop_before_2fa
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - read_batch
+    payload:
+      actual_from: read_batch.text
+      expected: ok

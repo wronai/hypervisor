@@ -1,0 +1,28 @@
+task:
+  id: office-supplier-report-monthly
+  description: Supplier portal — open report page, verify CSV export is ready.
+
+steps:
+  - id: open_portal
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    payload:
+      url: https://supplier-portal.example.local/reports/monthly
+
+  - id: read_page
+    uri: dom://chrome/active/body
+    operation: read
+    kind: query
+    depends_on:
+      - open_portal
+
+  - id: verify_csv
+    uri: assertion://contains
+    operation: check
+    kind: assertion
+    depends_on:
+      - read_page
+    payload:
+      actual_from: read_page.text
+      expected: csv

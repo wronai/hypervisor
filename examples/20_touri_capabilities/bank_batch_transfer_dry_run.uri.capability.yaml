@@ -1,0 +1,19 @@
+version: 1
+
+capability:
+  id: workflow.bank.batch_transfer.dry_run
+  scheme: workflow
+  uri_template: workflow://bank/batch-transfer/dry-run
+  operation: plan
+  kind: query
+  description: Bank batch transfers — dry-run, stops before 2FA.
+
+backend:
+  type: uri_graph
+  graph: examples/33_office_workflows/bank_batch_transfer.yaml
+  dry_run: true
+  browser: mock
+
+policy:
+  side_effects: false
+  requires_approval: false

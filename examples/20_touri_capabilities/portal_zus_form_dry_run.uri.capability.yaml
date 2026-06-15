@@ -1,0 +1,19 @@
+version: 1
+
+capability:
+  id: workflow.portal.zus_form.dry_run
+  scheme: workflow
+  uri_template: workflow://portal/zus-form/dry-run
+  operation: plan
+  kind: query
+  description: ZUS portal form — dry-run with screenshot checkpoint.
+
+backend:
+  type: uri_graph
+  graph: examples/33_office_workflows/portal_zus_form.yaml
+  dry_run: true
+  browser: mock
+
+policy:
+  side_effects: false
+  requires_approval: false

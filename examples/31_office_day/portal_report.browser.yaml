@@ -1,0 +1,30 @@
+task:
+  id: office-portal-report
+  description: Open supplier portal, read the report page, and verify that export is available.
+
+steps:
+  - id: open_supplier_portal
+    uri: browser://chrome/page/open
+    operation: open
+    kind: command
+    payload:
+      url: https://supplier-portal.example.local/reports
+
+  - id: read_report_page
+    uri: browser://chrome/page/active
+    operation: extract_dom
+    kind: query
+    depends_on:
+      - open_supplier_portal
+    payload:
+      mock_text: "ok supplier report csv ready invoice export"
+
+  - id: verify_csv_ready
+    uri: assertion://contains
+    operation: check
+    kind: query
+    depends_on:
+      - read_report_page
+    payload:
+      actual_from: read_report_page.text
+      expected: csv

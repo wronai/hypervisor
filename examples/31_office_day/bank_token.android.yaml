@@ -1,0 +1,35 @@
+task:
+  id: office-bank-token
+  description: Show Android token screen and tap approval prompt in mock mode.
+
+steps:
+  - id: screenshot_bank_token
+    uri: android://device/emulator-5554/screenshot
+    operation: screenshot
+    kind: query
+
+  - id: dump_token_ui
+    uri: android://device/emulator-5554/dump_ui
+    operation: dump_ui
+    kind: query
+    depends_on:
+      - screenshot_bank_token
+
+  - id: tap_token_prompt
+    uri: android://device/emulator-5554/tap
+    operation: tap
+    kind: command
+    depends_on:
+      - dump_token_ui
+    payload:
+      selector: Settings
+
+  - id: verify_token_prompt_visible
+    uri: assertion://contains
+    operation: check
+    kind: query
+    depends_on:
+      - tap_token_prompt
+    payload:
+      actual_from: dump_token_ui.xml
+      expected: Settings
