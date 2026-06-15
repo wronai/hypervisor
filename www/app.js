@@ -10,6 +10,9 @@ const {
   isPlausibleUri,
   looksLikeUri,
   uriImpliesDryRun,
+  buildNlUri,
+  isNlUri,
+  routeUserInput,
   agentsForSidebar,
 } = uri;
 const { escapeHtml, renderMarkdown, htmlToPlainText } = md;
@@ -46,7 +49,7 @@ const QUICK_PROMPTS = [
 ];
 
 const INTRO_MARKDOWN =
-  "## Taskinity Chat\n\n" +
+  "## TellMesh Chat\n\n" +
   "NL → URI → result in one view. Pick a quick prompt or type your own command.\n\n" +
   "Paste **one command per line** for batch planning:\n\n" +
   "```bash\n" +
@@ -74,13 +77,66 @@ const agentListEl = document.getElementById("agent-list");
 const eventListEl = document.getElementById("event-list");
 const micBtn = document.getElementById("mic-btn");
 const voiceEngineEl = document.getElementById("voice-engine");
+const workspaceEl = document.getElementById("workspace");
+const flowPanelEl = document.getElementById("flow-panel");
+const inlineFlowGraphEl = document.getElementById("inline-flow-graph");
+const inlineFlowYamlEl = document.getElementById("inline-flow-yaml");
+const inlineFlowLanesEl = document.getElementById("inline-flow-lanes");
+const viewNlBtn = document.getElementById("view-nl-btn");
+const viewSplitBtn = document.getElementById("view-split-btn");
+const viewFlowBtn = document.getElementById("view-flow-btn");
 
+const flowView = window.TaskinityFlowView || {};
+const flowSession = flowView.createSession ? flowView.createSession() : { turns: [], nodes: [] };
+const FLOW_VIEW_KEY = "taskinity.chatView";
 
+function setChatView(mode) {
+  const allowed = new Set(["nl", "split", "flow"]);
+  const selected = allowed.has(mode) ? mode : "nl";
+  workspaceEl.classList.remove("view-nl", "view-split", "view-flow");
+  workspaceEl.classList.add(`view-${selected}`);
+  flowPanelEl.hidden = selected === "nl";
+  viewNlBtn.classList.toggle("is-active", selected === "nl");
+  viewSplitBtn.classList.toggle("is-active", selected === "split");
+  viewFlowBtn.classList.toggle("is-active", selected === "flow");
+  try {
+    localStorage.setItem(FLOW_VIEW_KEY, selected);
+  } catch (_err) {
+    // Ignore blocked storage.
+  }
+}
 
+function renderInlineFlowPanel() {
+  if (!flowView.renderGraphHtml) return;
+  inlineFlowGraphEl.innerHTML = flowView.renderGraphHtml(flowSession);
+  inlineFlowYamlEl.textContent = flowView.renderCompactYaml(flowSession);
+  inlineFlowLanesEl.innerHTML = flowView.renderLanesHtml(flowSession);
+  inlineFlowLanesEl.querySelectorAll(".flow-run-uri").forEach((btn) => {
+    btn.addEventListener("click", () => callUri(btn.dataset.uri));
+  });
+}
 
+function recordFlowUser(text, uri) {
+  const turn = { role: "user", nl: text };
+  if (uri) turn.uri = uri;
+  flowSession.turns.push(turn);
+  renderInlineFlowPanel();
+}
+
+function recordFlowPlanner(result) {
+  if (!flowView.plannerTurnFromAsk) return;
+  flowSession.turns.push(flowView.plannerTurnFromAsk(result));
+  renderInlineFlowPanel();
+}
+
+function recordFlowExecutor(uri, result) {
+  if (!flowView.executorTurnFromCall) return;
+  flowSession.turns.push(flowView.executorTurnFromCall(uri, result));
+  renderInlineFlowPanel();
+}
 
 function buildConversationMarkdown() {
-  const lines = ["# Taskinity Chat", ""];
+  const lines = ["# TellMesh Chat", ""];
   conversationLog.forEach((entry) => {
     lines.push(`## ${entry.role === "user" ? "You" : "Assistant"}`);
     lines.push("");
@@ -135,6 +191,9 @@ async function copyConversation() {
 function appendMessage(role, bodyHtml, { text, error = false, uris = [] } = {}) {
   const bodyText = text ?? htmlToPlainText(bodyHtml);
   conversationLog.push({ role, text: bodyText });
+  if (role === "user" && bodyText) {
+    recordFlowUser(bodyText);
+  }
   const wrap = document.createElement("article");
   wrap.className = `msg msg--${role}${error ? " msg--error" : ""}`;
   wrap.innerHTML = `
@@ -419,11 +478,12 @@ async function loadEvents() {
 }
 
 
-async function askPrompt(text) {
+async function askPrompt(text, nlUri) {
+  const uri = nlUri || buildNlUri(text);
   return apiFetch("/api/ask", {
     method: "POST",
     body: JSON.stringify({
-      prompt: text,
+      uri,
       dry_run: dryRunEl.checked,
       llm: false,
     }),
@@ -509,6 +569,7 @@ async function callUri(uri, { approved = false, echoUser = true, dryRun = null }
         policy: "dev",
       }),
     });
+    recordFlowExecutor(uri, result);
     const md =
       result.presentation_markdown ||
       result.message_markdown ||
@@ -520,6 +581,12 @@ async function callUri(uri, { approved = false, echoUser = true, dryRun = null }
     appendPresentationHtml(wrap, result);
     await loadSystemState();
   } catch (err) {
+    recordFlowExecutor(uri, {
+      ok: false,
+      result_type: "error",
+      service_result_status: "failed",
+      data: { title: String(err) },
+    });
     appendMessage("assistant", `<p><strong>URI error</strong></p><p>${escapeHtml(String(err))}</p>`, {
       error: true,
     });
@@ -545,27 +612,32 @@ async function handleSubmit(event) {
   const text = promptEl.value.trim();
   if (!text) return;
 
-  appendMessage("user", `<p>${escapeHtml(text)}</p>`, { text });
   promptEl.value = "";
+  const routed = routeUserInput(text);
+  if (!routed) return;
 
-  if (looksLikeUri(text)) {
-    const uri = extractUri(text) || text.trim();
-    await callUri(uri, { echoUser: false });
-    return;
+  appendMessage("user", `<p>${escapeHtml(routed.nl)}</p>`, { text: routed.nl });
+  if (routed.kind === "nl") {
+    recordFlowUser(routed.nl, routed.uri);
   }
 
-  if (/[a-z][a-z0-9+.-]*:\/\//i.test(text) && !isPlausibleUri(text)) {
-    appendMessage(
-      "assistant",
-      `<p>To wygląda na ucięty URL lub niepełny adres — nie uruchamiam go jako URI.</p><p>Jeśli chodziło o health agenta, użyj:</p><pre><code>view://process/agent/weather-map-agent.local/latest</code></pre>`,
-      { error: true },
-    );
+  if (routed.kind === "uri") {
+    if (/[a-z][a-z0-9+.-]*:\/\//i.test(text) && !isPlausibleUri(text)) {
+      appendMessage(
+        "assistant",
+        `<p>To wygląda na ucięty URL lub niepełny adres — nie uruchamiam go jako URI.</p><p>Jeśli chodziło o health agenta, użyj:</p><pre><code>view://process/agent/weather-map-agent.local/latest</code></pre>`,
+        { error: true },
+      );
+      return;
+    }
+    await callUri(routed.uri, { echoUser: false });
     return;
   }
 
   setBusy(true);
   try {
-    const result = await askPrompt(text);
+    const result = await askPrompt(routed.nl, routed.uri);
+    recordFlowPlanner(result);
     const md = result.message_markdown || "_No response._";
     const wrap = appendMessage("assistant", renderMarkdown(md), {
       uris: collectUris(result.data),
@@ -584,8 +656,11 @@ async function handleSubmit(event) {
 
 function resetConversation() {
   conversationLog.length = 0;
+  flowSession.turns.length = 0;
+  flowSession.nodes.length = 0;
   messagesEl.innerHTML = "";
   appendMessage("assistant", renderMarkdown(INTRO_MARKDOWN), { text: INTRO_MARKDOWN });
+  renderInlineFlowPanel();
 }
 
 function renderQuickPrompts() {
@@ -623,6 +698,9 @@ refreshBtn.addEventListener("click", () => loadSystemState());
 micBtn?.addEventListener("click", toggleVoiceCapture);
 copyChatBtn?.addEventListener("click", () => copyConversation());
 clearChatBtn?.addEventListener("click", resetConversation);
+viewNlBtn?.addEventListener("click", () => setChatView("nl"));
+viewSplitBtn?.addEventListener("click", () => setChatView("split"));
+viewFlowBtn?.addEventListener("click", () => setChatView("flow"));
 promptEl.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
     event.preventDefault();
@@ -632,6 +710,11 @@ promptEl.addEventListener("keydown", (event) => {
 
 renderQuickPrompts();
 resetConversation();
+try {
+  setChatView(localStorage.getItem(FLOW_VIEW_KEY) || "nl");
+} catch (_err) {
+  setChatView("nl");
+}
 loadSystemState();
 startEventStream();
 

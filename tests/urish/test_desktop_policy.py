@@ -18,13 +18,21 @@ def test_desktop_operator_policy_distinguishes_reads_and_mutations():
     assert classify_uri("android://device/test/tap") == "mutation"
 
 
-def test_desktop_mutations_require_dry_run_or_approval_by_default():
+def test_desktop_mutations_default_to_real_in_dev_policy():
     allowed, reason, force_dry_run = evaluate_policy(
         "browser://chrome/page/open",
         options=PolicyOptions(policy="dev"),
     )
+    assert allowed is True
+    assert reason is None
+    assert force_dry_run is False
+
+    allowed, reason, force_dry_run = evaluate_policy(
+        "browser://chrome/page/open",
+        options=PolicyOptions(no_approve=True, policy="dev"),
+    )
     assert allowed is False
-    assert "dry-run" in (reason or "")
+    assert "no-approve" in (reason or "").lower()
     assert force_dry_run is False
 
     allowed, reason, force_dry_run = evaluate_policy(

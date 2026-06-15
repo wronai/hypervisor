@@ -29,7 +29,7 @@ def write_fixture_files(tmp_path: Path) -> tuple[Path, Path]:
                 "# hotspots[1]: register_runtime_commands fan=30",
                 "# Keys: M=modules",
                 "M[5]:",
-                "  packages/uri2ops/uri2ops/operator/adapters/browser_router.py,40",
+                "  agents/operators/browser_operator/adapters/browser_router.py,40",
                 "  packages/uri3/uri3/graph/adapters/browser_router.py,50",
                 "  packages/urish/urish/cli.py,450",
                 "  packages/urish/urish/office_scenarios.py,25",
@@ -61,7 +61,7 @@ def write_fixture_files(tmp_path: Path) -> tuple[Path, Path]:
                 "DUPLICATES[2] (ranked by impact):",
                 "  [abc] ! STRU  _playwright_ready  L=17 N=2 saved=17 sim=1.00",
                 (
-                    "      packages/uri2ops/uri2ops/operator/adapters/"
+                    "      agents/operators/browser_operator/adapters/"
                     "browser_router.py:12-28  (_playwright_ready)"
                 ),
                 (
@@ -74,7 +74,7 @@ def write_fixture_files(tmp_path: Path) -> tuple[Path, Path]:
                     "hypervisor_dashboard_agent/uri_client.py:47-71  (resolve_view_uri)"
                 ),
                 (
-                    "      packages/hypervisor-dashboard-agent/"
+                    "      agents/system/hypervisor_dashboard/"
                     "hypervisor_dashboard_agent/uri_client.py:69-93  (resolve_view_uri)"
                 ),
             ]
@@ -180,15 +180,14 @@ def test_audit_flags_domain_named_generic_module_when_file_exists(
     )
 
 
-def test_audit_flags_domain_vocabulary_in_generic_runtime(repo_root: Path, tmp_path: Path):
+def test_audit_does_not_flag_domain_vocabulary_in_operator_agents(repo_root: Path, tmp_path: Path):
     audit = load_audit_module(repo_root)
     map_path, dup_path = write_fixture_files(tmp_path)
     runtime_file = (
         tmp_path
-        / "packages"
-        / "uri2ops"
-        / "uri2ops"
-        / "operator"
+        / "agents"
+        / "operators"
+        / "browser_operator"
         / "adapters"
         / "browser_router.py"
     )
@@ -197,9 +196,8 @@ def test_audit_flags_domain_vocabulary_in_generic_runtime(repo_root: Path, tmp_p
 
     result = audit.build_audit(tmp_path, map_path, dup_path)
 
-    assert any(
+    assert not any(
         finding.category == "domain_vocabulary_in_generic_package"
-        and finding.paths == ["packages/uri2ops/uri2ops/operator/adapters/browser_router.py"]
         for finding in result.findings
     )
 

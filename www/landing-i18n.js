@@ -7,7 +7,7 @@
   window.TaskinityLandingI18n = {
     TRANSLATIONS: {
     pl: {
-      title: "Taskinity — command center dla automatyzacji i agentów AI",
+      title: "TellMesh — Text2Ops control plane dla agentów i automatyzacji",
       metaDescription: "Jeden chat i dashboard: integracje WordPress, WooCommerce, BaseLinker, Allegro, ERP, CRM, agenci AI, health, incident i naprawa.",
       nav: {
         problem: "Problem",
@@ -36,7 +36,7 @@
       },
       hero: {
         badge: "Command center · PL · self-host",
-        title: "Automatyzacje i agenci AI przestali działać? Taskinity pokaże gdzie, dlaczego i co zrobić dalej.",
+        title: "Automatyzacje i agenci AI przestali działać? TellMesh pokaże gdzie, dlaczego i co zrobić dalej.",
         lead: "Jeden chat i dashboard dla skryptów, webhooków, n8n, API, Dockera i agentów AI. Health, logi, incident, ticket i propozycja naprawy — bez szukania po pięciu narzędziach.",
         demo: "Zobacz demo (2 min)",
         chat: "Wypróbuj chat na żywo",
@@ -107,7 +107,7 @@
         fastTitle: "Minimalny kontrakt integracji",
         fastLead: "Najpierw nie budujesz pełnego konektora. Rejestrujesz jeden proces, jeden health check i jeden sposób diagnozy.",
         step1Title: "Podłącz źródło",
-        step1Lead: "Webhook, REST API, plugin WordPress, cron lub skrypt — cokolwiek już masz. Taskinity woła to przez http:// albo shell://.",
+        step1Lead: "Webhook, REST API, plugin WordPress, cron lub skrypt — cokolwiek już masz. TellMesh woła to przez http:// albo shell://.",
         step2Title: "Zarejestruj proces",
         step2Lead: "Jeden wpis w rejestrze deploymentów: nazwa, health URI, logi. Widzisz status w dashboardzie i API.",
         step3Title: "Monitoruj i naprawiaj",
@@ -121,11 +121,11 @@
         pipe4Title: "Chat i proof",
         pipe4Lead: "Wynik, screenshot, logi, dry-run, approval i raport audytowy w jednym miejscu.",
         wordpressTitle: "Lead z formularza do CRM",
-        wordpressLead: "Hook formularza lub REST API wysyła zdarzenie do Taskinity, a agent dopisuje kontakt w CRM i odsyła potwierdzenie.",
+        wordpressLead: "Hook formularza lub REST API wysyła zdarzenie do TellMesh, a agent dopisuje kontakt w CRM i odsyła potwierdzenie.",
         wooTitle: "Zamówienie do faktury i magazynu",
         wooLead: "Webhook sklepu uruchamia workflow: pobierz zamówienie, sprawdź płatność, wystaw fakturę i zsynchronizuj stan.",
         baselinkerTitle: "Marketplace hub bez ślepych cronów",
-        baselinkerLead: "Cron lub n8n woła API BaseLinker, a Taskinity porównuje zamówienia, stany i błędy synchronizacji z ERP.",
+        baselinkerLead: "Cron lub n8n woła API BaseLinker, a TellMesh porównuje zamówienia, stany i błędy synchronizacji z ERP.",
         allegroTitle: "OAuth, zamówienia, zwroty",
         allegroLead: "Agent pilnuje tokenu OAuth, pobiera checkout forms, wykrywa 429/503 i pokazuje w chacie, które zamówienie utknęło.",
         erpTitle: "Comarch, Subiekt, HubSpot, Salesforce",
@@ -135,7 +135,7 @@
       },
       office: {
         title: "Jak pracuje biuro — konkretne przykłady",
-        lead: "Marta, specjalista ds. rozliczeń, nie pisze skryptów. Opisuje zadanie po polsku w chacie. Taskinity planuje kroki: strona WWW, portal, okna w systemie, faktura, bank — a gdy trzeba tokenu na telefonie, <strong>prosi Martę o jeden klik</strong> i kontynuuje resztę.",
+        lead: "Marta, specjalista ds. rozliczeń, nie pisze skryptów. Opisuje zadanie po polsku w chacie. TellMesh planuje kroki: strona WWW, portal, okna w systemie, faktura, bank — a gdy trzeba tokenu na telefonie, <strong>prosi Martę o jeden klik</strong> i kontynuuje resztę.",
       },
       offer: {
         title: "Oferta",
@@ -157,19 +157,19 @@
       contact: {
         title: "Umów 10-min demo",
         lead: "Pokażemy scenariusz: webhook → błąd API → incident → ticket → naprawa.",
-        mail: "Napisz: kontakt@taskinity.local",
+        mail: "Napisz: kontakt@tellmesh.local",
         chat: "Otwórz chat produkcyjny",
         demo: "Demo techniczne (URI)",
       },
       faq: {
-        q1: "Czy Taskinity obsługuje banki i token na telefonie?",
+        q1: "Czy TellMesh obsługuje banki i token na telefonie?",
         a1: "Tak — w modelu human-in-the-loop. Agent wypełnia przelew w banku online, zatrzymuje się przed autoryzacją, pokazuje podgląd i czeka na klik człowieka.",
         q2: "Jak podłączyć WooCommerce, Baselinker lub Allegro?",
-        a2: "Webhook lub cron woła URI agenta. Taskinity rejestruje proces, monitoruje health i przy awarii pokazuje incident w chacie.",
+        a2: "Webhook lub cron woła URI agenta. TellMesh rejestruje proces, monitoruje health i przy awarii pokazuje incident w chacie.",
         q3: "Czy zastępujecie n8n / Make / Zapier?",
-        a3: "Nie. Masz już automatyzacje — Taskinity pokazuje, które działają, które padły i co dalej.",
+        a3: "Nie. Masz już automatyzacje — TellMesh pokazuje, które działają, które padły i co dalej.",
         q4: "Czym różnicie się od LangSmith Engine?",
-        a4: "LangSmith Engine skupia się na agentach LangChain. Taskinity spina skrypty, cron, webhooki, n8n, Docker i agentów w jeden command center.",
+        a4: "LangSmith Engine skupia się na agentach LangChain. TellMesh spina skrypty, cron, webhooki, n8n, Docker i agentów w jeden command center.",
         q5: "Czy to dla firm bez agentów AI?",
         a5: "Tak — skrypty, cron i webhooki często padają pierwsze i też je monitorujemy.",
         q6: "Czy macie SOC2 / enterprise governance?",
@@ -178,7 +178,7 @@
       steps: {
         prompt: {
           title: "Jedna komenda zamiast ręcznego klejenia usług",
-          caption: "Operator opisuje cel po polsku. Taskinity zamienia go na plan URI, artefakty i kontrolowany runtime.",
+          caption: "Operator opisuje cel po polsku. TellMesh zamienia go na plan URI, artefakty i kontrolowany runtime.",
         },
         plan: {
           title: "NL → plan URI",
@@ -203,7 +203,7 @@
       },
     },
     en: {
-      title: "Taskinity — command center for automation and AI agents",
+      title: "TellMesh — Text2Ops control plane for agents and automation",
       metaDescription: "One chat and dashboard for WordPress, WooCommerce, BaseLinker, Allegro, ERP, CRM, AI agents, health checks, incidents and repairs.",
       nav: {
         problem: "Problem",
@@ -232,7 +232,7 @@
       },
       hero: {
         badge: "Command center · EN · self-host",
-        title: "Did your automations or AI agents stop working? Taskinity shows where, why, and what to do next.",
+        title: "Did your automations or AI agents stop working? TellMesh shows where, why, and what to do next.",
         lead: "One chat and dashboard for scripts, webhooks, n8n, APIs, Docker and AI agents. Health, logs, incidents, tickets and repair proposals without searching five tools.",
         demo: "See demo (2 min)",
         chat: "Try live chat",
@@ -303,7 +303,7 @@
         fastTitle: "Minimal integration contract",
         fastLead: "Do not build a full connector first. Register one process, one health check and one diagnosis path.",
         step1Title: "Connect the source",
-        step1Lead: "Webhook, REST API, WordPress plugin, cron or script: whatever you already have. Taskinity calls it via http:// or shell://.",
+        step1Lead: "Webhook, REST API, WordPress plugin, cron or script: whatever you already have. TellMesh calls it via http:// or shell://.",
         step2Title: "Register the process",
         step2Lead: "One deployment registry entry: name, health URI and logs. You see status in the dashboard and API.",
         step3Title: "Monitor and repair",
@@ -317,11 +317,11 @@
         pipe4Title: "Chat and proof",
         pipe4Lead: "Result, screenshot, logs, dry-run, approval and audit report in one place.",
         wordpressTitle: "Form lead to CRM",
-        wordpressLead: "A form hook or REST API sends the event to Taskinity. The agent creates the CRM contact and returns confirmation.",
+        wordpressLead: "A form hook or REST API sends the event to TellMesh. The agent creates the CRM contact and returns confirmation.",
         wooTitle: "Order to invoice and stock",
         wooLead: "A store webhook starts the workflow: fetch order, check payment, issue invoice and sync inventory.",
         baselinkerTitle: "Marketplace hub without blind cron jobs",
-        baselinkerLead: "Cron or n8n calls the BaseLinker API, while Taskinity compares orders, stock and ERP sync errors.",
+        baselinkerLead: "Cron or n8n calls the BaseLinker API, while TellMesh compares orders, stock and ERP sync errors.",
         allegroTitle: "OAuth, orders, returns",
         allegroLead: "The agent watches the OAuth token, fetches checkout forms, detects 429/503 and shows the stuck order in chat.",
         erpTitle: "Comarch, Subiekt, HubSpot, Salesforce",
@@ -331,7 +331,7 @@
       },
       office: {
         title: "How an office works — concrete examples",
-        lead: "Marta from accounting does not write scripts. She describes the task in chat. Taskinity plans the steps: website, portal, desktop app, invoice, bank. When a phone token is needed, <strong>Taskinity asks Marta for one click</strong> and continues.",
+        lead: "Marta from accounting does not write scripts. She describes the task in chat. TellMesh plans the steps: website, portal, desktop app, invoice, bank. When a phone token is needed, <strong>TellMesh asks Marta for one click</strong> and continues.",
       },
       offer: {
         title: "Offer",
@@ -353,19 +353,19 @@
       contact: {
         title: "Book a 10-minute demo",
         lead: "We will show: webhook → API error → incident → ticket → repair.",
-        mail: "Email: kontakt@taskinity.local",
+        mail: "Email: kontakt@tellmesh.local",
         chat: "Open production chat",
         demo: "Technical demo (URI)",
       },
       faq: {
-        q1: "Does Taskinity support banks and phone tokens?",
+        q1: "Does TellMesh support banks and phone tokens?",
         a1: "Yes, in a human-in-the-loop model. The agent prepares the transfer, stops before authorization, shows a preview and waits for a human click.",
         q2: "How do I connect WooCommerce, BaseLinker or Allegro?",
-        a2: "A webhook or cron calls the agent URI. Taskinity registers the process, monitors health and shows an incident in chat on failure.",
+        a2: "A webhook or cron calls the agent URI. TellMesh registers the process, monitors health and shows an incident in chat on failure.",
         q3: "Do you replace n8n / Make / Zapier?",
-        a3: "No. You already have automations. Taskinity shows which work, which failed and what comes next.",
+        a3: "No. You already have automations. TellMesh shows which work, which failed and what comes next.",
         q4: "How are you different from LangSmith Engine?",
-        a4: "LangSmith Engine focuses on LangChain agents. Taskinity connects scripts, cron, webhooks, n8n, Docker and agents into one command center.",
+        a4: "LangSmith Engine focuses on LangChain agents. TellMesh connects scripts, cron, webhooks, n8n, Docker and agents into one command center.",
         q5: "Is this for companies without AI agents?",
         a5: "Yes. Scripts, cron jobs and webhooks often fail first, and we monitor them too.",
         q6: "Do you have SOC2 / enterprise governance?",
@@ -374,7 +374,7 @@
       steps: {
         prompt: {
           title: "One command instead of hand-wiring services",
-          caption: "The operator describes the goal in natural language. Taskinity turns it into a URI plan, artifacts and controlled runtime.",
+          caption: "The operator describes the goal in natural language. TellMesh turns it into a URI plan, artifacts and controlled runtime.",
         },
         plan: {
           title: "NL → URI plan",
@@ -390,16 +390,8 @@
         },
         repair: {
           title: "Supervisor repairs in a loop",
-          caption: "Inspect → classify → restart on effective port → health/card verification. The agent returns healthy after one attempt.",
-        },
-        proof: {
-          title: "Proof: process, health, card and logs match",
-          caption: "The same truth is visible in Web UI, CLI, API and runtime state. That is what enables autonomy.",
-        },
-      },
-    },
-    de: {
-      title: "Taskinity — Command Center fuer Automatisierung und KI-Agenten",
+          caption: "    de: {
+      title: "TellMesh — Text2Ops Control Plane fuer Agenten und Automatisierung",
       metaDescription: "Ein Chat und Dashboard fuer WordPress, WooCommerce, BaseLinker, Allegro, ERP, CRM, KI-Agenten, Health Checks, Incidents und Reparaturen.",
       nav: {
         problem: "Problem",
@@ -428,7 +420,7 @@
       },
       hero: {
         badge: "Command Center · DE · self-host",
-        title: "Automatisierungen oder KI-Agenten funktionieren nicht? Taskinity zeigt wo, warum und was als Naechstes zu tun ist.",
+        title: "Automatisierungen oder KI-Agenten funktionieren nicht? TellMesh zeigt wo, warum und was als Naechstes zu tun ist.",
         lead: "Ein Chat und Dashboard fuer Skripte, Webhooks, n8n, APIs, Docker und KI-Agenten. Health, Logs, Incidents, Tickets und Reparaturvorschlaege ohne Suche in fuenf Tools.",
         demo: "Demo ansehen (2 Min)",
         chat: "Live-Chat testen",
@@ -499,7 +491,7 @@
         fastTitle: "Minimaler Integrationsvertrag",
         fastLead: "Nicht sofort einen kompletten Connector bauen. Erst einen Prozess, einen Health Check und einen Diagnoseweg registrieren.",
         step1Title: "Quelle verbinden",
-        step1Lead: "Webhook, REST API, WordPress-Plugin, Cron oder Skript: alles, was bereits vorhanden ist. Taskinity ruft es via http:// oder shell:// auf.",
+        step1Lead: "Webhook, REST API, WordPress-Plugin, Cron oder Skript: alles, was bereits vorhanden ist. TellMesh ruft es via http:// oder shell:// auf.",
         step2Title: "Prozess registrieren",
         step2Lead: "Ein Registry-Eintrag: Name, Health URI und Logs. Status ist im Dashboard und in der API sichtbar.",
         step3Title: "Ueberwachen und reparieren",
@@ -513,11 +505,11 @@
         pipe4Title: "Chat und Proof",
         pipe4Lead: "Ergebnis, Screenshot, Logs, Dry-run, Freigabe und Auditbericht an einem Ort.",
         wordpressTitle: "Formular-Lead ins CRM",
-        wordpressLead: "Ein Formular-Hook oder REST API sendet das Ereignis an Taskinity. Der Agent erstellt den CRM-Kontakt und bestaetigt den Schritt.",
+        wordpressLead: "Ein Formular-Hook oder REST API sendet das Ereignis an TellMesh. Der Agent erstellt den CRM-Kontakt und bestaetigt den Schritt.",
         wooTitle: "Bestellung zu Rechnung und Bestand",
         wooLead: "Ein Shop-Webhook startet den Workflow: Bestellung holen, Zahlung pruefen, Rechnung erstellen und Bestand synchronisieren.",
         baselinkerTitle: "Marketplace-Hub ohne blinde Cronjobs",
-        baselinkerLead: "Cron oder n8n ruft die BaseLinker API auf, Taskinity vergleicht Bestellungen, Bestände und ERP-Sync-Fehler.",
+        baselinkerLead: "Cron oder n8n ruft die BaseLinker API auf, TellMesh vergleicht Bestellungen, Bestände und ERP-Sync-Fehler.",
         allegroTitle: "OAuth, Bestellungen, Retouren",
         allegroLead: "Der Agent ueberwacht den OAuth-Token, holt Checkout-Forms, erkennt 429/503 und zeigt die haengende Bestellung im Chat.",
         erpTitle: "Comarch, Subiekt, HubSpot, Salesforce",
@@ -527,7 +519,7 @@
       },
       office: {
         title: "So arbeitet ein Buero — konkrete Beispiele",
-        lead: "Marta aus der Abrechnung schreibt keine Skripte. Sie beschreibt die Aufgabe im Chat. Taskinity plant Website, Portal, Desktop-App, Rechnung und Bank. Wenn ein Telefon-Token noetig ist, <strong>fragt Taskinity Marta nach einem Klick</strong> und macht weiter.",
+        lead: "Marta aus der Abrechnung schreibt keine Skripte. Sie beschreibt die Aufgabe im Chat. TellMesh plant Website, Portal, Desktop-App, Rechnung und Bank. Wenn ein Telefon-Token noetig ist, <strong>fragt TellMesh Marta nach einem Klick</strong> und macht weiter.",
       },
       offer: {
         title: "Angebot",
@@ -549,19 +541,19 @@
       contact: {
         title: "10-Minuten-Demo buchen",
         lead: "Wir zeigen: Webhook → API-Fehler → Incident → Ticket → Reparatur.",
-        mail: "E-Mail: kontakt@taskinity.local",
+        mail: "E-Mail: kontakt@tellmesh.local",
         chat: "Produktions-Chat oeffnen",
         demo: "Technische Demo (URI)",
       },
       faq: {
-        q1: "Unterstuetzt Taskinity Banken und Telefon-Token?",
+        q1: "Unterstuetzt TellMesh Banken und Telefon-Token?",
         a1: "Ja, im Human-in-the-loop-Modell. Der Agent bereitet die Ueberweisung vor, stoppt vor der Autorisierung, zeigt eine Vorschau und wartet auf den Klick.",
         q2: "Wie verbindet man WooCommerce, BaseLinker oder Allegro?",
-        a2: "Webhook oder Cron ruft die Agent-URI auf. Taskinity registriert den Prozess, ueberwacht Health und zeigt bei Ausfall einen Incident im Chat.",
+        a2: "Webhook oder Cron ruft die Agent-URI auf. TellMesh registriert den Prozess, ueberwacht Health und zeigt bei Ausfall einen Incident im Chat.",
         q3: "Ersetzt ihr n8n / Make / Zapier?",
-        a3: "Nein. Automatisierungen bleiben bestehen. Taskinity zeigt, welche laufen, welche ausgefallen sind und was als Naechstes kommt.",
+        a3: "Nein. Automatisierungen bleiben bestehen. TellMesh zeigt, welche laufen, welche ausgefallen sind und was als Naechstes kommt.",
         q4: "Unterschied zu LangSmith Engine?",
-        a4: "LangSmith Engine fokussiert LangChain-Agenten. Taskinity verbindet Skripte, Cron, Webhooks, n8n, Docker und Agenten in einem Command Center.",
+        a4: "LangSmith Engine fokussiert LangChain-Agenten. TellMesh verbindet Skripte, Cron, Webhooks, n8n, Docker und Agenten in einem Command Center.",
         q5: "Ist das fuer Firmen ohne KI-Agenten?",
         a5: "Ja. Skripte, Cronjobs und Webhooks fallen oft zuerst aus und werden ebenfalls ueberwacht.",
         q6: "Habt ihr SOC2 / Enterprise Governance?",
@@ -570,7 +562,7 @@
       steps: {
         prompt: {
           title: "Ein Befehl statt manuellem Verkleben von Services",
-          caption: "Der Operator beschreibt das Ziel natuerlich. Taskinity macht daraus URI-Plan, Artefakte und kontrollierte Runtime.",
+          caption: "Der Operator beschreibt das Ziel natuerlich. TellMesh macht daraus URI-Plan, Artefakte und kontrollierte Runtime.",
         },
         plan: {
           title: "NL → URI-Plan",
@@ -586,6 +578,14 @@
         },
         repair: {
           title: "Supervisor repariert in der Schleife",
+          caption: "Inspect → Klassifikation → Restart auf effektivem Port → Health/Card-Pruefung. Nach einem Versuch ist der Agent healthy.",
+        },
+        proof: {
+          title: "Proof: Prozess, Health, Card und Logs stimmen",
+          caption: "Dieselbe Wahrheit ist in Web UI, CLI, API und Runtime State sichtbar. Das ermoeglicht Autonomie.",
+        },
+      },
+    }, "Supervisor repariert in der Schleife",
           caption: "Inspect → Klassifikation → Restart auf effektivem Port → Health/Card-Pruefung. Nach einem Versuch ist der Agent healthy.",
         },
         proof: {

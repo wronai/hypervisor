@@ -47,7 +47,7 @@ def workspace_pythonpath(repo_root: Path) -> str:
         repo_root / "packages" / "uri2verify",
         repo_root / "packages" / "urigen",
         repo_root / "packages" / "urish",
-        repo_root / "packages" / "hypervisor-dashboard-agent",
+        repo_root / "agents" / "system" / "hypervisor_dashboard",
         repo_root / "examples" / "21_touri_voice",
     ]
     prefix = os.pathsep.join(str(path) for path in paths if path.is_dir())

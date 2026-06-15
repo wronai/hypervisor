@@ -7,9 +7,9 @@ import sys
 
 import pytest
 
-from uri2ops.operator.adapters.pcwin_router import resolve_adapter_mode
-from uri2ops.operator.adapters.pcwin_uri import parse_pcwin_uri
-from uri2ops.operator.adapters.pcwin_uia import uia_available
+from agents.operators.desktop_operator.adapters.pcwin_router import resolve_adapter_mode
+from agents.operators.desktop_operator.adapters.pcwin_uri import parse_pcwin_uri
+from agents.operators.desktop_operator.adapters.pcwin_uia import uia_available
 from uri2ops.operator.runner import run_task
 from uri2ops.operator.task import load_task
 

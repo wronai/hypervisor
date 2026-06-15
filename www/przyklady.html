@@ -3,28 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tested integrations — Taskinity examples</title>
+  <title>Tested integrations — TellMesh examples</title>
+  <link rel="icon" href="assets/tellmesh.png" type="image/png">
   <meta name="description" content="27 verified scenarios from examples/*/* — browser, Android, Windows, workflow, agents, office. All PASS in CI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="landing.css">
+  <link rel="stylesheet" href="site-shell.css">
 </head>
-<body>
-  <nav class="site-nav" aria-label="Main navigation">
-    <div class="container">
-      <a class="brand" href="/www/">
-        <span class="brand-mark" aria-hidden="true"></span>
-        Taskinity
+<body class="shell-page">
+  <header class="topbar">
+    <div class="container nav" aria-label="Główna nawigacja">
+      <a class="brand" href="index.html" aria-label="TellMesh home">
+        <img class="brand-logo" src="assets/tellmesh.png" alt="TellMesh" width="168" height="38" decoding="async">
+        <span class="brand-sub">by Prototypowanie.pl</span>
       </a>
-      <div class="nav-links">
-        <a class="nav-hide-mobile" href="index.html#integracje">Integrations</a>
-        <a class="nav-hide-mobile" href="docs/examples.html">Docs examples</a>
-        <a href="chat.html">Chat</a>
-        <a class="btn btn-primary" href="index.html#kontakt">Book demo</a>
+      <nav class="nav-links" aria-label="Sekcje">
+        <a href="index.html#problem">Problem</a>
+        <a href="index.html#control-plane">Control plane</a>
+        <a href="index.html#deploy-gate">Walidacja</a>
+        <a href="index.html#demo">Demo</a>
+        <a href="index.html#konkurencja">Konkurencja</a>
+        <a href="index.html#oferta">Oferta</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="docs/examples.html">Przykłady</a>
+        <a class="btn btn-primary" href="chat.html">Otwórz chat</a>
       </div>
     </div>
-  </nav>
+  </header>
 
   <header class="hero hero-compact">
     <div class="container">
@@ -96,14 +104,14 @@ bash examples/31_office_day/run.sh            # Marta's office day</pre>
 touri    → uri2run → uri2ops / python / shell / http
 uri2ops  → browser:// · android:// · pcwin:// · shell://
 hypervisor → lifecycle, deployment registry, repair loop
-Taskinity www → NL chat + health + incident (command center)</pre>
+TellMesh www → NL chat + health + incident (command center)</pre>
       </div>
     </div>
   </section>
 
   <footer class="site-footer">
     <div class="container">
-      <p>Taskinity · hypervisor · <a href="index.html">Home</a> · <a href="chat.html">Chat</a></p>
+      <p>TellMesh · Prototypowanie.pl · <a href="index.html">Home</a> · <a href="docs/examples.html">Docs</a> · <a href="chat.html">Chat</a></p>
     </div>
   </footer>
 

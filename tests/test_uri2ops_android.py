@@ -7,9 +7,9 @@ from pathlib import Path
 
 import pytest
 
-from uri2ops.operator.adapters.android_adb import adb_available, list_devices
-from uri2ops.operator.adapters.android_router import resolve_adapter_mode
-from uri2ops.operator.adapters.android_uri import parse_android_uri
+from agents.operators.desktop_operator.adapters.android_adb import adb_available, list_devices
+from agents.operators.desktop_operator.adapters.android_router import resolve_adapter_mode
+from agents.operators.desktop_operator.adapters.android_uri import parse_android_uri
 from uri2ops.operator.runner import run_task
 from uri2ops.operator.task import load_task
 
@@ -25,7 +25,7 @@ def test_resolve_adapter_mode_mock():
 
 
 def test_resolve_adapter_mode_auto_without_adb(monkeypatch):
-    monkeypatch.setattr("uri2ops.operator.adapters.android_router._adb_ready", lambda: False)
+    monkeypatch.setattr("agents.operators.desktop_operator.adapters.android_router._adb_ready", lambda: False)
     assert resolve_adapter_mode("android", {"adapter": "auto"}) == "mock"
 
 

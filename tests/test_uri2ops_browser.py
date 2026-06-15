@@ -5,14 +5,24 @@ from __future__ import annotations
 import http.server
 import os
 import socket
+import sys
 import threading
 from pathlib import Path
 
 import pytest
-from uri2ops.operator.adapters import browser_mock
-from uri2ops.operator.adapters.browser_router import resolve_adapter_mode
+from agents.operators.browser_operator.adapters import browser_mock
+from agents.operators.browser_operator.adapters.browser_router import resolve_adapter_mode
 from uri2ops.operator.runner import run_task
 from uri2ops.operator.task import load_task
+
+
+def test_playwright_import_error_includes_python_executable():
+    from agents.operators.browser_operator.adapters.browser_playwright import playwright_import_error
+
+    result = playwright_import_error()
+    assert result["error"] == "playwright_not_installed"
+    assert sys.executable in result["detail"]
+    assert "pip install -e '.[browser]'" in result["detail"]
 
 
 def test_resolve_adapter_mode_mock():
@@ -21,7 +31,7 @@ def test_resolve_adapter_mode_mock():
 
 def test_resolve_adapter_mode_auto_falls_back_without_playwright(monkeypatch):
     monkeypatch.setattr(
-        "uri2ops.operator.adapters.browser_router._playwright_ready",
+        "agents.operators.browser_operator.adapters.browser_router._playwright_ready",
         lambda: False,
     )
     assert resolve_adapter_mode("browser", {"adapter": "auto"}) == "mock"
@@ -30,7 +40,7 @@ def test_resolve_adapter_mode_auto_falls_back_without_playwright(monkeypatch):
 def test_playwright_run_sync_offloads_when_asyncio_loop_active():
     import asyncio
 
-    from uri2ops.operator.adapters import browser_playwright as bp
+    from agents.operators.browser_operator.adapters import browser_playwright as bp
 
     seen_on_thread: list[str] = []
 
@@ -49,7 +59,7 @@ def test_playwright_run_sync_offloads_when_asyncio_loop_active():
 
 
 def test_playwright_cleanup_swallows_greenlet_thread_mismatch():
-    from uri2ops.operator.adapters import browser_playwright as bp
+    from agents.operators.browser_operator.adapters import browser_playwright as bp
 
     class _BrokenPage:
         def close(self) -> None:

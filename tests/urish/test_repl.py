@@ -72,8 +72,21 @@ def test_parse_repl_line_meta_help_returns_none(capsys):
     state = ReplState()
     assert parse_repl_line(".help", state) is None
     out = capsys.readouterr().out
-    assert "URI shell" in out
+    assert "TellMesh URI shell" in out
     assert "real" in out
+
+
+def test_parse_repl_line_shell_output_is_not_routed_to_ask(capsys):
+    state = ReplState()
+    assert parse_repl_line("FAIL blocked/failed policy -msOK completed/succeeded data 13ms", state) is None
+    out = capsys.readouterr().out
+    assert "output terminala" in out
+
+
+def test_parse_repl_line_bare_uri_adds_approve_for_browser_mutation():
+    state = ReplState(dry_run=False)
+    argv = parse_repl_line("browser://chrome/page/open", state)
+    assert "--approve" in argv
 
 
 def test_main_empty_argv_starts_repl():

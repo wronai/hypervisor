@@ -30,6 +30,17 @@ def test_hypervisor_agent_run_uri_dry_run_waits_for_generated_deployment(tmp_pat
     assert result["pending_dependency"] == "deployment registry entry"
 
 
+def test_hypervisor_local_alias_run_uri_dry_run():
+    result = call_system_uri(
+        "hypervisor://local/weather-agent/run",
+        dry_run=True,
+    )
+
+    assert result["ok"] is True
+    assert result["result_type"] in {"lifecycle_plan", "lifecycle", "run_agent"}
+    assert result.get("deployment_id") == "weather-map-agent.local"
+
+
 def test_schema_uri_returns_agent_contract_and_capability_refs(tmp_path):
     contract_path = tmp_path / "contracts" / "agents" / "schema_agent.yaml"
     contract_path.parent.mkdir(parents=True)

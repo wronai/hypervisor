@@ -30,6 +30,8 @@
     "incident",
     "cron",
     "robot",
+    "chat",
+    "nl",
   ]);
 
   function httpHostLooksValid(host) {
@@ -116,6 +118,35 @@
     return /\/dry-run\/?$/i.test(normalized);
   }
 
+  function buildNlUri(text, app = "ask") {
+    const params = new URLSearchParams();
+    params.set("text", text);
+    if (app === "ask") {
+      return `nl://ask?${params.toString()}`;
+    }
+    return `nl://${app}/ask?${params.toString()}`;
+  }
+
+  function isNlUri(value) {
+    return /^nl:\/\//i.test(String(value || "").trim());
+  }
+
+  function routeUserInput(text) {
+    const trimmed = String(text || "").trim();
+    if (!trimmed) return null;
+    if (looksLikeUri(trimmed) && !isNlUri(trimmed)) {
+      return {
+        kind: "uri",
+        uri: extractUri(trimmed) || trimmed.split("\n")[0].trim(),
+        nl: trimmed,
+      };
+    }
+    if (isNlUri(trimmed)) {
+      return { kind: "nl", uri: trimmed, nl: trimmed };
+    }
+    return { kind: "nl", uri: buildNlUri(trimmed), nl: trimmed };
+  }
+
   function agentsForSidebar(agents) {
     const byRef = new Map();
     const rank = (agent) => {
@@ -143,6 +174,9 @@
     isPlausibleUri,
     looksLikeUri,
     uriImpliesDryRun,
+    buildNlUri,
+    isNlUri,
+    routeUserInput,
     agentsForSidebar,
   };
 })();

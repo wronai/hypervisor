@@ -1,7 +1,13 @@
 from __future__ import annotations
 
-from uri2ops.operator.adapters.input_router import resolve_adapter_mode, type_text
-from uri2ops.operator.adapters.screen_router import observe, resolve_adapter_mode as screen_mode
+from agents.operators.desktop_operator.adapters.input_router import (
+    resolve_adapter_mode,
+    type_text,
+)
+from agents.operators.desktop_operator.adapters.screen_router import (
+    observe,
+    resolve_adapter_mode as screen_mode,
+)
 
 
 def test_screen_router_mock_observe():
@@ -17,7 +23,7 @@ def test_input_router_mock_type():
 
 def test_screen_router_gnome_mode_when_unavailable(monkeypatch):
     monkeypatch.setattr(
-        "uri2ops.operator.adapters.screen_router._gnome_ready",
+        "agents.operators.desktop_operator.adapters.screen_router._gnome_ready",
         lambda: False,
     )
     assert screen_mode("screen", {"adapter": "auto"}) == "mock"
@@ -25,7 +31,7 @@ def test_screen_router_gnome_mode_when_unavailable(monkeypatch):
 
 def test_input_router_gnome_mode_when_unavailable(monkeypatch):
     monkeypatch.setattr(
-        "uri2ops.operator.adapters.input_router._gnome_ready",
+        "agents.operators.desktop_operator.adapters.input_router._gnome_ready",
         lambda: False,
     )
     assert resolve_adapter_mode("input", {"adapter": "auto"}) == "mock"

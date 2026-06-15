@@ -15,7 +15,7 @@ def test_device_robot_operator_contract_is_generic_capability_agent(repo_root: P
 
     assert spec["kind"] == "hypervisor.operator_agent"
     assert spec["metadata"]["agent_ref"] == "agent://device-robot-operator"
-    assert spec["metadata"]["runtime_package"] == "uri2ops"
+    assert spec["metadata"]["runtime_package"] == "agents/operators/device_robot_operator"
     assert spec["metadata"]["capability_domain"] == "domains/physical_ops"
     assert spec["domain_boundary"]["owns_domain_logic"] is False
     assert spec["domain_boundary"]["owns_execution"] is True
@@ -57,13 +57,13 @@ def test_device_robot_operator_is_registered_as_package_agent(repo_root: Path):
 
     deployment = resolve_deployment("device-robot-operator.local", root=repo_root)
     assert deployment.agent_ref == "agent://device-robot-operator"
-    assert deployment.target_uri == "local://packages/uri2ops"
+    assert deployment.target_uri == "local://agents/operators/device_robot_operator"
     assert deployment.metadata["source"] == "operator_agent"
-    assert deployment.metadata["contract"] == "agents/operators/device_robot_operator.yaml"
+    assert deployment.metadata["contract"] == "agents/operators/device_robot_operator/device_robot_operator.yaml"
 
-    assert local_target_to_module(deployment.target_uri) == "uri2ops.main:app"
+    assert local_target_to_module(deployment.target_uri) == "agents.operators.device_robot_operator.main:app"
     plan = build_run_plan(deployment, root=repo_root)
-    assert plan["module"] == "uri2ops.main:app"
+    assert plan["module"] == "agents.operators.device_robot_operator.main:app"
     assert plan["port"] == 8792
     assert plan["health_uri"] == "http://localhost:8792/health"
     assert plan["card_uri"] == "http://localhost:8792/.well-known/agent-card.json"

@@ -172,6 +172,15 @@ def test_local_target_supports_packages_path():
     )
 
 
+def test_local_target_supports_system_dashboard_path():
+    from hypervisor.deployment_registry.local_targets import local_target_to_module
+
+    assert (
+        local_target_to_module("local://agents/system/hypervisor_dashboard")
+        == "agents.system.hypervisor_dashboard.main:app"
+    )
+
+
 def test_resolve_view_uri_process(monkeypatch: pytest.MonkeyPatch):
     from hypervisor_dashboard_agent.models import ProcessViewModel
 

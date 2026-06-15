@@ -29,4 +29,4 @@ EXPOSE 8788
 HEALTHCHECK --interval=10s --timeout=5s --start-period=20s --retries=5 \
   CMD curl -fsS http://127.0.0.1:8788/health >/dev/null || exit 1
 
-CMD ["uvicorn", "hypervisor_dashboard_agent.main:app", "--host", "0.0.0.0", "--port", "8788"]
+CMD ["uvicorn", "agents.system.hypervisor_dashboard.main:app", "--host", "0.0.0.0", "--port", "8788"]

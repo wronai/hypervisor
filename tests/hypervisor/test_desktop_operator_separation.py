@@ -15,12 +15,13 @@ def test_desktop_operator_contract_is_generic_capability_agent(repo_root: Path):
 
     assert spec["kind"] == "hypervisor.operator_agent"
     assert spec["metadata"]["agent_ref"] == "agent://desktop-operator"
-    assert spec["metadata"]["runtime_package"] == "uri2ops"
+    assert spec["metadata"]["runtime_package"] == "agents/operators/desktop_operator"
     assert spec["domain_boundary"]["owns_domain_logic"] is False
     assert spec["domain_boundary"]["owns_execution"] is True
 
     schemes = {capability["scheme"] for capability in spec["capabilities"]}
-    assert {"browser", "screen", "input", "pcwin", "android"} <= schemes
+    assert {"screen", "input", "pcwin", "android"} <= schemes
+    assert "browser" not in schemes
 
     runtime = spec["runtime"]
     assert runtime["deployment_id"] == "desktop-operator.local"
@@ -73,13 +74,13 @@ def test_desktop_operator_is_registered_as_package_agent(repo_root: Path):
 
     deployment = resolve_deployment("desktop-operator.local", root=repo_root)
     assert deployment.agent_ref == "agent://desktop-operator"
-    assert deployment.target_uri == "local://packages/uri2ops"
+    assert deployment.target_uri == "local://agents/operators/desktop_operator"
     assert deployment.metadata["source"] == "operator_agent"
-    assert deployment.metadata["contract"] == "agents/operators/desktop_operator.yaml"
+    assert deployment.metadata["contract"] == "agents/operators/desktop_operator/desktop_operator.yaml"
 
-    assert local_target_to_module(deployment.target_uri) == "uri2ops.main:app"
+    assert local_target_to_module(deployment.target_uri) == "agents.operators.desktop_operator.main:app"
     plan = build_run_plan(deployment, root=repo_root)
-    assert plan["module"] == "uri2ops.main:app"
+    assert plan["module"] == "agents.operators.desktop_operator.main:app"
     assert plan["port"] == 8791
     assert plan["health_uri"] == "http://localhost:8791/health"
     assert plan["card_uri"] == "http://localhost:8791/.well-known/agent-card.json"

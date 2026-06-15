@@ -8,7 +8,38 @@ import yaml
 from fastapi.testclient import TestClient
 
 from uri2ops.remote_registry.loader import merge_registry_documents, resolve_operation_registry
+from uri2ops.server.adapter import resolve_serve_adapter
 from uri2ops.server.app import create_app
+
+
+def test_resolve_serve_adapter_prefers_arguments_then_payload():
+    assert resolve_serve_adapter({}, {"adapter": "playwright"}) == "playwright"
+    assert resolve_serve_adapter({"adapter": "mock"}, {"adapter": "playwright"}) == "mock"
+    assert resolve_serve_adapter({}, {}) == "auto"
+
+
+def test_serve_mcp_browser_open_uses_adapter_from_payload(monkeypatch):
+    captured: dict[str, str] = {}
+
+    def fake_dispatch(scheme, operation, payload, context, **kwargs):
+        captured["adapter"] = context["adapter"]
+        return {"ok": True, "url": payload.get("url"), "text": "mock-ok", "adapter": context["adapter"]}
+
+    monkeypatch.setattr("uri2ops.server.routes.mcp.dispatch_with_environment", fake_dispatch)
+    client = TestClient(create_app(root=Path.cwd(), base_url="http://testserver"))
+    response = client.post(
+        "/mcp/tools/call",
+        json={
+            "name": "browser_open",
+            "arguments": {
+                "approve": True,
+                "payload": {"url": "http://example.com/", "adapter": "playwright"},
+            },
+        },
+    )
+    assert response.status_code == 200
+    assert captured["adapter"] == "playwright"
+    assert response.json()["text"] == "mock-ok"
 
 
 def test_merge_remote_registry_adds_browser_wait():

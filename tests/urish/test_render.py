@@ -48,3 +48,20 @@ def test_render_view_summary_in_text_mode():
     text = render_result(result, output="text")
     assert "Demo Agent" in text
     assert "healthy" in text
+
+
+def test_render_browser_page_markdown_from_uri_envelope():
+    result = {
+        "ok": True,
+        "data": {
+            "ok": True,
+            "url": "http://localhost:8788/www/",
+            "adapter": "playwright",
+            "title": "TellMesh",
+            "status_code": 200,
+            "text": "Hello page",
+        },
+    }
+    text = render_result(result, output="markdown")
+    assert "# TellMesh" in text
+    assert "Hello page" in text

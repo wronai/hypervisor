@@ -3,28 +3,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Examples — Taskinity documentation</title>
+  <title>Examples — TellMesh documentation</title>
   <meta name="description" content="Full documentation for examples/*/* — README and source files from the hypervisor repository.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../landing.css">
+  <link rel="stylesheet" href="../site-shell.css">
 </head>
-<body class="docs-body">
-  <nav class="site-nav" aria-label="Main navigation">
-    <div class="container">
-      <a class="brand" href="/www/">
-        <span class="brand-mark" aria-hidden="true"></span>
-        Taskinity
+<body class="docs-body shell-page">
+  <header class="topbar">
+    <div class="container nav" aria-label="Główna nawigacja">
+      <a class="brand" href="../index.html" aria-label="TellMesh home">
+        <img class="brand-logo" src="../assets/tellmesh.png" alt="TellMesh" width="168" height="38" decoding="async">
+        <span class="brand-sub">by Prototypowanie.pl</span>
       </a>
-      <div class="nav-links">
-        <a class="nav-hide-mobile" href="../index.html">Landing</a>
-        <a class="nav-hide-mobile" href="../przyklady.html">Integration lab</a>
-        <a href="../chat.html">Chat</a>
-        <button type="button" class="btn btn-ghost docs-sidebar-toggle" id="docs-sidebar-toggle">Table of contents</button>
+      <nav class="nav-links" aria-label="Sekcje">
+        <a href="../index.html#problem">Problem</a>
+        <a href="../index.html#control-plane">Control plane</a>
+        <a href="../index.html#deploy-gate">Walidacja</a>
+        <a href="../index.html#demo">Demo</a>
+        <a href="../index.html#konkurencja">Konkurencja</a>
+        <a href="../index.html#oferta">Oferta</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-ghost is-active" href="../docs/examples.html">Przykłady</a>
+        <a class="btn btn-ghost" href="../chat.html">NL Chat</a>
+        <a class="btn btn-primary" href="../flow-chat.html">Flow Chat</a>
+        <button type="button" class="btn btn-ghost docs-sidebar-toggle" id="docs-sidebar-toggle">Spis treści</button>
       </div>
     </div>
-  </nav>
+  </header>
 
   <div class="docs-layout container">
     <aside class="docs-sidebar" id="docs-sidebar" aria-label="Table of contents">
@@ -70,6 +79,7 @@
 <li><a href="#ex-36_physical_ops">physical ops robot/device URIs</a></li>
 <li><a href="#ex-37_agent_screenshot_analysis">two agents: screenshot capture + screenshot analysis</a></li>
 <li><a href="#ex-38_autonomous_agents">autonomous multi-agent collaboration</a></li>
+<li><a href="#ex-browser_ops">browser_ops</a></li>
           </ul>
         </nav>
         <p class="docs-built">Generated: deterministic<br><code>scripts/www/build_examples_docs.py</code></p>
@@ -5290,12 +5300,37 @@ echo &quot;PASS examples/38_autonomous_agents&quot;
   </details>
 </section></div>
 </article>
+<article class="docs-section" id="ex-browser_ops" data-title="browser_ops">
+  <div class="docs-section-head">
+    <span class="docs-section-kicker">browser_ops</span>
+    <a class="docs-anchor" href="#ex-browser_ops" aria-label="Link do sekcji">#</a>
+  </div>
+  <div class="docs-md"><p><em>No README.md — source files for this example are listed below.</em></p></div>
+  <div class="docs-files"><h3 class="docs-files-title">Source files</h3>
+<section class="docs-file" id="ex-browser_ops-capture_www-uri-flow-yaml">
+  <details open>
+    <summary><code>capture_www.uri.flow.yaml</code></summary>
+    <pre class="docs-code docs-code-yaml"><code>flow:
+  id: browser-capture-tellmesh-www
+  description: Uruchom browser-operator, otwórz WWW TellMesh, pobierz DOM i screenshot.
+
+do:
+  - hypervisor://local/browser-operator.local/run
+  - health://agent/browser-operator.local
+  - browser://chrome/page/open:
+      url: http://localhost:8788/www/
+  - browser://chrome/page/active/dom
+  - browser://chrome/page/active/screenshot
+</code></pre>
+  </details>
+</section></div>
+</article>
     </main>
   </div>
 
   <footer class="site-footer">
     <div class="container">
-      <p>Taskinity · <a href="../index.html">Home</a> · <a href="../przyklady.html">Integration lab</a> · <a href="../chat.html">Chat</a></p>
+      <p>TellMesh · Prototypowanie.pl · <a href="../index.html">Home</a> · <a href="../przyklady.html">Integration lab</a> · <a href="../docs/examples.html">Docs</a> · <a href="../chat.html">NL Chat</a> · <a href="../flow-chat.html">Flow Chat</a></p>
     </div>
   </footer>
 

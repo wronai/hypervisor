@@ -24,9 +24,10 @@ def test_desktop_ops_domain_declares_operator_boundary(repo_root: Path):
     assert spec["contracts"]["operator_agent"] == "agents/operators/desktop_operator.yaml"
     assert spec["contracts"]["operator_registry"] == "domains/desktop_ops/operator_registry.yaml"
     assert spec["contracts"]["scenario_registry"] == "domains/desktop_ops/scenario_registry.yaml"
-    assert {"browser", "screen", "input", "pcwin", "android"} <= set(spec["schemes"])
+    assert {"screen", "input", "pcwin", "android"} <= set(spec["schemes"])
+    assert "browser" not in spec["schemes"]
     assert spec["policy"]["enforcement"]["policy_module"] == "packages/urish/urish/policy.py"
-    assert "browser.open" in spec["policy"]["enforcement"]["mutation_operations"]
+    assert "browser.open" not in spec["policy"]["enforcement"]["mutation_operations"]
     assert "screen.observe" in spec["policy"]["enforcement"]["read_operations"]
     assert {"dry_run", "approve"} <= set(spec["policy"]["enforcement"]["mutation_requires"])
 
@@ -40,14 +41,15 @@ def test_desktop_ops_operator_registry_matches_uri2ops_capabilities(repo_root: P
     assert registry["runtime"]["package"] == "uri2ops"
 
     cards = {card["id"]: card for card in registry["cards"]}
-    assert {"browser", "screen", "input", "pcwin", "android"} <= set(cards)
+    assert {"screen", "input", "pcwin", "android"} <= set(cards)
+    assert "browser" not in cards
 
     operation_uris = {
         operation["uri"]
         for card in cards.values()
         for operation in card.get("operations", [])
     }
-    assert "browser://chrome/page/open" in operation_uris
+    assert "browser://chrome/page/open" not in operation_uris
     assert "pcwin://window/{id}/focus" in operation_uris
     assert "android://device/{id}/screenshot" in operation_uris
 

@@ -8,6 +8,7 @@
   <meta property="og:title" content="TellMesh — Text2Ops control plane" />
   <meta property="og:description" content="Observable, repairable automation. Built by Prototypowanie.pl" />
   <meta name="theme-color" content="#101827" />
+  <link rel="icon" href="assets/tellmesh.png" type="image/png" />
   <style>
     :root {
       --bg: #070b14;
@@ -68,9 +69,11 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(18px);
-      background: rgba(7, 11, 20, 0.74);
-      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+      background: rgba(232, 237, 243, 0.96);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.12);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      color: #0f172a;
     }
     .nav {
       height: 72px;
@@ -86,21 +89,27 @@
       font-weight: 780;
       letter-spacing: -0.025em;
       white-space: nowrap;
+      color: #0f172a;
     }
-    .brand-mark {
-      width: 38px;
+    .brand-logo {
+      display: block;
       height: 38px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(94, 234, 212, .42);
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(94,234,212,.18), rgba(139,92,246,.18));
-      box-shadow: 0 0 30px rgba(94,234,212,.14);
-      color: var(--brand);
+      width: auto;
+      max-width: min(200px, 46vw);
+      object-fit: contain;
+      background: transparent;
     }
-    .nav-links { display: flex; align-items: center; gap: 18px; font-size: 14px; color: var(--muted); }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links { display: flex; align-items: center; gap: 18px; font-size: 14px; color: #475569; }
+    .nav-links a:hover { color: #0f172a; }
     .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .topbar .btn {
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      color: #0f172a;
+      background: #f1f5f9;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+    .topbar .btn:hover { border-color: rgba(14, 165, 233, 0.45); background: #e8edf2; }
+    .topbar .btn-ghost { background: transparent; box-shadow: none; }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -181,8 +190,7 @@
       font-size: 14px;
     }
     .hero-by a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
-    .brand-name { display: block; font-size: 1em; }
-    .brand-sub { display: block; font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; }
+    .brand-sub { display: block; font-size: 11px; font-weight: 600; color: #64748b; letter-spacing: 0.04em; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
     .trust-line {
       display: flex;
@@ -418,6 +426,7 @@
       .container { width: min(100% - 22px, var(--max)); }
       .nav { height: auto; min-height: 66px; padding: 10px 0; }
       .nav-actions .btn-ghost { display: none; }
+      .brand-sub { display: none; }
       .hero-actions .btn { width: 100%; }
       .panel-top { align-items: flex-start; }
       .flow-row { grid-template-columns: 1fr; gap: 4px; }
@@ -432,11 +441,8 @@
   <header class="topbar">
     <div class="container nav" aria-label="Główna nawigacja">
       <a class="brand" href="#top" aria-label="TellMesh home">
-        <span class="brand-mark">⌁</span>
-        <span>
-          <span class="brand-name">TellMesh</span>
-          <span class="brand-sub">by Prototypowanie.pl</span>
-        </span>
+        <img class="brand-logo" src="assets/tellmesh.png" alt="TellMesh" width="168" height="38" decoding="async">
+        <span class="brand-sub">by Prototypowanie.pl</span>
       </a>
       <nav class="nav-links" aria-label="Sekcje strony">
         <a href="#problem">Problem</a>
@@ -513,8 +519,8 @@
       <div class="container">
         <div class="section-head">
           <div class="kicker">Dlaczego teraz</div>
-          <h2>Firmy będą miały coraz więcej agentów. Problemem nie jest już samo „zbuduj agenta”.</h2>
-          <p class="section-lead">Problemem jest: kto widzi, co agent zrobił, czy workflow działa, kto ma zatwierdzić ryzykowny krok i jak szybko naprawić awarię bez grzebania w pięciu narzędziach.</p>
+          <h2>Wyzwania rozproszonej automatyzacji</h2>
+          <p class="section-lead">Kto widzi, co agent zrobił? Czy workflow działa? Kto ma zatwierdzić ryzykowny krok i jak szybko naprawić awarię bez grzebania w pięciu narzędziach?</p>
         </div>
         <div class="grid-3">
           <article class="card">
@@ -724,6 +730,11 @@
           <article class="card"><h3>Standards</h3><p>MCP i A2A jako kanały komunikacji, a nie konkurencja. TellMesh może być nad nimi warstwą operacyjną.</p></article>
           <article class="card"><h3>Governance</h3><p>Policy safe/dev/prod, readonly, sandbox, approve, incident artifacts, ticket workflow i evolution proposals.</p></article>
         </div>
+        <div class="integration-build-hint" hidden aria-hidden="true"></div>
+        <!-- @integrations-connectors:start -->
+        <!-- @integrations-connectors:end -->
+        <!-- @integrations-grid:start -->
+        <!-- @integrations-grid:end -->
       </div>
     </section>
 

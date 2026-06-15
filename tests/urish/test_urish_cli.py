@@ -285,8 +285,26 @@ def test_cli_select_command():
 
 
 def test_cli_policy_blocked_exit_code():
-    code = main(["call", "repair://agent/demo/apply", "--json"])
+    code = main(["call", "repair://agent/demo/apply", "--json", "--no-approve"])
     assert code == 4
+
+
+def test_cli_dev_real_mode_allows_browser_without_explicit_approve():
+    with patch("urish.backends.call.call_uri") as mocked:
+        mocked.return_value = {"ok": True, "result_type": "data", "data": {"text": "ok"}}
+        code = main(
+            [
+                "call",
+                "browser://chrome/page/open",
+                "--payload",
+                '{"url":"http://localhost:8788/www/"}',
+                "--json",
+            ]
+        )
+    assert code == 0
+    mocked.assert_called_once()
+    policy_opts = mocked.call_args.kwargs["policy_options"]
+    assert policy_opts.resolves_approve() is True
 
 
 def test_cli_ticket_list():

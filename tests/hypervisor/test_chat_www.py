@@ -117,6 +117,43 @@ def test_format_uri_result_markdown():
     )
     assert "succeeded" in md
     assert "Agent healthy" in md
+    assert "Envelope JSON" not in md
+
+
+def test_format_uri_result_markdown_workflow_plan():
+    md = format_uri_result_markdown(
+        {
+            "ok": True,
+            "result_type": "plan",
+            "workflow_status": "planned",
+            "plan": {
+                "graph_id": "website-screenshot-schedule",
+                "steps": [
+                    {
+                        "id": "capture-home",
+                        "uri": "browser://chrome/page/capture",
+                        "payload": {"url": "https://example.com"},
+                    },
+                    {
+                        "id": "capture-about",
+                        "uri": "browser://chrome/page/capture",
+                        "payload": {"url": "https://example.com/about"},
+                    },
+                ],
+            },
+        }
+    )
+    assert "### Workflow steps" in md
+    assert "capture-home" in md
+    assert "browser://chrome/page/capture" in md
+    assert "https://example.com" in md
+    assert "website-screenshot-schedule" in md
+    assert "Envelope JSON" not in md
+
+
+def test_format_uri_result_markdown_include_envelope_opt_in():
+    md = format_uri_result_markdown({"ok": True, "result_type": "view"}, include_envelope=True)
+    assert "Envelope JSON" in md
 
 
 def test_format_uri_result_markdown_includes_runtime_and_logs():
@@ -318,6 +355,109 @@ def test_api_ask_multiline_batch_plans_each_line(client: TestClient):
     assert "Detected 3 commands" in payload["message_markdown"]
 
 
+def test_api_ask_accepts_chat_uri_field(client: TestClient):
+    text = (
+        "pokaż proces agenta weather-map-agent.local\n"
+        "zdiagnozuj agenta invoices-agent.local"
+    )
+    from urish.chat_uri import build_chat_prompt_uri
+
+    response = client.post(
+        "/api/ask",
+        json={"uri": build_chat_prompt_uri("tellmesh", text), "dry_run": True, "llm": False},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    data = payload["data"]
+    assert data["batch"] is True
+    assert len(data["actions"]) == 2
+    assert data["chat"]["app"] == "tellmesh"
+    assert data["chat_uri"].startswith("chat://tellmesh/prompt")
+    assert "view://process/agent/weather-map-agent.local/latest" in payload["message_markdown"]
+    assert "repair://agent/invoices-agent.local/diagnose" in payload["message_markdown"]
+
+
+def test_api_ask_accepts_chat_uri_as_prompt(client: TestClient):
+    from urish.chat_uri import build_chat_prompt_uri
+
+    response = client.post(
+        "/api/ask",
+        json={"prompt": build_chat_prompt_uri("tellmesh", "pokaż health agenta user-agent.local")},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["data"]["chat"]["app"] == "tellmesh"
+    assert "health://agent/user-agent.local" in payload["data"]["planned_uris"]
+
+
+def test_api_uri_call_chat_prompt(client: TestClient):
+    from urish.chat_uri import build_chat_prompt_uri
+
+    text = (
+        "pokaż proces agenta weather-map-agent.local\n"
+        "zdiagnozuj agenta invoices-agent.local"
+    )
+    response = client.post(
+        "/api/uri/call",
+        json={
+            "uri": build_chat_prompt_uri("tellmesh", text, mime_type="text/plain"),
+            "dry_run": True,
+            "approved": False,
+            "policy": "dev",
+        },
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["result_type"] == "ask"
+    assert payload["data"]["batch"] is True
+    assert "Detected 2 commands" in payload["message_markdown"]
+
+
+def test_api_ask_requires_prompt_or_uri(client: TestClient):
+    response = client.post("/api/ask", json={"dry_run": True})
+    assert response.status_code == 400
+    assert "prompt or uri" in response.json()["detail"]
+
+
+def test_api_ask_accepts_nl_uri(client: TestClient):
+    from urish.nl_uri import build_nl_uri
+
+    text = (
+        "pokaż proces agenta weather-map-agent.local\n"
+        "zdiagnozuj agenta invoices-agent.local"
+    )
+    response = client.post(
+        "/api/ask",
+        json={"uri": build_nl_uri(text), "dry_run": True, "llm": False},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    data = payload["data"]
+    assert data["batch"] is True
+    assert len(data["actions"]) == 2
+    assert data["nl"]["target"] == "ask"
+    assert data["nl_uri"].startswith("nl://ask?")
+
+
+def test_api_uri_call_nl_uri_plans(client: TestClient):
+    from urish.nl_uri import build_nl_uri
+
+    response = client.post(
+        "/api/uri/call",
+        json={
+            "uri": build_nl_uri("pokaż health agenta user-agent.local"),
+            "dry_run": True,
+            "approved": False,
+            "policy": "dev",
+        },
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["result_type"] == "ask"
+    assert "health://agent/user-agent.local" in payload["data"]["planned_uris"]
+    assert "health://agent/user-agent.local" in payload["message_markdown"]
+
+
 def test_api_uri_call_dry_run_preview_markdown(client: TestClient):
     response = client.post(
         "/api/uri/call",
@@ -495,9 +635,32 @@ def test_www_chat_served(client: TestClient):
     assert "clear-chat-btn" in response.text
     assert "Clear" in response.text
     assert 'src="app.js?v=' in response.text
+    assert "chat-flow-view.js" in response.text
+    assert "flow-chat.css" in response.text
+    assert "view-split-btn" in response.text
+    assert "flow-panel" in response.text
     assert "mic-btn" in response.text
     assert "voice-engine" in response.text
     assert "speak-summary" in response.text
+    assert "flow-chat.html" in response.text
+
+
+def test_www_flow_chat_served(client: TestClient):
+    response = client.get("/www/flow-chat.html")
+    assert response.status_code == 200
+    assert "TellMesh Flow Chat" in response.text
+    assert "chat-flow-view.js" in response.text
+    assert "flow-chat.js" in response.text
+    assert "compact-yaml" in response.text
+    assert "Load demo session" in response.text
+
+
+def test_www_chat_flow_view_module(repo_root: Path):
+    script = (repo_root / "www" / "chat-flow-view.js").read_text(encoding="utf-8")
+    assert "data.actions" in script
+    assert "plannerTurnFromAsk" in script
+    assert "executorTurnFromCall" in script
+    assert "manifest.uri_graph" in script
 
 
 def test_www_chat_js_guards_stale_and_duplicate_actions(repo_root: Path):
@@ -512,6 +675,9 @@ def test_www_chat_js_guards_stale_and_duplicate_actions(repo_root: Path):
     assert "Run real" in script
     assert "Run plan (dry-run)" in script
     assert "appendPlanActions" in script
+    assert "TaskinityFlowView" in script
+    assert "setChatView" in script
+    assert "recordFlowPlanner" in script
     assert "startEventStream" in script
     assert "toggleVoiceCapture" in script
     assert "speak-summary" in script
@@ -525,6 +691,7 @@ def test_www_landing_has_tour_copy(client: TestClient):
     assert response.status_code == 200
     assert "Kopiuj URI" in response.text
     assert 'href="chat.html"' in response.text or 'href="/www/chat.html"' in response.text
+    assert 'href="flow-chat.html"' in response.text or 'href="/www/flow-chat.html"' in response.text
 
 
 def test_www_landing_js_explains_repair_loop(repo_root: Path):

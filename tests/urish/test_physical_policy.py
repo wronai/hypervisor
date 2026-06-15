@@ -13,13 +13,21 @@ def test_physical_operator_policy_distinguishes_reads_and_mutations():
     assert classify_uri("device://device/relay-1/write") == "mutation"
 
 
-def test_physical_mutations_require_dry_run_or_approval_by_default():
+def test_physical_mutations_default_to_real_in_dev_policy():
     allowed, reason, force_dry_run = evaluate_policy(
         "robot://robot/amr-1/move",
         options=PolicyOptions(policy="dev"),
     )
+    assert allowed is True
+    assert reason is None
+    assert force_dry_run is False
+
+    allowed, reason, force_dry_run = evaluate_policy(
+        "robot://robot/amr-1/move",
+        options=PolicyOptions(no_approve=True, policy="dev"),
+    )
     assert allowed is False
-    assert "dry-run" in (reason or "")
+    assert "no-approve" in (reason or "").lower()
     assert force_dry_run is False
 
     allowed, reason, force_dry_run = evaluate_policy(

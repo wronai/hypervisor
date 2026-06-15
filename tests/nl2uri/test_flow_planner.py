@@ -36,6 +36,15 @@ def test_plan_flow_weather_prompt():
     assert browser_step["browser://chrome/page/open"]["url"] == "http://localhost:8101/health"
 
 
+def test_weather_domain_registry_fragment_has_flow_aliases(repo_root):
+    fragment = repo_root / "domains" / "weather_map" / "registry.fragment.yaml"
+    text = fragment.read_text(encoding="utf-8")
+    assert "flow_aliases:" in text
+    assert "generator: weather-generator" in text
+    assert "local_run: weather-agent" in text
+    assert "default_health_uri: http://localhost:8101/health" in text
+
+
 def test_plan_auto_prefers_uri_flow_for_weather():
     auto = plan_auto(WEATHER_PROMPT)
     assert auto["nl2uri"]["kind"] == "uri_flow"
