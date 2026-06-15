@@ -1,4 +1,4 @@
-# code2llm/evolution | 2755 func | 470f | 2026-06-15
+# code2llm/evolution | 1544 func | 205f | 2026-06-15
 # generated in 0.01s
 
 NEXT[10] (ranked by impact):
@@ -38,9 +38,9 @@ NEXT[10] (ranked by impact):
       WHY: CC=24 exceeds 15
       EFFORT: ~1h  IMPACT: 336
 
-  [10] !  SPLIT-FUNC      call_uri  CC=15  fan=22
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 330
+  [10] !  SPLIT-FUNC      handle_schema_uri  CC=20  fan=14
+      WHY: CC=20 exceeds 15
+      EFFORT: ~1h  IMPACT: 280
 
 
 RISKS[3]:
@@ -49,10 +49,10 @@ RISKS[3]:
   ⚠ Splitting www/app.js may break 99 import paths
 
 METRICS-TARGET:
-  CC̄:          3.7 → ≤2.6
+  CC̄:          3.6 → ≤2.5
   max-CC:      70 → ≤20
   god-modules: 8 → 0
-  high-CC(≥15): 20 → ≤10
+  high-CC(≥15): 14 → ≤7
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -80,4 +80,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.7 → now CC̄=3.7
+  prev CC̄=3.5 → now CC̄=3.6

@@ -5,12 +5,12 @@
 
 - **Project**: /home/tom/github/wronai/hypervisor
 - **Primary Language**: python
-- **Languages**: python: 606, yaml: 139, json: 82, shell: 40, toml: 20
+- **Languages**: python: 311, yaml: 145, json: 77, shell: 40, javascript: 17
 - **Analysis Mode**: static
-- **Total Functions**: 2916
-- **Total Classes**: 154
-- **Modules**: 943
-- **Entry Points**: 1011
+- **Total Functions**: 1723
+- **Total Classes**: 93
+- **Modules**: 641
+- **Entry Points**: 750
 
 ## Architecture by Module
 
@@ -38,32 +38,14 @@
 - **Functions**: 31
 - **File**: `cli.py`
 
-### packages.urish.urish.scenario_registry
-- **Functions**: 30
-- **File**: `scenario_registry.py`
-
 ### www.assets.api-client
 - **Functions**: 28
 - **Classes**: 1
 - **File**: `api-client.js`
 
-### packages.nl2uri.nl2uri.graph_repair
-- **Functions**: 27
-- **File**: `graph_repair.py`
-
 ### www.chat-flow-view
 - **Functions**: 27
 - **File**: `chat-flow-view.js`
-
-### packages.urish.urish.repl
-- **Functions**: 26
-- **Classes**: 1
-- **File**: `repl.py`
-
-### agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.uri_client
-- **Functions**: 26
-- **Classes**: 1
-- **File**: `uri_client.py`
 
 ### www.examples-gallery
 - **Functions**: 25
@@ -86,38 +68,39 @@
 - **Classes**: 5
 - **File**: `routes.py`
 
+### agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.uri_client
+- **Functions**: 22
+- **Classes**: 1
+- **File**: `uri_client.py`
+
 ### agents.operators.browser_operator.adapters.browser_playwright
 - **Functions**: 21
 - **Classes**: 1
 - **File**: `browser_playwright.py`
 
-### packages.urish.urish.backends.proof
+### scripts.www.build_examples_docs
 - **Functions**: 20
-- **Classes**: 1
-- **File**: `proof.py`
+- **File**: `build_examples_docs.py`
 
-### packages.uri3.uri3.results.envelope
-- **Functions**: 20
-- **File**: `envelope.py`
+### packages.resource-agent-hypervisor.hypervisor.contract_registry.uri_resolver
+- **Functions**: 19
+- **File**: `uri_resolver.py`
+
+### packages.resource-agent-hypervisor.hypervisor.routing.system_dispatch
+- **Functions**: 19
+- **File**: `system_dispatch.py`
+
+### agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.events_service
+- **Functions**: 19
+- **File**: `events_service.py`
+
+### scripts.www.build_landing_integrations
+- **Functions**: 18
+- **File**: `build_landing_integrations.py`
 
 ## Key Entry Points
 
 Main execution flows into the system:
-
-### packages.urish.urish.commands.agent_commands.register_agent_commands
-- **Calls**: typer.Typer, agent_app.command, agent_app.command, agent_app.command, agent_app.command, agent_app.command, agent_app.command, agent_app.command
-
-### packages.urish.urish.commands.ecosystem_commands.register_ecosystem_commands
-- **Calls**: typer.Typer, ecosystem_app.command, ecosystem_app.command, ecosystem_app.command, ecosystem_app.command, ecosystem_app.command, app.add_typer, typer.Argument
-
-### packages.urish.urish.commands.dashboard_commands.register_dashboard_commands
-- **Calls**: typer.Typer, typer.Typer, dashboard_app.command, dashboard_app.command, www_app.command, www_app.command, www_app.command, app.add_typer
-
-### packages.uri2ops.uri2ops.cli.main
-- **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, ops.add_subparsers, ops_sub.add_parser, ops_sub.add_parser, desc.add_argument, desc.add_argument
-
-### packages.uri3.uri3.cli.commands.discovery.register
-- **Calls**: app.command, app.command, app.command, app.command, typer.Option, typer.Option, packages.uri3.uri3.cli.helpers.list_payload, typer.echo
 
 ### www.chat-voice.createVoiceController
 - **Calls**: www.chat-voice.trim, www.chat-voice.apiFetch, www.chat-voice.stringify, www.chat-voice.slice, www.chat-voice.Audio, www.chat-voice.play, www.chat-voice.speakText, www.chat-voice.String
@@ -128,21 +111,11 @@ Main execution flows into the system:
 ### scripts.examples.effective_weather_playwright.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, workspace_env
 
-### packages.uri2run.uri2run.runner.run_target
-> Execute a concrete runtime URI target.
-- **Calls**: target.startswith, target.startswith, target.startswith, target.startswith, target.startswith, target.startswith, target.startswith, target.startswith
-
 ### hypervisor.config.models.HypervisorConfig.from_dict
 - **Calls**: cls, str, str, data.get, bool, str, LLMConfig.from_dict, Uri3Config.from_dict
 
 ### scripts.www.build_landing_integrations.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.parse_args, scripts.www.build_landing_integrations.collect_cards, scripts.www.build_landing_integrations.build_sections, fragment_path.parent.mkdir, scripts.www.build_landing_integrations.splice_index
-
-### packages.urish.urish.backends.call.call_uri
-- **Calls**: packages.urish.urish.backends.call._is_system_uri, packages.urish.urish.backends.call._is_operator_uri, packages.uri2run.uri2run.runner.run_backend, result.to_dict, body.setdefault, packages.urish.urish.policy.evaluate_policy, packages.urish.urish.backends.call._call_system_uri, packages.urish.urish.backends.call._call_operator_uri
-
-### packages.uri3.uri3.protocols.schemes.spec_registry.build_scheme_registry
-- **Calls**: log.spec, env.spec, python.spec, llm.spec, pypi.spec, http.spec, http.spec, a2a.spec
 
 ### packages.resource-agent-hypervisor.meta_agent.cli.main
 - **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, plan.add_argument, plan.add_argument, sub.add_parser, validate.add_argument, sub.add_parser
@@ -150,27 +123,15 @@ Main execution flows into the system:
 ### www.api-bridge.bridge.call_uri
 - **Calls**: app.post, uri.startswith, uri.startswith, www.api-bridge.bridge.run_cmd, www.api-bridge.bridge.envelope, uri.removeprefix, www.api-bridge.bridge.run_cmd, www.api-bridge.bridge.envelope
 
-### packages.uri3.uri3.cli.commands.resolve.register
-- **Calls**: app.command, app.command, app.command, app.command, uri3.validators.uri_validator.validate_uri, typer.echo, packages.uri3.uri3.validators.uri_tree_validator.validate_uri_tree, typer.echo
-
 ### scripts.www.monitor_landing.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, scripts.www.monitor_landing.load_baseline
 
 ### agents.operators.desktop_operator.adapters.android_adb.tap
 - **Calls**: agents.operators.desktop_operator.adapters.android_uri.device_id_from_payload, payload.get, payload.get, payload.get, agents.operators.desktop_operator.adapters.android_adb._run_adb, agents.operators.desktop_operator.adapters.android_adb._task_context, str, write_step_artifact
 
-### packages.uri3.uri3.graph.adapters.browser_playwright.PlaywrightBrowserAdapter.execute
-- **Calls**: packages.uri3.uri3.graph.adapters.browser_playwright._session_state, state.get, None.execute, urlparse, str, None.start, playwright.chromium.launch, browser.new_page
-
 ### packages.resource-agent-hypervisor.hypervisor.cli.supervise_cmd
 > Run bounded health supervision or continuous watch mode.
 - **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
-
-### packages.resource-agent-hypervisor.hypervisor.repair.supervisor.repair_apply
-- **Calls**: packages.resource-agent-hypervisor.hypervisor.repair.supervisor._repo_root, packages.resource-agent-hypervisor.hypervisor.repair.supervisor.diagnose_agent, packages.resource-agent-hypervisor.hypervisor.repair.supervisor._repair_playbook_candidates, packages.resource-agent-hypervisor.hypervisor.repair.supervisor._execute_repair_playbooks, packages.resource-agent-hypervisor.hypervisor.repair.supervisor._envelope, packages.resource-agent-hypervisor.hypervisor.events.emit_result_event, inspection.get, packages.resource-agent-hypervisor.hypervisor.repair.supervisor._healthy_repair_apply_body
-
-### packages.uri3.uri3.cli.commands.workflow.register
-- **Calls**: app.command, app.command, app.command, packages.uri3.uri3.graph.graph_validator.validate_workflow_graph, typer.echo, packages.uri3.uri3.graph.execution_plan.build_execution_plan, typer.echo, typer.Option
 
 ### agents.operators.desktop_operator.adapters.pcwin_uia.focus
 - **Calls**: agents.operators.desktop_operator.adapters.pcwin_uri.window_id_from_payload, str, agents.operators.desktop_operator.adapters.pcwin_uia._task_context, str, Desktop, window.set_focus, write_step_artifact, agents.operators.desktop_operator.adapters.pcwin_uia.uia_available
@@ -178,82 +139,131 @@ Main execution flows into the system:
 ### agents.operators.desktop_operator.adapters.screen_gnome.observe
 - **Calls**: agents.operators.desktop_operator.adapters.screen_gnome._task_context, str, temp_path.parent.mkdir, agents.operators.desktop_operator.adapters.screen_gnome._capture_screenshot, temp_path.read_bytes, write_step_artifact, agents.operators.desktop_operator.adapters.screen_gnome._list_windows, write_step_artifact
 
-### packages.uri3.uri3.graph.adapters.registry.AssertionAdapter.execute
-- **Calls**: payload.get, payload.get, payload.get, context.resolve_ref, node.uri.endswith, payload.get, payload.get, bool
-
-### packages.uri3.uri3.doctor.checks.boundaries.check_runtime_transports
-- **Calls**: frozenset, packages.uri3.uri3.doctor.checks._helpers.check_result, packages.uri2run.uri2run.runner.run_backend, result.to_dict, body.setdefault, body.setdefault, body.setdefault, set
-
 ### scripts.examples.run_uri3_workflow.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, packages.uri3.uri3.graph.graph_validator.validate_workflow_graph, packages.uri3.uri3.graph.graph_validator.load_workflow_graph
+- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, validate_workflow_graph, load_workflow_graph
 
 ### scripts.www.build_examples_docs.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.parse_args, scripts.www.build_examples_docs.list_example_dirs, scripts.www.build_examples_docs.build_overview_section, scripts.www.build_examples_docs.build_page, args.out.parent.mkdir
 
+### agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.routes.api_uri_call
+- **Calls**: router.post, agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.uri_client.uri_implies_dry_run, agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.policy.decision_for_uri, result.setdefault, result.get, HTTPException, agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.uri_client.call_system_uri, result.get
+
 ### agents.operators.browser_operator.adapters.browser_playwright.close_playwright_session
 - **Calls**: state.get, state.get, state.get, state.get, None.pop, agents.operators.browser_operator.adapters.browser_playwright._run_sync, None.get, None.pop
 
-### packages.uri3.uri3.graph.adapters.uri2ops_adapter.Uri2OpsAdapter.execute
-- **Calls**: packages.uri2ops.uri2ops.operation_registry.uri_mapping.registry_scheme, packages.uri2ops.uri2ops.operation_registry.uri_mapping.registry_operation, packages.uri2ops.uri2ops.remote_registry.loader.resolve_operation_registry, registry.require, dict, payload.setdefault, payload.setdefault, packages.uri3.uri3.graph.adapters.uri2ops_adapter._runtime_context
+### www.app.handleSubmit
+- **Calls**: www.app.preventDefault, www.app.trim, www.app.routeUserInput, www.app.appendMessage, www.app.escapeHtml, www.app.recordFlowUser, www.app.test, www.app.isPlausibleUri
+
+### agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.routes.api_ask
+> Natural language → planned URIs and next steps (urish ask backend).
+- **Calls**: router.post, ask_prompt, envelope.get, agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.chat_format.format_ask_markdown, resolve_ask_input, bool, isinstance, HTTPException
+
+### packages.resource-agent-hypervisor.hypervisor.repair.playbooks._playbook_rebind_port
+- **Calls**: packages.resource-agent-hypervisor.hypervisor.deployment_registry.port_utils.find_free_port, packages.resource-agent-hypervisor.hypervisor.deployment_registry.lifecycle.restart_agent, packages.resource-agent-hypervisor.hypervisor.deployment_registry.runtime_state.load_runtime_state, state.get, packages.resource-agent-hypervisor.hypervisor.deployment_registry.health_uri.command_port_from_runtime, packages.resource-agent-hypervisor.hypervisor.deployment_registry.port_utils.port_from_http_uri, int, result.get
+
+### scripts.architecture_audit.cli.main
+- **Calls**: None.parse_args, args.root.resolve, scripts.architecture_audit.cli.resolve_input, scripts.architecture_audit.cli.resolve_input, scripts.architecture_audit.audit.build_audit, scripts.architecture_audit.cli.write_output, scripts.architecture_audit.cli.fail_code, map_path.is_file
+
+### www.assets.app.init
+- **Calls**: www.assets.app.updateApiLabels, www.assets.app.addAssistantWelcome, www.assets.app.addEventListener, www.assets.app.preventDefault, www.assets.app.trim, www.assets.app.handlePrompt, www.assets.app.querySelectorAll, www.assets.app.forEach
+
+### agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.events_service._agent_health_event
+- **Calls**: str, bool, bool, agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.events_service._derive_service_status, agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.events_service._health_summary, packages.resource-agent-hypervisor.hypervisor.deployment_registry.supervisor.inspect_agent, None.get, _now_iso
+
+### agents.operators.desktop_operator.adapters.pcwin_uia.click
+- **Calls**: agents.operators.desktop_operator.adapters.pcwin_uri.automation_id_from_payload, agents.operators.desktop_operator.adapters.pcwin_uia._task_context, str, window.descendants, control.click_input, write_step_artifact, agents.operators.desktop_operator.adapters.pcwin_uia.uia_available, agents.operators.desktop_operator.adapters.pcwin_uia._focused_window
+
+### packages.resource-agent-hypervisor.hypervisor.contract_registry.cli_commands.run_check_command
+- **Calls**: hypervisor.contract_registry.schema_validator.validate_contract_files, hypervisor.contract_registry.loader.load_contract_registry, packages.resource-agent-hypervisor.hypervisor.contract_registry.validate.validate_registry, packages.resource-agent-hypervisor.hypervisor.contract_registry.cross_validator.validate_root, packages.resource-agent-hypervisor.hypervisor.contract_registry.registry_builder.write_registry_manifest, examples.38_autonomous_agents.run.print, examples.38_autonomous_agents.run.print, len
+
+### scripts.www.build_examples_manifest.main
+- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.parse_args, scripts.www.build_examples_manifest.build_manifest, OUT.parent.mkdir, OUT.write_text, examples.38_autonomous_agents.run.print, OUT.is_file
+
+### www.landing.initReveal
+- **Calls**: www.landing.querySelectorAll, www.landing.forEach, www.landing.add, www.landing.disconnect, www.landing.clearTimeout, www.landing.IntersectionObserver, www.landing.unobserve, www.landing.from
+
+### agents.operators.desktop_operator.adapters.input_gnome.type_text
+- **Calls**: bool, str, write_artifact, agents.operators.desktop_operator.adapters.input_gnome.gnome_input_available, payload.get, shutil.which, payload.get, payload.get
+
+### packages.resource-agent-hypervisor.hypervisor.cli.run_agent_cmd
+> Start a local agent or print an SSH remote start plan with --dry-run.
+- **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+
+### scripts.www.monitor_url.main
+- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, examples.38_autonomous_agents.run.print
+
+### www.landing.copyTourChat
+- **Calls**: www.landing.querySelector, www.landing.querySelectorAll, www.landing.flashTourCopy, www.landing.lookup, www.landing.forEach, www.landing.trim, www.landing.cloneNode, www.landing.remove
 
 ## Process Flows
 
 Key execution flows identified:
 
-### Flow 1: register_agent_commands
-```
-register_agent_commands [packages.urish.urish.commands.agent_commands]
-```
-
-### Flow 2: register_ecosystem_commands
-```
-register_ecosystem_commands [packages.urish.urish.commands.ecosystem_commands]
-```
-
-### Flow 3: register_dashboard_commands
-```
-register_dashboard_commands [packages.urish.urish.commands.dashboard_commands]
-```
-
-### Flow 4: main
-```
-main [packages.uri2ops.uri2ops.cli]
-```
-
-### Flow 5: register
-```
-register [packages.uri3.uri3.cli.commands.discovery]
-```
-
-### Flow 6: createVoiceController
+### Flow 1: createVoiceController
 ```
 createVoiceController [www.chat-voice]
 ```
 
-### Flow 7: run_target
+### Flow 2: main
 ```
-run_target [packages.uri2run.uri2run.runner]
+main [scripts.examples.audit_agent_reports]
 ```
 
-### Flow 8: from_dict
+### Flow 3: from_dict
 ```
 from_dict [hypervisor.config.models.HypervisorConfig]
 ```
 
-### Flow 9: call_uri
+### Flow 4: call_uri
 ```
-call_uri [packages.urish.urish.backends.call]
-  └─> _is_system_uri
-      └─> _is_dashboard_view_uri
-          └─> _uri_path_parts
-  └─> _is_operator_uri
-  └─ →> run_backend
-      └─ →> handler
+call_uri [www.api-bridge.bridge]
+  └─> run_cmd
+  └─> envelope
 ```
 
-### Flow 10: build_scheme_registry
+### Flow 5: tap
 ```
-build_scheme_registry [packages.uri3.uri3.protocols.schemes.spec_registry]
+tap [agents.operators.desktop_operator.adapters.android_adb]
+  └─> _run_adb
+  └─ →> device_id_from_payload
+      └─> parse_android_uri
+```
+
+### Flow 6: supervise_cmd
+```
+supervise_cmd [packages.resource-agent-hypervisor.hypervisor.cli]
+```
+
+### Flow 7: focus
+```
+focus [agents.operators.desktop_operator.adapters.pcwin_uia]
+  └─> _task_context
+  └─ →> window_id_from_payload
+      └─> parse_pcwin_uri
+          └─> _pcwin_segments
+```
+
+### Flow 8: observe
+```
+observe [agents.operators.desktop_operator.adapters.screen_gnome]
+  └─> _task_context
+  └─> _capture_screenshot
+      └─> _desktop_env
+```
+
+### Flow 9: api_uri_call
+```
+api_uri_call [agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.routes]
+  └─ →> uri_implies_dry_run
+      └─ →> uri_path_parts
+  └─ →> decision_for_uri
+      └─ →> evaluate_route_policy
+          └─> policy_options
+```
+
+### Flow 10: close_playwright_session
+```
+close_playwright_session [agents.operators.browser_operator.adapters.browser_playwright]
 ```
 
 ## Key Classes
@@ -261,10 +271,6 @@ build_scheme_registry [packages.uri3.uri3.protocols.schemes.spec_registry]
 ### www.assets.api-client.TaskinityApiClient
 - **Methods**: 28
 - **Key Methods**: www.assets.api-client.TaskinityApiClient.setBaseUrl, www.assets.api-client.TaskinityApiClient.useMock, www.assets.api-client.TaskinityApiClient.isMock, www.assets.api-client.TaskinityApiClient.health, www.assets.api-client.TaskinityApiClient.res, www.assets.api-client.TaskinityApiClient.data, www.assets.api-client.TaskinityApiClient.call, www.assets.api-client.TaskinityApiClient.res, www.assets.api-client.TaskinityApiClient.data, www.assets.api-client.TaskinityApiClient.ask
-
-### packages.uri2ops.uri2ops.server.service.OperatorService
-- **Methods**: 9
-- **Key Methods**: packages.uri2ops.uri2ops.server.service.OperatorService.__init__, packages.uri2ops.uri2ops.server.service.OperatorService.registry, packages.uri2ops.uri2ops.server.service.OperatorService.registry_export, packages.uri2ops.uri2ops.server.service.OperatorService.list_operations, packages.uri2ops.uri2ops.server.service.OperatorService.describe_operation, packages.uri2ops.uri2ops.server.service.OperatorService.list_registry_sources, packages.uri2ops.uri2ops.server.service.OperatorService.validate_task, packages.uri2ops.uri2ops.server.service.OperatorService.plan_task, packages.uri2ops.uri2ops.server.service.OperatorService.run_task
 
 ### packages.resource-agent-hypervisor.hypervisor.uri.client.Uri3Client
 > Thin hypervisor adapter over uri3 routing, scanning and graph utilities.
@@ -280,22 +286,6 @@ Example:
   
 - **Methods**: 7
 - **Key Methods**: packages.resource-agent-hypervisor.hypervisor.core.Hypervisor.__post_init__, packages.resource-agent-hypervisor.hypervisor.core.Hypervisor.from_config, packages.resource-agent-hypervisor.hypervisor.core.Hypervisor.start, packages.resource-agent-hypervisor.hypervisor.core.Hypervisor.stop, packages.resource-agent-hypervisor.hypervisor.core.Hypervisor.register_agent, packages.resource-agent-hypervisor.hypervisor.core.Hypervisor.status, packages.resource-agent-hypervisor.hypervisor.core.Hypervisor.__repr__
-
-### packages.nl2uri.nl2uri.domain_registry.DomainRegistryEntry
-- **Methods**: 5
-- **Key Methods**: packages.nl2uri.nl2uri.domain_registry.DomainRegistryEntry.flow_aliases, packages.nl2uri.nl2uri.domain_registry.DomainRegistryEntry.default_deployment_id, packages.nl2uri.nl2uri.domain_registry.DomainRegistryEntry.default_health_uri, packages.nl2uri.nl2uri.domain_registry.DomainRegistryEntry.default_card_uri, packages.nl2uri.nl2uri.domain_registry.DomainRegistryEntry.deployment_selector_aliases
-
-### uri2ops.operation_registry.models.OperationRegistry
-- **Methods**: 3
-- **Key Methods**: uri2ops.operation_registry.models.OperationRegistry.get, uri2ops.operation_registry.models.OperationRegistry.require, uri2ops.operation_registry.models.OperationRegistry.list
-
-### packages.uri3.uri3.results.service_result.ServiceResult
-- **Methods**: 3
-- **Key Methods**: packages.uri3.uri3.results.service_result.ServiceResult.finalize, packages.uri3.uri3.results.service_result.ServiceResult._default_error_source, packages.uri3.uri3.results.service_result.ServiceResult.to_dict
-
-### packages.uri3.uri3.resolvers.router.Uri3Router
-- **Methods**: 3
-- **Key Methods**: packages.uri3.uri3.resolvers.router.Uri3Router.__init__, packages.uri3.uri3.resolvers.router.Uri3Router.resolve, packages.uri3.uri3.resolvers.router.Uri3Router.call
 
 ### hypervisor.contract_registry.models.ContractRegistry
 - **Methods**: 3
@@ -323,153 +313,134 @@ Expected runtime API:
 - **Methods**: 3
 - **Key Methods**: agents.operators.browser_operator.adapters.browser_playwright._PlaywrightWorker.__init__, agents.operators.browser_operator.adapters.browser_playwright._PlaywrightWorker._loop, agents.operators.browser_operator.adapters.browser_playwright._PlaywrightWorker.run
 
-### packages.urish.urish.policy.PolicyOptions
+### packages.resource-agent-hypervisor.hypervisor.repair.models.IncidentArtifact
 - **Methods**: 2
-- **Key Methods**: packages.urish.urish.policy.PolicyOptions.from_flags, packages.urish.urish.policy.PolicyOptions.resolves_approve
+- **Key Methods**: packages.resource-agent-hypervisor.hypervisor.repair.models.IncidentArtifact.to_dict, packages.resource-agent-hypervisor.hypervisor.repair.models.IncidentArtifact.self_uri
 
-### uri2ops.operation_registry.models.OperationSpec
+### hypervisor.config.models.HypervisorConfig
 - **Methods**: 2
-- **Key Methods**: uri2ops.operation_registry.models.OperationSpec.from_mapping, uri2ops.operation_registry.models.OperationSpec.to_dict
+- **Key Methods**: hypervisor.config.models.HypervisorConfig.from_dict, hypervisor.config.models.HypervisorConfig.to_dict
 
-### uri3.graph.uri_graph.UriGraph
+### packages.resource-agent-hypervisor.hypervisor.routing.policy.PolicyEvaluation
 - **Methods**: 2
-- **Key Methods**: uri3.graph.uri_graph.UriGraph.add_node, uri3.graph.uri_graph.UriGraph.add_edge
+- **Key Methods**: packages.resource-agent-hypervisor.hypervisor.routing.policy.PolicyEvaluation.reason, packages.resource-agent-hypervisor.hypervisor.routing.policy.PolicyEvaluation.to_route_decision
 
-### packages.uri3.uri3.graph.models.GraphNode
+### packages.resource-agent-hypervisor.hypervisor.deployment_registry.models.DeploymentRegistry
 - **Methods**: 2
-- **Key Methods**: packages.uri3.uri3.graph.models.GraphNode.from_dict, packages.uri3.uri3.graph.models.GraphNode.to_dict
+- **Key Methods**: packages.resource-agent-hypervisor.hypervisor.deployment_registry.models.DeploymentRegistry.by_id, packages.resource-agent-hypervisor.hypervisor.deployment_registry.models.DeploymentRegistry.by_agent_ref
 
-### packages.uri3.uri3.graph.models.WorkflowGraph
+### scripts.examples.audit_agent_reports.AuditReport
 - **Methods**: 2
-- **Key Methods**: packages.uri3.uri3.graph.models.WorkflowGraph.add_node, packages.uri3.uri3.graph.models.WorkflowGraph.to_dict
+- **Key Methods**: scripts.examples.audit_agent_reports.AuditReport.errors, scripts.examples.audit_agent_reports.AuditReport.warnings
 
-### packages.uri3.uri3.graph.adapters.browser_router.BrowserRouterAdapter
-> Deprecated: uri3 delegates operator schemes to uri2ops (see Uri2OpsAdapter).
-- **Methods**: 2
-- **Key Methods**: packages.uri3.uri3.graph.adapters.browser_router.BrowserRouterAdapter.__init__, packages.uri3.uri3.graph.adapters.browser_router.BrowserRouterAdapter.execute
+### generator.model.AgentSpec
+- **Methods**: 1
+- **Key Methods**: generator.model.AgentSpec.output_dir_name
 
-### uri3.resolvers.http_resolver.HttpResolver
-- **Methods**: 2
-- **Key Methods**: uri3.resolvers.http_resolver.HttpResolver.resolve, uri3.resolvers.http_resolver.HttpResolver.fetch
+### packages.resource-agent-hypervisor.hypervisor.agent_describe.AgentDescribeReport
+- **Methods**: 1
+- **Key Methods**: packages.resource-agent-hypervisor.hypervisor.agent_describe.AgentDescribeReport.write
+
+### packages.resource-agent-hypervisor.hypervisor.domain_pack.model.DomainModel
+- **Methods**: 1
+- **Key Methods**: packages.resource-agent-hypervisor.hypervisor.domain_pack.model.DomainModel.from_uri_tree
+
+### packages.resource-agent-hypervisor.hypervisor.repair.models.Symptom
+- **Methods**: 1
+- **Key Methods**: packages.resource-agent-hypervisor.hypervisor.repair.models.Symptom.to_dict
+
+### hypervisor.config.models.LLMConfig
+- **Methods**: 1
+- **Key Methods**: hypervisor.config.models.LLMConfig.from_dict
+
+### hypervisor.config.models.Uri3Config
+- **Methods**: 1
+- **Key Methods**: hypervisor.config.models.Uri3Config.from_dict
+
+### hypervisor.config.models.RegistryConfig
+- **Methods**: 1
+- **Key Methods**: hypervisor.config.models.RegistryConfig.from_dict
 
 ## Data Transformation Functions
 
 Key functions that process and transform data:
 
-### packages.urish.urish.chat_uri.parse_chat_prompt_uri
-> Parse ``chat://{app}/prompt?text=…&img=…&mime-type=…``.
-- **Output to**: urlparse, parsed.netloc.strip, parse_qs, packages.urish.urish.chat_uri._query_value, packages.urish.urish.chat_uri._query_value
+### generator.validate.validate_agent
+- **Output to**: set, generator.model.load_agent_spec, names.add, errors.append, errors.append
 
-### packages.urish.urish.nl_uri.parse_nl_uri
-> Parse ``nl://ask?text=…`` or ``nl://ask/{prompt}`` (see chat UI contract).
-- **Output to**: urlparse, parse_qs, packages.urish.urish.chat_uri._query_value, parsed.netloc.strip, unquote
+### meta_agent.api.validate
+- **Output to**: app.post, Path, generator.validate.validate_agent, path.exists, HTTPException
 
-### packages.urish.urish.repl.parse_repl_line
-> Parse one REPL line into CLI argv, or None when handled as meta-command.
-- **Output to**: line.strip, stripped.lower, _META_HANDLERS.get, packages.urish.urish.repl._handle_context_use, packages.urish.urish.repl._looks_like_shell_output
+### packages.resource-agent-hypervisor.meta_agent.orchestrator.validate_repair_generate
+- **Output to**: generator.validate.validate_agent, PipelineResult, meta_agent.repair.pipeline.repair_agent_spec, PipelineResult, packages.resource-agent-factory.generator.agent_generator.generate_agent
 
-### packages.urish.urish.backends.proof._format_proof_check_line
-- **Output to**: check.get, check.get, check.get, check.get, check.get
+### packages.resource-agent-hypervisor.meta_agent.cli_commands.cmd_validate
+- **Output to**: generator.validate.validate_agent, examples.38_autonomous_agents.run.print, Path, examples.38_autonomous_agents.run.print, examples.38_autonomous_agents.run.print
 
-### packages.urish.urish.backends.environments.validate_environments
-- **Output to**: packages.uri2ops.uri2ops.server.runtime_profiles.validate_runtime_registry, packages.uri3.uri3.config.repo_root.find_repo_root, str
+### packages.resource-agent-hypervisor.hypervisor.domain_pack.parser.parse_uri_tree
+- **Output to**: Path, yaml.safe_load, path.read_text
 
-### packages.urigen.urigen.cli.build_parser
-- **Output to**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, plan.add_argument, plan.add_argument
+### packages.resource-agent-hypervisor.hypervisor.artifacts.gate.validate_config_dict
+- **Output to**: validate_artifact
 
-### packages.urigen.urigen.apply_validate.validate_apply_artifact
-- **Output to**: Draft202012Validator, packages.urigen.urigen.apply_validate._load_schema, validator.iter_errors, None.join, str
+### packages.resource-agent-hypervisor.hypervisor.artifacts.gate.validate_runtime_environments_dict
+- **Output to**: validate_runtime_registry_schema, errors.extend, validate_runtime_registry_semantics, str
 
-### packages.uri2ops.uri2ops.cli.validate_cmd
-- **Output to**: validate_task_file, packages.uri2ops.uri2ops.cli._print, packages.uri2ops.uri2ops.cli._print
+### packages.resource-agent-hypervisor.hypervisor.artifacts.gate._validate_path
+- **Output to**: str, path.relative_to, validator, ArtifactCheckResult, json.loads
 
-### packages.uri2ops.uri2ops.operation_registry.validator.validate_registry_schema
-- **Output to**: json.loads, None.read_text, sorted, uri2ops.operation_registry.loader.registry_schema_path, uri2ops.operation_registry.models.OperationRegistry.list
+### packages.resource-agent-hypervisor.hypervisor.repair.validator.validate_incident_dict
+- **Output to**: validate_artifact
 
-### packages.uri2ops.uri2ops.operation_registry.validator.validate_operation_registry
-- **Output to**: registry.list, errors.append, spec.handler.startswith, errors.append, spec.handler.removeprefix
+### packages.resource-agent-hypervisor.hypervisor.repair.validator.validate_repair_plan_dict
+- **Output to**: validate_artifact
 
-### packages.uri2ops.uri2ops.server.runtime_profiles.validate_runtime_registry_schema
-- **Output to**: packages.uri2ops.uri2ops.server.runtime_profiles.registry_schema_path, json.loads, schema_path.read_text, sorted, Path
+### packages.resource-agent-hypervisor.hypervisor.repair.validator.validate_evolution_proposal_dict
+- **Output to**: validate_artifact
 
-### packages.uri2ops.uri2ops.server.runtime_profiles.validate_runtime_registry_semantics
-- **Output to**: environments.items, operators.items, data.get, set, errors.append
+### packages.resource-agent-hypervisor.hypervisor.repair.validator.validate_runtime_state_dict
+- **Output to**: validate_artifact
 
-### packages.uri2ops.uri2ops.server.runtime_profiles.validate_runtime_registry
-- **Output to**: packages.uri2ops.uri2ops.server.runtime_profiles._find_registry_path, packages.uri2ops.uri2ops.server.runtime_profiles.validate_runtime_registry_schema, errors.extend, yaml.safe_load, packages.uri2ops.uri2ops.server.runtime_profiles.validate_runtime_registry_semantics
+### packages.resource-agent-hypervisor.hypervisor.repair.validator.validate_ticket_dict
+- **Output to**: validate_artifact
 
-### packages.uri2ops.uri2ops.server.service.OperatorService.validate_task
-- **Output to**: validate_task_data, self.registry
+### packages.resource-agent-hypervisor.hypervisor.config.config_checks.validate_hypervisor
+- **Output to**: hypervisor.get, hypervisor.get, cfg.get, errors.append, int
 
-### packages.uri2ops.uri2ops.server.renderers.mcp_response.resolve_mcp_render_format
-- **Output to**: packages.uri2ops.uri2ops.server.renderers.browser_page.normalize_render_format, HTTPException, str
+### packages.resource-agent-hypervisor.hypervisor.config.config_checks.validate_llm
+- **Output to**: cfg.get, llm.get, None.startswith, str
 
-### packages.uri2ops.uri2ops.server.renderers.browser_page.normalize_render_format
-- **Output to**: None.strip, ValueError, None.lower, str, sorted
+### packages.resource-agent-hypervisor.hypervisor.config.config_checks.validate_uri3
+- **Output to**: uri3.get, cfg.get, isinstance
 
-### packages.uri3.uri3.logs.parsing.parse_json_entry
-- **Output to**: line.strip, json.loads, isinstance, isinstance, data.get
+### packages.resource-agent-hypervisor.hypervisor.config.config_checks.validate_path_sections
+- **Output to**: None.get, errors.append, None.strip, cfg.get, str
 
-### packages.uri3.uri3.logs.parsing.parse_text_entry
-- **Output to**: line.strip, _TEXT_LOG_RE.match, match.groupdict, groups.get, None.upper
+### packages.resource-agent-hypervisor.hypervisor.config.validators.validate_config
+- **Output to**: packages.resource-agent-hypervisor.hypervisor.config.config_checks.validate_hypervisor, packages.resource-agent-hypervisor.hypervisor.config.config_checks.validate_llm, packages.resource-agent-hypervisor.hypervisor.config.config_checks.validate_uri3, packages.resource-agent-hypervisor.hypervisor.config.config_checks.validate_path_sections
 
-### packages.uri3.uri3.logs.parsing.parse_log_line
-- **Output to**: line.strip, packages.uri3.uri3.logs.parsing.empty_entry, packages.uri3.uri3.logs.parsing.parse_json_entry, packages.uri3.uri3.logs.parsing.parse_text_entry, line.strip
+### hypervisor.config.env._parse_bool
+- **Output to**: value.lower
 
-### packages.uri3.uri3.logs.reader._parse_since
-- **Output to**: value.strip, datetime.now, value.endswith, value.endswith, value.endswith
+### packages.resource-agent-hypervisor.hypervisor.evolution.validator.validate_proposal_dict
+- **Output to**: payload.get, packages.resource-agent-hypervisor.hypervisor.repair.validator.validate_evolution_proposal_dict, errors.append, payload.get, None.get
 
-### packages.uri3.uri3.graph.graph_validator.validate_workflow_schema
-- **Output to**: json.loads, Draft202012Validator, None.read_text, sorted, packages.uri3.uri3.graph.graph_validator._schema_path
+### packages.resource-agent-hypervisor.hypervisor.evolution.validator.validate_proposal
+- **Output to**: hasattr, packages.resource-agent-hypervisor.hypervisor.evolution.validator.validate_proposal_dict, proposal.to_dict, is_dataclass, packages.resource-agent-hypervisor.hypervisor.paths.find_repo_root
 
-### packages.uri3.uri3.graph.graph_validator.validate_workflow_graph
-- **Output to**: packages.uri3.uri3.graph.graph_validator.load_workflow_graph, packages.uri3.uri3.graph.graph_validator.validate_workflow_schema, set, graph.nodes.values, packages.uri3.uri3.graph.dependency_graph.detect_cycles
+### packages.resource-agent-hypervisor.hypervisor.contract_registry.cli._parse_args
+- **Output to**: Path, len
 
-### packages.uri3.uri3.graph.operation_registry.validate_node_operation
-- **Output to**: packages.uri3.uri3.graph.operation_registry.scheme_from_uri, packages.uri3.uri3.graph.operation_registry.allowed_operations, None.join, sorted, packages.uri3.uri3.graph.operation_registry.allowed_operations
+### packages.resource-agent-hypervisor.hypervisor.contract_registry.validate.validate_registry
+- **Output to**: packages.resource-agent-hypervisor.hypervisor.contract_registry.registry_checks.resources.validate_resources, packages.resource-agent-hypervisor.hypervisor.contract_registry.registry_checks.resources.validate_views, packages.resource-agent-hypervisor.hypervisor.contract_registry.registry_checks.capabilities.validate_capabilities
 
-### uri3.validators.uri_validator.validate_uri
-- **Output to**: uri3.protocols.parser.parse_uri, ValueError
+### hypervisor.contract_registry.schema_validator.validate_file
+- **Output to**: hypervisor.contract_registry.schema_validator._read_yaml, hypervisor.contract_registry.schema_validator._read_json, Draft202012Validator, SchemaValidationResult, str
 
-### packages.uri3.uri3.validators.uri_tree_validator.validate_uri_tree
-- **Output to**: packages.uri3.uri3.validators.uri_tree_validator.load_yaml, json.loads, Draft202012Validator, sorted, SCHEMA_PATH.read_text
+### hypervisor.contract_registry.schema_validator.validate_contract_files
+- **Output to**: Path, sorted, sorted, None.glob, results.append
 
 ## Behavioral Patterns
-
-### recursion_load_payload
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: packages.urish.urish.payload.load_payload
-
-### recursion_list
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: uri2ops.operation_registry.models.OperationRegistry.list
-
-### recursion_plan_task
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: packages.uri2ops.uri2ops.server.service.OperatorService.plan_task
-
-### recursion_run_task
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: packages.uri2ops.uri2ops.server.service.OperatorService.run_task
-
-### recursion_resolve_uri_values
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: packages.uri3.uri3.config.uri_yaml.resolve_uri_values
-
-### recursion_resolve
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: packages.uri3.uri3.resolvers.router.Uri3Router.resolve
-
-### recursion_call
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: packages.uri3.uri3.resolvers.router.Uri3Router.call
 
 ### recursion_scan
 - **Type**: recursion
@@ -485,46 +456,46 @@ Key functions that process and transform data:
 
 Functions exposed as public API (no underscore prefix):
 
-- `packages.urish.urish.commands.agent_commands.register_agent_commands` - 71 calls
 - `scripts.architecture_audit.parsers.parse_duplication` - 62 calls
-- `packages.urish.urish.commands.call_commands.register_call_commands` - 58 calls
-- `packages.urish.urish.commands.ecosystem_commands.register_ecosystem_commands` - 56 calls
-- `packages.urish.urish.commands.dashboard_commands.register_dashboard_commands` - 54 calls
-- `packages.uri2ops.uri2ops.cli.main` - 54 calls
-- `packages.uri3.uri3.cli.commands.discovery.register` - 47 calls
-- `packages.uri2ops.uri2ops.server.routes.mcp.mcp_router` - 43 calls
 - `packages.resource-agent-hypervisor.hypervisor.contract_registry.uri_resolver.fetch_agent_artifacts` - 42 calls
-- `packages.urigen.urigen.cli.build_parser` - 41 calls
-- `packages.urigen.urigen.generator.generate_ecosystem` - 40 calls
 - `scripts.architecture_audit.parsers.parse_map` - 40 calls
-- `packages.urish.urish.backends.dashboard.create_dashboard` - 37 calls
 - `www.chat-voice.createVoiceController` - 37 calls
-- `packages.urish.urish.commands.ticket_commands.register_ticket_commands` - 35 calls
 - `packages.resource-agent-hypervisor.hypervisor.domain_pack.pack_writer.write_domain_pack` - 34 calls
 - `hypervisor.contract_registry.loader.load_contract_registry` - 33 calls
-- `packages.uri3.uri3.config.llm_profiles.resolve_llm_profile` - 32 calls
 - `scripts.architecture_audit.render.render_markdown` - 32 calls
-- `packages.urish.urish.commands.evolution_commands.register_evolution_commands` - 31 calls
-- `packages.nl2uri.nl2uri.flow_planner.plan_flow` - 30 calls
 - `meta_agent.planner.infer_intent` - 30 calls
-- `packages.urish.urish.commands.observe_commands.register_observe_commands` - 29 calls
+- `scripts.tellmesh.split_packages.copy_package` - 30 calls
 - `packages.resource-agent-hypervisor.hypervisor.contract_registry.uri_resolver.resolve_contract_path` - 29 calls
 - `packages.resource-agent-hypervisor.hypervisor.contract_registry.uri_resolver.handle_contract_uri` - 29 calls
 - `agents.custom.screenshot_analysis_agent.analysis.analyze_artifact` - 29 calls
 - `agents.operators.browser_operator.adapters.browser_playwright.open_page` - 29 calls
-- `packages.urish.urish.commands.repair_commands.register_repair_commands` - 28 calls
-- `packages.urigen.urigen.apply_planner.build_apply_plan` - 28 calls
-- `uri3.graph.uri_graph.build_graph_from_tree` - 28 calls
 - `packages.resource-agent-hypervisor.hypervisor.deployment_registry.watch.supervise_watch` - 28 calls
 - `scripts.examples.audit_agent_reports.main` - 28 calls
 - `scripts.examples.effective_weather_playwright.main` - 28 calls
 - `agents.operators.browser_operator.adapters.browser_playwright_worker.capture_page` - 28 calls
-- `packages.uri2run.uri2run.runner.run_target` - 27 calls
-- `packages.urish.urish.scenario_registry.try_scenario_intent` - 26 calls
-- `packages.urish.urish.chat_uri.resolve_ask_input` - 26 calls
-- `packages.uri3.uri3.resolvers.explain.explain_uri` - 26 calls
 - `packages.resource-agent-hypervisor.hypervisor.agent_describe.describe_agent` - 26 calls
 - `hypervisor.config.models.HypervisorConfig.from_dict` - 26 calls
+- `packages.resource-agent-hypervisor.hypervisor.contract_registry.uri_resolver.generate_agent_contract` - 26 calls
+- `scripts.www.build_landing_integrations.main` - 26 calls
+- `packages.resource-agent-hypervisor.meta_agent.cli.main` - 25 calls
+- `www.api-bridge.bridge.call_uri` - 25 calls
+- `generator.model.load_agent_spec` - 24 calls
+- `scripts.www.monitor_landing.main` - 24 calls
+- `scripts.www.build_landing_integrations.render_connector` - 24 calls
+- `agents.operators.desktop_operator.adapters.android_adb.tap` - 24 calls
+- `packages.resource-agent-hypervisor.hypervisor.cli.supervise_cmd` - 23 calls
+- `packages.resource-agent-hypervisor.hypervisor.repair.supervisor.supervise_with_repair` - 23 calls
+- `packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.monitor_webhook.write_monitor_webhook` - 23 calls
+- `packages.resource-agent-factory.generator.agent_generator.generate_agent` - 22 calls
+- `packages.resource-agent-hypervisor.hypervisor.deployment_registry.status.deployment_from_uri_tree` - 22 calls
+- `scripts.tellmesh.move_tests.sync_tests` - 22 calls
+- `packages.resource-agent-hypervisor.hypervisor.repair.supervisor.repair_apply` - 21 calls
+- `packages.resource-agent-hypervisor.hypervisor.repair.supervisor.learn_from_incident` - 21 calls
+- `packages.resource-agent-hypervisor.hypervisor.deployment_registry.inspection.pipeline.gather_inspection_context` - 21 calls
+- `packages.resource-agent-hypervisor.hypervisor.deployment_registry.inspection.incidents.classify_incidents` - 21 calls
+- `agents.system.hypervisor_dashboard.hypervisor_dashboard_agent.chat_format.format_uri_result_markdown` - 21 calls
+- `packages.resource-agent-hypervisor.hypervisor.routing.system_handlers.handle_schema_uri` - 20 calls
+- `agents.operators.desktop_operator.adapters.pcwin_uia.focus` - 20 calls
 
 ## System Interactions
 
@@ -532,36 +503,36 @@ How components interact:
 
 ```mermaid
 graph TD
-    register_agent_comma --> Typer
-    register_agent_comma --> command
-    register_ecosystem_c --> Typer
-    register_ecosystem_c --> command
-    register_dashboard_c --> Typer
-    register_dashboard_c --> command
-    main --> ArgumentParser
-    main --> add_subparsers
-    main --> add_parser
-    register --> command
-    register --> Option
     createVoiceControlle --> trim
     createVoiceControlle --> apiFetch
     createVoiceControlle --> stringify
     createVoiceControlle --> slice
     createVoiceControlle --> Audio
+    main --> ArgumentParser
     main --> add_argument
     main --> parse_args
     main --> mkdir
-    run_target --> startswith
     from_dict --> cls
     from_dict --> str
     from_dict --> get
     from_dict --> bool
     main --> collect_cards
-    call_uri --> _is_system_uri
-    call_uri --> _is_operator_uri
-    call_uri --> run_backend
-    call_uri --> to_dict
-    call_uri --> setdefault
+    main --> add_subparsers
+    main --> add_parser
+    call_uri --> post
+    call_uri --> startswith
+    call_uri --> run_cmd
+    call_uri --> envelope
+    tap --> device_id_from_paylo
+    tap --> get
+    tap --> _run_adb
+    supervise_cmd --> command
+    supervise_cmd --> Argument
+    supervise_cmd --> Option
+    focus --> window_id_from_paylo
+    focus --> str
+    focus --> _task_context
+    focus --> Desktop
 ```
 
 ## Reverse Engineering Guidelines
