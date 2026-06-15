@@ -3,6 +3,31 @@
   "title": "URI Operator Task",
   "type": "object",
   "required": ["task", "steps"],
+  "$defs": {
+    "payloadLeaf": {
+      "oneOf": [
+        { "type": ["string", "number", "integer", "boolean", "null"] },
+        {
+          "type": "object",
+          "required": ["value"],
+          "properties": {
+            "value": {},
+            "secret": { "const": true }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "payloadValue": {
+      "oneOf": [
+        { "$ref": "#/$defs/payloadLeaf" },
+        {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/payloadLeaf" }
+        }
+      ]
+    }
+  },
   "properties": {
     "task": {
       "type": "object",
@@ -24,20 +49,7 @@
           "kind": { "enum": ["query", "command", "assertion"] },
           "payload": {
             "type": "object",
-            "additionalProperties": {
-              "oneOf": [
-                { "type": ["string", "number", "integer", "boolean", "null"] },
-                {
-                  "type": "object",
-                  "required": ["value"],
-                  "properties": {
-                    "value": {},
-                    "secret": { "const": true }
-                  },
-                  "additionalProperties": false
-                }
-              ]
-            }
+            "additionalProperties": { "$ref": "#/$defs/payloadValue" }
           },
           "depends_on": {
             "type": "array",

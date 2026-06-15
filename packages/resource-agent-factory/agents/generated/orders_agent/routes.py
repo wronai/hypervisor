@@ -68,10 +68,14 @@ def dispatch_command(request: CommandRequest) -> dict[str, Any]:
 
 @router.get("/skills/read_order")
 def skill_read_order(order_id: str) -> dict[str, Any]:
-    uri = "resource://orders/{order_id}".replace("{order_id}", order_id)    return client.read_resource(uri)
+    uri = "resource://orders/{order_id}".replace("{order_id}", order_id)
+    return client.read_resource(uri)
+
+
 @router.get("/skills/read_order_events")
 def skill_read_order_events(order_id: str) -> dict[str, Any]:
-    uri = "resource://orders/{order_id}/events".replace("{order_id}", order_id)    return client.read_resource(uri)
+    uri = "resource://orders/{order_id}/events".replace("{order_id}", order_id)
+    return client.read_resource(uri)
 
 
 

@@ -75,6 +75,11 @@ uri3 plan-workflow output/weather.uri.graph.yaml
 uri3 run-workflow output/weather.uri.graph.yaml --approve --browser mock
 ```
 
+**Port note:** compact flows often hardcode `http://localhost:8101/health`. If hypervisor
+rebound the agent to another port (e.g. `8118`), update the flow URL or run
+`hypervisor repair apply weather-map-agent.local --playbook sync_health_uri` before
+real Playwright runs. Mock browser adapter does not call the real HTTP endpoint.
+
 ## Instalacja
 
 Z root repo (entry point w root `pyproject.toml`):

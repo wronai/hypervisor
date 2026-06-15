@@ -1,0 +1,7 @@
+auto_generated: 'true'
+source: contracts/agents/hypervisor_dashboard_agent.yaml
+contract_hash: sha256:e4ec619a25955f0c7cfe29270e603cf7256c7840417f77ca63fd48173bda14b5
+generator: resource-agent-factory
+generation_command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator
+  contracts/agents/hypervisor_dashboard_agent.yaml
+markpact_readme: file:///home/tom/github/wronai/hypervisor/agents/generated/hypervisor_dashboard_agent/README.md

@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package operator.robot.v1;
+
+message RobotState {
+  string robot_id = 1;
+  string mode = 2;
+  bool online = 3;
+  string pose = 4;
+  string battery = 5;
+  string mission = 6;
+}
+
+message RobotMoveCommand {
+  string robot_id = 1;
+  string target = 2;
+}
+
+message RobotStopCommand {
+  string robot_id = 1;
+}
+
+message RobotMissionStartCommand {
+  string robot_id = 1;
+  string mission_id = 2;
+}
+
+package operator.device.v1;
+
+message DeviceStatus {
+  string device_id = 1;
+  string mode = 2;
+  bool online = 3;
+  string health = 4;
+  string protocol = 5;
+  string artifact_uri = 6;
+}
+
+message DeviceReadCommand {
+  string device_id = 1;
+  string register = 2;
+}
+
+message DeviceReading {
+  string device_id = 1;
+  string register = 2;
+  string value = 3;
+}
+
+message DeviceWriteCommand {
+  string device_id = 1;
+  string register = 2;
+  string value = 3;
+}
+
+package operator.common.v1;
+
+message OperationResult {
+  bool ok = 1;
+  string status = 2;
+  string detail = 3;
+}

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resource-agent-system"
-version = "0.5.27"
+version = "0.5.28"
 description = "WronAI resource agent monorepo — uri3, nl2uri, uri2flow, uri2ops, touri, hypervisor, agent factory"
 readme = "README.md"
 license = "Apache-2.0"
@@ -16,10 +16,11 @@ dependencies = [
     "httpx>=0.27",
     "jinja2>=3.1",
     "jsonschema>=4.23",
+    "markdown>=3.5",
     "pydantic>=2.0",
     "python-dotenv>=1.0.0",
     "pyyaml>=6.0",
-    "typer>=0.12",
+    "typer>=0.26.7",
 ]
 
 [project.optional-dependencies]
@@ -34,6 +35,7 @@ dev = [
     "costs>=0.1.20",
     "pfix>=0.1.60",
     "rich>=13.0.0",
+    "uvicorn>=0.27",
 ]
 browser = [
     "playwright>=1.40",
@@ -53,6 +55,7 @@ uri2flow = "uri2flow.cli:main"
 uri2run = "uri2run.cli:main"
 uri = "urish.cli:main"
 urish = "urish.cli:main"
+taskinity = "urish.cli:main"
 touri = "touri.cli:main"
 uri2verify = "uri2verify.cli:main"
 urigen = "urigen.cli:main"
@@ -153,6 +156,9 @@ markers = [
     "examples: integration tests for examples/* demos",
     "docker: requires docker daemon",
     "slow: long-running tutorial or full-stack example",
+    "real: real-mode command (hardware, browser, live agent)",
+    "www: requires Taskinity WWW on localhost:8788",
+    "monitor: landing/uptime monitor automation",
 ]
 pythonpath = [
     "packages/uri3",

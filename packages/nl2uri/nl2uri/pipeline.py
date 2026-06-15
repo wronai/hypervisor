@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import yaml
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -109,6 +110,15 @@ def run_full_pipeline(
     if verify_errors:
         raise ValueError("Agent verification failed: " + "; ".join(verify_errors))
 
+    # Read the marker to get the canonical file:// for the markpact README of the generated agent
+    marker_path = generated_agent_dir / ".generated.yaml"
+    markpact_readme_uri = None
+    try:
+        marker = yaml.safe_load(marker_path.read_text(encoding="utf-8")) or {}
+        markpact_readme_uri = marker.get("markpact_readme")
+    except Exception:
+        pass
+
     try:
         from uri3.logs.writer import append_log
 
@@ -117,6 +127,7 @@ def run_full_pipeline(
             "Full pipeline completed",
             logger="nl2uri.pipeline",
             agent_dir=str(generated_agent_dir),
+            markpact_readme=markpact_readme_uri or str(generated_agent_dir / "README.md"),
             root=Path(root),
         )
         append_log(
@@ -124,6 +135,7 @@ def run_full_pipeline(
             "Agent generated and verified",
             logger="generator.verify",
             agent_dir=str(generated_agent_dir),
+            markpact_readme=markpact_readme_uri,
             root=Path(root),
         )
     except FileNotFoundError:

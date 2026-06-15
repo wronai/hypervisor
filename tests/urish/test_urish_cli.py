@@ -387,6 +387,30 @@ def test_cli_dashboard_create_plan_only():
         assert kwargs["approve"] is False
 
 
+def test_cli_agent_run_passes_detach_once():
+    with patch("urish.backends.agent.agent_action") as mocked:
+        mocked.return_value = {"ok": True, "service_result_status": "succeeded"}
+        code = main(
+            [
+                "agent",
+                "run",
+                "weather-map-agent.local",
+                "--approve",
+                "--detach",
+                "--wait-healthy",
+                "--json",
+            ]
+        )
+        assert code == 0
+        mocked.assert_called_once_with(
+            "run",
+            "weather-map-agent.local",
+            detach=True,
+            wait_healthy=True,
+            supervise_repair="auto",
+        )
+
+
 def test_cli_agent_create_dashboard_alias():
     with patch("urish.backends.dashboard.create_dashboard") as mocked:
         mocked.return_value = {
@@ -426,3 +450,16 @@ def test_cli_www_create_from_nl_prompt():
         assert args[0] == "hypervisor-dashboard"
         assert kwargs["prompt"] == "stwórz prosty chat markdown połączony z API systemu"
         assert kwargs["plan_only"] is True
+
+
+def test_cli_agent_describe_does_not_crash_on_typer_signature():
+    code = main(["agent", "describe", "weather-map-agent.local"])
+    assert code == 0
+
+
+def test_cli_agent_describe_writes_output(tmp_path):
+    out = tmp_path / "weather-map-agent.local.md"
+    code = main(["agent", "describe", "weather-map-agent.local", "-o", str(out), "--json"])
+    assert code == 0
+    assert out.is_file()
+    assert "weather-map-agent" in out.read_text(encoding="utf-8")

@@ -11,7 +11,13 @@ from hypervisor.contract_registry.models import ContractRegistry
 
 def validate_cross_references(registry: ContractRegistry) -> list[str]:
     view_names = {view.name for view in registry.views}
-    renderer_names = {view.viewKind for view in registry.views} | {"detail", "table", "timeline", "chart"}
+    renderer_names = {view.viewKind for view in registry.views} | {
+        "chart",
+        "detail",
+        "table",
+        "text",
+        "timeline",
+    }
     resource_uris = {resource.uri for resource in registry.resources}
     resource_schemas = {resource.schema for resource in registry.resources}
     proto_text = load_proto_text(registry.root)

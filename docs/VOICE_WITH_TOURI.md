@@ -1,11 +1,16 @@
 # Voice with touri
 
-STT/TTS from `tellm` are implemented as a **touri capability pack**, not a monolithic server.
+STT/TTS from `tellm` are implemented as a **touri capability pack** backed by
+`packages/uri2voice`, not a monolithic server.
 
 ```txt
-Etap 1 (now): examples/21_touri_voice — manifesty + Python handlery
-Etap 2: wspólne modele audio, profile, testy integracyjne
-Etap 3: packages/uri2voice (gdy urośnie)
+Current:
+  examples/21_touri_voice — capability manifests
+  packages/uri2voice      — Python handlers for mock STT/TTS, voice planning and Whisper STT
+  www/chat.html           — microphone button, transcript → normal NL planning
+
+Next:
+  richer audio profiles, real TTS output engines, wake-word / hands-free profile
 ```
 
 ## Architecture
@@ -26,6 +31,7 @@ microphone / text
 | URI | Capability | Backend |
 |-----|------------|---------|
 | `stt://mock/transcribe` | `stt.mock.transcribe` | `uri2voice.stt:transcribe` |
+| `stt://local/whisper` | `stt.local.whisper` | `uri2voice.stt_whisper:transcribe_whisper` |
 | `tts://mock/speak` | `tts.mock.speak` | `uri2voice.tts:speak` |
 | `voice://command/from-text` | `voice.command.from_text` | `uri2voice.voice_command:plan_voice_command` |
 
@@ -57,6 +63,29 @@ uri3 validate-workflow output/artifacts/voice/voice_command.uri.graph.yaml
 uri3 run-workflow output/artifacts/voice/voice_command.uri.graph.yaml --dry-run
 ```
 
+## WWW chat microphone
+
+The browser chat has a microphone control:
+
+```text
+MediaRecorder audio/webm
+  → POST /api/voice/transcribe
+  → transcript text
+  → POST /api/ask
+  → user clicks URI / Run plan action
+```
+
+Execution is intentionally not hands-free: the transcript becomes a normal chat
+prompt, then policy and approval rules apply exactly as they do for typed text.
+
+API examples:
+
+```bash
+curl -s -X POST http://localhost:8788/api/voice/transcribe \
+  -H 'Content-Type: application/json' \
+  -d '{"engine":"mock","text":"zdiagnozuj agenta invoices-agent.local"}'
+```
+
 ## What we took from tellm
 
 | tellm concept | touri equivalent |
@@ -67,21 +96,25 @@ uri3 run-workflow output/artifacts/voice/voice_command.uri.graph.yaml --dry-run
 | `generate_test_audio` | mock STT with `text` / `transcript_file` |
 | `TellmServer.process_request` | **not ported** — too monolithic |
 
-## Real STT/TTS (later)
+## Real STT/TTS
 
-### Local whisper
+### Whisper STT
 
-```yaml
-capability:
-  id: stt.local.whisper
-  scheme: stt
-  uri_template: stt://local/whisper
-backend:
-  type: python
-  target: python://touri_examples_voice.whisper_local:transcribe
-```
+`stt://local/whisper` is already declared in
+[`examples/21_touri_voice/stt_whisper.uri.capability.yaml`](../examples/21_touri_voice/stt_whisper.uri.capability.yaml)
+and implemented by `uri2voice.stt_whisper:transcribe_whisper`.
+
+Runtime selection:
+
+| Mode | Requirements |
+|------|--------------|
+| `engine=openai` or `OPENAI_API_KEY` set | OpenAI audio transcription API |
+| `engine=local` or no API key | optional local `openai-whisper` Python package |
+| no audio, text supplied | deterministic text fallback for tests and demos |
 
 ### Local piper
+
+Real TTS remains a manifest-level target for a future engine:
 
 ```yaml
 capability:
@@ -90,7 +123,7 @@ capability:
   uri_template: tts://local/piper
 backend:
   type: python
-  target: python://touri_examples_voice.piper_local:speak
+  target: python://your_voice_runtime.piper:speak
 ```
 
 ### Cloud (secrets by URI)
@@ -100,7 +133,7 @@ Never embed API keys in manifests:
 ```yaml
 backend:
   type: python
-  target: python://touri_examples_voice.openai_stt:transcribe
+  target: python://uri2voice.stt_whisper:transcribe_whisper
   extra:
     model: gpt-4o-transcribe
     api_key: env://OPENAI_API_KEY

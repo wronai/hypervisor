@@ -6,11 +6,14 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 
-from .routes import router
+try:
+    from .routes import router
+except ImportError:  # standalone rsync package on remote host
+    from routes import router
 
 app = FastAPI(
     title="invoices-agent",
     version="0.1.0",
-    description="Generated thin agent for invoices resources.",
+    description='Generated thin agent for invoices resources.',
 )
 app.include_router(router)

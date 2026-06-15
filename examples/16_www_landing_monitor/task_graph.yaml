@@ -45,4 +45,4 @@ steps:
       - extract_body
     payload:
       actual_from: extract_body.text
-      expected: "2 500–5 000 zł"
+      expected: "3 000–6 000 zł"

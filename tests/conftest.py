@@ -33,6 +33,7 @@ def repo_root() -> Path:
 
 def workspace_pythonpath(repo_root: Path) -> str:
     paths = [
+        repo_root,  # root for top-level like domains/ (for externalized domain planners etc.)
         repo_root / "packages" / "resource-agent-factory",
         repo_root / "packages" / "resource-agent-hypervisor",
         repo_root / "packages" / "nl2uri",

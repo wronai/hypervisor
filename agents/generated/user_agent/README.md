@@ -13,7 +13,7 @@ Generated thin resource agent.
 ## Run
 
 ```bash
-uvicorn agents.generated.user_agent.main:app --reload --port 8101
+uvicorn agents.generated.user_agent.main:app --reload --port 8102
 ```
 
 ## Reproduce
@@ -35,7 +35,7 @@ generator:
   id: resource-agent-factory
   command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator contracts/agents/user_agent.yaml
 runtime:
-  default_run: uvicorn agents.generated.user_agent.main:app --reload --port 8101
+  default_run: uvicorn agents.generated.user_agent.main:app --reload --port 8102
 logs:
   hypervisor: log://hypervisor?grep=user-agent.local
   process: log://file/output/logs/agents/user-agent.local.process.log
@@ -63,4 +63,11 @@ POST /commands
 
 ## Capabilities
 
-- `read_user` — `resource_read`, URI: `resource://users/{user_id}`- `read_user_roles` — `resource_read`, URI: `resource://users/{user_id}/roles`- `create_user` — `command`, command: `CreateUser`- `assign_user_role` — `command`, command: `AssignUserRole`
+- `read_user` — `resource_read`, URI: `resource://users/{user_id}`
+
+- `read_user_roles` — `resource_read`, URI: `resource://users/{user_id}/roles`
+
+- `create_user` — `command`, command: `CreateUser`
+
+- `assign_user_role` — `command`, command: `AssignUserRole`
+

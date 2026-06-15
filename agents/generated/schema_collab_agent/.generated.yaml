@@ -1,0 +1,7 @@
+auto_generated: 'true'
+source: contracts/agents/schema_collab_agent.yaml
+contract_hash: sha256:17b3d806a8ebef60fa04b5234c2f32ccc2b94d7745234e05cbbd5c7e51bb4bd3
+generator: resource-agent-factory
+generation_command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator
+  contracts/agents/schema_collab_agent.yaml
+markpact_readme: file:///home/tom/github/wronai/hypervisor/agents/generated/schema_collab_agent/README.md

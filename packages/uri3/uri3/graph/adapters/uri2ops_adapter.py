@@ -2,46 +2,24 @@ from __future__ import annotations
 
 import json
 import os
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
 from uri2ops.operation_registry.dispatcher import call_handler
+from uri2ops.operation_registry.uri_mapping import registry_operation, registry_scheme
 from uri2ops.operator.adapters.browser_router import cleanup_browser_session
 from uri2ops.remote_registry.loader import resolve_operation_registry
-from uri3.graph.artifacts import write_artifact
+
+from uri3.graph.artifacts import mock_screenshot_png, write_artifact
 from uri3.graph.execution_models import ExecutionContext
 from uri3.graph.models import GraphNode
 
 OPERATOR_SCHEMES = frozenset({"browser", "dom", "screen", "input"})
 
-# Map uri3 workflow operations to uri2ops registry operations.
-_OPERATION_MAP: dict[tuple[str, str], str] = {
-    ("browser", "read"): "extract_dom",
-    ("browser", "extract"): "extract_dom",
-    ("dom", "read"): "extract_dom",
-    ("dom", "extract"): "extract_dom",
-    ("dom", "extract_dom"): "extract_dom",
-    ("browser", "capture"): "screenshot",
-    ("browser", "screenshot"): "screenshot",
-    ("screen", "capture"): "observe",
-    ("screen", "screenshot"): "observe",
-    ("input", "call"): "type",
-    ("input", "type"): "type",
-}
-
 
 def _use_legacy_browser_adapter() -> bool:
     return os.getenv("URI3_USE_LEGACY_BROWSER", "").lower() in {"1", "true", "yes"}
-
-
-def _registry_scheme(scheme: str) -> str:
-    if scheme == "dom":
-        return "browser"
-    return scheme
-
-
-def _registry_operation(scheme: str, operation: str) -> str:
-    return _OPERATION_MAP.get((scheme, operation), operation)
 
 
 def _runtime_context(context: ExecutionContext) -> dict[str, Any]:
@@ -61,7 +39,7 @@ def _artifact_suffix(scheme: str, operation: str) -> str | None:
         return "open.json"
     if scheme in {"browser", "dom"} and operation in {"read", "extract", "extract_dom"}:
         return "dom.json"
-    if scheme in {"browser", "screen"} and operation in {"screenshot", "capture"}:
+    if scheme in {"browser", "screen"} and operation in {"screenshot", "capture", "capture_page"}:
         return "screenshot.png"
     if scheme == "screen" and operation == "observe":
         return "screenshot.png"
@@ -74,7 +52,7 @@ def _attach_workflow_artifact(
     payload: dict[str, Any],
 ) -> dict[str, Any]:
     scheme = urlparse(node.uri).scheme
-    operation = _registry_operation(scheme, node.operation)
+    operation = registry_operation(scheme, node.operation)
     suffix = _artifact_suffix(scheme, operation)
     if suffix is None:
         return payload
@@ -82,7 +60,14 @@ def _attach_workflow_artifact(
     if suffix.endswith(".json"):
         body = json.dumps(payload, indent=2, ensure_ascii=False)
     else:
-        body = b"mock-screenshot\n"
+        # For screenshots we must emit *valid* PNG bytes so the artifact is a real image file.
+        # If the underlying handler provided a real capture path, re-use its bytes.
+        real_path = payload.get("path")
+        if real_path:
+            rp = Path(real_path)
+            body = rp.read_bytes() if rp.exists() else mock_screenshot_png()
+        else:
+            body = mock_screenshot_png()
     _, artifact_uri = write_artifact(context, node.id, suffix, body)
     return {**payload, "artifact_uri": artifact_uri}
 
@@ -94,10 +79,10 @@ class Uri2OpsAdapter:
 
     def execute(self, node: GraphNode, context: ExecutionContext) -> dict[str, Any]:
         scheme = urlparse(node.uri).scheme
-        registry_scheme = _registry_scheme(scheme)
-        registry_operation = _registry_operation(scheme, node.operation)
+        registry_scheme_name = registry_scheme(scheme)
+        registry_operation_name = registry_operation(scheme, node.operation)
         registry = resolve_operation_registry(root=context.root)
-        spec = registry.require(registry_scheme, registry_operation)
+        spec = registry.require(registry_scheme_name, registry_operation_name)
 
         payload = dict(node.payload or {})
         payload.setdefault("target_uri", node.uri)

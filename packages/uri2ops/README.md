@@ -54,6 +54,14 @@ uri2ops executes operator actions through URI-addressed operations.
 - MCP-compatible `GET /mcp/tools` and `POST /mcp/tools/call`.
 - Remote registry merge from `config/operator_registry.uri.yaml`.
 
+## v0.6 — Physical operations
+
+- Robot/device mock operations for physical-operation planning.
+- URIs: `robot://robot/{id}/state`, `move`, `stop`, `mission/{mission_id}/start`.
+- URIs: `device://device/{id}/status`, `read`, `write`.
+- Real adapters are intentionally not implicit; add `ros2`, `mqtt`, `modbus`,
+  `opcua` or vendor SDK adapters behind the same URI contracts.
+
 ## CLI
 
 ```bash
@@ -64,6 +72,8 @@ uri2ops plan examples/10_browser_operator/task.health.yaml
 uri2ops run examples/10_browser_operator/task.health.yaml --adapter mock --approve
 uri2ops run examples/10_browser_operator/task.health.yaml --adapter playwright --approve
 uri2ops run examples/10_browser_operator/task.health.yaml --adapter auto --approve
+uri2ops run examples/36_physical_ops/task.robot.yaml --adapter mock --approve
+uri2ops run examples/36_physical_ops/task.device.yaml --adapter mock --approve
 uri2ops serve --host 127.0.0.1 --port 8791
 uri2ops registry list
 ```

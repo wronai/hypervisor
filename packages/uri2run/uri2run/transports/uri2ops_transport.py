@@ -5,34 +5,14 @@ from typing import Any
 from urllib.parse import urlparse
 
 from uri2ops.operation_registry.dispatcher import dispatch
+from uri2ops.operation_registry.uri_mapping import registry_operation, registry_scheme
 from uri3.results import ServiceResult
 
 from uri2run.result import error_result, result_from_output
 
-_OPERATOR_SCHEMES = frozenset({"browser", "dom", "screen", "input", "android", "pcwin"})
-_OPERATION_MAP: dict[tuple[str, str], str] = {
-    ("browser", "read"): "extract_dom",
-    ("browser", "extract"): "extract_dom",
-    ("dom", "read"): "extract_dom",
-    ("dom", "extract"): "extract_dom",
-    ("dom", "extract_dom"): "extract_dom",
-    ("browser", "capture"): "screenshot",
-    ("browser", "screenshot"): "screenshot",
-    ("screen", "capture"): "observe",
-    ("screen", "screenshot"): "observe",
-    ("input", "call"): "type",
-    ("input", "type"): "type",
-}
-
-
-def _registry_scheme(scheme: str) -> str:
-    if scheme == "dom":
-        return "browser"
-    return scheme
-
-
-def _registry_operation(scheme: str, operation: str) -> str:
-    return _OPERATION_MAP.get((scheme, operation), operation)
+_OPERATOR_SCHEMES = frozenset(
+    {"browser", "dom", "screen", "input", "android", "pcwin", "robot", "device"}
+)
 
 
 def _resolve_root(context: dict[str, Any]) -> Path:
@@ -74,8 +54,8 @@ def run_uri2ops(
             "URI2OPS_SCHEME_UNSUPPORTED", f"scheme not supported by uri2ops: {scheme}"
         )
 
-    registry_scheme = _registry_scheme(scheme)
-    registry_operation = _registry_operation(scheme, str(extra.get("operation") or operation))
+    registry_scheme_name = registry_scheme(scheme)
+    registry_operation_name = registry_operation(scheme, str(extra.get("operation") or operation))
     dispatch_payload = dict(payload)
     dispatch_payload.setdefault("target_uri", uri)
     dispatch_payload.setdefault(
@@ -84,7 +64,12 @@ def run_uri2ops(
     runtime_context = _build_runtime_context(uri, payload, context, extra)
 
     try:
-        output = dispatch(registry_scheme, registry_operation, dispatch_payload, runtime_context)
+        output = dispatch(
+            registry_scheme_name,
+            registry_operation_name,
+            dispatch_payload,
+            runtime_context,
+        )
     except Exception as exc:
         return error_result("URI2OPS_DISPATCH_FAILED", str(exc))
 

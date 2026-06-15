@@ -34,21 +34,37 @@ def extract_title(readme: Path, fallback: str) -> str:
     return fallback
 
 
+# Declarative category rules (lowers CC; order matters, first match wins).
+_CATEGORY_RULES: list[tuple[callable, str]] = [
+    (lambda n: "office" in n or n.startswith("31_") or n.startswith("33_"), "office"),
+    (lambda n: "browser" in n or "android" in n or "pcwin" in n or "playwright" in n, "operator"),
+    (lambda n: "workflow" in n or "flow" in n or "graph" in n or n.startswith("14_"), "workflow"),
+    (lambda n: "touri" in n or "voice" in n or "markpact" in n, "touri"),
+    (lambda n: "tutorial" in n or "quickstart" in n or "golden" in n, "tutorial"),
+    (lambda n: "agent" in n or n.startswith("0"), "agents"),
+]
+
 def category_for(name: str) -> str:
-    if "office" in name or name.startswith("31_") or name.startswith("33_"):
-        return "office"
-    if "browser" in name or "android" in name or "pcwin" in name or "playwright" in name:
-        return "operator"
-    if "workflow" in name or "flow" in name or "graph" in name or name.startswith("14_"):
-        return "workflow"
-    if "touri" in name or "voice" in name or "markpact" in name:
-        return "touri"
-    if "tutorial" in name or "quickstart" in name or "golden" in name:
-        return "tutorial"
-    if "agent" in name or name.startswith("0"):
-        return "agents"
+    for predicate, cat in _CATEGORY_RULES:
+        if predicate(name):
+            return cat
     return "workflow"
 
+
+def _build_office_chain(chain: dict) -> dict | None:
+    """Pure builder for one office chain dict; returns None if invalid."""
+    if not isinstance(chain, dict):
+        return None
+    steps = [str(step) for step in chain.get("steps") or [] if str(step).strip()]
+    if not steps:
+        return None
+    return {
+        "id": str(chain.get("id") or "-".join(steps[:2])),
+        "title": str(chain.get("title") or chain.get("id") or "Office chain"),
+        "chat": str(chain.get("chat") or ""),
+        "steps": steps,
+        "i18n": chain.get("i18n") if isinstance(chain.get("i18n"), dict) else {},
+    }
 
 def load_office_chains() -> list[dict]:
     if not OFFICE_CHAINS.is_file():
@@ -57,22 +73,11 @@ def load_office_chains() -> list[dict]:
     chains = raw.get("chains") if isinstance(raw, dict) else None
     if not isinstance(chains, list):
         return []
-    out: list[dict] = []
+    out = []
     for chain in chains:
-        if not isinstance(chain, dict):
-            continue
-        steps = [str(step) for step in chain.get("steps") or [] if str(step).strip()]
-        if not steps:
-            continue
-        out.append(
-            {
-                "id": str(chain.get("id") or "-".join(steps[:2])),
-                "title": str(chain.get("title") or chain.get("id") or "Office chain"),
-                "chat": str(chain.get("chat") or ""),
-                "steps": steps,
-                "i18n": chain.get("i18n") if isinstance(chain.get("i18n"), dict) else {},
-            }
-        )
+        built = _build_office_chain(chain)
+        if built:
+            out.append(built)
     return out
 
 

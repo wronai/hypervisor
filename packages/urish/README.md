@@ -14,8 +14,10 @@ uri ask "stwórz web UI agenta hypervisor-dashboard do pokazywania procesów"
 uri dashboard create hypervisor-dashboard --plan-only
 uri watch health://agent/weather-map-agent.local
 uri stream sse://localhost:8791/events
-uri shell
+uri shell   # same as running `uri` with no arguments
 ```
+
+Running **`uri`** or **`urish`** with no arguments opens the interactive shell.
 
 Semantic model everywhere:
 

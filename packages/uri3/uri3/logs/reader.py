@@ -12,17 +12,40 @@ from uri3.resolvers.log_resolver import LogRef, parse_log_uri
 
 DEFAULT_STREAM_FILES = {
     "hypervisor": "output/logs/hypervisor.log",
+    "hypervisor-events": "output/logs/hypervisor-events.jsonl",
     "uri3": "output/logs/uri3.log",
     "nl2uri": "output/logs/nl2uri.log",
     "nl2a": "output/logs/nl2a.log",
     "factory": "output/logs/factory.log",
     "meta_agent": "output/logs/meta_agent.log",
     "default": "output/logs/hypervisor.log",
+    # Workflow execution traces (detailed Step*/Workflow* events) live under
+    # output/events/workflows/<id>.jsonl and are addressable directly as:
+    #   log://workflow/<workflow_id>
+    #   log://events/<workflow_id>
+    #   log://file/output/events/workflows/<workflow_id>.jsonl
+    # These are the primary place for "treść logów" of a graph/workflow run.
 }
 
 
 def resolve_log_path(ref: LogRef, *, root: Path | None = None) -> Path:
     repo = root or find_repo_root()
+
+    # First-class support for per-workflow execution logs via short log:// forms.
+    # Allows: log://workflow/<workflow_id> , log://events/<workflow_id> , etc.
+    # These contain the detailed StepStarted/StepCompleted/Workflow* events (the "treść logów").
+    if ref.stream in ("workflow", "workflows", "events", "workflow-events", "workflow_event"):
+        wf_id = None
+        if ref.path is not None:
+            p = str(ref.path).strip("/")
+            # support both log://workflow/foo  and log://workflow/foo/bar (take last segment as id)
+            wf_id = p.split("/")[-1] if p else None
+        if not wf_id and ref.stream in DEFAULT_STREAM_FILES:
+            # fallback if someone registered a static one
+            pass
+        if wf_id:
+            return repo / "output" / "events" / "workflows" / f"{wf_id}.jsonl"
+
     if ref.path is not None:
         return ref.path if ref.path.is_absolute() else repo / ref.path
     relative = DEFAULT_STREAM_FILES.get(ref.stream, f"output/logs/{ref.stream}.log")

@@ -10,6 +10,9 @@ CAPABILITY_SOURCES = {
     "workflow.check_health.graph": (
         "examples/20_touri_capabilities/check_health_graph.uri.capability.yaml"
     ),
+    "workflow.website_screenshot_schedule.dry_run": (
+        "examples/20_touri_capabilities/website_screenshot_schedule_dry_run.uri.capability.yaml"
+    ),
     "stt.mock.transcribe": "examples/21_touri_voice/stt_mock.uri.capability.yaml",
     "tts.mock.speak": "examples/21_touri_voice/tts_mock.uri.capability.yaml",
     "voice.command.from_text": "examples/21_touri_voice/voice_command.uri.capability.yaml",
@@ -22,6 +25,9 @@ CAPABILITY_SAMPLE_URIS = {
     "weather.forecast.html": "weather://forecast/Gdansk/14/html",
     "workflow.weather.flow": "workflow://flow/weather/dry-run",
     "workflow.check_health.graph": "workflow://graph/check-agent-health/dry-run",
+    "workflow.website_screenshot_schedule.dry_run": (
+        "workflow://graph/website-screenshot-schedule/dry-run"
+    ),
     "stt.mock.transcribe": "stt://mock/transcribe",
     "tts.mock.speak": "tts://mock/speak",
     "voice.command.from_text": "voice://command/from-text",

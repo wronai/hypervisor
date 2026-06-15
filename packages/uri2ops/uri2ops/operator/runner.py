@@ -20,6 +20,8 @@ from .redaction import redact_payload
 BROWSER_SCHEMES = frozenset({"browser", "dom", "screen"})
 ANDROID_SCHEMES = frozenset({"android"})
 PCWIN_SCHEMES = frozenset({"pcwin"})
+SCREEN_SCHEMES = frozenset({"screen"})
+INPUT_SCHEMES = frozenset({"input"})
 
 
 def _scheme(uri: str) -> str:
@@ -67,6 +69,16 @@ def _resolve_adapter(spec: OperationSpec, requested: str, runtime_context: dict[
             return resolve_adapter_mode(spec.scheme, runtime_context)
         if spec.scheme in PCWIN_SCHEMES:
             from uri2ops.operator.adapters.pcwin_router import resolve_adapter_mode
+
+            runtime_context["adapter"] = "auto"
+            return resolve_adapter_mode(spec.scheme, runtime_context)
+        if spec.scheme in SCREEN_SCHEMES:
+            from uri2ops.operator.adapters.screen_router import resolve_adapter_mode
+
+            runtime_context["adapter"] = "auto"
+            return resolve_adapter_mode(spec.scheme, runtime_context)
+        if spec.scheme in INPUT_SCHEMES:
+            from uri2ops.operator.adapters.input_router import resolve_adapter_mode
 
             runtime_context["adapter"] = "auto"
             return resolve_adapter_mode(spec.scheme, runtime_context)
@@ -190,7 +202,10 @@ def run_task(
                 step_results.append(result)
                 append_event(task.id, "StepFailed", result.to_dict(), root=root)
     finally:
-        cleanup_browser_session(runtime_context)
+        try:
+            cleanup_browser_session(runtime_context)
+        except Exception:
+            pass
     ok = all(step.ok for step in step_results) and not any(step.status == "blocked" for step in step_results)
     append_event(task.id, "WorkflowCompleted", {"ok": ok}, root=root)
     return TaskResult(task.id, ok=ok, dry_run=dry_run, steps=step_results)

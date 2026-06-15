@@ -3,12 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 from urllib.parse import urlparse
 
+from hypervisor.deployment_registry.aliases import load_deployment_selector_aliases
 from hypervisor.deployment_registry.loader import load_deployment_registry
 from hypervisor.deployment_registry.models import AgentDeployment
-
-_LOCAL_AGENT_ALIASES: dict[str, str] = {
-    "weather-agent": "weather-map-agent",
-}
 
 
 def parse_hypervisor_uri(uri: str) -> tuple[str, str]:
@@ -56,8 +53,10 @@ def resolve_deployment(
     root: str | Path = ".",
     prefer_local: bool = False,
 ) -> AgentDeployment:
-    registry = load_deployment_registry(root)
-    normalized = _LOCAL_AGENT_ALIASES.get(selector, selector)
+    root_path = Path(root)
+    registry = load_deployment_registry(root_path)
+    aliases = load_deployment_selector_aliases(str(root_path.resolve()))
+    normalized = aliases.get(selector, selector)
     deployment = registry.by_id(normalized)
     if deployment is None and normalized != selector:
         deployment = registry.by_id(selector)

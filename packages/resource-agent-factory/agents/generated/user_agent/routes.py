@@ -68,10 +68,14 @@ def dispatch_command(request: CommandRequest) -> dict[str, Any]:
 
 @router.get("/skills/read_user")
 def skill_read_user(user_id: str) -> dict[str, Any]:
-    uri = "resource://users/{user_id}".replace("{user_id}", user_id)    return client.read_resource(uri)
+    uri = "resource://users/{user_id}".replace("{user_id}", user_id)
+    return client.read_resource(uri)
+
+
 @router.get("/skills/read_user_roles")
 def skill_read_user_roles(user_id: str) -> dict[str, Any]:
-    uri = "resource://users/{user_id}/roles".replace("{user_id}", user_id)    return client.read_resource(uri)
+    uri = "resource://users/{user_id}/roles".replace("{user_id}", user_id)
+    return client.read_resource(uri)
 
 @router.post("/skills/create_user")
 def skill_create_user(payload: dict[str, Any]) -> dict[str, Any]:

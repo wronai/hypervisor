@@ -11,8 +11,8 @@ from hypervisor.repair.models import IncidentArtifact, Symptom
 from hypervisor.repair.validator import validate_incident_dict
 
 
-def _now_iso() -> str:
-    return datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+# Use shared now_iso to eliminate duplication (flagged in architecture audits).
+from ..deployment_registry.runtime_state import now_iso as _now_iso
 
 
 def _incident_id() -> str:

@@ -1,0 +1,7 @@
+auto_generated: 'true'
+source: contracts/agents/codex_uri_smoke_agent.yaml
+contract_hash: sha256:92e4d835ecacc5e7138946e5012d5948102fc79fd492458ffb981bd857372c38
+generator: resource-agent-factory
+generation_command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator
+  contracts/agents/codex_uri_smoke_agent.yaml
+markpact_readme: file:///home/tom/github/wronai/hypervisor/agents/generated/codex_uri_smoke_agent/README.md

@@ -51,6 +51,39 @@ def test_sync_from_uri_tree_writes_registry(tmp_path: Path):
     assert loaded.by_id("weather-map-agent.local") is not None
 
 
+def test_sync_from_uri_tree_preserves_existing_http_endpoints(tmp_path: Path):
+    registry_path = tmp_path / "deployments" / "agent_deployments.yaml"
+    registry_path.parent.mkdir(parents=True, exist_ok=True)
+    registry_path.write_text(
+        yaml.safe_dump(
+            {
+                "deployments": [
+                    {
+                        "id": "weather-map-agent.local",
+                        "agent_ref": "agent://weather-map-agent",
+                        "target_uri": "local://agents/generated/weather_map_agent",
+                        "status": "generated",
+                        "health_uri": "http://localhost:8101/health",
+                        "card_uri": "http://localhost:8101/.well-known/agent-card.json",
+                        "metadata": {
+                            "source": "uri_tree",
+                            "contract": "contracts/agents/weather_map_agent.yaml",
+                        },
+                    }
+                ]
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+    tree = plan_from_prompt("generuj mape pogody dwa tygodnie do przodu w html", use_llm=False)
+    deployment = sync_from_uri_tree(tree, root=tmp_path, path=registry_path)
+    assert deployment is not None
+    assert deployment.health_uri == "http://localhost:8101/health"
+    assert deployment.card_uri == "http://localhost:8101/.well-known/agent-card.json"
+    assert deployment.metadata.get("contract") == "contracts/agents/weather_map_agent.yaml"
+
+
 def test_upsert_replaces_existing_deployment(tmp_path: Path):
     registry_path = default_registry_path(tmp_path)
     registry = load_deployment_registry(tmp_path, path=registry_path)

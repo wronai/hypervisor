@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from uri3.graph.models import GraphNode
 
 OPERATIONS_BY_SCHEME: dict[str, frozenset[str]] = {
-    "browser": frozenset({"open", "read", "extract", "extract_dom", "screenshot", "capture"}),
+    "browser": frozenset({"open", "read", "extract", "extract_dom", "screenshot", "capture", "capture_page"}),
     "dom": frozenset({"read", "extract", "extract_dom"}),
     "screen": frozenset({"capture", "screenshot"}),
     "assertion": frozenset({"check", "contains", "equals", "status-code", "json-path"}),

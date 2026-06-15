@@ -1,38 +1,46 @@
-# code2llm/evolution | 2149 func | 402f | 2026-06-15
+# code2llm/evolution | 2455 func | 429f | 2026-06-15
 # generated in 0.01s
 
-NEXT[8] (ranked by impact):
+NEXT[10] (ranked by impact):
   [1] !! SPLIT           www/landing.js
       WHY: 836L, 0 classes, max CC=24
       EFFORT: ~4h  IMPACT: 20064
 
-  [2] !! SPLIT-FUNC      createVoiceController  CC=29  fan=37
+  [2] !! SPLIT-FUNC      _render_markdown  CC=70  fan=25
+      WHY: CC=70 exceeds 15
+      EFFORT: ~1h  IMPACT: 1750
+
+  [3] !! SPLIT-FUNC      createVoiceController  CC=29  fan=37
       WHY: CC=29 exceeds 15
       EFFORT: ~1h  IMPACT: 1073
 
-  [3] !  SPLIT-FUNC      applyLanguage  CC=24  fan=14
+  [4] !  SPLIT-FUNC      resolve_contract_path  CC=22  fan=21
+      WHY: CC=22 exceeds 15
+      EFFORT: ~1h  IMPACT: 462
+
+  [5] !  SPLIT-FUNC      fetch_agent_artifacts  CC=21  fan=19
+      WHY: CC=21 exceeds 15
+      EFFORT: ~1h  IMPACT: 399
+
+  [6] !  SPLIT-FUNC      describe_agent  CC=17  fan=21
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 357
+
+  [7] !  SPLIT-FUNC      handle_contract_uri  CC=21  fan=17
+      WHY: CC=21 exceeds 15
+      EFFORT: ~1h  IMPACT: 357
+
+  [8] !  SPLIT-FUNC      applyLanguage  CC=24  fan=14
       WHY: CC=24 exceeds 15
       EFFORT: ~1h  IMPACT: 336
 
-  [4] !  SPLIT-FUNC      _merge_markpact_scenarios  CC=15  fan=16
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 240
-
-  [5] !  SPLIT-FUNC      _build_proof_checks  CC=20  fan=9
+  [9] !  SPLIT-FUNC      _handle_schema_uri  CC=20  fan=14
       WHY: CC=20 exceeds 15
-      EFFORT: ~1h  IMPACT: 180
+      EFFORT: ~1h  IMPACT: 280
 
-  [6] !  SPLIT-FUNC      load_workflow_graph  CC=15  fan=12
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 180
-
-  [7] !! SPLIT           planfile.yaml
-      WHY: 1319L, 0 classes, max CC=0
-      EFFORT: ~4h  IMPACT: 0
-
-  [8] !! SPLIT           www/landing-i18n.js
-      WHY: 719L, 0 classes, max CC=0
-      EFFORT: ~4h  IMPACT: 0
+  [10] !  SPLIT-FUNC      detect_intent  CC=17  fan=14
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 238
 
 
 RISKS[3]:
@@ -41,10 +49,10 @@ RISKS[3]:
   ⚠ Splitting www/landing-i18n.js may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          3.6 → ≤2.5
-  max-CC:      29 → ≤14
-  god-modules: 5 → 0
-  high-CC(≥15): 8 → ≤4
+  CC̄:          3.7 → ≤2.6
+  max-CC:      70 → ≤20
+  god-modules: 9 → 0
+  high-CC(≥15): 10 → ≤5
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -72,4 +80,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.6 → now CC̄=3.6
+  prev CC̄=3.7 → now CC̄=3.7

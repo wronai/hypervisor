@@ -57,6 +57,7 @@ class ProcessViewModel:
             "readiness": self.readiness,
             "related_uris": self.related_uris,
             "actions": [item.to_dict() for item in self.actions],
+            "inspection": self.inspection,
         }
 
 

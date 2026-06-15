@@ -237,3 +237,16 @@ def enrich_lifecycle_dict(payload: dict[str, Any]) -> dict[str, Any]:
     body["service_result_status"] = service_result_status
     body.setdefault("result_type", "lifecycle")
     return body
+
+
+def unwrap_data(payload: dict[str, Any]) -> dict[str, Any]:
+    """Return inner 'data' dict if present, else the original payload.
+
+    Centralized unwrap helper to eliminate duplicated _payload_data / nested.get("data")
+    logic across dashboard rendering, urish render/proof, and result processing.
+    This addresses cross-area duplication flagged in architecture audits.
+    """
+    if not isinstance(payload, dict):
+        return payload
+    nested = payload.get("data")
+    return nested if isinstance(nested, dict) else payload

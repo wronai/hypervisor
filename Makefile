@@ -1,12 +1,16 @@
 .PHONY: validate generate verify test clean run-user-agent run-meta-agent meta-plan meta-pipeline meta-repair
 .PHONY: uri-tree graph nl2a-weather docker-ssh-up docker-ssh-down scan-http scan-ssh docker-testenv-up docker-testenv-down evolution-check examples run-weather-agent
 .PHONY: uri2flow-test uri2flow-validate uri2flow-expand uri3-flow-dry-run nl2uri-flow-validate example-18 touri-test touri-demo voice-test voice-demo
-.PHONY: architecture-test doctor architecture-gate ci-gate examples-test
-.PHONY: start stop www-test www-smoke www-logs www-monitor www-monitor-reset www-monitor-test
+.PHONY: architecture-test architecture-responsibility-audit doctor architecture-gate ci-gate examples-test examples-comprehensive examples-real-report
+.PHONY: start start-agents start-full stop uri-shell ensure-dev agent-health www-test www-smoke www-logs www-monitor www-monitor-reset www-monitor-test www-docs www-docs-check examples-shell examples-playwright-proof
 
 WWW_PORT ?= 8788
 WWW_COMPOSE = docker compose -f www/docker-compose.yml
 WWW_BASE = http://localhost:$(WWW_PORT)
+
+# Prefer repo .venv so start-agents works outside an activated shell (conda base often lacks uvicorn).
+PYTHON := $(shell if [ -x .venv/bin/python ]; then echo .venv/bin/python; else command -v python3; fi)
+HYPERVISOR := $(PYTHON) -m hypervisor.cli
 
 WEATHER_PROMPT = generuj mape pogody dwa tygodnie do przodu w html
 
@@ -25,6 +29,9 @@ test:
 architecture-test:
 	pytest tests/architecture -q
 
+architecture-responsibility-audit:
+	python3 scripts/architecture_responsibility_audit.py --top 30
+
 doctor:
 	uri3 doctor --json
 
@@ -35,6 +42,22 @@ ci-gate: architecture-gate test examples-test
 
 examples-test:
 	pytest tests/examples -q
+
+examples-comprehensive:
+	python3 scripts/examples/comprehensive_test.py
+
+examples-real-report:
+	python3 scripts/examples/comprehensive_test.py --real-only
+
+doql-registry:
+	bash scripts/examples/doql_host_preview.sh
+
+examples-comprehensive-mock:
+	python3 scripts/examples/comprehensive_test.py --mock-only
+
+examples-playwright-proof:
+	python3 scripts/examples/effective_weather_playwright.py
+	python3 scripts/examples/effective_weather_playwright.py --legacy-screenshot
 
 uri2flow-test:
 	pytest tests/uri2flow -q
@@ -130,6 +153,27 @@ clean:
 	rm -rf agents/generated/* output/* .pytest_cache
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
 
+ensure-dev:
+	@$(PYTHON) -c "import uvicorn" 2>/dev/null || { \
+		echo "Installing dev deps into project Python…"; \
+		$(PYTHON) -m pip install -q -e ".[dev]"; \
+	}
+	@$(PYTHON) -c "import sys, uvicorn; import typer._click.decorators; print('ok: uvicorn + typer', typer.__version__, 'via', sys.executable)" 2>/dev/null || { \
+		echo "Repairing typer (need >=0.26.7 with bundled click)…"; \
+		$(PYTHON) -m pip install -q 'typer>=0.26.7'; \
+	}
+	@$(PYTHON) -c "import sys, uvicorn, typer; import typer._click.decorators; print('ok: uvicorn + typer', typer.__version__, 'via', sys.executable)"
+
+agent-health:
+	@echo "Agents:"
+	@for id in weather-map-agent.local invoices-agent.local user-agent.local; do \
+		uri=$$($(HYPERVISOR) inspect-agent $$id 2>/dev/null | $(PYTHON) -c "import json,sys; print(json.load(sys.stdin).get('effective_health_uri',''))" 2>/dev/null || true); \
+		if [ -n "$$uri" ]; then \
+			echo "  $$id -> $$uri"; \
+			curl -fsS "$$uri" 2>/dev/null | $(PYTHON) -m json.tool || echo "    (unreachable)"; \
+		fi; \
+	done
+
 start:
 	$(WWW_COMPOSE) up -d --build
 	@echo "Waiting for www chat health on $(WWW_BASE)…"
@@ -140,12 +184,38 @@ start:
 	done
 	@curl -fsS "$(WWW_BASE)/health" | python3 -m json.tool
 	@echo "Chat UI: $(WWW_BASE)/www/"
+	@echo "Tip: run local agents with: make start-agents"
+
+start-agents: ensure-dev
+	$(HYPERVISOR) run-agent weather-map-agent.local --detach --if-running reuse --wait-healthy
+	$(HYPERVISOR) run-agent invoices-agent.local --detach --if-running reuse --wait-healthy
+	$(HYPERVISOR) run-agent user-agent.local --detach --if-running reuse --wait-healthy
+	@$(MAKE) agent-health
+
+start-full: start start-agents
+
+uri-shell:
+	urish
 
 stop:
 	$(WWW_COMPOSE) down
 
 www-test:
 	pytest tests/hypervisor/test_chat_www.py -q
+
+www-docs:
+	python3 scripts/www/build_examples_docs.py
+	python3 scripts/www/build_landing_integrations.py
+	python3 scripts/www/build_examples_manifest.py
+
+www-docs-check:
+	python3 scripts/www/build_examples_docs.py --check
+	python3 scripts/www/build_landing_integrations.py --check
+	python3 scripts/www/build_examples_manifest.py --check
+	python3 scripts/www/check_examples_links.py
+
+examples-shell:
+	python3 tests/examples/shell_runner.py
 
 www-smoke:
 	bash scripts/www/smoke.sh "$(WWW_BASE)"

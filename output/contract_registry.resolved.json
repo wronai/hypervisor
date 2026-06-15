@@ -5,7 +5,7 @@
     "schema_version": 1,
     "description": "Central index for resources, capabilities, schemas, events and projections."
   },
-  "contract_hash": "sha256:178d7b8cf4d234a62a062a9cb0ca6913bcb3e3082b36371ff5e554f00900bc2c",
+  "contract_hash": "sha256:743bfb17a530993746320f8e0c7690415611ac8fa8ada9862f003c442435f53c",
   "resources": [
     {
       "uri": "resource://users/{user_id}",
@@ -215,6 +215,144 @@
   ],
   "capabilities": [
     {
+      "name": "read_markpact_source",
+      "agent": "codex-nl-plan-agent",
+      "type": "resource_read",
+      "uri": "file:///app/agents/generated/codex_nl_plan_agent/README.md",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "app.codex.v1.MarkpactSourceView",
+      "renderer": "text",
+      "emits": []
+    },
+    {
+      "name": "read_device_status",
+      "agent": "codex-nl-plan-agent",
+      "type": "resource_read",
+      "uri": "device://device/sensor-1/status",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "operator.device.v1.DeviceStatus",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "run_cron_monitor",
+      "agent": "codex-nl-plan-agent",
+      "type": "command",
+      "uri": "cron://www/monitor/landing",
+      "command": "RunCronMonitor",
+      "input_schema": "app.codex.v1.RunCronMonitorCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": [
+        "CronMonitorRequested"
+      ]
+    },
+    {
+      "name": "read_markpact_source",
+      "agent": "codex-nl-smoke-agent",
+      "type": "resource_read",
+      "uri": "file:///home/tom/github/wronai/hypervisor/agents/generated/codex_nl_smoke_agent/README.md",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "app.codex.v1.MarkpactSourceView",
+      "renderer": "text",
+      "emits": []
+    },
+    {
+      "name": "read_device_status",
+      "agent": "codex-nl-smoke-agent",
+      "type": "resource_read",
+      "uri": "device://device/sensor-1/status",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "operator.device.v1.DeviceStatus",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "run_cron_monitor",
+      "agent": "codex-nl-smoke-agent",
+      "type": "command",
+      "uri": null,
+      "command": "RunCronMonitor",
+      "input_schema": "app.codex.v1.RunCronMonitorCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": [
+        "CronMonitorRequested"
+      ]
+    },
+    {
+      "name": "read_markpact_source",
+      "agent": "codex-uri-smoke-agent",
+      "type": "resource_read",
+      "uri": "file:///home/tom/github/wronai/hypervisor/agents/generated/codex_uri_smoke_agent/README.md",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "app.codex.v1.MarkpactSourceView",
+      "renderer": "text",
+      "emits": []
+    },
+    {
+      "name": "read_device_status",
+      "agent": "codex-uri-smoke-agent",
+      "type": "resource_read",
+      "uri": "device://device/sensor-1/status",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "operator.device.v1.DeviceStatus",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "run_cron_monitor",
+      "agent": "codex-uri-smoke-agent",
+      "type": "command",
+      "uri": null,
+      "command": "RunCronMonitor",
+      "input_schema": "app.codex.v1.RunCronMonitorCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": [
+        "CronMonitorRequested"
+      ]
+    },
+    {
+      "name": "observe_desktop",
+      "agent": "gnome-programmer-agent",
+      "type": "command",
+      "uri": "screen://desktop/observe",
+      "command": "ObserveDesktop",
+      "input_schema": "app.desktop.v1.ObserveDesktopCommand",
+      "output_schema": "app.desktop.v1.DesktopObservation",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "type_on_desktop",
+      "agent": "gnome-programmer-agent",
+      "type": "command",
+      "uri": "input://desktop/type",
+      "command": "TypeOnDesktop",
+      "input_schema": "app.desktop.v1.TypeOnDesktopCommand",
+      "output_schema": "app.desktop.v1.DesktopInputResult",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "programmer_session",
+      "agent": "gnome-programmer-agent",
+      "type": "command",
+      "uri": "workflow://desktop/programmer-session",
+      "command": "RunProgrammerSession",
+      "input_schema": "app.desktop.v1.ProgrammerSessionCommand",
+      "output_schema": "app.desktop.v1.ProgrammerSessionResult",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
       "name": "process_view",
       "agent": "hypervisor-dashboard",
       "type": "resource_read",
@@ -316,6 +454,147 @@
       ]
     },
     {
+      "name": "plan_remote_deploy",
+      "agent": "remote-deploy-agent",
+      "type": "command",
+      "uri": "deploy://agents/plan",
+      "command": "PlanRemoteDeploy",
+      "input_schema": "app.deploy.v1.PlanRemoteDeployCommand",
+      "output_schema": "app.deploy.v1.RemoteDeployPlan",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "apply_remote_deploy",
+      "agent": "remote-deploy-agent",
+      "type": "command",
+      "uri": "deploy://agents/apply",
+      "command": "ApplyRemoteDeploy",
+      "input_schema": "app.deploy.v1.ApplyRemoteDeployCommand",
+      "output_schema": "app.deploy.v1.RemoteDeployResult",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "verify_remote_agent",
+      "agent": "remote-deploy-agent",
+      "type": "command",
+      "uri": "deploy://agents/verify",
+      "command": "VerifyRemoteAgent",
+      "input_schema": "app.deploy.v1.VerifyRemoteAgentCommand",
+      "output_schema": "app.deploy.v1.RemoteVerifyResult",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "start_remote_agent",
+      "agent": "remote-deploy-agent",
+      "type": "command",
+      "uri": "deploy://agents/start",
+      "command": "StartRemoteAgent",
+      "input_schema": "app.deploy.v1.StartRemoteAgentCommand",
+      "output_schema": "app.deploy.v1.RemoteStartResult",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "deploy_verify_start",
+      "agent": "remote-deploy-agent",
+      "type": "command",
+      "uri": "workflow://agents/deploy-verify-start",
+      "command": "DeployVerifyStart",
+      "input_schema": "app.deploy.v1.DeployVerifyStartCommand",
+      "output_schema": "app.deploy.v1.DeployVerifyStartResult",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "read_markpact_source",
+      "agent": "schema-collab-agent",
+      "type": "resource_read",
+      "uri": "file://agents/generated/schema_collab_agent/README.md",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "app.codex.v1.MarkpactSourceView",
+      "renderer": "text",
+      "emits": []
+    },
+    {
+      "name": "read_device_status",
+      "agent": "schema-collab-agent",
+      "type": "resource_read",
+      "uri": "device://device/sensor-1/status",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "operator.device.v1.DeviceStatus",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "read_robot_state",
+      "agent": "schema-collab-agent",
+      "type": "resource_read",
+      "uri": "robot://robot/amr-1/state",
+      "command": null,
+      "input_schema": null,
+      "output_schema": "operator.robot.v1.RobotState",
+      "renderer": "detail",
+      "emits": []
+    },
+    {
+      "name": "run_cron_monitor",
+      "agent": "schema-collab-agent",
+      "type": "command",
+      "uri": "cron://www/monitor/landing",
+      "command": "RunCronMonitor",
+      "input_schema": "app.codex.v1.RunCronMonitorCommand",
+      "output_schema": null,
+      "renderer": null,
+      "emits": [
+        "CronMonitorRequested"
+      ]
+    },
+    {
+      "name": "analyze_screenshot",
+      "agent": "screenshot-analysis-agent",
+      "type": "command",
+      "uri": "analysis://screenshots/analyze",
+      "command": "AnalyzeScreenshot",
+      "input_schema": "app.screenshots.v1.AnalyzeScreenshotCommand",
+      "output_schema": "app.screenshots.v1.ScreenshotObservation",
+      "renderer": "detail",
+      "emits": [
+        "ScreenshotObservationRecorded"
+      ]
+    },
+    {
+      "name": "capture_and_analyze",
+      "agent": "screenshot-analysis-agent",
+      "type": "command",
+      "uri": "workflow://screenshots/capture-and-analyze",
+      "command": "CaptureAndAnalyze",
+      "input_schema": "app.screenshots.v1.CaptureAndAnalyzeCommand",
+      "output_schema": "app.screenshots.v1.CaptureAndAnalysisResult",
+      "renderer": "detail",
+      "emits": [
+        "ScreenshotCaptured",
+        "ScreenshotObservationRecorded"
+      ]
+    },
+    {
+      "name": "scheduled_capture_analysis",
+      "agent": "screenshot-analysis-agent",
+      "type": "command",
+      "uri": "cron://screenshots/capture-analysis/every-5-min",
+      "command": "RunScheduledCaptureAnalysis",
+      "input_schema": "app.screenshots.v1.CaptureAndAnalyzeCommand",
+      "output_schema": "app.screenshots.v1.CaptureAndAnalysisResult",
+      "renderer": "detail",
+      "emits": [
+        "ScreenshotCaptureAnalysisTick"
+      ]
+    },
+    {
       "name": "read_user",
       "agent": "user-agent",
       "type": "resource_read",
@@ -392,6 +671,6 @@
   "counts": {
     "resources": 10,
     "views": 10,
-    "capabilities": 15
+    "capabilities": 39
   }
 }

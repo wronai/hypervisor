@@ -70,17 +70,94 @@ def _command(raw: dict[str, Any]) -> str:
     return str(raw.get("command") or "")
 
 
-def _legacy_runtime_state(raw: dict[str, Any], *, deployment_id: str | None) -> dict[str, Any]:
-    command = str(raw.get("command") or "")
-    health_uri = str(raw.get("health_uri") or "")
-    effective_port = _port_from_command(command) or _port_from_http_uri(health_uri)
-    dep_id = str(deployment_id or raw.get("id") or "")
-    uri_block: dict[str, Any] = {
+# Public aliases for shared use across deployment_registry (lifecycle, pipeline, etc.)
+# to reduce duplication and help large-module metrics.
+state_pid = _pid
+state_command = _command
+
+
+def state_health_uri(raw: dict[str, Any]) -> str:
+    """Public version of the health uri extractor from raw/legacy state."""
+    network = raw.get("network") or {}
+    if isinstance(network, dict) and network.get("effective_health_uri"):
+        return str(network["effective_health_uri"])
+    return str(raw.get("health_uri") or "")
+
+
+
+
+def _process_log_path(raw: dict[str, Any]) -> str | None:
+    process = raw.get("process") or {}
+    if isinstance(process, dict) and process.get("log_path"):
+        return str(process["log_path"])
+    value = raw.get("process_log_path")
+    return str(value) if value else None
+
+
+def _process_log_uri(raw: dict[str, Any]) -> str | None:
+    process = raw.get("process") or {}
+    if isinstance(process, dict) and process.get("log_uri"):
+        return str(process["log_uri"])
+    value = raw.get("process_log_uri")
+    return str(value) if value else None
+
+
+def _build_uri_block(raw: dict[str, Any], dep_id: str) -> dict[str, Any]:
+    block: dict[str, Any] = {
         "self": f"runtime://agent/{dep_id}/state",
         "deployment": f"hypervisor://local/{dep_id}",
     }
     if raw.get("agent_ref"):
-        uri_block["agent"] = raw.get("agent_ref")
+        block["agent"] = raw.get("agent_ref")
+    return block
+
+
+def _build_process_block(raw: dict[str, Any], command: str) -> dict[str, Any]:
+    process_log_path = _process_log_path(raw)
+    process_log_uri = _process_log_uri(raw)
+    block: dict[str, Any] = {
+        "pid": _pid(raw),
+        "command": command,
+    }
+    if process_log_path:
+        block["log_path"] = process_log_path
+    if process_log_uri:
+        block["log_uri"] = process_log_uri
+    return block
+
+
+def _build_status_block(raw: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "process_status": str(raw.get("status") or "unknown"),
+        "health_status": str(raw.get("health_status") or "unknown"),
+        "lifecycle_status": str(raw.get("lifecycle_status") or raw.get("status") or "unknown"),
+        "deployment_status": str(raw.get("deployment_status") or "unknown"),
+        "service_result_status": str(raw.get("service_result_status") or "unknown"),
+    }
+
+
+def _build_network_block(command: str, health_uri: str, raw: dict[str, Any]) -> dict[str, Any]:
+    effective_port = _port_from_command(command) or _port_from_http_uri(health_uri)
+    return {
+        "requested_port": raw.get("requested_port"),
+        "effective_port": effective_port,
+        "effective_health_uri": health_uri,
+        "declared_health_uri": raw.get("declared_health_uri"),
+    }
+
+
+def _legacy_runtime_state(raw: dict[str, Any], *, deployment_id: str | None) -> dict[str, Any]:
+    command = _command(raw)
+    health_uri = str(raw.get("health_uri") or "")
+    dep_id = str(deployment_id or raw.get("id") or "")
+    process_log_path = _process_log_path(raw)
+    process_log_uri = _process_log_uri(raw)
+
+    uri_block = _build_uri_block(raw, dep_id)
+    process_block = _build_process_block(raw, command)
+    status_block = _build_status_block(raw)
+    network_block = _build_network_block(command, health_uri, raw)
+
     return {
         "$schema": RUNTIME_STATE_SCHEMA,
         "apiVersion": "uri3.io/v1",
@@ -88,28 +165,16 @@ def _legacy_runtime_state(raw: dict[str, Any], *, deployment_id: str | None) -> 
         "id": dep_id,
         "agent_ref": raw.get("agent_ref"),
         "uri": uri_block,
-        "status": {
-            "process_status": str(raw.get("status") or "unknown"),
-            "health_status": str(raw.get("health_status") or "unknown"),
-            "lifecycle_status": str(raw.get("lifecycle_status") or raw.get("status") or "unknown"),
-            "deployment_status": str(raw.get("deployment_status") or "unknown"),
-            "service_result_status": str(raw.get("service_result_status") or "unknown"),
-        },
-        "process": {
-            "pid": raw.get("pid"),
-            "command": command,
-        },
-        "network": {
-            "requested_port": raw.get("requested_port"),
-            "effective_port": effective_port,
-            "effective_health_uri": health_uri,
-            "declared_health_uri": raw.get("declared_health_uri"),
-        },
+        "status": status_block,
+        "process": process_block,
+        "network": network_block,
         "started_at": raw.get("started_at"),
         "stopped_at": raw.get("stopped_at"),
         "command": command,
         "health_uri": health_uri,
         "log_uri": raw.get("log_uri"),
+        "process_log_path": process_log_path,
+        "process_log_uri": process_log_uri,
         "env": raw.get("env") or {},
     }
 
@@ -117,15 +182,23 @@ def _legacy_runtime_state(raw: dict[str, Any], *, deployment_id: str | None) -> 
 def _apply_flat_accessors(body: dict[str, Any]) -> dict[str, Any]:
     body["pid"] = _pid(body)
     body["process_status"] = _process_status(body)
-    body["status"] = body.get("status") if isinstance(body.get("status"), dict) else {
-        "process_status": str(body.get("status") or "unknown"),
-    }
+    body["status"] = (
+        body.get("status")
+        if isinstance(body.get("status"), dict)
+        else {
+            "process_status": str(body.get("status") or "unknown"),
+        }
+    )
     body["command"] = _command(body)
     body["health_uri"] = _health_uri(body)
+    body["process_log_path"] = _process_log_path(body)
+    body["process_log_uri"] = _process_log_uri(body)
     return body
 
 
-def normalize_runtime_state(raw: dict[str, Any], *, deployment_id: str | None = None) -> dict[str, Any]:
+def normalize_runtime_state(
+    raw: dict[str, Any], *, deployment_id: str | None = None
+) -> dict[str, Any]:
     """Upgrade legacy flat runtime state to schema artifact while keeping flat accessors."""
     if raw.get("kind") == "RuntimeState" and isinstance(raw.get("status"), dict):
         body = dict(raw)
@@ -146,10 +219,21 @@ def load_runtime_state(deployment_id: str, root: Path | None = None) -> dict[str
 
 def save_runtime_state(deployment_id: str, state: dict[str, Any], root: Path | None = None) -> Path:
     repo = Path(root) if root is not None else find_repo_root()
-    normalized = normalize_runtime_state({**state, "id": deployment_id}, deployment_id=deployment_id)
+    normalized = normalize_runtime_state(
+        {**state, "id": deployment_id}, deployment_id=deployment_id
+    )
     artifact = dict(normalized)
     artifact.pop("process_status", None)
-    for key in ("started_at", "stopped_at", "log_uri", "agent_ref", "command", "health_uri"):
+    for key in (
+        "started_at",
+        "stopped_at",
+        "log_uri",
+        "process_log_path",
+        "process_log_uri",
+        "agent_ref",
+        "command",
+        "health_uri",
+    ):
         if artifact.get(key) is None:
             artifact.pop(key, None)
     uri = dict(artifact.get("uri") or {})
@@ -187,6 +271,8 @@ def is_process_alive(pid: int | None) -> bool:
         return False
     try:
         os.kill(pid, 0)
+    except PermissionError:
+        return True
     except OSError:
         return False
     return True

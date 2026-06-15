@@ -1,0 +1,235 @@
+version: 1
+kind: urish.scenario_registry
+metadata:
+  id: office-automation
+  description: Office automation scenarios — canonical domain registry under domains/office/.
+  source: domains/office/scenario_registry.yaml
+  markpact_readme: domains/office/README.md
+  examples:
+    - examples/31_office_day
+    - examples/32_ecommerce_integrations
+    - examples/33_office_workflows
+intent_kind: office
+profile: office-automation
+default_deployment_id: invoices-agent.local
+context_patterns:
+  - "faktur|invoice|rozlicz|portal|bank|przelew|baselinker|woocommerce"
+  - "allegro|raport|\\.csv|token|2fa|subiekt|erp|dostawc|integrac"
+  - "zamówien|zamowien|crm|woo\\b|sklep|zus|formularz|telefon|android"
+  - "aplikac|wklej|szkic|potwierdz"
+subtype_rules:
+  - subtype: invoice_batch
+    patterns:
+      - "\\b(wystaw|wystawieni).{0,40}\\bfaktur|\\bfaktur.{0,40}\\b(wystaw|podgląd|podglad)"
+  - subtype: portal_report
+    patterns:
+      - "\\b(pobierz|pobranie).{0,30}\\b(raport|csv)|\\braport.{0,20}\\b(csv|portal)"
+  - subtype: bank_transfer
+    patterns:
+      - "\\b(przelew|przelewy|bank|autoryzac|2fa|token).{0,30}\\b(telefon|android|bank)"
+      - "\\bprzygotuj.{0,20}\\bprzelew"
+  - subtype: office_status
+    patterns:
+      - "\\b(co.{0,12}(padło|padlo|stało|stalo)|co dziś|status.{0,20}rozlicz)"
+  - subtype: invoice_status
+    patterns:
+      - "\\bfaktur"
+  - subtype: ecommerce_sync
+    patterns:
+      - "woocommerce|baselinker|allegro|woo\\b|sklep|marketplace"
+      - "połącz|polacz|integrac|erp|crm|zamówien|zamowien"
+      - "nie trafi|błęd|bled|error|sync|webhook"
+fallback_subtype: office_general
+uri_templates:
+  ecommerce_sync:
+    - workflow://order/woocommerce-to-erp/dry-run
+    - health://agent/{deployment_id}
+    - log://hypervisor?grep=order&level=ERROR
+  invoice_batch:
+    - workflow://invoices/batch/dry-run
+    - view://process/agent/{deployment_id}/latest
+  portal_report:
+    - browser://chrome/page/open
+    - workflow://office/supplier-report/monthly
+    - health://agent/desktop-operator.local
+  portal_form:
+    - workflow://portal/zus-form/dry-run
+    - workflow://portal/zus-form
+  erp_pcwin:
+    - pcwin://window/Subiekt GT/focus
+    - pcwin://control/NumerFaktury/set_text
+    - pcwin://control/Zapisz/click
+  android_2fa:
+    - android://device/pixel-7/screenshot
+    - android://device/pixel-7/tap
+  bank_transfer:
+    - workflow://bank/batch-transfer/dry-run
+  office_status:
+    - view://process/agent/{deployment_id}/latest
+    - health://agent/{deployment_id}
+    - log://hypervisor?grep={deployment_id}&level=ERROR
+  invoice_status:
+    - view://process/agent/{deployment_id}/latest
+    - repair://agent/{deployment_id}/diagnose
+  office_general:
+    - workflow://office/day-marta/dry-run
+next_step_templates:
+  ecommerce_sync:
+    - uri explain workflow://order/woocommerce-to-erp
+    - uri run workflow://order/woocommerce-to-erp --dry-run
+    - uri run workflow://order/woocommerce-to-erp --approve
+    - uri call health://agent/{deployment_id}
+    - bash examples/32_ecommerce_integrations/run.sh
+  invoice_batch:
+    - uri ask "wystaw faktury za wczoraj i pokaż podgląd przed wysyłką"
+    - uri run workflow://invoices/batch/dry-run
+    - hypervisor inspect-agent {deployment_id}
+    - bash examples/31_office_day/run.sh
+  portal_report:
+    - uri explain workflow://office/supplier-report/monthly
+    - uri run workflow://office/supplier-report/monthly --dry-run
+    - uri run workflow://office/supplier-report/monthly --approve
+    - bash examples/31_office_day/run.sh
+  portal_form:
+    - uri run workflow://portal/zus-form/dry-run
+    - "# screenshot + plan — Marta zatwierdza wysyłkę"
+    - uri run workflow://portal/zus-form --approve
+  erp_pcwin:
+    - uri2ops run examples/31_office_day/invoice_review.pcwin.yaml --adapter mock --approve
+    - uri2ops run examples/13_pcwin_operator/task.pcwin.yaml --adapter mock --approve
+  android_2fa:
+    - uri2ops run examples/31_office_day/bank_token.android.yaml --adapter mock --approve
+    - uri2ops run examples/12_android_operator/run.sh
+  bank_transfer:
+    - uri run workflow://bank/batch-transfer/dry-run
+    - "# STOP przed autoryzacją — token na Androidzie (human-in-the-loop)"
+    - uri run workflow://bank/batch-transfer --approve
+    - bash examples/31_office_day/run.sh
+  office_status:
+    - hypervisor inspect-agent {deployment_id}
+    - uri call repair://agent/{deployment_id}/diagnose
+    - bash examples/31_office_day/run.sh
+  invoice_status:
+    - hypervisor inspect-agent {deployment_id}
+    - uri call repair://agent/{deployment_id}/diagnose
+    - log://hypervisor?grep={deployment_id}
+  office_general:
+    - bash examples/31_office_day/run.sh
+human_in_the_loop_subtypes:
+  - android_2fa
+  - bank_transfer
+  - invoice_batch
+  - portal_form
+artifacts:
+  contracts:
+    - contracts/agents/invoices_agent.yaml
+  workflows:
+    - examples/31_office_day/task_graph.yaml
+    - examples/32_ecommerce_integrations/task_graph.yaml
+  capabilities:
+    - examples/20_touri_capabilities/invoices_batch_dry_run.uri.capability.yaml
+    - examples/20_touri_capabilities/order_woocommerce_to_erp_dry_run.uri.capability.yaml
+  generated_agents:
+    - agents/generated/invoices_agent
+scenarios:
+  - id: website_report
+    subtype: portal_report
+    chat_prompt: Wejdź na stronę dostawcy, pobierz raport CSV za ten miesiąc i zapisz w rozliczeniach.
+    needles:
+      - "stron[aęe]\\s+dostawc"
+      - "raport\\s+csv"
+      - "pobierz\\s+raport"
+      - "zapisz\\s+w\\s+rozliczeniach"
+    planned_uris:
+      - browser://chrome/page/open
+      - workflow://office/supplier-report/monthly
+      - health://agent/desktop-operator.local
+    next_steps:
+      - uri explain workflow://office/supplier-report/monthly
+      - uri run workflow://office/supplier-report/monthly --dry-run
+      - uri run workflow://office/supplier-report/monthly --approve
+      - bash examples/31_office_day/run.sh
+    human_in_the_loop: false
+  - id: portal_zus_form
+    subtype: portal_form
+    chat_prompt: Zaloguj się do portalu klienta, uzupełnij formularz ZUS i wyślij — najpierw pokaż podgląd.
+    needles:
+      - "formularz\\s+zus"
+      - "portalu\\s+klienta"
+      - "zaloguj\\s+si[eę].{0,40}portal"
+      - "poka[zż]\\s+podgl[aą]d"
+    planned_uris:
+      - workflow://portal/zus-form/dry-run
+      - workflow://portal/zus-form
+    next_steps:
+      - uri run workflow://portal/zus-form/dry-run
+      - "# screenshot + plan — Marta zatwierdza wysyłkę"
+      - uri run workflow://portal/zus-form --approve
+    human_in_the_loop: true
+  - id: erp_subiekt
+    subtype: erp_pcwin
+    chat_prompt: Otwórz Subiekta, wklej dane z Excela do faktury i zapisz jako szkic.
+    needles:
+      - subiekt
+      - "okna?\\s+erp"
+      - pcwin
+      - "wklei[jj].{0,20}excel"
+      - szkic
+    planned_uris:
+      - pcwin://window/Subiekt GT/focus
+      - pcwin://control/NumerFaktury/set_text
+      - pcwin://control/Zapisz/click
+    next_steps:
+      - uri2ops run examples/31_office_day/invoice_review.pcwin.yaml --adapter mock --approve
+      - uri2ops run examples/13_pcwin_operator/task.pcwin.yaml --adapter mock --approve
+    human_in_the_loop: false
+  - id: invoice_batch_woo
+    subtype: invoice_batch
+    deployment_id: invoices-agent.local
+    chat_prompt: Wystaw faktury za zamówienia z WooCommerce, pokaż listę do akceptacji i wyślij tylko zatwierdzone.
+    needles:
+      - "wystaw\\s+faktur"
+      - "podgl[aą]d"
+      - akceptac
+      - zatwierdz
+      - "woocommerce.{0,40}faktur"
+    planned_uris:
+      - workflow://invoices/batch/dry-run
+      - view://process/agent/invoices-agent.local/latest
+    next_steps:
+      - uri run workflow://invoices/batch/dry-run
+      - uri call view://process/agent/invoices-agent.local/latest
+      - hypervisor inspect-agent invoices-agent.local
+    human_in_the_loop: true
+  - id: bank_batch
+    subtype: bank_transfer
+    chat_prompt: Przygotuj przelewy do dostawców z listy — zatrzymaj się przed autoryzacją.
+    needles:
+      - "przygotuj\\s+przelew"
+      - "przelew[yó]?\\s+do\\s+dostawc"
+      - "zatrzymaj\\s+si[eę]\\s+przed\\s+autoryzac"
+      - "banku.{0,30}token"
+    planned_uris:
+      - workflow://bank/batch-transfer/dry-run
+    next_steps:
+      - uri run workflow://bank/batch-transfer/dry-run
+      - "# STOP przed autoryzacją — token na Androidzie (human-in-the-loop)"
+      - uri run workflow://bank/batch-transfer --approve
+    human_in_the_loop: true
+  - id: android_2fa
+    subtype: android_2fa
+    chat_prompt: Bank czeka na potwierdzenie w aplikacji — pokaż mi ekran telefonu.
+    needles:
+      - telefon
+      - android
+      - "aplikacj[ią]\\s+bankow"
+      - "potwierd[zź].{0,20}przelew"
+      - 2fa
+      - "token\\s+mobiln"
+    planned_uris:
+      - android://device/pixel-7/screenshot
+      - android://device/pixel-7/tap
+    next_steps:
+      - uri2ops run examples/31_office_day/bank_token.android.yaml --adapter mock --approve
+      - uri2ops run examples/12_android_operator/run.sh
+    human_in_the_loop: true

@@ -40,6 +40,17 @@ def test_artifact_resolver_reads_written_file(tmp_path: Path):
     assert b"ok" in read_artifact(artifact_uri, root=tmp_path)
 
 
+def test_policy_allows_gnome_adapter():
+    registry = load_operation_registry()
+    policy = load_operator_policy(root=Path.cwd())
+    screen = registry.require("screen", "observe")
+    allowed, reason = can_execute(screen, approve=False, adapter="gnome", dry_run=False, policy=policy)
+    assert allowed is True, reason
+    typing = registry.require("input", "type")
+    allowed, reason = can_execute(typing, approve=True, adapter="gnome", dry_run=False, policy=policy)
+    assert allowed is True, reason
+
+
 def test_policy_blocks_command_without_approve():
     registry = load_operation_registry()
     spec = registry.require("browser", "open")

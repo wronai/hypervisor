@@ -1,0 +1,7 @@
+auto_generated: 'true'
+source: contracts/agents/codex_nl_plan_agent.yaml
+contract_hash: sha256:2d9bc1c0b851ce7acae3b9134afc15449ddc5fe881c3fdb439c4077b9df4c699
+generator: resource-agent-factory
+generation_command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator
+  contracts/agents/codex_nl_plan_agent.yaml
+markpact_readme: file:///home/tom/github/wronai/hypervisor/agents/generated/codex_nl_plan_agent/README.md

@@ -8,6 +8,20 @@
 
 ## Runtime Architecture
 
+- [x] Add architecture responsibility audit over `project/map.toon.yaml` and
+      `project/duplication.toon.yaml` for refactor planning across system,
+      app, command, domain, runtime and generated boundaries.
+- [ ] Use the architecture responsibility audit P1 findings to externalize
+      remaining vertical vocabulary from `nl2uri`, `urish` and `uri3/contracts`
+      into `domains/*`, `agents/scenarios/*` or profile artifacts.
+- [ ] Resolve cross-boundary duplication reported by
+      `make architecture-responsibility-audit`, starting with URI2OPS adapters,
+      runtime graph adapters and generated dashboard snapshots.
+- [x] Thin `packages/urish/urish/cli.py` by moving agent, ecosystem,
+      dashboard/www, ticket, repair and evolution subcommands into
+      `urish.commands.*` modules.
+- [ ] Thin the remaining critical runtime hotspot from the current map:
+      `hypervisor/deployment_registry/lifecycle.py`.
 - [x] Add `packages/uri2run` MVP for `python`, `shell`, `http`, `uri_flow`,
   `uri_graph`, `uri2ops` and `mock` transports.
 - [x] Delegate `touri` backend wrappers to `uri2run.run_backend`.
@@ -18,6 +32,7 @@
 - [x] CI gate: `scripts/ci/architecture_gate.sh`, `.github/workflows/ci.yml`, `make architecture-gate`.
 - [x] Add `packages/urigen` MVP for ecosystem proposals, artifact generation, verify, explain, and gated apply.
 - [x] Split `uri3/doctor/checks.py` into `uri3/doctor/checks/` submodules.
+- [x] (2026-06) Latest continuation: added canonical unwrap_data to uri3 envelope + migrated _payload_data dups (chat_format, render, proof); centralized now_iso (multiple files now delegate, fewer dups); more extraction in lifecycle (docker stop). Audit: critical map items 5, dups handled in source. Remaining: regenerate map.toon for updated numbers, finish thinning lifecycle (last critical), more cli command moves, package fan-out splits per SMELL list. See CHANGELOG.
 - [x] Examples integration suite: `tests/examples/` (catalog, run.sh, inline, smoke).
 - [x] All 25 examples pass via `scripts/test-all-examples.sh` on new architecture stack.
 - [x] CI job **Examples integration** + `make examples-test` + `make ci-gate`.
@@ -68,17 +83,58 @@
       agents/events context, URI preview/run actions, and `urish www create`.
 - [x] Mount generated agents, shared output, config/contracts/schemas and repair
       knowledge into the `www` Docker runtime.
-- [ ] Add port conflict classifier using socket/lsof probes without killing unrelated processes.
-- [ ] Add safe deployment registry update proposal when effective runtime port differs from declared `health_uri`.
-- [ ] Add `health://agent/{deployment}` and `repair://agent/{deployment}/auto` URI schemes or resolver aliases.
+- [x] Taskinity landing: integracje (ERP, WooCommerce, Baselinker, Allegro), sekcja biurowa (browser/Android/Windows).
+- [x] `www/przyklady.html` — lab integracji (27/27 PASS, filtry, komendy z examples).
+- [x] `www/docs/examples.html` — pełna treść `examples/*/*` (README + YAML/SH), generator `make www-docs`.
+- [x] `tests/hypervisor/test_chat_www.py` — coverage WWW (landing, chat, docs, gallery).
+- [x] NL→URI chat routing: intent `agent` (fix domain:// misroute), dry-run preview markdown.
+- [x] Refaktoryzacja metod CC>15 (incident, uri_client, repair loop, landing.js tour).
+- [x] NL routing for landing office cards (`domains/office/`, markpact scenarios, 6 quick prompts).
+- [x] Move office/e-commerce NL routing data out of generic `urish` code and into
+      declarative `agents/scenarios/*.yaml`.
+- [x] Add `domains/desktop_ops/` for generic desktop operator routing and load all
+      `domains/*/scenario_registry.yaml` files automatically.
+- [x] Add generated agent provenance in README markpact blocks (`agent_generation`,
+      `run_log`) with contract hash, reproduction command and `log://` URIs.
+- [x] `examples/33_office_workflows` — supplier report, ZUS portal, bank batch graphs + run.sh.
+- [x] `examples/31_office_day` — workflow pilot portal → faktury → bank → Android token.
+- [x] README dla `examples/22_dashboard_agent` i `examples/16_www_landing_monitor`.
+- [x] CI: `make www-docs --check` w job test.
+- [x] Workflow YAML z krokiem Android mock (`bank_token.android.yaml`) obok mock uri3 validate.
+- [x] Add port conflict classifier using socket/lsof probes without killing unrelated processes.
+- [x] Add safe deployment registry update when effective runtime port differs from declared `health_uri` (`registry_sync`, `sync_health_uri` playbook, auto-persist on port rebound).
+- [x] Add `health://agent/{deployment}` and `repair://agent/{deployment}/auto` URI schemes or resolver aliases.
 - [ ] Add policy-gated strategies: rebind port, kill stale owned process, regenerate agent, rollback to last known good artifact.
 
 ## Examples & Testing
 
+- [x] Uri-healer entry point: `hypervisor repair heal` (bounded repair + incident + proposal via `run_uri_healer`).
 - [ ] Full autonomous repair loop: log classification → regenerate agent → registry rollback (uri-healer / uri2repair).
-- [ ] `hypervisor supervise --watch` long-running daemon mode.
-- [ ] Reduce duplicate coverage between `scripts/test-all-examples.sh` and `pytest tests/examples` (shared catalog only).
+- [x] `hypervisor supervise --watch` long-running daemon mode (`--interval`, `--count`, JSONL to `output/logs/hypervisor-watch.jsonl`).
+- [x] Minimal durable lifecycle/repair event bus (`output/logs/hypervisor-events.jsonl`)
+      surfaced through `/api/events`.
+- [x] Reduce duplicate coverage between `scripts/test-all-examples.sh` and `pytest tests/examples` (shared catalog only).
 - [ ] Document Playwright setup in each browser example README when `[browser]` extra is required.
+- [ ] Production deploy Docker/SSH for `user-agent`, `invoices-agent` (beyond demo mounts).
+- [ ] Real bank/portal selectors + secrets vault for office automation pilots.
+- [ ] Promote `examples/31_office_day` from mock-first pilot to guarded real-device
+      profile (`playwright` + `uia` + `adb`) with per-step approval policy.
+
+## Taskinity WWW
+
+- [x] Landing `www/index.html` — tour, integracje e-commerce, przykłady biurowe, FAQ.
+- [x] Chat `www/chat.html` — quick-prompts biurowe, NL→URI via dashboard-agent API.
+- [x] Chat `Run plan` actions via `/api/plan/run` with dry-run/approved policy gate.
+- [x] Chat live event sidebar via `/api/events` and `/api/events/stream` SSE.
+- [x] `/api/events` reads durable lifecycle/repair/watch `LogEvent` records.
+- [x] Browser microphone path via `/api/voice/transcribe` (mock/Whisper STT → NL plan).
+- [x] Lab integracji `www/przyklady.html` + `www/examples-gallery.js`.
+- [x] Docs examples `www/docs/examples.html` + `scripts/www/build_examples_docs.py` + `make www-docs`.
+- [x] Monitory WWW (`scripts/www/monitor_landing.py`, cron install).
+- [x] CI job: `make www-docs --check` + link check na `/www/docs/examples.html`.
+- [ ] Auto-regeneracja docs examples w pre-commit lub CI po zmianie `examples/*/README.md`.
+- [ ] Durable workflow event bus for every workflow/repair step (current `/api/events`
+      has lifecycle/repair/watch events, but not every workflow backend step).
 
 ## urigen Roadmap
 
@@ -95,8 +151,8 @@
 - [ ] Add JSON Schema validation to `urigen plan` and `urigen generate`.
 - [ ] Expand generator profiles: `agent`, `operator`, `provider`, `full` (partial).
 - [x] Generate dashboard `app/` tree in ecosystem output (not only contracts/capabilities).
-- [ ] Export richer `markpact` README blocks for capability, flow, deploy and
-  test sections.
+- [x] Export richer `markpact` README blocks for capability, flow, deploy and
+  test sections (`deployments/README.md` — `markpact:deploy`; agent README provenance).
 - [ ] Add recovery report handling and optional `uri2verify replay --create-test`
   integration when `urigen verify` fails.
 
@@ -116,7 +172,7 @@
 - [x] packages/nl2uri/nl2uri/flow_repair.py:109 - String concatenation can be converted to f-string
 - [x] packages/nl2uri/nl2uri/flow_repair.py:119 - String concatenation can be converted to f-string
 - [x] packages/nl2uri/nl2uri/flow_repair.py:192 - Magic number: 80 - use named constant
-- [x] tests/examples/ - Comprehensive examples integration suite (25/25 shell smoke, 47 pytest)
+- [x] tests/examples/ - Comprehensive examples integration suite (27/27 shell smoke, 50 pytest)
 - [x] generator/verify.py - Skip `__pycache__` when verifying `agents/generated/`
 - [x] examples/23_nl_to_agent_tutorial - Idempotent agent lifecycle in tutorial run.sh
 - [x] .github/workflows/ci.yml - Examples integration CI job

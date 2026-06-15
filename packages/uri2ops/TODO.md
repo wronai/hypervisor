@@ -32,3 +32,11 @@
 - [x] Add `uri2ops serve` daemon mode.
 - [x] Add A2A/MCP wrapper.
 - [x] Add remote operator registry.
+
+## v0.6
+
+- [x] Add mock `robot://` operations for state, move, stop and mission start.
+- [x] Add mock `device://` operations for status, read and write.
+- [ ] Add real ROS2 adapter behind `robot://`.
+- [ ] Add real MQTT/Modbus/OPC UA adapters behind `device://`.
+- [ ] Add physical-operation safety policy fixtures for hardware labs.

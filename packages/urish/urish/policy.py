@@ -44,6 +44,8 @@ READ_SCHEMES = {
     "health",
     "runtime",
     "readiness",
+    "schema",
+    "contract",
     "view",
     "explain",
     "http",
@@ -54,6 +56,7 @@ READ_SCHEMES = {
     "incident",
     "proposal",
     "evolution",
+    "file",
 }
 MUTATION_SCHEMES = {
     "shell",
@@ -65,6 +68,7 @@ MUTATION_SCHEMES = {
     "docker",
     "ssh",
     "agent",
+    "agent-factory",
     "workflow",
     "flow",
     "repair",
@@ -80,6 +84,8 @@ def _path_has_any(path: str, tokens: tuple[str, ...]) -> bool:
 
 
 def _classify_repair(scheme: str, path: str) -> ActionKind | None:
+    if scheme == "repair" and _path_has_any(path, ("/diagnose", "/plan")):
+        return "read"
     if scheme == "repair" or _path_has_any(path, ("/repair", "/apply")):
         return "repair"
     return None
@@ -95,6 +101,52 @@ def _classify_hypervisor_mutation(scheme: str, path: str) -> ActionKind | None:
     if scheme == "hypervisor" and _path_has_any(path, ("/run", "/stop", "/restart")):
         return "mutation"
     return None
+
+
+def _classify_physical_operator(scheme: str, path: str) -> ActionKind | None:
+    if scheme not in {"robot", "device"}:
+        return None
+    if _path_has_any(
+        path,
+        (
+            "/move",
+            "/stop",
+            "/start",
+            "/mission",
+            "/write",
+            "/set",
+            "/reset",
+            "/enable",
+            "/disable",
+            "/dock",
+            "/undock",
+            "/home",
+        ),
+    ):
+        return "mutation"
+    return "read"
+
+
+def _classify_desktop_operator(scheme: str, path: str) -> ActionKind | None:
+    if scheme not in {"browser", "screen", "input", "pcwin", "android"}:
+        return None
+    if _path_has_any(
+        path,
+        (
+            "/open",
+            "/click",
+            "/type",
+            "/tap",
+            "/focus",
+            "/submit",
+            "/write",
+            "/set",
+            "/run",
+            "/start",
+        ),
+    ):
+        return "mutation"
+    return "read"
 
 
 def _classify_read(scheme: str, path: str, parsed) -> ActionKind | None:
@@ -119,6 +171,8 @@ def classify_uri(uri: str) -> ActionKind:
         lambda: _classify_repair(scheme, path),
         lambda: _classify_apply(scheme, path),
         lambda: _classify_hypervisor_mutation(scheme, path),
+        lambda: _classify_physical_operator(scheme, path),
+        lambda: _classify_desktop_operator(scheme, path),
         lambda: _classify_read(scheme, path, parsed),
         lambda: _classify_mutation_scheme(scheme, path),
     ):

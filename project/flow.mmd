@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.27s
+%% generated in 0.28s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
@@ -12,6 +12,9 @@ flowchart TD
     end
 
     subgraph Core
+        packages__urish__urish__scenario_registry__clear_scenario_registry_cache["clear_scenario_registry_cache"]
+        packages__urish__urish__scenario_registry__scenario_by_id["scenario_by_id"]
+        packages__urish__urish__scenario_registry__scenarios_for_kind["scenarios_for_kind"]
         packages__urish__urish__cli___policy_options["_policy_options"]
         packages__urish__urish__cli___context_policy["_context_policy"]
         packages__urish__urish__cli___emit["_emit"]
@@ -24,10 +27,7 @@ flowchart TD
         packages__urish__urish__cli__shell_cmd["shell_cmd"]
         packages__urish__urish__cli__doctor_cmd["doctor_cmd"]
         packages__urish__urish__cli__shortcuts_cmd["shortcuts_cmd"]
-        packages__urish__urish__cli__proof_cmd["proof_cmd"]
-        packages__urish__urish__cli__context_list_cmd["context_list_cmd"]
-        packages__urish__urish__cli__context_show_cmd["context_show_cmd"]
-        ...["+792 more"]
+        ...["+926 more"]
     end
 
     subgraph Exporters
@@ -36,4 +36,4 @@ flowchart TD
         packages__resource_agent_hypervisor__hypervisor__contract_registry__cli_commands__run_export_md_command["run_export_md_command"]
     end
 
-    class packages__urish__urish__cli___policy_options,packages__urish__urish__cli___context_policy,packages__urish__urish__cli___emit,packages__urish__urish__cli___finish,packages__urish__urish__cli__root,packages__urish__urish__cli___print_ask_result,packages__urish__urish__cli__ask_cmd,packages__urish__urish__cli__nl_cmd,packages__urish__urish__cli__select_cmd,packages__urish__urish__cli__shell_cmd entry
+    class packages__urish__urish__scenario_registry__clear_scenario_registry_cache,packages__urish__urish__scenario_registry__scenario_by_id,packages__urish__urish__scenario_registry__scenarios_for_kind,packages__urish__urish__cli___policy_options,packages__urish__urish__cli___context_policy,packages__urish__urish__cli___emit,packages__urish__urish__cli___finish,packages__urish__urish__cli__root,packages__urish__urish__cli___print_ask_result,packages__urish__urish__cli__ask_cmd entry

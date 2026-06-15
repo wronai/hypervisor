@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package app.desktop.v1;
+
+message ObserveDesktopCommand {
+  string operator_url = 1;
+  string adapter = 2;
+  bool approve = 3;
+}
+
+message DesktopObservation {
+  bool ok = 1;
+  string artifact_uri = 2;
+}
+
+message TypeOnDesktopCommand {
+  string operator_url = 1;
+  string adapter = 2;
+  bool approve = 3;
+  string text = 4;
+}
+
+message DesktopInputResult {
+  bool ok = 1;
+}
+
+message ProgrammerSessionCommand {
+  string operator_url = 1;
+  string adapter = 2;
+  bool approve = 3;
+  string command_text = 4;
+}
+
+message ProgrammerSessionResult {
+  bool ok = 1;
+  string artifact_uri = 2;
+}

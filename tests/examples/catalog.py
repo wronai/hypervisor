@@ -97,6 +97,20 @@ RUN_SH_EXAMPLES: tuple[ExampleSpec, ...] = (
         "examples/36_physical_ops/run.sh",
     ),
     ExampleSpec(
+        "37",
+        "agent_screenshot_analysis",
+        "run_sh",
+        "examples/37_agent_screenshot_analysis/run.sh",
+        timeout_s=180,
+    ),
+    ExampleSpec(
+        "38",
+        "autonomous_agents",
+        "run_sh",
+        "examples/38_autonomous_agents/run.sh",
+        timeout_s=240,
+    ),
+    ExampleSpec(
         "01",
         "quickstart_local",
         "run_sh",

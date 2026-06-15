@@ -113,12 +113,15 @@ def _inspect_agent(agent_id: str, *, env: dict[str, str]) -> dict[str, Any] | No
         return None
 
 
-def _ensure_weather_agent(agent_id: str, *, env: dict[str, str]) -> tuple[dict[str, Any], str]:
-    inspected = _inspect_agent(agent_id, env=env)
-    health_uri = _extract_health_uri(inspected or {}) if inspected else None
-    if inspected and inspected.get("ok") is True and health_uri and _health_ok(health_uri):
-        return inspected, health_uri
+def _is_agent_healthy(inspected: dict[str, Any] | None, health_uri: str | None) -> bool:
+    return bool(
+        inspected
+        and inspected.get("ok") is True
+        and health_uri
+        and _health_ok(health_uri)
+    )
 
+def _try_repair_or_start(agent_id: str, *, env: dict[str, str]) -> None:
     repair = _run(
         cli_argv("hypervisor", "repair", "apply", agent_id, "--approve", env=env, repo_root=ROOT),
         env=env,
@@ -138,6 +141,14 @@ def _ensure_weather_agent(agent_id: str, *, env: dict[str, str]) -> tuple[dict[s
             env=env,
             timeout_s=240,
         )
+
+def _ensure_weather_agent(agent_id: str, *, env: dict[str, str]) -> tuple[dict[str, Any], str]:
+    inspected = _inspect_agent(agent_id, env=env)
+    health_uri = _extract_health_uri(inspected or {}) if inspected else None
+    if _is_agent_healthy(inspected, health_uri):
+        return inspected, health_uri
+
+    _try_repair_or_start(agent_id, env=env)
 
     inspected = _inspect_agent(agent_id, env=env)
     health_uri = _extract_health_uri(inspected or {}) if inspected else None

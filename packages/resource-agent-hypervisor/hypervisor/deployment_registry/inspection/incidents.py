@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 from urllib.parse import urlsplit
 
-from hypervisor.deployment_registry.port_utils import health_matches_agent, is_port_free
+from hypervisor.deployment_registry.port_conflict import port_conflict_detail
 
 
 BLOCKING_INCIDENT_CODES = frozenset(
@@ -32,21 +32,16 @@ def _port_conflict_incident(
     effective_port: int | None,
     health: dict[str, Any],
     expected_agent: str | None,
+    run_plan: dict[str, Any] | None = None,
 ) -> dict[str, Any] | None:
-    if not effective_port or is_port_free(effective_port):
+    if not effective_port:
         return None
-    if health_matches_agent(health, expected_agent=expected_agent):
-        return None
-    foreign = health.get("foreign_service")
-    detail = f"port {effective_port} is in use by another service"
-    if foreign:
-        detail += f" ({foreign})"
-    return {
-        "code": "PORT_OCCUPIED",
-        "detail": detail,
-        "effective_port": effective_port,
-        "foreign_service": foreign,
-    }
+    return port_conflict_detail(
+        port=effective_port,
+        health=health,
+        expected_agent=expected_agent,
+        plan=run_plan,
+    )
 
 
 def _foreign_service_incident(
@@ -116,6 +111,7 @@ def classify_incidents(
     card: dict[str, Any],
     logs: dict[str, Any],
     expected_agent: str | None = None,
+    run_plan: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     stored_port = _port_from_http_uri(stored_health_uri)
     effective_port = _port_from_http_uri(effective_health_uri)
@@ -123,7 +119,10 @@ def classify_incidents(
 
     for builder in (
         lambda: _port_conflict_incident(
-            effective_port=effective_port, health=health, expected_agent=expected_agent
+            effective_port=effective_port,
+            health=health,
+            expected_agent=expected_agent,
+            run_plan=run_plan,
         ),
         lambda: _foreign_service_incident(health=health, effective_port=effective_port),
     ):

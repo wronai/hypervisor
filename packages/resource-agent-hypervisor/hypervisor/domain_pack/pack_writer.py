@@ -72,6 +72,13 @@ def write_domain_pack(
         "domain_pack": str(out_dir.relative_to(project_root)) if out_dir.is_relative_to(project_root) else str(out_dir),
         "agent_contract": str(agent_path.relative_to(project_root)),
     }
+    existing_fragment = out_dir / "registry.fragment.yaml"
+    if existing_fragment.is_file():
+        preserved = yaml.safe_load(existing_fragment.read_text(encoding="utf-8")) or {}
+        if isinstance(preserved, dict):
+            for key in ("default_deployment_id", "deployment_selector_aliases"):
+                if key in preserved:
+                    registry_ref[key] = preserved[key]
     files["registry_fragment"] = write_file(
         out_dir / "registry.fragment.yaml",
         yaml.safe_dump(registry_ref, sort_keys=False, allow_unicode=True),

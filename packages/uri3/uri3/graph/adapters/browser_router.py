@@ -10,30 +10,20 @@ import warnings
 from typing import Any
 
 from uri3.graph.adapters.browser_mock import BrowserMockAdapter
-from uri3.graph.adapters.browser_playwright import PlaywrightBrowserAdapter, close_playwright_session
+from uri3.graph.adapters.browser_playwright import (
+    PlaywrightBrowserAdapter,
+    close_playwright_session,
+)
 from uri3.graph.execution_models import ExecutionContext
 from uri3.graph.models import GraphNode
 
-_PLAYWRIGHT_READY: bool | None = None
 
-
-def _playwright_ready() -> bool:
-    global _PLAYWRIGHT_READY
-    if _PLAYWRIGHT_READY is not None:
-        return _PLAYWRIGHT_READY
+def _uri2ops_playwright_ready() -> bool:
     try:
-        from playwright.sync_api import sync_playwright
-
-        playwright = sync_playwright().start()
-        try:
-            browser = playwright.chromium.launch(headless=True)
-            browser.close()
-            _PLAYWRIGHT_READY = True
-        finally:
-            playwright.stop()
-    except Exception:
-        _PLAYWRIGHT_READY = False
-    return _PLAYWRIGHT_READY
+        from uri2ops.operator.adapters.browser_router import playwright_ready
+    except ImportError:
+        return False
+    return playwright_ready()
 
 
 def resolve_browser_mode(context: ExecutionContext) -> str:
@@ -42,7 +32,7 @@ def resolve_browser_mode(context: ExecutionContext) -> str:
         return "mock"
     if mode == "playwright":
         return "playwright"
-    return "playwright" if _playwright_ready() else "mock"
+    return "playwright" if _uri2ops_playwright_ready() else "mock"
 
 
 class BrowserRouterAdapter:

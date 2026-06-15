@@ -33,3 +33,4 @@ hypervisor run-agent hypervisor-dashboard.local --detach
 | `POST /api/uri/call` | policy-gated URI execution |
 | `GET /api/agents` | deployment list for the chat sidebar |
 | `GET /api/events` | recent observable events |
+| `POST /api/monitors/webhook` | ingest monitor/webhook JSON into `/api/events` |

@@ -89,6 +89,18 @@ def test_screenshot_polish_inflection_detects_workflow():
     assert result["data"]["planned_uris"] == ["workflow://graph/website-screenshot-schedule/dry-run"]
 
 
+def test_weather_forecast_prompt_plans_weather_uri():
+    prompt = "prognoza pogody Gdańsk 7 dni"
+    intent = detect_intent(prompt)
+    assert intent["kind"] == "weather"
+    assert intent["uri"] == "weather://forecast/Gdansk/7/html"
+    result = ask_prompt(prompt)
+    data = result["data"]
+    assert data["detected_kind"] == "weather"
+    assert data["planned_uris"] == ["weather://forecast/Gdansk/7/html"]
+    assert "domain://" not in data["planned_uris"][0]
+
+
 def test_detect_www_chat_dashboard_intent_without_agent_word():
     intent = detect_intent(
         "stwórz prosty web UI hypervisora jako chat markdown połączony z API systemu"

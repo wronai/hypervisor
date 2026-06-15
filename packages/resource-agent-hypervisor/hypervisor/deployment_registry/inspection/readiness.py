@@ -57,8 +57,11 @@ def build_agent_readiness_report(
     effective_health_uri: str,
     declared_health_uri: str | None,
 ) -> dict[str, Any]:
-    blocking_codes = {item.get("code") for item in incidents if item.get("code") in BLOCKING_INCIDENT_CODES}
+    blocking_codes = {
+        str(item.get("code")) for item in incidents if item.get("code") in BLOCKING_INCIDENT_CODES
+    }
     all_codes = {str(item.get("code")) for item in incidents if item.get("code")}
+    warning_codes = all_codes - blocking_codes
     summary = readiness_summary(
         process_alive=process_alive,
         health=health,
@@ -83,6 +86,7 @@ def build_agent_readiness_report(
         "recommended_action": recommended_action_from_incidents(blocking_codes),
         "effective_port": summary.get("effective_port"),
         "effective_health_uri": effective_health_uri,
-        "incident_codes": sorted(all_codes),
+        "incident_codes": sorted(blocking_codes),
+        "warning_codes": sorted(warning_codes),
         "summary": summary,
     }

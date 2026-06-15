@@ -26,8 +26,35 @@ Install:
 
 ```bash
 pip install -e '.[dev]'
+# dev extra includes uvicorn (required for hypervisor run-agent on host)
 uri doctor
 ```
+
+## Interactive URI shell
+
+Start the REPL (same as `uri shell`):
+
+```bash
+urish
+# or
+make uri-shell
+```
+
+Inside the shell, paste a URI or type natural language:
+
+```text
+uri[local-dev|dev]> view://process/agent/weather-map-agent.local/latest
+uri[local-dev|dev]> health://agent/invoices-agent.local
+uri[local-dev|dev]> workflow://portal/zus-form/dry-run
+uri[local-dev|dev]> zdiagnozuj agenta invoices-agent.local
+```
+
+Tips:
+
+- Default mode is **real** (mutations get `--approve` under policy=dev). Toggle with `.dry-run on` for safe preview.
+- Output format: `.json`, `.yaml`, or `.text`
+- Exit: `exit`, `quit`, or `:q`
+- One-shot from bash (no REPL): `uri 'view://process/agent/weather-map-agent.local/latest'`
 
 ## System flow (one page)
 
@@ -93,6 +120,40 @@ uri dashboard open
 # or: uri call browser://chrome/page/open --payload '{"url":"http://localhost:8788/ui"}' --approve
 ```
 
+### 6. Chat and office workflows (WWW or CLI)
+
+```bash
+make start   # http://localhost:8788/www/chat.html
+
+# Single office prompt (matches landing card)
+uri ask "Wejdź na stronę dostawcy, pobierz raport CSV za ten miesiąc i zapisz w rozliczeniach."
+uri run workflow://office/supplier-report/monthly --dry-run
+
+# Batch: paste three lines in chat, or:
+uri ask $'pokaż proces agenta weather-map-agent.local\nzdiagnozuj agenta invoices-agent.local'
+
+# Compact flow (author YAML — not via chat)
+bash examples/15_compact_uri_flow/run.sh
+uri3 run-workflow output/weather.uri.graph.yaml --approve --browser mock
+```
+
+See [`CHAT_AND_WORKFLOWS.md`](./CHAT_AND_WORKFLOWS.md) · [`examples/33_office_workflows/`](../examples/33_office_workflows/).
+
+### 7. Multiple agents and monitoring
+
+```bash
+hypervisor deployments
+hypervisor run-agent weather-map-agent.local --detach --if-running reuse
+hypervisor run-agent invoices-agent.local --detach --if-running reuse
+hypervisor inspect-agent weather-map-agent.local
+curl -s http://localhost:8788/api/events?limit=10
+```
+
+Each deployment has its own port and runtime state. Use `hypervisor` for lifecycle,
+dashboard `/api/events` for a merged sidebar feed, `uri3 logs` for log:// queries.
+
+See [`AGENTS_AND_MONITORING.md`](./AGENTS_AND_MONITORING.md) · hands-on [`TUTORIAL_THREE_AGENTS.md`](./TUTORIAL_THREE_AGENTS.md) (3 agents + markpact export) · [`TUTORIAL_AGENT_SCHEMA_URI.md`](./TUTORIAL_AGENT_SCHEMA_URI.md) (NL-generated agent + `schema://agent`).
+
 ## Command levels
 
 | Level | Who | Examples |
@@ -125,6 +186,7 @@ See [`examples/30_golden_path/README.md`](../examples/30_golden_path/README.md) 
 
 ## Next docs
 
+- [`CHAT_AND_WORKFLOWS.md`](./CHAT_AND_WORKFLOWS.md) — chat, office cards, batch NL, uri2flow
 - [`MENTAL_MODEL.md`](./MENTAL_MODEL.md) — 7 core concepts
 - [`URI_COOKBOOK.md`](./URI_COOKBOOK.md) — “I want to…” recipes
 - [`PROFILES.md`](./PROFILES.md) — minimal, dashboard-agent, voice, …

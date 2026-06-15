@@ -13,19 +13,24 @@
     "flow",
     "log",
     "agent",
+    "agent-factory",
     "resource",
     "ticket",
     "hypervisor",
     "browser",
     "dom",
+    "device",
+    "file",
     "readiness",
+    "schema",
     "proposal",
     "ecosystem",
-  "evolution",
-  "artifact",
-  "incident",
-  "cron",
-]);
+    "evolution",
+    "artifact",
+    "incident",
+    "cron",
+    "robot",
+  ]);
 
   function httpHostLooksValid(host) {
     if (!host || host.length < 3) return false;

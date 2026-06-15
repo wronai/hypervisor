@@ -27,6 +27,48 @@ def test_resolve_adapter_mode_auto_falls_back_without_playwright(monkeypatch):
     assert resolve_adapter_mode("browser", {"adapter": "auto"}) == "mock"
 
 
+def test_playwright_run_sync_offloads_when_asyncio_loop_active():
+    import asyncio
+
+    from uri2ops.operator.adapters import browser_playwright as bp
+
+    seen_on_thread: list[str] = []
+
+    def work() -> str:
+        import threading
+
+        seen_on_thread.append(threading.current_thread().name)
+        return "ok"
+
+    async def main() -> None:
+        assert bp._run_sync(work) == "ok"
+
+    asyncio.run(main())
+    assert seen_on_thread
+    assert seen_on_thread[0].startswith("uri2ops-playwright")
+
+
+def test_playwright_cleanup_swallows_greenlet_thread_mismatch():
+    from uri2ops.operator.adapters import browser_playwright as bp
+
+    class _BrokenPage:
+        def close(self) -> None:
+            raise RuntimeError("Cannot switch to a different thread")
+
+    context = {
+        "session": {
+            "playwright": {
+                "page": _BrokenPage(),
+                "browser": None,
+                "playwright": None,
+                "owner_thread": threading.get_ident(),
+            }
+        }
+    }
+    bp.close_playwright_session(context)
+    assert "playwright" not in context["session"]
+
+
 def test_mock_task_writes_artifacts(tmp_path: Path):
     task = load_task("examples/10_browser_operator/task.health.yaml")
     result = run_task(task, adapter="mock", approve=True, root=tmp_path)

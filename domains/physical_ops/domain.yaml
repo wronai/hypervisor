@@ -1,0 +1,67 @@
+version: 1
+kind: taskinity.domain_pack
+metadata:
+  id: physical_ops
+  title: Physical Operations
+  description: Generic capability routing for robots, sensors, actuators and field devices.
+  owner_layer: domains/physical_ops
+
+boundary:
+  control_plane: hypervisor
+  nl_router: urish
+  workflow_runner: uri3
+  execution_runtime: uri2ops
+  operator_agent: agent://device-robot-operator
+  deployment_id: device-robot-operator.local
+
+contracts:
+  operator_agent: agents/operators/device_robot_operator.yaml
+  operator_registry: domains/physical_ops/operator_registry.yaml
+  scenario_registry: domains/physical_ops/scenario_registry.yaml
+  operation_registry: packages/uri2ops/uri2ops/operation_registry/registry.yaml
+
+schemes:
+  - robot
+  - device
+
+uri_design:
+  robot:
+    state: robot://robot/{id}/state
+    move: robot://robot/{id}/move
+    stop: robot://robot/{id}/stop
+    mission_start: robot://robot/{id}/mission/{mission_id}/start
+  device:
+    status: device://device/{id}/status
+    read: device://device/{id}/read
+    write: device://device/{id}/write
+
+policy:
+  default_adapter: mock
+  read_actions_without_approval:
+    - robot.state
+    - device.status
+    - device.read
+  write_actions_require_approval:
+    - robot.move
+    - robot.stop
+    - robot.mission_start
+    - device.write
+  real_adapters_require_explicit_selection: true
+  safety_stop_always_available: true
+  stop_before:
+    - physical_motion
+    - actuator_write
+    - unsafe_zone_entry
+    - irreversible_submit
+    - external_side_effect
+
+must_own:
+  - physical operation URI vocabulary
+  - adapter-independent robot and device capability cards
+  - safety and approval boundary metadata
+
+must_not_own:
+  - customer factory workflow defaults
+  - warehouse or production scenario implementation
+  - generated agent source
+  - hidden device credentials

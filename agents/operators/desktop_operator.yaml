@@ -34,11 +34,13 @@ capabilities:
       - observe
     adapters:
       - mock
+      - gnome
   - scheme: input
     operations:
       - type
     adapters:
       - mock
+      - gnome
   - scheme: pcwin
     operations:
       - focus

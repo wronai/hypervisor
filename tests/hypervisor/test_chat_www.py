@@ -280,6 +280,20 @@ def test_api_ask_detects_screenshot_schedule_as_workflow(client: TestClient):
     assert "domain://" not in payload["message_markdown"]
 
 
+def test_api_ask_detects_weather_forecast(client: TestClient):
+    response = client.post(
+        "/api/ask",
+        json={"prompt": "prognoza pogody Gdańsk 7 dni", "dry_run": True, "llm": False},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["ok"] is True
+    assert payload["data"]["detected_kind"] == "weather"
+    assert payload["data"]["planned_uris"] == ["weather://forecast/Gdansk/7/html"]
+    assert "weather://forecast/Gdansk/7/html" in payload["message_markdown"]
+    assert "domain://" not in payload["message_markdown"]
+
+
 def test_api_ask_multiline_batch_plans_each_line(client: TestClient):
     prompt = (
         "pokaż proces agenta weather-map-agent.local\n"
@@ -364,15 +378,13 @@ def test_root_redirects_to_www(client: TestClient):
 def test_www_index_served(client: TestClient):
     response = client.get("/www/")
     assert response.status_code == 200
-    assert "Taskinity" in response.text
-    assert "Autonomy in practice" in response.text
-    assert "tour-slide-host" in response.text
-    assert "tour-live-strip" in response.text
-    assert "scenario-lab" in response.text
-    assert "scenario-terminal" in response.text
-    assert "system-map" in response.text
-    assert "Deployment registry" in response.text
-    assert "landing.css" in response.text
+    assert "TellMesh" in response.text
+    assert "Text2Ops" in response.text
+    assert "scenario-tabs" in response.text
+    assert "demo-terminal" in response.text
+    assert 'id="deploy-gate"' in response.text
+    assert "contract://agent/weather-map-agent" in response.text
+    assert 'id="control-plane"' in response.text
 
 
 def test_www_index_integrations_section(client: TestClient):
@@ -380,26 +392,20 @@ def test_www_index_integrations_section(client: TestClient):
     assert response.status_code == 200
     text = response.text
     assert 'id="integracje"' in text
-    assert "Integrations in 3 steps" in text
+    assert 'data-integration-card="woocommerce-connector"' in text
     assert "Baselinker" in text
-    assert "Allegro.pl" in text
-    assert "WooCommerce" in text
-    assert "WordPress" in text
-    assert 'href="#integracje"' in text
 
 
 def test_www_index_office_examples(client: TestClient):
     response = client.get("/www/")
     assert response.status_code == 200
     text = response.text
-    assert 'id="przyklady-biuro"' in text
-    assert "How an office works" in text
+    assert 'id="demo"' in text
+    assert "Office day" in text
+    assert "workflow://office/day-marta/dry-run" in text
     assert "android://" in text
-    assert "pcwin://" in text
-    assert "human://marta/approve/invoices/batch" in text
-    assert "human://marta/input/bank-token" in text
-    assert "human-in-the-loop" in text
-    assert 'href="#przyklady-biuro"' in text
+    assert "bank_token.android.yaml" in text
+    assert 'href="#demo"' in text
 
 
 def test_www_examples_gallery(client: TestClient):
@@ -481,7 +487,7 @@ def test_readme_links_docs_todo_changelog(repo_root: Path):
 def test_www_chat_served(client: TestClient):
     response = client.get("/www/chat.html")
     assert response.status_code == 200
-    assert "Taskinity Chat" in response.text
+    assert "TellMesh Chat" in response.text
     assert "quick-prompts" in response.text
     assert "agent-list" in response.text
     assert "copy-chat-btn" in response.text
@@ -517,12 +523,14 @@ def test_www_chat_js_guards_stale_and_duplicate_actions(repo_root: Path):
 def test_www_landing_has_tour_copy(client: TestClient):
     response = client.get("/www/")
     assert response.status_code == 200
-    assert "tour-copy-chat" in response.text
-    assert "Copy chat" in response.text
+    assert "Kopiuj URI" in response.text
+    assert 'href="chat.html"' in response.text or 'href="/www/chat.html"' in response.text
 
 
 def test_www_landing_js_explains_repair_loop(repo_root: Path):
+    legacy = repo_root / "www" / "index.legacy.html"
     script = (repo_root / "www" / "landing.js").read_text(encoding="utf-8")
+    assert legacy.is_file()
     assert "buildSlideRepair" in script
     assert "SCENARIOS" in script
     assert "scenario-replay" in script
@@ -530,6 +538,9 @@ def test_www_landing_js_explains_repair_loop(repo_root: Path):
     assert "failSafeTimer" in script
     assert "RUNTIME_STATE_STALE" in script
     assert "hypervisor supervise user-agent.local --repair auto" in script
+    index = (repo_root / "www" / "index.html").read_text(encoding="utf-8")
+    assert "repair" in index.lower()
+    assert "contract://agent/weather-map-agent" in index
 
 
 def test_www_compose_mounts_system_artifacts(repo_root: Path):
@@ -538,7 +549,8 @@ def test_www_compose_mounts_system_artifacts(repo_root: Path):
     volumes = service["volumes"]
     assert service["network_mode"] == "host"
     assert service["pid"] == "host"
-    assert "../agents/generated:/app/agents/generated:ro" in volumes
+    assert "../agents/generated:/app/agents/generated" in volumes
+    assert "../contracts:/app/contracts" in volumes
     assert "../deployments:/app/deployments" in volumes
     assert "../knowledge:/app/knowledge:ro" in volumes
     assert "../output:/app/output" in volumes

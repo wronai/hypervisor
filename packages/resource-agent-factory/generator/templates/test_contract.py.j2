@@ -7,9 +7,11 @@ def test_agent_card_has_expected_name():
 
 
 def test_agent_card_has_capabilities():
-    names = {cap["name"] for cap in AGENT_CARD["capabilities"]}
+    names = [cap["name"] for cap in AGENT_CARD["capabilities"]]
     assert names == {{ capability_names | tojson }}
 
 
 def test_agent_card_has_contract_hash():
-    assert AGENT_CARD["generated_from"]["contract_hash"] == "{{ contract_hash }}"
+    assert AGENT_CARD["generated_from"]["contract_hash"] == (
+        "{{ contract_hash }}"
+    )

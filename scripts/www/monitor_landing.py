@@ -30,11 +30,11 @@ if str(ROOT / "scripts" / "www") not in sys.path:
 from monitor_notify import emit_alert  # noqa: E402
 
 DEFAULT_BASELINE = ROOT / "output" / "monitoring" / "www-prices.json"
-PRICE_RE = re.compile(r'<p class="price">([^<]+)<span')
+PRICE_RE = re.compile(r'<(?:p|div) class="price">([^<]+)(?:<span|<small)', re.I)
 
 
 def fetch_html(url: str, timeout: float = 10.0) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": "taskinity-monitor/0.1"})
+    req = urllib.request.Request(url, headers={"User-Agent": "tellmesh-monitor/0.1"})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         if resp.status != 200:
             raise urllib.error.HTTPError(url, resp.status, resp.reason, resp.headers, None)

@@ -9,6 +9,7 @@ from hypervisor.deployment_registry.docker_runner import (
     build_docker_deploy_plan,
     verify_docker_deployment,
 )
+from hypervisor.deployment_registry.local_verify import verify_local_deployment
 from hypervisor.deployment_registry.remote_runner import (
     apply_ssh_deploy_plan,
     build_ssh_deploy_plan,
@@ -51,12 +52,18 @@ def run_local_agent(
     plan = build_run_plan(deployment, port=port, host=host, reload=reload)
     echo_json(plan)
     if dry_run:
-        return
-    if deployment.target_uri.startswith("ssh://"):
-        typer.echo(
-            "SSH targets require --dry-run. Use deploy-agent and verify-agent first.", err=True
+        from hypervisor.events import emit_operation_event
+
+        emit_operation_event(
+            "AGENT_RUN_PLANNED",
+            f"{deployment.id} run-agent dry-run plan created",
+            selector=deployment.id,
+            operation="run-agent",
+            target_uri=deployment.target_uri,
+            port=plan.get("port"),
+            module=plan.get("module"),
         )
-        raise typer.Exit(1)
+        return
     if deployment.target_uri.startswith("docker://"):
         typer.echo("Use hypervisor deploy-agent for docker:// targets.", err=True)
         raise typer.Exit(1)
@@ -121,12 +128,17 @@ def deploy_agent(selector: str, *, apply: bool) -> None:
 
 def verify_agent(selector: str, *, check_health: bool) -> None:
     deployment = resolve_deployment(selector)
-    if deployment.target_uri.startswith("docker://"):
+    target = deployment.target_uri
+    if target.startswith("docker://"):
         payload = verify_docker_deployment(deployment, check_health=check_health)
-    else:
+    elif target.startswith("ssh://"):
         payload = verify_remote_deployment(deployment, check_health=check_health)
+    elif target.startswith("local://"):
+        payload = verify_local_deployment(deployment, check_health=check_health)
+    else:
+        raise typer.BadParameter(f"Unsupported deployment target: {target}")
     echo_json(payload)
-    if not payload.get("verified") and deployment.target_uri.startswith(("ssh://", "docker://")):
+    if not payload.get("verified"):
         raise typer.Exit(1)
 
 

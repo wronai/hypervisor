@@ -89,7 +89,10 @@ def ssh_auth_hint(ref: dict[str, Any] | None = None, *, stderr: str = "") -> str
         return None
     repo = _repo_root(None)
     if resolve_ssh_password(ref, root=repo):
-        return "SSH password is configured but sshpass may be missing. Install sshpass or configure SSH keys."
+        return (
+            "SSH password is configured (HYPERVISOR_SSH_PASSWORD or .env) but sshpass may be missing. "
+            "Install sshpass or configure SSH keys."
+        )
     return (
         "SSH authentication failed. For docker testenv set "
         "HYPERVISOR_SSH_PASSWORD=deploy (or add it to .env), or configure SSH keys."

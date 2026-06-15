@@ -10,9 +10,11 @@ def test_agent_card_has_expected_name():
 
 
 def test_agent_card_has_capabilities():
-    names = {cap["name"] for cap in AGENT_CARD["capabilities"]}
+    names = [cap["name"] for cap in AGENT_CARD["capabilities"]]
     assert names == ["read_weather_map", "generate_weather_map"]
 
 
 def test_agent_card_has_contract_hash():
-    assert AGENT_CARD["generated_from"]["contract_hash"] == "sha256:47b69e7e4fc1b3b3e56e5778021526be07db596966aac1362c0782a766ca2485"
+    assert AGENT_CARD["generated_from"]["contract_hash"] == (
+        "sha256:47b69e7e4fc1b3b3e56e5778021526be07db596966aac1362c0782a766ca2485"
+    )

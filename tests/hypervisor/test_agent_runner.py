@@ -107,11 +107,16 @@ def test_ssh_run_plan_via_build_run_plan():
     assert "remote_command" in plan
 
 
-def test_ssh_target_cannot_start_without_dry_run():
-    with pytest.raises(ValueError, match="SSH targets support dry-run"):
-        from hypervisor.deployment_registry.runner import run_agent
+def test_ssh_target_starts_via_remote_runner(monkeypatch: pytest.MonkeyPatch):
+    from hypervisor.deployment_registry.runner import run_agent
 
-        run_agent("weather-map-agent.ssh-dev", dry_run=False)
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.ssh_run.apply_ssh_run_plan",
+        lambda plan, **kwargs: {"ok": True, "remote_pid": 1234, "health_uri": plan["health_uri"]},
+    )
+    result = run_agent("weather-map-agent.ssh-dev", dry_run=False, detach=True)
+    assert result.get("ok") is True
+    assert result.get("transport") == "ssh"
 
 
 def test_run_agent_detach_idempotent_when_already_running(monkeypatch: pytest.MonkeyPatch):
@@ -626,3 +631,31 @@ def test_ensure_agent_healthy_waits_before_first_probe(monkeypatch: pytest.Monke
     assert payload["ok"] is True
     assert payload["attempts"] == 0
     assert sleeps == [0.25]
+
+
+def test_verify_local_deployment(monkeypatch: pytest.MonkeyPatch):
+    from hypervisor.deployment_registry.local_verify import verify_local_deployment
+
+    deployment = resolve_deployment("weather-map-agent.local")
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.local_verify.runtime_status",
+        lambda _deployment_id, _root=None: "running",
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.local_verify.load_runtime_state",
+        lambda _deployment_id, _root=None: {"pid": 4242},
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.local_verify.health_scan_ok",
+        lambda _items: True,
+    )
+    monkeypatch.setattr(
+        "hypervisor.deployment_registry.local_verify.scan_http",
+        lambda _uri: [],
+    )
+
+    payload = verify_local_deployment(deployment, check_health=True)
+    assert payload["local_target_ok"] is True
+    assert payload["runtime_status"] == "running"
+    assert payload["health_ok"] is True
+    assert payload["verified"] is True

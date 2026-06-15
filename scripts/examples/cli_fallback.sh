@@ -4,6 +4,7 @@ if [[ -z "${ROOT:-}" ]]; then
   ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 fi
 
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 if [[ -d "$ROOT/packages" ]]; then
   PACKAGE_PYTHONPATH="$(find "$ROOT/packages" -maxdepth 1 -mindepth 1 -type d | paste -sd: -)"
   export PYTHONPATH="$PACKAGE_PYTHONPATH${PYTHONPATH:+:$PYTHONPATH}"

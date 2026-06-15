@@ -1,14 +1,21 @@
 from __future__ import annotations
 
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 from urllib.parse import urlparse
 
 from uri3.resolvers.env_resolver import resolve_env
+from uri3.resolvers.file_resolver import resolve_file
 from uri3.resolvers.llm_resolver import resolve_llm
 from uri3.resolvers.log_resolver import resolve_log
-from uri3.resolvers.protocol_resolver import resolve_a2a, resolve_http_like, resolve_mcp, resolve_resource
-from uri3.resolvers.python_resolver import resolve_python
+from uri3.resolvers.protocol_resolver import (
+    resolve_a2a,
+    resolve_http_like,
+    resolve_mcp,
+    resolve_resource,
+)
 from uri3.resolvers.pypi_resolver import resolve_pypi
+from uri3.resolvers.python_resolver import resolve_python
 
 RESOURCE_SCHEMES = frozenset(
     {
@@ -48,6 +55,7 @@ RESOLVE_BY_SCHEME: dict[str, Callable[[str], Any]] = {
     "a2a": resolve_a2a,
     "mcp": resolve_mcp,
     "docker": _resolve_docker,
+    "file": resolve_file,
 }
 
 

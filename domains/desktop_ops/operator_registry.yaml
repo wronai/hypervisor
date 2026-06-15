@@ -1,0 +1,109 @@
+version: 1
+kind: taskinity.operator_registry
+metadata:
+  id: desktop-ops-operator-registry
+  domain_id: desktop_ops
+  description: Operator-facing capability cards for the generic desktop operator.
+
+runtime:
+  agent_ref: agent://desktop-operator
+  deployment_id: desktop-operator.local
+  package: uri2ops
+  health_uri: http://localhost:8791/health
+  card_uri: http://localhost:8791/.well-known/agent-card.json
+  a2a_tasks_uri: http://localhost:8791/a2a/tasks
+  mcp_tools_uri: http://localhost:8791/mcp/tools
+
+cards:
+  - id: browser
+    scheme: browser
+    adapter_boundary: packages/uri2ops
+    adapters:
+      - mock
+      - playwright
+    operations:
+      - id: browser.open
+        uri: browser://chrome/page/open
+        registry_operation: browser.open
+        side_effects: true
+        requires_approval: true
+      - id: browser.extract_dom
+        uri: browser://chrome/page/active/dom
+        registry_operation: browser.extract_dom
+        side_effects: false
+        produces_artifact: true
+      - id: browser.screenshot
+        uri: browser://chrome/page/active/screenshot
+        registry_operation: browser.screenshot
+        side_effects: false
+        produces_artifact: true
+      - id: browser.click
+        uri: browser://chrome/page/active/click
+        registry_operation: browser.click
+        side_effects: true
+        requires_approval: true
+
+  - id: screen
+    scheme: screen
+    adapter_boundary: packages/uri2ops
+    adapters:
+      - mock
+    operations:
+      - id: screen.observe
+        uri: screen://desktop/observe
+        registry_operation: screen.observe
+        side_effects: false
+        produces_artifact: true
+
+  - id: input
+    scheme: input
+    adapter_boundary: packages/uri2ops
+    adapters:
+      - mock
+    operations:
+      - id: input.type
+        uri: input://keyboard/type
+        registry_operation: input.type
+        side_effects: true
+        requires_approval: true
+
+  - id: pcwin
+    scheme: pcwin
+    adapter_boundary: packages/uri2ops
+    adapters:
+      - mock
+      - uia
+    operations:
+      - id: pcwin.focus
+        uri: pcwin://window/{id}/focus
+        registry_operation: pcwin.focus
+        side_effects: true
+        requires_approval: true
+      - id: pcwin.click
+        uri: pcwin://control/{id}/click
+        registry_operation: pcwin.click
+        side_effects: true
+        requires_approval: true
+
+  - id: android
+    scheme: android
+    adapter_boundary: packages/uri2ops
+    adapters:
+      - mock
+      - adb
+    operations:
+      - id: android.screenshot
+        uri: android://device/{id}/screenshot
+        registry_operation: android.screenshot
+        side_effects: false
+        produces_artifact: true
+      - id: android.dump_ui
+        uri: android://device/{id}/dump_ui
+        registry_operation: android.dump_ui
+        side_effects: false
+        produces_artifact: true
+      - id: android.tap
+        uri: android://device/{id}/tap
+        registry_operation: android.tap
+        side_effects: true
+        requires_approval: true

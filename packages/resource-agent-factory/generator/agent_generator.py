@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import sys
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
+from pprint import pformat
 
 import yaml
 from jinja2 import Environment, FileSystemLoader
@@ -25,9 +26,25 @@ TEMPLATES = PACKAGE_ROOT / "templates"
 OUTPUT_ROOT = ROOT / "agents" / "generated"
 
 
+def _default_port_for_agent(spec: AgentSpec, repo: Path) -> int:
+    try:
+        from hypervisor.deployment_registry.loader import load_deployment_registry
+        from hypervisor.deployment_registry.status import infer_port
+
+        registry = load_deployment_registry(repo)
+        matches = registry.by_agent_ref(f"agent://{spec.name}")
+        if matches:
+            return infer_port(matches[0])
+    except Exception:
+        pass
+    return 8101
+
+
 def render_template(env: Environment, template_name: str, dest: Path, context: dict) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     rendered = env.get_template(template_name).render(**context)
+    if rendered and not rendered.endswith("\n"):
+        rendered += "\n"
     dest.write_text(rendered, encoding="utf-8")
 
 
@@ -43,14 +60,19 @@ def generate_agent(spec_path: Path, *, output_root: Path | None = None) -> Path:
     output_dir = base_output / spec.output_dir_name
     env = Environment(loader=FileSystemLoader(TEMPLATES), trim_blocks=True, lstrip_blocks=True)
 
+    agent_card = spec_to_plain_dict(spec, contract_hash, source_ref=source_ref)
+    default_port = _default_port_for_agent(spec, ROOT)
     context = {
         "spec": spec,
         "source_ref": source_ref,
         "contract_hash": contract_hash,
+        "default_port": default_port,
         "python_header": python_file_header(source_ref, contract_hash),
         "dockerfile_header": dockerfile_header(source_ref, contract_hash),
         "markdown_header": markdown_generated_banner(source_ref, contract_hash),
-        "agent_card": spec_to_plain_dict(spec, contract_hash, source_ref=source_ref),
+        "agent_card": agent_card,
+        "agent_card_literal": pformat(agent_card, width=88, sort_dicts=False),
+        "spec_description_literal": pformat(spec.description, width=88),
         "capability_names": [cap.name for cap in spec.capabilities],
     }
 
@@ -67,8 +89,12 @@ def generate_agent(spec_path: Path, *, output_root: Path | None = None) -> Path:
         render_template(env, template, destination, context)
 
     marker_path = output_dir / ".generated.yaml"
+    readme_path = output_dir / "README.md"
+    # Record the markpact source using proper file:// URI
+    marker = generated_marker_payload(source_ref, contract_hash)
+    marker["markpact_readme"] = f"file://{readme_path.resolve().as_posix()}"
     marker_path.write_text(
-        yaml.safe_dump(generated_marker_payload(source_ref, contract_hash), sort_keys=False),
+        yaml.safe_dump(marker, sort_keys=False),
         encoding="utf-8",
     )
 

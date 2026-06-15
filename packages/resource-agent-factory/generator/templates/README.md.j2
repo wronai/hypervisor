@@ -6,11 +6,46 @@ Generated thin resource agent.
 - Version: `{{ spec.version }}`
 - Source: `{{ source_ref }}`
 - Contract hash: `{{ contract_hash }}`
+- Generator: `resource-agent-factory`
 
 ## Run
 
 ```bash
-uvicorn agents.generated.{{ spec.python_package }}.main:app --reload --port 8101
+uvicorn agents.generated.{{ spec.python_package }}.main:app --reload --port {{ default_port }}
+```
+
+## Reproduce
+
+```bash
+PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator {{ source_ref }}
+```
+
+## Markpact provenance
+
+```markpact:agent_generation {{ spec.name }}
+agent:
+  id: agent://{{ spec.name }}
+  package: agents.generated.{{ spec.python_package }}
+source:
+  contract: {{ source_ref }}
+  contract_hash: {{ contract_hash }}
+generator:
+  id: resource-agent-factory
+  command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator {{ source_ref }}
+runtime:
+  default_run: uvicorn agents.generated.{{ spec.python_package }}.main:app --reload --port {{ default_port }}
+logs:
+  hypervisor: log://hypervisor?grep={{ spec.name }}.local
+  process: log://file/output/logs/agents/{{ spec.name }}.local.process.log
+```
+
+```markpact:run_log {{ spec.name }}.local.latest
+inspect:
+  command: hypervisor inspect-agent {{ spec.name }}.local
+  uri: view://process/agent/{{ spec.name }}.local/latest
+logs:
+  hypervisor: log://hypervisor?grep={{ spec.name }}.local
+  process: log://file/output/logs/agents/{{ spec.name }}.local.process.log
 ```
 
 ## Endpoints
@@ -27,5 +62,5 @@ POST /commands
 ## Capabilities
 
 {% for cap in spec.capabilities %}
-- `{{ cap.name }}` — `{{ cap.type }}`{% if cap.uri %}, URI: `{{ cap.uri }}`{% endif %}{% if cap.command %}, command: `{{ cap.command }}`{% endif %}
+- `{{ cap.name }}` — `{{ cap.type }}`{% if cap.uri %}, URI: `{{ cap.uri }}`{% endif %}{% if cap.command %}, command: `{{ cap.command }}`{% endif %}{{ "\n" }}
 {% endfor %}

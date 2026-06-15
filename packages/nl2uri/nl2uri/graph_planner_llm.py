@@ -22,7 +22,7 @@ def build_graph_planner_system_prompt(*, kind: str) -> str:
                 "uri": "browser://chrome/page/open",
                 "operation": "open",
                 "kind": "command",
-                "payload": {"url": "http://localhost:8101/health"},
+                "payload": {"url": "http://localhost:<port>/health"},
             },
             {
                 "id": "extract_body",
@@ -43,20 +43,20 @@ def build_graph_planner_system_prompt(*, kind: str) -> str:
     }
     workflow_example = {
         "graph": {
-            "id": "weather-health",
+            "id": "<domain>-health",
             "version": 1,
             "kind": "workflow",
-            "description": "Generate weather agent, run it, verify health in browser",
+            "description": "Generate <domain> agent, run it, verify health in browser",
             "nodes": [
                 {
                     "id": "generate_domain",
-                    "uri": "domain://weather-map",
+                    "uri": "domain://<domain>",
                     "operation": "generate",
                     "kind": "command",
                 },
                 {
                     "id": "run_agent",
-                    "uri": "hypervisor://deployment/weather-map-agent.local/run",
+                    "uri": "hypervisor://deployment/<agent-id>.local/run",
                     "operation": "run",
                     "kind": "command",
                     "depends_on": ["generate_domain"],
@@ -66,7 +66,7 @@ def build_graph_planner_system_prompt(*, kind: str) -> str:
                     "uri": "browser://chrome/page/open",
                     "operation": "open",
                     "kind": "command",
-                    "payload": {"url": "http://localhost:8101/health"},
+                    "payload": {"url": "http://localhost:<port>/health"},
                     "depends_on": ["run_agent"],
                 },
             ],

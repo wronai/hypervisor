@@ -16,9 +16,10 @@ FILE_GRAPH="file://$(pwd)/$GRAPH"
 run_cli uri3 validate-workflow "$FILE_GRAPH"
 
 echo
-echo "Tip: In another terminal, watch logs live with log:// while running the workflow:"
+echo "Tip: In another terminal, inspect live/recent log content with log:// (use urish logs for treść, watch for snapshots):"
+echo '  urish logs '\''log://workflow/website-screenshot-schedule?tail=true&limit=20'\'''
+echo '  urish logs '\''log://events/website-screenshot-schedule?grep=screenshot|StepCompleted&limit=10'\'''
 echo '  urish watch '\''log://hypervisor?grep=website-screenshot-schedule|browser|screen'\'' --interval 1'
-echo '  # or for file log: urish watch '\''log://file/output/logs/hypervisor.log?grep=screenshot'\'' --interval 2'
 
 echo
 echo "=== touri dry-run ==="

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0 — 2026-06-15
+
+- Added mock physical operations for robot and device URI planning.
+- Operations: `robot://robot/{id}/state`, `move`, `stop`, `mission/{mission_id}/start`.
+- Operations: `device://device/{id}/status`, `read`, `write`.
+- Example: `examples/36_physical_ops/`.
+
 ## 0.5.0 — 2026-06-14
 
 - HTTP daemon: `uri2ops serve` with validate/plan/run endpoints.

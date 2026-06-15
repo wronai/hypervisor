@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from hypervisor.deployment_registry.supervisor import ensure_agent_healthy, inspect_agent
+from hypervisor.events import emit_operation_event, emit_result_event
 from hypervisor.paths import find_repo_root
 from hypervisor.repair.classifier import classify_inspection
 from hypervisor.repair.incident import build_incident_from_inspection, load_incident, write_incident
@@ -28,6 +29,24 @@ def _repo_root(root: str | Path | None) -> Path:
     return Path(root) if root is not None else find_repo_root()
 
 
+def _sync_registry_if_drifted(inspection: dict[str, Any], *, repo: Path) -> dict[str, Any] | None:
+    if not inspection.get("ok"):
+        return None
+    effective = str(inspection.get("effective_health_uri") or "")
+    declared = str(inspection.get("declared_health_uri") or "")
+    if not effective or not declared or effective == declared:
+        return None
+    deployment_id = str(inspection.get("id") or "")
+    if not deployment_id:
+        return None
+    from hypervisor.deployment_registry.registry_sync import sync_deployment_health_uri
+
+    try:
+        return sync_deployment_health_uri(deployment_id, effective, root=repo)
+    except Exception as exc:
+        return {"ok": False, "error": str(exc), "error_type": type(exc).__name__}
+
+
 def diagnose_agent(
     selector: str,
     *,
@@ -49,8 +68,82 @@ def diagnose_agent(
         "readiness": inspection.get("readiness"),
         "agent_readiness": inspection.get("agent_readiness"),
     }
-    diagnosis_body["repair_plan"] = build_repair_plan_from_diagnosis(diagnosis_body)
-    return _envelope(diagnosis_body)
+    if not inspection.get("ok"):
+        diagnosis_body["repair_plan"] = build_repair_plan_from_diagnosis(diagnosis_body)
+    result = _envelope(diagnosis_body)
+    emit_operation_event(
+        "REPAIR_DIAGNOSED",
+        f"{selector} repair diagnosis completed",
+        root=repo,
+        level="INFO" if result.get("ok") else "WARNING",
+        selector=str(result.get("id") or selector),
+        operation="repair-diagnose",
+        family=classification.get("family"),
+        readiness=inspection.get("readiness"),
+    )
+    return result
+
+
+def _repair_playbook_candidates(
+    diagnosis: dict[str, Any],
+    classification: dict[str, Any],
+    *,
+    playbook: str | None,
+) -> list[str]:
+    if playbook:
+        return [playbook]
+    known_case = diagnosis.get("known_case")
+    if known_case:
+        return list(known_case.get("repair_sequence") or [])[:4]
+    plan_steps = ((diagnosis.get("repair_plan") or {}).get("spec") or {}).get("steps") or []
+    return list(plan_steps or classification.get("safe_repairs") or [])[:4]
+
+
+def _execute_repair_playbooks(
+    candidates: list[str],
+    *,
+    selector: str,
+    repo: Path,
+    safe: bool,
+    approved: bool,
+    timeout: float,
+    inspection: dict[str, Any],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    actions: list[dict[str, Any]] = []
+    after = inspection
+    for name in candidates:
+        if safe and not is_playbook_allowed(name, max_level="level_1_safe_fix"):
+            actions.append({"playbook": name, "status": "blocked", "reason": "requires approval"})
+            continue
+        if playbook_requires_approval(name) and not approved:
+            actions.append({"playbook": name, "status": "blocked", "reason": "requires approval"})
+            continue
+        actions.append(apply_playbook(name, selector=selector, root=repo, approved=approved))
+        time.sleep(0.5)
+        after = inspect_agent(selector, root=repo, timeout=timeout)
+        if after.get("ok"):
+            break
+    return actions, after
+
+
+def _healthy_repair_apply_body(
+    selector: str,
+    diagnosis: dict[str, Any],
+    inspection: dict[str, Any],
+    *,
+    repo: Path,
+) -> dict[str, Any]:
+    registry_sync = _sync_registry_if_drifted(inspection, repo=repo)
+    body: dict[str, Any] = {
+        "ok": True,
+        "status": "healthy",
+        "id": selector,
+        "actions": [],
+        "diagnosis": diagnosis,
+    }
+    if registry_sync is not None:
+        body["registry_sync"] = registry_sync
+    return body
 
 
 def repair_apply(
@@ -65,48 +158,60 @@ def repair_apply(
     repo = _repo_root(root)
     diagnosis = diagnose_agent(selector, root=repo, timeout=timeout)
     inspection = diagnosis["inspection"]
-    if inspection.get("ok"):
-        return _envelope(
-            {
-                "ok": True,
-                "status": "healthy",
-                "id": selector,
-                "actions": [],
-                "diagnosis": diagnosis,
-            }
+    if inspection.get("ok") and not playbook:
+        body = _healthy_repair_apply_body(selector, diagnosis, inspection, repo=repo)
+        result = _envelope(body)
+        emit_result_event(
+            "repair-apply",
+            str(result.get("id") or selector),
+            result,
+            root=repo,
+            success_code="REPAIR_APPLY_SKIPPED_HEALTHY",
+            failure_code="REPAIR_APPLY_FAILED",
+            success_message=f"{selector} repair apply skipped; agent is healthy",
+            failure_message=f"{selector} repair apply failed",
+            extra_fields={"registry_sync": body.get("registry_sync")},
         )
+        return result
 
     classification = diagnosis["classification"]
-    known_case = diagnosis.get("known_case")
-    if playbook:
-        candidates = [playbook]
-    elif known_case:
-        candidates = list(known_case.get("repair_sequence") or [])[:4]
-    else:
-        candidates = list(classification.get("safe_repairs") or [])[:3]
-
-    actions: list[dict[str, Any]] = []
-    for name in candidates:
-        if safe and not is_playbook_allowed(name, max_level="level_1_safe_fix"):
-            actions.append({"playbook": name, "status": "blocked", "reason": "requires approval"})
-            continue
-        if playbook_requires_approval(name) and not approved:
-            actions.append({"playbook": name, "status": "blocked", "reason": "requires approval"})
-            continue
-        actions.append(apply_playbook(name, selector=selector, root=repo, approved=approved))
-
-    time.sleep(0.5)
-    after = inspect_agent(selector, root=repo, timeout=timeout)
-    return _envelope(
-        {
-            "ok": bool(after.get("ok")),
-            "status": "repaired" if after.get("ok") else "degraded",
-            "id": selector,
-            "actions": actions,
-            "diagnosis": diagnosis,
-            "after": after,
-        }
+    candidates = _repair_playbook_candidates(diagnosis, classification, playbook=playbook)
+    actions, after = _execute_repair_playbooks(
+        candidates,
+        selector=selector,
+        repo=repo,
+        safe=safe,
+        approved=approved,
+        timeout=timeout,
+        inspection=inspection,
     )
+    registry_sync = _sync_registry_if_drifted(after, repo=repo) if after.get("ok") else None
+    body = {
+        "ok": bool(after.get("ok")),
+        "status": "repaired" if after.get("ok") else "degraded",
+        "id": selector,
+        "actions": actions,
+        "diagnosis": diagnosis,
+        "after": after,
+    }
+    if registry_sync is not None:
+        body["registry_sync"] = registry_sync
+    result = _envelope(body)
+    emit_result_event(
+        "repair-apply",
+        str(result.get("id") or selector),
+        result,
+        root=repo,
+        success_code="REPAIR_APPLY_COMPLETED",
+        failure_code="REPAIR_APPLY_FAILED",
+        success_message=f"{selector} repair apply completed",
+        failure_message=f"{selector} repair apply failed",
+        extra_fields={
+            "action_count": len(actions),
+            "registry_sync": registry_sync,
+        },
+    )
+    return result
 
 
 def supervise_with_repair(
@@ -131,13 +236,25 @@ def supervise_with_repair(
         max_attempts=max_attempts,
     )
     if healed.get("ok"):
-        return _envelope(
+        result = _envelope(
             {
                 **healed,
                 "result_type": "repair",
                 "phase": "healthy",
             }
         )
+        emit_result_event(
+            "repair-heal",
+            selector,
+            result,
+            root=repo,
+            success_code="URI_HEALER_COMPLETED",
+            failure_code="URI_HEALER_FAILED",
+            success_message=f"{selector} uri-healer completed",
+            failure_message=f"{selector} uri-healer failed",
+            extra_fields={"phase": "healthy"},
+        )
+        return result
 
     after = healed.get("after") or inspect_agent(
         selector, root=repo, timeout=timeout, log_limit=log_limit
@@ -180,7 +297,7 @@ def supervise_with_repair(
                 "sandbox": sandbox,
             }
 
-    return _envelope(
+    result = _envelope(
         {
             "ok": False,
             "status": "incident_created",
@@ -194,6 +311,22 @@ def supervise_with_repair(
             "escalation": escalation,
         }
     )
+    emit_result_event(
+        "repair-heal",
+        selector,
+        result,
+        root=repo,
+        success_code="URI_HEALER_COMPLETED",
+        failure_code="URI_HEALER_INCIDENT_CREATED",
+        success_message=f"{selector} uri-healer completed",
+        failure_message=f"{selector} uri-healer created incident",
+        extra_fields={
+            "phase": "learn",
+            "incident_uri": incident.self_uri,
+            "proposal_created": bool(proposal),
+        },
+    )
+    return result
 
 
 def learn_from_incident(
@@ -225,7 +358,7 @@ def learn_from_incident(
             root=repo,
         )
 
-    return _envelope(
+    result = _envelope(
         {
             "ok": bool(sandbox_result.get("ok")) if sandbox_result else True,
             "status": "proposal_created",
@@ -234,3 +367,15 @@ def learn_from_incident(
             "sandbox": sandbox_result,
         }
     )
+    emit_result_event(
+        "repair-learn",
+        agent_id or str(incident_path),
+        result,
+        root=repo,
+        success_code="REPAIR_LEARN_COMPLETED",
+        failure_code="REPAIR_LEARN_FAILED",
+        success_message="repair learn completed",
+        failure_message="repair learn failed",
+        extra_fields={"incident_path": str(incident_path)},
+    )
+    return result

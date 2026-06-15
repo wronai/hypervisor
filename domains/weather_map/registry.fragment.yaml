@@ -1,2 +1,5 @@
 domain_pack: domains/weather_map
 agent_contract: contracts/agents/weather_map_agent.yaml
+default_deployment_id: weather-map-agent.local
+deployment_selector_aliases:
+  weather-agent: weather-map-agent.local

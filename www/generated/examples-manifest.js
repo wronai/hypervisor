@@ -1,7 +1,7 @@
 window.__EXAMPLES_MANIFEST__ = {
   "testSummary": {
-    "pytest": "34 catalogued · see pytest tests/examples",
-    "runSh": "25 run.sh · bash scripts/test-all-examples.sh",
+    "pytest": "36 catalogued · see pytest tests/examples",
+    "runSh": "27 run.sh · bash scripts/test-all-examples.sh",
     "testedAt": "generated"
   },
   "examples": [
@@ -13,7 +13,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "lokalny quickstart",
       "cmd": "bash examples/01_quickstart_local/run.sh",
       "uris": [],
-      "office": null
+      "office": "Quickstart"
     },
     {
       "id": "02_uri3_scan_http",
@@ -23,7 +23,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "skanowanie HTTP/A2A-like",
       "cmd": "# see examples/02_uri3_scan_http/README.md",
       "uris": [],
-      "office": null
+      "office": "URI3 · scan"
     },
     {
       "id": "03_ssh_remote_agent",
@@ -33,7 +33,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "remote agent host przez Docker + SSH",
       "cmd": "# see examples/03_ssh_remote_agent/README.md",
       "uris": [],
-      "office": null
+      "office": "Remote · SSH"
     },
     {
       "id": "04_nl2a_weather_map",
@@ -43,7 +43,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "prompt do weather-map Domain Pack",
       "cmd": "bash examples/04_nl2a_weather_map/run.sh",
       "uris": [],
-      "office": null
+      "office": "NL2A · weather"
     },
     {
       "id": "05_meta_repair",
@@ -53,7 +53,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "meta-agent repair",
       "cmd": "# see examples/05_meta_repair/README.md",
       "uris": [],
-      "office": null
+      "office": "Meta · repair"
     },
     {
       "id": "06_orders_agent",
@@ -63,7 +63,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "kontrakt agenta zamówień",
       "cmd": "# see examples/06_orders_agent/README.md",
       "uris": [],
-      "office": null
+      "office": "Orders"
     },
     {
       "id": "07_invoices_agent",
@@ -73,7 +73,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "prompt agenta faktur",
       "cmd": "# see examples/07_invoices_agent/README.md",
       "uris": [],
-      "office": null
+      "office": "Invoices"
     },
     {
       "id": "08_evolution",
@@ -83,7 +83,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "evolution proposals",
       "cmd": "# see examples/08_evolution/README.md",
       "uris": [],
-      "office": null
+      "office": "Evolution"
     },
     {
       "id": "09_run_agent_hypervisor",
@@ -93,7 +93,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "uruchomienie agenta przez hypervisor",
       "cmd": "bash examples/09_run_agent_hypervisor/run.sh",
       "uris": [],
-      "office": null
+      "office": "Hypervisor"
     },
     {
       "id": "10_browser_operator",
@@ -103,7 +103,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Browser Operator Mock",
       "cmd": "bash examples/10_browser_operator/run.sh",
       "uris": [],
-      "office": null
+      "office": "Browser"
     },
     {
       "id": "11_playwright_browser",
@@ -113,7 +113,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "uri2ops Playwright browser operator (v0.2)",
       "cmd": "bash examples/11_playwright_browser/run.sh",
       "uris": [],
-      "office": null
+      "office": "Playwright"
     },
     {
       "id": "12_android_operator",
@@ -123,7 +123,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "uri2ops Android operator (v0.3)",
       "cmd": "bash examples/12_android_operator/run.sh",
       "uris": [],
-      "office": null
+      "office": "Android"
     },
     {
       "id": "13_nl2uri_multi_uri_graph",
@@ -133,7 +133,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "nl2uri multi-URI output (single / list / tree / task / graph)",
       "cmd": "bash examples/13_nl2uri_multi_uri_graph/run.sh",
       "uris": [],
-      "office": null
+      "office": "NL2URI · graph"
     },
     {
       "id": "13_pcwin_operator",
@@ -143,7 +143,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "uri2ops Windows UI Automation operator (v0.4)",
       "cmd": "bash examples/13_pcwin_operator/run.sh",
       "uris": [],
-      "office": null
+      "office": "PC Win"
     },
     {
       "id": "14_uri2ops_serve",
@@ -153,7 +153,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "uri2ops serve daemon + remote registry (v0.5)",
       "cmd": "bash examples/14_uri2ops_serve/run.sh",
       "uris": [],
-      "office": null
+      "office": "URI2OPS"
     },
     {
       "id": "14_workflow_executor_mock",
@@ -163,7 +163,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Workflow Executor MVP (mock adapters)",
       "cmd": "bash examples/14_workflow_executor_mock/run.sh",
       "uris": [],
-      "office": null
+      "office": "Workflow"
     },
     {
       "id": "15_compact_uri_flow",
@@ -173,7 +173,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Compact URI Flow",
       "cmd": "bash examples/15_compact_uri_flow/run.sh",
       "uris": [],
-      "office": null
+      "office": "Flow"
     },
     {
       "id": "15_playwright_browser",
@@ -183,7 +183,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Playwright browser adapter (optional)",
       "cmd": "# see examples/15_playwright_browser/README.md",
       "uris": [],
-      "office": null
+      "office": "Playwright"
     },
     {
       "id": "16_llm_graph_planner",
@@ -193,7 +193,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "LLM Graph Planner (v0.6.3)",
       "cmd": "bash examples/16_llm_graph_planner/run.sh",
       "uris": [],
-      "office": null
+      "office": "LLM Graph"
     },
     {
       "id": "16_www_landing_monitor",
@@ -203,7 +203,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "monitor landing WWW",
       "cmd": "# see examples/16_www_landing_monitor/README.md",
       "uris": [],
-      "office": null
+      "office": "Monitor"
     },
     {
       "id": "17_flow_vs_graph",
@@ -213,7 +213,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Flow vs Graph",
       "cmd": "bash examples/17_flow_vs_graph/run.sh",
       "uris": [],
-      "office": null
+      "office": "Comparison"
     },
     {
       "id": "18_llm_flow_planner",
@@ -223,7 +223,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "LLM Compact Flow Planner (v0.6.4)",
       "cmd": "bash examples/18_llm_flow_planner/run.sh",
       "uris": [],
-      "office": null
+      "office": "LLM Flow"
     },
     {
       "id": "20_touri_capabilities",
@@ -233,7 +233,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Example 20: touri capabilities",
       "cmd": "bash examples/20_touri_capabilities/run.sh",
       "uris": [],
-      "office": null
+      "office": "Touri"
     },
     {
       "id": "21_touri_voice",
@@ -243,7 +243,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Example 21: touri voice capabilities",
       "cmd": "bash examples/21_touri_voice/run.sh",
       "uris": [],
-      "office": null
+      "office": "Voice"
     },
     {
       "id": "22_dashboard_agent",
@@ -253,7 +253,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "dashboard-agent capabilities",
       "cmd": "# see examples/22_dashboard_agent/README.md",
       "uris": [],
-      "office": null
+      "office": "Dashboard"
     },
     {
       "id": "22_markpact_weather",
@@ -263,7 +263,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Example 22: markpact capability for touri",
       "cmd": "bash examples/22_markpact_weather/run.sh",
       "uris": [],
-      "office": null
+      "office": "Markpact"
     },
     {
       "id": "23_nl_to_agent_tutorial",
@@ -283,7 +283,7 @@ window.__EXAMPLES_MANIFEST__ = {
       "desc": "Golden path (15 min tutorial)",
       "cmd": "bash examples/30_golden_path/run.sh",
       "uris": [],
-      "office": null
+      "office": "Golden"
     },
     {
       "id": "31_office_day",
@@ -342,6 +342,26 @@ window.__EXAMPLES_MANIFEST__ = {
       "title": "physical ops robot/device URIs",
       "desc": "physical ops robot/device URIs",
       "cmd": "bash examples/36_physical_ops/run.sh",
+      "uris": [],
+      "office": "Physical"
+    },
+    {
+      "id": "37_agent_screenshot_analysis",
+      "num": "37",
+      "category": "agents",
+      "title": "two agents: screenshot capture + screenshot analysis",
+      "desc": "two agents: screenshot capture + screenshot analysis",
+      "cmd": "bash examples/37_agent_screenshot_analysis/run.sh",
+      "uris": [],
+      "office": null
+    },
+    {
+      "id": "38_autonomous_agents",
+      "num": "38",
+      "category": "agents",
+      "title": "autonomous multi-agent collaboration",
+      "desc": "autonomous multi-agent collaboration",
+      "cmd": "bash examples/38_autonomous_agents/run.sh",
       "uris": [],
       "office": null
     }

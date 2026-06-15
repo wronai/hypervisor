@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from nl2uri.planner_templates import deterministic_weather_plan, generic_plan, is_weather_prompt
+from nl2uri.domain_registry import match_domain, resolve_plan
 
 
 def validate_tree_data(tree: dict[str, Any]) -> list[str]:
@@ -34,29 +34,35 @@ def is_structured_uri_tree(tree: dict[str, Any]) -> bool:
 
 
 def normalize_llm_tree(prompt: str, candidate: dict[str, Any]) -> dict[str, Any]:
-    if is_weather_prompt(prompt):
-        base = deterministic_weather_plan(prompt)
+    entry = match_domain(prompt)
+    if entry is not None:
+        base = entry.deterministic_plan(prompt)
         if not is_structured_uri_tree(candidate):
-            base["planner_warning"] = "LLM returned simplified URI Tree; deterministic weather template used."
+            base["planner_warning"] = (
+                f"LLM returned simplified URI Tree; deterministic {entry.domain_id} template used."
+            )
             return base
         errors = validate_tree_data(candidate)
         if errors:
             base["planner_warning"] = (
-                "LLM URI Tree failed schema validation; deterministic weather template used. "
+                f"LLM URI Tree failed schema validation; deterministic {entry.domain_id} template used. "
                 + "; ".join(errors[:3])
             )
             return base
-        if candidate.get("domain", {}).get("id") != "weather_map":
-            base["planner_warning"] = "LLM changed weather domain id; deterministic weather template used."
+        expected_id = base.get("domain", {}).get("id")
+        if candidate.get("domain", {}).get("id") != expected_id:
+            base["planner_warning"] = (
+                f"LLM changed {entry.domain_id} domain id; deterministic {entry.domain_id} template used."
+            )
             return base
         return candidate
     if not is_structured_uri_tree(candidate):
-        plan = generic_plan(prompt)
+        plan = resolve_plan(prompt)
         plan["planner_warning"] = "LLM returned simplified URI Tree; generic deterministic template used."
         return plan
     errors = validate_tree_data(candidate)
     if errors:
-        plan = generic_plan(prompt)
+        plan = resolve_plan(prompt)
         plan["planner_warning"] = (
             "LLM URI Tree failed schema validation; generic deterministic template used. "
             + "; ".join(errors[:3])

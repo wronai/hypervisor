@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 import yaml
 
 from uri3.config.uri_yaml import unwrap_uri_yaml_document
+from uri3.paths import find_repo_root
 from uri3.resolvers.dispatch import RESOLVE_BY_SCHEME, RESOURCE_SCHEMES, scheme_from_uri
 from uri3.resolvers.explain_verification import build_verification_hints, summarize_fallbacks
 
@@ -15,16 +16,8 @@ RESOLUTION_ORDER = ("uri3", "touri", "uri2ops", "hypervisor", "denied")
 _CONFIG_NAME = "config/touri.uri.yaml"
 
 
-def _find_repo_root(start: Path | None = None) -> Path:
-    current = (start or Path.cwd()).resolve()
-    for path in (current, *current.parents):
-        if (path / "pyproject.toml").is_file() and (path / "examples").is_dir():
-            return path
-    return current
-
-
 def load_touri_config(root: Path | None = None) -> dict[str, Any]:
-    base = root or _find_repo_root()
+    base = root or find_repo_root(strict=False)
     path = base / _CONFIG_NAME
     if not path.exists():
         return {
@@ -38,7 +31,7 @@ def load_touri_config(root: Path | None = None) -> dict[str, Any]:
 def default_touri_registry(root: Path | None = None) -> Path:
     cfg = load_touri_config(root)
     rel = ((cfg.get("registry") or {}).get("path")) or "examples/20_touri_capabilities"
-    base = root or _find_repo_root()
+    base = root or find_repo_root(strict=False)
     env_override = os.getenv("TOURI_REGISTRY")
     if env_override:
         return Path(env_override)
@@ -168,6 +161,23 @@ def _match_uri2ops(scheme: str, uri: str, root: Path | None) -> dict[str, Any] |
 
 
 def _match_hypervisor(scheme: str, uri: str) -> dict[str, Any] | None:
+    if scheme in {"health", "view", "repair", "runtime"}:
+        parts = [part for part in urlparse(uri).path.split("/") if part]
+        if urlparse(uri).netloc:
+            parts = [urlparse(uri).netloc, *parts]
+        return {
+            "matched_registry": "hypervisor",
+            "uri": uri,
+            "scheme": scheme,
+            "parts": parts,
+            "action": parts[-1] if parts else scheme,
+            "note": "system URI handled by hypervisor deployment registry",
+            "verification": build_verification_hints(
+                data_quality=None,
+                fallbacks=None,
+                matched_registry="hypervisor",
+            ),
+        }
     if scheme != "hypervisor":
         return None
     parsed = urlparse(uri)
@@ -200,7 +210,7 @@ def explain_uri(
     registry_root: str | Path | None = None,
     root: Path | None = None,
 ) -> dict[str, Any]:
-    repo_root = root or _find_repo_root()
+    repo_root = root or find_repo_root(strict=False)
     scheme = scheme_from_uri(uri)
     cfg = load_touri_config(repo_root)
     order = list(cfg.get("resolution_order") or RESOLUTION_ORDER)

@@ -8,35 +8,30 @@ from hypervisor.deployment_registry.health_uri import (
     command_port_from_runtime,
     resolve_effective_health_uri,
 )
-from hypervisor.deployment_registry.inspection.incidents import BLOCKING_INCIDENT_CODES, blocking_incidents, classify_incidents
+from hypervisor.deployment_registry.inspection.incidents import (
+    BLOCKING_INCIDENT_CODES,
+    blocking_incidents,
+    classify_incidents,
+)
 from hypervisor.deployment_registry.inspection.probe import probe_http, read_error_logs
 from hypervisor.deployment_registry.inspection.readiness import build_agent_readiness_report
 from hypervisor.deployment_registry.lifecycle import agent_logs_uri
 from hypervisor.deployment_registry.models import AgentDeployment
 from hypervisor.deployment_registry.port_utils import expected_agent_id
 from hypervisor.deployment_registry.run_plans import build_run_plan
-from hypervisor.deployment_registry.runtime_state import is_process_alive, load_runtime_state, runtime_status
+from hypervisor.deployment_registry.runtime_state import (
+    is_process_alive,
+    load_runtime_state,
+    runtime_status,
+)
 
 
-def _state_pid(state: dict[str, Any]) -> int | None:
-    process = state.get("process") or {}
-    if isinstance(process, dict) and process.get("pid") is not None:
-        return process.get("pid")
-    return state.get("pid")
-
-
-def _state_command(state: dict[str, Any]) -> str:
-    process = state.get("process") or {}
-    if isinstance(process, dict) and process.get("command"):
-        return str(process["command"])
-    return str(state.get("command") or "")
-
-
-def _state_health_uri(state: dict[str, Any]) -> str:
-    network = state.get("network") or {}
-    if isinstance(network, dict) and network.get("effective_health_uri"):
-        return str(network["effective_health_uri"])
-    return str(state.get("health_uri") or "")
+# Use shared to reduce duplication (helps large file + CC metrics across the package).
+from hypervisor.deployment_registry.runtime_state import (
+    state_command as _state_command,
+    state_pid as _state_pid,
+    state_health_uri as _state_health_uri,
+)
 
 
 def _runtime_command_port(state: dict[str, Any], plan: dict[str, Any]) -> int | None:
@@ -58,7 +53,23 @@ class InspectionContext:
     effective_health_uri: str
     effective_card_uri: str | None
     log_uri: str
+    process_log_uri: str | None
     expected_agent: str | None
+    expected_service: str | None
+
+
+def _derive_effective_card_uri(effective_health_uri: str | None, state: dict[str, Any], run_plan: dict[str, Any], deployment: AgentDeployment) -> str | None:
+    from urllib.parse import urlsplit
+
+    card = state.get("card_uri") or run_plan.get("card_uri") or deployment.card_uri
+    if effective_health_uri:
+        try:
+            port = urlsplit(effective_health_uri).port
+            if port:
+                card = f"http://localhost:{port}/.well-known/agent-card.json"
+        except Exception:
+            pass
+    return str(card) if card else None
 
 
 def gather_inspection_context(deployment: AgentDeployment, *, repo: Path) -> InspectionContext:
@@ -74,15 +85,9 @@ def gather_inspection_context(deployment: AgentDeployment, *, repo: Path) -> Ins
         _state_health_uri(state) or run_plan.get("health_uri") or deployment.health_uri or ""
     )
     effective_health_uri = resolve_effective_health_uri(state, run_plan)
-    effective_port = None
-    if effective_health_uri:
-        from urllib.parse import urlsplit
-
-        effective_port = urlsplit(effective_health_uri).port
-    effective_card_uri = state.get("card_uri") or run_plan.get("card_uri") or deployment.card_uri
-    if effective_port:
-        effective_card_uri = f"http://localhost:{effective_port}/.well-known/agent-card.json"
+    effective_card_uri = _derive_effective_card_uri(effective_health_uri, state, run_plan, deployment)
     log_uri = str(state.get("log_uri") or agent_logs_uri(deployment.id, root=repo))
+    process_log_uri = state.get("process_log_uri")
     return InspectionContext(
         deployment=deployment,
         state=state,
@@ -92,10 +97,38 @@ def gather_inspection_context(deployment: AgentDeployment, *, repo: Path) -> Ins
         runtime=runtime,
         stored_health_uri=stored_health_uri,
         effective_health_uri=effective_health_uri,
-        effective_card_uri=str(effective_card_uri) if effective_card_uri else None,
+        effective_card_uri=effective_card_uri,
         log_uri=log_uri,
+        process_log_uri=str(process_log_uri) if process_log_uri else None,
         expected_agent=expected_agent_id(deployment.agent_ref),
+        expected_service=str(deployment.metadata.get("expected_service") or "") or None,
     )
+
+
+def _merge_log_results(
+    primary: dict[str, Any], secondary: dict[str, Any], *, limit: int
+) -> dict[str, Any]:
+    entries = list(primary.get("entries") or []) + list(secondary.get("entries") or [])
+    merged = dict(primary)
+    merged["sources"] = [
+        {
+            "uri": primary.get("uri"),
+            "summary": primary.get("summary"),
+            "error_count": primary.get("error_count", 0),
+            "hint": primary.get("hint"),
+        },
+        {
+            "uri": secondary.get("uri"),
+            "summary": secondary.get("summary"),
+            "error_count": secondary.get("error_count", 0),
+            "hint": secondary.get("hint"),
+        },
+    ]
+    merged["entries"] = entries[-limit:]
+    merged["error_count"] = int(primary.get("error_count", 0)) + int(
+        secondary.get("error_count", 0)
+    )
+    return merged
 
 
 def probe_agent_endpoints(
@@ -109,13 +142,18 @@ def probe_agent_endpoints(
         context.effective_health_uri or None,
         timeout=timeout,
         expected_agent=context.expected_agent,
+        expected_service=context.expected_service,
     )
     card = probe_http(
         context.effective_card_uri,
         timeout=timeout,
         expected_agent=context.expected_agent,
+        expected_service=context.expected_service,
     )
     logs = read_error_logs(context.log_uri, root=repo, limit=log_limit)
+    if context.process_log_uri:
+        process_logs = read_error_logs(context.process_log_uri, root=repo, limit=log_limit)
+        logs = _merge_log_results(logs, process_logs, limit=log_limit)
     return health, card, logs
 
 
@@ -137,6 +175,7 @@ def build_inspection_report(
         card=card,
         logs=logs,
         expected_agent=context.expected_agent,
+        run_plan=context.run_plan,
     )
     blocking = blocking_incidents(incidents)
     service_status = (
@@ -173,6 +212,7 @@ def build_inspection_report(
         "health": health,
         "card": card,
         "log_uri": context.log_uri,
+        "process_log_uri": context.process_log_uri,
         "log_errors": logs,
         "declared_health_uri": context.deployment.health_uri,
         "stored_health_uri": context.stored_health_uri or None,

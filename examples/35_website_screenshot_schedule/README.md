@@ -44,33 +44,34 @@ uri run workflow://graph/website-screenshot-schedule --approve --adapter playwri
 Recurring host schedule is **not** auto-installed by chat — use `scripts/www/install-cron.sh`
 or wire a custom cron entry that calls the workflow URI.
 
-**Watching logs live with `log://` in watch mode (via urish / uri):**
+**Viewing log content (`treść logów`) via `log://*` (recommended):**
 
-Run the workflow in one terminal (use `--adapter mock` to avoid sync/async playwright issues with real browser inside the flow executor asyncio context):
-
-```bash
-urish run workflow://graph/website-screenshot-schedule --approve --adapter mock
-```
-
-In another terminal, watch logs using log:// URI:
+The detailed execution trace for this workflow (StepStarted, screenshot_softreck, artifact_uri for the PNGs, WorkflowCompleted etc.) lives in the per-workflow event file. It is addressable as a first-class `log://` URI:
 
 ```bash
-# Watch hypervisor logs filtered for this schedule (live, Ctrl-C to stop)
-urish watch 'log://hypervisor?grep=website-screenshot-schedule|open|screenshot|browser' --interval 1
+# Short, clean forms (new)
+urish logs 'log://workflow/website-screenshot-schedule?limit=10'
+urish logs 'log://events/website-screenshot-schedule?tail=true&limit=8'           # only recent / changes
+urish logs 'log://workflow/website-screenshot-schedule?grep=screenshot_softreck|artifact_uri&limit=5'
 
-# Or one-shot recent entries
-urish logs 'log://hypervisor?grep=website-screenshot-schedule&limit=50'
-
-# Watch a specific file log (e.g. process log)
-urish watch 'log://file/output/logs/hypervisor.log?grep=website' --interval 2
-
-# Direct "uri" (via fallback)
-uri watch 'log://hypervisor?grep=website-screenshot-schedule' --interval 1
+# Explicit file form (also works everywhere)
+urish logs 'log://file/output/events/workflows/website-screenshot-schedule.jsonl?tail=true&limit=5'
 ```
 
-The `urish watch` / `uri watch` for `log://` polls and emits RuntimeEvent snapshots with the log summary.
+Live observation vs one-shot content:
+- `urish logs 'log://...'`  → actual log lines / parsed events (the treść you want)
+- `urish watch 'log://...'` → polling RuntimeEvent snapshots (status only, use --json for payload)
 
-See `packages/urish/urish/commands/observe_commands.py` and `backends/watch.py` (and `read_log_uri`).
+Examples with watch (snapshots):
+
+```bash
+urish watch 'log://hypervisor?grep=website-screenshot-schedule|browser|screen' --interval 1
+urish watch 'log://events/website-screenshot-schedule?tail=true&limit=3' --interval 2 --json
+```
+
+The workflow-specific events are intentionally separate from the main `log://hypervisor` / `log://hypervisor-events` (those contain agent lifecycle, repair, deployment etc.).
+
+See also the tip printed by `bash examples/35_website_screenshot_schedule/run.sh`.
 
 **file:// URI support** (rolled out for markpact sources, graphs, flows, agent READMEs):
 The defining sources for this schedule (task_graph.yaml and this README as provenance/chat source) are referenceable as:

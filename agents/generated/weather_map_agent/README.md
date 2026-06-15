@@ -63,4 +63,7 @@ POST /commands
 
 ## Capabilities
 
-- `read_weather_map` — `resource_read`, URI: `resource://weather/maps/{place}/forecast/{days}`- `generate_weather_map` — `command`, command: `GenerateWeatherMap`
+- `read_weather_map` — `resource_read`, URI: `resource://weather/maps/{place}/forecast/{days}`
+
+- `generate_weather_map` — `command`, command: `GenerateWeatherMap`
+

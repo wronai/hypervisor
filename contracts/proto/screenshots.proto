@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package app.screenshots.v1;
+
+message AnalyzeScreenshotCommand {
+  string artifact_uri = 1;
+  string output_dir = 2;
+  string prompt = 3;
+}
+
+message ScreenshotObservation {
+  string artifact_uri = 1;
+  string summary = 2;
+  string observation_path = 3;
+  repeated string tags = 4;
+}
+
+message CaptureAndAnalyzeCommand {
+  string url = 1;
+  string output_dir = 2;
+  string adapter = 3;
+  bool dry_run = 4;
+}
+
+message CaptureAndAnalysisResult {
+  string screenshot_artifact_uri = 1;
+  string observation_path = 2;
+  ScreenshotObservation observation = 3;
+}

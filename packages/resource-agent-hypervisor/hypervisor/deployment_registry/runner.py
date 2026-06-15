@@ -18,6 +18,7 @@ from hypervisor.deployment_registry.supervisor import (
     inspect_agent,
     supervise_agent,
 )
+from hypervisor.deployment_registry.watch import supervise_watch
 
 __all__ = [
     "agent_logs_uri",
@@ -31,5 +32,6 @@ __all__ = [
     "restart_agent",
     "run_agent",
     "supervise_agent",
+    "supervise_watch",
     "stop_agent",
 ]

@@ -1,0 +1,7 @@
+auto_generated: 'true'
+source: contracts/agents/screenshot_analysis_agent.yaml
+contract_hash: sha256:a541c061b26d8303d14f931b3ad48dea9ada37990cc1a9426d2c1c0a13fbc77e
+generator: resource-agent-factory
+generation_command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator
+  contracts/agents/screenshot_analysis_agent.yaml
+markpact_readme: file:///home/tom/github/wronai/hypervisor/agents/generated/screenshot_analysis_agent/README.md

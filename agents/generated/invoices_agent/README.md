@@ -13,7 +13,7 @@ Generated thin resource agent.
 ## Run
 
 ```bash
-uvicorn agents.generated.invoices_agent.main:app --reload --port 8101
+uvicorn agents.generated.invoices_agent.main:app --reload --port 8123
 ```
 
 ## Reproduce
@@ -35,7 +35,7 @@ generator:
   id: resource-agent-factory
   command: PYTHONPATH=packages/resource-agent-factory python -m generator.agent_generator contracts/agents/invoices_agent.yaml
 runtime:
-  default_run: uvicorn agents.generated.invoices_agent.main:app --reload --port 8101
+  default_run: uvicorn agents.generated.invoices_agent.main:app --reload --port 8123
 logs:
   hypervisor: log://hypervisor?grep=invoices-agent.local
   process: log://file/output/logs/agents/invoices-agent.local.process.log
@@ -63,4 +63,9 @@ POST /commands
 
 ## Capabilities
 
-- `read_invoice` — `resource_read`, URI: `resource://invoices/{invoice_id}`- `read_invoice_events` — `resource_read`, URI: `resource://invoices/{invoice_id}/events`- `create_invoice` — `command`, command: `CreateInvoice`
+- `read_invoice` — `resource_read`, URI: `resource://invoices/{invoice_id}`
+
+- `read_invoice_events` — `resource_read`, URI: `resource://invoices/{invoice_id}/events`
+
+- `create_invoice` — `command`, command: `CreateInvoice`
+

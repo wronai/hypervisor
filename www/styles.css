@@ -270,6 +270,31 @@ button {
   color: var(--muted);
 }
 
+.html-preview {
+  margin-top: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0b0d0b;
+}
+
+.html-preview__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.html-preview__frame {
+  display: block;
+  width: 100%;
+  min-height: 280px;
+  border: 0;
+  background: #fff;
+}
+
 .block-actions,
 .uri-actions {
   display: flex;

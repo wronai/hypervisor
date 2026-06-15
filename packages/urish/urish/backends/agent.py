@@ -29,9 +29,16 @@ def agent_action(action: str, selector: str, **kwargs: Any) -> dict[str, Any]:
     if handler is None:
         return {"ok": False, "not_found": True, "error": f"unknown agent action: {action}"}
     if action == "run":
-        return handler(selector, detach=kwargs.get("detach", True), **kwargs)
+        run_kwargs = dict(kwargs)
+        run_kwargs.setdefault("detach", True)
+        return handler(selector, **run_kwargs)
     if action == "repair":
-        return handler(selector, safe=kwargs.get("safe", True), approved=kwargs.get("approve", False))
+        repair_kwargs = dict(kwargs)
+        repair_kwargs.setdefault("safe", True)
+        repair_kwargs.setdefault("approved", repair_kwargs.pop("approve", False))
+        return handler(selector, **repair_kwargs)
     if action == "supervise":
-        return handler(selector, repair=kwargs.get("repair", "auto"), **kwargs)
+        supervise_kwargs = dict(kwargs)
+        supervise_kwargs.setdefault("repair", "auto")
+        return handler(selector, **supervise_kwargs)
     return handler(selector, **kwargs)

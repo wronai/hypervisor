@@ -10,9 +10,9 @@ services:
     volumes:
       - ../www:/app/www:ro
       - ../packages:/app/packages:ro
-      - ../agents/generated:/app/agents/generated:ro
+      - ../agents/generated:/app/agents/generated
       - ../config:/app/config:ro
-      - ../contracts:/app/contracts:ro
+      - ../contracts:/app/contracts
       - ../deployments:/app/deployments
       - ../domains:/app/domains:ro
       - ../examples:/app/examples:ro

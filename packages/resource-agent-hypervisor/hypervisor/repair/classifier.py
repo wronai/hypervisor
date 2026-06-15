@@ -16,6 +16,8 @@ ERROR_FAMILIES: tuple[ErrorFamily, ...] = (
     ErrorFamily(
         "PORT_CONFLICT",
         (
+            r"PORT_OCCUPIED",
+            r"FOREIGN_SERVICE_ON_PORT",
             r"address already in use",
             r"port is already allocated",
             r"Port .* zaj[eę]ty",
@@ -108,7 +110,8 @@ def _log_text(log_payload: dict[str, Any] | None) -> list[str]:
 def _collect_text(inspection: dict[str, Any], log_payload: dict[str, Any] | None) -> str:
     health = inspection.get("health") or {}
     chunks = _incident_text(inspection)
-    chunks.extend(_warning_text(inspection))
+    if not inspection.get("ok"):
+        chunks.extend(_warning_text(inspection))
     chunks.append(str(health.get("error") or ""))
     chunks.extend(_log_text(log_payload))
     return "\n".join(chunks).lower()

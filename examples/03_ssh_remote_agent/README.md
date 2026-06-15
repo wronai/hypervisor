@@ -30,19 +30,17 @@ Kontener wystawia:
 
 ```txt
 SSH:        ssh://deploy@localhost:2222/opt/agents   (hasło: deploy)
-HTTP mock:  http://localhost:8101  (patrz uwaga o porcie poniżej)
+HTTP mock:  http://localhost:8140  (domyślnie; zmień przez SSH_AGENT_HEALTH_HOST_PORT)
 Agent Card: /.well-known/agent-card.json
 Health:     /health
 ```
 
-### Uwaga: port HTTP
-
-Compose mapuje `8101:8101`. Jeśli port `8101` na hoście jest zajęty, Docker może użyć innego portu:
+Compose mapuje `${SSH_AGENT_HEALTH_HOST_PORT:-8140}:8101`. Jeśli port jest zajęty:
 
 ```bash
+SSH_AGENT_HEALTH_HOST_PORT=8110 docker compose -f examples/03_ssh_remote_agent/docker-compose.yml -p hypervisor-ssh up -d --build
 docker port hypervisor-ssh-agent-host 8101
-# np. 0.0.0.0:8102 → skanuj http://localhost:8102
-uri3 scan http://localhost:8102
+uri3 scan http://localhost:8110
 ```
 
 ## 3. Sprawdzenie (scan / verify)

@@ -6,10 +6,10 @@ from __future__ import annotations
 
 import os
 from typing import Any
+from urllib.parse import urlparse
 
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
-
 from runtime_client.client import ResourceRuntimeClient
 
 from .agent_card import AGENT_CARD
@@ -52,18 +52,30 @@ def well_known_agent_card_json() -> dict[str, Any]:
 
 @router.get("/resources/read")
 def read_resource(uri: str = Query(...)) -> dict[str, Any]:
-    allowed = [cap.get("uri") for cap in AGENT_CARD["capabilities"] if cap.get("type") == "resource_read"]
+    allowed = [
+        cap.get("uri")
+        for cap in AGENT_CARD["capabilities"]
+        if cap.get("type") == "resource_read"
+    ]
     if not _uri_allowed(uri, allowed):
         raise HTTPException(status_code=403, detail=f"URI not exposed by this agent: {uri}")
-    return client.read_resource(uri)
+    return _read_uri(uri)
 
 
 @router.post("/commands")
 def dispatch_command(request: CommandRequest) -> dict[str, Any]:
-    allowed = [cap.get("command") for cap in AGENT_CARD["capabilities"] if cap.get("type") == "command"]
+    allowed = [
+        cap.get("command")
+        for cap in AGENT_CARD["capabilities"]
+        if cap.get("type") == "command"
+    ]
     if request.command not in allowed:
-        raise HTTPException(status_code=403, detail=f"Command not exposed by this agent: {request.command}")
-    return client.dispatch_command(request.command, request.payload)
+        raise HTTPException(
+            status_code=403,
+            detail=f"Command not exposed by this agent: {request.command}",
+        )
+    command_uri = _command_uri(request.command)
+    return _dispatch_command(request.command, request.payload, uri=command_uri)
 
 
 @router.get("/skills/read_weather_map")
@@ -71,11 +83,15 @@ def skill_read_weather_map(place: str, days: str) -> dict[str, Any]:
     uri = "resource://weather/maps/{place}/forecast/{days}"
     uri = uri.replace("{place}", place)
     uri = uri.replace("{days}", days)
-    return client.read_resource(uri)
+    return _read_uri(uri)
 
 @router.post("/skills/generate_weather_map")
 def skill_generate_weather_map(payload: dict[str, Any]) -> dict[str, Any]:
-    return client.dispatch_command("GenerateWeatherMap", payload)
+    return _dispatch_command(
+        "GenerateWeatherMap",
+        payload,
+        uri=None,
+    )
 
 
 def _uri_allowed(uri: str, templates: list[str | None]) -> bool:
@@ -86,3 +102,43 @@ def _uri_allowed(uri: str, templates: list[str | None]) -> bool:
         if uri.startswith(prefix):
             return True
     return False
+
+
+def _read_uri(uri: str) -> dict[str, Any]:
+    scheme = urlparse(uri).scheme
+    if scheme == "resource":
+        return client.read_resource(uri)
+    if scheme == "file":
+        from uri3.resolvers.resolve_core import resolve
+
+        resolved = resolve(uri)
+        return {
+            "ok": True,
+            "uri": uri,
+            "result_type": "file",
+            "data": resolved.target,
+        }
+    from urish.backends.call import call_uri
+
+    return call_uri(uri, {}, dry_run=False)
+
+
+def _command_uri(command: str) -> str | None:
+    for cap in AGENT_CARD["capabilities"]:
+        if cap.get("type") == "command" and cap.get("command") == command:
+            uri = cap.get("uri")
+            return str(uri) if uri else None
+    return None
+
+
+def _dispatch_command(
+    command: str,
+    payload: dict[str, Any],
+    *,
+    uri: str | None = None,
+) -> dict[str, Any]:
+    if uri:
+        from urish.backends.call import call_uri
+
+        return call_uri(uri, payload, dry_run=bool(payload.get("dry_run", False)))
+    return client.dispatch_command(command, payload)

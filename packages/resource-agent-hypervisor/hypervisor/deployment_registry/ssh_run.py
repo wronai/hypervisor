@@ -54,5 +54,65 @@ def build_ssh_run_plan(
         "command": command,
         "command_string": " ".join(command),
         "env": display_env,
-        "hint": "Remote start is dry-run only in v0.6; deploy first, then run manually or via future remote detach.",
+        "hint": "Use hypervisor run-agent with --detach to start the agent on the remote host.",
     }
+
+
+def apply_ssh_run_plan(
+    plan: dict[str, Any],
+    *,
+    wait_healthy: bool = False,
+    timeout_s: float = 30.0,
+) -> dict[str, Any]:
+    import subprocess
+    import time
+    import urllib.error
+    import urllib.request
+
+    from uri3.resolvers.ssh_resolver import build_ssh_command, parse_ssh_uri
+
+    ssh_ref = parse_ssh_uri(plan["target_uri"])
+    remote_path = plan["remote_path"]
+    log_path = f"{remote_path}/agent.process.log"
+    remote_start = (
+        f"cd {shlex.quote(remote_path)} && "
+        f"nohup {plan['remote_command']} >> {shlex.quote(log_path)} 2>&1 & echo $!"
+    )
+    completed = subprocess.run(
+        build_ssh_command(ssh_ref, remote_start),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    payload: dict[str, Any] = {
+        "ok": completed.returncode == 0,
+        "transport": "ssh",
+        "deployment_id": plan["deployment_id"],
+        "remote_path": remote_path,
+        "remote_command": plan["remote_command"],
+        "log_path": log_path,
+        "stdout": completed.stdout.strip(),
+        "stderr": completed.stderr.strip(),
+        "health_uri": plan["health_uri"],
+    }
+    if completed.returncode != 0:
+        payload["error"] = completed.stderr.strip() or "remote start failed"
+        return payload
+    pid_text = completed.stdout.strip().splitlines()[-1] if completed.stdout.strip() else ""
+    if pid_text.isdigit():
+        payload["remote_pid"] = int(pid_text)
+    if wait_healthy:
+        deadline = time.time() + timeout_s
+        health_uri = str(plan["health_uri"])
+        while time.time() < deadline:
+            try:
+                with urllib.request.urlopen(health_uri, timeout=2) as response:
+                    if response.status == 200:
+                        payload["service_healthy"] = True
+                        break
+            except (urllib.error.URLError, TimeoutError):
+                time.sleep(0.5)
+        else:
+            payload["service_healthy"] = False
+            payload["warning"] = f"remote process started but health check timed out: {health_uri}"
+    return payload

@@ -184,20 +184,27 @@ function enhanceBlocks(root) {
 
 function appendPlanActions(root, askResult) {
   const data = askResult?.data || {};
-  const uris = collectUris(data);
-  if (!uris.length) return;
+  const planUris = Array.isArray(data.planned_uris)
+    ? data.planned_uris.filter((uri) => typeof uri === "string" && uri.includes("://"))
+    : collectUris(data);
+  const displayUris = collectUris(data);
+  if (!planUris.length && !displayUris.length) return;
 
   const actions = document.createElement("div");
   actions.className = "plan-actions";
-  actions.appendChild(
-    actionButton("Run plan (dry-run)", () => runPlan(uris, { dryRun: true, approved: false })),
-  );
-  actions.appendChild(
-    actionButton("Run plan (approve)", () =>
-      runPlan(uris, { dryRun: false, approved: true }),
-    ),
-  );
-  uris.slice(0, 4).forEach((uri) => {
+  if (planUris.length) {
+    actions.appendChild(
+      actionButton("Run plan (dry-run)", () =>
+        runPlan(planUris, { dryRun: true, approved: false }),
+      ),
+    );
+    actions.appendChild(
+      actionButton("Run plan (approve)", () =>
+        runPlan(planUris, { dryRun: false, approved: true }),
+      ),
+    );
+  }
+  displayUris.slice(0, 4).forEach((uri) => {
     actions.appendChild(actionButton(shortUri(uri), () => previewUri(uri), "uri-chip"));
   });
   root.appendChild(actions);
@@ -235,11 +242,16 @@ async function runPlan(uris, { dryRun = true, approved = false } = {}) {
       text: md,
     });
     for (const step of result.results || []) {
-      if (step.message_markdown) {
-        appendMessage("assistant", renderMarkdown(step.message_markdown), {
+      if (step.message_markdown || step.presentation_markdown || step.html) {
+        const stepMd =
+          step.presentation_markdown ||
+          step.message_markdown ||
+          "```json\n" + JSON.stringify(step, null, 2) + "\n```";
+        const stepWrap = appendMessage("assistant", renderMarkdown(stepMd), {
           uris: collectUris(step),
-          text: step.message_markdown,
+          text: stepMd,
         });
+        appendPresentationHtml(stepWrap, step);
       }
     }
     if (result.speech) {
@@ -462,6 +474,22 @@ function formatPreviewMarkdown(result) {
   ].join("\n");
 }
 
+function appendPresentationHtml(root, result) {
+  const html = result.html || (result.data && result.data.html);
+  if (!html || typeof html !== "string") return;
+  const wrap = document.createElement("div");
+  wrap.className = "html-preview";
+  wrap.dataset.html = html;
+  wrap.innerHTML = `
+    <div class="html-preview__label">HTML · ${escapeHtml(result.source_uri || result.view_uri || result.uri || "view")}</div>
+    <iframe class="html-preview__frame" sandbox="allow-same-origin" title="URI HTML preview"></iframe>
+  `;
+  const body = root.querySelector(".msg-body");
+  if (body) body.appendChild(wrap);
+  const frame = wrap.querySelector(".html-preview__frame");
+  if (frame) frame.srcdoc = html;
+}
+
 async function callUri(uri, { approved = false, echoUser = true, dryRun = null } = {}) {
   if (isBusy) return;
   if (echoUser) {
@@ -481,8 +509,15 @@ async function callUri(uri, { approved = false, echoUser = true, dryRun = null }
         policy: "dev",
       }),
     });
-    const md = result.message_markdown || "```json\n" + JSON.stringify(result, null, 2) + "\n```";
-    appendMessage("assistant", renderMarkdown(md), { uris: collectUris(result.data), text: md });
+    const md =
+      result.presentation_markdown ||
+      result.message_markdown ||
+      "```json\n" + JSON.stringify(result, null, 2) + "\n```";
+    const wrap = appendMessage("assistant", renderMarkdown(md), {
+      uris: collectUris(result.data),
+      text: md,
+    });
+    appendPresentationHtml(wrap, result);
     await loadSystemState();
   } catch (err) {
     appendMessage("assistant", `<p><strong>URI error</strong></p><p>${escapeHtml(String(err))}</p>`, {

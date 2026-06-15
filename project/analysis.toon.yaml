@@ -1,141 +1,142 @@
-# code2llm | 756f 50895L | python:494,yaml:115,json:52,shell:37,toml:17,javascript:15,txt:6,yml:4,proto:4,mk:2,j2:1 | 2026-06-15
-# generated in 0.21s
-# CC̅=3.7 | critical:11/2293 | dups:0 | cycles:0
+# code2llm | 875f 59860L | python:554,yaml:130,json:80,shell:40,toml:17,javascript:15,proto:9,txt:6,yml:4,mk:2,j2:1 | 2026-06-15
+# generated in 0.23s
+# CC̅=3.7 | critical:12/2612 | dups:0 | cycles:0
 
-HEALTH[11]:
-  🟡 CC    _build_proof_checks CC=20 (limit:15)
-  🟡 CC    render_proof_text CC=15 (limit:15)
-  🟡 CC    _build_incident_event CC=15 (limit:15)
+HEALTH[12]:
+  🟡 CC    detect_intent CC=17 (limit:15)
+  🟡 CC    _handle_schema_uri CC=20 (limit:15)
+  🟡 CC    describe_agent CC=17 (limit:15)
+  🟡 CC    _render_markdown CC=70 (limit:15)
+  🟡 CC    _validate_example CC=25 (limit:15)
+  🟡 CC    _validate_deployments CC=26 (limit:15)
+  🟡 CC    applyLanguage CC=24 (limit:15)
   🟡 CC    createVoiceController CC=29 (limit:15)
   🟡 CC    _applyOfficeCardCopy CC=15 (limit:15)
-  🟡 CC    applyLanguage CC=24 (limit:15)
-  🟡 CC    _merge_markpact_scenarios CC=15 (limit:15)
-  🟡 CC    category_for CC=20 (limit:15)
-  🟡 CC    load_office_chains CC=15 (limit:15)
-  🟡 CC    load_workflow_graph CC=15 (limit:15)
-  🟡 CC    _ensure_weather_agent CC=15 (limit:15)
+  🟡 CC    resolve_contract_path CC=22 (limit:15)
+  🟡 CC    fetch_agent_artifacts CC=21 (limit:15)
+  🟡 CC    handle_contract_uri CC=21 (limit:15)
 
 REFACTOR[1]:
-  1. split 11 high-CC methods  (CC>15)
+  1. split 12 high-CC methods  (CC>15)
 
-PIPELINES[647]:
-  [1] Src [_policy_options]: _policy_options → load_context → find_repo_root → _walk_up
+PIPELINES[763]:
+  [1] Src [clear_scenario_registry_cache]: clear_scenario_registry_cache
       PURITY: 100% pure
-  [2] Src [_context_policy]: _context_policy → load_context → find_repo_root → _walk_up
+  [2] Src [scenario_by_id]: scenario_by_id → load_scenario_registries → _repo_root
       PURITY: 100% pure
-  [3] Src [root]: root
+  [3] Src [scenarios_for_kind]: scenarios_for_kind → scenario_registries_for_kind → load_scenario_registries → _repo_root
       PURITY: 100% pure
-  [4] Src [nl_cmd]: nl_cmd → ask_cmd → ask_prompt → split_nl_commands
+  [4] Src [_policy_options]: _policy_options → load_context → find_repo_root → _walk_up
       PURITY: 100% pure
-  [5] Src [select_cmd]: select_cmd → select_from_envelope → select_path
+  [5] Src [_context_policy]: _context_policy → load_context → find_repo_root → _walk_up
       PURITY: 100% pure
-  [6] Src [shell_cmd]: shell_cmd → run_repl → load_context → find_repo_root → ...(1 more)
+  [6] Src [root]: root
       PURITY: 100% pure
-  [7] Src [doctor_cmd]: doctor_cmd → doctor_all → find_repo_root → _walk_up
+  [7] Src [nl_cmd]: nl_cmd → ask_cmd → ask_prompt → split_nl_commands
       PURITY: 100% pure
-  [8] Src [shortcuts_cmd]: shortcuts_cmd → _emit → render_result → _render_table → ...(3 more)
+  [8] Src [select_cmd]: select_cmd → select_from_envelope → select_path
       PURITY: 100% pure
-  [9] Src [proof_cmd]: proof_cmd → proof_uri → _call_proof_context → classify_uri → ...(2 more)
+  [9] Src [shell_cmd]: shell_cmd → run_repl → load_context → find_repo_root → ...(1 more)
       PURITY: 100% pure
-  [10] Src [context_list_cmd]: context_list_cmd → list_contexts → context_dir → find_repo_root → ...(1 more)
+  [10] Src [doctor_cmd]: doctor_cmd → doctor_all → find_repo_root → _walk_up
       PURITY: 100% pure
-  [11] Src [context_show_cmd]: context_show_cmd → load_context → find_repo_root → _walk_up
+  [11] Src [shortcuts_cmd]: shortcuts_cmd → _emit → render_result → _render_table → ...(3 more)
       PURITY: 100% pure
-  [12] Src [context_use_cmd]: context_use_cmd
+  [12] Src [proof_cmd]: proof_cmd → proof_uri → _call_proof_context → classify_uri → ...(2 more)
       PURITY: 100% pure
-  [13] Src [main]: main → list
+  [13] Src [context_list_cmd]: context_list_cmd → list_contexts → context_dir → find_repo_root → ...(1 more)
       PURITY: 100% pure
-  [14] Src [_meta_help]: _meta_help → _register_meta
+  [14] Src [context_show_cmd]: context_show_cmd → load_context → find_repo_root → _walk_up
       PURITY: 100% pure
-  [15] Src [_meta_dry_on]: _meta_dry_on → _register_meta
+  [15] Src [context_use_cmd]: context_use_cmd
       PURITY: 100% pure
-  [16] Src [_meta_dry_off]: _meta_dry_off → _register_meta
+  [16] Src [main]: main → list
       PURITY: 100% pure
-  [17] Src [_meta_json]: _meta_json → _register_meta
+  [17] Src [from_flags]: from_flags
       PURITY: 100% pure
-  [18] Src [_meta_yaml]: _meta_yaml → _register_meta
+  [18] Src [_meta_help]: _meta_help → _register_meta
       PURITY: 100% pure
-  [19] Src [_meta_text]: _meta_text → _register_meta
+  [19] Src [_meta_dry_on]: _meta_dry_on → _register_meta
       PURITY: 100% pure
-  [20] Src [register_runtime_commands]: register_runtime_commands → register_call_commands → load_payload
+  [20] Src [_meta_dry_off]: _meta_dry_off → _register_meta
       PURITY: 100% pure
-  [21] Src [register_dashboard_commands]: register_dashboard_commands → create_dashboard → plan_ecosystem → normalize_profile
+  [21] Src [_meta_json]: _meta_json → _register_meta
       PURITY: 100% pure
-  [22] Src [register_agent_commands]: register_agent_commands → agent_action → handler
+  [22] Src [_meta_yaml]: _meta_yaml → _register_meta
       PURITY: 100% pure
-  [23] Src [register_ecosystem_commands]: register_ecosystem_commands → detect_intent → _detect_kind → _detect_agent_action → ...(1 more)
+  [23] Src [_meta_text]: _meta_text → _register_meta
       PURITY: 100% pure
-  [24] Src [register_governance_commands]: register_governance_commands → register_ticket_commands → list_tickets → tickets_dir → ...(2 more)
+  [24] Src [register_runtime_commands]: register_runtime_commands → register_call_commands → load_payload
       PURITY: 100% pure
-  [25] Src [_ask_ecosystem_plan]: _ask_ecosystem_plan → plan_ecosystem → normalize_profile
+  [25] Src [register_dashboard_commands]: register_dashboard_commands → create_dashboard → plan_ecosystem → normalize_profile
       PURITY: 100% pure
-  [26] Src [_ask_agent_plan]: _ask_agent_plan → agent_uri
+  [26] Src [register_agent_commands]: register_agent_commands → agent_action → handler
       PURITY: 100% pure
-  [27] Src [_ask_workflow_plan]: _ask_workflow_plan → is_screenshot_schedule_prompt
+  [27] Src [register_ecosystem_commands]: register_ecosystem_commands → detect_intent → _detect_kind → try_scenario_intent → ...(2 more)
       PURITY: 100% pure
-  [28] Src [_ask_domain_plan]: _ask_domain_plan → plan_from_prompt → is_weather_prompt
+  [28] Src [register_governance_commands]: register_governance_commands → register_ticket_commands → list_tickets → tickets_dir → ...(2 more)
       PURITY: 100% pure
-  [29] Src [cmd_explain]: cmd_explain → explain_ecosystem → repo_root → find_repo_root → ...(1 more)
+  [29] Src [_ask_ecosystem_plan]: _ask_ecosystem_plan → plan_ecosystem → normalize_profile
       PURITY: 100% pure
-  [30] Src [cmd_apply]: cmd_apply → apply_ecosystem → repo_root → find_repo_root → ...(1 more)
+  [30] Src [_ask_agent_plan]: _ask_agent_plan → agent_uri
       PURITY: 100% pure
-  [31] Src [cmd_schema_check]: cmd_schema_check → schema_check_ecosystem → repo_root → find_repo_root → ...(1 more)
+  [31] Src [_ask_agent_factory_plan]: _ask_agent_factory_plan → infer_agent_name → _slug
       PURITY: 100% pure
-  [32] Src [cmd_profiles]: cmd_profiles → _emit → print
+  [32] Src [_ask_workflow_plan]: _ask_workflow_plan → is_screenshot_schedule_prompt
       PURITY: 100% pure
-  [33] Src [main]: main → build_parser
+  [33] Src [_ask_domain_plan]: _ask_domain_plan → plan_from_prompt → resolve_plan → match_domain → ...(2 more)
       PURITY: 100% pure
-  [34] Src [to_dict]: to_dict
+  [34] Src [_ask_weather_plan]: _ask_weather_plan → plan_weather_forecast → extract_weather_place → _ascii_place
       PURITY: 100% pure
-  [35] Src [to_dict]: to_dict
+  [35] Src [cmd_explain]: cmd_explain → explain_ecosystem → repo_root → find_repo_root → ...(1 more)
       PURITY: 100% pure
-  [36] Src [operations_cmd]: operations_cmd → resolve_operation_registry → load_registry_config → registry_config_path
+  [36] Src [cmd_apply]: cmd_apply → apply_ecosystem → repo_root → find_repo_root → ...(1 more)
       PURITY: 100% pure
-  [37] Src [registry_cmd]: registry_cmd → _print → print
+  [37] Src [cmd_schema_check]: cmd_schema_check → schema_check_ecosystem → repo_root → find_repo_root → ...(1 more)
       PURITY: 100% pure
-  [38] Src [validate_cmd]: validate_cmd → _print → print
+  [38] Src [cmd_profiles]: cmd_profiles → _emit → print
       PURITY: 100% pure
-  [39] Src [plan_cmd]: plan_cmd → _print → print
+  [39] Src [main]: main → build_parser
       PURITY: 100% pure
-  [40] Src [run_cmd]: run_cmd → run_task
+  [40] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [41] Src [serve_cmd]: serve_cmd → create_app → health_router
+  [41] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [42] Src [main]: main
+  [42] Src [operations_cmd]: operations_cmd → resolve_operation_registry → load_registry_config → registry_config_path
       PURITY: 100% pure
-  [43] Src [from_mapping]: from_mapping → list
+  [43] Src [registry_cmd]: registry_cmd → _print → print
       PURITY: 100% pure
-  [44] Src [get]: get
+  [44] Src [validate_cmd]: validate_cmd → _print → print
       PURITY: 100% pure
-  [45] Src [require]: require
+  [45] Src [plan_cmd]: plan_cmd → _print → print
       PURITY: 100% pure
-  [46] Src [__init__]: __init__
+  [46] Src [run_cmd]: run_cmd → run_task
       PURITY: 100% pure
-  [47] Src [registry]: registry → resolve_operation_registry → load_registry_config → registry_config_path
+  [47] Src [serve_cmd]: serve_cmd → create_app → health_router
       PURITY: 100% pure
-  [48] Src [registry_export]: registry_export → registry_document
+  [48] Src [main]: main
       PURITY: 100% pure
-  [49] Src [list_operations]: list_operations
+  [49] Src [from_mapping]: from_mapping → list
       PURITY: 100% pure
-  [50] Src [describe_operation]: describe_operation
+  [50] Src [get]: get
       PURITY: 100% pure
 
 LAYERS:
-  generator/                      CC̄=5.3    ←in:11  →out:4
-  │ validate                     0L  0C    3m  CC=11     ←5
-  │ hashutil                     0L  0C    1m  CC=1      ←2
-  │ model                        0L  2C    2m  CC=7      ←2
+  generator/                      CC̄=5.3    ←in:16  →out:4
+  │ validate                     0L  0C    3m  CC=11     ←6
+  │ hashutil                     0L  0C    1m  CC=1      ←3
+  │ model                        0L  2C    2m  CC=7      ←3
   │ __init__                     0L  0C    0m  CC=0.0    ←0
-  │ Dockerfile.j2                0L  0C    0m  CC=0.0    ←0
   │
-  scripts/                        CC̄=4.2    ←in:0  →out:0
-  │ !! effective_weather_playwright   455L  0C   15m  CC=15     ←1
+  scripts/                        CC̄=4.4    ←in:0  →out:0
+  │ effective_weather_playwright   466L  0C   17m  CC=14     ←1
+  │ !! audit_agent_reports        427L  3C    6m  CC=26     ←0
   │ build_examples_docs        327L  0C   20m  CC=8      ←0
   │ build_landing_integrations   313L  0C   18m  CC=12     ←0
-  │ checks_structure           244L  0C   15m  CC=11     ←1
+  │ checks_structure           276L  0C   17m  CC=11     ←1
   │ test_monitors.sh           179L  1C    2m  CC=0.0    ←0
   │ parsers                    170L  0C    3m  CC=12     ←1
-  │ !! build_examples_manifest    159L  0C    7m  CC=20     ←0
+  │ build_examples_manifest    164L  0C    8m  CC=11     ←0
   │ areas                      156L  0C    3m  CC=13     ←2
   │ install-cron.sh            150L  0C    4m  CC=0.0    ←0
   │ audit                      144L  0C    5m  CC=14     ←1
@@ -147,7 +148,7 @@ LAYERS:
   │ render                      83L  0C    5m  CC=3      ←1
   │ monitor_url                 83L  0C    2m  CC=5      ←0
   │ doql_host_preview.sh        74L  0C    0m  CC=0.0    ←0
-  │ cli_fallback.sh             61L  0C    1m  CC=0.0    ←0
+  │ cli_fallback.sh             62L  0C    1m  CC=0.0    ←0
   │ run_uri3_workflow           58L  0C    1m  CC=4      ←0
   │ architecture_gate.sh        56L  0C    1m  CC=0.0    ←0
   │ about_parser                53L  0C    3m  CC=7      ←2
@@ -159,61 +160,69 @@ LAYERS:
   │ smoke.sh                    28L  0C    0m  CC=0.0    ←0
   │ __init__                    20L  0C    0m  CC=0.0    ←0
   │ ensure_editable_install.sh    19L  0C    0m  CC=0.0    ←0
+  │ fix-generated-ownership.sh    18L  0C    0m  CC=0.0    ←0
   │ test-all-examples.sh         5L  0C    0m  CC=0.0    ←0
   │
-  packages/                       CC̄=3.8    ←in:0  →out:0
-  │ cli                        495L  0C   28m  CC=8      ←0
-  │ uri_client                 445L  1C   29m  CC=9      ←4
-  │ lifecycle                  432L  0C   16m  CC=7      ←4
-  │ graph_planner              414L  0C   15m  CC=12     ←5
+  packages/                       CC̄=4.0    ←in:0  →out:0
+  │ !! uri_client                 713L  1C   52m  CC=20     ←5
+  │ !! agent_describe             677L  1C   16m  CC=70     ←3
+  │ !! uri_resolver               562L  0C   19m  CC=22     ←1
+  │ !! cli                        523L  0C   29m  CC=8      ←0
+  │ agent_factory              450L  0C   18m  CC=12     ←5
+  │ lifecycle                  423L  0C   15m  CC=7      ←5
+  │ scenario_registry          410L  0C   30m  CC=14     ←8
   │ watch                      408L  0C   17m  CC=14     ←1
-  │ !! scenario_registry          402L  0C   28m  CC=15     ←2
+  │ graph_planner              399L  0C   13m  CC=12     ←5
   │ apply_executor             394L  2C   15m  CC=13     ←1
   │ supervisor                 381L  0C   10m  CC=11     ←5
-  │ chat_format                356L  0C   23m  CC=14     ←5
-  │ routes                     354L  5C   21m  CC=8      ←0
+  │ proof                      368L  1C   20m  CC=12     ←1
+  │ chat_format                365L  0C   23m  CC=14     ←6
+  │ routes                     356L  5C   21m  CC=9      ←0
   │ cli                        319L  0C   19m  CC=9      ←0
   │ generator                  315L  0C    9m  CC=7      ←3
-  │ graph_repair               315L  0C   27m  CC=7      ←2
-  │ repl                       296L  1C   25m  CC=9      ←1
-  │ runtime_state              295L  0C   24m  CC=12     ←7
+  │ graph_repair               315L  0C   27m  CC=7      ←1
+  │ runtime_state              295L  0C   24m  CC=12     ←8
+  │ repl                       294L  1C   24m  CC=10     ←1
   │ gate                       292L  2C   10m  CC=14     ←2
-  │ !! proof                      281L  0C   13m  CC=20     ←1
-  │ !! events_service             275L  0C   16m  CC=15     ←1
-  │ runner                     275L  0C   20m  CC=14     ←12
-  │ explain                    268L  0C    9m  CC=14     ←12
-  │ run_executor               260L  0C   13m  CC=10     ←2
+  │ ask                        289L  0C   11m  CC=8      ←3
+  │ events_service             283L  0C   19m  CC=13     ←1
+  │ call                       278L  0C    9m  CC=12     ←19
+  │ runner                     275L  0C   20m  CC=14     ←9
+  │ run_executor               274L  0C   13m  CC=10     ←2
+  │ explain                    261L  0C    8m  CC=14     ←12
   │ envelope                   252L  0C   20m  CC=10     ←8
   │ cli                        246L  0C   15m  CC=6      ←0
   │ stopper                    239L  0C   11m  CC=11     ←4
-  │ ask                        232L  0C    9m  CC=8      ←3
+  │ !! intent                     238L  0C    7m  CC=17     ←3
   │ pipeline                   231L  1C    6m  CC=13     ←1
+  │ policy                     224L  1C   11m  CC=14     ←6
   │ step_runner                219L  0C    8m  CC=6      ←1
   │ backend_dispatch           216L  0C   18m  CC=7      ←2
   │ stt_whisper                213L  0C    8m  CC=9      ←1
   │ data_quality               208L  1C   11m  CC=6      ←0
   │ supervisor                 199L  0C    8m  CC=10     ←8
-  │ policy                     197L  1C   10m  CC=14     ←6
+  │ registry.yaml              195L  0C    0m  CC=0.0    ←0
   │ apply                      190L  0C    6m  CC=5      ←3
+  │ status                     188L  0C   11m  CC=13     ←8
   │ replay                     187L  0C   13m  CC=7      ←4
-  │ registry.yaml              187L  0C    0m  CC=0.0    ←0
-  │ intent                     186L  0C    7m  CC=13     ←3
   │ incidents                  184L  0C    7m  CC=13     ←1
+  │ agent_commands             182L  0C    1m  CC=1      ←0
   │ incident                   181L  0C   11m  CC=8      ←1
   │ plan_runner                173L  1C    5m  CC=12     ←1
   │ core                       171L  0C   13m  CC=12     ←6
   │ boundaries                 159L  0C    5m  CC=7      ←0
+  │ cli_commands               159L  0C    6m  CC=7      ←1
   │ render                     158L  0C    9m  CC=11     ←2
-  │ cli_commands               158L  0C    6m  CC=8      ←1
+  │ artifacts                  156L  0C    5m  CC=9      ←3
   │ docker_resolver            154L  1C    7m  CC=12     ←5
   │ pipeline                   153L  2C    4m  CC=6      ←1
-  │ status                     152L  0C   10m  CC=11     ←6
   │ call_commands              149L  0C    1m  CC=1      ←1
   │ output_classifier          149L  1C   13m  CC=4      ←2
   │ probe                      148L  0C    6m  CC=13     ←1
   │ graph_planner_llm          147L  0C    3m  CC=4      ←1
   │ loader                     145L  0C    9m  CC=14     ←7
   │ cli                        144L  0C   10m  CC=3      ←1
+  │ domain_registry            142L  1C   10m  CC=7      ←3
   │ verify                     138L  0C    7m  CC=8      ←5
   │ classifier                 138L  1C    5m  CC=7      ←1
   │ cli                        137L  0C    8m  CC=6      ←0
@@ -221,19 +230,23 @@ LAYERS:
   │ evolve                     136L  0C    5m  CC=7      ←1
   │ execution_models           135L  4C    6m  CC=5      ←2
   │ playbooks                  134L  0C   10m  CC=8      ←2
-  │ agent_commands             130L  0C    1m  CC=1      ←0
+  │ agent_generator            132L  0C    5m  CC=5      ←4
   │ dashboard                  128L  0C    1m  CC=12     ←2
   │ stream                     127L  0C    6m  CC=12     ←1
+  │ reader                     127L  0C    5m  CC=10     ←8
   │ monitor_webhook            127L  0C    6m  CC=9      ←1
   │ cli                        127L  0C    9m  CC=5      ←0
   │ proposal_from_source       127L  0C    3m  CC=11     ←4
   │ process_discovery          124L  0C    7m  CC=9      ←2
   │ models                     124L  4C    6m  CC=7      ←0
   │ explain                    122L  0C    8m  CC=7      ←1
-  │ uri2ops_adapter            122L  1C    9m  CC=9      ←4
   │ registry                   121L  3C    5m  CC=10     ←2
+  │ templates                  121L  0C    5m  CC=1      ←0
+  │ agent_resolution           120L  0C   10m  CC=7      ←2
   │ instance_parser            119L  0C   13m  CC=4      ←2
   │ ticket_workflow            118L  0C    7m  CC=10     ←2
+  │ ssh_run                    118L  0C    2m  CC=10     ←3
+  │ compose                    117L  0C    8m  CC=12     ←1
   │ dependency_graph           116L  0C   12m  CC=6      ←3
   │ runner                     116L  0C    5m  CC=11     ←3
   │ artifacts                  114L  0C    1m  CC=1      ←1
@@ -247,53 +260,51 @@ LAYERS:
   │ flow_helpers               111L  0C   14m  CC=5      ←3
   │ ssh_resolver               110L  0C    7m  CC=8      ←8
   │ resolver                   110L  1C   10m  CC=7      ←1
-  │ agent_generator            110L  0C    4m  CC=5      ←2
   │ ticket                     109L  0C    5m  CC=10     ←1
   │ envelope                   109L  0C    6m  CC=11     ←2
   │ event_emitter              109L  0C    6m  CC=4      ←2
   │ view_builder               109L  0C    7m  CC=8      ←1
-  │ call                       108L  0C    3m  CC=8      ←8
   │ tts                        108L  0C    3m  CC=10     ←1
   │ plan_builder               108L  0C    6m  CC=11     ←1
-  │ artifacts                  107L  0C    4m  CC=9      ←3
-  │ flow_planner               106L  0C    5m  CC=12     ←5
-  │ uri2ops_transport          106L  0C    6m  CC=9      ←2
-  │ reader                     105L  0C    5m  CC=9      ←8
-  │ service_result             102L  1C    4m  CC=12     ←17
-  │ planner_templates          102L  0C    5m  CC=6      ←2
-  │ models                     101L  0C    7m  CC=6      ←16
+  │ uri2ops_adapter            107L  1C    7m  CC=9      ←4
+  │ local_targets              106L  0C    6m  CC=6      ←2
+  │ service_result             102L  1C    4m  CC=12     ←16
+  │ models                     101L  0C    7m  CC=6      ←20
   │ parsing                    100L  0C    6m  CC=11     ←1
   │ flow                       100L  0C    3m  CC=6      ←0
-  │ compose                     99L  0C    8m  CC=9      ←1
+  │ weather_forecast           100L  0C    6m  CC=7      ←2
   │ spec_registry               99L  0C    5m  CC=5      ←3
   │ parser                      99L  1C    4m  CC=12     ←3
+  │ ssh_auth                    99L  0C    7m  CC=12     ←2
   │ ecosystem_commands          98L  0C    1m  CC=1      ←0
   │ writer                      98L  0C    5m  CC=4      ←1
-  │ run                         97L  0C    4m  CC=9      ←0
-  │ ssh_auth                    96L  0C    7m  CC=12     ←2
+  │ run                         97L  0C    4m  CC=9      ←3
   │ loader                      96L  0C    5m  CC=6      ←2
-  │ local_targets               96L  0C    6m  CC=6      ←1
-  │ graph_executor              95L  0C    2m  CC=5      ←8
+  │ graph_executor              95L  0C    2m  CC=5      ←7
   │ routes                      95L  1C   11m  CC=4      ←0
   │ ticket_mapper               95L  0C    5m  CC=10     ←3
-  │ ssh_deploy                  95L  0C    2m  CC=7      ←1
+  │ ssh_deploy                  95L  0C    2m  CC=7      ←2
   │ env_resolver                94L  1C    7m  CC=8      ←5
   │ scenarios                   94L  0C    6m  CC=9      ←1
+  │ watch                       92L  0C    5m  CC=11     ←1
+  │ graph_validator             92L  0C    7m  CC=9      ←10
   │ readiness                   92L  0C    3m  CC=9      ←1
   │ docker_scanner              91L  0C    5m  CC=6      ←2
   │ ssh_scanner                 90L  0C    6m  CC=8      ←2
+  │ uri2ops_transport           89L  0C    4m  CC=9      ←2
   │ routes                      89L  1C    9m  CC=4      ←0
   │ evolution_commands          88L  0C    2m  CC=5      ←1
   │ models                      88L  3C    5m  CC=8      ←0
   │ a2a_transport               88L  0C    3m  CC=12     ←1
+  │ flow_planner                88L  0C    3m  CC=11     ←5
   │ result_checks               88L  0C    7m  CC=5      ←3
   │ ticket_commands             87L  0C    2m  CC=5      ←2
   │ explain                     87L  0C    7m  CC=5      ←0
-  │ loader                      87L  0C    7m  CC=7      ←6
+  │ loader                      87L  0C    7m  CC=7      ←11
   │ mcp_transport               86L  0C    3m  CC=14     ←1
   │ shell_transport             86L  0C    6m  CC=5      ←1
-  │ events                      86L  0C    3m  CC=6      ←10
-  │ graph_transport             86L  0C    3m  CC=8      ←1
+  │ events                      86L  0C    3m  CC=6      ←4
+  │ pack_writer                 86L  0C    1m  CC=8      ←1
   │ doctor                      85L  0C    3m  CC=13     ←0
   │ log_resolver                85L  2C    5m  CC=7      ←3
   │ registry                    85L  0C    3m  CC=6      ←0
@@ -303,28 +314,27 @@ LAYERS:
   │ core                        84L  1C    7m  CC=3      ←0
   │ schema_check                83L  0C    3m  CC=11     ←1
   │ llm_profiles                83L  1C    4m  CC=10     ←4
-  │ verify                      83L  0C    4m  CC=7      ←4
+  │ verify                      83L  0C    4m  CC=7      ←5
+  │ presentation                82L  0C    4m  CC=7      ←1
   │ models                      82L  3C    3m  CC=2      ←0
   │ http_transport              82L  0C    4m  CC=12     ←1
   │ expander                    81L  0C    4m  CC=11     ←8
   │ manifest                    81L  0C    7m  CC=4      ←4
-  │ !! graph_validator             80L  0C    4m  CC=15     ←11
-  │ watch                       79L  0C    5m  CC=6      ←1
   │ discovery                   79L  0C    1m  CC=1      ←0
-  │ pack_writer                 79L  0C    1m  CC=3      ←1
-  │ flow_transport              79L  0C    2m  CC=8      ←1
   │ browser_playwright          77L  1C    3m  CC=11     ←1
   │ evolution_source            77L  1C    5m  CC=5      ←1
   │ flow_extract                77L  0C    7m  CC=6      ←1
   │ flow_step_ids               77L  0C    7m  CC=8      ←1
   │ port_conflict               77L  0C    2m  CC=7      ←1
-  │ selector                    77L  0C    3m  CC=14     ←7
   │ writer                      76L  0C    2m  CC=13     ←3
-  │ http_scanner                76L  0C    6m  CC=7      ←3
+  │ http_scanner                76L  0C    6m  CC=7      ←4
   │ log                         76L  0C    1m  CC=3      ←0
   │ fallbacks                   76L  0C    6m  CC=8      ←1
   │ docker_runner               76L  0C    6m  CC=9      ←4
+  │ selector                    76L  0C    3m  CC=14     ←10
   │ doctor                      75L  0C    2m  CC=9      ←1
+  │ dispatch                    75L  0C    3m  CC=3      ←0
+  │ file_resolver               75L  0C    3m  CC=7      ←0
   │ cli                         75L  0C    5m  CC=3      ←1
   │ generator                   75L  0C    2m  CC=2      ←1
   │ runtime_adapter             74L  1C    2m  CC=9      ←0
@@ -335,47 +345,50 @@ LAYERS:
   │ orchestrator                73L  0C    4m  CC=7      ←2
   │ ecosystem_workflow          72L  0C    7m  CC=6      ←3
   │ operation_registry          71L  0C    6m  CC=2      ←9
-  │ browser_router              71L  1C    5m  CC=5      ←0
   │ register                    71L  0C    2m  CC=6      ←3
+  │ planner_validation          71L  0C    3m  CC=10     ←1
   │ policy                      71L  0C    3m  CC=2      ←2
   │ shortcuts                   69L  0C    5m  CC=14     ←4
   │ observe_commands            69L  0C    1m  CC=1      ←1
   │ cli_commands                69L  0C    6m  CC=3      ←1
+  │ capabilities                68L  0C    2m  CC=14     ←1
   │ registry_sync               68L  0C    4m  CC=2      ←3
   │ helpers                     67L  0C    2m  CC=5      ←2
   │ base                        67L  2C    2m  CC=4      ←0
-  │ dispatch                    67L  0C    3m  CC=3      ←0
   │ lifecycle_status            67L  0C    4m  CC=5      ←4
   │ envelope                    66L  0C    2m  CC=11     ←0
   │ health_uri                  66L  0C    7m  CC=8      ←6
-  │ planner_validation          65L  0C    3m  CC=10     ←1
+  │ workflow_transport          65L  0C    1m  CC=6      ←2
   │ cli_commands                65L  0C    5m  CC=5      ←0
+  │ __init__                    65L  0C    0m  CC=0.0    ←0
   │ writer                      64L  0C    3m  CC=3      ←4
   │ validator                   64L  0C    3m  CC=11     ←4
   │ graph_serializer            63L  0C    4m  CC=12     ←3
-  │ execution_plan              63L  0C    3m  CC=5      ←6
+  │ execution_plan              63L  0C    3m  CC=5      ←5
   │ voice_resolver              63L  0C    3m  CC=5      ←3
   │ sse_transport               63L  0C    3m  CC=7      ←1
   │ models                      63L  2C    2m  CC=2      ←0
   │ defaults                    63L  0C    4m  CC=4      ←1
-  │ agent_card                  63L  0C    0m  CC=0.0    ←0
-  │ __init__                    63L  0C    0m  CC=0.0    ←0
   │ operator_task.schema.json    63L  0C    0m  CC=0.0    ←0
+  │ agent_card                  63L  0C    0m  CC=0.0    ←0
   │ ssh_transport               62L  0C    2m  CC=5      ←0
   │ port_utils                  62L  0C    6m  CC=4      ←8
+  │ browser_router              61L  1C    5m  CC=5      ←0
   │ dashboard.js                61L  0C   11m  CC=6      ←0
   │ merge_helpers               61L  0C    3m  CC=6      ←1
   │ explain_verification        60L  0C    2m  CC=9      ←1
   │ voice_command               60L  0C    1m  CC=7      ←0
+  │ registry_builder            60L  0C    4m  CC=5      ←4
   │ planner_llm                 59L  0C    2m  CC=4      ←3
+  │ capabilities                59L  0C    4m  CC=8      ←2
   │ validator                   58L  0C    2m  CC=5      ←4
   │ registry                    58L  0C    5m  CC=10     ←1
-  │ ssh_run                     58L  0C    1m  CC=7      ←1
   │ mcp                         57L  0C    1m  CC=1      ←1
   │ docker_stacks               57L  0C    4m  CC=5      ←2
   │ process                     57L  0C    4m  CC=5      ←1
   │ __init__                    57L  0C    0m  CC=0.0    ←0
   │ envelope_migrate            56L  0C    2m  CC=9      ←1
+  │ graph_transport             56L  0C    3m  CC=3      ←1
   │ stdio_transport             56L  0C    3m  CC=7      ←1
   │ header                      56L  0C    5m  CC=3      ←1
   │ io                          55L  1C    8m  CC=3      ←13
@@ -392,44 +405,48 @@ LAYERS:
   │ validator                   51L  0C    6m  CC=2      ←5
   │ verify                      50L  0C    2m  CC=9      ←0
   │ docker_transport            50L  0C    3m  CC=4      ←1
+  │ planner_templates           50L  0C    3m  CC=6      ←2
   │ config_checks               50L  0C    4m  CC=7      ←1
-  │ env                         50L  0C    3m  CC=9      ←5
+  │ env                         50L  0C    3m  CC=9      ←4
   │ nlp2uri.yaml                50L  0C    0m  CC=0.0    ←0
   │ run_commands                49L  0C    1m  CC=1      ←1
   │ repair                      49L  0C    4m  CC=4      ←3
+  │ flow_transport              49L  0C    2m  CC=3      ←1
   │ sandbox                     49L  0C    2m  CC=6      ←1
   │ agent_contract              48L  0C    1m  CC=2      ←1
   │ models                      47L  2C    1m  CC=11     ←0
   │ replay                      46L  0C    2m  CC=9      ←0
-  │ result                      46L  0C    3m  CC=8      ←14
+  │ result                      46L  0C    3m  CC=8      ←15
   │ flow_sanitize               46L  0C    4m  CC=5      ←1
   │ __init__                    46L  0C    0m  CC=0.0    ←0
+  │ browser_mock                45L  1C    2m  CC=8      ←1
   │ validator                   45L  0C    5m  CC=3      ←4
   │ workflow                    45L  0C    1m  CC=1      ←0
   │ resolve_core                45L  1C    2m  CC=8      ←0
   │ validator                   45L  0C    2m  CC=14     ←1
-  │ browser_mock                44L  1C    2m  CC=8      ←1
+  │ agent                       44L  0C    1m  CC=5      ←2
   │ llm_profile_builder         44L  0C    4m  CC=7      ←1
-  │ repo_root                   44L  0C    4m  CC=7      ←47
+  │ repo_root                   44L  0C    4m  CC=7      ←56
+  │ validator                   43L  0C    2m  CC=14     ←4
   │ docker                      43L  0C    1m  CC=1      ←0
   │ payload                     42L  0C    1m  CC=14     ←2
   │ scanner                     42L  0C    2m  CC=5      ←0
+  │ cross_validator             42L  0C    2m  CC=5      ←3
   │ uri_capability.schema.json    42L  0C    0m  CC=0.0    ←0
   │ cli_shortcuts               41L  0C    5m  CC=4      ←2
   │ executor                    41L  0C    1m  CC=2      ←0
   │ cli                         41L  0C    2m  CC=5      ←0
   │ tasks                       40L  0C    2m  CC=2      ←3
   │ python_transport            40L  0C    3m  CC=3      ←1
+  │ paths                       40L  0C    3m  CC=8      ←1
   │ uri_config                  40L  0C    2m  CC=10     ←1
-  │ capabilities                40L  0C    3m  CC=7      ←1
-  │ paths                       40L  0C    3m  CC=8      ←2
   │ uri_flow.schema.json        40L  0C    0m  CC=0.0    ←0
+  │ local_verify                39L  0C    1m  CC=8      ←1
   │ explain                     38L  0C    1m  CC=4      ←0
   │ utils                       38L  0C    4m  CC=5      ←2
   │ client                      38L  1C    8m  CC=2      ←0
-  │ ssh_verify                  38L  0C    1m  CC=12     ←1
+  │ ssh_verify                  38L  0C    1m  CC=12     ←2
   │ context                     37L  0C    3m  CC=7      ←2
-  │ agent                       37L  0C    1m  CC=5      ←2
   │ container                   37L  0C    3m  CC=8      ←1
   │ __init__                    37L  0C    0m  CC=0.0    ←0
   │ agent_card                  37L  0C    0m  CC=0.0    ←0
@@ -439,23 +456,22 @@ LAYERS:
   │ resolve                     36L  0C    1m  CC=1      ←0
   │ config                      36L  0C    1m  CC=4      ←0
   │ markpact_loader             36L  0C    1m  CC=6      ←1
-  │ cross_validator             36L  0C    2m  CC=5      ←1
   │ pyproject.toml              36L  0C    0m  CC=0.0    ←0
   │ errors                      35L  1C    2m  CC=10     ←3
   │ matcher                     35L  1C    3m  CC=3      ←2
   │ healer                      35L  0C    1m  CC=1      ←1
   │ proposal_builder            35L  0C    2m  CC=2      ←1
+  │ constants                   35L  0C    0m  CC=0.0    ←0
+  │ aliases                     34L  0C    2m  CC=8      ←1
   │ app                         33L  0C    1m  CC=2      ←1
   │ doctor                      33L  0C    1m  CC=3      ←2
-  │ domain_planner              33L  0C    1m  CC=7      ←6
   │ validators                  33L  0C    2m  CC=5      ←1
   │ cli                         33L  0C    1m  CC=10     ←0
-  │ run_plans                   33L  0C    1m  CC=5      ←6
+  │ run_plans                   33L  0C    1m  CC=5      ←5
   │ pyproject.toml              33L  0C    0m  CC=0.0    ←0
-  │ constants                   33L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              33L  0C    0m  CC=0.0    ←0
   │ main                        32L  0C    2m  CC=2      ←0
-  │ capabilities                32L  0C    1m  CC=13     ←1
+  │ domain_planner              31L  0C    1m  CC=5      ←6
   │ env_merge                   31L  0C    2m  CC=6      ←1
   │ __init__                    31L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              31L  0C    0m  CC=0.0    ←0
@@ -470,6 +486,7 @@ LAYERS:
   │ uri_flow_backend            28L  0C    2m  CC=2      ←0
   │ env_config                  28L  0C    3m  CC=2      ←1
   │ __init__                    28L  0C    0m  CC=0.0    ←0
+  │ uri_mapping                 27L  0C    2m  CC=1      ←2
   │ protocol_resolver           27L  0C    4m  CC=4      ←3
   │ pyproject.toml              27L  0C    0m  CC=0.0    ←0
   │ registry                    27L  0C    0m  CC=0.0    ←0
@@ -527,6 +544,7 @@ LAYERS:
   │ __init__                    16L  0C    0m  CC=0.0    ←0
   │ main                        16L  0C    0m  CC=0.0    ←0
   │ main                        16L  0C    0m  CC=0.0    ←0
+  │ remote_runner               16L  0C    0m  CC=0.0    ←0
   │ mcp                         15L  0C    1m  CC=1      ←0
   │ http                        15L  0C    1m  CC=1      ←0
   │ pypi                        15L  0C    1m  CC=1      ←0
@@ -535,16 +553,15 @@ LAYERS:
   │ resources.yaml              15L  0C    0m  CC=0.0    ←0
   │ __init__                    15L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              15L  0C    0m  CC=0.0    ←0
-  │ remote_runner               15L  0C    0m  CC=0.0    ←0
   │ governance_commands         14L  0C    1m  CC=1      ←0
   │ paths                       14L  0C    1m  CC=3      ←1
-  │ weather                     14L  0C    1m  CC=1      ←0
+  │ weather                     14L  0C    1m  CC=1      ←5
   │ registry_loader             14L  0C    1m  CC=2      ←0
   │ protocol_url                14L  0C    1m  CC=4      ←2
   │ renderers                   14L  0C    1m  CC=3      ←1
   │ ssh_helpers                 14L  0C    2m  CC=2      ←2
   │ planner                     13L  1C    1m  CC=1      ←1
-  │ validate                    13L  0C    1m  CC=1      ←5
+  │ validate                    13L  0C    1m  CC=1      ←6
   │ deps                        13L  1C    0m  CC=0.0    ←0
   │ __init__                    13L  0C    0m  CC=0.0    ←0
   │ __init__                    13L  0C    0m  CC=0.0    ←0
@@ -568,9 +585,11 @@ LAYERS:
   │ proto                        8L  0C    1m  CC=2      ←1
   │ capability_tests             8L  0C    1m  CC=1      ←0
   │ __init__                     7L  0C    0m  CC=0.0    ←0
+  │ Dockerfile.j2                7L  0C    0m  CC=0.0    ←0
   │ paths                        5L  0C    0m  CC=0.0    ←0
   │ __init__                     5L  0C    0m  CC=0.0    ←0
   │ __init__                     5L  0C    0m  CC=0.0    ←0
+  │ generate_weather_map         5L  0C    0m  CC=0.0    ←0
   │ uri_graph_backend            5L  0C    0m  CC=0.0    ←0
   │ __init__                     5L  0C    0m  CC=0.0    ←0
   │ paths                        5L  0C    0m  CC=0.0    ←0
@@ -601,20 +620,18 @@ LAYERS:
   │ llm_planner                  0L  0C    0m  CC=0.0    ←0
   │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
-  hypervisor/                     CC̄=3.1    ←in:0  →out:0
+  hypervisor/                     CC̄=3.4    ←in:0  →out:0
   │ pypi_resolver                0L  0C    1m  CC=5      ←1
-  │ templates                    0L  0C    5m  CC=1      ←0
   │ cli                          0L  0C    1m  CC=5      ←0
   │ gate                         0L  1C    1m  CC=5      ←0
   │ models                       0L  8C    9m  CC=4      ←0
   │ env                          0L  0C    4m  CC=9      ←1
   │ models                       0L  1C    1m  CC=5      ←1
-  │ loader                       0L  0C    2m  CC=9      ←8
+  │ loader                       0L  0C    2m  CC=9      ←10
   │ registry_exporter            0L  0C    2m  CC=6      ←1
-  │ schema_validator             0L  1C    4m  CC=6      ←2
+  │ schema_validator             0L  1C    4m  CC=6      ←4
   │ models                       0L  4C    3m  CC=4      ←0
-  │ registry_builder             0L  0C    4m  CC=5      ←3
-  │ writer                       0L  0C    4m  CC=3      ←2
+  │ writer                       0L  0C    4m  CC=3      ←3
   │ checker                      0L  0C    2m  CC=8      ←0
   │ _version                     0L  0C    0m  CC=0.0    ←0
   │ __init__                     0L  0C    0m  CC=0.0    ←0
@@ -627,19 +644,19 @@ LAYERS:
   │ env_resolver                 0L  0C    0m  CC=0.0    ←0
   │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
-  www/                            CC̄=3.1    ←in:6  →out:0
-  │ !! landing.js                 836L  0C  111m  CC=24     ←0
+  www/                            CC̄=3.1    ←in:8  →out:0
+  │ !! integrations-i18n.js      1143L  0C    0m  CC=0.0    ←0
+  │ !! landing.js                 836L  0C  111m  CC=24     ←7
   │ !! landing-i18n.js            719L  0C    0m  CC=0.0    ←0
-  │ !! app.js                     613L  0C   75m  CC=11     ←0
-  │ examples-manifest.js       457L  0C    0m  CC=0.0    ←0
-  │ !! office-cards-i18n.js       306L  0C   16m  CC=15     ←6
-  │ integrations-i18n.js       275L  0C    0m  CC=0.0    ←0
+  │ !! app.js                     648L  0C   81m  CC=14     ←0
+  │ examples-manifest.js       477L  0C    0m  CC=0.0    ←0
+  │ !! office-cards-i18n.js       306L  0C   16m  CC=15     ←0
   │ app.js                     260L  0C   30m  CC=8      ←0
   │ api-client.js              215L  1C   22m  CC=13     ←0
   │ bridge                     199L  2C    8m  CC=11     ←0
-  │ !! chat-voice.js              157L  0C   22m  CC=29     ←0
+  │ !! chat-voice.js              157L  0C   22m  CC=29     ←1
+  │ chat-uri.js                148L  0C   24m  CC=11     ←0
   │ examples-gallery.js        144L  0C   24m  CC=7      ←0
-  │ chat-uri.js                143L  0C   24m  CC=11     ←0
   │ chat-markdown.js            80L  0C   10m  CC=5      ←0
   │ openapi.yaml                75L  0C    0m  CC=0.0    ←0
   │ docs-examples.js            59L  0C   12m  CC=9      ←0
@@ -649,67 +666,65 @@ LAYERS:
   │ Dockerfile                  32L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml          22L  0C    0m  CC=0.0    ←0
   │ config.js                   13L  0C    0m  CC=0.0    ←0
-  │ 34_cron_uri-8caa86a1f0b567e7.json     4L  0C    0m  CC=0.0    ←0
-  │ 32_ecommerce_integrations-232ba3159dae70e5.json     4L  0C    0m  CC=0.0    ←0
-  │ 31_office_day-e7c4d91a191e34ff.json     4L  0C    0m  CC=0.0    ←0
-  │ 33_office_workflows-16fbaee09a140a1e.json     4L  0C    0m  CC=0.0    ←0
-  │ 23_nl_to_agent_tutorial-2c28d4c71f717931.json     4L  0C    0m  CC=0.0    ←0
+  │ 06_orders_agent-fa8cebf95291599c.json     4L  0C    0m  CC=0.0    ←0
+  │ 16_llm_graph_planner-159f06dd4832dbab.json     4L  0C    0m  CC=0.0    ←0
   │ 35_website_screenshot_schedule-e692fc863f4dfa33.json     4L  0C    0m  CC=0.0    ←0
   │ 32_ecommerce_integrations-ceb917a24dc426c7.json     4L  0C    0m  CC=0.0    ←0
-  │ 35_website_screenshot_schedule-5d3d692bad14d211.json     4L  0C    0m  CC=0.0    ←0
   │ 32_ecommerce_integrations-57cc7abc3e46c709.json     4L  0C    0m  CC=0.0    ←0
+  │ 05_meta_repair-829661dc35de8437.json     4L  0C    0m  CC=0.0    ←0
+  │ 16_www_landing_monitor-f7bdca1db38212a5.json     4L  0C    0m  CC=0.0    ←0
+  │ 18_llm_flow_planner-f9fd0a829937576e.json     4L  0C    0m  CC=0.0    ←0
+  │ 35_website_screenshot_schedule-5d3d692bad14d211.json     4L  0C    0m  CC=0.0    ←0
   │ 33_office_workflows-3181e16d403bf94e.json     4L  0C    0m  CC=0.0    ←0
-  │ 32_ecommerce_integrations-6c89fbcb7026a6d6.json     4L  0C    0m  CC=0.0    ←0
+  │ 09_run_agent_hypervisor-1711dce8fea4b4bd.json     4L  0C    0m  CC=0.0    ←0
   │ 32_ecommerce_integrations-305e5c45f88421e7.json     4L  0C    0m  CC=0.0    ←0
+  │ 12_android_operator-86a6aec1684d0822.json     4L  0C    0m  CC=0.0    ←0
+  │ 32_ecommerce_integrations-6c89fbcb7026a6d6.json     4L  0C    0m  CC=0.0    ←0
   │ 32_ecommerce_integrations-824cdb1be9f48c5f.json     4L  0C    0m  CC=0.0    ←0
-  │ 32_ecommerce_integrations-5a3ded5e1fc34441.json     4L  0C    0m  CC=0.0    ←0
+  │ 03_ssh_remote_agent-948fe4512a944461.json     4L  0C    0m  CC=0.0    ←0
+  │ 15_compact_uri_flow-bfca62561aac316c.json     4L  0C    0m  CC=0.0    ←0
+  │ 22_dashboard_agent-c59387bc332dc4f0.json     4L  0C    0m  CC=0.0    ←0
+  │ 36_physical_ops-5999114d62a13a0c.json     4L  0C    0m  CC=0.0    ←0
+  │ 21_touri_voice-dfb4ecf1dd749f23.json     4L  0C    0m  CC=0.0    ←0
+  │ 20_touri_capabilities-44612b79959663b2.json     4L  0C    0m  CC=0.0    ←0
+  │ 34_cron_uri-8caa86a1f0b567e7.json     4L  0C    0m  CC=0.0    ←0
+  │ 32_ecommerce_integrations-232ba3159dae70e5.json     4L  0C    0m  CC=0.0    ←0
+  │ 04_nl2a_weather_map-35dffafaa015f2b1.json     4L  0C    0m  CC=0.0    ←0
+  │ 10_browser_operator-2dc37409a09018f3.json     4L  0C    0m  CC=0.0    ←0
   │ 32_ecommerce_integrations-ef973d98bef7911e.json     4L  0C    0m  CC=0.0    ←0
+  │ 17_flow_vs_graph-315d5c344a908569.json     4L  0C    0m  CC=0.0    ←0
+  │ 32_ecommerce_integrations-5a3ded5e1fc34441.json     4L  0C    0m  CC=0.0    ←0
+  │ 31_office_day-e7c4d91a191e34ff.json     4L  0C    0m  CC=0.0    ←0
+  │ 14_workflow_executor_mock-3c044d3a9015c567.json     4L  0C    0m  CC=0.0    ←0
+  │ 11_playwright_browser-65f644b9333c4fad.json     4L  0C    0m  CC=0.0    ←0
   │ 35_website_screenshot_schedule-5f3f6f2bfa01f1f5.json     4L  0C    0m  CC=0.0    ←0
+  │ 08_evolution-db22aad1f8844232.json     4L  0C    0m  CC=0.0    ←0
   │ 32_ecommerce_integrations-61c29dafb93b6890.json     4L  0C    0m  CC=0.0    ←0
+  │ 13_pcwin_operator-73848739b38fa413.json     4L  0C    0m  CC=0.0    ←0
+  │ 07_invoices_agent-5859648a80381c9c.json     4L  0C    0m  CC=0.0    ←0
+  │ 22_markpact_weather-311b3b5c7edf84a8.json     4L  0C    0m  CC=0.0    ←0
+  │ 33_office_workflows-16fbaee09a140a1e.json     4L  0C    0m  CC=0.0    ←0
+  │ 02_uri3_scan_http-194cbbcfa8306eac.json     4L  0C    0m  CC=0.0    ←0
+  │ 23_nl_to_agent_tutorial-2c28d4c71f717931.json     4L  0C    0m  CC=0.0    ←0
+  │ 13_nl2uri_multi_uri_graph-def5bcd16af46627.json     4L  0C    0m  CC=0.0    ←0
   │ 32_ecommerce_integrations-a0f1de7dca1f671a.json     4L  0C    0m  CC=0.0    ←0
+  │ 15_playwright_browser-a74b7e7795438fdb.json     4L  0C    0m  CC=0.0    ←0
+  │ 14_uri2ops_serve-7b57cb5162c84c38.json     4L  0C    0m  CC=0.0    ←0
   │ 32_ecommerce_integrations-66ca0b9fc6eae707.json     4L  0C    0m  CC=0.0    ←0
+  │ 01_quickstart_local-3ea5cbf71000635c.json     4L  0C    0m  CC=0.0    ←0
   │ 35_website_screenshot_schedule-390ed226ee85a7ff.json     4L  0C    0m  CC=0.0    ←0
-  │
-  domains/                        CC̄=3.0    ←in:0  →out:0
-  │ scenario_registry.yaml     235L  0C    0m  CC=0.0    ←0
-  │ scenario_registry.yaml     153L  0C    0m  CC=0.0    ←0
-  │ scenario_registry.yaml     153L  0C    0m  CC=0.0    ←0
-  │ operator_registry.yaml     109L  0C    0m  CC=0.0    ←0
-  │ uri_tree.yaml               85L  0C    0m  CC=0.0    ←0
-  │ operator_registry.yaml      78L  0C    0m  CC=0.0    ←0
-  │ domain.yaml                 67L  0C    0m  CC=0.0    ←0
-  │ domain.yaml                 48L  0C    0m  CC=0.0    ←0
-  │ weather_map.proto           41L  0C    0m  CC=0.0    ←0
-  │ generate_weather_map        24L  0C    1m  CC=3      ←5
-  │ resources.yaml              23L  0C    0m  CC=0.0    ←0
-  │ uri_tree.yaml               16L  0C    0m  CC=0.0    ←0
-  │ views.yaml                  11L  0C    0m  CC=0.0    ←0
-  │ renderers.yaml              10L  0C    0m  CC=0.0    ←0
-  │ domain.yaml                  9L  0C    0m  CC=0.0    ←0
-  │ commands.yaml                8L  0C    0m  CC=0.0    ←0
-  │ domain.yaml                  4L  0C    0m  CC=0.0    ←0
-  │ registry.fragment.yaml       2L  0C    0m  CC=0.0    ←0
+  │ 30_golden_path-e898a3a7b7679ee7.json     4L  0C    0m  CC=0.0    ←0
   │
   uri3/                           CC̄=2.7    ←in:0  →out:0
   │ uri_graph                    0L  3C    3m  CC=10     ←2
   │ uri_validator                0L  0C    1m  CC=2      ←2
   │ normalizer                   0L  0C    1m  CC=3      ←0
   │ parser                       0L  1C    1m  CC=2      ←4
-  │ http_resolver                0L  1C    2m  CC=2      ←1
+  │ http_resolver                0L  1C    2m  CC=2      ←13
   │ llm_resolver                 0L  2C    2m  CC=5      ←2
   │ python_resolver              0L  1C    5m  CC=2      ←2
   │ base                         0L  1C    0m  CC=0.0    ←0
   │ __init__                     0L  0C    0m  CC=0.0    ←0
-  │
-  uri2ops/                        CC̄=2.3    ←in:0  →out:0
-  │ validator                    0L  0C    2m  CC=14     ←4
-  │ loader                       0L  0C    3m  CC=10     ←2
-  │ models                       0L  2C    5m  CC=2      ←48
-  │ dispatcher                   0L  0C    3m  CC=3      ←3
-  │ mcp_wrapper                  0L  0C    2m  CC=2      ←1
-  │ a2a_wrapper                  0L  0C    1m  CC=3      ←1
-  │ service                      0L  1C    9m  CC=2      ←4
-  │ operation_registry.schema.json     0L  0C    0m  CC=0.0    ←0
   │
   testenv/                        CC̄=2.3    ←in:0  →out:0
   │ mock_agent_server           57L  1C    3m  CC=5      ←0
@@ -717,27 +732,118 @@ LAYERS:
   │ docker-compose.ssh.yml      10L  0C    0m  CC=0.0    ←0
   │ entrypoint.sh                7L  0C    0m  CC=0.0    ←0
   │
-  agents/                         CC̄=1.9    ←in:0  →out:0
-  │ routes                      95L  1C   11m  CC=4      ←0
-  │ routes                      90L  1C   10m  CC=4      ←0
-  │ desktop_operator.yaml       89L  0C    0m  CC=0.0    ←0
-  │ routes                      88L  1C    9m  CC=4      ←0
+  agents/                         CC̄=2.3    ←in:0  →out:0
+  │ analysis                   265L  0C   11m  CC=14     ←1
+  │ programmer                 184L  0C    7m  CC=14     ←1
+  │ routes                     166L  1C   15m  CC=5      ←0
+  │ routes                     165L  1C   16m  CC=5      ←0
+  │ routes                     155L  1C   14m  CC=5      ←0
+  │ routes                     152L  1C   13m  CC=5      ←0
+  │ routes                     152L  1C   13m  CC=5      ←0
+  │ routes                     150L  1C   14m  CC=5      ←0
+  │ routes                     148L  1C   13m  CC=5      ←0
+  │ routes                     146L  1C   13m  CC=5      ←0
+  │ routes                     146L  1C   13m  CC=5      ←0
+  │ routes                     146L  1C   13m  CC=5      ←0
+  │ routes                     144L  1C   12m  CC=5      ←0
+  │ desktop_operator.yaml       91L  0C    0m  CC=0.0    ←0
+  │ deploy                      90L  0C    7m  CC=4      ←1
+  │ routes                      80L  2C    7m  CC=1      ←0
+  │ routes                      73L  3C    6m  CC=1      ←0
   │ device_robot_operator.yaml    73L  0C    0m  CC=0.0    ←0
-  │ main                        16L  0C    0m  CC=0.0    ←0
-  │ main                        16L  0C    0m  CC=0.0    ←0
-  │ main                        16L  0C    0m  CC=0.0    ←0
+  │ routes                      69L  1C    8m  CC=1      ←0
+  │ agent_card                  67L  0C    0m  CC=0.0    ←0
+  │ agent_card                  61L  0C    0m  CC=0.0    ←0
+  │ agent_card                  55L  0C    0m  CC=0.0    ←0
+  │ agent_card                  50L  0C    0m  CC=0.0    ←0
+  │ agent_card                  47L  0C    0m  CC=0.0    ←0
+  │ agent_card                  42L  0C    0m  CC=0.0    ←0
+  │ agent_card                  42L  0C    0m  CC=0.0    ←0
+  │ agent_card                  41L  0C    0m  CC=0.0    ←0
+  │ agent_card                  41L  0C    0m  CC=0.0    ←0
+  │ agent_card                  41L  0C    0m  CC=0.0    ←0
+  │ agent_card                  40L  0C    0m  CC=0.0    ←0
+  │ agent_card                  38L  0C    0m  CC=0.0    ←0
+  │ agent_card                  31L  0C    0m  CC=0.0    ←0
+  │ agent_card                  28L  0C    0m  CC=0.0    ←0
+  │ main                        21L  0C    0m  CC=0.0    ←0
+  │ main                        20L  0C    0m  CC=0.0    ←0
+  │ main                        20L  0C    0m  CC=0.0    ←0
+  │ main                        19L  0C    0m  CC=0.0    ←0
+  │ main                        19L  0C    0m  CC=0.0    ←0
+  │ main                        19L  0C    0m  CC=0.0    ←0
+  │ main                        19L  0C    0m  CC=0.0    ←0
+  │ main                        19L  0C    0m  CC=0.0    ←0
+  │ main                        19L  0C    0m  CC=0.0    ←0
+  │ main                        19L  0C    0m  CC=0.0    ←0
+  │ main                        19L  0C    0m  CC=0.0    ←0
+  │ main                        12L  0C    0m  CC=0.0    ←0
+  │ main                        12L  0C    0m  CC=0.0    ←0
+  │ main                        12L  0C    0m  CC=0.0    ←0
   │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
   │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
   │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
-  │ agent_card                   7L  0C    0m  CC=0.0    ←0
-  │ agent_card                   7L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
   │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
-  │ agent_card                   7L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
+  │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
   │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
   │ .generated.yaml              7L  0C    0m  CC=0.0    ←0
   │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     2L  0C    0m  CC=0.0    ←0
+  │
+  domains/                        CC̄=2.0    ←in:0  →out:0
+  │ scenario_registry.yaml     235L  0C    0m  CC=0.0    ←0
+  │ scenario_registry.yaml     153L  0C    0m  CC=0.0    ←0
+  │ scenario_registry.yaml     153L  0C    0m  CC=0.0    ←0
+  │ operator_registry.yaml     109L  0C    0m  CC=0.0    ←0
+  │ uri_tree.yaml               85L  0C    0m  CC=0.0    ←0
+  │ operator_registry.yaml      78L  0C    0m  CC=0.0    ←0
+  │ domain.yaml                 67L  0C    0m  CC=0.0    ←0
+  │ domain.yaml                 66L  0C    0m  CC=0.0    ←0
+  │ planner                     61L  0C    2m  CC=2      ←0
+  │ weather_map.proto           41L  0C    0m  CC=0.0    ←0
+  │ generate_weather_map        30L  0C    1m  CC=3      ←0
+  │ resources.yaml              23L  0C    0m  CC=0.0    ←0
+  │ uri_tree.yaml               16L  0C    0m  CC=0.0    ←0
+  │ views.yaml                  11L  0C    0m  CC=0.0    ←0
+  │ renderers.yaml              10L  0C    0m  CC=0.0    ←0
+  │ domain.yaml                  9L  0C    0m  CC=0.0    ←0
+  │ commands.yaml                8L  0C    0m  CC=0.0    ←0
+  │ registry.fragment.yaml       5L  0C    0m  CC=0.0    ←0
+  │ domain.yaml                  4L  0C    0m  CC=0.0    ←0
+  │
+  uri2ops/                        CC̄=1.8    ←in:0  →out:0
+  │ loader                       0L  0C    3m  CC=10     ←2
+  │ models                       0L  2C    5m  CC=2      ←48
+  │ dispatcher                   0L  0C    3m  CC=3      ←3
+  │ mcp_wrapper                  0L  0C    2m  CC=2      ←1
+  │ a2a_wrapper                  0L  0C    1m  CC=3      ←1
+  │ service                      0L  1C    9m  CC=2      ←4
+  │ operation_registry.schema.json     0L  0C    0m  CC=0.0    ←0
   │
   runtime_client/                 CC̄=1.7    ←in:0  →out:0
   │ client                       0L  1C    3m  CC=2      ←0
@@ -749,13 +855,15 @@ LAYERS:
   │ cli                          0L  0C    2m  CC=1      ←0
   │
   examples/                       CC̄=0.0    ←in:0  →out:0
-  │ run.sh                     204L  0C    3m  CC=0.0    ←23
+  │ run.sh                     204L  0C    3m  CC=0.0    ←0
   │ run.sh                      85L  1C    2m  CC=0.0    ←0
   │ workflow_graph.yaml         82L  0C    0m  CC=0.0    ←0
+  │ run.sh                      80L  0C    1m  CC=0.0    ←0
   │ run.sh                      76L  0C    2m  CC=0.0    ←0
   │ task_graph.yaml             72L  0C    0m  CC=0.0    ←0
   │ task_graph.yaml             72L  0C    0m  CC=0.0    ←0
   │ office_chains.yaml          71L  0C    0m  CC=0.0    ←0
+  │ run.sh                      66L  0C    1m  CC=0.0    ←24
   │ task_plan.yaml              60L  0C    0m  CC=0.0    ←0
   │ run.sh                      54L  0C    0m  CC=0.0    ←0
   │ task_graph.yaml             48L  0C    0m  CC=0.0    ←0
@@ -768,10 +876,9 @@ LAYERS:
   │ task.device.yaml            40L  0C    0m  CC=0.0    ←0
   │ run.sh                      39L  0C    0m  CC=0.0    ←0
   │ expanded.expected.uri.graph.yaml    38L  0C    0m  CC=0.0    ←0
-  │ task_graph.yaml             38L  0C    0m  CC=0.0    ←0
   │ task.robot.yaml             38L  0C    0m  CC=0.0    ←0
+  │ run.sh                      37L  0C    0m  CC=0.0    ←0
   │ voice_command.uri.capability.yaml    36L  0C    0m  CC=0.0    ←0
-  │ run.sh                      36L  0C    0m  CC=0.0    ←0
   │ task.android.yaml           35L  0C    0m  CC=0.0    ←0
   │ bank_token.android.yaml     35L  0C    0m  CC=0.0    ←0
   │ run.sh                      34L  0C    0m  CC=0.0    ←0
@@ -788,6 +895,7 @@ LAYERS:
   │ run.sh                      26L  0C    0m  CC=0.0    ←0
   │ run.sh                      25L  0C    0m  CC=0.0    ←0
   │ browser_open_mock.uri.capability.yaml    24L  0C    0m  CC=0.0    ←0
+  │ task_graph.yaml             24L  0C    0m  CC=0.0    ←0
   │ www_landing_monitor_cron.uri.capability.yaml    23L  0C    0m  CC=0.0    ←0
   │ website_screenshot_schedule.uri.capability.yaml    21L  0C    0m  CC=0.0    ←0
   │ website_screenshot_schedule_dry_run.uri.capability.yaml    21L  0C    0m  CC=0.0    ←0
@@ -838,9 +946,9 @@ LAYERS:
   │ !! planfile.yaml             1319L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  511L  0C    0m  CC=0.0    ←0
   │ tree.txt                   240L  0C    0m  CC=0.0    ←0
-  │ Makefile                   234L  0C    0m  CC=0.0    ←0
+  │ Makefile                   233L  0C    0m  CC=0.0    ←0
   │ pyproject.toml             216L  0C    0m  CC=0.0    ←0
-  │ prefact.yaml                97L  0C    0m  CC=0.0    ←0
+  │ prefact.yaml                99L  0C    0m  CC=0.0    ←0
   │ project.sh                  59L  0C    0m  CC=0.0    ←0
   │ manifest.yaml               20L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml          18L  0C    0m  CC=0.0    ←0
@@ -877,14 +985,26 @@ LAYERS:
   contracts/                      CC̄=0.0    ←in:0  →out:0
   │ views.yaml                  84L  0C    0m  CC=0.0    ←0
   │ resources.yaml              71L  0C    0m  CC=0.0    ←0
+  │ operator.proto              62L  0C    0m  CC=0.0    ←0
   │ hypervisor_dashboard_agent.yaml    55L  0C    0m  CC=0.0    ←0
+  │ remote_deploy_agent.yaml    53L  0C    0m  CC=0.0    ←0
+  │ deploy.proto                51L  0C    0m  CC=0.0    ←0
+  │ screenshot_analysis_agent.yaml    42L  0C    0m  CC=0.0    ←0
   │ dashboard.proto             39L  0C    0m  CC=0.0    ←0
   │ user.proto                  39L  0C    0m  CC=0.0    ←0
   │ user_agent.yaml             38L  0C    0m  CC=0.0    ←0
+  │ desktop.proto               37L  0C    0m  CC=0.0    ←0
+  │ schema_collab_agent.yaml    36L  0C    0m  CC=0.0    ←0
+  │ gnome_programmer_agent.yaml    35L  0C    0m  CC=0.0    ←0
   │ invoices.proto              32L  0C    0m  CC=0.0    ←0
+  │ codex_uri_smoke_agent.yaml    30L  0C    0m  CC=0.0    ←0
+  │ codex_nl_plan_agent.yaml    30L  0C    0m  CC=0.0    ←0
+  │ screenshots.proto           29L  0C    0m  CC=0.0    ←0
+  │ codex_nl_smoke_agent.yaml    29L  0C    0m  CC=0.0    ←0
   │ standards.yaml              28L  0C    0m  CC=0.0    ←0
   │ registry.yaml               28L  0C    0m  CC=0.0    ←0
   │ invoices_agent.yaml         28L  0C    0m  CC=0.0    ←0
+  │ codex_uri_smoke.proto       24L  0C    0m  CC=0.0    ←0
   │ policy.yaml                 24L  0C    0m  CC=0.0    ←0
   │ weather_map_agent.yaml      22L  0C    0m  CC=0.0    ←0
   │
@@ -905,7 +1025,7 @@ LAYERS:
   │
   config/                         CC̄=0.0    ←in:0  →out:0
   │ flow_defaults.uri.yaml     141L  0C    0m  CC=0.0    ←0
-  │ operator_policy.uri.yaml    70L  0C    0m  CC=0.0    ←0
+  │ operator_policy.uri.yaml    74L  0C    0m  CC=0.0    ←0
   │ llm.uri.yaml                63L  0C    0m  CC=0.0    ←0
   │ cli_shortcuts.uri.yaml      54L  0C    0m  CC=0.0    ←0
   │ docker.uri.yaml             32L  0C    0m  CC=0.0    ←0
@@ -925,7 +1045,7 @@ LAYERS:
   │ pyproject.optional.snippet.toml     5L  0C    0m  CC=0.0    ←0
   │
   deployments/                    CC̄=0.0    ←in:0  →out:0
-  │ agent_deployments.yaml     130L  0C    0m  CC=0.0    ←0
+  │ agent_deployments.yaml     219L  0C    0m  CC=0.0    ←0
   │
   ── zero ──
      evolution/proposals/add_invoices_agent.yaml  0L
@@ -936,7 +1056,6 @@ LAYERS:
      generator/__init__.py                     0L
      generator/hashutil.py                     0L
      generator/model.py                        0L
-     generator/templates/Dockerfile.j2         0L
      generator/validate.py                     0L
      hypervisor/__init__.py                    0L
      hypervisor/_version.py                    0L
@@ -946,12 +1065,10 @@ LAYERS:
      hypervisor/config/models.py               0L
      hypervisor/contract_registry/loader.py    0L
      hypervisor/contract_registry/models.py    0L
-     hypervisor/contract_registry/registry_builder.py  0L
      hypervisor/contract_registry/registry_exporter.py  0L
      hypervisor/contract_registry/schema_validator.py  0L
      hypervisor/deployment_registry/writer.py  0L
      hypervisor/domain_pack/__init__.py        0L
-     hypervisor/domain_pack/templates.py       0L
      hypervisor/evolution/models.py            0L
      hypervisor/policy_gate/gate.py            0L
      hypervisor/uri2llm/__init__.py            0L
@@ -979,7 +1096,6 @@ LAYERS:
      uri2ops/operation_registry/dispatcher.py  0L
      uri2ops/operation_registry/loader.py      0L
      uri2ops/operation_registry/models.py      0L
-     uri2ops/operation_registry/validator.py   0L
      uri2ops/schemas/operation_registry.schema.json  0L
      uri2ops/server/a2a_wrapper.py             0L
      uri2ops/server/mcp_wrapper.py             0L
@@ -995,57 +1111,59 @@ LAYERS:
      uri3/validators/uri_validator.py          0L
 
 COUPLING:
-                                                             packages.uri3   packages.resource-agent-hypervisor                       packages.urish     examples.23_nl_to_agent_tutorial           uri2ops.operation_registry                     packages.uri2run                      packages.nl2uri                      packages.urigen                       packages.touri  packages.hypervisor-dashboard-agent                    packages.uri2flow                     packages.uri2ops                          scripts.www      packages.resource-agent-factory                     scripts.examples
-                        packages.uri3                                   ──                                   16                                    1                                                                        29                                    2                                  ←27                                    2                                   10                                   ←7                                    2                                    5                                                                        ←1                                   ←8  hub
-   packages.resource-agent-hypervisor                                   83                                   ──                                    1                                   24                                   16                                                                         1                                    6                                                                       ←10                                    1                                                                                                              3                                       hub
-                       packages.urish                                   24                                   11                                   ──                                   10                                    9                                    5                                    3                                   22                                   ←1                                    3                                    1                                                                                                                                                   1  hub
-     examples.23_nl_to_agent_tutorial                                                                       ←24                                  ←10                                   ──                                                                                                                                                  ←1                                   ←1                                                                        ←3                                   ←1                                  ←21                                   ←6                                   ←5  hub
-           uri2ops.operation_registry                                  ←29                                  ←16                                   ←9                                                                        ──                                   ←2                                   ←7                                   ←4                                   ←1                                   ←5                                                                         1                                                                                                                 hub
-                     packages.uri2run                                   41                                                                        ←5                                                                         2                                   ──                                                                                                            ←13                                   ←2                                    1                                                                                                                                                      hub
-                      packages.nl2uri                                   27                                    2                                   ←3                                                                         7                                                                        ──                                    1                                                                                                              4                                                                                                              2                                       hub
-                      packages.urigen                                    5                                   ←6                                  ←22                                    1                                    4                                                                        ←1                                   ──                                    1                                                                         3                                                                                                                                                  ←1  hub
-                       packages.touri                                    9                                                                         1                                    1                                    1                                   13                                                                        ←1                                   ──                                                                                                                                                                                                                                hub
-  packages.hypervisor-dashboard-agent                                    7                                   10                                    4                                                                         5                                    2                                                                                                                                                  ──                                                                                                                                                                                           !! fan-out
-                    packages.uri2flow                                    2                                   ←1                                   ←1                                    3                                                                        ←1                                   ←4                                    4                                                                                                             ──                                                                                                                                                  ←1  hub
-                     packages.uri2ops                                   ←5                                                                                                              1                                    7                                                                                                                                                                                                                                                                 ──                                                                                                                 hub
-                          scripts.www                                                                                                                                                  21                                                                                                                                                                                                                                                                                                                                           ──                                                                            !! fan-out
-      packages.resource-agent-factory                                    1                                   ←3                                                                         6                                                                                                             ←2                                                                                                                                                                                                                                                                 ──                                       hub
-                     scripts.examples                                    8                                                                        ←1                                    5                                                                                                                                                   1                                                                                                              1                                                                                                                                                  ──  !! fan-out
+                                                             packages.uri3   packages.resource-agent-hypervisor                       packages.urish        examples.38_autonomous_agents           uri2ops.operation_registry                      packages.nl2uri                      packages.urigen                     packages.uri2run  packages.hypervisor-dashboard-agent                       packages.touri                     agents.generated                     scripts.examples                     packages.uri2ops                    packages.uri2flow      packages.resource-agent-factory
+                        packages.uri3                                   ──                                    6                                   12                                                                        28                                  ←27                                    2                                    1                                   ←7                                   10                                                                        ←8                                    9                                    2                                   ←1  hub
+   packages.resource-agent-hypervisor                                   90                                   ──                                    1                                   24                                   16                                    1                                    6                                                                       ←17                                                                                                             ←7                                                                         1                                    5  hub
+                       packages.urish                                   27                                   15                                   ──                                   10                                   11                                    6                                   22                                    4                                    3                                    5                                  ←22                                    1                                                                         1                                    1  hub
+        examples.38_autonomous_agents                                                                       ←24                                  ←10                                   ──                                                                                                             ←1                                                                                                             ←1                                                                        ←9                                   ←1                                   ←3                                   ←6  hub
+           uri2ops.operation_registry                                  ←28                                  ←16                                  ←11                                                                        ──                                   ←7                                   ←4                                   ←2                                   ←5                                   ←1                                                                                                              2                                                                            hub
+                      packages.nl2uri                                   27                                    5                                    1                                                                         7                                   ──                                    3                                                                                                                                                                                                                                                                  4                                    2  hub
+                      packages.urigen                                    5                                   ←6                                  ←22                                    1                                    4                                   ←3                                   ──                                                                                                              1                                                                        ←1                                                                         3                                       hub
+                     packages.uri2run                                   34                                                                        ←4                                                                         2                                                                                                             ──                                   ←1                                    1                                                                                                              2                                    1                                       hub
+  packages.hypervisor-dashboard-agent                                    7                                   17                                    6                                                                         5                                                                                                              1                                   ──                                    1                                                                                                                                                                                           !! fan-out
+                       packages.touri                                    9                                                                         1                                    1                                    1                                                                        ←1                                   13                                   ←1                                   ──                                                                                                                                                                                           hub
+                     agents.generated                                                                                                             22                                                                                                                                                                                                                                                                                                      ──                                                                                                                                                      !! fan-out
+                     scripts.examples                                    8                                    7                                   ←1                                    9                                                                                                              1                                                                                                                                                                                       ──                                                                         1                                       !! fan-out
+                     packages.uri2ops                                   ←9                                                                                                              1                                    6                                                                                                             ←2                                                                                                                                                                                       ──                                                                            hub
+                    packages.uri2flow                                    2                                   ←1                                   ←1                                    3                                                                        ←4                                    4                                   ←1                                                                                                                                                  ←1                                                                        ──                                       hub
+      packages.resource-agent-factory                                    1                                    2                                   ←1                                    6                                                                        ←2                                                                                                                                                                                                                                                                                                                                           ──  hub
   CYCLES: none
-  HUB: uri2ops.server/ (fan-in=8)
-  HUB: packages.resource-agent-hypervisor/ (fan-in=47)
-  HUB: domains.weather_map/ (fan-in=9)
-  HUB: packages.nl2uri/ (fan-in=6)
-  HUB: packages.uri2verify/ (fan-in=9)
   HUB: packages.uri2pact/ (fan-in=7)
-  HUB: generator/ (fan-in=11)
-  HUB: packages.uri3/ (fan-in=213)
-  HUB: www/ (fan-in=6)
-  HUB: packages.touri/ (fan-in=11)
-  HUB: packages.resource-agent-factory/ (fan-in=6)
-  HUB: packages.uri2run/ (fan-in=22)
   HUB: packages.uri2flow/ (fan-in=13)
-  HUB: packages.urigen/ (fan-in=36)
+  HUB: hypervisor.deployment_registry/ (fan-in=8)
+  HUB: packages.nl2uri/ (fan-in=9)
+  HUB: uri2ops.server/ (fan-in=8)
+  HUB: packages.resource-agent-hypervisor/ (fan-in=69)
+  HUB: packages.uri3/ (fan-in=219)
+  HUB: generator/ (fan-in=16)
+  HUB: uri3.resolvers/ (fan-in=17)
+  HUB: examples.38_autonomous_agents/ (fan-in=87)
+  HUB: packages.urish/ (fan-in=45)
+  HUB: packages.resource-agent-factory/ (fan-in=9)
+  HUB: packages.uri2run/ (fan-in=19)
+  HUB: packages.touri/ (fan-in=18)
+  HUB: www/ (fan-in=8)
   HUB: uri2ops.operation_registry/ (fan-in=81)
-  HUB: uri3.resolvers/ (fan-in=5)
-  HUB: packages.urish/ (fan-in=9)
-  HUB: examples.23_nl_to_agent_tutorial/ (fan-in=83)
-  HUB: hypervisor.contract_registry/ (fan-in=15)
-  HUB: packages.uri2ops/ (fan-in=9)
-  SMELL: packages.hypervisor-dashboard-agent/ fan-out=34 → split needed
-  SMELL: packages.resource-agent-hypervisor/ fan-out=160 → split needed
-  SMELL: packages.nl2uri/ fan-out=48 → split needed
-  SMELL: scripts.www/ fan-out=21 → split needed
-  SMELL: packages.uri3/ fan-out=89 → split needed
-  SMELL: scripts.examples/ fan-out=16 → split needed
-  SMELL: packages.touri/ fan-out=30 → split needed
-  SMELL: packages.resource-agent-factory/ fan-out=12 → split needed
-  SMELL: packages.uri2run/ fan-out=45 → split needed
+  HUB: packages.uri2ops/ (fan-in=16)
+  HUB: packages.urigen/ (fan-in=47)
+  HUB: hypervisor.contract_registry/ (fan-in=19)
+  HUB: packages.uri2verify/ (fan-in=9)
   SMELL: packages.uri2flow/ fan-out=11 → split needed
+  SMELL: packages.nl2uri/ fan-out=53 → split needed
   SMELL: meta_agent/ fan-out=8 → split needed
+  SMELL: agents.custom/ fan-out=19 → split needed
+  SMELL: packages.resource-agent-hypervisor/ fan-out=178 → split needed
+  SMELL: packages.uri3/ fan-out=93 → split needed
+  SMELL: scripts.www/ fan-out=21 → split needed
+  SMELL: packages.urish/ fan-out=114 → split needed
+  SMELL: packages.resource-agent-factory/ fan-out=14 → split needed
+  SMELL: packages.uri2run/ fan-out=40 → split needed
+  SMELL: packages.touri/ fan-out=28 → split needed
+  SMELL: packages.uri2ops/ fan-out=12 → split needed
+  SMELL: agents.generated/ fan-out=33 → split needed
   SMELL: packages.urigen/ fan-out=14 → split needed
-  SMELL: packages.urish/ fan-out=97 → split needed
-  SMELL: packages.uri2ops/ fan-out=13 → split needed
+  SMELL: scripts.examples/ fan-out=28 → split needed
+  SMELL: packages.hypervisor-dashboard-agent/ fan-out=43 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

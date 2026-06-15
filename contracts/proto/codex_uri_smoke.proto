@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package app.codex.v1;
+
+message MarkpactSourceView {
+  string uri = 1;
+  string path = 2;
+  int32 agent_generation_blocks = 3;
+  int32 run_log_blocks = 4;
+}
+
+message DeviceStatus {
+  string device_id = 1;
+  string mode = 2;
+  bool online = 3;
+  string health = 4;
+  string protocol = 5;
+  string artifact_uri = 6;
+}
+
+message RunCronMonitorCommand {
+  string uri = 1;
+  bool dry_run = 2;
+}

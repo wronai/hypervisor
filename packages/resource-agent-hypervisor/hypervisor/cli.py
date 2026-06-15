@@ -2,6 +2,7 @@ import json
 import sys
 from collections.abc import Sequence
 from pathlib import Path
+from typing import Any
 
 import typer
 
@@ -20,6 +21,7 @@ from hypervisor.deployment_registry.runner import (
     restart_agent,
     stop_agent,
     supervise_agent,
+    supervise_watch,
 )
 from hypervisor.deployment_registry.status import registry_summary
 from hypervisor.uri.client import Uri3Client
@@ -79,7 +81,7 @@ def deployments_list():
 @app.command("run-agent")
 def run_agent_cmd(
     selector: str = typer.Argument(
-        ..., help="Deployment id or agent ref, e.g. weather-map-agent.local"
+        ..., help="Deployment id or agent ref, e.g. <agent-id>"
     ),
     port: int | None = typer.Option(None, "--port", help="Override HTTP port"),
     host: str = typer.Option("0.0.0.0", "--host"),
@@ -98,6 +100,11 @@ def run_agent_cmd(
         "--wait-healthy",
         help="After detach start, run bounded supervise/repair until HTTP health OK",
     ),
+    approve: bool = typer.Option(
+        False,
+        "--approve",
+        help="Compatibility no-op; direct hypervisor run-agent is not policy-gated.",
+    ),
     supervise_repair: str = typer.Option(
         "auto",
         "--supervise-repair",
@@ -105,6 +112,7 @@ def run_agent_cmd(
     ),
 ):
     """Start a local agent or print an SSH remote start plan with --dry-run."""
+    _ = approve
     run_local_agent(
         selector,
         port=port,
@@ -157,6 +165,34 @@ def inspect_agent_cmd(
     echo_json(inspect_agent(selector, timeout=timeout, log_limit=log_limit))
 
 
+@app.command("describe-agent")
+def describe_agent_cmd(
+    selector: str = typer.Argument(..., help="Deployment id or agent ref"),
+    output: Path | None = typer.Option(
+        None,
+        "--output",
+        "-o",
+        help="Write markdown report to this file",
+    ),
+    json_out: bool = typer.Option(False, "--json", help="Emit metadata JSON instead of markdown"),
+):
+    """Describe agent contract, files, domain pack links, and invocation paths (markdown)."""
+    from hypervisor.agent_describe import describe_agent
+
+    report = describe_agent(selector)
+    if output is not None:
+        written = report.write(output)
+        payload = {"ok": True, "written": str(written), **report.data}
+        if json_out:
+            echo_json(payload)
+        else:
+            typer.echo(f"Wrote agent report: {written}")
+    elif json_out:
+        echo_json({"ok": True, "markdown": report.markdown, **report.data})
+    else:
+        typer.echo(report.markdown)
+
+
 @app.command("supervise")
 def supervise_cmd(
     selector: str = typer.Argument(..., help="Deployment id or agent ref"),
@@ -164,6 +200,22 @@ def supervise_cmd(
         "none",
         "--repair",
         help="Repair strategy: none, auto, restart, reuse, sync_health",
+    ),
+    watch: bool = typer.Option(
+        False,
+        "--watch",
+        help="Keep supervising in a loop and emit deduped JSONL events.",
+    ),
+    interval: float = typer.Option(10.0, "--interval", help="Seconds between watch ticks"),
+    count: int | None = typer.Option(
+        None,
+        "--count",
+        help="Stop watch mode after N ticks. Omit for daemon-style loop.",
+    ),
+    repair_backoff_ticks: int = typer.Option(
+        3,
+        "--repair-backoff-ticks",
+        help="Minimum watch ticks before retrying repair for the same failure.",
     ),
     max_attempts: int = typer.Option(3, "--max-attempts", help="Bounded repair attempts"),
     timeout: float = typer.Option(2.0, "--timeout", help="HTTP probe timeout"),
@@ -174,7 +226,34 @@ def supervise_cmd(
         help="On unresolved failure create schema-valid incident + evolution proposal",
     ),
 ):
-    """Run bounded health supervision and optional restart repair."""
+    """Run bounded health supervision or continuous watch mode."""
+    if watch:
+        def print_tick(tick: dict[str, Any]) -> None:
+            typer.echo(json.dumps(tick, ensure_ascii=False))
+
+        payload = supervise_watch(
+            selector,
+            repair=repair,
+            interval=interval,
+            count=count,
+            timeout=timeout,
+            log_limit=log_limit,
+            max_attempts=max_attempts,
+            learn=learn,
+            repair_backoff_ticks=repair_backoff_ticks,
+            on_tick=print_tick,
+        )
+        echo_json(
+            {
+                key: value
+                for key, value in payload.items()
+                if key != "ticks"
+            }
+        )
+        if not payload.get("ok"):
+            raise typer.Exit(1)
+        return
+
     if learn:
         from hypervisor.repair.supervisor import supervise_with_repair
 
@@ -226,6 +305,31 @@ def repair_apply_cmd(
         safe=safe,
         approved=approve,
         playbook=playbook,
+    )
+    echo_json(payload)
+    if not payload.get("ok"):
+        raise typer.Exit(1)
+
+
+@repair_app.command("heal")
+def repair_heal_cmd(
+    selector: str = typer.Argument(..., help="Deployment id or agent ref"),
+    repair: str = typer.Option("auto", "--repair", help="Repair strategy before learn"),
+    learn: bool = typer.Option(True, "--learn/--no-learn", help="Create incident + proposal"),
+    max_attempts: int = typer.Option(3, "--max-attempts"),
+    timeout: float = typer.Option(2.0, "--timeout"),
+    log_limit: int = typer.Option(20, "--log-limit"),
+):
+    """Uri-healer entry: bounded repair loop, then incident and evolution proposal."""
+    from hypervisor.repair.healer import run_uri_healer
+
+    payload = run_uri_healer(
+        selector,
+        repair=repair,
+        learn=learn,
+        timeout=timeout,
+        log_limit=log_limit,
+        max_attempts=max_attempts,
     )
     echo_json(payload)
     if not payload.get("ok"):

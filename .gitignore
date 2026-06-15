@@ -12,6 +12,7 @@ output/
 __pycache__/
 *.py[codz]
 *$py.class
+.nlp2dsl
 
 # C extensions
 *.so

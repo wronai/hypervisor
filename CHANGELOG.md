@@ -9,6 +9,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `scripts/architecture_responsibility_audit.py` and
+  `make architecture-responsibility-audit` to turn `project/map.toon.yaml` plus
+  `project/duplication.toon.yaml` into a responsibility-boundary refactor report.
+  The CLI is now a small wrapper over `scripts/architecture_audit/*` modules so
+  the audit tool does not become a new command-surface hotspot.
+- Split the `urish` command surface: `cli.py` now wires the shell and delegates
+  agent, ecosystem, dashboard/www, ticket, repair and evolution/proposal groups
+  to `urish.commands.*` modules. The refreshed responsibility audit no longer
+  reports `urish/cli.py` as a critical large command file.
+- Refactored multiple CC>15 hotspots flagged in analysis.toon.yaml (REFACTOR[2] + follow-up from updated report with 13 remaining):
+  dispatch tables, pure builders/predicates and context collectors for load_markpact_scenario_registry_dicts,
+  _legacy_runtime_state (now block builders), gather_inspection_context, proof_uri + _build_proof_checks,
+  events health/incident builders, stt suffix, _rewrite_url. Continued thinning of !! modules (runtime_state,
+  inspection/pipeline, proof, stt_whisper, events_service). Critical count improved; architecture tests green (1 unrelated port assert in deployment view test).
+- Removed `urish.office_intent` and `urish.office_scenarios` compatibility
+  facades; office scenarios are loaded only through the generic scenario
+  registry from `domains/office/`.
+- Added declarative `urish` scenario registry loading from `agents/scenarios/*.yaml`
+  and moved office/e-commerce NL routing data to
+  `agents/scenarios/office_automation.yaml`.
+- Added `domains/desktop_ops/` as the generic desktop operator domain pack, plus
+  automatic `domains/*/scenario_registry.yaml` loading in `urish`.
+- Added durable lifecycle/repair operation events in
+  `output/logs/hypervisor-events.jsonl`, surfaced through `/api/events`.
+- Added a three-agent tutorial smoke test for NL routing, batch ask, and URI proof
+  baseline coverage.
+- Added `agents/README.md` and `docs/DOMAIN_SEPARATION.md` to document the boundary
+  between generic packages and domain artifacts.
+- Added markpact provenance/run-log blocks to generated agent READMEs and the
+  resource-agent-factory README template.
+- Added `urish` **office** intent for biurowe polecenia NL (faktury, portal CSV, bank/2FA, status rozliczeń)
+  with planned workflow URIs and `examples/31_office_day` pilot graph.
+- Expanded `examples/31_office_day` into a mock-first office persona scenario:
+  supplier portal report, invoice ERP window, bank checkpoint and Android token task.
+- Added README for [`examples/16_www_landing_monitor`](examples/16_www_landing_monitor/) and
+  [`examples/22_dashboard_agent`](examples/22_dashboard_agent/).
+- Added CI check `scripts/www/build_examples_docs.py --check` for stale `www/docs/examples.html`.
+- Added Taskinity WWW product pages: landing integracje/biuro, [`www/przyklady.html`](www/przyklady.html)
+  (lab integracji 27/27 PASS), [`www/docs/examples.html`](www/docs/examples.html) (full `examples/*/*`
+  docs with README + source files), and [`scripts/www/build_examples_docs.py`](scripts/www/build_examples_docs.py)
+  with `make www-docs`.
+- Added office-use quick prompts in `www/app.js` and `www/examples/nl-commands.txt`.
+- Added e-commerce + office scenario tabs in `www/landing.js` tour.
 - Added comprehensive examples integration suite in `tests/examples/`:
   `catalog.py`, parametrized `run.sh` tests, inline demos (02–08, 15pw), smoke
   checks for touri manifests and architecture stack imports.
@@ -65,6 +108,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added real-system `www/` chat UI surface with Markdown rendering, health/agents/events
   API context, URI preview/run actions, and `urish www create` for NL-driven dashboard
   creation.
+- Added documented chat autonomy controls: `/api/plan/run` Run plan actions,
+  `/api/events/stream` SSE event updates and `/api/voice/transcribe` mock/Whisper
+  transcription path, with route coverage for the SSE contract.
+- Improved dashboard event feed responsiveness by running live agent health probes
+  concurrently and limiting sidebar probe fan-out.
 - Added Docker runtime artifact mounts for `www/` so dashboard-agent repair/lifecycle can
   see `agents/generated`, shared `output`, and repair knowledge inside the container.
 - Added schemas: `ticket`, `log_event`, `workflow_artifact`, `deployment_registry`, `config/config_base`.
@@ -113,6 +161,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`lifecycle.py` reuses healthy agent when already running).
 - Fixed lifecycle envelope marking `ok=true` when only PID exists but HTTP health fails.
 - Fixed effective `health_uri` derived from uvicorn `--port` in runtime state (ex23 port drift).
+
+## [0.5.28] - 2026-06-15
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update README.pl.md
+- Update TODO.md
+- Update agents/custom/README.md
+- Update agents/generated/codex_nl_plan_agent/README.md
+- Update agents/generated/codex_nl_smoke_agent/README.md
+- Update agents/generated/codex_uri_smoke_agent/README.md
+- Update agents/generated/gnome_programmer_agent/README.md
+- Update agents/generated/hypervisor_dashboard_agent/README.md
+- ... and 48 more files
+
+### Test
+- Update tests/conftest.py
+- Update tests/examples/catalog.py
+- Update tests/hypervisor/test_agent_describe.py
+- Update tests/hypervisor/test_agent_factory_uri.py
+- Update tests/hypervisor/test_agent_runner.py
+- Update tests/hypervisor/test_autonomous_agents.py
+- Update tests/hypervisor/test_chat_www.py
+- Update tests/hypervisor/test_contract_uri.py
+- Update tests/hypervisor/test_dashboard_agent.py
+- Update tests/hypervisor/test_deployment_aliases.py
+- ... and 23 more files
+
+### Other
+- Update .gitignore
+- Update .registry/capability_index.json
+- Update .registry/operation_index.json
+- Update Makefile
+- Update agents/custom/gnome_programmer_agent/__init__.py
+- Update agents/custom/gnome_programmer_agent/agent_card.py
+- Update agents/custom/gnome_programmer_agent/main.py
+- Update agents/custom/gnome_programmer_agent/programmer.py
+- Update agents/custom/gnome_programmer_agent/routes.py
+- Update agents/custom/remote_deploy_agent/__init__.py
+- ... and 341 more files
 
 ## [0.5.27] - 2026-06-14
 

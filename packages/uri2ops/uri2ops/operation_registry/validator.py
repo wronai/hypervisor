@@ -9,7 +9,7 @@ from .loader import registry_schema_path
 from .models import OperationRegistry
 
 VALID_KINDS = {"query", "command", "assertion"}
-VALID_ADAPTER_SETS = {"mock", "playwright", "builtin", "adb", "uia"}
+VALID_ADAPTER_SETS = {"mock", "playwright", "builtin", "adb", "uia", "gnome"}
 
 
 def validate_registry_schema(data: dict) -> list[str]:

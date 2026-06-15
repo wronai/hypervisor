@@ -63,6 +63,8 @@ pip install -e '.[windows]'   # Windows UIA
 | 34 | [`34_cron_uri`](./34_cron_uri/) | **`cron://` harmonogramy via touri → shell** | `bash examples/34_cron_uri/run.sh` |
 | 35 | [`35_website_screenshot_schedule`](./35_website_screenshot_schedule/) | **Harmonogram screenshotów strony (chat → workflow)** | `bash examples/35_website_screenshot_schedule/run.sh` |
 | 36 | [`36_physical_ops`](./36_physical_ops/) | **Robot/device — operacje fizyczne (mock)** | `bash examples/36_physical_ops/run.sh` |
+| 37 | [`37_agent_screenshot_analysis`](./37_agent_screenshot_analysis/) | **Dwóch agentów: screenshot → plik analizy** | `bash examples/37_agent_screenshot_analysis/run.sh` |
+| 38 | [`38_autonomous_agents`](./38_autonomous_agents/) | **Multi-agent: remote deploy + GNOME programmer + analiza screenshotów** | `bash examples/38_autonomous_agents/run.sh` |
 | — | [`22_dashboard_agent`](./22_dashboard_agent/) | capability/flow dashboard-agent | [`README`](./22_dashboard_agent/README.md) |
 | — | [`16_www_landing_monitor`](./16_www_landing_monitor/) | monitor landing WWW | [`README`](./16_www_landing_monitor/README.md) |
 

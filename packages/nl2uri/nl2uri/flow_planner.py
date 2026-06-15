@@ -3,12 +3,15 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from nl2uri.graph_planner import (
-    WEATHER_AGENT,
-    _detect_health_uri,
-    _slug,
-    wrap_nl2uri_output,
+from nl2uri.agent_resolution import (
+    resolve_agent_id,
+    resolve_card_uri,
+    resolve_generator_alias,
+    resolve_health_uri,
+    resolve_local_run_slug,
+    resolve_log_uri,
 )
+from nl2uri.graph_planner import _slug, wrap_nl2uri_output
 
 
 def _compact_step(uri: str, payload: dict[str, Any] | None = None) -> str | dict[str, Any]:
@@ -29,34 +32,31 @@ def plan_flow(prompt: str, *, use_llm: bool = False) -> dict[str, Any]:
     steps: list[str | dict[str, Any]] = []
 
     if re.search(r"\b(wygeneruj|generuj|stw[oó]rz|zbuduj)\b", text, re.I):
-        if re.search(r"pogod|weather", text, re.I):
-            steps.append("agent://weather-generator")
-        else:
-            steps.append(f"agent://{_detect_agent_slug(text)}")
+        steps.append(f"agent://{resolve_generator_alias(text)}")
 
     if re.search(r"\b(uruchom|run)\b", text, re.I):
-        agent = _detect_local_agent_slug(text)
-        steps.append(f"hypervisor://local/{agent}/run")
+        steps.append(f"hypervisor://local/{resolve_local_run_slug(text)}/run")
 
-    health_uri = _detect_health_uri(text)
+    health_uri = resolve_health_uri(text)
     if re.search(r"\b(chrome|przegl[aą]dark|browser|sprawd[zź]|health|localhost)\b", text, re.I):
         steps.append(_compact_step("browser://chrome/page/open", {"url": health_uri}))
 
     if re.search(r"\b(agent card|karta agenta)\b", text, re.I):
-        card_uri = "http://localhost:8101/.well-known/agent-card.json"
+        card_uri = resolve_card_uri(text)
         if steps:
             steps.append({"id": "read_card", "uri": card_uri, "after": _last_step_id(steps, fallback="run_agent")})
         else:
             steps.append(card_uri)
 
     if re.search(r"\b(je[sś]li|if|gdy).*(log|nie dzia)", text, re.I | re.S):
+        local_slug = resolve_local_run_slug(text)
         steps.extend(
             [
-                {"id": "run_agent", "uri": f"hypervisor://local/{_detect_local_agent_slug(text)}/run"},
+                {"id": "run_agent", "uri": f"hypervisor://local/{local_slug}/run"},
                 {"id": "check_health", "uri": health_uri, "after": "run_agent"},
                 {
                     "id": "logs_if_failed",
-                    "uri": f"log://weather-map-agent.local?limit=100",
+                    "uri": resolve_log_uri(text),
                     "after": "check_health",
                     "if": "check_health.ok == false",
                 },
@@ -69,7 +69,7 @@ def plan_flow(prompt: str, *, use_llm: bool = False) -> dict[str, Any]:
         elif re.search(r"\bhealth\b", text, re.I):
             steps.append(health_uri)
         else:
-            steps.append(f"agent://{WEATHER_AGENT}")
+            steps.append(f"agent://{resolve_agent_id(text)}")
 
     return wrap_nl2uri_output(
         "uri_flow",
@@ -79,24 +79,6 @@ def plan_flow(prompt: str, *, use_llm: bool = False) -> dict[str, Any]:
             "do": steps,
         },
     )
-
-
-def _detect_agent_slug(prompt: str) -> str:
-    if re.search(r"pogod|weather", prompt, re.I):
-        return "weather-generator"
-    match = re.search(r"agent[a]?[:\s]+([a-z0-9-]+)", prompt, re.I)
-    if match:
-        return match.group(1)
-    return WEATHER_AGENT
-
-
-def _detect_local_agent_slug(prompt: str) -> str:
-    if re.search(r"pogod|weather", prompt, re.I):
-        return "weather-agent"
-    match = re.search(r"agent[a]?[:\s]+([a-z0-9-]+)", prompt, re.I)
-    if match:
-        return match.group(1)
-    return "weather-agent"
 
 
 def _last_step_id(steps: list[str | dict[str, Any]], *, fallback: str) -> str:

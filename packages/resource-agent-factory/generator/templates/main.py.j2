@@ -3,11 +3,14 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 
-from .routes import router
+try:
+    from .routes import router
+except ImportError:  # standalone rsync package on remote host
+    from routes import router
 
 app = FastAPI(
     title="{{ spec.name }}",
     version="{{ spec.version }}",
-    description="{{ spec.description }}",
+    description={{ spec_description_literal }},
 )
 app.include_router(router)

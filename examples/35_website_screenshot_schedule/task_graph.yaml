@@ -3,36 +3,22 @@ task:
   description: Capture website screenshots (mock browser; Playwright for real PNGs).
 
 steps:
-  - id: open_softreck
-    uri: browser://chrome/page/open
-    operation: open
-    kind: command
+  - id: capture_softreck
+    uri: browser://chrome/page/capture
+    operation: capture_page
+    kind: query
     payload:
       url: https://softreck.com
-
-  - id: screenshot_softreck
-    uri: screen://browser/active/screenshot
-    operation: capture
-    kind: query
-    depends_on:
-      - open_softreck
     produces:
       - artifact://operator/screenshots/softreck.com.png
 
-  - id: open_prototypowanie
-    uri: browser://chrome/page/open
-    operation: open
-    kind: command
+  - id: capture_prototypowanie
+    uri: browser://chrome/page/capture
+    operation: capture_page
+    kind: query
     payload:
       url: https://prototypowanie.pl
     depends_on:
-      - screenshot_softreck
-
-  - id: screenshot_prototypowanie
-    uri: screen://browser/active/screenshot
-    operation: capture
-    kind: query
-    depends_on:
-      - open_prototypowanie
+      - capture_softreck
     produces:
       - artifact://operator/screenshots/prototypowanie.pl.png

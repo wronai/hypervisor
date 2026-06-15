@@ -15,6 +15,7 @@ spec:
     allowed_adapters:
       - mock
       - playwright
+      - gnome
       - builtin
       - adb
       - uia
@@ -28,7 +29,10 @@ spec:
       allowed_adapters: [mock, playwright]
     input:type:
       require_approval: true
-      allowed_adapters: [mock]
+      allowed_adapters: [mock, gnome]
+    screen:observe:
+      require_approval: false
+      allowed_adapters: [mock, gnome]
     assertion:check:
       require_approval: false
       allowed_adapters: [builtin]

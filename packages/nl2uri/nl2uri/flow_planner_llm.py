@@ -16,26 +16,26 @@ def build_flow_planner_system_prompt() -> str:
     allowed_schemes = ", ".join(sorted(registry))
     example = {
         "flow": {
-            "id": "weather-agent-health",
-            "description": "Generate weather agent, run locally, verify health in Chrome",
+            "id": "<domain>-agent-health",
+            "description": "Generate <domain> agent, run locally, verify health in Chrome",
         },
         "do": [
-            "agent://weather-generator",
-            "hypervisor://local/weather-agent/run",
+            "agent://<domain>-generator",
+            "hypervisor://local/<agent-id>/run",
             {
                 "uri": "browser://chrome/page/open",
-                "with": {"url": "http://localhost:8101/health"},
+                "with": {"url": "http://localhost:<port>/health"},
             },
         ],
     }
     branching_example = {
         "flow": {"id": "check-agent"},
         "do": [
-            {"id": "run_agent", "uri": "hypervisor://local/weather-agent/run"},
-            {"id": "health", "uri": "http://localhost:8101/health", "after": "run_agent"},
+            {"id": "run_agent", "uri": "hypervisor://local/<agent-id>/run"},
+            {"id": "health", "uri": "http://localhost:<port>/health", "after": "run_agent"},
             {
                 "id": "logs_if_failed",
-                "uri": "log://weather-map-agent.local?limit=100",
+                "uri": "log://<agent-id>?limit=100",
                 "after": "health",
                 "if": "health.ok == false",
             },

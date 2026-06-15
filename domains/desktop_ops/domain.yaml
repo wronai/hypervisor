@@ -1,0 +1,66 @@
+version: 1
+kind: taskinity.domain_pack
+metadata:
+  id: desktop_ops
+  title: Desktop Operations
+  description: Generic capability routing for browser, screen, input, pcwin and Android operations.
+  owner_layer: domains/desktop_ops
+
+boundary:
+  control_plane: hypervisor
+  nl_router: urish
+  workflow_runner: uri3
+  execution_runtime: uri2ops
+  operator_agent: agent://desktop-operator
+  deployment_id: desktop-operator.local
+
+contracts:
+  operator_agent: agents/operators/desktop_operator.yaml
+  operator_registry: domains/desktop_ops/operator_registry.yaml
+  scenario_registry: domains/desktop_ops/scenario_registry.yaml
+  operation_registry: packages/uri2ops/uri2ops/operation_registry/registry.yaml
+
+schemes:
+  - browser
+  - screen
+  - input
+  - pcwin
+  - android
+
+policy:
+  default_adapter: mock
+  write_actions_require_approval: true
+  real_adapters_require_explicit_selection: true
+  enforcement:
+    policy_module: packages/urish/urish/policy.py
+    read_operations:
+      - browser.extract_dom
+      - browser.screenshot
+      - screen.observe
+      - android.screenshot
+      - android.dump_ui
+    mutation_operations:
+      - browser.open
+      - browser.click
+      - input.type
+      - pcwin.focus
+      - pcwin.click
+      - android.tap
+    mutation_requires:
+      - dry_run
+      - approve
+  stop_before:
+    - credential_entry
+    - irreversible_submit
+    - external_side_effect
+
+must_own:
+  - operator capability vocabulary
+  - operation URI routing examples
+  - adapter-independent discovery metadata
+
+must_not_own:
+  - customer workflow defaults
+  - generated agent source
+  - vertical scenario data
+  - hidden approval shortcuts

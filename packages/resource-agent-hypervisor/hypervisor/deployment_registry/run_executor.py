@@ -114,13 +114,27 @@ def sync_runtime_health_uri(state: dict[str, Any], health_uri: str) -> dict[str,
 
 
 def prepare_runtime_env(deployment: AgentDeployment, *, repo: Path) -> dict[str, str]:
-    return resolve_deployment_env(
+    import os
+
+    env = resolve_deployment_env(
         deployment.id,
         deployment.agent_ref,
         deployment.env,
         root=repo,
         resolve_secrets=True,
     )
+    role = (deployment.metadata or {}).get("role")
+    if role == "desktop_operator":
+        for key in (
+            "DISPLAY",
+            "WAYLAND_DISPLAY",
+            "XDG_RUNTIME_DIR",
+            "DBUS_SESSION_BUS_ADDRESS",
+            "XAUTHORITY",
+        ):
+            if key not in env and os.environ.get(key):
+                env[key] = os.environ[key]
+    return env
 
 
 def verify_process_alive(process_pid: int, *, settle_seconds: float = 0.3) -> bool:
@@ -151,9 +165,17 @@ def write_runtime_state_after_start(
         "command": plan["command_string"],
         "health_uri": plan["health_uri"],
         "log_uri": plan["log_uri"],
+        "process_log_path": plan.get("process_log_path"),
+        "process_log_uri": plan.get("process_log_uri"),
         "env": runtime_env,
         "requested_port": requested_port,
         "declared_health_uri": declared_health,
+        "process": {
+            "pid": process_pid,
+            "command": plan["command_string"],
+            "log_path": plan.get("process_log_path"),
+            "log_uri": plan.get("process_log_uri"),
+        },
         "network": {
             "host": host,
             "requested_port": requested_port,
@@ -170,18 +192,79 @@ def process_start_failure_payload(
     *,
     process_pid: int,
     plan: dict[str, Any],
+    error: str | None = None,
 ) -> dict[str, Any]:
+    detail = error
+    if not detail:
+        detail = (
+            f"agent process exited immediately (pid={process_pid}); "
+            f"port {plan.get('port')} may be unavailable"
+        )
+        log_path = plan.get("process_log_path")
+        if log_path:
+            path = Path(str(log_path))
+            if path.exists():
+                tail = path.read_text(encoding="utf-8", errors="replace").strip().splitlines()
+                if tail:
+                    detail = f"{detail}; log: {tail[-1]}"
     return {
         "ok": False,
         "deployment_id": deployment_id,
-        "error": (
-            f"agent process exited immediately (pid={process_pid}); "
-            f"port {plan.get('port')} may be unavailable"
-        ),
+        "error": detail,
         "port": plan.get("port"),
+        "health_uri": plan.get("health_uri"),
         "port_rebound": plan.get("port_rebound"),
+        "process_log_path": plan.get("process_log_path"),
+        "process_log_uri": plan.get("process_log_uri"),
         "result_type": "lifecycle",
     }
+
+
+def validate_run_dependencies(plan: dict[str, Any]) -> str | None:
+    """Return an error message when required runtime dependencies are missing."""
+    command = plan.get("command") or []
+    if not isinstance(command, list):
+        return None
+    if "-m" not in command:
+        return None
+    try:
+        module_index = command.index("-m") + 1
+        module_name = str(command[module_index])
+    except (ValueError, IndexError):
+        return None
+    if module_name != "uvicorn":
+        return None
+    python = str(command[0])
+    import subprocess
+
+    try:
+        probe = subprocess.run(
+            [python, "-c", "import uvicorn"],
+            capture_output=True,
+            text=True,
+        )
+    except OSError as exc:
+        return f"cannot execute agent runtime ({python}): {exc}"
+    if probe.returncode == 0:
+        return None
+    return (
+        "uvicorn is not installed for the hypervisor venv "
+        f"({python}); run: pip install 'uvicorn>=0.27' or pip install -e '.[server]'"
+    )
+
+
+def persist_rebound_port(
+    deployment: AgentDeployment, plan: dict[str, Any], *, repo: Path
+) -> dict[str, object] | None:
+    rebound = plan.get("port_rebound")
+    if not rebound:
+        return None
+    port = int(rebound.get("to") or plan.get("port") or 0)
+    if port <= 0:
+        return None
+    from hypervisor.deployment_registry.registry_sync import sync_deployment_port
+
+    return sync_deployment_port(deployment.id, port, root=repo)
 
 
 def attach_started_process(plan: dict[str, Any], process_pid: int) -> dict[str, Any]:

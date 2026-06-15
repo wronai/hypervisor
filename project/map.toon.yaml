@@ -1,32 +1,93 @@
-# hypervisor | 756f 50895L | yaml:115,yml:4,toml:17,txt:6,shell:37,json:52,python:494,proto:4,javascript:15,j2:1,mk:2 | 2026-06-15
-# generated in 0.07s
-# stats: 2293 func | 0 cls | 756 mod | CC̄=3.7 | critical:11 | cycles:0
-# alerts[5]: fan-out createVoiceController=37; CC createVoiceController=29; fan-out generate_ecosystem=23; fan-out parse_duplication=23; fan-out register_call_commands=22
-# hotspots[5]: createVoiceController fan=37; generate_ecosystem fan=23; parse_duplication fan=23; register_call_commands fan=22; register_ecosystem_commands fan=21
-# evolution: CC̄ 3.6→3.7 (regressed +0.1)
+# hypervisor | 875f 59860L | yaml:130,yml:4,toml:17,txt:6,shell:40,json:80,python:554,proto:9,javascript:15,j2:1,mk:2 | 2026-06-15
+# generated in 0.08s
+# stats: 2612 func | 0 cls | 875 mod | CC̄=3.7 | critical:12 | cycles:0
+# alerts[5]: CC _render_markdown=70; fan-out createVoiceController=37; CC createVoiceController=29; CC _validate_deployments=26; CC _validate_example=25
+# hotspots[5]: createVoiceController fan=37; _render_markdown fan=25; analyze_artifact fan=24; generate_ecosystem fan=23; parse_duplication fan=23
+# evolution: CC̄ 3.7→3.7 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[756]:
+M[875]:
   Dockerfile,13
-  Makefile,234
+  Makefile,233
+  agents/custom/gnome_programmer_agent/agent_card.py,28
+  agents/custom/gnome_programmer_agent/main.py,12
+  agents/custom/gnome_programmer_agent/programmer.py,184
+  agents/custom/gnome_programmer_agent/routes.py,73
+  agents/custom/remote_deploy_agent/agent_card.py,40
+  agents/custom/remote_deploy_agent/deploy.py,90
+  agents/custom/remote_deploy_agent/main.py,12
+  agents/custom/remote_deploy_agent/routes.py,69
+  agents/custom/screenshot_analysis_agent/__init__.py,2
+  agents/custom/screenshot_analysis_agent/agent_card.py,55
+  agents/custom/screenshot_analysis_agent/analysis.py,265
+  agents/custom/screenshot_analysis_agent/main.py,12
+  agents/custom/screenshot_analysis_agent/routes.py,80
+  agents/generated/codex_nl_plan_agent/__init__.py,4
+  agents/generated/codex_nl_plan_agent/.generated.yaml,7
+  agents/generated/codex_nl_plan_agent/Dockerfile,9
+  agents/generated/codex_nl_plan_agent/agent_card.py,41
+  agents/generated/codex_nl_plan_agent/main.py,20
+  agents/generated/codex_nl_plan_agent/routes.py,146
+  agents/generated/codex_nl_smoke_agent/__init__.py,4
+  agents/generated/codex_nl_smoke_agent/.generated.yaml,7
+  agents/generated/codex_nl_smoke_agent/Dockerfile,9
+  agents/generated/codex_nl_smoke_agent/agent_card.py,41
+  agents/generated/codex_nl_smoke_agent/main.py,20
+  agents/generated/codex_nl_smoke_agent/routes.py,146
+  agents/generated/codex_uri_smoke_agent/__init__.py,4
+  agents/generated/codex_uri_smoke_agent/.generated.yaml,7
+  agents/generated/codex_uri_smoke_agent/Dockerfile,9
+  agents/generated/codex_uri_smoke_agent/agent_card.py,38
+  agents/generated/codex_uri_smoke_agent/main.py,19
+  agents/generated/codex_uri_smoke_agent/routes.py,146
+  agents/generated/gnome_programmer_agent/__init__.py,4
+  agents/generated/gnome_programmer_agent/.generated.yaml,7
+  agents/generated/gnome_programmer_agent/Dockerfile,9
+  agents/generated/gnome_programmer_agent/agent_card.py,42
+  agents/generated/gnome_programmer_agent/main.py,19
+  agents/generated/gnome_programmer_agent/routes.py,152
+  agents/generated/hypervisor_dashboard_agent/__init__.py,4
+  agents/generated/hypervisor_dashboard_agent/.generated.yaml,7
+  agents/generated/hypervisor_dashboard_agent/Dockerfile,9
+  agents/generated/hypervisor_dashboard_agent/agent_card.py,67
+  agents/generated/hypervisor_dashboard_agent/main.py,19
+  agents/generated/hypervisor_dashboard_agent/routes.py,165
   agents/generated/invoices_agent/__init__.py,4
   agents/generated/invoices_agent/.generated.yaml,7
   agents/generated/invoices_agent/Dockerfile,9
-  agents/generated/invoices_agent/agent_card.py,7
-  agents/generated/invoices_agent/main.py,16
-  agents/generated/invoices_agent/routes.py,90
+  agents/generated/invoices_agent/agent_card.py,41
+  agents/generated/invoices_agent/main.py,19
+  agents/generated/invoices_agent/routes.py,148
+  agents/generated/remote_deploy_agent/__init__.py,4
+  agents/generated/remote_deploy_agent/.generated.yaml,7
+  agents/generated/remote_deploy_agent/Dockerfile,9
+  agents/generated/remote_deploy_agent/agent_card.py,61
+  agents/generated/remote_deploy_agent/main.py,19
+  agents/generated/remote_deploy_agent/routes.py,166
+  agents/generated/schema_collab_agent/__init__.py,4
+  agents/generated/schema_collab_agent/.generated.yaml,7
+  agents/generated/schema_collab_agent/Dockerfile,9
+  agents/generated/schema_collab_agent/agent_card.py,50
+  agents/generated/schema_collab_agent/main.py,21
+  agents/generated/schema_collab_agent/routes.py,150
+  agents/generated/screenshot_analysis_agent/__init__.py,4
+  agents/generated/screenshot_analysis_agent/.generated.yaml,7
+  agents/generated/screenshot_analysis_agent/Dockerfile,9
+  agents/generated/screenshot_analysis_agent/agent_card.py,42
+  agents/generated/screenshot_analysis_agent/main.py,19
+  agents/generated/screenshot_analysis_agent/routes.py,152
   agents/generated/user_agent/__init__.py,4
   agents/generated/user_agent/.generated.yaml,7
   agents/generated/user_agent/Dockerfile,9
-  agents/generated/user_agent/agent_card.py,7
-  agents/generated/user_agent/main.py,16
-  agents/generated/user_agent/routes.py,95
+  agents/generated/user_agent/agent_card.py,47
+  agents/generated/user_agent/main.py,19
+  agents/generated/user_agent/routes.py,155
   agents/generated/weather_map_agent/__init__.py,4
   agents/generated/weather_map_agent/.generated.yaml,7
   agents/generated/weather_map_agent/Dockerfile,9
-  agents/generated/weather_map_agent/agent_card.py,7
-  agents/generated/weather_map_agent/main.py,16
-  agents/generated/weather_map_agent/routes.py,88
-  agents/operators/desktop_operator.yaml,89
+  agents/generated/weather_map_agent/agent_card.py,31
+  agents/generated/weather_map_agent/main.py,19
+  agents/generated/weather_map_agent/routes.py,144
+  agents/operators/desktop_operator.yaml,91
   agents/operators/device_robot_operator.yaml,73
   config/cli_shortcuts.uri.yaml,54
   config/deployments.uri.yaml,25
@@ -34,29 +95,41 @@ M[756]:
   config/extra_operator_registry.yaml,11
   config/flow_defaults.uri.yaml,141
   config/llm.uri.yaml,63
-  config/operator_policy.uri.yaml,70
+  config/operator_policy.uri.yaml,74
   config/operator_registry.uri.yaml,18
   config/runtime.uri.yaml,18
   config/ssh.uri.yaml,21
   config/touri.uri.yaml,20
   config/uri3.uri.yaml,24
   config/urish/contexts/local-dev.yaml,19
+  contracts/agents/codex_nl_plan_agent.yaml,30
+  contracts/agents/codex_nl_smoke_agent.yaml,29
+  contracts/agents/codex_uri_smoke_agent.yaml,30
+  contracts/agents/gnome_programmer_agent.yaml,35
   contracts/agents/hypervisor_dashboard_agent.yaml,55
   contracts/agents/invoices_agent.yaml,28
+  contracts/agents/remote_deploy_agent.yaml,53
+  contracts/agents/schema_collab_agent.yaml,36
+  contracts/agents/screenshot_analysis_agent.yaml,42
   contracts/agents/user_agent.yaml,38
   contracts/agents/weather_map_agent.yaml,22
   contracts/compatibility/policy.yaml,24
+  contracts/proto/codex_uri_smoke.proto,24
   contracts/proto/dashboard.proto,39
+  contracts/proto/deploy.proto,51
+  contracts/proto/desktop.proto,37
   contracts/proto/invoices.proto,32
+  contracts/proto/operator.proto,62
+  contracts/proto/screenshots.proto,29
   contracts/proto/user.proto,39
   contracts/registry.yaml,28
   contracts/resources.yaml,71
   contracts/standards.yaml,28
   contracts/views.yaml,84
-  deployments/agent_deployments.yaml,130
+  deployments/agent_deployments.yaml,219
   docker-compose.yml,18
   docs/PACKAGE_BOUNDARIES.yaml,67
-  domains/desktop_ops/domain.yaml,48
+  domains/desktop_ops/domain.yaml,66
   domains/desktop_ops/operator_registry.yaml,109
   domains/desktop_ops/scenario_registry.yaml,153
   domains/hypervisor_dashboard/domain.yaml,4
@@ -67,9 +140,10 @@ M[756]:
   domains/physical_ops/scenario_registry.yaml,153
   domains/weather_map/commands.yaml,8
   domains/weather_map/domain.yaml,9
-  domains/weather_map/handlers/generate_weather_map.py,24
+  domains/weather_map/handlers/generate_weather_map.py,30
+  domains/weather_map/planner.py,61
   domains/weather_map/proto/weather_map.proto,41
-  domains/weather_map/registry.fragment.yaml,2
+  domains/weather_map/registry.fragment.yaml,5
   domains/weather_map/renderers.yaml,10
   domains/weather_map/resources.yaml,23
   domains/weather_map/uri_tree.yaml,85
@@ -151,11 +225,13 @@ M[756]:
   examples/33_office_workflows/run.sh,41
   examples/33_office_workflows/supplier_report_monthly.yaml,28
   examples/34_cron_uri/run.sh,34
-  examples/35_website_screenshot_schedule/run.sh,36
-  examples/35_website_screenshot_schedule/task_graph.yaml,38
+  examples/35_website_screenshot_schedule/run.sh,37
+  examples/35_website_screenshot_schedule/task_graph.yaml,24
   examples/36_physical_ops/run.sh,14
   examples/36_physical_ops/task.device.yaml,40
   examples/36_physical_ops/task.robot.yaml,38
+  examples/37_agent_screenshot_analysis/run.sh,80
+  examples/38_autonomous_agents/run.sh,66
   examples/broken_agent.yaml,0
   examples/create_invoices_agent_prompt.txt,0
   examples/create_orders_agent.yaml,0
@@ -163,7 +239,6 @@ M[756]:
   generator/__init__.py,0
   generator/hashutil.py,0
   generator/model.py,0
-  generator/templates/Dockerfile.j2,0
   generator/validate.py,0
   goal.yaml,511
   hypervisor/__init__.py,0
@@ -174,12 +249,10 @@ M[756]:
   hypervisor/config/models.py,0
   hypervisor/contract_registry/loader.py,0
   hypervisor/contract_registry/models.py,0
-  hypervisor/contract_registry/registry_builder.py,0
   hypervisor/contract_registry/registry_exporter.py,0
   hypervisor/contract_registry/schema_validator.py,0
   hypervisor/deployment_registry/writer.py,0
   hypervisor/domain_pack/__init__.py,0
-  hypervisor/domain_pack/templates.py,0
   hypervisor/evolution/models.py,0
   hypervisor/policy_gate/gate.py,0
   hypervisor/uri2llm/__init__.py,0
@@ -211,29 +284,32 @@ M[756]:
   nl2uri/writer.py,0
   nlp2uri.yaml,8
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/agent_card.py,74
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/chat_format.py,356
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/events_service.py,275
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/chat_format.py,365
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/events_service.py,283
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/main.py,24
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/models.py,82
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/monitor_webhook.py,127
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/paths.py,14
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/plan_runner.py,173
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/policy.py,52
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/routes.py,354
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/presentation.py,82
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/routes.py,356
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/static/dashboard.js,61
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py,445
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py,713
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/view_builder.py,109
   packages/hypervisor-dashboard-agent/pyproject.toml,29
+  packages/nl2uri/nl2uri/agent_resolution.py,120
   packages/nl2uri/nl2uri/cli.py,246
-  packages/nl2uri/nl2uri/domain_planner.py,33
+  packages/nl2uri/nl2uri/domain_planner.py,31
+  packages/nl2uri/nl2uri/domain_registry.py,142
   packages/nl2uri/nl2uri/flow_extract.py,77
   packages/nl2uri/nl2uri/flow_helpers.py,111
-  packages/nl2uri/nl2uri/flow_planner.py,106
+  packages/nl2uri/nl2uri/flow_planner.py,88
   packages/nl2uri/nl2uri/flow_planner_llm.py,112
   packages/nl2uri/nl2uri/flow_repair.py,74
   packages/nl2uri/nl2uri/flow_sanitize.py,46
   packages/nl2uri/nl2uri/flow_step_ids.py,77
-  packages/nl2uri/nl2uri/graph_planner.py,414
+  packages/nl2uri/nl2uri/graph_planner.py,399
   packages/nl2uri/nl2uri/graph_planner_llm.py,147
   packages/nl2uri/nl2uri/graph_repair.py,315
   packages/nl2uri/nl2uri/llm_planner.py,8
@@ -241,8 +317,9 @@ M[756]:
   packages/nl2uri/nl2uri/pipeline.py,153
   packages/nl2uri/nl2uri/planner.py,13
   packages/nl2uri/nl2uri/planner_llm.py,59
-  packages/nl2uri/nl2uri/planner_templates.py,102
-  packages/nl2uri/nl2uri/planner_validation.py,65
+  packages/nl2uri/nl2uri/planner_templates.py,50
+  packages/nl2uri/nl2uri/planner_validation.py,71
+  packages/nl2uri/nl2uri/weather_forecast.py,100
   packages/nl2uri/pyproject.toml,31
   packages/resource-agent-factory/agents/generated/orders_agent/__init__.py,4
   packages/resource-agent-factory/agents/generated/orders_agent/.generated.yaml,4
@@ -256,15 +333,17 @@ M[756]:
   packages/resource-agent-factory/agents/generated/user_agent/agent_card.py,63
   packages/resource-agent-factory/agents/generated/user_agent/main.py,16
   packages/resource-agent-factory/agents/generated/user_agent/routes.py,95
-  packages/resource-agent-factory/generator/agent_generator.py,110
+  packages/resource-agent-factory/generator/agent_generator.py,132
   packages/resource-agent-factory/generator/header.py,56
   packages/resource-agent-factory/generator/paths.py,12
+  packages/resource-agent-factory/generator/templates/Dockerfile.j2,7
   packages/resource-agent-factory/generator/verify.py,83
   packages/resource-agent-factory/pyproject.toml,25
+  packages/resource-agent-hypervisor/hypervisor/agent_describe.py,677
   packages/resource-agent-hypervisor/hypervisor/artifacts/__init__.py,3
   packages/resource-agent-hypervisor/hypervisor/artifacts/gate.py,292
-  packages/resource-agent-hypervisor/hypervisor/cli.py,495
-  packages/resource-agent-hypervisor/hypervisor/cli_commands.py,158
+  packages/resource-agent-hypervisor/hypervisor/cli.py,523
+  packages/resource-agent-hypervisor/hypervisor/cli_commands.py,159
   packages/resource-agent-hypervisor/hypervisor/config/config_checks.py,50
   packages/resource-agent-hypervisor/hypervisor/config/defaults.py,63
   packages/resource-agent-hypervisor/hypervisor/config/loader.py,96
@@ -273,19 +352,22 @@ M[756]:
   packages/resource-agent-hypervisor/hypervisor/contract_registry/cli.py,41
   packages/resource-agent-hypervisor/hypervisor/contract_registry/cli_commands.py,65
   packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_checks/__init__.py,9
-  packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_checks/capabilities.py,32
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_checks/capabilities.py,68
   packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_checks/proto_index.py,16
   packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_checks/resources.py,22
-  packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_validator.py,36
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_validator.py,42
   packages/resource-agent-hypervisor/hypervisor/contract_registry/merge_helpers.py,61
   packages/resource-agent-hypervisor/hypervisor/contract_registry/merger.py,26
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/registry_builder.py,60
   packages/resource-agent-hypervisor/hypervisor/contract_registry/registry_checks/__init__.py,4
-  packages/resource-agent-hypervisor/hypervisor/contract_registry/registry_checks/capabilities.py,40
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/registry_checks/capabilities.py,59
   packages/resource-agent-hypervisor/hypervisor/contract_registry/registry_checks/resources.py,26
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/uri_resolver.py,562
   packages/resource-agent-hypervisor/hypervisor/contract_registry/validate.py,13
   packages/resource-agent-hypervisor/hypervisor/core.py,84
   packages/resource-agent-hypervisor/hypervisor/data/nlp2uri.yaml,50
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/__init__.py,63
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/__init__.py,65
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/aliases.py,34
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/docker_runner.py,76
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/env.py,50
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/env_config.py,28
@@ -296,27 +378,28 @@ M[756]:
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/pipeline.py,231
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/probe.py,148
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/readiness.py,92
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py,432
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py,423
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle_status.py,67
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/loader.py,87
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/local_targets.py,96
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/local_targets.py,106
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/local_verify.py,39
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/models.py,124
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/port_conflict.py,77
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/port_utils.py,62
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/process.py,57
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/process_discovery.py,124
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/registry_sync.py,68
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/remote_runner.py,15
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/run_executor.py,260
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/remote_runner.py,16
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/run_executor.py,274
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/run_plans.py,33
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/runner.py,37
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py,295
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/selector.py,77
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/selector.py,76
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_deploy.py,95
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_helpers.py,14
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_run.py,58
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_run.py,118
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_verify.py,38
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/status.py,152
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/status.py,188
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/stopper.py,239
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/supervisor.py,199
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/watch.py,408
@@ -329,8 +412,9 @@ M[756]:
   packages/resource-agent-hypervisor/hypervisor/domain_pack/artifact_generators/views.py,16
   packages/resource-agent-hypervisor/hypervisor/domain_pack/generator.py,75
   packages/resource-agent-hypervisor/hypervisor/domain_pack/model.py,25
-  packages/resource-agent-hypervisor/hypervisor/domain_pack/pack_writer.py,79
+  packages/resource-agent-hypervisor/hypervisor/domain_pack/pack_writer.py,86
   packages/resource-agent-hypervisor/hypervisor/domain_pack/parser.py,17
+  packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py,121
   packages/resource-agent-hypervisor/hypervisor/domain_pack/writer.py,11
   packages/resource-agent-hypervisor/hypervisor/events.py,86
   packages/resource-agent-hypervisor/hypervisor/evolution/cli.py,33
@@ -403,7 +487,9 @@ M[756]:
   packages/uri2ops/uri2ops/__init__.py,3
   packages/uri2ops/uri2ops/cli.py,137
   packages/uri2ops/uri2ops/main.py,12
-  packages/uri2ops/uri2ops/operation_registry/registry.yaml,187
+  packages/uri2ops/uri2ops/operation_registry/registry.yaml,195
+  packages/uri2ops/uri2ops/operation_registry/uri_mapping.py,27
+  packages/uri2ops/uri2ops/operation_registry/validator.py,43
   packages/uri2ops/uri2ops/remote_registry/loader.py,145
   packages/uri2ops/uri2ops/schemas/operator_task.schema.json,63
   packages/uri2ops/uri2ops/server/app.py,33
@@ -428,8 +514,8 @@ M[756]:
   packages/uri2run/uri2run/transports/__init__.py,46
   packages/uri2run/uri2run/transports/a2a_transport.py,88
   packages/uri2run/uri2run/transports/docker_transport.py,50
-  packages/uri2run/uri2run/transports/flow_transport.py,79
-  packages/uri2run/uri2run/transports/graph_transport.py,86
+  packages/uri2run/uri2run/transports/flow_transport.py,49
+  packages/uri2run/uri2run/transports/graph_transport.py,56
   packages/uri2run/uri2run/transports/http_transport.py,82
   packages/uri2run/uri2run/transports/mcp_transport.py,86
   packages/uri2run/uri2run/transports/mock_transport.py,11
@@ -440,7 +526,8 @@ M[756]:
   packages/uri2run/uri2run/transports/sse_transport.py,63
   packages/uri2run/uri2run/transports/ssh_transport.py,62
   packages/uri2run/uri2run/transports/stdio_transport.py,56
-  packages/uri2run/uri2run/transports/uri2ops_transport.py,106
+  packages/uri2run/uri2run/transports/uri2ops_transport.py,89
+  packages/uri2run/uri2run/transports/workflow_transport.py,65
   packages/uri2run/uri2run/transports/ws_transport.py,55
   packages/uri2run/uri2run/voice_resolver.py,63
   packages/uri2verify/pyproject.toml,18
@@ -461,6 +548,7 @@ M[756]:
   packages/uri2voice/uri2voice/voice_command.py,60
   packages/uri3/contracts/resources.yaml,15
   packages/uri3/contracts/views.yaml,17
+  packages/uri3/domains/weather_map/handlers/generate_weather_map.py,5
   packages/uri3/pyproject.toml,30
   packages/uri3/uri3/artifacts/__init__.py,21
   packages/uri3/uri3/artifacts/evolution_source.py,77
@@ -483,10 +571,10 @@ M[756]:
   packages/uri3/uri3/config/llm_profile_builder.py,44
   packages/uri3/uri3/config/llm_profiles.py,83
   packages/uri3/uri3/config/repo_root.py,44
-  packages/uri3/uri3/config/ssh_auth.py,96
+  packages/uri3/uri3/config/ssh_auth.py,99
   packages/uri3/uri3/config/uri_yaml.py,113
   packages/uri3/uri3/docker/actions/__init__.py,4
-  packages/uri3/uri3/docker/actions/compose.py,99
+  packages/uri3/uri3/docker/actions/compose.py,117
   packages/uri3/uri3/docker/actions/container.py,37
   packages/uri3/uri3/docker/compose_generator.py,53
   packages/uri3/uri3/docker/controller.py,36
@@ -507,13 +595,13 @@ M[756]:
   packages/uri3/uri3/graph/__init__.py,57
   packages/uri3/uri3/graph/adapters/__init__.py,3
   packages/uri3/uri3/graph/adapters/base.py,12
-  packages/uri3/uri3/graph/adapters/browser_mock.py,44
+  packages/uri3/uri3/graph/adapters/browser_mock.py,45
   packages/uri3/uri3/graph/adapters/browser_playwright.py,77
-  packages/uri3/uri3/graph/adapters/browser_router.py,71
+  packages/uri3/uri3/graph/adapters/browser_router.py,61
   packages/uri3/uri3/graph/adapters/registry.py,121
   packages/uri3/uri3/graph/adapters/runtime_adapter.py,74
-  packages/uri3/uri3/graph/adapters/uri2ops_adapter.py,122
-  packages/uri3/uri3/graph/artifacts.py,107
+  packages/uri3/uri3/graph/adapters/uri2ops_adapter.py,107
+  packages/uri3/uri3/graph/artifacts.py,156
   packages/uri3/uri3/graph/conditions.py,24
   packages/uri3/uri3/graph/dependency_graph.py,116
   packages/uri3/uri3/graph/event_emitter.py,109
@@ -522,7 +610,7 @@ M[756]:
   packages/uri3/uri3/graph/execution_plan.py,63
   packages/uri3/uri3/graph/graph_executor.py,95
   packages/uri3/uri3/graph/graph_serializer.py,63
-  packages/uri3/uri3/graph/graph_validator.py,80
+  packages/uri3/uri3/graph/graph_validator.py,92
   packages/uri3/uri3/graph/models.py,88
   packages/uri3/uri3/graph/operation_registry.py,71
   packages/uri3/uri3/graph/policy.py,20
@@ -531,7 +619,7 @@ M[756]:
   packages/uri3/uri3/logs/__init__.py,3
   packages/uri3/uri3/logs/filters.py,73
   packages/uri3/uri3/logs/parsing.py,100
-  packages/uri3/uri3/logs/reader.py,105
+  packages/uri3/uri3/logs/reader.py,127
   packages/uri3/uri3/logs/writer.py,76
   packages/uri3/uri3/paths.py,5
   packages/uri3/uri3/protocols/scheme_registry.py,24
@@ -539,7 +627,7 @@ M[756]:
   packages/uri3/uri3/protocols/schemes/a2a.py,15
   packages/uri3/uri3/protocols/schemes/analyze.py,73
   packages/uri3/uri3/protocols/schemes/base.py,67
-  packages/uri3/uri3/protocols/schemes/constants.py,33
+  packages/uri3/uri3/protocols/schemes/constants.py,35
   packages/uri3/uri3/protocols/schemes/docker.py,43
   packages/uri3/uri3/protocols/schemes/env.py,22
   packages/uri3/uri3/protocols/schemes/http.py,15
@@ -552,11 +640,12 @@ M[756]:
   packages/uri3/uri3/protocols/schemes/registry.py,27
   packages/uri3/uri3/protocols/schemes/resource_like.py,16
   packages/uri3/uri3/protocols/schemes/spec_registry.py,99
-  packages/uri3/uri3/resolvers/dispatch.py,67
+  packages/uri3/uri3/resolvers/dispatch.py,75
   packages/uri3/uri3/resolvers/docker_resolver.py,154
   packages/uri3/uri3/resolvers/env_resolver.py,94
-  packages/uri3/uri3/resolvers/explain.py,268
+  packages/uri3/uri3/resolvers/explain.py,261
   packages/uri3/uri3/resolvers/explain_verification.py,60
+  packages/uri3/uri3/resolvers/file_resolver.py,75
   packages/uri3/uri3/resolvers/log_query.py,55
   packages/uri3/uri3/resolvers/log_resolver.py,85
   packages/uri3/uri3/resolvers/protocol_resolver.py,27
@@ -595,23 +684,24 @@ M[756]:
   packages/urigen/urigen/writer.py,98
   packages/urish/pyproject.toml,33
   packages/urish/urish/__init__.py,3
-  packages/urish/urish/backends/agent.py,37
-  packages/urish/urish/backends/ask.py,232
-  packages/urish/urish/backends/call.py,108
+  packages/urish/urish/backends/agent.py,44
+  packages/urish/urish/backends/agent_factory.py,450
+  packages/urish/urish/backends/ask.py,289
+  packages/urish/urish/backends/call.py,278
   packages/urish/urish/backends/dashboard.py,128
   packages/urish/urish/backends/doctor.py,75
   packages/urish/urish/backends/evolve.py,136
   packages/urish/urish/backends/explain.py,9
   packages/urish/urish/backends/logs.py,20
-  packages/urish/urish/backends/proof.py,281
+  packages/urish/urish/backends/proof.py,368
   packages/urish/urish/backends/repair.py,49
   packages/urish/urish/backends/run.py,97
   packages/urish/urish/backends/stream.py,127
   packages/urish/urish/backends/ticket.py,109
-  packages/urish/urish/backends/watch.py,79
+  packages/urish/urish/backends/watch.py,92
   packages/urish/urish/cli.py,319
   packages/urish/urish/commands/__init__.py,1
-  packages/urish/urish/commands/agent_commands.py,130
+  packages/urish/urish/commands/agent_commands.py,182
   packages/urish/urish/commands/call_commands.py,149
   packages/urish/urish/commands/dashboard_commands.py,136
   packages/urish/urish/commands/deps.py,13
@@ -626,17 +716,17 @@ M[756]:
   packages/urish/urish/context.py,37
   packages/urish/urish/ecosystem_workflow.py,72
   packages/urish/urish/exit_codes.py,21
-  packages/urish/urish/intent.py,186
+  packages/urish/urish/intent.py,238
   packages/urish/urish/payload.py,42
-  packages/urish/urish/policy.py,197
+  packages/urish/urish/policy.py,224
   packages/urish/urish/render.py,158
-  packages/urish/urish/repl.py,296
-  packages/urish/urish/scenario_registry.py,402
+  packages/urish/urish/repl.py,294
+  packages/urish/urish/scenario_registry.py,410
   packages/urish/urish/select.py,30
   packages/urish/urish/shortcuts.py,69
   packages/urish/urish/ticket_workflow.py,118
   planfile.yaml,1319
-  prefact.yaml,97
+  prefact.yaml,99
   project.sh,59
   pyproject.toml,216
   runtime_client/client.py,0
@@ -669,7 +759,7 @@ M[756]:
   scripts/architecture_audit/areas.py,156
   scripts/architecture_audit/audit.py,144
   scripts/architecture_audit/checks_domain.py,142
-  scripts/architecture_audit/checks_structure.py,244
+  scripts/architecture_audit/checks_structure.py,276
   scripts/architecture_audit/cli.py,92
   scripts/architecture_audit/models.py,53
   scripts/architecture_audit/parsers.py,170
@@ -677,14 +767,16 @@ M[756]:
   scripts/architecture_responsibility_audit.py,28
   scripts/ci/architecture_gate.sh,56
   scripts/ci/ensure_editable_install.sh,19
-  scripts/examples/cli_fallback.sh,61
+  scripts/examples/audit_agent_reports.py,427
+  scripts/examples/cli_fallback.sh,62
   scripts/examples/doql_host_preview.sh,74
-  scripts/examples/effective_weather_playwright.py,455
+  scripts/examples/effective_weather_playwright.py,466
   scripts/examples/run_uri3_workflow.py,58
+  scripts/fix-generated-ownership.sh,18
   scripts/test-all-examples.sh,5
   scripts/www/about_parser.py,53
   scripts/www/build_examples_docs.py,327
-  scripts/www/build_examples_manifest.py,159
+  scripts/www/build_examples_manifest.py,164
   scripts/www/build_landing_integrations.py,313
   scripts/www/check_examples_links.py,106
   scripts/www/install-cron.sh,150
@@ -707,7 +799,6 @@ M[756]:
   uri2ops/operation_registry/dispatcher.py,0
   uri2ops/operation_registry/loader.py,0
   uri2ops/operation_registry/models.py,0
-  uri2ops/operation_registry/validator.py,0
   uri2ops/schemas/operation_registry.schema.json,0
   uri2ops/server/a2a_wrapper.py,0
   uri2ops/server/mcp_wrapper.py,0
@@ -723,12 +814,12 @@ M[756]:
   uri3/validators/uri_validator.py,0
   www/Dockerfile,32
   www/api-bridge/bridge.py,199
-  www/app.js,613
+  www/app.js,648
   www/assets/api-client.js,215
   www/assets/app.js,260
   www/assets/config.js,13
   www/chat-markdown.js,80
-  www/chat-uri.js,143
+  www/chat-uri.js,148
   www/chat-voice.js,157
   www/contracts/chat_ui_agent.yaml,55
   www/contracts/openapi.yaml,75
@@ -736,7 +827,34 @@ M[756]:
   www/docs-examples.js,59
   www/examples-gallery.js,144
   www/examples/nl-commands.txt,33
+  www/generated/cache/about/01_quickstart_local-3ea5cbf71000635c.json,4
+  www/generated/cache/about/02_uri3_scan_http-194cbbcfa8306eac.json,4
+  www/generated/cache/about/03_ssh_remote_agent-948fe4512a944461.json,4
+  www/generated/cache/about/04_nl2a_weather_map-35dffafaa015f2b1.json,4
+  www/generated/cache/about/05_meta_repair-829661dc35de8437.json,4
+  www/generated/cache/about/06_orders_agent-fa8cebf95291599c.json,4
+  www/generated/cache/about/07_invoices_agent-5859648a80381c9c.json,4
+  www/generated/cache/about/08_evolution-db22aad1f8844232.json,4
+  www/generated/cache/about/09_run_agent_hypervisor-1711dce8fea4b4bd.json,4
+  www/generated/cache/about/10_browser_operator-2dc37409a09018f3.json,4
+  www/generated/cache/about/11_playwright_browser-65f644b9333c4fad.json,4
+  www/generated/cache/about/12_android_operator-86a6aec1684d0822.json,4
+  www/generated/cache/about/13_nl2uri_multi_uri_graph-def5bcd16af46627.json,4
+  www/generated/cache/about/13_pcwin_operator-73848739b38fa413.json,4
+  www/generated/cache/about/14_uri2ops_serve-7b57cb5162c84c38.json,4
+  www/generated/cache/about/14_workflow_executor_mock-3c044d3a9015c567.json,4
+  www/generated/cache/about/15_compact_uri_flow-bfca62561aac316c.json,4
+  www/generated/cache/about/15_playwright_browser-a74b7e7795438fdb.json,4
+  www/generated/cache/about/16_llm_graph_planner-159f06dd4832dbab.json,4
+  www/generated/cache/about/16_www_landing_monitor-f7bdca1db38212a5.json,4
+  www/generated/cache/about/17_flow_vs_graph-315d5c344a908569.json,4
+  www/generated/cache/about/18_llm_flow_planner-f9fd0a829937576e.json,4
+  www/generated/cache/about/20_touri_capabilities-44612b79959663b2.json,4
+  www/generated/cache/about/21_touri_voice-dfb4ecf1dd749f23.json,4
+  www/generated/cache/about/22_dashboard_agent-c59387bc332dc4f0.json,4
+  www/generated/cache/about/22_markpact_weather-311b3b5c7edf84a8.json,4
   www/generated/cache/about/23_nl_to_agent_tutorial-2c28d4c71f717931.json,4
+  www/generated/cache/about/30_golden_path-e898a3a7b7679ee7.json,4
   www/generated/cache/about/31_office_day-e7c4d91a191e34ff.json,4
   www/generated/cache/about/32_ecommerce_integrations-232ba3159dae70e5.json,4
   www/generated/cache/about/32_ecommerce_integrations-305e5c45f88421e7.json,4
@@ -756,13 +874,32 @@ M[756]:
   www/generated/cache/about/35_website_screenshot_schedule-5d3d692bad14d211.json,4
   www/generated/cache/about/35_website_screenshot_schedule-5f3f6f2bfa01f1f5.json,4
   www/generated/cache/about/35_website_screenshot_schedule-e692fc863f4dfa33.json,4
-  www/generated/examples-manifest.js,457
-  www/generated/integrations-i18n.js,275
+  www/generated/cache/about/36_physical_ops-5999114d62a13a0c.json,4
+  www/generated/examples-manifest.js,477
+  www/generated/integrations-i18n.js,1143
   www/landing.js,836
   www/landing-i18n.js,719
   www/office-cards-i18n.js,306
   www/schemas/agent_contract.schema.json,36
 D:
+  packages/resource-agent-hypervisor/hypervisor/agent_describe.py:
+    e: AgentDescribeReport,describe_agent,_deployment_health_label,_safe_run_plan,_find_contract_path,_find_domain_pack,_package_relative_path,_list_package_files,_agent_kind,_capability_backing_note,_skill_invoke_example,_file_role,_extract_markpact_blocks,_read_yaml,_rel,_render_markdown
+    AgentDescribeReport: write(1)
+    describe_agent(selector)
+    _deployment_health_label(deployment_item)
+    _safe_run_plan(deployment;repo)
+    _find_contract_path(repo;agent_name;deployment)
+    _find_domain_pack(repo;contract_path;deployment;contract)
+    _package_relative_path(deployment;repo)
+    _list_package_files(package_dir)
+    _agent_kind(deployment)
+    _capability_backing_note()
+    _skill_invoke_example(cap)
+    _file_role(rel)
+    _extract_markpact_blocks(readme_path)
+    _read_yaml(path)
+    _rel(repo;path)
+    _render_markdown()
   www/chat-voice.js:
     e: createVoiceController,mediaRecorder,speakText,playSpeechResult,playback,audio,markdownToSpeechText,maybeSpeakAssistantReply,text,blobToBase64,buffer,bytes,transcribeAudioBlob,engine,showVoiceError,submitTranscript,result,text,bindRecorderStop,blob,startRecording,stream,toggleVoiceCapture
     createVoiceController()
@@ -788,6 +925,17 @@ D:
     startRecording()
     stream()
     toggleVoiceCapture()
+  scripts/examples/audit_agent_reports.py:
+    e: ExampleAuditSpec,Finding,AuditReport,_validate_example,_validate_contracts,_validate_deployments,_write_deployment_reports,_render_markdown,main
+    ExampleAuditSpec:
+    Finding:
+    AuditReport:
+    _validate_example(spec;repo;registry)
+    _validate_contracts(repo)
+    _validate_deployments(repo;registry)
+    _write_deployment_reports(repo;out_dir)
+    _render_markdown(report)
+    main()
   www/landing.js:
     e: i18n,TRANSLATIONS,TEXT_BINDINGS,SLIDE_DURATION_MS,storageGet,storageSet,normalizeChoice,currentLang,currentTheme,currentStep,autoTimer,paused,progressRAF,progressStart,stageEl,captionTitle,captionText,progressBar,countEl,stepButtons,btnPrev,btnNext,btnPlay,btnCopyChat,scenarioTabs,scenarioTerminal,scenarioResult,scenarioReplay,systemMapNodes,lookup,langCopy,fallbackCopy,read,getStepCopy,step,setNodeText,el,strong,applyTheme,active,updatePlayButton,applyLanguage,copy,meta,active,label,labelEl,label,activeScenario,elLang,initPreferences,escapeHtml,buildSlidePrompt,mockShell,sidebar,buildSlidePlan,html,buildSlideAgents,agentRunCard,buildSlideFailure,buildSlideRepair,buildSlideProof,copyTourChat,slide,messages,label,clone,text,flashTourCopy,original,clearScenarioTimers,getScenario,renderScenarioResult,setSystemMapFocus,active,key,appendScenarioLine,row,renderScenario,scenario,animate,timer,initScenarioLab,id,selected,active,renderStep,step,stepCopy,slide,resetProgress,tick,elapsed,pct,stopAuto,startAuto,goToStep,pauseTourPlayback,bindTourStepButtons,bindTourNavButtons,bindTourPlayButton,bindTourHoverPause,tourSection,initTour,initReveal,els,done,failSafeTimer,revealAll,obs,initFaq,btn,open,initSmoothAnchors,id,target,initOfficeCards,quote,prompt
     i18n()
@@ -909,48 +1057,91 @@ D:
     initOfficeCards()
     quote()
     prompt()
-  packages/urish/urish/backends/proof.py:
-    e: _check,_system_body,_view_payload,_actions,_has_action,_call_proof_context,_evaluate_chat_check,_target_status,_dashboard_view_ok,_build_proof_checks,_collect_proof_context,proof_uri,render_proof_text
-    _check(name)
-    _system_body(call_result)
-    _view_payload(system_body)
-    _actions(system_body)
-    _has_action(actions)
-    _call_proof_context(target)
-    _evaluate_chat_check(call_result)
-    _target_status(view_payload)
-    _dashboard_view_ok(system_body;result_type)
-    _build_proof_checks()
-    _collect_proof_context(target;call_result;system_body)
-    proof_uri(target)
-    render_proof_text(result)
-  scripts/www/build_examples_manifest.py:
-    e: natural_key,extract_title,category_for,load_office_chains,test_summary,build_manifest,main
-    natural_key(name)
-    extract_title(readme;fallback)
-    category_for(name)
-    load_office_chains()
-    test_summary()
-    build_manifest()
-    main()
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/events_service.py:
-    e: _parse_ts,_build_incident_event,_incident_events,_monitor_events,_derive_service_status,_health_summary,_agent_health_event,_agent_health_events,_should_include_log_event,_agent_id_from_log_subject,_log_event_from_payload,_recent_jsonl_lines,_events_from_jsonl_path,_log_jsonl_events,collect_system_events,filter_events_since
-    _parse_ts(value)
-    _build_incident_event(path;root;payload)
-    _incident_events(root)
-    _monitor_events(root)
-    _derive_service_status(inspection;health_ok)
-    _health_summary(service_status;incidents)
-    _agent_health_event(root;deployment)
-    _agent_health_events(root)
-    _should_include_log_event(payload)
-    _agent_id_from_log_subject(subject)
-    _log_event_from_payload(payload)
-    _recent_jsonl_lines(path)
-    _events_from_jsonl_path(path)
-    _log_jsonl_events(root)
-    collect_system_events()
-    filter_events_since(events;since)
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/uri_resolver.py:
+    e: _parse_bool,_parse_kinds,_schema_refs_from_contract,_find_proto_files,_artifact_entry,_read_yaml,_slug_to_snake,_contract_uri,_agent_contract_uri,resolve_contract_path,_format_schema_results,_validation_payload,fetch_agent_contract,validate_agent_contract,validate_contract_registry_uri,fetch_registry_manifest,generate_agent_contract,fetch_agent_artifacts,handle_contract_uri
+    _parse_bool(value)
+    _parse_kinds(value)
+    _schema_refs_from_contract(contract)
+    _find_proto_files(root;schema_refs)
+    _artifact_entry()
+    _read_yaml(path)
+    _slug_to_snake(value)
+    _contract_uri(path)
+    _agent_contract_uri(agent_name)
+    resolve_contract_path(name;root)
+    _format_schema_results(results)
+    _validation_payload()
+    fetch_agent_contract(name;root)
+    validate_agent_contract(name;root)
+    validate_contract_registry_uri(root)
+    fetch_registry_manifest(root)
+    generate_agent_contract(name;root)
+    fetch_agent_artifacts(name;root)
+    handle_contract_uri(uri;root)
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py:
+    e: _SystemUriRequest,_repo_root,_uri_path_parts,uri_implies_dry_run,list_agent_deployments,resolve_view_uri,_normalize_view_uri,_handle_view_uri,_handle_runtime_uri,_handle_health_uri,_contract_path_for_agent,_schema_refs_from_capabilities,_read_contract,_handle_schema_uri,_contract_uri_for_schema,_handle_repair_uri,_query_params,_bool_param,_int_param,_handle_agent_factory_uri,_handle_hypervisor_agent_uri,_handle_log_uri,_is_presentation_request,_html_request,_markdown_request,_is_view_request,_is_runtime_request,_is_health_request,_is_contract_request,_contract_request,_is_schema_request,_is_repair_request,_is_agent_factory_request,_is_hypervisor_agent_request,_view_request,_runtime_request,_health_request,_schema_request,_repair_request,_agent_factory_request,_hypervisor_agent_request,_log_request,_file_request,_is_touri_run_request,_touri_run_request,_is_http_request,_infer_operator_operation,_is_operator_request,_operator_request,_http_request,_presentation_request,_select_system_uri_handler,call_system_uri
+    _SystemUriRequest:
+    _repo_root(root)
+    _uri_path_parts(uri)
+    uri_implies_dry_run(uri)
+    list_agent_deployments()
+    resolve_view_uri(view_uri)
+    _normalize_view_uri(uri)
+    _handle_view_uri(uri)
+    _handle_runtime_uri(parts)
+    _handle_health_uri(parts)
+    _contract_path_for_agent(agent_id)
+    _schema_refs_from_capabilities(capabilities)
+    _read_contract(path)
+    _handle_schema_uri(parts)
+    _contract_uri_for_schema(agent_id;file_uri)
+    _handle_repair_uri(parts)
+    _query_params(uri)
+    _bool_param(value)
+    _int_param(value)
+    _handle_agent_factory_uri(request)
+    _handle_hypervisor_agent_uri(request)
+    _handle_log_uri(uri)
+    _is_presentation_request(request)
+    _html_request(request)
+    _markdown_request(request)
+    _is_view_request(request)
+    _is_runtime_request(request)
+    _is_health_request(request)
+    _is_contract_request(request)
+    _contract_request(request)
+    _is_schema_request(request)
+    _is_repair_request(request)
+    _is_agent_factory_request(request)
+    _is_hypervisor_agent_request(request)
+    _view_request(request)
+    _runtime_request(request)
+    _health_request(request)
+    _schema_request(request)
+    _repair_request(request)
+    _agent_factory_request(request)
+    _hypervisor_agent_request(request)
+    _log_request(request)
+    _file_request(request)
+    _is_touri_run_request(request)
+    _touri_run_request(request)
+    _is_http_request(request)
+    _infer_operator_operation(parts)
+    _is_operator_request(request)
+    _operator_request(request)
+    _http_request(request)
+    _presentation_request(request)
+    _select_system_uri_handler(request)
+    call_system_uri(uri)
+  packages/urish/urish/intent.py:
+    e: extract_agent_id,_detect_agent_action,agent_uri,split_nl_commands,is_screenshot_schedule_prompt,detect_intent,_detect_kind
+    extract_agent_id(prompt)
+    _detect_agent_action(prompt)
+    agent_uri(agent_id;action)
+    split_nl_commands(prompt)
+    is_screenshot_schedule_prompt(prompt)
+    detect_intent(prompt)
+    _detect_kind(prompt)
   www/office-cards-i18n.js:
     e: _quoteMarks,open,close,_applyOfficeCardCopy,tagEl,titleEl,quoteEl,flowEls,autoBadge,humanBadge,snippetEl,cleaned,applyOfficeCardI18n,cards,id,card
     _quoteMarks()
@@ -970,12 +1161,14 @@ D:
     id()
     card()
   packages/urish/urish/scenario_registry.py:
-    e: _repo_root,_registry_paths,_markpact_domain_readmes,_load_markpact_registries,_registry_key,_merge_markpact_scenarios,_iter_yaml_files,load_scenario_registries,clear_scenario_registry_cache,_normalize_prompt,_render_template,_render_list,_agent_id,_context_for,_deployment_from_prompt,scenario_registries_for_kind,scenario_by_id,scenarios_for_kind,_with_registry_meta,_score_scenario_against,match_scenario,_matches_any,_infer_subtype,_planned_uris_for,next_steps_for_subtype,next_steps_for_intent,scenario_to_intent,try_scenario_intent
+    e: _repo_root,_registry_paths,_markpact_domain_readmes,_load_markpact_registries,_registry_key,_load_exported_scenarios,_merge_scenarios,_merge_markpact_scenarios,_iter_yaml_files,load_scenario_registries,clear_scenario_registry_cache,_normalize_prompt,_render_template,_render_list,_agent_id,_context_for,_deployment_from_prompt,scenario_registries_for_kind,scenario_by_id,scenarios_for_kind,_with_registry_meta,_score_scenario_against,match_scenario,_matches_any,_infer_subtype,_planned_uris_for,next_steps_for_subtype,next_steps_for_intent,scenario_to_intent,try_scenario_intent
     _repo_root(start)
     _registry_paths()
     _markpact_domain_readmes(root)
     _load_markpact_registries(root)
     _registry_key(registry)
+    _load_exported_scenarios(readme;root)
+    _merge_scenarios(existing;exported)
     _merge_markpact_scenarios(registry;root)
     _iter_yaml_files(path)
     load_scenario_registries()
@@ -999,32 +1192,22 @@ D:
     next_steps_for_intent(intent)
     scenario_to_intent(scenario)
     try_scenario_intent(prompt)
-  packages/uri3/uri3/graph/graph_validator.py:
-    e: _schema_path,load_workflow_graph,validate_workflow_schema,validate_workflow_graph
-    _schema_path(name)
-    load_workflow_graph(source)
-    validate_workflow_schema(graph)
-    validate_workflow_graph(source)
-  scripts/examples/effective_weather_playwright.py:
-    e: _run,_json_cmd,_health_ok,_extract_health_uri,_discover_local_agent_health,_inspect_agent,_ensure_weather_agent,_flow_text,_task_text,_artifact_to_path,_validate_workflow_result,_validate_png_artifact,_run_uri3_flow,_run_uri2ops_task,main
-    _run(argv)
-    _json_cmd(argv)
-    _health_ok(url)
-    _extract_health_uri(payload)
-    _discover_local_agent_health()
-    _inspect_agent(agent_id)
-    _ensure_weather_agent(agent_id)
-    _flow_text(flow_id;health_uri)
-    _task_text(task_id;health_uri)
-    _artifact_to_path(uri)
-    _validate_workflow_result(payload;health_uri)
-    _validate_png_artifact(payload)
-    _run_uri3_flow(flow_path;graph_path;health_uri)
-    _run_uri2ops_task(task_path)
-    main(argv)
   packages/urish/urish/payload.py:
     e: load_payload
     load_payload(raw)
+  packages/urish/urish/policy.py:
+    e: PolicyOptions,_path_has_any,_classify_repair,_classify_apply,_classify_hypervisor_mutation,_classify_physical_operator,_classify_desktop_operator,_classify_read,_classify_mutation_scheme,classify_uri,evaluate_policy
+    PolicyOptions: from_flags(0)
+    _path_has_any(path;tokens)
+    _classify_repair(scheme;path)
+    _classify_apply(scheme;path)
+    _classify_hypervisor_mutation(scheme;path)
+    _classify_physical_operator(scheme;path)
+    _classify_desktop_operator(scheme;path)
+    _classify_read(scheme;path;parsed)
+    _classify_mutation_scheme(scheme;path)
+    classify_uri(uri)
+    evaluate_policy(uri)
   packages/urish/urish/shortcuts.py:
     e: shortcuts_path,load_shortcut_specs,load_shortcuts,resolve_shortcut,resolve_target
     shortcuts_path(root)
@@ -1032,7 +1215,7 @@ D:
     load_shortcuts(root)
     resolve_shortcut(name_or_uri)
     resolve_target(name_or_uri)
-  uri2ops/operation_registry/validator.py:
+  packages/uri2ops/uri2ops/operation_registry/validator.py:
     e: validate_registry_schema,validate_operation_registry
     validate_registry_schema(data)
     validate_operation_registry(registry)
@@ -1053,8 +1236,7 @@ D:
     analyze_uri(uri)
     describe_uri(value)
   packages/uri3/uri3/resolvers/explain.py:
-    e: _find_repo_root,load_touri_config,default_touri_registry,runtime_transport_for_match,_match_uri3,_match_touri,_match_uri2ops,_match_hypervisor,explain_uri
-    _find_repo_root(start)
+    e: load_touri_config,default_touri_registry,runtime_transport_for_match,_match_uri3,_match_touri,_match_uri2ops,_match_hypervisor,explain_uri
     load_touri_config(root)
     default_touri_registry(root)
     runtime_transport_for_match(match)
@@ -1133,6 +1315,10 @@ D:
     e: validate_proposal_dict,validate_proposal
     validate_proposal_dict(payload;repo_root)
     validate_proposal(proposal)
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_checks/capabilities.py:
+    e: _validate_single_capability,validate_capability_cross_refs
+    _validate_single_capability(capability)
+    validate_capability_cross_refs(registry)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/watch.py:
     e: _repo_root,_safe_selector,watch_state_path,load_watch_state,save_watch_state,_inspection_from_result,_incident_codes,_service_status,_health_signature,_actions_from_result,_write_watch_log,_repair_allowed,_run_supervision,_learn_allowed_for_state,_emit_tick_events,_next_state,supervise_watch
     _repo_root(root)
@@ -1157,6 +1343,25 @@ D:
     parse_hypervisor_uri(uri)
     _prefer_local_deployment(matches)
     resolve_deployment(selector)
+  scripts/examples/effective_weather_playwright.py:
+    e: _run,_json_cmd,_health_ok,_extract_health_uri,_discover_local_agent_health,_inspect_agent,_is_agent_healthy,_try_repair_or_start,_ensure_weather_agent,_flow_text,_task_text,_artifact_to_path,_validate_workflow_result,_validate_png_artifact,_run_uri3_flow,_run_uri2ops_task,main
+    _run(argv)
+    _json_cmd(argv)
+    _health_ok(url)
+    _extract_health_uri(payload)
+    _discover_local_agent_health()
+    _inspect_agent(agent_id)
+    _is_agent_healthy(inspected;health_uri)
+    _try_repair_or_start(agent_id)
+    _ensure_weather_agent(agent_id)
+    _flow_text(flow_id;health_uri)
+    _task_text(task_id;health_uri)
+    _artifact_to_path(uri)
+    _validate_workflow_result(payload;health_uri)
+    _validate_png_artifact(payload)
+    _run_uri3_flow(flow_path;graph_path;health_uri)
+    _run_uri2ops_task(task_path)
+    main(argv)
   scripts/architecture_audit/audit.py:
     e: area_summary,build_backlog,_backlog_item,build_audit,_suggested_gates
     area_summary(modules)
@@ -1164,27 +1369,129 @@ D:
     _backlog_item(priority;title;why;finding_count)
     build_audit(root;map_path;dup_path)
     _suggested_gates()
-  packages/urish/urish/policy.py:
-    e: PolicyOptions,_path_has_any,_classify_repair,_classify_apply,_classify_hypervisor_mutation,_classify_physical_operator,_classify_read,_classify_mutation_scheme,classify_uri,evaluate_policy
-    PolicyOptions: from_flags(0)
-    _path_has_any(path;tokens)
-    _classify_repair(scheme;path)
-    _classify_apply(scheme;path)
-    _classify_hypervisor_mutation(scheme;path)
-    _classify_physical_operator(scheme;path)
-    _classify_read(scheme;path;parsed)
-    _classify_mutation_scheme(scheme;path)
-    classify_uri(uri)
-    evaluate_policy(uri)
-  packages/urish/urish/intent.py:
-    e: is_screenshot_schedule_prompt,extract_agent_id,_detect_agent_action,agent_uri,split_nl_commands,detect_intent,_detect_kind
-    is_screenshot_schedule_prompt(prompt)
-    extract_agent_id(prompt)
-    _detect_agent_action(prompt)
-    agent_uri(agent_id;action)
-    split_nl_commands(prompt)
-    detect_intent(prompt)
-    _detect_kind(prompt)
+  www/app.js:
+    e: uri,md,isBusy,messagesEl,form,promptEl,dryRunEl,speakSummaryEl,sendBtn,statusPill,apiDetail,refreshBtn,copyChatBtn,clearChatBtn,quickPromptsEl,agentListEl,eventListEl,micBtn,voiceEngineEl,buildConversationMarkdown,copyToClipboard,area,flashButtonFeedback,original,copyConversation,markdown,appendMessage,bodyText,wrap,enhanceBlocks,text,uri,actions,copyBtn,appendPlanActions,data,planUris,displayUris,actions,planRunPayload,runPlan,result,md,stepWrap,renderEvents,item,summary,badge,targetUri,startEventStream,payload,appendUriActions,actions,group,actionButton,button,shortUri,apiFetch,res,payload,detail,checkHealth,health,loadSystemState,loadAgents,payload,agents,item,loadEvents,payload,askPrompt,previewUri,result,formatPreviewMarkdown,approval,dryRunAllowed,execute,mode,appendPresentationHtml,html,wrap,body,frame,callUri,impliedDryRun,result,wrap,setBusy,handleSubmit,text,uri,result,md,wrap,resetConversation,renderQuickPrompts,button,voice,pendingPrompt
+    uri()
+    md()
+    isBusy()
+    messagesEl()
+    form()
+    promptEl()
+    dryRunEl()
+    speakSummaryEl()
+    sendBtn()
+    statusPill()
+    apiDetail()
+    refreshBtn()
+    copyChatBtn()
+    clearChatBtn()
+    quickPromptsEl()
+    agentListEl()
+    eventListEl()
+    micBtn()
+    voiceEngineEl()
+    buildConversationMarkdown()
+    copyToClipboard()
+    area()
+    flashButtonFeedback()
+    original()
+    copyConversation()
+    markdown()
+    appendMessage()
+    bodyText()
+    wrap()
+    enhanceBlocks()
+    text()
+    uri()
+    actions()
+    copyBtn()
+    appendPlanActions()
+    data()
+    planUris()
+    displayUris()
+    actions()
+    planRunPayload()
+    runPlan()
+    result()
+    md()
+    stepWrap()
+    renderEvents()
+    item()
+    summary()
+    badge()
+    targetUri()
+    startEventStream()
+    payload()
+    appendUriActions()
+    actions()
+    group()
+    actionButton()
+    button()
+    shortUri()
+    apiFetch()
+    res()
+    payload()
+    detail()
+    checkHealth()
+    health()
+    loadSystemState()
+    loadAgents()
+    payload()
+    agents()
+    item()
+    loadEvents()
+    payload()
+    askPrompt()
+    previewUri()
+    result()
+    formatPreviewMarkdown()
+    approval()
+    dryRunAllowed()
+    execute()
+    mode()
+    appendPresentationHtml()
+    html()
+    wrap()
+    body()
+    frame()
+    callUri()
+    impliedDryRun()
+    result()
+    wrap()
+    setBusy()
+    handleSubmit()
+    text()
+    uri()
+    result()
+    md()
+    wrap()
+    resetConversation()
+    renderQuickPrompts()
+    button()
+    voice()
+    pendingPrompt()
+  agents/custom/gnome_programmer_agent/programmer.py:
+    e: repo_root,_post_json,_operator_task,observe_desktop,type_on_desktop,programmer_session,_extract_artifact
+    repo_root()
+    _post_json(url;payload)
+    _operator_task()
+    observe_desktop()
+    type_on_desktop()
+    programmer_session()
+    _extract_artifact(result)
+  agents/custom/screenshot_analysis_agent/analysis.py:
+    e: repo_root,_path_from_file_uri,resolve_observation_path,_png_size,_json_summary,_read_previous,_append_markdown,analyze_artifact,_post_json,_extract_screenshot_artifact,capture_with_operator
+    repo_root()
+    _path_from_file_uri(uri)
+    resolve_observation_path(uri)
+    _png_size(data)
+    _json_summary(data)
+    _read_previous(jsonl_path)
+    _append_markdown(path;observation)
+    analyze_artifact(artifact_uri)
+    _post_json(url;payload)
+    _extract_screenshot_artifact(result)
+    capture_with_operator()
   packages/urigen/urigen/apply_planner.py:
     e: _repo_relative,build_apply_plan
     _repo_relative(path;repo)
@@ -1215,9 +1522,40 @@ D:
     register(app)
     _render(payload)
     _check_summary(check)
-  packages/resource-agent-hypervisor/hypervisor/contract_registry/cross_checks/capabilities.py:
-    e: validate_capability_cross_refs
-    validate_capability_cross_refs(registry)
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/events_service.py:
+    e: _parse_ts,_extract_agent_id,_extract_incident_id,_extract_summary,_build_incident_event,_incident_events,_monitor_events,_derive_service_status,_health_summary,_agent_health_event,_agent_health_events,_should_include_log_event,_agent_id_from_log_subject,_log_event_from_payload,_recent_jsonl_lines,_events_from_jsonl_path,_log_jsonl_events,collect_system_events,filter_events_since
+    _parse_ts(value)
+    _extract_agent_id(metadata;path)
+    _extract_incident_id(metadata;path)
+    _extract_summary(symptoms)
+    _build_incident_event(path;root;payload)
+    _incident_events(root)
+    _monitor_events(root)
+    _derive_service_status(inspection;health_ok)
+    _health_summary(service_status;incidents)
+    _agent_health_event(root;deployment)
+    _agent_health_events(root)
+    _should_include_log_event(payload)
+    _agent_id_from_log_subject(subject)
+    _log_event_from_payload(payload)
+    _recent_jsonl_lines(path)
+    _events_from_jsonl_path(path)
+    _log_jsonl_events(root)
+    collect_system_events()
+    filter_events_since(events;since)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/status.py:
+    e: infer_port,deployment_id_for_agent,infer_health_uri,infer_card_uri,deployment_from_uri_tree,_merge_uri_tree_deployment,sync_from_uri_tree,resolve_status,list_deployments,get_deployment_for_agent,registry_summary
+    infer_port(deployment)
+    deployment_id_for_agent(agent_id)
+    infer_health_uri(target_uri;agent_id)
+    infer_card_uri(agent;agent_id)
+    deployment_from_uri_tree(tree)
+    _merge_uri_tree_deployment(existing;incoming)
+    sync_from_uri_tree(tree)
+    resolve_status(deployment)
+    list_deployments(registry)
+    get_deployment_for_agent(agent_ref)
+    registry_summary(registry)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/probe.py:
     e: _probe_payload_ok,_host_probe_uri,_probe_response,probe_http,log_uri_with_filters,read_error_logs
     _probe_payload_ok(payload)
@@ -1255,6 +1593,17 @@ D:
   packages/urish/urish/backends/dashboard.py:
     e: create_dashboard
     create_dashboard(name)
+  packages/urish/urish/backends/call.py:
+    e: _uri_path_parts,_is_dashboard_view_uri,_misrouted_view_hint,_is_system_uri,_call_system_uri,_operation_from_uri,_backend_from_explain,_registry_path_from_explain,call_uri
+    _uri_path_parts(uri)
+    _is_dashboard_view_uri(target)
+    _misrouted_view_hint(target)
+    _is_system_uri(target)
+    _call_system_uri(target;payload)
+    _operation_from_uri(target;operations)
+    _backend_from_explain(target;explain)
+    _registry_path_from_explain(explain)
+    call_uri(target;payload)
   packages/urish/urish/backends/stream.py:
     e: stream_uri,_stream_sse,_stream_ws,_runtime_event,_success,_error
     stream_uri(target)
@@ -1263,25 +1612,69 @@ D:
     _runtime_event(uri;payload)
     _success(uri;events)
     _error(message)
+  packages/urish/urish/backends/proof.py:
+    e: _ProofFlags,_check,_system_body,_view_payload,_actions,_has_action,_call_proof_context,_evaluate_chat_check,_target_status,_dashboard_view_ok,_proof_flags,_shell_proof_specs,_runtime_proof_specs,_view_proof_specs,_optional_action_specs,_materialize_checks,_build_proof_checks,_collect_proof_context,proof_uri,_format_proof_check_line,render_proof_text
+    _ProofFlags:
+    _check(name)
+    _system_body(call_result)
+    _view_payload(system_body)
+    _actions(system_body)
+    _has_action(actions)
+    _call_proof_context(target)
+    _evaluate_chat_check(call_result)
+    _target_status(view_payload)
+    _dashboard_view_ok(system_body;result_type)
+    _proof_flags()
+    _shell_proof_specs()
+    _runtime_proof_specs()
+    _view_proof_specs()
+    _optional_action_specs()
+    _materialize_checks(specs)
+    _build_proof_checks()
+    _collect_proof_context(target;call_result;system_body)
+    proof_uri(target)
+    _format_proof_check_line(check)
+    render_proof_text(result)
+  packages/urish/urish/backends/agent_factory.py:
+    e: _slug,infer_agent_name,_python_package,_first_uri,_capabilities,_port_free,_next_agent_port,build_agent_contract,_write_yaml,_generate_agent_package,_ssh_target_from_prompt,_remote_deploy_next_steps,_upsert_deployment,_upsert_ssh_deployment,_upsert_deployments,_planned_payload,_generation_next_steps,generate_agent_from_prompt
+    _slug(value)
+    infer_agent_name(prompt;explicit)
+    _python_package(agent_name)
+    _first_uri(pattern;prompt;fallback)
+    _capabilities(prompt)
+    _port_free(port)
+    _next_agent_port(root;preferred)
+    build_agent_contract(prompt)
+    _write_yaml(path;payload)
+    _generate_agent_package(contract_path;root)
+    _ssh_target_from_prompt(prompt)
+    _remote_deploy_next_steps(agent_name)
+    _upsert_deployment()
+    _upsert_ssh_deployment()
+    _upsert_deployments()
+    _planned_payload()
+    _generation_next_steps()
+    generate_agent_from_prompt(prompt)
   packages/uri3/uri3/graph/graph_serializer.py:
     e: edges_from_depends_on,normalize_graph_payload,task_steps_to_graph,workflow_manifest
     edges_from_depends_on(nodes)
     normalize_graph_payload(data)
     task_steps_to_graph(task;steps)
     workflow_manifest(graph)
+  packages/uri3/uri3/docker/actions/compose.py:
+    e: compose_base,_parse_ps_stdout,control_compose_ps,control_compose_up,control_compose_down,control_compose_lifecycle,control_compose_logs,control_compose
+    compose_base(ref)
+    _parse_ps_stdout(stdout)
+    control_compose_ps(ref)
+    control_compose_up(ref)
+    control_compose_down(ref)
+    control_compose_lifecycle(ref)
+    control_compose_logs(ref)
+    control_compose(ref)
   packages/uri3/uri3/results/service_result.py:
     e: ServiceResult,service_result
     ServiceResult: finalize(0),_default_error_source(0),to_dict(0)
     service_result(ok;result_type)
-  packages/uri3/uri3/config/ssh_auth.py:
-    e: ssh_config_path,load_ssh_config,_profile_matches,_password_from_env_file,_resolve_password_value,resolve_ssh_password,ssh_auth_hint
-    ssh_config_path(root)
-    load_ssh_config(root)
-    _profile_matches(ref;match)
-    _password_from_env_file(root)
-    _resolve_password_value(value)
-    resolve_ssh_password(ref)
-    ssh_auth_hint(ref)
   packages/uri3/uri3/resolvers/docker_resolver.py:
     e: DockerRef,_first,_bool,_int,parse_docker_uri,resolve_docker,resolve_docker_target
     DockerRef: to_dict(0)
@@ -1318,10 +1711,8 @@ D:
     run_a2a(target;payload;context)
     run_a2a_transport(backend;payload;context)
   packages/nl2uri/nl2uri/graph_planner.py:
-    e: _slug,_detect_agent_id,_detect_health_uri,wrap_nl2uri_output,plan_single,plan_list,plan_tree,_extract_site_urls,_extract_interval_minutes,_extract_output_dir,plan_screenshot_schedule,plan_task,plan_workflow_graph,plan_auto,plan_by_kind
+    e: _slug,wrap_nl2uri_output,plan_single,plan_list,plan_tree,_extract_site_urls,_extract_interval_minutes,_extract_output_dir,plan_screenshot_schedule,plan_task,plan_workflow_graph,plan_auto,plan_by_kind
     _slug(text)
-    _detect_agent_id(prompt)
-    _detect_health_uri(prompt)
     wrap_nl2uri_output(kind;prompt;body)
     plan_single(prompt)
     plan_list(prompt)
@@ -1334,13 +1725,21 @@ D:
     plan_workflow_graph(prompt)
     plan_auto(prompt)
     plan_by_kind(prompt)
-  packages/nl2uri/nl2uri/flow_planner.py:
-    e: _compact_step,plan_flow,_detect_agent_slug,_detect_local_agent_slug,_last_step_id
-    _compact_step(uri;payload)
-    plan_flow(prompt)
-    _detect_agent_slug(prompt)
-    _detect_local_agent_slug(prompt)
-    _last_step_id(steps)
+  packages/uri2pact/uri2pact/core.py:
+    e: is_markpact_registry,find_repo_root,resolve_markpact_ref,_split_markpact_target,_path_from_file_uri,_resolve_markpact_path,extract_markpact_blocks,load_markpact_markdown,parse_markpact_yaml_blocks,_parse_block_yaml,_matches_fragment,_typed_block_id,_block_id
+    is_markpact_registry(ref)
+    find_repo_root(start)
+    resolve_markpact_ref(ref)
+    _split_markpact_target(ref)
+    _path_from_file_uri(uri)
+    _resolve_markpact_path(raw_path)
+    extract_markpact_blocks(markdown;block_type)
+    load_markpact_markdown(ref)
+    parse_markpact_yaml_blocks(markdown;block_type)
+    _parse_block_yaml(block;block_type)
+    _matches_fragment(fragment;block_id;meta_id)
+    _typed_block_id(data;block_type)
+    _block_id(block;data;block_type)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_verify.py:
     e: verify_remote_deployment
     verify_remote_deployment(deployment)
@@ -1383,21 +1782,6 @@ D:
     _check_href(href)
     check_examples_links(page)
     main()
-  packages/uri2pact/uri2pact/core.py:
-    e: is_markpact_registry,find_repo_root,resolve_markpact_ref,_split_markpact_target,_path_from_file_uri,_resolve_markpact_path,extract_markpact_blocks,load_markpact_markdown,parse_markpact_yaml_blocks,_parse_block_yaml,_matches_fragment,_typed_block_id,_block_id
-    is_markpact_registry(ref)
-    find_repo_root(start)
-    resolve_markpact_ref(ref)
-    _split_markpact_target(ref)
-    _path_from_file_uri(uri)
-    _resolve_markpact_path(raw_path)
-    extract_markpact_blocks(markdown;block_type)
-    load_markpact_markdown(ref)
-    parse_markpact_yaml_blocks(markdown;block_type)
-    _parse_block_yaml(block;block_type)
-    _matches_fragment(fragment;block_id;meta_id)
-    _typed_block_id(data;block_type)
-    _block_id(block;data;block_type)
   scripts/www/build_landing_integrations.py:
     e: _esc,_i18n_values,_cta_i18n_values,_spotlight_body_html,_render_cta_links,_render_i18n_spans,_render_i18n,_snippet_block,render_connector,render_card,_render_inline_i18n,render_spotlight,_card_body_html,collect_cards,build_sections,splice_index,write_i18n_js,main
     _esc(value)
@@ -1418,6 +1802,15 @@ D:
     splice_index(connectors_html;grid_html)
     write_i18n_js(i18n_export)
     main()
+  packages/uri3/uri3/config/ssh_auth.py:
+    e: ssh_config_path,load_ssh_config,_profile_matches,_password_from_env_file,_resolve_password_value,resolve_ssh_password,ssh_auth_hint
+    ssh_config_path(root)
+    load_ssh_config(root)
+    _profile_matches(ref;match)
+    _password_from_env_file(root)
+    _resolve_password_value(value)
+    resolve_ssh_password(ref)
+    ssh_auth_hint(ref)
   packages/urish/urish/render.py:
     e: render_result,_unwrap_system_body,_view_model,_render_view_fallback,_render_system_summary,_render_data_dict_lines,_render_envelope_text,_render_text,_render_table
     render_result(result)
@@ -1429,6 +1822,13 @@ D:
     _render_envelope_text(result)
     _render_text(result)
     _render_table(result)
+  packages/urish/urish/backends/watch.py:
+    e: watch_uri,_normalize_watch_uri,_poll_once,_event_type,render_event
+    watch_uri(target)
+    _normalize_watch_uri(target)
+    _poll_once(uri)
+    _event_type(result)
+    render_event(event)
   packages/urigen/urigen/envelope.py:
     e: _legacy_fields,stamp_proposal,_default_lifecycle,_ecosystem_metadata,_ecosystem_spec,stamp_ecosystem
     _legacy_fields(payload)
@@ -1498,6 +1898,11 @@ D:
     validate_agent(path)
     iter_agent_specs(root)
     main(argv)
+  packages/nl2uri/nl2uri/flow_planner.py:
+    e: _compact_step,plan_flow,_last_step_id
+    _compact_step(uri;payload)
+    plan_flow(prompt)
+    _last_step_id(steps)
   packages/resource-agent-hypervisor/hypervisor/repair/supervisor.py:
     e: _envelope,_repo_root,_sync_registry_if_drifted,diagnose_agent,_repair_playbook_candidates,_execute_repair_playbooks,_healthy_repair_apply_body,repair_apply,supervise_with_repair,learn_from_incident
     _envelope(payload)
@@ -1523,20 +1928,21 @@ D:
     build_evolution_proposal(source)
     build_repair_proposal_from_incident(incident)
     build_evolution_proposal_from_ticket(ticket)
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/status.py:
-    e: infer_port,deployment_id_for_agent,infer_health_uri,infer_card_uri,deployment_from_uri_tree,sync_from_uri_tree,resolve_status,list_deployments,get_deployment_for_agent,registry_summary
-    infer_port(deployment)
-    deployment_id_for_agent(agent_id)
-    infer_health_uri(target_uri;agent_id)
-    infer_card_uri(agent;agent_id)
-    deployment_from_uri_tree(tree)
-    sync_from_uri_tree(tree)
-    resolve_status(deployment)
-    list_deployments(registry)
-    get_deployment_for_agent(agent_ref)
-    registry_summary(registry)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/stopper.py:
+    e: _lifecycle_payload,_repo_root,_safe_stop_plan,_state_health_uri,_candidate_stop_ports,_terminate_matching_agent_processes,_emit_stop_result,_stop_docker_deployment,_stop_without_runtime_state,_stop_with_runtime_state,stop_agent
+    _lifecycle_payload(payload)
+    _repo_root(root)
+    _safe_stop_plan(deployment)
+    _state_health_uri(state)
+    _candidate_stop_ports(state;plan)
+    _terminate_matching_agent_processes(state;plan)
+    _emit_stop_result(deployment;result_core)
+    _stop_docker_deployment(deployment)
+    _stop_without_runtime_state(deployment;plan)
+    _stop_with_runtime_state(deployment;state;plan)
+    stop_agent(selector)
   scripts/architecture_audit/checks_structure.py:
-    e: is_generated_area,unique_ordered,sort_findings,audit_map_alerts,audit_large_modules,_hotspot_finding,_should_skip_hotspot,audit_duplication,_ignored_source_areas,_source_areas,_is_generated_source_mix,_is_cross_area,_is_runtime_operator_boundary,_classify_duplication,_duplication_group_findings
+    e: is_generated_area,unique_ordered,sort_findings,audit_map_alerts,audit_large_modules,_hotspot_finding,_should_skip_hotspot,audit_duplication,_ignored_source_areas,_source_areas,_is_generated_source_mix,_is_cross_area,_is_runtime_operator_boundary,_classify_duplication,_live_duplication_group,_fragment_symbol_is_stale,_duplication_group_findings
     is_generated_area(area)
     unique_ordered(values)
     sort_findings(findings)
@@ -1551,7 +1957,19 @@ D:
     _is_cross_area(source_areas)
     _is_runtime_operator_boundary(source_areas)
     _classify_duplication(group;areas)
+    _live_duplication_group(group;root)
+    _fragment_symbol_is_stale(root;fragment)
     _duplication_group_findings(group)
+  scripts/www/build_examples_manifest.py:
+    e: natural_key,extract_title,category_for,_build_office_chain,load_office_chains,test_summary,build_manifest,main
+    natural_key(name)
+    extract_title(readme;fallback)
+    category_for(name)
+    _build_office_chain(chain)
+    load_office_chains()
+    test_summary()
+    build_manifest()
+    main()
   www/chat-uri.js:
     e: INTERNAL_URI_SCHEMES,httpHostLooksValid,extractUri,match,candidate,extractUriFromCode,trimmed,direct,uri,candidate,uri,extractUrisFromCodeBlocks,uri,collectUris,isPlausibleUri,trimmed,match,scheme,authority,host,looksLikeUri,trimmed,uri,uriImpliesDryRun,normalized,agentsForSidebar,byRef,rank,id,ref,existing
     INTERNAL_URI_SCHEMES()
@@ -1585,100 +2003,6 @@ D:
     id()
     ref()
     existing()
-  www/app.js:
-    e: uri,md,isBusy,messagesEl,form,promptEl,dryRunEl,speakSummaryEl,sendBtn,statusPill,apiDetail,refreshBtn,copyChatBtn,clearChatBtn,quickPromptsEl,agentListEl,eventListEl,micBtn,voiceEngineEl,buildConversationMarkdown,copyToClipboard,area,flashButtonFeedback,original,copyConversation,markdown,appendMessage,bodyText,wrap,enhanceBlocks,text,uri,actions,copyBtn,appendPlanActions,data,uris,actions,planRunPayload,runPlan,result,md,renderEvents,item,summary,badge,targetUri,startEventStream,payload,appendUriActions,actions,group,actionButton,button,shortUri,apiFetch,res,payload,detail,checkHealth,health,loadSystemState,loadAgents,payload,agents,item,loadEvents,payload,askPrompt,previewUri,result,formatPreviewMarkdown,approval,dryRunAllowed,execute,mode,callUri,impliedDryRun,result,md,setBusy,handleSubmit,text,uri,result,md,wrap,resetConversation,renderQuickPrompts,button,voice,pendingPrompt
-    uri()
-    md()
-    isBusy()
-    messagesEl()
-    form()
-    promptEl()
-    dryRunEl()
-    speakSummaryEl()
-    sendBtn()
-    statusPill()
-    apiDetail()
-    refreshBtn()
-    copyChatBtn()
-    clearChatBtn()
-    quickPromptsEl()
-    agentListEl()
-    eventListEl()
-    micBtn()
-    voiceEngineEl()
-    buildConversationMarkdown()
-    copyToClipboard()
-    area()
-    flashButtonFeedback()
-    original()
-    copyConversation()
-    markdown()
-    appendMessage()
-    bodyText()
-    wrap()
-    enhanceBlocks()
-    text()
-    uri()
-    actions()
-    copyBtn()
-    appendPlanActions()
-    data()
-    uris()
-    actions()
-    planRunPayload()
-    runPlan()
-    result()
-    md()
-    renderEvents()
-    item()
-    summary()
-    badge()
-    targetUri()
-    startEventStream()
-    payload()
-    appendUriActions()
-    actions()
-    group()
-    actionButton()
-    button()
-    shortUri()
-    apiFetch()
-    res()
-    payload()
-    detail()
-    checkHealth()
-    health()
-    loadSystemState()
-    loadAgents()
-    payload()
-    agents()
-    item()
-    loadEvents()
-    payload()
-    askPrompt()
-    previewUri()
-    result()
-    formatPreviewMarkdown()
-    approval()
-    dryRunAllowed()
-    execute()
-    mode()
-    callUri()
-    impliedDryRun()
-    result()
-    md()
-    setBusy()
-    handleSubmit()
-    text()
-    uri()
-    result()
-    md()
-    wrap()
-    resetConversation()
-    renderQuickPrompts()
-    button()
-    voice()
-    pendingPrompt()
   www/api-bridge/bridge.py:
     e: UriCall,AskCall,envelope,run_cmd,health,call_uri,preview_uri,agents,events,ask
     UriCall(BaseModel):
@@ -1691,19 +2015,6 @@ D:
     agents()
     events(limit)
     ask(body)
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/stopper.py:
-    e: _lifecycle_payload,_repo_root,_safe_stop_plan,_state_health_uri,_candidate_stop_ports,_terminate_matching_agent_processes,_emit_stop_result,_stop_docker_deployment,_stop_without_runtime_state,_stop_with_runtime_state,stop_agent
-    _lifecycle_payload(payload)
-    _repo_root(root)
-    _safe_stop_plan(deployment)
-    _state_health_uri(state)
-    _candidate_stop_ports(state;plan)
-    _terminate_matching_agent_processes(state;plan)
-    _emit_stop_result(deployment;result_core)
-    _stop_docker_deployment(deployment)
-    _stop_without_runtime_state(deployment;plan)
-    _stop_with_runtime_state(deployment;state;plan)
-    stop_agent(selector)
   packages/urish/urish/ticket_workflow.py:
     e: resolve_ticket_path,_dashboard_intent,_ticket_prompt,_evolution_intent,detect_intent_from_ticket,build_evolution_next_steps,build_ticket_workflow
     resolve_ticket_path(target)
@@ -1713,6 +2024,33 @@ D:
     detect_intent_from_ticket(ticket)
     build_evolution_next_steps()
     build_ticket_workflow(ticket)
+  packages/urish/urish/repl.py:
+    e: ReplState,_known_commands,_line_has_uri,_first_token,_register_meta,_meta_help,_meta_dry_on,_meta_dry_off,_meta_json,_meta_yaml,_meta_text,_handle_context_use,parse_repl_line,_argv_for_uri_line,_argv_for_ask,_mode_label,_uri_implies_dry_run,_append_flag_once,_append_call_mutation_flags,_append_run_mutation_flags,_append_command_flags,_append_output_flags,_append_policy_flag,_apply_repl_defaults,run_repl
+    ReplState:
+    _known_commands()
+    _line_has_uri(line)
+    _first_token(line)
+    _register_meta(trigger)
+    _meta_help(_raw;state)
+    _meta_dry_on(_raw;state)
+    _meta_dry_off(_raw;state)
+    _meta_json(_raw;state)
+    _meta_yaml(_raw;state)
+    _meta_text(_raw;state)
+    _handle_context_use(stripped;state)
+    parse_repl_line(line;state)
+    _argv_for_uri_line(line;state)
+    _argv_for_ask(prompt;state)
+    _mode_label(state)
+    _uri_implies_dry_run(uri)
+    _append_flag_once(extras;flags;flag)
+    _append_call_mutation_flags(extras;flags)
+    _append_run_mutation_flags(extras;flags)
+    _append_command_flags(extras;flags)
+    _append_output_flags(extras;flags)
+    _append_policy_flag(extras;flags)
+    _apply_repl_defaults(argv;state)
+    run_repl()
   packages/urish/urish/backends/ticket.py:
     e: tickets_dir,list_tickets,show_ticket,import_tickets,plan_ticket
     tickets_dir()
@@ -1725,6 +2063,13 @@ D:
     default_registry_path()
     registry_schema_path()
     load_operation_registry(path)
+  packages/uri3/uri3/logs/reader.py:
+    e: resolve_log_path,_parse_since,read_logs,read_logs_result,summarize_logs
+    resolve_log_path(ref)
+    _parse_since(value)
+    read_logs(uri)
+    read_logs_result(uri)
+    summarize_logs(uri)
   uri3/graph/uri_graph.py:
     e: UriNode,UriEdge,UriGraph,build_graph_from_tree
     UriNode:
@@ -1826,6 +2171,10 @@ D:
     _apply_repair(selector)
     ensure_agent_healthy(selector)
     supervise_agent(selector)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_run.py:
+    e: build_ssh_run_plan,apply_ssh_run_plan
+    build_ssh_run_plan(deployment)
+    apply_ssh_run_plan(plan)
   packages/urish/urish/cli.py:
     e: _policy_options,_context_policy,_emit,_finish,root,_print_ask_result,ask_cmd,nl_cmd,select_cmd,shell_cmd,doctor_cmd,shortcuts_cmd,proof_cmd,context_list_cmd,context_show_cmd,context_use_cmd,_normalize_argv,execute_cli_argv,main
     _policy_options()
@@ -1847,57 +2196,36 @@ D:
     _normalize_argv(argv)
     execute_cli_argv(argv)
     main(argv)
-  packages/urish/urish/repl.py:
-    e: ReplState,_known_commands,_line_has_uri,_first_token,_register_meta,_meta_help,_meta_dry_on,_meta_dry_off,_meta_json,_meta_yaml,_meta_text,_handle_context_use,_resolve_repl_argv,parse_repl_line,_argv_for_uri_line,_argv_for_ask,_mode_label,_uri_implies_dry_run,_append_flag_once,_append_call_mutation_flags,_append_run_mutation_flags,_append_command_flags,_append_output_flags,_append_policy_flag,_apply_repl_defaults,run_repl
-    ReplState:
-    _known_commands()
-    _line_has_uri(line)
-    _first_token(line)
-    _register_meta(trigger)
-    _meta_help(_raw;state)
-    _meta_dry_on(_raw;state)
-    _meta_dry_off(_raw;state)
-    _meta_json(_raw;state)
-    _meta_yaml(_raw;state)
-    _meta_text(_raw;state)
-    _handle_context_use(stripped;state)
-    _resolve_repl_argv(stripped;state)
-    parse_repl_line(line;state)
-    _argv_for_uri_line(line;state)
-    _argv_for_ask(prompt;state)
-    _mode_label(state)
-    _uri_implies_dry_run(uri)
-    _append_flag_once(extras;flags;flag)
-    _append_call_mutation_flags(extras;flags)
-    _append_run_mutation_flags(extras;flags)
-    _append_command_flags(extras;flags)
-    _append_output_flags(extras;flags)
-    _append_policy_flag(extras;flags)
-    _apply_repl_defaults(argv;state)
-    run_repl()
   packages/urish/urish/backends/doctor.py:
     e: doctor_all,_artifact_gate_checks
     doctor_all()
     _artifact_gate_checks(repo)
-  packages/uri3/uri3/logs/reader.py:
-    e: resolve_log_path,_parse_since,read_logs,read_logs_result,summarize_logs
-    resolve_log_path(ref)
-    _parse_since(value)
-    read_logs(uri)
-    read_logs_result(uri)
-    summarize_logs(uri)
+  packages/urish/urish/backends/run.py:
+    e: _repo_root,_touri_registry_root,_run_workflow_uri,run_target
+    _repo_root()
+    _touri_registry_root()
+    _run_workflow_uri(target)
+    run_target(target)
   packages/uri3/uri3/graph/artifacts.py:
-    e: artifact_path,artifact_uri,build_workflow_step_artifact,write_artifact
+    e: artifact_path,artifact_uri,build_workflow_step_artifact,write_artifact,mock_screenshot_png
     artifact_path(context;step_id;suffix)
     artifact_uri(context;step_id;suffix)
     build_workflow_step_artifact(context;step_id;suffix)
     write_artifact(context;step_id;suffix;content)
+    mock_screenshot_png(width;height)
+  packages/uri3/uri3/graph/graph_validator.py:
+    e: _schema_path,_resolve_graph_source_path,_load_graph_data,_unwrap_graph_payload,load_workflow_graph,validate_workflow_schema,validate_workflow_graph
+    _schema_path(name)
+    _resolve_graph_source_path(source)
+    _load_graph_data(path)
+    _unwrap_graph_payload(data)
+    load_workflow_graph(source)
+    validate_workflow_schema(graph)
+    validate_workflow_graph(source)
   packages/uri3/uri3/graph/adapters/uri2ops_adapter.py:
-    e: Uri2OpsAdapter,_use_legacy_browser_adapter,_registry_scheme,_registry_operation,_runtime_context,_artifact_suffix,_attach_workflow_artifact,cleanup_operator_adapters,resolve_operator_adapter
+    e: Uri2OpsAdapter,_use_legacy_browser_adapter,_runtime_context,_artifact_suffix,_attach_workflow_artifact,cleanup_operator_adapters,resolve_operator_adapter
     Uri2OpsAdapter: execute(2)  # Delegates operator schemes to uri2ops operation registry...
     _use_legacy_browser_adapter()
-    _registry_scheme(scheme)
-    _registry_operation(scheme;operation)
     _runtime_context(context)
     _artifact_suffix(scheme;operation)
     _attach_workflow_artifact(node;context;payload)
@@ -1907,16 +2235,6 @@ D:
     e: RuntimeAdapter,service_result_to_step_payload
     RuntimeAdapter: execute(2)  # Delegate executable runtime URI schemes to uri2run...
     service_result_to_step_payload(result)
-  packages/uri3/uri3/docker/actions/compose.py:
-    e: compose_base,_parse_ps_stdout,control_compose_ps,control_compose_up,control_compose_down,control_compose_lifecycle,control_compose_logs,control_compose
-    compose_base(ref)
-    _parse_ps_stdout(stdout)
-    control_compose_ps(ref)
-    control_compose_up(ref)
-    control_compose_down(ref)
-    control_compose_lifecycle(ref)
-    control_compose_logs(ref)
-    control_compose(ref)
   packages/uri3/uri3/cli/commands/replay.py:
     e: register,_render
     register(app)
@@ -1933,6 +2251,34 @@ D:
     e: check_capability_plan,check_replay_failures
     check_capability_plan(root)
     check_replay_failures(root)
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/routes.py:
+    e: PlanRunRequest,VoiceSpeakRequest,VoiceTranscribeRequest,UriCallRequest,AskRequest,root,chat_page_redirect,health,capabilities,well_known_agent_json,well_known_agent_card_json,ui_root,ui_agents,ui_agent_detail,api_process_view,api_ask,api_uri_preview,api_uri_call,api_plan_run,_speak_plan_summary,api_voice_transcribe,api_voice_speak,api_agents,api_events,api_monitor_webhook,api_events_stream
+    PlanRunRequest(BaseModel):
+    VoiceSpeakRequest(BaseModel):
+    VoiceTranscribeRequest(BaseModel):
+    UriCallRequest(BaseModel):
+    AskRequest(BaseModel):
+    root()
+    chat_page_redirect()
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    ui_root()
+    ui_agents(request)
+    ui_agent_detail(request;agent_id)
+    api_process_view(agent_id)
+    api_ask(body)
+    api_uri_preview(body)
+    api_uri_call(body)
+    api_plan_run(body)
+    _speak_plan_summary(payload)
+    api_voice_transcribe(body)
+    api_voice_speak(body)
+    api_agents()
+    api_events(limit;since)
+    api_monitor_webhook(request)
+    api_events_stream(limit;interval_s)
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/monitor_webhook.py:
     e: _safe_slug,_event_name,_summary,_monitor_path,_write_log_event,write_monitor_webhook
     _safe_slug(value;default)
@@ -1951,6 +2297,12 @@ D:
     _load_audio_bytes(payload)
     _pick_whisper_engine(mode)
     transcribe_whisper(payload;context)
+  packages/uri2run/uri2run/transports/uri2ops_transport.py:
+    e: _resolve_root,_build_runtime_context,run_uri2ops,run_uri2ops_transport
+    _resolve_root(context)
+    _build_runtime_context(uri;payload;context;extra)
+    run_uri2ops(uri;scheme;operation;payload;context)
+    run_uri2ops_transport(backend;payload;context)
   packages/uri2pact/uri2pact/scenarios.py:
     e: _scenario_body,load_markpact_scenario_dicts,_resolve_include_path,_merge_include_data,_ensure_urish_scenario_registry_kind,load_markpact_scenario_registry_dicts
     _scenario_body(data)
@@ -2026,71 +2378,22 @@ D:
     section()
     obs()
     id()
-  packages/urish/urish/backends/run.py:
-    e: _repo_root,_touri_registry_root,_run_workflow_uri,run_target
-    _repo_root()
-    _touri_registry_root()
-    _run_workflow_uri(target)
-    run_target(target)
-  packages/uri2run/uri2run/transports/uri2ops_transport.py:
-    e: _registry_scheme,_registry_operation,_resolve_root,_build_runtime_context,run_uri2ops,run_uri2ops_transport
-    _registry_scheme(scheme)
-    _registry_operation(scheme;operation)
-    _resolve_root(context)
-    _build_runtime_context(uri;payload;context;extra)
-    run_uri2ops(uri;scheme;operation;payload;context)
-    run_uri2ops_transport(backend;payload;context)
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py:
-    e: _SystemUriRequest,_repo_root,_uri_path_parts,uri_implies_dry_run,list_agent_deployments,resolve_view_uri,_normalize_view_uri,_handle_view_uri,_handle_runtime_uri,_handle_health_uri,_handle_repair_uri,_handle_log_uri,_is_view_request,_is_runtime_request,_is_health_request,_is_repair_request,_view_request,_runtime_request,_health_request,_repair_request,_log_request,_is_touri_run_request,_touri_run_request,_is_http_request,_infer_operator_operation,_is_operator_request,_operator_request,_http_request,_select_system_uri_handler,call_system_uri
-    _SystemUriRequest:
-    _repo_root(root)
-    _uri_path_parts(uri)
-    uri_implies_dry_run(uri)
-    list_agent_deployments()
-    resolve_view_uri(view_uri)
-    _normalize_view_uri(uri)
-    _handle_view_uri(uri)
-    _handle_runtime_uri(parts)
-    _handle_health_uri(parts)
-    _handle_repair_uri(parts)
-    _handle_log_uri(uri)
-    _is_view_request(request)
-    _is_runtime_request(request)
-    _is_health_request(request)
-    _is_repair_request(request)
-    _view_request(request)
-    _runtime_request(request)
-    _health_request(request)
-    _repair_request(request)
-    _log_request(request)
-    _is_touri_run_request(request)
-    _touri_run_request(request)
-    _is_http_request(request)
-    _infer_operator_operation(parts)
-    _is_operator_request(request)
-    _operator_request(request)
-    _http_request(request)
-    _select_system_uri_handler(request)
-    call_system_uri(uri)
   packages/urish/urish/exit_codes.py:
     e: exit_code_for_result
     exit_code_for_result(result)
   packages/urish/urish/backends/ask.py:
-    e: _ask_ecosystem_plan,_ask_agent_plan,_ask_scenario_plan,_ask_workflow_plan,_ask_domain_plan,_dedupe,_plan_single,_build_ask_envelope,ask_prompt
+    e: _ask_ecosystem_plan,_ask_agent_plan,_ask_agent_factory_plan,_ask_scenario_plan,_ask_workflow_plan,_ask_domain_plan,_ask_weather_plan,_dedupe,_plan_single,_build_ask_envelope,ask_prompt
     _ask_ecosystem_plan(text;intent)
     _ask_agent_plan(intent)
+    _ask_agent_factory_plan(text;intent)
     _ask_scenario_plan(intent)
     _ask_workflow_plan(text)
     _ask_domain_plan(text)
+    _ask_weather_plan(text)
     _dedupe(items)
     _plan_single(text)
     _build_ask_envelope()
     ask_prompt(prompt)
-  packages/urish/urish/backends/call.py:
-    e: _is_system_uri,_call_system_uri,call_uri
-    _is_system_uri(target)
-    _call_system_uri(target;payload)
-    call_uri(target;payload)
   packages/urigen/urigen/verify.py:
     e: verify_ecosystem,_check_result,_resolve,_check_capabilities,_check_flows,_check_explain,_check_doctor
     verify_ecosystem(ecosystem_path)
@@ -2152,34 +2455,6 @@ D:
     resolve_path(parsed)
     resolve_level(query)
     parse_query(uri)
-  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/routes.py:
-    e: PlanRunRequest,VoiceSpeakRequest,VoiceTranscribeRequest,UriCallRequest,AskRequest,root,chat_page_redirect,health,capabilities,well_known_agent_json,well_known_agent_card_json,ui_root,ui_agents,ui_agent_detail,api_process_view,api_ask,api_uri_preview,api_uri_call,api_plan_run,_speak_plan_summary,api_voice_transcribe,api_voice_speak,api_agents,api_events,api_monitor_webhook,api_events_stream
-    PlanRunRequest(BaseModel):
-    VoiceSpeakRequest(BaseModel):
-    VoiceTranscribeRequest(BaseModel):
-    UriCallRequest(BaseModel):
-    AskRequest(BaseModel):
-    root()
-    chat_page_redirect()
-    health()
-    capabilities()
-    well_known_agent_json()
-    well_known_agent_card_json()
-    ui_root()
-    ui_agents(request)
-    ui_agent_detail(request;agent_id)
-    api_process_view(agent_id)
-    api_ask(body)
-    api_uri_preview(body)
-    api_uri_call(body)
-    api_plan_run(body)
-    _speak_plan_summary(payload)
-    api_voice_transcribe(body)
-    api_voice_speak(body)
-    api_agents()
-    api_events(limit;since)
-    api_monitor_webhook(request)
-    api_events_stream(limit;interval_s)
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/view_builder.py:
     e: _human_title,_related_uris,_process_actions,_process_view_context,_process_status_fields,build_process_view,render_process_html
     _human_title(agent_ref;agent_id)
@@ -2202,6 +2477,11 @@ D:
     result_from_output(output)
     error_result(code;detail)
     with_transport_meta(result)
+  packages/uri2run/uri2run/transports/paths.py:
+    e: resolve_path,execution_root,execution_options
+    resolve_path(path;context)
+    execution_root(context)
+    execution_options(payload;backend_extra)
   packages/nl2uri/nl2uri/flow_step_ids.py:
     e: needs_explicit_ids,_after_refs,_set_after_refs,_remove_unknown_after_refs,_assign_missing_step_ids,_prune_unknown_after_refs,ensure_step_ids
     needs_explicit_ids(steps)
@@ -2220,7 +2500,7 @@ D:
     repair_command_capability(cap;warnings)
     repair_capabilities(data;warnings)
   packages/resource-agent-hypervisor/hypervisor/cli.py:
-    e: call,scan,resolve,status,config_cmd,deployments_list,run_agent_cmd,stop_agent_cmd,restart_agent_cmd,agent_status_cmd,inspect_agent_cmd,supervise_cmd,repair_diagnose_cmd,repair_apply_cmd,repair_heal_cmd,repair_learn_cmd,artifacts_check_cmd,artifacts_schemas_cmd,artifacts_lifecycle_cmd,ticket_import_cmd,evolution_propose_from_ticket_cmd,evolution_propose_from_incident_cmd,logs_cmd,deploy_agent_cmd,verify_agent_cmd,docker_cmd,replay_failure_cmd,main
+    e: call,scan,resolve,status,config_cmd,deployments_list,run_agent_cmd,stop_agent_cmd,restart_agent_cmd,agent_status_cmd,inspect_agent_cmd,describe_agent_cmd,supervise_cmd,repair_diagnose_cmd,repair_apply_cmd,repair_heal_cmd,repair_learn_cmd,artifacts_check_cmd,artifacts_schemas_cmd,artifacts_lifecycle_cmd,ticket_import_cmd,evolution_propose_from_ticket_cmd,evolution_propose_from_incident_cmd,logs_cmd,deploy_agent_cmd,verify_agent_cmd,docker_cmd,replay_failure_cmd,main
     call(uri)
     scan(uri)
     resolve(uri)
@@ -2232,6 +2512,7 @@ D:
     restart_agent_cmd(selector;port;host;reload;detach)
     agent_status_cmd(selector;no_health)
     inspect_agent_cmd(selector;timeout;log_limit)
+    describe_agent_cmd(selector;output;json_out)
     supervise_cmd(selector;repair;watch;interval;count;repair_backoff_ticks;max_attempts;timeout;log_limit;learn)
     repair_diagnose_cmd(selector;timeout;log_limit)
     repair_apply_cmd(selector;safe;approve;playbook)
@@ -2249,14 +2530,9 @@ D:
     docker_cmd(uri;dry_run)
     replay_failure_cmd(source;create_test;json_out)
     main(argv)
-  packages/resource-agent-hypervisor/hypervisor/cli_commands.py:
-    e: echo_json,run_local_agent,deploy_agent,verify_agent,read_agent_logs,call_docker
-    echo_json(payload)
-    run_local_agent(selector)
-    deploy_agent(selector)
-    verify_agent(selector)
-    read_agent_logs(selector)
-    call_docker(uri)
+  packages/resource-agent-hypervisor/hypervisor/domain_pack/pack_writer.py:
+    e: write_domain_pack
+    write_domain_pack(model)
   packages/resource-agent-hypervisor/hypervisor/repair/playbooks.py:
     e: _repo_root,_playbook_sync_health_uri,_playbook_restart_agent,_playbook_clear_stale_runtime,_playbook_rebind_port,_playbook_inspect,_playbook_requires_approval,_playbook_not_implemented,apply_playbook,apply_playbook_sequence
     _repo_root(root)
@@ -2282,6 +2558,12 @@ D:
     build_incident_from_inspection(inspection)
     write_incident(incident)
     load_incident(path)
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/registry_checks/capabilities.py:
+    e: _resolves_as_external_uri,validate_resource_read_capability,validate_command_capability,validate_capabilities
+    _resolves_as_external_uri(uri)
+    validate_resource_read_capability(registry;cap)
+    validate_command_capability(cap)
+    validate_capabilities(registry)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/health_uri.py:
     e: port_from_http_uri,port_from_command,health_uri_for_port,_runtime_command,_network_effective_port,resolve_effective_health_uri,command_port_from_runtime
     port_from_http_uri(uri)
@@ -2291,6 +2573,10 @@ D:
     _network_effective_port(state)
     resolve_effective_health_uri(state;plan)
     command_port_from_runtime(state;plan)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/aliases.py:
+    e: _read_yaml,load_deployment_selector_aliases
+    _read_yaml(path)
+    load_deployment_selector_aliases(root)
   hypervisor/compatibility/checker.py:
     e: _load_policy,classify_registry_change
     _load_policy(root)
@@ -2357,20 +2643,9 @@ D:
     graphForUri()
     scrollMessages()
     escapeHtml()
-  packages/uri2run/uri2run/transports/paths.py:
-    e: resolve_path,execution_root,execution_options
-    resolve_path(path;context)
-    execution_root(context)
-    execution_options(payload;backend_extra)
-  packages/uri2run/uri2run/transports/graph_transport.py:
-    e: _load_graph,run_uri_graph,run_graph_transport
-    _load_graph(path)
-    run_uri_graph(graph_path;payload;context)
-    run_graph_transport(backend;payload;context)
-  packages/uri2run/uri2run/transports/flow_transport.py:
-    e: run_uri_flow,run_flow_transport
-    run_uri_flow(flow_path;payload;context)
-    run_flow_transport(backend;payload;context)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/local_verify.py:
+    e: verify_local_deployment
+    verify_local_deployment(deployment)
   packages/urish/urish/context.py:
     e: context_dir,load_context,list_contexts
     context_dir(root)
@@ -2449,6 +2724,11 @@ D:
     find_repo_root(start)
     config_repo_root(root)
     repo_root()
+  packages/uri3/uri3/resolvers/file_resolver.py:
+    e: path_from_file_uri,resolve_file,_looks_like_text
+    path_from_file_uri(uri)
+    resolve_file(uri)
+    _looks_like_text(path;mime_type)
   packages/uri3/uri3/resolvers/log_resolver.py:
     e: LogRef,LogResolver,parse_log_uri,resolve_log
     LogRef: to_dict(0)
@@ -2462,6 +2742,12 @@ D:
     check_duplicate_top_level_modules(root)
     check_browser_delegation()
     check_runtime_transports(root)
+  packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/presentation.py:
+    e: _uri_path_parts,source_view_uri,resolve_html_presentation,resolve_markdown_presentation
+    _uri_path_parts(uri)
+    source_view_uri(presentation_uri)
+    resolve_html_presentation(presentation_uri)
+    resolve_markdown_presentation(presentation_uri)
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/policy.py:
     e: ApprovalDecision,decision_for_uri,preview_action
     ApprovalDecision:
@@ -2562,9 +2848,39 @@ D:
     _wrapped_payload(body;nl2uri_wrapper)
     _has_operation_errors(errors)
     _drop_invalid_operation_nodes(body)
-  packages/nl2uri/nl2uri/domain_planner.py:
-    e: plan_from_prompt
-    plan_from_prompt(prompt;use_llm)
+  packages/nl2uri/nl2uri/weather_forecast.py:
+    e: is_weather_forecast_prompt,_ascii_place,extract_weather_place,extract_weather_days,weather_forecast_uri,plan_weather_forecast
+    is_weather_forecast_prompt(prompt)
+    _ascii_place(name)
+    extract_weather_place(prompt)
+    extract_weather_days(prompt)
+    weather_forecast_uri(prompt)
+    plan_weather_forecast(prompt)
+  packages/nl2uri/nl2uri/domain_registry.py:
+    e: DomainRegistryEntry,repo_root,_read_yaml,_find_callable,_load_planner_module,load_domain_registry,match_domain,resolve_plan,_weather_entry,is_weather_prompt,deterministic_weather_plan
+    DomainRegistryEntry:
+    repo_root()
+    _read_yaml(path)
+    _find_callable(module)
+    _load_planner_module(planner_path)
+    load_domain_registry()
+    match_domain(prompt)
+    resolve_plan(prompt)
+    _weather_entry()
+    is_weather_prompt(prompt)
+    deterministic_weather_plan(prompt)
+  packages/nl2uri/nl2uri/agent_resolution.py:
+    e: _agent_id_from_plan,_domain_slug,resolve_agent_id,resolve_domain_uri,resolve_deployment_id,resolve_generator_alias,resolve_local_run_slug,resolve_health_uri,resolve_card_uri,resolve_log_uri
+    _agent_id_from_plan(plan)
+    _domain_slug(prompt)
+    resolve_agent_id(prompt)
+    resolve_domain_uri(prompt)
+    resolve_deployment_id(prompt)
+    resolve_generator_alias(prompt)
+    resolve_local_run_slug(prompt)
+    resolve_health_uri(prompt)
+    resolve_card_uri(prompt)
+    resolve_log_uri(prompt)
   packages/uri2verify/uri2verify/replay.py:
     e: _resolve_event_path,load_workflow_events,_workflow_id_from_events,_events_of_type,_last_event_of_type,replay_workflow_events,_step_from_started_event,_started_steps,build_task_payload_from_events,render_regression_test,create_regression_test,_step_ids,_write_regression_test
     _resolve_event_path(source;root)
@@ -2607,11 +2923,23 @@ D:
     e: validate_resources,validate_views
     validate_resources(registry)
     validate_views(registry)
-  packages/resource-agent-hypervisor/hypervisor/contract_registry/registry_checks/capabilities.py:
-    e: validate_resource_read_capability,validate_command_capability,validate_capabilities
-    validate_resource_read_capability(registry;cap)
-    validate_command_capability(cap)
-    validate_capabilities(registry)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py:
+    e: _lifecycle_payload,_repo_root,_validate_run_agent_options,_finalize_run_plan,_load_active_runtime_state,_sync_reused_runtime_state,_resolve_running_process,_run_non_local_target,_start_local_process,_is_process_start_failure,_resolve_initial_run_plan,_execute_run_agent_plan,_emit_run_agent_result,run_agent,restart_agent
+    _lifecycle_payload(payload)
+    _repo_root(root)
+    _validate_run_agent_options()
+    _finalize_run_plan(plan_dict)
+    _load_active_runtime_state(selector;deployment)
+    _sync_reused_runtime_state(deployment_id;existing;plan)
+    _resolve_running_process(selector;deployment;existing;plan)
+    _run_non_local_target(deployment)
+    _start_local_process(deployment;plan)
+    _is_process_start_failure(payload)
+    _resolve_initial_run_plan(selector;deployment)
+    _execute_run_agent_plan(deployment;plan;finalize)
+    _emit_run_agent_result(deployment;result)
+    run_agent(selector)
+    restart_agent(selector)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/port_conflict.py:
     e: classify_port_listeners,port_conflict_detail
     classify_port_listeners(port)
@@ -2632,20 +2960,10 @@ D:
     AgentDeployment: to_dict(0)
     DeploymentRegistry: by_id(1),by_agent_ref(1)
     _port_from_uri(uri)
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_run.py:
-    e: build_ssh_run_plan
-    build_ssh_run_plan(deployment)
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/ssh_deploy.py:
     e: build_ssh_deploy_plan,apply_ssh_deploy_plan
     build_ssh_deploy_plan(deployment)
     apply_ssh_deploy_plan(plan)
-  scripts/www/monitor_landing.py:
-    e: fetch_html,extract_prices,load_baseline,save_baseline,main
-    fetch_html(url;timeout)
-    extract_prices(html)
-    load_baseline(path)
-    save_baseline(path;payload)
-    main()
   scripts/www/monitor_notify.py:
     e: webhook_url,is_placeholder_webhook,is_supported_webhook,emit_alert,post_webhook
     webhook_url(explicit)
@@ -2685,24 +3003,21 @@ D:
     btn()
     cmd()
     prev()
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py:
-    e: _lifecycle_payload,_repo_root,_validate_run_agent_options,_finalize_run_plan,_load_active_runtime_state,_sync_reused_runtime_state,_resolve_running_process,_run_non_local_target,_start_local_process,_is_process_start_failure,_resolve_initial_run_plan,_execute_run_agent_plan,run_agent,restart_agent,agent_status,agent_logs_uri
-    _lifecycle_payload(payload)
-    _repo_root(root)
-    _validate_run_agent_options()
-    _finalize_run_plan(plan_dict)
-    _load_active_runtime_state(selector;deployment)
-    _sync_reused_runtime_state(deployment_id;existing;plan)
-    _resolve_running_process(selector;deployment;existing;plan)
-    _run_non_local_target(deployment)
-    _start_local_process(deployment;plan)
-    _is_process_start_failure(payload)
-    _resolve_initial_run_plan(selector;deployment)
-    _execute_run_agent_plan(deployment;plan;finalize)
-    run_agent(selector)
-    restart_agent(selector)
-    agent_status(selector)
-    agent_logs_uri(selector)
+  packages/resource-agent-hypervisor/hypervisor/cli_commands.py:
+    e: echo_json,run_local_agent,deploy_agent,verify_agent,read_agent_logs,call_docker
+    echo_json(payload)
+    run_local_agent(selector)
+    deploy_agent(selector)
+    verify_agent(selector)
+    read_agent_logs(selector)
+    call_docker(uri)
+  scripts/www/monitor_landing.py:
+    e: fetch_html,extract_prices,load_baseline,save_baseline,main
+    fetch_html(url;timeout)
+    extract_prices(html)
+    load_baseline(path)
+    save_baseline(path;payload)
+    main()
   packages/urish/urish/ecosystem_workflow.py:
     e: _quote,proposal_path,ecosystem_dir,ecosystem_file,build_ecosystem_next_steps,build_planned_uris,build_planned_uris_display
     _quote(text)
@@ -2712,13 +3027,6 @@ D:
     build_ecosystem_next_steps()
     build_planned_uris(intent)
     build_planned_uris_display(planned_uris)
-  packages/urish/urish/backends/watch.py:
-    e: watch_uri,_normalize_watch_uri,_poll_once,_event_type,render_event
-    watch_uri(target)
-    _normalize_watch_uri(target)
-    _poll_once(uri)
-    _event_type(result)
-    render_event(event)
   packages/urigen/urigen/proposal.py:
     e: plan_ecosystem,_dashboard_proposal,_default_ecosystem_id
     plan_ecosystem(prompt)
@@ -2821,6 +3129,9 @@ D:
     _backend_from_target(target)
     doctor_cmd()
     main(argv)
+  packages/uri2run/uri2run/transports/workflow_transport.py:
+    e: run_workflow_from_graph_dict
+    run_workflow_from_graph_dict(graph)
   packages/nl2uri/nl2uri/cli.py:
     e: _default_use_llm,_resolve_use_llm,_emit,_validate_flow_payload,_plan_command,plan,classify,single,list_cmd,tree,flow,task,graph,generate,main
     _default_use_llm()
@@ -2848,12 +3159,18 @@ D:
     _extract_from_graph(body)
     extract_flow_payload(raw)
   packages/nl2uri/nl2uri/planner_templates.py:
-    e: slug,llm_uri_from_env,is_weather_prompt,deterministic_weather_plan,generic_plan
+    e: slug,llm_uri_from_env,generic_plan
     slug(text)
     llm_uri_from_env()
-    is_weather_prompt(prompt)
-    deterministic_weather_plan(prompt)
     generic_plan(prompt)
+  packages/nl2uri/nl2uri/pipeline.py:
+    e: PipelineResult,FullPipelineResult,generate_tree,_append_pipeline_logs,run_generate_pipeline,run_full_pipeline
+    PipelineResult:
+    FullPipelineResult(PipelineResult):
+    generate_tree(prompt)
+    _append_pipeline_logs()
+    run_generate_pipeline(prompt)
+    run_full_pipeline(prompt)
   packages/uri2verify/uri2verify/cli.py:
     e: replay_cmd,capability_plan_cmd,data_quality_cmd,_render_replay,_render_replay_header,_render_replay_events,main
     replay_cmd(source;json_out;timeline;create_test)
@@ -2923,14 +3240,6 @@ D:
     e: merge_runtime_defaults,materialize_env_values
     merge_runtime_defaults(merged)
     materialize_env_values(merged)
-  packages/nl2uri/nl2uri/pipeline.py:
-    e: PipelineResult,FullPipelineResult,generate_tree,_append_pipeline_logs,run_generate_pipeline,run_full_pipeline
-    PipelineResult:
-    FullPipelineResult(PipelineResult):
-    generate_tree(prompt)
-    _append_pipeline_logs()
-    run_generate_pipeline(prompt)
-    run_full_pipeline(prompt)
   packages/urish/urish/commands/ticket_commands.py:
     e: register_ticket_commands,print_ticket_summary
     register_ticket_commands(app;deps)
@@ -2968,9 +3277,9 @@ D:
     utc_now_iso()
     new_execution_context(workflow_id)
   packages/uri3/uri3/graph/adapters/browser_router.py:
-    e: BrowserRouterAdapter,_playwright_ready,resolve_browser_mode,cleanup_browser_adapters
+    e: BrowserRouterAdapter,_uri2ops_playwright_ready,resolve_browser_mode,cleanup_browser_adapters
     BrowserRouterAdapter: __init__(0),execute(2)  # Deprecated: uri3 delegates operator schemes to uri2ops (see ...
-    _playwright_ready()
+    _uri2ops_playwright_ready()
     resolve_browser_mode(context)
     cleanup_browser_adapters(context)
   packages/uri3/uri3/artifacts/evolution_source.py:
@@ -3063,6 +3372,16 @@ D:
     _env(payload;context)
     run_shell(command;payload;context)
     run_shell_transport(backend;payload;context)
+  packages/resource-agent-factory/generator/agent_generator.py:
+    e: _default_port_for_agent,render_template,generate_agent,expand_paths,main
+    _default_port_for_agent(spec;repo)
+    render_template(env;template_name;dest;context)
+    generate_agent(spec_path)
+    expand_paths(patterns)
+    main(argv)
+  packages/nl2uri/nl2uri/domain_planner.py:
+    e: plan_from_prompt
+    plan_from_prompt(prompt;use_llm)
   packages/nl2uri/nl2uri/flow_sanitize.py:
     e: _warn_invalid_step,_sanitize_uri_step,_normalized_step_uri,sanitize_flow_step
     _warn_invalid_step(warnings;index;detail)
@@ -3128,7 +3447,7 @@ D:
     e: validate_cross_references,validate_root
     validate_cross_references(registry)
     validate_root(root)
-  hypervisor/contract_registry/registry_builder.py:
+  packages/resource-agent-hypervisor/hypervisor/contract_registry/registry_builder.py:
     e: _hash_file,_contract_hash,build_registry_manifest,write_registry_manifest
     _hash_file(path)
     _contract_hash(root)
@@ -3150,6 +3469,12 @@ D:
   packages/resource-agent-hypervisor/hypervisor/deployment_registry/run_plans.py:
     e: build_run_plan
     build_run_plan(deployment)
+  packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle_status.py:
+    e: _lifecycle_payload,_repo_root,agent_status,agent_logs_uri
+    _lifecycle_payload(payload)
+    _repo_root(root)
+    agent_status(selector)
+    agent_logs_uri(selector)
   testenv/ssh_agent_host/mock_agent_server.py:
     e: Handler
     Handler(BaseHTTPRequestHandler): _json(2),do_GET(0),log_message(1)
@@ -3176,18 +3501,188 @@ D:
     raw()
     htmlToPlainText()
     div()
-  packages/resource-agent-factory/generator/agent_generator.py:
-    e: render_template,generate_agent,expand_paths,main
-    render_template(env;template_name;dest;context)
-    generate_agent(spec_path)
-    expand_paths(patterns)
-    main(argv)
-  packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle_status.py:
-    e: _lifecycle_payload,_repo_root,agent_status,agent_logs_uri
-    _lifecycle_payload(payload)
-    _repo_root(root)
-    agent_status(selector)
-    agent_logs_uri(selector)
+  agents/generated/codex_uri_smoke_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_markpact_source,skill_read_device_status,skill_run_cron_monitor,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_read_markpact_source()
+    skill_read_device_status()
+    skill_run_cron_monitor(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/codex_nl_smoke_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_markpact_source,skill_read_device_status,skill_run_cron_monitor,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_read_markpact_source()
+    skill_read_device_status()
+    skill_run_cron_monitor(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/weather_map_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_weather_map,skill_generate_weather_map,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_read_weather_map(place;days)
+    skill_generate_weather_map(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/hypervisor_dashboard_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_process_view,skill_workflow_timeline,skill_incident_explain,skill_repair_diagnose,skill_repair_action,skill_uri_call,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_process_view(agent_id)
+    skill_workflow_timeline(workflow_id)
+    skill_incident_explain(incident_id)
+    skill_repair_diagnose(agent_id)
+    skill_repair_action(payload)
+    skill_uri_call(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/user_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_user,skill_read_user_roles,skill_create_user,skill_assign_user_role,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_read_user(user_id)
+    skill_read_user_roles(user_id)
+    skill_create_user(payload)
+    skill_assign_user_role(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/codex_nl_plan_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_markpact_source,skill_read_device_status,skill_run_cron_monitor,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_read_markpact_source()
+    skill_read_device_status()
+    skill_run_cron_monitor(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/invoices_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_invoice,skill_read_invoice_events,skill_create_invoice,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_read_invoice(invoice_id)
+    skill_read_invoice_events(invoice_id)
+    skill_create_invoice(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/schema_collab_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_markpact_source,skill_read_device_status,skill_read_robot_state,skill_run_cron_monitor,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_read_markpact_source()
+    skill_read_device_status()
+    skill_read_robot_state()
+    skill_run_cron_monitor(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/screenshot_analysis_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_analyze_screenshot,skill_capture_and_analyze,skill_scheduled_capture_analysis,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_analyze_screenshot(payload)
+    skill_capture_and_analyze(payload)
+    skill_scheduled_capture_analysis(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/remote_deploy_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_plan_remote_deploy,skill_apply_remote_deploy,skill_verify_remote_agent,skill_start_remote_agent,skill_deploy_verify_start,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_plan_remote_deploy(payload)
+    skill_apply_remote_deploy(payload)
+    skill_verify_remote_agent(payload)
+    skill_start_remote_agent(payload)
+    skill_deploy_verify_start(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
+  agents/generated/gnome_programmer_agent/routes.py:
+    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_observe_desktop,skill_type_on_desktop,skill_programmer_session,_uri_allowed,_read_uri,_command_uri,_dispatch_command
+    CommandRequest(BaseModel):
+    health()
+    capabilities()
+    well_known_agent_json()
+    well_known_agent_card_json()
+    read_resource(uri)
+    dispatch_command(request)
+    skill_observe_desktop(payload)
+    skill_type_on_desktop(payload)
+    skill_programmer_session(payload)
+    _uri_allowed(uri;templates)
+    _read_uri(uri)
+    _command_uri(command)
+    _dispatch_command(command;payload)
   packages/urish/urish/backends/repair.py:
     e: repair_diagnose,repair_apply,repair_learn,_wrap
     repair_diagnose(selector)
@@ -3380,45 +3875,15 @@ D:
   scripts/examples/run_uri3_workflow.py:
     e: main
     main(argv)
-  agents/generated/weather_map_agent/routes.py:
-    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_weather_map,skill_generate_weather_map,_uri_allowed
-    CommandRequest(BaseModel):
-    health()
-    capabilities()
-    well_known_agent_json()
-    well_known_agent_card_json()
-    read_resource(uri)
-    dispatch_command(request)
-    skill_read_weather_map(place;days)
-    skill_generate_weather_map(payload)
-    _uri_allowed(uri;templates)
-  agents/generated/user_agent/routes.py:
-    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_user,skill_read_user_roles,skill_create_user,skill_assign_user_role,_uri_allowed
-    CommandRequest(BaseModel):
-    health()
-    capabilities()
-    well_known_agent_json()
-    well_known_agent_card_json()
-    read_resource(uri)
-    dispatch_command(request)
-    skill_read_user(user_id)
-    skill_read_user_roles(user_id)
-    skill_create_user(payload)
-    skill_assign_user_role(payload)
-    _uri_allowed(uri;templates)
-  agents/generated/invoices_agent/routes.py:
-    e: CommandRequest,health,capabilities,well_known_agent_json,well_known_agent_card_json,read_resource,dispatch_command,skill_read_invoice,skill_read_invoice_events,skill_create_invoice,_uri_allowed
-    CommandRequest(BaseModel):
-    health()
-    capabilities()
-    well_known_agent_json()
-    well_known_agent_card_json()
-    read_resource(uri)
-    dispatch_command(request)
-    skill_read_invoice(invoice_id)
-    skill_read_invoice_events(invoice_id)
-    skill_create_invoice(payload)
-    _uri_allowed(uri;templates)
+  agents/custom/remote_deploy_agent/deploy.py:
+    e: repo_root,_resolve_deployment,plan_remote_deploy,apply_remote_deploy,verify_remote_agent,start_remote_agent,deploy_verify_start
+    repo_root()
+    _resolve_deployment(deployment_id)
+    plan_remote_deploy(deployment_id)
+    apply_remote_deploy(deployment_id)
+    verify_remote_agent(deployment_id)
+    start_remote_agent(deployment_id)
+    deploy_verify_start(deployment_id)
   packages/urigen/urigen/cli.py:
     e: _emit,cmd_plan,cmd_generate,cmd_verify,cmd_explain,cmd_apply,cmd_schema_check,cmd_profiles,build_parser,main
     _emit(payload)
@@ -3472,9 +3937,6 @@ D:
     _resolve_docker(uri)
     resolve_target(scheme;uri)
     scheme_from_uri(uri)
-  domains/weather_map/handlers/generate_weather_map.py:
-    e: handler
-    handler(payload)
   packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/paths.py:
     e: repo_www_dir
     repo_www_dir()
@@ -3497,6 +3959,15 @@ D:
   packages/uri2run/uri2run/doctor.py:
     e: doctor_transport_dependencies
     doctor_transport_dependencies()
+  packages/uri2run/uri2run/transports/flow_transport.py:
+    e: run_uri_flow,run_flow_transport
+    run_uri_flow(flow_path;payload;context)
+    run_flow_transport(backend;payload;context)
+  packages/uri2run/uri2run/transports/graph_transport.py:
+    e: _load_graph,run_uri_graph,run_graph_transport
+    _load_graph(path)
+    run_uri_graph(graph_path;payload;context)
+    run_graph_transport(backend;payload;context)
   packages/uri2run/uri2run/transports/python_transport.py:
     e: split_python_uri,run_python,run_python_transport
     split_python_uri(uri)
@@ -3531,9 +4002,6 @@ D:
 
 Example:
     from hypervisor im...
-  packages/resource-agent-hypervisor/hypervisor/domain_pack/pack_writer.py:
-    e: write_domain_pack
-    write_domain_pack(model)
   packages/resource-agent-hypervisor/hypervisor/domain_pack/artifact_generators/renderers.py:
     e: generate_renderers
     generate_renderers(model)
@@ -3559,6 +4027,9 @@ Example:
     md_to_html(text)
     cache_key(source;body)
     cached_html(source;body;cache_dir)
+  domains/weather_map/handlers/generate_weather_map.py:
+    e: handler
+    handler(payload)
   packages/urish/urish/backends/explain.py:
     e: explain_target
     explain_target(uri)
@@ -3741,6 +4212,10 @@ Example:
     ResourceRuntimeClient: __init__(2),read_resource(1),dispatch_command(2)  # Small HTTP client used by generated thin agents.
 
 Expected r...
+  domains/weather_map/planner.py:
+    e: is_weather_prompt,deterministic_weather_plan
+    is_weather_prompt(prompt)
+    deterministic_weather_plan(prompt)
   packages/urish/urish/commands/run_commands.py:
     e: register_run_commands
     register_run_commands(app;deps)
@@ -3771,6 +4246,10 @@ Expected r...
   packages/urigen/urigen/artifacts.py:
     e: repo_path
     repo_path(root;relative)
+  packages/uri2ops/uri2ops/operation_registry/uri_mapping.py:
+    e: registry_scheme,registry_operation
+    registry_scheme(scheme)
+    registry_operation(scheme;operation)
   packages/uri2ops/uri2ops/server/routes/mcp.py:
     e: mcp_router
     mcp_router(service)
@@ -3892,7 +4371,7 @@ Expected r...
     e: parse_uri_tree,derive_domain_model
     parse_uri_tree(uri_tree_path)
     derive_domain_model(tree;out_dir)
-  hypervisor/domain_pack/templates.py:
+  packages/resource-agent-hypervisor/hypervisor/domain_pack/templates.py:
     e: package_name,generic_proto,weather_proto,weather_handler,generic_handler
     package_name(domain_id)
     generic_proto(domain_id)
@@ -3914,6 +4393,39 @@ Expected r...
   packages/resource-agent-hypervisor/hypervisor/contract_registry/validate.py:
     e: validate_registry
     validate_registry(registry)
+  agents/custom/remote_deploy_agent/routes.py:
+    e: DeploymentRequest,health,well_known_agent_card_json,capabilities,skill_plan_remote_deploy,skill_apply_remote_deploy,skill_verify_remote_agent,skill_start_remote_agent,skill_deploy_verify_start
+    DeploymentRequest(BaseModel):
+    health()
+    well_known_agent_card_json()
+    capabilities()
+    skill_plan_remote_deploy(payload)
+    skill_apply_remote_deploy(payload)
+    skill_verify_remote_agent(payload)
+    skill_start_remote_agent(payload)
+    skill_deploy_verify_start(payload)
+  agents/custom/gnome_programmer_agent/routes.py:
+    e: OperatorRequest,TypeRequest,SessionRequest,health,well_known_agent_card_json,capabilities,skill_observe_desktop,skill_type_on_desktop,skill_run_programmer_session
+    OperatorRequest(BaseModel):
+    TypeRequest(OperatorRequest):
+    SessionRequest(OperatorRequest):
+    health()
+    well_known_agent_card_json()
+    capabilities()
+    skill_observe_desktop(payload)
+    skill_type_on_desktop(payload)
+    skill_run_programmer_session(payload)
+  agents/custom/screenshot_analysis_agent/routes.py:
+    e: AnalyzeScreenshotRequest,CaptureAndAnalyzeRequest,health,well_known_agent_card_json,well_known_agent_json,capabilities,skill_analyze_screenshot,skill_capture_and_analyze,skill_run_scheduled_capture_analysis
+    AnalyzeScreenshotRequest(BaseModel):
+    CaptureAndAnalyzeRequest(BaseModel):
+    health()
+    well_known_agent_card_json()
+    well_known_agent_json()
+    capabilities()
+    skill_analyze_screenshot(payload)
+    skill_capture_and_analyze(payload)
+    skill_run_scheduled_capture_analysis(payload)
   goal.yaml:
   manifest.yaml:
   planfile.yaml:
@@ -3965,6 +4477,8 @@ Expected r...
   packages/uri2ops/uri2ops/__init__.py:
   packages/uri2ops/uri2ops/main.py:
   uri2ops/schemas/operation_registry.schema.json:
+  packages/uri2ops/uri2ops/schemas/operator_task.schema.json:
+  packages/uri2ops/uri2ops/operation_registry/registry.yaml:
   packages/uri3/pyproject.toml:
   packages/uri3/uri3/paths.py:
   packages/uri3/uri3/logs/__init__.py:
@@ -3987,6 +4501,7 @@ Expected r...
   uri3/resolvers/__init__.py:
   packages/uri3/uri3/doctor/__init__.py:
   packages/uri3/uri3/doctor/checks/__init__.py:
+  packages/uri3/domains/weather_map/handlers/generate_weather_map.py:
   packages/uri3/contracts/views.yaml:
   packages/uri3/contracts/resources.yaml:
   domains/weather_map/proto/weather_map.proto:
@@ -4011,7 +4526,7 @@ Expected r...
   packages/uri2run/uri2run/__init__.py:
   packages/uri2run/uri2run/transports/__init__.py:
   packages/resource-agent-factory/pyproject.toml:
-  generator/templates/Dockerfile.j2:
+  packages/resource-agent-factory/generator/templates/Dockerfile.j2:
   packages/resource-agent-factory/agents/generated/orders_agent/__init__.py:
   packages/resource-agent-factory/agents/generated/orders_agent/agent_card.py:
   packages/resource-agent-factory/agents/generated/orders_agent/main.py:
@@ -4059,6 +4574,8 @@ Expected r...
   testenv/docker-compose.ssh.yml:
   testenv/ssh_agent_host/entrypoint.sh:
   testenv/ssh_agent_host/Dockerfile:
+  examples/office_chains.yaml:
+  examples/20_touri_capabilities/website_screenshot_schedule.uri.capability.yaml:
   examples/20_touri_capabilities/office_day_marta.uri.capability.yaml:
   examples/20_touri_capabilities/check_health_graph.uri.capability.yaml:
   examples/20_touri_capabilities/run.sh:
@@ -4067,6 +4584,7 @@ Expected r...
   examples/20_touri_capabilities/order_woocommerce_to_erp_dry_run.uri.capability.yaml:
   examples/20_touri_capabilities/bank_batch_transfer.uri.capability.yaml:
   examples/20_touri_capabilities/browser_open_mock.uri.capability.yaml:
+  examples/20_touri_capabilities/website_screenshot_schedule_dry_run.uri.capability.yaml:
   examples/20_touri_capabilities/weather_forecast.uri.capability.yaml:
   examples/20_touri_capabilities/mock_echo.uri.capability.yaml:
   examples/20_touri_capabilities/bank_batch_transfer_dry_run.uri.capability.yaml:
@@ -4078,6 +4596,9 @@ Expected r...
   examples/17_flow_vs_graph/run.sh:
   examples/17_flow_vs_graph/expanded.expected.uri.graph.yaml:
   examples/17_flow_vs_graph/weather.uri.flow.yaml:
+  examples/36_physical_ops/run.sh:
+  examples/36_physical_ops/task.device.yaml:
+  examples/36_physical_ops/task.robot.yaml:
   examples/13_pcwin_operator/run.sh:
   examples/13_pcwin_operator/task.pcwin.yaml:
   examples/14_workflow_executor_mock/run.sh:
@@ -4086,6 +4607,9 @@ Expected r...
   examples/33_office_workflows/bank_batch_transfer.yaml:
   examples/33_office_workflows/portal_zus_form.yaml:
   examples/33_office_workflows/supplier_report_monthly.yaml:
+  examples/38_autonomous_agents/run.sh:
+    e: print
+    print()
   examples/15_compact_uri_flow/run.sh:
   examples/15_compact_uri_flow/weather.uri.flow.yaml:
   examples/15_compact_uri_flow/branching.uri.flow.yaml:
@@ -4100,7 +4624,6 @@ Expected r...
     port_8101_in_use_by_other()
     print()
   examples/16_llm_graph_planner/prompt.txt:
-  examples/03_ssh_remote_agent/docker-compose.yml:
   examples/09_run_agent_hypervisor/run.sh:
   examples/13_nl2uri_multi_uri_graph/workflow_graph.yaml:
   examples/13_nl2uri_multi_uri_graph/run.sh:
@@ -4108,7 +4631,10 @@ Expected r...
   examples/13_nl2uri_multi_uri_graph/prompt.txt:
   evolution/proposals/add_invoices_agent.yaml:
   evolution/proposals/add_orders_agent.yaml:
-  examples/16_www_landing_monitor/task_graph.yaml:
+  examples/37_agent_screenshot_analysis/run.sh:
+    e: print,print
+    print()
+    print()
   examples/11_playwright_browser/run.sh:
     e: Handler,do_GET,log_message
     Handler:
@@ -4123,6 +4649,7 @@ Expected r...
   examples/12_android_operator/run.sh:
   examples/12_android_operator/task.android.yaml:
   examples/30_golden_path/run.sh:
+  examples/35_website_screenshot_schedule/run.sh:
   examples/35_website_screenshot_schedule/task_graph.yaml:
   examples/14_uri2ops_serve/run.sh:
   examples/create_invoices_agent_prompt.txt:
@@ -4151,6 +4678,7 @@ Expected r...
   examples/32_ecommerce_integrations/task_graph.yaml:
   scripts/test-all-examples.sh:
   scripts/architecture_responsibility_audit.py:
+  scripts/fix-generated-ownership.sh:
   scripts/examples/doql_host_preview.sh:
   scripts/examples/cli_fallback.sh:
     e: run_cli
@@ -4187,11 +4715,56 @@ Expected r...
   www/docker-compose.yml:
   www/Dockerfile:
   www/schemas/agent_contract.schema.json:
+  www/generated/examples-manifest.js:
+  www/generated/integrations-i18n.js:
+  www/generated/cache/about/06_orders_agent-fa8cebf95291599c.json:
+  www/generated/cache/about/16_llm_graph_planner-159f06dd4832dbab.json:
+  www/generated/cache/about/35_website_screenshot_schedule-e692fc863f4dfa33.json:
+  www/generated/cache/about/32_ecommerce_integrations-ceb917a24dc426c7.json:
+  www/generated/cache/about/32_ecommerce_integrations-57cc7abc3e46c709.json:
+  www/generated/cache/about/05_meta_repair-829661dc35de8437.json:
+  www/generated/cache/about/16_www_landing_monitor-f7bdca1db38212a5.json:
+  www/generated/cache/about/18_llm_flow_planner-f9fd0a829937576e.json:
+  www/generated/cache/about/35_website_screenshot_schedule-5d3d692bad14d211.json:
+  www/generated/cache/about/33_office_workflows-3181e16d403bf94e.json:
+  www/generated/cache/about/09_run_agent_hypervisor-1711dce8fea4b4bd.json:
+  www/generated/cache/about/32_ecommerce_integrations-305e5c45f88421e7.json:
+  www/generated/cache/about/12_android_operator-86a6aec1684d0822.json:
+  www/generated/cache/about/32_ecommerce_integrations-6c89fbcb7026a6d6.json:
+  www/generated/cache/about/32_ecommerce_integrations-824cdb1be9f48c5f.json:
+  www/generated/cache/about/03_ssh_remote_agent-948fe4512a944461.json:
+  www/generated/cache/about/15_compact_uri_flow-bfca62561aac316c.json:
+  www/generated/cache/about/22_dashboard_agent-c59387bc332dc4f0.json:
+  www/generated/cache/about/36_physical_ops-5999114d62a13a0c.json:
+  www/generated/cache/about/21_touri_voice-dfb4ecf1dd749f23.json:
+  www/generated/cache/about/20_touri_capabilities-44612b79959663b2.json:
   www/generated/cache/about/34_cron_uri-8caa86a1f0b567e7.json:
   www/generated/cache/about/32_ecommerce_integrations-232ba3159dae70e5.json:
+  www/generated/cache/about/04_nl2a_weather_map-35dffafaa015f2b1.json:
+  www/generated/cache/about/10_browser_operator-2dc37409a09018f3.json:
+  www/generated/cache/about/32_ecommerce_integrations-ef973d98bef7911e.json:
+  www/generated/cache/about/17_flow_vs_graph-315d5c344a908569.json:
+  www/generated/cache/about/32_ecommerce_integrations-5a3ded5e1fc34441.json:
   www/generated/cache/about/31_office_day-e7c4d91a191e34ff.json:
+  www/generated/cache/about/14_workflow_executor_mock-3c044d3a9015c567.json:
+  www/generated/cache/about/11_playwright_browser-65f644b9333c4fad.json:
+  www/generated/cache/about/35_website_screenshot_schedule-5f3f6f2bfa01f1f5.json:
+  www/generated/cache/about/08_evolution-db22aad1f8844232.json:
+  www/generated/cache/about/32_ecommerce_integrations-61c29dafb93b6890.json:
+  www/generated/cache/about/13_pcwin_operator-73848739b38fa413.json:
+  www/generated/cache/about/07_invoices_agent-5859648a80381c9c.json:
+  www/generated/cache/about/22_markpact_weather-311b3b5c7edf84a8.json:
   www/generated/cache/about/33_office_workflows-16fbaee09a140a1e.json:
+  www/generated/cache/about/02_uri3_scan_http-194cbbcfa8306eac.json:
   www/generated/cache/about/23_nl_to_agent_tutorial-2c28d4c71f717931.json:
+  www/generated/cache/about/13_nl2uri_multi_uri_graph-def5bcd16af46627.json:
+  www/generated/cache/about/32_ecommerce_integrations-a0f1de7dca1f671a.json:
+  www/generated/cache/about/15_playwright_browser-a74b7e7795438fdb.json:
+  www/generated/cache/about/14_uri2ops_serve-7b57cb5162c84c38.json:
+  www/generated/cache/about/32_ecommerce_integrations-66ca0b9fc6eae707.json:
+  www/generated/cache/about/01_quickstart_local-3ea5cbf71000635c.json:
+  www/generated/cache/about/35_website_screenshot_schedule-390ed226ee85a7ff.json:
+  www/generated/cache/about/30_golden_path-e898a3a7b7679ee7.json:
   www/examples/nl-commands.txt:
   www/contracts/chat_ui_agent.yaml:
   www/contracts/openapi.yaml:
@@ -4203,15 +4776,18 @@ Expected r...
   domains/weather_map/uri_tree.yaml:
   domains/weather_map/commands.yaml:
   domains/weather_map/views.yaml:
-  domains/weather_map/registry.fragment.yaml:
   domains/weather_map/renderers.yaml:
   domains/weather_map/resources.yaml:
   domains/hypervisor_dashboard/domain.yaml:
   domains/hypervisor_dashboard/uri_tree.yaml:
+  domains/physical_ops/scenario_registry.yaml:
+  domains/physical_ops/domain.yaml:
+  domains/physical_ops/operator_registry.yaml:
   domains/desktop_ops/scenario_registry.yaml:
   domains/desktop_ops/domain.yaml:
   domains/desktop_ops/operator_registry.yaml:
   domains/office/scenario_registry.yaml:
+  config/operator_policy.uri.yaml:
   config/operator_registry.uri.yaml:
   config/deployments.uri.yaml:
   config/llm.uri.yaml:
@@ -4231,59 +4807,91 @@ Expected r...
   contracts/proto/dashboard.proto:
   contracts/proto/invoices.proto:
   contracts/proto/user.proto:
+  contracts/proto/deploy.proto:
+  contracts/proto/codex_uri_smoke.proto:
+  contracts/proto/desktop.proto:
+  contracts/proto/operator.proto:
+  contracts/proto/screenshots.proto:
+  contracts/agents/codex_uri_smoke_agent.yaml:
+  contracts/agents/codex_nl_smoke_agent.yaml:
+  contracts/agents/codex_nl_plan_agent.yaml:
+  contracts/agents/screenshot_analysis_agent.yaml:
+  contracts/agents/remote_deploy_agent.yaml:
   contracts/agents/invoices_agent.yaml:
   contracts/agents/hypervisor_dashboard_agent.yaml:
   contracts/agents/user_agent.yaml:
+  contracts/agents/gnome_programmer_agent.yaml:
+  contracts/agents/schema_collab_agent.yaml:
   contracts/compatibility/policy.yaml:
+  agents/generated/codex_uri_smoke_agent/__init__.py:
+  agents/generated/codex_uri_smoke_agent/agent_card.py:
+  agents/generated/codex_uri_smoke_agent/Dockerfile:
+  agents/generated/codex_uri_smoke_agent/.generated.yaml:
+  agents/generated/codex_nl_smoke_agent/__init__.py:
+  agents/generated/codex_nl_smoke_agent/agent_card.py:
+  agents/generated/codex_nl_smoke_agent/Dockerfile:
+  agents/generated/codex_nl_smoke_agent/.generated.yaml:
   agents/generated/weather_map_agent/__init__.py:
   agents/generated/weather_map_agent/agent_card.py:
   agents/generated/weather_map_agent/main.py:
   agents/generated/weather_map_agent/Dockerfile:
+  agents/generated/weather_map_agent/.generated.yaml:
+  agents/generated/hypervisor_dashboard_agent/__init__.py:
+  agents/generated/hypervisor_dashboard_agent/agent_card.py:
+  agents/generated/hypervisor_dashboard_agent/Dockerfile:
+  agents/generated/hypervisor_dashboard_agent/.generated.yaml:
   agents/generated/user_agent/__init__.py:
   agents/generated/user_agent/agent_card.py:
   agents/generated/user_agent/main.py:
   agents/generated/user_agent/Dockerfile:
   agents/generated/user_agent/.generated.yaml:
+  agents/generated/codex_nl_plan_agent/__init__.py:
+  agents/generated/codex_nl_plan_agent/agent_card.py:
+  agents/generated/codex_nl_plan_agent/Dockerfile:
+  agents/generated/codex_nl_plan_agent/.generated.yaml:
   agents/generated/invoices_agent/__init__.py:
   agents/generated/invoices_agent/agent_card.py:
-  agents/generated/invoices_agent/main.py:
   agents/generated/invoices_agent/Dockerfile:
+  agents/generated/invoices_agent/.generated.yaml:
+  agents/generated/schema_collab_agent/__init__.py:
+  agents/generated/schema_collab_agent/agent_card.py:
+  agents/generated/schema_collab_agent/Dockerfile:
+  agents/generated/schema_collab_agent/.generated.yaml:
+  agents/generated/screenshot_analysis_agent/__init__.py:
+  agents/generated/screenshot_analysis_agent/agent_card.py:
+  agents/generated/screenshot_analysis_agent/Dockerfile:
+  agents/generated/screenshot_analysis_agent/.generated.yaml:
+  agents/custom/remote_deploy_agent/agent_card.py:
+  agents/custom/remote_deploy_agent/main.py:
+  agents/custom/gnome_programmer_agent/agent_card.py:
+  agents/custom/gnome_programmer_agent/main.py:
+  agents/custom/screenshot_analysis_agent/__init__.py:
+  agents/custom/screenshot_analysis_agent/agent_card.py:
+  agents/custom/screenshot_analysis_agent/main.py:
+  agents/operators/device_robot_operator.yaml:
+  agents/operators/desktop_operator.yaml:
   integration/uri2flow/pyproject.optional.snippet.toml:
   integration/uri2flow/Makefile.optional.snippet.mk:
   integration/touri/pyproject.optional.snippet.toml:
   integration/touri/Makefile.optional.snippet.mk:
-  packages/uri2ops/uri2ops/schemas/operator_task.schema.json:
-  packages/uri2ops/uri2ops/operation_registry/registry.yaml:
-  examples/office_chains.yaml:
-  examples/20_touri_capabilities/website_screenshot_schedule.uri.capability.yaml:
-  examples/20_touri_capabilities/website_screenshot_schedule_dry_run.uri.capability.yaml:
-  examples/36_physical_ops/run.sh:
-  examples/36_physical_ops/task.device.yaml:
-  examples/36_physical_ops/task.robot.yaml:
-  examples/35_website_screenshot_schedule/run.sh:
+  examples/03_ssh_remote_agent/docker-compose.yml:
+  examples/16_www_landing_monitor/task_graph.yaml:
   deployments/agent_deployments.yaml:
-  www/generated/integrations-i18n.js:
-  www/generated/cache/about/35_website_screenshot_schedule-e692fc863f4dfa33.json:
-  www/generated/cache/about/32_ecommerce_integrations-ceb917a24dc426c7.json:
-  www/generated/cache/about/35_website_screenshot_schedule-5d3d692bad14d211.json:
-  www/generated/cache/about/32_ecommerce_integrations-57cc7abc3e46c709.json:
-  www/generated/examples-manifest.js:
-  www/generated/cache/about/33_office_workflows-3181e16d403bf94e.json:
-  www/generated/cache/about/32_ecommerce_integrations-6c89fbcb7026a6d6.json:
-  www/generated/cache/about/32_ecommerce_integrations-305e5c45f88421e7.json:
-  www/generated/cache/about/32_ecommerce_integrations-824cdb1be9f48c5f.json:
-  www/generated/cache/about/32_ecommerce_integrations-5a3ded5e1fc34441.json:
-  www/generated/cache/about/32_ecommerce_integrations-ef973d98bef7911e.json:
-  www/generated/cache/about/35_website_screenshot_schedule-5f3f6f2bfa01f1f5.json:
-  www/generated/cache/about/32_ecommerce_integrations-61c29dafb93b6890.json:
-  www/generated/cache/about/32_ecommerce_integrations-a0f1de7dca1f671a.json:
-  www/generated/cache/about/32_ecommerce_integrations-66ca0b9fc6eae707.json:
-  www/generated/cache/about/35_website_screenshot_schedule-390ed226ee85a7ff.json:
-  domains/physical_ops/domain.yaml:
-  domains/physical_ops/scenario_registry.yaml:
-  domains/physical_ops/operator_registry.yaml:
-  config/operator_policy.uri.yaml:
-  agents/generated/weather_map_agent/.generated.yaml:
-  agents/operators/device_robot_operator.yaml:
-  agents/generated/invoices_agent/.generated.yaml:
-  agents/operators/desktop_operator.yaml:
+  domains/weather_map/registry.fragment.yaml:
+  agents/generated/remote_deploy_agent/__init__.py:
+  agents/generated/remote_deploy_agent/agent_card.py:
+  agents/generated/remote_deploy_agent/main.py:
+  agents/generated/remote_deploy_agent/Dockerfile:
+  agents/generated/remote_deploy_agent/.generated.yaml:
+  agents/generated/codex_uri_smoke_agent/main.py:
+  agents/generated/gnome_programmer_agent/__init__.py:
+  agents/generated/gnome_programmer_agent/agent_card.py:
+  agents/generated/gnome_programmer_agent/main.py:
+  agents/generated/gnome_programmer_agent/Dockerfile:
+  agents/generated/gnome_programmer_agent/.generated.yaml:
+  agents/generated/codex_nl_smoke_agent/main.py:
+  agents/generated/hypervisor_dashboard_agent/main.py:
+  agents/generated/codex_nl_plan_agent/main.py:
+  agents/generated/invoices_agent/main.py:
+  agents/generated/schema_collab_agent/main.py:
+  agents/generated/screenshot_analysis_agent/main.py:

@@ -347,6 +347,23 @@ def test_api_uri_call_browser_open(client: TestClient):
     assert "unsupported or unimplemented URI" not in payload.get("message_markdown", "")
 
 
+def test_api_uri_call_browser_open_requires_approval(client: TestClient):
+    response = client.post(
+        "/api/uri/call",
+        json={
+            "uri": "browser://chrome/page/open",
+            "dry_run": False,
+            "approved": False,
+            "policy": "dev",
+            "payload": {"url": "https://example.com/reports"},
+        },
+    )
+    assert response.status_code == 403
+    detail = response.json()["detail"]
+    assert detail["requires_approval"] is True
+    assert "dry-run" in detail["error"]
+
+
 def test_api_uri_call_desktop_operator_health(client: TestClient):
     response = client.post(
         "/api/uri/call",

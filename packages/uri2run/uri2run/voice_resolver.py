@@ -6,6 +6,7 @@ from typing import Any
 
 VOICE_PYTHON_BACKENDS: dict[str, str] = {
     "stt://mock/transcribe": "python://uri2voice.stt:transcribe",
+    "stt://local/whisper": "python://uri2voice.stt_whisper:transcribe_whisper",
     "tts://mock/speak": "python://uri2voice.tts:speak",
     "voice://command/from-text": "python://uri2voice.voice_command:plan_voice_command",
 }

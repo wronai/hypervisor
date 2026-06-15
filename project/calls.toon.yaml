@@ -1,19 +1,19 @@
 # code2llm call graph | /home/tom/github/wronai/hypervisor
-# generated in 0.22s
-# nodes: 384 | edges: 500 | modules: 111
+# generated in 0.21s
+# nodes: 377 | edges: 500 | modules: 98
 # CC̄=3.7
 
 HUBS[20]:
-  examples.23_nl_to_agent_tutorial.run.print
-    CC=0  in:83  out:0  total:83
-  uri2ops.operation_registry.models.OperationRegistry.list
-    CC=1  in:75  out:2  total:77
+  examples.38_autonomous_agents.run.print
+    CC=0  in:87  out:0  total:87
   packages.uri3.uri3.config.repo_root.find_repo_root
-    CC=4  in:69  out:4  total:73
+    CC=4  in:82  out:4  total:86
+  uri2ops.operation_registry.models.OperationRegistry.list
+    CC=1  in:77  out:2  total:79
   packages.urish.urish.commands.call_commands.register_call_commands
     CC=1  in:1  out:56  total:57
-  packages.urish.urish.commands.agent_commands.register_agent_commands
-    CC=1  in:0  out:48  total:48
+  packages.urish.urish.backends.call.call_uri
+    CC=12  in:31  out:20  total:51
   packages.urigen.urigen.generator.generate_ecosystem
     CC=7  in:3  out:40  total:43
   packages.urigen.urigen.cli.build_parser
@@ -24,10 +24,10 @@ HUBS[20]:
     CC=12  in:3  out:37  total:40
   packages.urish.urish.commands.ticket_commands.register_ticket_commands
     CC=1  in:1  out:35  total:36
+  packages.nl2uri.nl2uri.flow_planner.plan_flow
+    CC=11  in:5  out:30  total:35
   packages.uri2ops.uri2ops.server.routes.mcp.mcp_router
     CC=1  in:1  out:33  total:34
-  packages.nl2uri.nl2uri.flow_planner.plan_flow
-    CC=12  in:5  out:29  total:34
   packages.urigen.urigen.apply_executor._merge_deployment_fragment
     CC=12  in:1  out:32  total:33
   packages.urish.urish.commands.evolution_commands.register_evolution_commands
@@ -35,36 +35,44 @@ HUBS[20]:
   packages.urish.urish.commands.observe_commands.register_observe_commands
     CC=1  in:1  out:29  total:30
   packages.uri3.uri3.resolvers.explain.explain_uri
-    CC=14  in:8  out:21  total:29
+    CC=14  in:9  out:21  total:30
   packages.urigen.urigen.apply_planner.build_apply_plan
     CC=13  in:1  out:28  total:29
   packages.urish.urish.commands.repair_commands.register_repair_commands
     CC=1  in:1  out:28  total:29
-  packages.uri3.uri3.graph.artifacts.write_artifact
-    CC=9  in:7  out:22  total:29
-  packages.uri3.uri3.graph.graph_validator.load_workflow_graph
-    CC=15  in:11  out:17  total:28
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.loader.load_deployment_registry
+    CC=5  in:20  out:8  total:28
+  packages.urish.urish.scenario_registry.load_scenario_registries
+    CC=11  in:4  out:24  total:28
 
 MODULES:
-  domains.weather_map.handlers.generate_weather_map  [1 funcs]
-    handler  CC=3  out:10
-  examples.23_nl_to_agent_tutorial.run  [1 funcs]
+  examples.38_autonomous_agents.run  [1 funcs]
     print  CC=0  out:0
+  hypervisor.deployment_registry.writer  [2 funcs]
+    save_deployment_registry  CC=2  out:4
+    upsert_deployment  CC=3  out:2
   packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.chat_format  [2 funcs]
-    format_uri_result_markdown  CC=5  out:13
+    format_uri_result_markdown  CC=9  out:21
     format_uri_result_summary  CC=1  out:1
   packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.uri_client  [1 funcs]
     call_system_uri  CC=4  out:7
   packages.nl2uri.nl2uri.domain_planner  [1 funcs]
-    plan_from_prompt  CC=7  out:11
+    plan_from_prompt  CC=5  out:7
   packages.nl2uri.nl2uri.flow_planner  [1 funcs]
-    plan_flow  CC=12  out:29
+    plan_flow  CC=11  out:30
   packages.nl2uri.nl2uri.graph_planner  [1 funcs]
     plan_screenshot_schedule  CC=6  out:11
+  packages.nl2uri.nl2uri.weather_forecast  [2 funcs]
+    is_weather_forecast_prompt  CC=6  out:5
+    plan_weather_forecast  CC=1  out:2
+  packages.resource-agent-factory.generator.agent_generator  [1 funcs]
+    generate_agent  CC=5  out:22
   packages.resource-agent-hypervisor.hypervisor.artifacts.gate  [3 funcs]
     check_artifacts  CC=11  out:7
     check_lifecycle_coverage  CC=10  out:8
     check_schemas  CC=5  out:12
+  packages.resource-agent-hypervisor.hypervisor.deployment_registry.loader  [1 funcs]
+    load_deployment_registry  CC=5  out:8
   packages.resource-agent-hypervisor.hypervisor.evolution.proposal_from_source  [1 funcs]
     build_repair_proposal_from_incident  CC=8  out:13
   packages.resource-agent-hypervisor.hypervisor.integrations.planfile.ticket_mapper  [2 funcs]
@@ -78,6 +86,8 @@ MODULES:
     validate_evolution_proposal_dict  CC=1  out:1
   packages.touri.touri.validator  [1 funcs]
     validate_manifest  CC=3  out:4
+  packages.touri.touri_examples.weather  [1 funcs]
+    handler  CC=1  out:3
   packages.uri2flow.uri2flow.expander  [1 funcs]
     expand_flow  CC=6  out:8
   packages.uri2flow.uri2flow.validator  [1 funcs]
@@ -90,15 +100,14 @@ MODULES:
     run_cmd  CC=2  out:4
     serve_cmd  CC=2  out:4
     validate_cmd  CC=2  out:3
-  packages.uri2ops.uri2ops.remote_registry.loader  [9 funcs]
-    _load_source  CC=14  out:19
-    _unwrap_config_document  CC=4  out:5
+  packages.uri2ops.uri2ops.operation_registry.validator  [2 funcs]
+    validate_operation_registry  CC=14  out:13
+    validate_registry_schema  CC=2  out:7
+  packages.uri2ops.uri2ops.remote_registry.loader  [5 funcs]
     list_remote_sources  CC=4  out:9
     load_registry_config  CC=4  out:8
-    merge_registry_documents  CC=6  out:6
     registry_config_path  CC=2  out:2
     registry_document  CC=4  out:4
-    registry_from_document  CC=8  out:9
     resolve_operation_registry  CC=12  out:18
   packages.uri2ops.uri2ops.server.app  [1 funcs]
     create_app  CC=2  out:10
@@ -114,125 +123,32 @@ MODULES:
   packages.uri2ops.uri2ops.server.routes.tasks  [2 funcs]
     run_task_handler  CC=2  out:3
     tasks_router  CC=1  out:11
+  packages.uri2pact.uri2pact.scenarios  [2 funcs]
+    load_markpact_scenario_dicts  CC=5  out:5
+    load_markpact_scenario_registry_dicts  CC=9  out:13
   packages.uri2run.uri2run.cli  [1 funcs]
     _backend_from_target  CC=3  out:3
   packages.uri2run.uri2run.doctor  [1 funcs]
     doctor_transport_dependencies  CC=3  out:10
   packages.uri2run.uri2run.runner  [1 funcs]
     run_backend  CC=5  out:15
-  packages.uri3.uri3.artifacts.validator  [1 funcs]
-    validate_artifact  CC=3  out:5
   packages.uri3.uri3.config.repo_root  [1 funcs]
     find_repo_root  CC=4  out:4
   packages.uri3.uri3.config.uri_yaml  [1 funcs]
     unwrap_uri_yaml_document  CC=4  out:5
   packages.uri3.uri3.doctor.runner  [1 funcs]
     run_doctor  CC=9  out:16
-  packages.uri3.uri3.graph.adapters.registry  [1 funcs]
-    adapter_for_uri  CC=3  out:1
-  packages.uri3.uri3.graph.adapters.uri2ops_adapter  [6 funcs]
+  packages.uri3.uri3.graph.adapters.uri2ops_adapter  [1 funcs]
     execute  CC=3  out:13
-    _artifact_suffix  CC=9  out:0
-    _attach_workflow_artifact  CC=3  out:6
-    _registry_operation  CC=1  out:1
-    _registry_scheme  CC=2  out:0
-    cleanup_operator_adapters  CC=2  out:3
-  packages.uri3.uri3.graph.artifacts  [4 funcs]
-    artifact_path  CC=1  out:0
-    artifact_uri  CC=1  out:0
-    build_workflow_step_artifact  CC=4  out:2
-    write_artifact  CC=9  out:22
-  packages.uri3.uri3.graph.conditions  [1 funcs]
-    evaluate_condition  CC=7  out:15
-  packages.uri3.uri3.graph.dependency_graph  [10 funcs]
-    _indegree_outgoing  CC=6  out:1
-    _leaf_nodes  CC=4  out:1
-    _raise_if_cycles  CC=2  out:2
-    _remaining_cycle_nodes  CC=4  out:1
-    _root_nodes  CC=4  out:1
-    _topological_order  CC=6  out:7
-    _visit_acyclic_nodes  CC=6  out:4
-    dependency_summary  CC=2  out:6
-    detect_cycles  CC=2  out:4
-    topological_sort  CC=2  out:6
-  packages.uri3.uri3.graph.event_emitter  [6 funcs]
-    record_step  CC=1  out:1
-    record_step_finished  CC=3  out:1
-    record_step_started  CC=2  out:2
-    record_workflow_completed  CC=4  out:1
-    record_workflow_started  CC=1  out:1
-    redact_step_payload  CC=2  out:1
-  packages.uri3.uri3.graph.event_log  [2 funcs]
-    append_workflow_event  CC=1  out:6
-    workflow_event_path  CC=1  out:0
-  packages.uri3.uri3.graph.execution_models  [4 funcs]
-    to_dict  CC=5  out:2
-    to_dict  CC=4  out:1
-    new_execution_context  CC=2  out:3
-    utc_now_iso  CC=1  out:3
-  packages.uri3.uri3.graph.execution_plan  [2 funcs]
-    build_execution_plan  CC=3  out:10
-    prepare_workflow  CC=5  out:8
-  packages.uri3.uri3.graph.graph_executor  [2 funcs]
-    dry_run_workflow  CC=1  out:2
-    run_workflow  CC=5  out:13
-  packages.uri3.uri3.graph.graph_serializer  [4 funcs]
-    edges_from_depends_on  CC=4  out:5
-    normalize_graph_payload  CC=12  out:24
-    task_steps_to_graph  CC=3  out:7
-    workflow_manifest  CC=1  out:1
-  packages.uri3.uri3.graph.graph_validator  [2 funcs]
-    load_workflow_graph  CC=15  out:17
+  packages.uri3.uri3.graph.graph_validator  [1 funcs]
     validate_workflow_graph  CC=9  out:13
-  packages.uri3.uri3.graph.models  [1 funcs]
-    from_dict  CC=5  out:15
-  packages.uri3.uri3.graph.operation_registry  [5 funcs]
-    allowed_operations  CC=1  out:2
-    effective_kind  CC=2  out:2
-    requires_approval  CC=1  out:1
-    scheme_from_uri  CC=2  out:1
-    validate_node_operation  CC=2  out:5
-  packages.uri3.uri3.graph.policy  [1 funcs]
-    can_execute_step  CC=6  out:2
-  packages.uri3.uri3.graph.step_runner  [8 funcs]
-    dependencies_ok  CC=6  out:1
-    execute_step  CC=2  out:2
-    handle_blocked_node  CC=1  out:3
-    handle_completed_node  CC=5  out:7
-    handle_dependency_failure  CC=1  out:2
-    handle_skipped_node  CC=1  out:1
-    run_workflow_node  CC=4  out:12
-    step_result  CC=1  out:1
-  packages.uri3.uri3.logs.filters  [7 funcs]
-    entry_timestamp  CC=4  out:5
-    level_rank  CC=3  out:2
-    matches_filters  CC=4  out:4
-    matches_grep  CC=4  out:5
-    matches_level  CC=2  out:3
-    matches_logger  CC=3  out:4
-    matches_time_window  CC=7  out:1
-  packages.uri3.uri3.logs.parsing  [5 funcs]
-    _json_event_message  CC=4  out:4
-    empty_entry  CC=1  out:0
-    parse_json_entry  CC=11  out:21
-    parse_log_line  CC=4  out:5
-    parse_text_entry  CC=5  out:8
-  packages.uri3.uri3.logs.reader  [5 funcs]
-    _parse_since  CC=7  out:14
-    read_logs  CC=9  out:10
+  packages.uri3.uri3.logs.reader  [2 funcs]
     read_logs_result  CC=3  out:2
-    resolve_log_path  CC=4  out:3
     summarize_logs  CC=6  out:18
-  packages.uri3.uri3.logs.writer  [1 funcs]
-    append_log  CC=13  out:19
   packages.uri3.uri3.resolvers.explain  [2 funcs]
-    _find_repo_root  CC=5  out:4
+    default_touri_registry  CC=5  out:6
     explain_uri  CC=14  out:21
-  packages.uri3.uri3.resolvers.log_resolver  [1 funcs]
-    parse_log_uri  CC=7  out:16
-  packages.uri3.uri3.results.envelope  [3 funcs]
-    enrich_step_dict  CC=5  out:15
-    enrich_workflow_dict  CC=4  out:6
+  packages.uri3.uri3.results.envelope  [1 funcs]
     unwrap_data  CC=3  out:3
   packages.urigen.urigen.apply  [4 funcs]
     _build_apply_result  CC=3  out:1
@@ -327,21 +243,39 @@ MODULES:
     deployment_fragment  CC=2  out:0
     render_readme  CC=4  out:10
   packages.urish.urish.backends.agent  [1 funcs]
-    agent_action  CC=5  out:9
-  packages.urish.urish.backends.ask  [9 funcs]
+    agent_action  CC=5  out:13
+  packages.urish.urish.backends.agent_factory  [18 funcs]
+    _capabilities  CC=12  out:8
+    _first_uri  CC=2  out:3
+    _generate_agent_package  CC=1  out:6
+    _generation_next_steps  CC=3  out:3
+    _next_agent_port  CC=8  out:7
+    _planned_payload  CC=2  out:3
+    _port_free  CC=2  out:3
+    _python_package  CC=1  out:2
+    _remote_deploy_next_steps  CC=1  out:0
+    _slug  CC=2  out:5
+  packages.urish.urish.backends.ask  [11 funcs]
+    _ask_agent_factory_plan  CC=2  out:10
     _ask_agent_plan  CC=5  out:5
-    _ask_domain_plan  CC=3  out:3
+    _ask_domain_plan  CC=4  out:4
     _ask_ecosystem_plan  CC=4  out:10
     _ask_scenario_plan  CC=4  out:12
+    _ask_weather_plan  CC=1  out:1
     _ask_workflow_plan  CC=4  out:5
-    _build_ask_envelope  CC=3  out:7
+    _build_ask_envelope  CC=5  out:9
     _dedupe  CC=3  out:3
     _plan_single  CC=2  out:11
-    ask_prompt  CC=8  out:14
-  packages.urish.urish.backends.call  [3 funcs]
-    _call_system_uri  CC=6  out:7
-    _is_system_uri  CC=3  out:2
-    call_uri  CC=8  out:10
+  packages.urish.urish.backends.call  [9 funcs]
+    _backend_from_explain  CC=9  out:11
+    _call_system_uri  CC=8  out:9
+    _is_dashboard_view_uri  CC=11  out:5
+    _is_system_uri  CC=4  out:3
+    _misrouted_view_hint  CC=4  out:3
+    _operation_from_uri  CC=10  out:2
+    _registry_path_from_explain  CC=6  out:7
+    _uri_path_parts  CC=4  out:4
+    call_uri  CC=12  out:20
   packages.urish.urish.backends.dashboard  [1 funcs]
     create_dashboard  CC=12  out:37
   packages.urish.urish.backends.doctor  [2 funcs]
@@ -357,22 +291,27 @@ MODULES:
     explain_target  CC=2  out:1
   packages.urish.urish.backends.logs  [1 funcs]
     read_log_uri  CC=2  out:4
-  packages.urish.urish.backends.proof  [13 funcs]
+  packages.urish.urish.backends.proof  [19 funcs]
     _actions  CC=5  out:4
-    _build_proof_checks  CC=20  out:12
+    _build_proof_checks  CC=3  out:9
     _call_proof_context  CC=3  out:6
     _check  CC=1  out:1
-    _collect_proof_context  CC=6  out:9
+    _collect_proof_context  CC=8  out:9
     _dashboard_view_ok  CC=4  out:4
     _evaluate_chat_check  CC=3  out:4
     _has_action  CC=5  out:4
-    _system_body  CC=2  out:2
-    _target_status  CC=3  out:5
+    _materialize_checks  CC=2  out:1
+    _optional_action_specs  CC=5  out:0
   packages.urish.urish.backends.repair  [4 funcs]
     _wrap  CC=4  out:2
     repair_apply  CC=1  out:2
     repair_diagnose  CC=1  out:2
     repair_learn  CC=3  out:7
+  packages.urish.urish.backends.run  [4 funcs]
+    _repo_root  CC=1  out:1
+    _run_workflow_uri  CC=4  out:13
+    _touri_registry_root  CC=1  out:3
+    run_target  CC=9  out:14
   packages.urish.urish.backends.stream  [6 funcs]
     _error  CC=1  out:0
     _runtime_event  CC=3  out:4
@@ -402,8 +341,6 @@ MODULES:
     context_list_cmd  CC=2  out:3
     context_show_cmd  CC=2  out:5
     doctor_cmd  CC=2  out:6
-  packages.urish.urish.commands.agent_commands  [1 funcs]
-    register_agent_commands  CC=1  out:48
   packages.urish.urish.commands.call_commands  [1 funcs]
     register_call_commands  CC=1  out:56
   packages.urish.urish.commands.evolution_commands  [2 funcs]
@@ -438,14 +375,21 @@ MODULES:
     exit_code_for_result  CC=8  out:6
   packages.urish.urish.intent  [7 funcs]
     _detect_agent_action  CC=10  out:11
-    _detect_kind  CC=12  out:12
+    _detect_kind  CC=5  out:4
     agent_uri  CC=1  out:1
-    detect_intent  CC=13  out:12
+    detect_intent  CC=17  out:15
     extract_agent_id  CC=7  out:6
-    is_screenshot_schedule_prompt  CC=1  out:3
+    is_screenshot_schedule_prompt  CC=1  out:2
     split_nl_commands  CC=7  out:5
-  packages.urish.urish.policy  [2 funcs]
-    classify_uri  CC=5  out:10
+  packages.urish.urish.policy  [9 funcs]
+    _classify_apply  CC=3  out:1
+    _classify_desktop_operator  CC=3  out:1
+    _classify_hypervisor_mutation  CC=3  out:1
+    _classify_physical_operator  CC=3  out:1
+    _classify_read  CC=6  out:2
+    _classify_repair  CC=5  out:2
+    _path_has_any  CC=2  out:1
+    classify_uri  CC=5  out:11
     evaluate_policy  CC=14  out:1
   packages.urish.urish.render  [8 funcs]
     _render_envelope_text  CC=6  out:15
@@ -456,7 +400,7 @@ MODULES:
     _unwrap_system_body  CC=8  out:8
     _view_model  CC=2  out:2
     render_result  CC=10  out:10
-  packages.urish.urish.repl  [25 funcs]
+  packages.urish.urish.repl  [23 funcs]
     _append_call_mutation_flags  CC=8  out:4
     _append_command_flags  CC=5  out:3
     _append_flag_once  CC=2  out:2
@@ -464,12 +408,20 @@ MODULES:
     _append_policy_flag  CC=3  out:2
     _append_run_mutation_flags  CC=6  out:2
     _apply_repl_defaults  CC=4  out:6
-    _argv_for_ask  CC=4  out:3
     _argv_for_uri_line  CC=6  out:3
     _first_token  CC=3  out:1
-  packages.urish.urish.scenario_registry  [2 funcs]
-    next_steps_for_intent  CC=5  out:10
-    try_scenario_intent  CC=14  out:26
+    _handle_context_use  CC=4  out:8
+  packages.urish.urish.scenario_registry  [28 funcs]
+    _agent_id  CC=3  out:2
+    _context_for  CC=5  out:2
+    _infer_subtype  CC=6  out:8
+    _iter_yaml_files  CC=6  out:7
+    _load_exported_scenarios  CC=6  out:6
+    _load_markpact_registries  CC=5  out:7
+    _markpact_domain_readmes  CC=4  out:4
+    _matches_any  CC=2  out:3
+    _merge_markpact_scenarios  CC=6  out:9
+    _merge_scenarios  CC=8  out:8
   packages.urish.urish.select  [2 funcs]
     select_from_envelope  CC=3  out:5
     select_path  CC=7  out:7
@@ -499,9 +451,6 @@ MODULES:
   uri2ops.operation_registry.models  [2 funcs]
     list  CC=1  out:2
     from_mapping  CC=1  out:15
-  uri2ops.operation_registry.validator  [2 funcs]
-    validate_operation_registry  CC=14  out:13
-    validate_registry_schema  CC=2  out:7
   uri2ops.server.a2a_wrapper  [1 funcs]
     build_agent_card  CC=3  out:7
   uri2ops.server.mcp_wrapper  [1 funcs]
@@ -512,57 +461,57 @@ MODULES:
     registry  CC=1  out:1
     registry_export  CC=1  out:2
     run_task  CC=1  out:3
-  www.office-cards-i18n  [1 funcs]
-    open  CC=1  out:0
+  www.landing  [1 funcs]
+    quote  CC=1  out:1
 
 EDGES:
+  packages.urish.urish.scenario_registry._registry_paths → packages.urish.urish.scenario_registry._repo_root
+  packages.urish.urish.scenario_registry._load_markpact_registries → packages.urish.urish.scenario_registry._markpact_domain_readmes
+  packages.urish.urish.scenario_registry._load_markpact_registries → packages.uri2pact.uri2pact.scenarios.load_markpact_scenario_registry_dicts
+  packages.urish.urish.scenario_registry._load_exported_scenarios → packages.uri2pact.uri2pact.scenarios.load_markpact_scenario_dicts
+  packages.urish.urish.scenario_registry._merge_scenarios → uri2ops.operation_registry.models.OperationRegistry.list
+  packages.urish.urish.scenario_registry._merge_markpact_scenarios → packages.urish.urish.scenario_registry._load_exported_scenarios
+  packages.urish.urish.scenario_registry._merge_markpact_scenarios → uri2ops.operation_registry.models.OperationRegistry.list
+  packages.urish.urish.scenario_registry._merge_markpact_scenarios → packages.urish.urish.scenario_registry._merge_scenarios
+  packages.urish.urish.scenario_registry._iter_yaml_files → packages.urish.urish.scenario_registry._repo_root
+  packages.urish.urish.scenario_registry.load_scenario_registries → packages.urish.urish.scenario_registry._repo_root
+  packages.urish.urish.scenario_registry.load_scenario_registries → packages.urish.urish.scenario_registry._load_markpact_registries
+  packages.urish.urish.scenario_registry.load_scenario_registries → packages.urish.urish.scenario_registry._registry_paths
+  packages.urish.urish.scenario_registry.load_scenario_registries → packages.urish.urish.scenario_registry._registry_key
+  packages.urish.urish.scenario_registry.load_scenario_registries → packages.urish.urish.scenario_registry._iter_yaml_files
+  packages.urish.urish.scenario_registry._render_list → packages.urish.urish.scenario_registry._render_template
+  packages.urish.urish.scenario_registry._context_for → packages.urish.urish.scenario_registry._agent_id
+  packages.urish.urish.scenario_registry.scenario_registries_for_kind → packages.urish.urish.scenario_registry.load_scenario_registries
+  packages.urish.urish.scenario_registry.scenario_by_id → packages.urish.urish.scenario_registry.load_scenario_registries
+  packages.urish.urish.scenario_registry.scenario_by_id → packages.urish.urish.scenario_registry._with_registry_meta
+  packages.urish.urish.scenario_registry.scenarios_for_kind → packages.urish.urish.scenario_registry.scenario_registries_for_kind
+  packages.urish.urish.scenario_registry.scenarios_for_kind → packages.urish.urish.scenario_registry._with_registry_meta
+  packages.urish.urish.scenario_registry._score_scenario_against → packages.urish.urish.scenario_registry._normalize_prompt
+  packages.urish.urish.scenario_registry.match_scenario → packages.urish.urish.scenario_registry._normalize_prompt
+  packages.urish.urish.scenario_registry.match_scenario → packages.urish.urish.scenario_registry.load_scenario_registries
+  packages.urish.urish.scenario_registry.match_scenario → packages.urish.urish.scenario_registry._with_registry_meta
+  packages.urish.urish.scenario_registry.match_scenario → packages.urish.urish.scenario_registry._score_scenario_against
+  packages.urish.urish.scenario_registry._infer_subtype → packages.urish.urish.scenario_registry._normalize_prompt
+  packages.urish.urish.scenario_registry._infer_subtype → packages.urish.urish.scenario_registry._matches_any
+  packages.urish.urish.scenario_registry._planned_uris_for → packages.urish.urish.scenario_registry._render_list
+  packages.urish.urish.scenario_registry._planned_uris_for → uri2ops.operation_registry.models.OperationRegistry.list
+  packages.urish.urish.scenario_registry.next_steps_for_subtype → packages.urish.urish.scenario_registry.scenario_registries_for_kind
+  packages.urish.urish.scenario_registry.next_steps_for_subtype → packages.urish.urish.scenario_registry._context_for
+  packages.urish.urish.scenario_registry.next_steps_for_subtype → packages.urish.urish.scenario_registry._render_list
+  packages.urish.urish.scenario_registry.next_steps_for_subtype → uri2ops.operation_registry.models.OperationRegistry.list
+  packages.urish.urish.scenario_registry.next_steps_for_intent → packages.urish.urish.scenario_registry.next_steps_for_subtype
+  packages.urish.urish.scenario_registry.scenario_to_intent → packages.urish.urish.scenario_registry._agent_id
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry.match_scenario
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry._normalize_prompt
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry.load_scenario_registries
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry.scenario_to_intent
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry._infer_subtype
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry._context_for
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry._planned_uris_for
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry.next_steps_for_subtype
+  packages.urish.urish.scenario_registry.try_scenario_intent → packages.urish.urish.scenario_registry._matches_any
   packages.urish.urish.render.render_result → packages.urish.urish.render._render_table
   packages.urish.urish.render.render_result → packages.urish.urish.render._render_text
   packages.urish.urish.render._unwrap_system_body → packages.uri3.uri3.results.envelope.unwrap_data
   packages.urish.urish.render._render_view_fallback → packages.urish.urish.render._view_model
   packages.urish.urish.render._render_system_summary → packages.hypervisor-dashboard-agent.hypervisor_dashboard_agent.chat_format.format_uri_result_summary
-  packages.urish.urish.render._render_system_summary → packages.urish.urish.render._render_view_fallback
-  packages.urish.urish.render._render_text → packages.urish.urish.render._unwrap_system_body
-  packages.urish.urish.render._render_text → packages.urish.urish.render._render_envelope_text
-  packages.urish.urish.render._render_text → packages.urish.urish.render._render_system_summary
-  packages.urish.urish.render._render_table → packages.urish.urish.render._render_text
-  packages.urish.urish.cli._policy_options → packages.urish.urish.context.load_context
-  packages.urish.urish.cli._context_policy → packages.urish.urish.context.load_context
-  packages.urish.urish.cli._emit → packages.urish.urish.render.render_result
-  packages.urish.urish.cli._finish → packages.urish.urish.exit_codes.exit_code_for_result
-  packages.urish.urish.cli._print_ask_result → packages.urish.urish.ecosystem_workflow.build_planned_uris_display
-  packages.urish.urish.cli.ask_cmd → packages.urish.urish.backends.ask.ask_prompt
-  packages.urish.urish.cli.ask_cmd → packages.urish.urish.cli._finish
-  packages.urish.urish.cli.nl_cmd → packages.urish.urish.cli.ask_cmd
-  packages.urish.urish.cli.select_cmd → packages.urish.urish.select.select_from_envelope
-  packages.urish.urish.cli.shell_cmd → packages.urish.urish.repl.run_repl
-  packages.urish.urish.cli.doctor_cmd → packages.urish.urish.backends.doctor.doctor_all
-  packages.urish.urish.cli.doctor_cmd → packages.urish.urish.cli._emit
-  packages.urish.urish.cli.doctor_cmd → packages.urish.urish.cli._finish
-  packages.urish.urish.cli.shortcuts_cmd → packages.urish.urish.cli._emit
-  packages.urish.urish.cli.shortcuts_cmd → packages.urish.urish.shortcuts.load_shortcut_specs
-  packages.urish.urish.cli.proof_cmd → packages.urish.urish.backends.proof.proof_uri
-  packages.urish.urish.cli.proof_cmd → packages.urish.urish.cli._finish
-  packages.urish.urish.cli.proof_cmd → packages.urish.urish.backends.proof.render_proof_text
-  packages.urish.urish.cli.context_list_cmd → packages.urish.urish.context.list_contexts
-  packages.urish.urish.cli.context_show_cmd → packages.urish.urish.context.load_context
-  packages.urish.urish.cli._normalize_argv → packages.urish.urish.shortcuts.load_shortcuts
-  packages.urish.urish.cli.execute_cli_argv → packages.urish.urish.cli._normalize_argv
-  packages.urish.urish.cli.execute_cli_argv → uri2ops.operation_registry.models.OperationRegistry.list
-  packages.urish.urish.cli.main → uri2ops.operation_registry.models.OperationRegistry.list
-  packages.urish.urish.cli.main → packages.urish.urish.cli.execute_cli_argv
-  packages.urish.urish.cli.main → packages.urish.urish.repl.run_repl
-  packages.urish.urish.ticket_workflow.resolve_ticket_path → packages.uri3.uri3.config.repo_root.find_repo_root
-  packages.urish.urish.ticket_workflow.detect_intent_from_ticket → packages.urish.urish.ticket_workflow._ticket_prompt
-  packages.urish.urish.ticket_workflow.detect_intent_from_ticket → packages.urigen.urigen.models.wants_dashboard
-  packages.urish.urish.ticket_workflow.detect_intent_from_ticket → packages.urish.urish.intent.detect_intent
-  packages.urish.urish.ticket_workflow.detect_intent_from_ticket → packages.urish.urish.ticket_workflow._evolution_intent
-  packages.urish.urish.ticket_workflow.detect_intent_from_ticket → packages.urish.urish.ticket_workflow._dashboard_intent
-  packages.urish.urish.ticket_workflow.build_ticket_workflow → packages.urish.urish.ticket_workflow.detect_intent_from_ticket
-  packages.urish.urish.ticket_workflow.build_ticket_workflow → packages.urish.urish.ecosystem_workflow.build_ecosystem_next_steps
-  packages.urish.urish.intent._detect_agent_action → packages.urish.urish.intent.extract_agent_id
-  packages.urish.urish.intent.detect_intent → packages.urish.urish.intent._detect_kind
-  packages.urish.urish.intent.detect_intent → packages.urish.urish.scenario_registry.try_scenario_intent
-  packages.urish.urish.intent.detect_intent → packages.urish.urish.intent.extract_agent_id
-  packages.urish.urish.intent.detect_intent → packages.urigen.urigen.models.wants_dashboard
-  packages.urish.urish.intent.detect_intent → packages.urish.urish.intent._detect_agent_action

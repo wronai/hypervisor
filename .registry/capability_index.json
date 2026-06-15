@@ -1,6 +1,6 @@
 {
   "registry": "/home/tom/github/wronai/hypervisor/examples/20_touri_capabilities",
-  "count": 14,
+  "count": 17,
   "capabilities": [
     {
       "id": "workflow.bank.batch_transfer",
@@ -153,6 +153,39 @@
       "kind": "command",
       "backend_type": "python",
       "backend_target": "python://touri_examples.weather:handler",
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.website_screenshot_schedule",
+      "scheme": "workflow",
+      "uri_template": "workflow://graph/website-screenshot-schedule",
+      "operation": "run",
+      "kind": "command",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "workflow.website_screenshot_schedule.dry_run",
+      "scheme": "workflow",
+      "uri_template": "workflow://graph/website-screenshot-schedule/dry-run",
+      "operation": "plan",
+      "kind": "query",
+      "backend_type": "uri_graph",
+      "backend_target": null,
+      "has_data_quality": false,
+      "fallbacks": 0
+    },
+    {
+      "id": "cron.www.landing_monitor",
+      "scheme": "cron",
+      "uri_template": "cron://www/monitor/landing",
+      "operation": "run",
+      "kind": "command",
+      "backend_type": "shell",
+      "backend_target": null,
       "has_data_quality": false,
       "fallbacks": 0
     }

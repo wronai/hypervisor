@@ -58,3 +58,70 @@ def test_call_health_agent_system_uri():
     )
     assert result.get("result_type") in {"health", "system_uri"}
     assert "agent_id" in (result.get("data") or {})
+
+
+def test_call_cron_uri_uses_touri_backend(monkeypatch):
+    from urish.backends.call import call_uri
+
+    captured: dict[str, object] = {}
+
+    class Result:
+        ok = True
+
+        def to_dict(self):
+            return {
+                "ok": True,
+                "result_type": "shell",
+                "meta": {"transport": "shell"},
+            }
+
+    def fake_run_backend(backend, payload, context):
+        captured["backend"] = backend
+        captured["payload"] = payload
+        captured["context"] = context
+        return Result()
+
+    monkeypatch.setattr("urish.backends.call.run_backend", fake_run_backend)
+
+    result = call_uri("cron://www/monitor/landing", {})
+
+    assert result["ok"] is True
+    assert captured["backend"]["type"] == "shell"
+    assert "monitor_landing.py" in captured["backend"]["command"]
+    assert captured["context"]["uri"] == "cron://www/monitor/landing"
+
+
+def test_call_device_uri_uses_uri2ops_backend(monkeypatch):
+    from urish.backends.call import call_uri
+
+    captured: dict[str, object] = {}
+
+    class Result:
+        ok = True
+
+        def to_dict(self):
+            return {
+                "ok": True,
+                "result_type": "device.status",
+                "meta": {"transport": "uri2ops"},
+            }
+
+    def fake_run_backend(backend, payload, context):
+        captured["backend"] = backend
+        captured["payload"] = payload
+        captured["context"] = context
+        return Result()
+
+    monkeypatch.setattr("urish.backends.call.run_backend", fake_run_backend)
+
+    result = call_uri("device://device/sensor-1/status", {})
+
+    assert result["ok"] is True
+    assert captured["backend"] == {
+        "type": "uri2ops",
+        "uri": "device://device/sensor-1/status",
+        "scheme": "device",
+        "operation": "status",
+    }
+    assert captured["context"]["scheme"] == "device"
+    assert captured["context"]["operation"] == "status"

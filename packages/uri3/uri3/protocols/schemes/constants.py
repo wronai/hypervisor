@@ -29,5 +29,7 @@ SUPPORTED_SCHEMES = {
     "health",
     "runtime",
     "readiness",
+    "schema",
+    "contract",
     "incident",
 }

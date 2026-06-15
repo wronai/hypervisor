@@ -14,6 +14,35 @@ def _plan_id(agent_id: str) -> str:
     return f"rp_{safe_id}_{stamp}"
 
 
+def _ordered_unique(items: list[str]) -> list[str]:
+    return list(dict.fromkeys(item for item in items if item))
+
+
+def _inspection_codes(inspection: dict[str, Any]) -> set[str]:
+    codes: set[str] = set()
+    readiness = inspection.get("agent_readiness") or {}
+    codes.update(str(item) for item in readiness.get("incident_codes") or [] if item)
+    for group in ("incidents", "warnings"):
+        for item in inspection.get(group) or []:
+            if isinstance(item, dict) and item.get("code"):
+                codes.add(str(item["code"]))
+    return codes
+
+
+def _prioritized_playbooks(inspection: dict[str, Any], playbooks: list[str]) -> list[str]:
+    codes = _inspection_codes(inspection)
+    priority: list[str] = []
+    if codes & {"PORT_OCCUPIED", "FOREIGN_SERVICE_ON_PORT"}:
+        priority.extend(["rebind_port", "sync_health_uri", "restart_agent"])
+    elif codes & {"RUNTIME_STATE_STALE", "PROCESS_NOT_ALIVE"}:
+        priority.extend(["clear_stale_runtime", "restart_agent", "sync_health_uri"])
+    elif codes & {"COMMAND_HEALTH_MISMATCH", "HEALTH_URI_DRIFT"}:
+        priority.extend(["sync_health_uri", "restart_agent"])
+    elif codes & {"HEALTH_FAILED", "PROCESS_RUNNING_BUT_UNHEALTHY", "CARD_FAILED"}:
+        priority.extend(["check_process", "read_logs", "restart_agent"])
+    return _ordered_unique(priority + playbooks)
+
+
 def build_repair_plan_from_diagnosis(
     diagnosis: dict[str, Any],
     *,
@@ -40,6 +69,7 @@ def build_repair_plan_from_diagnosis(
         }
         playbooks = [action_to_playbook.get(action, "restart_agent")]
 
+    playbooks = _prioritized_playbooks(inspection, playbooks)
     playbook = playbooks[0]
     plan_id = _plan_id(agent_id)
     return {

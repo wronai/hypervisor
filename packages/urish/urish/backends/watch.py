@@ -76,4 +76,17 @@ def render_event(event: dict[str, Any], *, json_out: bool = False) -> str:
         return json.dumps(event, indent=2, ensure_ascii=False)
     ok = event.get("ok")
     prefix = "OK" if ok is not False else "FAIL"
-    return f"{prefix} {event.get('event_type', 'event')} {event.get('uri', '')}"
+    et = event.get("event_type", "event")
+    uri = event.get("uri", "")
+    if et == "log.snapshot":
+        data = event.get("data") or {}
+        matched = data.get("matched", data.get("summary", {}).get("matched", "?"))
+        hint = ""
+        entries = data.get("entries") or []
+        if entries:
+            # show a tiny preview of the last line content for "treść logów" visibility
+            last = entries[-1] if isinstance(entries[-1], dict) else {}
+            msg = str(last.get("message") or last.get("raw") or "")[:80].replace("\n", " ")
+            hint = f" last: {msg}..." if msg else ""
+        return f"{prefix} {et} {uri} (matched={matched}){hint}"
+    return f"{prefix} {et} {uri}"

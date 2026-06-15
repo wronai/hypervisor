@@ -15,14 +15,24 @@ def _local_endpoint(path: str, *, port: int) -> str:
 
 
 def _local_health_uri(deployment: AgentDeployment, *, port: int, overridden: bool) -> str:
-    if deployment.health_uri and not overridden:
-        return deployment.health_uri
+    candidates = (
+        deployment.declared.health_uri if deployment.declared else None,
+        deployment.health_uri,
+    )
+    for health_uri in candidates:
+        if isinstance(health_uri, str) and health_uri.startswith("http") and not overridden:
+            return health_uri
     return _local_endpoint("/health", port=port)
 
 
 def _local_card_uri(deployment: AgentDeployment, *, port: int, overridden: bool) -> str:
-    if deployment.card_uri and not overridden:
-        return deployment.card_uri
+    candidates = (
+        deployment.declared.card_uri if deployment.declared else None,
+        deployment.card_uri,
+    )
+    for card_uri in candidates:
+        if isinstance(card_uri, str) and card_uri.startswith("http") and not overridden:
+            return card_uri
     return _local_endpoint("/.well-known/agent-card.json", port=port)
 
 
@@ -38,9 +48,9 @@ def local_target_to_relative_path(target_uri: str) -> Path:
 def local_target_to_module(target_uri: str) -> str:
     relative = local_target_to_relative_path(target_uri)
     parts = relative.parts
-    if len(parts) >= 3 and parts[0] == "agents" and parts[1] == "generated":
+    if len(parts) >= 3 and parts[0] == "agents" and parts[1] in {"generated", "custom"}:
         package = parts[2]
-        return f"agents.generated.{package}.main:app"
+        return f"agents.{parts[1]}.{package}.main:app"
     if len(parts) >= 2 and parts[0] == "packages":
         package_dir = parts[1]
         module_name = package_dir.replace("-", "_")

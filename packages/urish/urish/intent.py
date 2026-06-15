@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 from typing import Any
 
 from urigen.models import wants_dashboard
+
+from urish.scenario_registry import try_scenario_intent
 
 DASHBOARD_PLANNED_URIS = [
     "agent://hypervisor-dashboard",
@@ -77,9 +80,53 @@ def agent_uri(agent_id: str, action: str) -> str:
     return routes.get(action, routes["process_view"])
 
 
+def split_nl_commands(prompt: str) -> list[str]:
+    """Split a pasted multi-line prompt into independent NL commands."""
+    text = prompt.strip()
+    if not text:
+        return []
+    lines = [line.strip() for line in text.splitlines()]
+    lines = [line for line in lines if line and not line.startswith("#")]
+    if len(lines) <= 1:
+        return [text]
+    return lines
+
+
+def is_screenshot_schedule_prompt(prompt: str) -> bool:
+    return bool(
+        re.search(
+            r"\b("
+            r"rzut(?:y|ów|y\s+ekran)|"
+            r"screenshot\w*|"
+            r"zrzut\s+ekran|"
+            r"monitor(?:uj|owanie)?\s+stron|"
+            r"harmonogram\s+screenshot"
+            r")\b",
+            prompt,
+            re.I,
+        )
+    )
+
+
 def detect_intent(prompt: str) -> dict[str, Any]:
     text = prompt.strip()
     kind = _detect_kind(text)
+    scenario = None if kind in {"agent", "agent_factory"} else try_scenario_intent(text, kind=kind)
+    if scenario:
+        return scenario
+    if kind == "agent_factory":
+        from urish.backends.agent_factory import infer_agent_name
+
+        agent_id = infer_agent_name(text)
+        return {
+            "kind": "agent_factory",
+            "subtype": "generate-agent",
+            "profile": None,
+            "agent_id": agent_id,
+            "deployment_id": f"{agent_id}.local",
+            "ecosystem_id": None,
+            "dashboard_port": None,
+        }
     if kind == "agent":
         action = _detect_agent_action(text) or "process_view"
         agent_id = extract_agent_id(text)
@@ -87,7 +134,11 @@ def detect_intent(prompt: str) -> dict[str, Any]:
             "kind": "agent",
             "subtype": action,
             "profile": None,
-            "agent_id": agent_id.split(".")[0] if agent_id and agent_id.endswith(".local") else agent_id,
+            "agent_id": (
+                agent_id.split(".")[0]
+                if agent_id and agent_id.endswith(".local")
+                else agent_id
+            ),
             "deployment_id": agent_id,
             "ecosystem_id": None,
             "dashboard_port": None,
@@ -121,30 +172,67 @@ def detect_intent(prompt: str) -> dict[str, Any]:
         }
     if kind == "workflow":
         return {"kind": "workflow", "subtype": None, "profile": None}
+    if kind == "weather":
+        from nl2uri.weather_forecast import is_weather_forecast_prompt, weather_forecast_uri
+
+        if is_weather_forecast_prompt(text):
+            return {
+                "kind": "weather",
+                "subtype": "forecast_html",
+                "profile": None,
+                "uri": weather_forecast_uri(text),
+            }
+        return {"kind": "weather", "subtype": "forecast", "profile": None}
     return {"kind": "domain", "subtype": None, "profile": None}
 
 
+# Declarative kind detection.
+# It reduces CC in detect_intent by turning long if-chain into pure predicates.
+# Order matters (first match wins, matching original logic).
+_KIND_DETECTORS: list[tuple[Callable[[str], bool], str]] = [
+    (lambda p: bool(re.search(r"\b(ecosystem|ekosystem)\b", p, re.I)), "ecosystem"),
+    (
+        lambda p: bool(
+            re.search(r"\b(stw[oó]rz|zbuduj|generuj)\b", p, re.I)
+            and re.search(r"\b(web\s*ui|webui|dashboard|chat\s+markdown)\b", p, re.I)
+            and re.search(r"\b(hypervisor\w*|system|api|proces\w*|process|agent\w*)\b", p, re.I)
+        ),
+        "ecosystem",
+    ),
+    (
+        lambda p: bool(
+            re.search(r"\b(stw[oó]rz|zbuduj|generuj)\b.*\b(agent|agenta)\b", p, re.I)
+        ),
+        "agent_factory",
+    ),
+    (
+        lambda p: bool(
+            re.search(r"\b(agent|agenta)\b", p, re.I)
+            and re.search(r"\b(stw[oó]rz|zbuduj|generuj)\b", p, re.I)
+        ),
+        "agent_factory",
+    ),
+    (lambda p: bool(_detect_agent_action(p)), "agent"),
+    (
+        is_screenshot_schedule_prompt,
+        "workflow",
+    ),
+    (lambda p: bool(try_scenario_intent(p)), "scenario"),  # special: returns the scenario's kind
+    (lambda p: bool(re.search(r"\b(pogod\w*|weather|forecast|prognoz\w*)\b", p, re.I)), "weather"),
+    (
+        lambda p: bool(
+            re.search(r"\b(flow|workflow|graf|health|chrome|localhost|napraw|repair)\b", p, re.I)
+        ),
+        "workflow",
+    ),
+]
+
 def _detect_kind(prompt: str) -> str:
-    if re.search(r"\b(ecosystem|ekosystem)\b", prompt, re.I):
-        return "ecosystem"
-    if re.search(r"\b(stw[oó]rz|zbuduj|generuj)\b", prompt, re.I) and re.search(
-        r"\b(web\s*ui|webui|dashboard|chat\s+markdown)\b", prompt, re.I
-    ) and re.search(r"\b(hypervisor|system|api|proces|process|agent)\b", prompt, re.I):
-        return "ecosystem"
-    if re.search(r"\b(stw[oó]rz|zbuduj|generuj)\b.*\b(agent|agenta)\b", prompt, re.I):
-        return "ecosystem"
-    if re.search(r"\b(agent|agenta)\b", prompt, re.I) and re.search(
-        r"\b(stw[oó]rz|zbuduj|generuj|healthcheck)\b", prompt, re.I
-    ):
-        return "ecosystem"
-    if _detect_agent_action(prompt):
-        return "agent"
-    if re.search(
-        r"\b(rzut(?:y|ów|y\s+ekran)|screenshot|zrzut\s+ekran|monitor(?:uj|owanie)?\s+stron)\b",
-        prompt,
-        re.I,
-    ):
-        return "workflow"
-    if re.search(r"\b(flow|workflow|graf|health|chrome|localhost|napraw|repair)\b", prompt, re.I):
-        return "workflow"
+    text = prompt.strip()
+    for predicate, kind in _KIND_DETECTORS:
+        if predicate(text):
+            if kind == "scenario":
+                scenario = try_scenario_intent(text)
+                return str(scenario["kind"]) if scenario else "domain"
+            return kind
     return "domain"

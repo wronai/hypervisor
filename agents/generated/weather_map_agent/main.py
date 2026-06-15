@@ -6,11 +6,14 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 
-from .routes import router
+try:
+    from .routes import router
+except ImportError:  # standalone rsync package on remote host
+    from routes import router
 
 app = FastAPI(
     title="weather-map-agent",
     version="0.1.0",
-    description="Generate forecast weather maps as HTML URL artifacts.",
+    description='Generate forecast weather maps as HTML URL artifacts.',
 )
 app.include_router(router)

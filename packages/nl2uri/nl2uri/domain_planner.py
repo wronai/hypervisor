@@ -3,8 +3,8 @@ from __future__ import annotations
 import os
 from typing import Any
 
+from nl2uri.domain_registry import resolve_plan
 from nl2uri.planner_llm import call_openrouter
-from nl2uri.planner_templates import deterministic_weather_plan, generic_plan, is_weather_prompt
 from nl2uri.planner_validation import normalize_llm_tree
 
 _normalize_llm_tree = normalize_llm_tree
@@ -20,12 +20,10 @@ def plan_from_prompt(prompt: str, use_llm: bool | None = None) -> dict[str, Any]
                 raise ValueError("LLM planner did not return a JSON object")
             return normalize_llm_tree(prompt, llm_tree)
         except Exception as exc:
-            plan = deterministic_weather_plan(prompt) if is_weather_prompt(prompt) else generic_plan(prompt)
+            plan = resolve_plan(prompt)
             plan["planner_warning"] = f"LLM planner failed, deterministic fallback used: {exc}"
             return plan
-    if is_weather_prompt(prompt):
-        return deterministic_weather_plan(prompt)
-    return generic_plan(prompt)
+    return resolve_plan(prompt)
 
 
 plan_domain_from_prompt = plan_from_prompt

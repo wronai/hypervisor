@@ -2,6 +2,7 @@ from hypervisor.deployment_registry.loader import default_registry_path, load_de
 from hypervisor.deployment_registry.models import AgentDeployment, DeploymentRegistry
 from hypervisor.deployment_registry.remote_runner import (
     apply_ssh_deploy_plan,
+    apply_ssh_run_plan,
     build_ssh_deploy_plan,
     build_ssh_run_plan,
     verify_remote_deployment,
@@ -38,6 +39,7 @@ __all__ = [
     "agent_logs_uri",
     "agent_status",
     "apply_ssh_deploy_plan",
+    "apply_ssh_run_plan",
     "build_run_plan",
     "build_ssh_deploy_plan",
     "build_ssh_run_plan",

@@ -72,6 +72,21 @@ Quick recipes. Prefer **`uri`** shortcuts where listed; full URIs work everywher
 | `uri weather-process` | process view for weather agent |
 | `uri dashboard-ui --approve` | open dashboard UI with payload from config |
 
+## Multi-agent monitoring
+
+| I want to… | Command / surface |
+|------------|-------------------|
+| List all deployments | `hypervisor deployments` or `GET /api/agents` |
+| Inspect one agent | `hypervisor inspect-agent invoices-agent.local` |
+| Run several agents | `hypervisor run-agent … --detach` per deployment (unique ports) |
+| Watch health | `uri watch health://agent/weather-map-agent.local --count 5` |
+| Fleet events (WWW) | `curl http://localhost:8788/api/events` · chat sidebar SSE |
+| Hypervisor logs | `uri3 logs 'log://hypervisor?level=ERROR&limit=50'` |
+| Bounded auto-repair | `hypervisor supervise weather-map-agent.local --repair auto` |
+| Plan run + auto-repair (chat) | `POST /api/plan/run` with `auto_repair: true` |
+
+Full reference: [`AGENTS_AND_MONITORING.md`](./AGENTS_AND_MONITORING.md) · tutorial [`TUTORIAL_THREE_AGENTS.md`](./TUTORIAL_THREE_AGENTS.md) · schema checker [`TUTORIAL_AGENT_SCHEMA_URI.md`](./TUTORIAL_AGENT_SCHEMA_URI.md).
+
 ## Policy reminders
 
 ```bash
@@ -79,3 +94,42 @@ uri call repair://agent/demo/apply              # blocked without --approve
 uri call repair://agent/demo/apply --dry-run    # show plan only
 uri call repair://agent/demo/apply --approve    # execute
 ```
+
+## Chat and office (WWW / CLI)
+
+| I want to… | Command / action |
+|------------|------------------|
+| Plan from NL | `uri ask "…"` or POST `/api/ask` |
+| Batch plans (one line each) | Paste multiline in chat → `Detected N commands` |
+| Office · supplier CSV | `uri ask "Wejdź na stronę dostawcy, pobierz raport CSV…"` → `uri run workflow://office/supplier-report/monthly --dry-run` |
+| Office · ZUS portal | `uri run workflow://portal/zus-form/dry-run` |
+| Office · bank batch | `uri run workflow://bank/batch-transfer/dry-run` |
+| Office · invoices | `uri run workflow://invoices/batch/dry-run` |
+| Run example bundle | `bash examples/33_office_workflows/run.sh` |
+| Full office day mock | `bash examples/31_office_day/run.sh` |
+
+Chat **does not** auto-execute — run `uri run` or click **Run URI** after the plan.
+
+See [`CHAT_AND_WORKFLOWS.md`](./CHAT_AND_WORKFLOWS.md).
+
+## Compact URI flow (author YAML)
+
+| I want to… | Command |
+|------------|---------|
+| Validate compact flow | `uri2flow validate examples/15_compact_uri_flow/weather.uri.flow.yaml` |
+| Expand to graph | `uri2flow expand … --out output/weather.uri.graph.yaml` |
+| Dry-run workflow | `uri3 run-workflow output/weather.uri.graph.yaml --dry-run --browser mock` |
+| Execute mock | `uri3 run-workflow output/weather.uri.graph.yaml --approve --browser mock` |
+| One-shot demo | `bash examples/15_compact_uri_flow/run.sh` |
+
+`uri2flow` compiles only; execution is `uri3`. Different path from chat NL → `workflow://graph/…`.
+
+## Port drift and registry sync
+
+| I want to… | Command |
+|------------|---------|
+| Inspect readiness | `hypervisor inspect-agent invoices-agent.local` |
+| Sync declared health URI to effective port | `hypervisor repair apply invoices-agent.local --playbook sync_health_uri` |
+| Start with auto-rebind | `hypervisor run-agent … --detach --wait-healthy --supervise-repair auto` |
+
+After port rebound on start, registry is updated automatically when the agent stays healthy.

@@ -77,7 +77,16 @@ def test_control_docker_up_recovers_from_name_conflict(monkeypatch: pytest.Monke
 
     def fake_run(cmd, *, dry_run=False):
         calls.append(cmd)
-        if cmd[0:3] == ["docker", "compose", "-f"]:
+        if cmd[0:3] == ["docker", "compose", "-f"] and "up" in cmd:
+            if cmd[-1] == "-d" and len(calls) > 1:
+                return {
+                    "command": cmd,
+                    "command_string": " ".join(cmd),
+                    "returncode": 0,
+                    "stdout": "",
+                    "stderr": "",
+                    "ok": True,
+                }
             return {
                 "command": cmd,
                 "command_string": " ".join(cmd),
@@ -100,5 +109,6 @@ def test_control_docker_up_recovers_from_name_conflict(monkeypatch: pytest.Monke
     monkeypatch.setattr("uri3.docker.actions.compose.run_command", fake_run)
     result = control_docker("docker://stack/ssh-testenv?action=up&build=1")
     assert result["ok"] is True
-    assert result["recovered"] == "start"
-    assert calls[-1] == ["docker", "start", "hypervisor-ssh-agent-host"]
+    assert result["recovered"] == "compose_up"
+    assert calls[-1][0:3] == ["docker", "compose", "-f"]
+    assert "-d" in calls[-1]

@@ -1,4 +1,32 @@
 deployments:
+- id: codex-nl-plan-agent.local
+  agent_ref: agent://codex-nl-plan-agent
+  target_uri: local://agents/generated/codex_nl_plan_agent
+  status: generated
+  declared:
+    target_uri: local://agents/generated/codex_nl_plan_agent
+    preferred_port: 8132
+    health_uri: http://localhost:8132/health
+    card_uri: http://localhost:8132/.well-known/agent-card.json
+  card_uri: http://localhost:8132/.well-known/agent-card.json
+  health_uri: http://localhost:8132/health
+  metadata:
+    source: nl_agent_factory
+    contract: contracts/agents/codex_nl_plan_agent.yaml
+- id: codex-nl-smoke-agent.local
+  agent_ref: agent://codex-nl-smoke-agent
+  target_uri: local://agents/generated/codex_nl_smoke_agent
+  status: generated
+  declared:
+    target_uri: local://agents/generated/codex_nl_smoke_agent
+    preferred_port: 8130
+    health_uri: http://localhost:8130/health
+    card_uri: http://localhost:8130/.well-known/agent-card.json
+  card_uri: http://localhost:8130/.well-known/agent-card.json
+  health_uri: http://localhost:8130/health
+  metadata:
+    source: nl_agent_factory
+    contract: contracts/agents/codex_nl_smoke_agent.yaml
 - id: desktop-operator.local
   agent_ref: agent://desktop-operator
   target_uri: local://packages/uri2ops
@@ -39,6 +67,21 @@ deployments:
     domain_pack: domains/physical_ops/domain.yaml
     operator_registry: domains/physical_ops/operator_registry.yaml
     expected_service: uri2ops
+- id: gnome-programmer-agent.local
+  agent_ref: agent://gnome-programmer-agent
+  target_uri: local://agents/custom/gnome_programmer_agent
+  status: generated
+  declared:
+    target_uri: local://agents/custom/gnome_programmer_agent
+    preferred_port: 8136
+    health_uri: http://localhost:8136/health
+    card_uri: http://localhost:8136/.well-known/agent-card.json
+  card_uri: http://localhost:8136/.well-known/agent-card.json
+  health_uri: http://localhost:8136/health
+  metadata:
+    source: custom_agent
+    role: gnome_programmer
+    contract: contracts/agents/gnome_programmer_agent.yaml
 - id: hypervisor-dashboard.local
   agent_ref: agent://hypervisor-dashboard
   target_uri: local://packages/hypervisor-dashboard-agent
@@ -53,6 +96,7 @@ deployments:
   metadata:
     source: system_agent
     role: observer_renderer_controller
+    contract: contracts/agents/hypervisor_dashboard_agent.yaml
 - id: invoices-agent.local
   agent_ref: agent://invoices-agent
   target_uri: local://agents/generated/invoices_agent
@@ -67,6 +111,50 @@ deployments:
   metadata:
     source: contract
     contract: contracts/agents/invoices_agent.yaml
+- id: remote-deploy-agent.local
+  agent_ref: agent://remote-deploy-agent
+  target_uri: local://agents/custom/remote_deploy_agent
+  status: generated
+  declared:
+    target_uri: local://agents/custom/remote_deploy_agent
+    preferred_port: 8135
+    health_uri: http://localhost:8135/health
+    card_uri: http://localhost:8135/.well-known/agent-card.json
+  card_uri: http://localhost:8135/.well-known/agent-card.json
+  health_uri: http://localhost:8135/health
+  metadata:
+    source: custom_agent
+    role: remote_deploy_orchestrator
+    contract: contracts/agents/remote_deploy_agent.yaml
+- id: schema-collab-agent.local
+  agent_ref: agent://schema-collab-agent
+  target_uri: local://agents/generated/schema_collab_agent
+  status: generated
+  declared:
+    target_uri: local://agents/generated/schema_collab_agent
+    preferred_port: 8131
+    health_uri: http://localhost:8131/health
+    card_uri: http://localhost:8131/.well-known/agent-card.json
+  card_uri: http://localhost:8131/.well-known/agent-card.json
+  health_uri: http://localhost:8131/health
+  metadata:
+    source: nl_agent_factory
+    contract: contracts/agents/schema_collab_agent.yaml
+- id: screenshot-analysis-agent.local
+  agent_ref: agent://screenshot-analysis-agent
+  target_uri: local://agents/custom/screenshot_analysis_agent
+  status: generated
+  declared:
+    target_uri: local://agents/custom/screenshot_analysis_agent
+    preferred_port: 8134
+    health_uri: http://localhost:8134/health
+    card_uri: http://localhost:8134/.well-known/agent-card.json
+  card_uri: http://localhost:8134/.well-known/agent-card.json
+  health_uri: http://localhost:8134/health
+  metadata:
+    source: custom_agent
+    role: screenshot_analyzer
+    contract: contracts/agents/screenshot_analysis_agent.yaml
 - id: user-agent.local
   agent_ref: agent://user-agent
   target_uri: local://agents/generated/user_agent
@@ -98,14 +186,15 @@ deployments:
   status: generated
   declared:
     target_uri: local://agents/generated/weather_map_agent
-    preferred_port: 8101
-    health_uri: http://localhost:8101/health
-    card_uri: http://localhost:8101/.well-known/agent-card.json
-  card_uri: http://localhost:8101/.well-known/agent-card.json
-  health_uri: http://localhost:8101/health
+    preferred_port: 8105
+    health_uri: http://localhost:8105/health
+    card_uri: http://localhost:8105/.well-known/agent-card.json
+  card_uri: http://localhost:8105/.well-known/agent-card.json
+  health_uri: http://localhost:8105/health
   metadata:
     source: uri_tree
     domain_id: weather_map
+    contract: contracts/agents/weather_map_agent.yaml
 - id: weather-map-agent.local-dev
   agent_ref: agent://weather-map-agent
   target_uri: local://agents/generated/weather_map_agent
@@ -125,6 +214,6 @@ deployments:
   status: planned
   declared:
     target_uri: ssh://deploy@localhost:2222/opt/agents/weather-map-agent
-    preferred_port: 8101
-    health_uri: http://localhost:8101/health
-  health_uri: http://localhost:8101/health
+    preferred_port: 8140
+    health_uri: http://localhost:8140/health
+  health_uri: http://localhost:8140/health

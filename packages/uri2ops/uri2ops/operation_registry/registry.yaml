@@ -31,6 +31,14 @@ schemes:
         produces_artifact: true
         adapters: [mock, playwright]
 
+      capture_page:
+        kind: query
+        handler: python://uri2ops.operator.adapters.browser_router:capture_page
+        output_schema: operator.screen.v1.ScreenObservation
+        side_effects: false
+        produces_artifact: true
+        adapters: [mock, playwright]
+
       click:
         kind: command
         handler: python://uri2ops.operator.adapters.browser_router:click
@@ -54,22 +62,22 @@ schemes:
     operations:
       observe:
         kind: query
-        handler: python://uri2ops.operator.adapters.screen_mock:observe
+        handler: python://uri2ops.operator.adapters.screen_router:observe
         output_schema: operator.screen.v1.ScreenObservation
         side_effects: false
         produces_artifact: true
-        adapters: [mock]
+        adapters: [mock, gnome]
 
   input:
     operations:
       type:
         kind: command
-        handler: python://uri2ops.operator.adapters.input_mock:type_text
+        handler: python://uri2ops.operator.adapters.input_router:type_text
         input_schema: operator.input.v1.TypeTextCommand
         output_schema: operator.common.v1.OperationResult
         side_effects: true
         requires_policy: true
-        adapters: [mock]
+        adapters: [mock, gnome]
 
   android:
     operations:
@@ -119,3 +127,69 @@ schemes:
         side_effects: true
         requires_policy: true
         adapters: [mock, uia]
+
+  robot:
+    operations:
+      state:
+        kind: query
+        handler: python://uri2ops.operator.adapters.physical_mock:robot_state
+        output_schema: operator.robot.v1.RobotState
+        side_effects: false
+        produces_artifact: true
+        adapters: [mock]
+
+      move:
+        kind: command
+        handler: python://uri2ops.operator.adapters.physical_mock:robot_move
+        input_schema: operator.robot.v1.RobotMoveCommand
+        output_schema: operator.common.v1.OperationResult
+        side_effects: true
+        requires_policy: true
+        adapters: [mock]
+
+      stop:
+        kind: command
+        handler: python://uri2ops.operator.adapters.physical_mock:robot_stop
+        input_schema: operator.robot.v1.RobotStopCommand
+        output_schema: operator.common.v1.OperationResult
+        side_effects: true
+        requires_policy: true
+        adapters: [mock]
+
+      mission_start:
+        kind: command
+        handler: python://uri2ops.operator.adapters.physical_mock:robot_mission_start
+        input_schema: operator.robot.v1.RobotMissionStartCommand
+        output_schema: operator.common.v1.OperationResult
+        side_effects: true
+        requires_policy: true
+        adapters: [mock]
+
+  device:
+    operations:
+      status:
+        kind: query
+        handler: python://uri2ops.operator.adapters.physical_mock:device_status
+        output_schema: operator.device.v1.DeviceStatus
+        side_effects: false
+        produces_artifact: true
+        adapters: [mock]
+
+      read:
+        kind: query
+        handler: python://uri2ops.operator.adapters.physical_mock:device_read
+        input_schema: operator.device.v1.DeviceReadCommand
+        output_schema: operator.device.v1.DeviceReading
+        side_effects: false
+        produces_artifact: true
+        adapters: [mock]
+
+      write:
+        kind: command
+        handler: python://uri2ops.operator.adapters.physical_mock:device_write
+        input_schema: operator.device.v1.DeviceWriteCommand
+        output_schema: operator.common.v1.OperationResult
+        side_effects: true
+        requires_policy: true
+        adapters: [mock]
+

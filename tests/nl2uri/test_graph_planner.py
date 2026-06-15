@@ -63,8 +63,8 @@ def test_plan_workflow_generate_run_check():
     prompt = "wygeneruj agenta pogodowego, uruchom go i sprawdź health"
     payload = plan_workflow_graph(prompt)
     node_ids = [node["id"] for node in payload["graph"]["nodes"]]
-    assert "generate_weather_domain" in node_ids
-    assert "run_weather_agent" in node_ids
+    assert "generate_domain" in node_ids
+    assert "run_agent" in node_ids
     assert "verify_ok" in node_ids
 
 

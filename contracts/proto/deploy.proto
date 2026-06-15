@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package app.deploy.v1;
+
+message PlanRemoteDeployCommand {
+  string deployment_id = 1;
+}
+
+message RemoteDeployPlan {
+  bool ok = 1;
+  string deployment_id = 2;
+}
+
+message ApplyRemoteDeployCommand {
+  string deployment_id = 1;
+}
+
+message RemoteDeployResult {
+  bool ok = 1;
+  string deployment_id = 2;
+}
+
+message VerifyRemoteAgentCommand {
+  string deployment_id = 1;
+}
+
+message RemoteVerifyResult {
+  bool ok = 1;
+  string deployment_id = 2;
+}
+
+message StartRemoteAgentCommand {
+  string deployment_id = 1;
+  bool wait_healthy = 2;
+}
+
+message RemoteStartResult {
+  bool ok = 1;
+  string deployment_id = 2;
+  string health_uri = 3;
+}
+
+message DeployVerifyStartCommand {
+  string deployment_id = 1;
+  bool wait_healthy = 2;
+}
+
+message DeployVerifyStartResult {
+  bool ok = 1;
+  string deployment_id = 2;
+}

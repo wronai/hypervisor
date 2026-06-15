@@ -21,6 +21,14 @@ def test_explain_http_uri_matches_uri3(repo_root: Path):
     assert payload["scheme"] == "http"
 
 
+def test_explain_file_uri_matches_uri3(tmp_path: Path, repo_root: Path):
+    source = tmp_path / "source.md"
+    source.write_text("# Source\n", encoding="utf-8")
+    payload = explain_uri(f"file://{source.as_posix()}", root=repo_root)
+    assert payload["matched_registry"] == "uri3"
+    assert payload["scheme"] == "file"
+
+
 def test_explain_browser_uri_matches_uri2ops(repo_root: Path):
     payload = explain_uri("browser://chrome/page/open", root=repo_root)
     assert payload["matched_registry"] == "uri2ops"

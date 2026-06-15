@@ -1,53 +1,53 @@
-# hypervisor | 2293 func | 428f | 50850L | python | 2026-06-15
+# hypervisor | 2576 func | 455f | 59021L | python | 2026-06-15
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.7  critical=136 (limit:10)  dup=3  cycles=0
+  CC̄=3.7  critical=156 (limit:10)  dup=4  cycles=0
 
 ALERTS[20]:
+  !!! cc_exceeded      _render_markdown = 70 (limit:15)
   !!! high_fan_out     createVoiceController = 37 (limit:10)
   !!! cc_exceeded      createVoiceController = 29 (limit:15)
+  !!! cc_exceeded      _validate_deployments = 26 (limit:15)
+  !!! cc_exceeded      _validate_example = 25 (limit:15)
+  !!! high_fan_out     _render_markdown = 25 (limit:10)
+  !!! high_fan_out     analyze_artifact = 24 (limit:10)
   !!! high_fan_out     generate_ecosystem = 23 (limit:10)
   !!! high_fan_out     parse_duplication = 23 (limit:10)
   !!! high_fan_out     register_call_commands = 22 (limit:10)
-  !!! high_fan_out     register_ecosystem_commands = 21 (limit:10)
-  !!! high_fan_out     _merge_deployment_fragment = 21 (limit:10)
-  !!! high_fan_out     supervise_watch = 21 (limit:10)
-  !!! high_fan_out     main = 20 (limit:10)
-  !!! high_fan_out     parse_map = 20 (limit:10)
 
-MODULES[756] (top by size):
+MODULES[862] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
-  M[www/landing.js] 836L C:0 F:111 CC↑24 D:0 (javascript)
+  M[www/generated/integrations-i18n.js] 1143L C:0 F:0 CC↑0 D:0 (javascript)
+  M[www/landing.js] 836L C:0 F:111 CC↑24 D:7 (javascript)
   M[www/landing-i18n.js] 719L C:0 F:0 CC↑0 D:0 (javascript)
-  M[www/app.js] 613L C:0 F:75 CC↑11 D:0 (javascript)
+  M[packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py] 713L C:1 F:52 CC↑20 D:5 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/agent_describe.py] 677L C:1 F:16 CC↑70 D:3 (python)
+  M[www/app.js] 648L C:0 F:81 CC↑14 D:0 (javascript)
+  M[packages/resource-agent-hypervisor/hypervisor/cli.py] 523L C:0 F:29 CC↑8 D:0 (python)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
-  M[packages/resource-agent-hypervisor/hypervisor/cli.py] 495L C:0 F:28 CC↑8 D:0 (python)
-  M[www/generated/examples-manifest.js] 457L C:0 F:0 CC↑0 D:0 (javascript)
-  M[scripts/examples/effective_weather_playwright.py] 455L C:0 F:15 CC↑15 D:1 (python)
-  M[packages/hypervisor-dashboard-agent/hypervisor_dashboard_agent/uri_client.py] 445L C:1 F:29 CC↑9 D:4 (python)
-  M[packages/nl2uri/nl2uri/graph_planner.py] 414L C:0 F:15 CC↑12 D:5 (python)
-  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/watch.py] 408L C:0 F:17 CC↑14 D:1 (python)
-  M[packages/urish/urish/scenario_registry.py] 402L C:0 F:28 CC↑15 D:2 (python)
-  M[packages/urigen/urigen/apply_executor.py] 394L C:2 F:15 CC↑13 D:1 (python)
-  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py] 387L C:0 F:16 CC↑7 D:4 (python)
-  M[packages/resource-agent-hypervisor/hypervisor/repair/supervisor.py] 381L C:0 F:10 CC↑11 D:5 (python)
-  LANGS: python:494/yaml:115/json:52/shell:37/toml:17/javascript:15/other:9/txt:6/proto:4/yml:4/mk:2/j2:1
+  M[www/generated/examples-manifest.js] 477L C:0 F:0 CC↑0 D:0 (javascript)
+  M[scripts/examples/effective_weather_playwright.py] 466L C:0 F:17 CC↑14 D:1 (python)
+  M[packages/urish/urish/backends/agent_factory.py] 450L C:0 F:18 CC↑12 D:5 (python)
+  M[scripts/examples/audit_agent_reports.py] 427L C:3 F:6 CC↑26 D:0 (python)
+  M[packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py] 423L C:0 F:15 CC↑7 D:5 (python)
+  M[packages/urish/urish/scenario_registry.py] 410L C:0 F:30 CC↑14 D:8 (python)
+  LANGS: python:545/yaml:128/json:80/shell:40/toml:17/javascript:15/other:15/proto:9/txt:6/yml:4/mk:2/j2:1
 
 HOTSPOTS[10]:
   ★ createVoiceController fan=37  // Orchestrates 37 calls
+  ★ _render_markdown fan=25  // Orchestrates 25 calls
+  ★ analyze_artifact fan=24  // Analysis pipeline, 24 stages
   ★ generate_ecosystem fan=23  // Generate an isolated ecosystem artifact directory from a proposal.
   ★ parse_duplication fan=23  // Orchestrates 23 calls
-  ★ register_call_commands fan=22  // Orchestrates 22 calls
-  ★ register_ecosystem_commands fan=21  // Orchestrates 21 calls
 
 REFACTOR[15]:
-  [1] H/L Split createVoiceController (CC=29)
-  [2] H/H Split god module www/landing.js (836L, 0 classes)
-  [3] H/H Split god module www/app.js (613L, 0 classes)
-  [4] H/H Split god module goal.yaml (511L, 0 classes)
-  [5] H/H Split god module planfile.yaml (1319L, 0 classes)
+  [1] H/L Split _render_markdown (CC=70)
+  [2] H/L Split _validate_example (CC=25)
+  [3] H/L Split _validate_deployments (CC=26)
+  [4] H/L Split createVoiceController (CC=29)
+  [5] H/H Split god module packages/resource-agent-hypervisor/hypervisor/agent_describe.py (677L, 1 classes)
 
 EVOLUTION:
   2026-06-14 CC̄=3.3 crit=15 10783L // Automated analysis
-  2026-06-15 CC̄=3.7 crit=136 50850L // Automated analysis
+  2026-06-15 CC̄=3.7 crit=156 59021L // Automated analysis

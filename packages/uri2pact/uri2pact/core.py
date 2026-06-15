@@ -19,7 +19,8 @@ MARKPACT_BLOCK_RE = re.compile(
 
 
 def is_markpact_registry(ref: str | Path) -> bool:
-    return str(ref).startswith("markpact://")
+    s = str(ref)
+    return s.startswith("markpact://") or s.startswith("file://")
 
 
 def find_repo_root(start: Path | None = None) -> Path:
@@ -33,13 +34,36 @@ def find_repo_root(start: Path | None = None) -> Path:
 def resolve_markpact_ref(ref: str | Path, *, root: Path | None = None) -> tuple[Path, str | None]:
     raw = str(ref)
     if not is_markpact_registry(raw):
-        raise ValueError(f"Not a markpact registry URI: {raw}")
-    raw_path, fragment = _split_markpact_target(raw)
-    path = _resolve_markpact_path(raw_path, root=root)
+        # Allow plain paths to .md files that contain markpact blocks (convenience)
+        p = Path(raw)
+        if p.suffix in (".md", ".markdown") and p.exists():
+            resolved = p.resolve()
+            return resolved, None
+        raise ValueError(f"Not a markpact registry URI or markdown file: {raw}")
+
+    # Normalize: support both "file:///path/README.md#frag" and "markpact://file:///path/README.md#frag"
+    if raw.startswith("file://") or (raw.startswith("markpact://") and "file://" in raw):
+        target = raw
+        if target.startswith("markpact://"):
+            target = target[len("markpact://") :]
+        # Parse file URI + optional fragment
+        if "#" in target:
+            file_part, fragment = target.split("#", 1)
+            fragment = fragment.strip() or None
+        else:
+            file_part, fragment = target, None
+        path = _path_from_file_uri(file_part)
+    else:
+        # Classic markpact://<relative-or-abs-path>[#frag]
+        raw_path, fragment = _split_markpact_target(raw)
+        path = _resolve_markpact_path(raw_path, root=root)
+        if fragment:
+            fragment = fragment.strip()
+
     resolved = path.resolve()
     if not resolved.is_file():
         raise FileNotFoundError(f"markpact README not found: {resolved} (from {raw})")
-    return resolved, (fragment.strip() if fragment else None)
+    return resolved, fragment
 
 
 def _split_markpact_target(ref: str) -> tuple[str, str | None]:
@@ -50,7 +74,23 @@ def _split_markpact_target(ref: str) -> tuple[str, str | None]:
     return target, None
 
 
+def _path_from_file_uri(uri: str) -> Path:
+    """Convert file:// URI (or markpact://file://...) to Path, handling unquoting."""
+    if uri.startswith("markpact://"):
+        uri = uri[len("markpact://"):]
+    if not uri.startswith("file://"):
+        # fallback
+        return Path(unquote(uri.strip()))
+    path_str = uri[7:]
+    # Handle windows file:///c:/... etc by stripping leading /
+    if path_str.startswith("/") and len(path_str) > 2 and path_str[2] == ":":
+        path_str = path_str[1:]
+    return Path(unquote(path_str))
+
+
 def _resolve_markpact_path(raw_path: str, *, root: Path | None) -> Path:
+    if raw_path.startswith("file://"):
+        return _path_from_file_uri(raw_path)
     path = Path(unquote(raw_path.strip()))
     if path.is_absolute():
         return path

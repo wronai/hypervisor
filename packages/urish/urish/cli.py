@@ -7,11 +7,16 @@ from typing import Any
 
 import typer
 
+from urish.commands.agent_commands import register_agent_commands
+from urish.commands.dashboard_commands import register_dashboard_commands
+from urish.commands.ecosystem_commands import register_ecosystem_commands
+from urish.commands.governance_commands import register_governance_commands
 from urish.commands.runtime import RuntimeCommandDeps, register_runtime_commands
 from urish.context import CONTEXT_ENV, list_contexts, load_context
 from urish.exit_codes import exit_code_for_result
 from urish.policy import PolicyOptions
 from urish.render import render_result
+from urish.repl import run_repl
 from urish.shortcuts import load_shortcut_specs, load_shortcuts
 
 app = typer.Typer(
@@ -20,15 +25,7 @@ app = typer.Typer(
     invoke_without_command=True,
 )
 
-agent_app = typer.Typer(help="Agent lifecycle shortcuts (maps to hypervisor:// / repair://)")
-ecosystem_app = typer.Typer(help="Ecosystem generation (urigen backend)")
-dashboard_app = typer.Typer(help="Dashboard system-agent workflow shortcuts")
-www_app = typer.Typer(help="Chat UI in repo www/ (NL + markdown + real API)")
 context_app = typer.Typer(help="Execution context")
-ticket_app = typer.Typer(help="Ticket artifacts and planfile integration")
-repair_app = typer.Typer(help="Self-healing repair supervisor")
-evolve_app = typer.Typer(help="Evolution proposals from tickets and incidents")
-proposal_app = typer.Typer(help="Verify and apply evolution proposals")
 
 
 def _policy_options(
@@ -70,32 +67,17 @@ def _finish(result: dict[str, Any], *, policy_blocked: bool = False) -> None:
         raise SystemExit(code)
 
 
-def _print_evolve_summary(result: dict[str, Any], *, json_out: bool) -> None:
-    if json_out or not result.get("ok"):
-        return
-    data = result.get("data")
-    if not isinstance(data, dict):
-        return
-    if data.get("proposal_path"):
-        typer.echo(f"Generated proposal: {data['proposal_path']}")
-    intent = data.get("detected_intent") or {}
-    if intent.get("subtype"):
-        typer.echo(f"Detected: {intent.get('kind')} / {intent.get('subtype')}")
-    if data.get("next_steps"):
-        typer.echo("Next:")
-        for step in data["next_steps"]:
-            typer.echo(f"  {step}")
-
-
-register_runtime_commands(
-    app,
-    RuntimeCommandDeps(
-        policy_options=_policy_options,
-        context_policy=_context_policy,
-        emit=_emit,
-        finish=_finish,
-    ),
+_COMMAND_DEPS = RuntimeCommandDeps(
+    policy_options=_policy_options,
+    context_policy=_context_policy,
+    emit=_emit,
+    finish=_finish,
 )
+register_runtime_commands(app, _COMMAND_DEPS)
+register_agent_commands(app, _COMMAND_DEPS)
+register_ecosystem_commands(app, _COMMAND_DEPS)
+register_dashboard_commands(app, _COMMAND_DEPS)
+register_governance_commands(app, _COMMAND_DEPS)
 
 
 @app.callback(invoke_without_command=True)
@@ -104,6 +86,33 @@ def root(ctx: typer.Context) -> None:
     if ctx.invoked_subcommand is None:
         typer.echo(ctx.get_help())
         raise typer.Exit(0)
+
+
+def _print_ask_result(data: dict[str, Any]) -> None:
+    """Pretty printer for ask/nl results. Extracted to keep command surface thinner."""
+    subtype = data.get("detected_subtype")
+    kind = data.get("detected_kind")
+    if subtype:
+        typer.echo(f"Detected: {subtype} {kind}")
+    else:
+        typer.echo(f"Detected: {kind}")
+    if data.get("ecosystem_id"):
+        typer.echo(f"Name: {data['ecosystem_id']}")
+    if data.get("profile"):
+        typer.echo(f"Profile: {data['profile']}")
+    if data.get("agent_id"):
+        typer.echo(f"Agent: agent://{data['agent_id']}")
+    if data.get("generated", {}).get("proposal_path"):
+        typer.echo(f"Generated proposal: {data['generated']['proposal_path']}")
+    from urish.ecosystem_workflow import build_planned_uris_display
+
+    planned = build_planned_uris_display(data.get("planned_uris") or data["uris"])
+    typer.echo("Planned:")
+    for uri in planned:
+        typer.echo(f"  {uri}")
+    typer.echo("Next:")
+    for step in data["next_steps"]:
+        typer.echo(f"  {step}")
 
 
 @app.command("ask")
@@ -131,30 +140,7 @@ def ask_cmd(
     if json_out:
         typer.echo(json.dumps(result, indent=2, ensure_ascii=False))
     else:
-        data = result["data"]
-        subtype = data.get("detected_subtype")
-        kind = data.get("detected_kind")
-        if subtype:
-            typer.echo(f"Detected: {subtype} {kind}")
-        else:
-            typer.echo(f"Detected: {kind}")
-        if data.get("ecosystem_id"):
-            typer.echo(f"Name: {data['ecosystem_id']}")
-        if data.get("profile"):
-            typer.echo(f"Profile: {data['profile']}")
-        if data.get("agent_id"):
-            typer.echo(f"Agent: agent://{data['agent_id']}")
-        if data.get("generated", {}).get("proposal_path"):
-            typer.echo(f"Generated proposal: {data['generated']['proposal_path']}")
-        from urish.ecosystem_workflow import build_planned_uris_display
-
-        planned = build_planned_uris_display(data.get("planned_uris") or data["uris"])
-        typer.echo("Planned:")
-        for uri in planned:
-            typer.echo(f"  {uri}")
-        typer.echo("Next:")
-        for step in data["next_steps"]:
-            typer.echo(f"  {step}")
+        _print_ask_result(result["data"])
     _finish(result)
 
 
@@ -192,9 +178,7 @@ def select_cmd(
 @app.command("shell")
 def shell_cmd() -> None:
     """Interactive REPL for uri commands."""
-    from urish.repl import run_repl
-
-    raise typer.Exit(run_repl(execute=main))
+    raise typer.Exit(run_repl(execute=execute_cli_argv))
 
 
 @app.command("doctor")
@@ -217,339 +201,21 @@ def shortcuts_cmd(json_out: bool = typer.Option(False, "--json")) -> None:
     _emit(payload, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
 
 
-@agent_app.command("status")
-def agent_status_cmd(selector: str, json_out: bool = typer.Option(False, "--json")) -> None:
-    from urish.backends.agent import agent_action
-
-    result = agent_action("status", selector)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@agent_app.command("health")
-def agent_health_cmd(selector: str, json_out: bool = typer.Option(False, "--json")) -> None:
-    from urish.backends.agent import agent_action
-
-    result = agent_action("health", selector)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@agent_app.command("create-dashboard")
-def agent_create_dashboard_cmd(
-    name: str = typer.Argument("hypervisor-dashboard"),
-    prompt: str = typer.Option("", "--prompt"),
-    plan_only: bool = typer.Option(False, "--plan-only"),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-    sandbox: bool = typer.Option(False, "--sandbox"),
-    approve: bool = typer.Option(False, "--approve"),
-    open_ui: bool = typer.Option(False, "--open"),
+@app.command("proof")
+def proof_cmd(
+    target: str = typer.Argument(..., help="URI to prove across CLI/API/runtime/view layers"),
     json_out: bool = typer.Option(False, "--json"),
+    dry_run: bool = typer.Option(False, "--dry-run", help="Force non-mutating proof call"),
 ) -> None:
-    """Alias for dashboard create — ecosystem plan→generate→verify→apply→run."""
-    from urish.backends.dashboard import create_dashboard
+    """Show whether one URI works through the Taskinity control plane."""
+    from urish.backends.proof import proof_uri, render_proof_text
 
-    result = create_dashboard(
-        name,
-        prompt=prompt or None,
-        plan_only=plan_only,
-        dry_run=dry_run,
-        sandbox=sandbox,
-        approve=approve,
-        open_browser=open_ui,
-    )
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@agent_app.command("run")
-def agent_run_cmd(
-    selector: str,
-    detach: bool = typer.Option(True, "--detach/--no-detach"),
-    wait_healthy: bool = typer.Option(False, "--wait-healthy"),
-    approve: bool = typer.Option(False, "--approve"),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.agent import agent_action
-    from urish.policy import evaluate_policy
-
-    policy_opts = _policy_options(
-        dry_run=dry_run,
-        approve=approve,
-        no_approve=False,
-        readonly=False,
-        sandbox=False,
-        policy="",
-    )
-    uri = f"hypervisor://local/{selector}/run"
-    allowed, reason, force_dry_run = evaluate_policy(
-        uri,
-        options=policy_opts,
-        context_policy=_context_policy(),
-    )
-    if not allowed:
-        _emit(
-            {"ok": False, "policy_blocked": True, "error": reason},
-            output="json",
-            quiet=False,
-            json_out=True,
-        )
-        _finish({"ok": False, "policy_blocked": True}, policy_blocked=True)
-    if force_dry_run:
-        result = {
-            "ok": True,
-            "result_type": "plan",
-            "data": {"action": "run", "selector": selector},
-        }
-        _emit(result, output="json" if json_out else "text", quiet=False, json_out=json_out)
-        _finish(result)
-    result = agent_action(
-        "run",
-        selector,
-        detach=detach,
-        wait_healthy=wait_healthy,
-        supervise_repair="auto" if wait_healthy else "auto",
-    )
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@agent_app.command("repair")
-def agent_repair_cmd(
-    selector: str,
-    dry_run: bool = typer.Option(False, "--dry-run"),
-    approve: bool = typer.Option(False, "--approve"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.agent import agent_action
-
-    if dry_run:
-        result = agent_action("diagnose", selector)
+    result = proof_uri(target, dry_run=dry_run)
+    if json_out:
+        typer.echo(json.dumps(result, indent=2, ensure_ascii=False))
     else:
-        result = agent_action("repair", selector, safe=not approve, approve=approve)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
+        typer.echo(render_proof_text(result))
     _finish(result)
-
-
-app.add_typer(agent_app, name="agent")
-
-
-@ecosystem_app.command("plan")
-def ecosystem_plan_cmd(
-    prompt: str = typer.Argument(...),
-    out: str = typer.Option("", "--out"),
-    profile: str = typer.Option("minimal", "--profile"),
-    ecosystem_id: str = typer.Option("", "--id"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urigen.io import dump_yaml, write_yaml
-    from urigen.proposal import plan_ecosystem
-
-    from urish.intent import detect_intent
-
-    intent = detect_intent(prompt)
-    selected_profile = profile
-    if profile == "minimal" and intent.get("profile"):
-        selected_profile = str(intent["profile"])
-    eco_id = ecosystem_id or intent.get("ecosystem_id")
-    payload = plan_ecosystem(prompt, profile=selected_profile, ecosystem_id=eco_id)
-    if out:
-        write_yaml(out, payload)
-    typer.echo(json.dumps(payload, indent=2) if json_out else dump_yaml(payload))
-
-
-@ecosystem_app.command("generate")
-def ecosystem_generate_cmd(
-    proposal: str = typer.Argument(...),
-    out: str = typer.Option(..., "--out"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urigen.generator import generate_ecosystem
-    from urigen.io import dump_yaml
-
-    payload = generate_ecosystem(proposal, out=out)
-    typer.echo(json.dumps(payload, indent=2) if json_out else dump_yaml(payload))
-    _finish(payload)
-
-
-@ecosystem_app.command("verify")
-def ecosystem_verify_cmd(path: str, json_out: bool = typer.Option(False, "--json")) -> None:
-    from urigen.io import dump_yaml
-    from urigen.verify import verify_ecosystem
-
-    payload = verify_ecosystem(path)
-    typer.echo(json.dumps(payload, indent=2) if json_out else dump_yaml(payload))
-    _finish(payload)
-
-
-@ecosystem_app.command("apply")
-def ecosystem_apply_cmd(
-    path: str,
-    approve: bool = typer.Option(False, "--approve"),
-    plan_only: bool = typer.Option(False, "--plan"),
-    sandbox: bool = typer.Option(False, "--sandbox"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urigen.apply import apply_ecosystem
-    from urigen.io import dump_yaml
-
-    if not approve and not plan_only:
-        result = {
-            "ok": False,
-            "policy_blocked": True,
-            "error": "ecosystem apply requires --approve or --plan",
-        }
-        typer.echo(json.dumps(result, indent=2) if json_out else dump_yaml(result))
-        _finish(result, policy_blocked=True)
-    payload = apply_ecosystem(path, approve=approve, plan_only=plan_only)
-    if sandbox:
-        payload.setdefault("meta", {})["sandbox"] = True
-    typer.echo(json.dumps(payload, indent=2) if json_out else dump_yaml(payload))
-    _finish(payload)
-
-
-@ecosystem_app.command("profiles")
-def ecosystem_profiles_cmd(json_out: bool = typer.Option(False, "--json")) -> None:
-    from urigen.io import dump_yaml
-    from urigen.models import profile_catalog
-
-    payload = {
-        "ok": True,
-        "profiles": list(profile_catalog().values()),
-        "result_type": "ecosystem_profiles",
-    }
-    typer.echo(json.dumps(payload, indent=2) if json_out else dump_yaml(payload))
-
-
-app.add_typer(ecosystem_app, name="ecosystem")
-
-
-@dashboard_app.command("create")
-def dashboard_create_cmd(
-    name: str = typer.Argument("hypervisor-dashboard"),
-    prompt: str = typer.Option("", "--prompt"),
-    plan_only: bool = typer.Option(False, "--plan-only"),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-    sandbox: bool = typer.Option(False, "--sandbox"),
-    approve: bool = typer.Option(False, "--approve"),
-    open_ui: bool = typer.Option(False, "--open"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.dashboard import create_dashboard
-
-    result = create_dashboard(
-        name,
-        prompt=prompt or None,
-        plan_only=plan_only,
-        dry_run=dry_run,
-        sandbox=sandbox,
-        approve=approve,
-        open_browser=open_ui,
-    )
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@dashboard_app.command("open")
-def dashboard_open_cmd(
-    url: str = typer.Option("http://localhost:8788/ui", "--url"),
-    approve: bool = typer.Option(False, "--approve"),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.call import call_uri
-    from urish.policy import PolicyOptions
-
-    result = call_uri(
-        "browser://chrome/page/open",
-        payload={"url": url},
-        dry_run=dry_run,
-        policy_options=PolicyOptions.from_flags(approve=approve, dry_run=dry_run),
-    )
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-app.add_typer(dashboard_app, name="dashboard")
-
-
-@www_app.command("serve")
-def www_serve_cmd(
-    host: str = typer.Option("0.0.0.0", "--host"),
-    port: int = typer.Option(8788, "--port"),
-    reload: bool = typer.Option(False, "--reload"),
-) -> None:
-    """Serve www/ chat and dashboard-agent API (uvicorn)."""
-    try:
-        import uvicorn
-    except ImportError as exc:
-        raise typer.BadParameter(
-            "Install server extras: pip install hypervisor-dashboard-agent[server]"
-        ) from exc
-
-    typer.echo(f"Chat UI: http://localhost:{port}/www/")
-    uvicorn.run(
-        "hypervisor_dashboard_agent.main:app",
-        host=host,
-        port=port,
-        reload=reload,
-    )
-
-
-@www_app.command("open")
-def www_open_cmd(
-    host: str = typer.Option("localhost", "--host"),
-    port: int = typer.Option(8788, "--port"),
-    approve: bool = typer.Option(False, "--approve"),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    """Open www chat in browser (requires running dashboard-agent)."""
-    from urish.backends.call import call_uri
-    from urish.policy import PolicyOptions
-
-    url = f"http://{host}:{port}/www/"
-    result = call_uri(
-        "browser://chrome/page/open",
-        payload={"url": url},
-        dry_run=dry_run,
-        policy_options=PolicyOptions.from_flags(approve=approve, dry_run=dry_run),
-    )
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@www_app.command("create")
-def www_create_cmd(
-    prompt: str = typer.Argument(
-        "stwórz prosty web UI hypervisora jako chat markdown połączony z API systemu"
-    ),
-    name: str = typer.Option("hypervisor-dashboard", "--name"),
-    plan_only: bool = typer.Option(False, "--plan-only"),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-    sandbox: bool = typer.Option(False, "--sandbox"),
-    approve: bool = typer.Option(False, "--approve"),
-    open_ui: bool = typer.Option(False, "--open"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    """Create the www chat/dashboard agent from a natural-language prompt."""
-    from urish.backends.dashboard import create_dashboard
-
-    result = create_dashboard(
-        name,
-        prompt=prompt,
-        plan_only=plan_only,
-        dry_run=dry_run,
-        sandbox=sandbox,
-        approve=approve,
-        open_browser=open_ui,
-    )
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-app.add_typer(www_app, name="www")
 
 
 @context_app.command("list")
@@ -574,178 +240,6 @@ def context_use_cmd(context_id: str) -> None:
 app.add_typer(context_app, name="context")
 
 
-@ticket_app.command("list")
-def ticket_list_cmd(json_out: bool = typer.Option(False, "--json")) -> None:
-    from urish.backends.ticket import list_tickets
-
-    result = list_tickets()
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-
-
-@ticket_app.command("show")
-def ticket_show_cmd(target: str, json_out: bool = typer.Option(False, "--json")) -> None:
-    from urish.backends.ticket import show_ticket
-
-    try:
-        result = show_ticket(target)
-    except FileNotFoundError as exc:
-        result = {"ok": False, "not_found": True, "error": str(exc)}
-    if not json_out and result.get("ok") and isinstance(result.get("data"), dict):
-        data = result["data"]
-        intent = data.get("detected_intent") or {}
-        if intent.get("subtype"):
-            typer.echo(f"Detected: {intent.get('kind')} / {intent.get('subtype')}")
-        if data.get("next_steps"):
-            typer.echo("Next:")
-            for step in data["next_steps"]:
-                typer.echo(f"  {step}")
-    _emit(result, output="json" if json_out else "yaml", quiet=not json_out, json_out=json_out)
-    _finish(result)
-
-
-@ticket_app.command("import")
-def ticket_import_cmd(
-    strategy: str = typer.Argument(...),
-    sprint: str = typer.Option("", "--sprint"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.ticket import import_tickets
-
-    result = import_tickets(strategy, sprint=sprint)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@ticket_app.command("plan")
-def ticket_plan_cmd(target: str, json_out: bool = typer.Option(False, "--json")) -> None:
-    from urish.backends.ticket import plan_ticket
-
-    try:
-        result = plan_ticket(target)
-    except FileNotFoundError as exc:
-        result = {"ok": False, "not_found": True, "error": str(exc)}
-    if not json_out and result.get("ok") and isinstance(result.get("data"), dict):
-        data = result["data"]
-        if data.get("proposal_path"):
-            typer.echo(f"Generated proposal: {data['proposal_path']}")
-        intent = data.get("detected_intent") or {}
-        if intent.get("subtype"):
-            typer.echo(f"Detected: {intent.get('kind')} / {intent.get('subtype')}")
-        if data.get("next_steps"):
-            typer.echo("Next:")
-            for step in data["next_steps"]:
-                typer.echo(f"  {step}")
-    _emit(result, output="json" if json_out else "yaml", quiet=not json_out, json_out=json_out)
-    _finish(result)
-
-
-app.add_typer(ticket_app, name="ticket")
-
-
-@repair_app.command("diagnose")
-def repair_diagnose_cmd(
-    selector: str = typer.Argument(...),
-    timeout: float = typer.Option(2.0, "--timeout"),
-    log_limit: int = typer.Option(20, "--log-limit"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.repair import repair_diagnose
-
-    result = repair_diagnose(selector, timeout=timeout, log_limit=log_limit)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@repair_app.command("apply")
-def repair_apply_cmd(
-    selector: str = typer.Argument(...),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-    approve: bool = typer.Option(False, "--approve"),
-    safe: bool = typer.Option(True, "--safe/--unsafe"),
-    playbook: str = typer.Option("", "--playbook"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.repair import repair_apply, repair_diagnose
-
-    if dry_run:
-        result = repair_diagnose(selector)
-    else:
-        result = repair_apply(selector, safe=safe, approve=approve, playbook=playbook or None)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@repair_app.command("learn")
-def repair_learn_cmd(
-    incident_path: str = typer.Argument(...),
-    sandbox: bool = typer.Option(True, "--sandbox/--no-sandbox"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.repair import repair_learn
-
-    result = repair_learn(incident_path, sandbox=sandbox)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-app.add_typer(repair_app, name="repair")
-
-
-@evolve_app.command("from-ticket")
-def evolve_from_ticket_cmd(target: str, json_out: bool = typer.Option(False, "--json")) -> None:
-    from urish.backends.evolve import evolve_from_ticket
-
-    try:
-        result = evolve_from_ticket(target)
-    except FileNotFoundError as exc:
-        result = {"ok": False, "not_found": True, "error": str(exc)}
-    _print_evolve_summary(result, json_out=json_out)
-    _emit(result, output="json" if json_out else "yaml", quiet=not json_out, json_out=json_out)
-    _finish(result)
-
-
-@evolve_app.command("from-incident")
-def evolve_from_incident_cmd(
-    incident_path: str,
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.evolve import evolve_from_incident
-
-    result = evolve_from_incident(incident_path)
-    _print_evolve_summary(result, json_out=json_out)
-    _emit(result, output="json" if json_out else "yaml", quiet=not json_out, json_out=json_out)
-    _finish(result)
-
-
-app.add_typer(evolve_app, name="evolve")
-
-
-@proposal_app.command("verify")
-def proposal_verify_cmd(path: str, json_out: bool = typer.Option(False, "--json")) -> None:
-    from urish.backends.evolve import proposal_verify
-
-    result = proposal_verify(path)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result)
-
-
-@proposal_app.command("apply")
-def proposal_apply_cmd(
-    path: str,
-    approve: bool = typer.Option(False, "--approve"),
-    sandbox: bool = typer.Option(False, "--sandbox"),
-    json_out: bool = typer.Option(False, "--json"),
-) -> None:
-    from urish.backends.evolve import proposal_apply
-
-    result = proposal_apply(path, approve=approve, sandbox=sandbox)
-    _emit(result, output="json" if json_out else "yaml", quiet=False, json_out=json_out)
-    _finish(result, policy_blocked=bool(result.get("policy_blocked")))
-
-
-app.add_typer(proposal_app, name="proposal")
-
-
 _KNOWN_COMMANDS = frozenset(
     {
         "call",
@@ -761,6 +255,7 @@ _KNOWN_COMMANDS = frozenset(
         "shell",
         "doctor",
         "shortcuts",
+        "proof",
         "agent",
         "dashboard",
         "www",
@@ -793,9 +288,12 @@ def _normalize_argv(argv: list[str]) -> list[str]:
     return argv
 
 
-def main(argv: list[str] | None = None) -> int:
+def execute_cli_argv(argv: list[str]) -> int:
+    """Run one uri subcommand (used by REPL and tests)."""
     try:
-        normalized = _normalize_argv(list(argv or sys.argv[1:]))
+        normalized = _normalize_argv(list(argv))
+        if not normalized:
+            return 0
         app(prog_name="uri", args=normalized, standalone_mode=False)
         return 0
     except SystemExit as exc:
@@ -808,6 +306,13 @@ def main(argv: list[str] | None = None) -> int:
     except typer.Exit as exc:
         code = getattr(exc, "exit_code", None) or getattr(exc, "code", 0)
         return int(code or 0)
+
+
+def main(argv: list[str] | None = None) -> int:
+    argv = list(argv if argv is not None else sys.argv[1:])
+    if not argv:
+        return run_repl(execute=execute_cli_argv)
+    return execute_cli_argv(argv)
 
 
 if __name__ == "__main__":

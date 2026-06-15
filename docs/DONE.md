@@ -15,13 +15,18 @@ Na podstawie logów `goal -au`, `make start/www-smoke` i logów kontenera `hyper
 | `/api/ask` | Działa — zwraca markdown z planem URI i `next_steps` |
 | Błąd w logach | `POST /api/uri/call` → **500** przy repair weather agent |
 
-**Kluczowy błąd z logów:**
+**Kluczowy błąd historyczny (naprawiony w compose):**
 
 ```
 FileNotFoundError: Generated agent path not found: /app/agents/generated/weather_map_agent
 ```
 
-Kontener Docker ma tylko `www/` i `deployments/` (read-only). Brakuje `agents/generated/`, więc repair/run agenta pogodowego z UI kończy się 500.
+Wcześniejszy obraz montował tylko `www/`. Obecnie `www/docker-compose.yml` montuje też
+`packages/`, `agents/generated/`, `deployments/`, `output/` — repair/run z UI powinny
+działać po `make start` z hostowego repo.
+
+Pozostałe luki: port rebound (8101/8103 zajęte), brak `uvicorn` w venv, flow YAML ze
+sztywnym portem vs effective health URI — zobacz [`CHAT_AND_WORKFLOWS.md`](./CHAT_AND_WORKFLOWS.md).
 
 ---
 
@@ -61,11 +66,15 @@ flowchart TB
 
 **Przepływ w czacie (`www/`):**
 
-1. Użytkownik pisze NL → `POST /api/ask` → `urish ask` → plan URI + komendy w markdown.
-2. Użytkownik klika URI / dry-run → `POST /api/uri/call` → policy gate → wykonanie (view, repair, log, itd.).
-3. Domyślnie **dry-run** — mutacje wymagają `approved: true`.
+1. Użytkownik pisze NL (lub klika kartę biurową) → `POST /api/ask` → `urish ask` → plan URI + `next_steps` w markdown.
+2. **Chat nie wykonuje workflow automatycznie** — użytkownik uruchamia `uri run …` lub klika Run URI.
+3. Wielolinijkowy prompt (jedna komenda na linię) → batch: `Detected N commands`.
+4. Klik URI / dry-run → `POST /api/uri/call` → policy gate → wykonanie (view, repair, workflow, …).
+5. Domyślnie **dry-run** — mutacje wymagają `approved: true` / `--approve`.
 
-**Rdzeń:** wszystko kręci się wokół **URI** jako języka operacji (`repair://`, `view://`, `agent://`, `browser://`, `mcp://`, `a2a://`).
+Pełny opis: [`CHAT_AND_WORKFLOWS.md`](./CHAT_AND_WORKFLOWS.md)
+
+**Rdzeń:** wszystko kręci się wokół **URI** jako języka operacji (`repair://`, `view://`, `workflow://`, `browser://`, …).
 
 ---
 

@@ -48,4 +48,9 @@ def generated_marker_payload(source_ref: str, contract_hash: str) -> dict[str, s
         "source": source_ref,
         "contract_hash": contract_hash,
         "generator": GENERATOR_NAME,
+        "generation_command": (
+            "PYTHONPATH=packages/resource-agent-factory "
+            f"python -m generator.agent_generator {source_ref}"
+        ),
+        "markpact_readme": "README.md",
     }

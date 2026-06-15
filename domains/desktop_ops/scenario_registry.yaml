@@ -1,0 +1,153 @@
+version: 1
+kind: urish.scenario_registry
+metadata:
+  id: desktop-ops
+  description: Generic desktop operation scenarios routed to the desktop operator.
+  source: domains/desktop_ops/scenario_registry.yaml
+  markpact_readme: domains/desktop_ops/README.md
+  examples:
+    - examples/10_browser_operator
+    - examples/11_playwright_browser
+    - examples/12_android_operator
+    - examples/13_pcwin_operator
+intent_kind: desktop_ops
+profile: desktop-ops
+default_deployment_id: desktop-operator.local
+context_patterns:
+  - "\\b(desktop\\s+operator|desktop-operator|uri2ops|operator\\s+runtime)\\b"
+  - "\\b(browser\\s+operator|chrome\\s+operator|web\\s*ui\\s+test|strona\\s+testowa)\\b"
+  - "\\b(pcwin|uia|windows\\s+ui|okno\\s+systemowe|control\\s+automation)\\b"
+  - "\\b(adb|android\\s+device|telefon\\s+testowy|device\\s+screen)\\b"
+  - "\\b(screen\\s+observe|pulpit|ekran\\s+operatora)\\b"
+subtype_rules:
+  - subtype: browser_capture
+    patterns:
+      - "\\b(browser\\s+operator|chrome\\s+operator|web\\s*ui\\s+test|strona\\s+testowa)\\b"
+  - subtype: pcwin_control
+    patterns:
+      - "\\b(pcwin|uia|windows\\s+ui|okno\\s+systemowe|control\\s+automation)\\b"
+  - subtype: android_device
+    patterns:
+      - "\\b(adb|android\\s+device|telefon\\s+testowy|device\\s+screen)\\b"
+  - subtype: screen_observe
+    patterns:
+      - "\\b(screen\\s+observe|pulpit|ekran\\s+operatora)\\b"
+  - subtype: desktop_status
+    patterns:
+      - "\\b(desktop\\s+operator|desktop-operator|uri2ops|operator\\s+runtime)\\b"
+fallback_subtype: desktop_status
+uri_templates:
+  browser_capture:
+    - browser://chrome/page/open
+    - browser://chrome/page/active/dom
+    - browser://chrome/page/active/screenshot
+    - health://agent/{deployment_id}
+  pcwin_control:
+    - pcwin://window/{id}/focus
+    - pcwin://control/{id}/click
+    - health://agent/{deployment_id}
+  android_device:
+    - android://device/{id}/screenshot
+    - android://device/{id}/dump_ui
+    - health://agent/{deployment_id}
+  screen_observe:
+    - screen://desktop/observe
+    - health://agent/{deployment_id}
+  desktop_status:
+    - health://agent/{deployment_id}
+    - view://process/agent/{deployment_id}/latest
+    - log://hypervisor?grep={deployment_id}
+next_step_templates:
+  browser_capture:
+    - uri2ops run examples/10_browser_operator/task.health.yaml --adapter mock --approve
+    - uri2ops run examples/11_playwright_browser/task.health.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  pcwin_control:
+    - uri2ops run examples/13_pcwin_operator/task.pcwin.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  android_device:
+    - uri2ops run examples/12_android_operator/task.android.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  screen_observe:
+    - uri2ops run examples/10_browser_operator/task.health.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  desktop_status:
+    - hypervisor inspect-agent {deployment_id}
+    - taskinity proof view://process/agent/{deployment_id}/latest
+    - uri call health://agent/{deployment_id}
+human_in_the_loop_subtypes:
+  - browser_capture
+  - pcwin_control
+  - android_device
+  - screen_observe
+artifacts:
+  contracts:
+    - agents/operators/desktop_operator.yaml
+    - domains/desktop_ops/domain.yaml
+    - domains/desktop_ops/operator_registry.yaml
+  operation_registry:
+    - packages/uri2ops/uri2ops/operation_registry/registry.yaml
+  examples:
+    - examples/10_browser_operator/task.health.yaml
+    - examples/12_android_operator/task.android.yaml
+    - examples/13_pcwin_operator/task.pcwin.yaml
+scenarios:
+  - id: desktop_operator_status
+    subtype: desktop_status
+    chat_prompt: Sprawdz desktop operator i pokaz stan runtime.
+    needles:
+      - "desktop\\s+operator"
+      - "desktop-operator"
+      - "uri2ops"
+      - "stan\\s+runtime"
+    planned_uris:
+      - health://agent/desktop-operator.local
+      - view://process/agent/desktop-operator.local/latest
+    next_steps:
+      - hypervisor inspect-agent desktop-operator.local
+      - taskinity proof view://process/agent/desktop-operator.local/latest
+    human_in_the_loop: false
+  - id: browser_operator_capture
+    subtype: browser_capture
+    chat_prompt: Otworz strone testowa w chrome operator i pobierz DOM oraz obraz.
+    needles:
+      - "chrome\\s+operator"
+      - "browser\\s+operator"
+      - "strone\\s+testowa"
+      - "pobierz\\s+dom"
+    planned_uris:
+      - browser://chrome/page/open
+      - browser://chrome/page/active/dom
+      - browser://chrome/page/active/screenshot
+    next_steps:
+      - uri2ops run examples/10_browser_operator/task.health.yaml --adapter mock --approve
+      - uri2ops run examples/11_playwright_browser/task.health.yaml --adapter mock --approve
+    human_in_the_loop: true
+  - id: pcwin_operator_control
+    subtype: pcwin_control
+    chat_prompt: Sprawdz pcwin operator na oknie systemowym w trybie mock.
+    needles:
+      - pcwin
+      - uia
+      - "okno\\s+systemowe"
+      - "trybie\\s+mock"
+    planned_uris:
+      - pcwin://window/{id}/focus
+      - pcwin://control/{id}/click
+    next_steps:
+      - uri2ops run examples/13_pcwin_operator/task.pcwin.yaml --adapter mock --approve
+    human_in_the_loop: true
+  - id: android_operator_device
+    subtype: android_device
+    chat_prompt: Sprawdz android device przez adb operator w trybie mock.
+    needles:
+      - "android\\s+device"
+      - adb
+      - "telefon\\s+testowy"
+      - "device\\s+screen"
+    planned_uris:
+      - android://device/{id}/screenshot
+      - android://device/{id}/dump_ui
+    next_steps:
+      - uri2ops run examples/12_android_operator/task.android.yaml --adapter mock --approve
+    human_in_the_loop: true

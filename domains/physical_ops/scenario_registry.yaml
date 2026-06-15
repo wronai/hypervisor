@@ -1,0 +1,153 @@
+version: 1
+kind: urish.scenario_registry
+metadata:
+  id: physical-ops
+  description: Generic physical-operation scenarios routed to the device/robot operator.
+  source: domains/physical_ops/scenario_registry.yaml
+  markpact_readme: domains/physical_ops/README.md
+  examples:
+    - examples/36_physical_ops
+intent_kind: physical_ops
+profile: physical-ops
+default_deployment_id: device-robot-operator.local
+context_patterns:
+  - "\\b(robot|roboty|ramie\\s+robota|amr|agv|cobot|ros2?)\\b"
+  - "\\b(urzadzenie|urządzenie|sensor|czujnik|aktuator|plc|modbus|mqtt|opcua)\\b"
+  - "\\b(device\\s+operator|physical\\s+ops|field\\s+device)\\b"
+subtype_rules:
+  - subtype: robot_status
+    patterns:
+      - "\\b(robot|roboty|amr|agv|cobot)\\b.*\\b(status|state|stan|pozycja|pose|battery|bateria)\\b"
+  - subtype: robot_move
+    patterns:
+      - "\\b(robot|amr|agv|cobot)\\b.*\\b(move|jedz|jedź|przesun|przesuń|pojedz|pojedź)\\b"
+  - subtype: robot_stop
+    patterns:
+      - "\\b(robot|amr|agv|cobot)\\b.*\\b(stop|zatrzymaj|awaryjnie)\\b"
+  - subtype: robot_mission
+    patterns:
+      - "\\b(robot|amr|agv|cobot)\\b.*\\b(mission|misja|zadanie)\\b"
+  - subtype: device_status
+    patterns:
+      - "\\b(urzadzenie|urządzenie|device|sensor|czujnik|plc)\\b.*\\b(status|stan|health)\\b"
+  - subtype: device_read
+    patterns:
+      - "\\b(urzadzenie|urządzenie|device|sensor|czujnik|plc)\\b.*\\b(read|odczytaj|pobierz|wartosc|wartość)\\b"
+  - subtype: device_write
+    patterns:
+      - "\\b(urzadzenie|urządzenie|device|aktuator|plc|przekaznik|przekaźnik)\\b.*\\b(write|ustaw|wlacz|włącz|wylacz|wyłącz)\\b"
+fallback_subtype: device_status
+uri_templates:
+  robot_status:
+    - robot://robot/{id}/state
+    - health://agent/{deployment_id}
+  robot_move:
+    - robot://robot/{id}/state
+    - human://operator/safety/approve
+    - robot://robot/{id}/move
+  robot_stop:
+    - human://operator/safety/approve
+    - robot://robot/{id}/stop
+  robot_mission:
+    - robot://robot/{id}/state
+    - human://operator/safety/approve
+    - robot://robot/{id}/mission/{mission_id}/start
+  device_status:
+    - device://device/{id}/status
+    - health://agent/{deployment_id}
+  device_read:
+    - device://device/{id}/status
+    - device://device/{id}/read
+  device_write:
+    - device://device/{id}/status
+    - human://operator/safety/approve
+    - device://device/{id}/write
+next_step_templates:
+  robot_status:
+    - uri2ops run examples/36_physical_ops/task.robot.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  robot_move:
+    - uri2ops run examples/36_physical_ops/task.robot.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  robot_stop:
+    - uri2ops run examples/36_physical_ops/task.robot.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  robot_mission:
+    - uri2ops run examples/36_physical_ops/task.robot.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  device_status:
+    - uri2ops run examples/36_physical_ops/task.device.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  device_read:
+    - uri2ops run examples/36_physical_ops/task.device.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+  device_write:
+    - uri2ops run examples/36_physical_ops/task.device.yaml --adapter mock --approve
+    - hypervisor inspect-agent {deployment_id}
+human_in_the_loop_subtypes:
+  - robot_move
+  - robot_stop
+  - robot_mission
+  - device_write
+artifacts:
+  contracts:
+    - agents/operators/device_robot_operator.yaml
+    - domains/physical_ops/domain.yaml
+    - domains/physical_ops/operator_registry.yaml
+  operation_registry:
+    - packages/uri2ops/uri2ops/operation_registry/registry.yaml
+  examples:
+    - examples/36_physical_ops/task.robot.yaml
+    - examples/36_physical_ops/task.device.yaml
+scenarios:
+  - id: robot_status
+    subtype: robot_status
+    chat_prompt: Sprawdz stan robota amr-1 i pokaz baterie oraz pozycje.
+    needles:
+      - robot
+      - "stan\\s+robota"
+      - bateria
+    planned_uris:
+      - robot://robot/amr-1/state
+    next_steps:
+      - uri2ops run examples/36_physical_ops/task.robot.yaml --adapter mock --approve
+    human_in_the_loop: false
+  - id: robot_move_with_approval
+    subtype: robot_move
+    chat_prompt: Przesun robota amr-1 do punktu kontrolnego po zatwierdzeniu operatora.
+    needles:
+      - "przesun\\s+robota"
+      - "po\\s+zatwierdzeniu"
+    planned_uris:
+      - robot://robot/amr-1/state
+      - human://operator/safety/approve
+      - robot://robot/amr-1/move
+    next_steps:
+      - uri2ops run examples/36_physical_ops/task.robot.yaml --adapter mock --approve
+    human_in_the_loop: true
+  - id: device_read
+    subtype: device_read
+    chat_prompt: Odczytaj temperature z czujnika sensor-1.
+    needles:
+      - odczytaj
+      - temperature
+      - sensor
+    planned_uris:
+      - device://device/sensor-1/status
+      - device://device/sensor-1/read
+    next_steps:
+      - uri2ops run examples/36_physical_ops/task.device.yaml --adapter mock --approve
+    human_in_the_loop: false
+  - id: device_write_with_approval
+    subtype: device_write
+    chat_prompt: Wlacz przekaznik relay-1 po zatwierdzeniu operatora.
+    needles:
+      - "wlacz\\s+przekaznik"
+      - "po\\s+zatwierdzeniu"
+    planned_uris:
+      - device://device/relay-1/status
+      - human://operator/safety/approve
+      - device://device/relay-1/write
+    next_steps:
+      - uri2ops run examples/36_physical_ops/task.device.yaml --adapter mock --approve
+    human_in_the_loop: true

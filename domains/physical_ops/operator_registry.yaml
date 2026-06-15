@@ -1,0 +1,78 @@
+version: 1
+kind: taskinity.operator_registry
+metadata:
+  id: physical-ops-operator-registry
+  domain_id: physical_ops
+  description: Operator-facing capability cards for generic robots and devices.
+
+runtime:
+  agent_ref: agent://device-robot-operator
+  deployment_id: device-robot-operator.local
+  package: uri2ops
+  health_uri: http://localhost:8792/health
+  card_uri: http://localhost:8792/.well-known/agent-card.json
+  a2a_tasks_uri: http://localhost:8792/a2a/tasks
+  mcp_tools_uri: http://localhost:8792/mcp/tools
+
+cards:
+  - id: robot
+    scheme: robot
+    adapter_boundary: packages/uri2ops
+    adapters:
+      - mock
+    future_adapters:
+      - ros2
+      - mqtt
+      - vendor_sdk
+    operations:
+      - id: robot.state
+        uri: robot://robot/{id}/state
+        registry_operation: robot.state
+        side_effects: false
+        produces_artifact: true
+      - id: robot.move
+        uri: robot://robot/{id}/move
+        registry_operation: robot.move
+        side_effects: true
+        requires_approval: true
+        safety_gate: human://operator/safety/approve
+      - id: robot.stop
+        uri: robot://robot/{id}/stop
+        registry_operation: robot.stop
+        side_effects: true
+        requires_approval: true
+        safety_gate: human://operator/safety/approve
+      - id: robot.mission_start
+        uri: robot://robot/{id}/mission/{mission_id}/start
+        registry_operation: robot.mission_start
+        side_effects: true
+        requires_approval: true
+        safety_gate: human://operator/safety/approve
+
+  - id: device
+    scheme: device
+    adapter_boundary: packages/uri2ops
+    adapters:
+      - mock
+    future_adapters:
+      - mqtt
+      - modbus
+      - opcua
+      - vendor_sdk
+    operations:
+      - id: device.status
+        uri: device://device/{id}/status
+        registry_operation: device.status
+        side_effects: false
+        produces_artifact: true
+      - id: device.read
+        uri: device://device/{id}/read
+        registry_operation: device.read
+        side_effects: false
+        produces_artifact: true
+      - id: device.write
+        uri: device://device/{id}/write
+        registry_operation: device.write
+        side_effects: true
+        requires_approval: true
+        safety_gate: human://operator/safety/approve

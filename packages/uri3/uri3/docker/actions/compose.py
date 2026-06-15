@@ -50,6 +50,24 @@ def control_compose_up(ref: DockerRef, *, dry_run: bool = False) -> dict[str, An
         and "Conflict" in (result.get("stderr") or "")
         and ref.container_name
     ):
+        start = run_command(base + ["up", "-d"], dry_run=dry_run)
+        if start.get("ok"):
+            return {
+                "action": "up",
+                "compose_file": ref.compose_file,
+                "recovered": "compose_up",
+                **start,
+            }
+        remove = run_command(["docker", "rm", "-f", ref.container_name], dry_run=dry_run)
+        if remove.get("ok"):
+            recreate = run_command(base + ["up", "-d"], dry_run=dry_run)
+            if recreate.get("ok"):
+                return {
+                    "action": "up",
+                    "compose_file": ref.compose_file,
+                    "recovered": "recreate",
+                    **recreate,
+                }
         start = run_command(["docker", "start", ref.container_name], dry_run=dry_run)
         if start.get("ok"):
             return {
