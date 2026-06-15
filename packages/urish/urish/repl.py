@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 import shlex
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -8,14 +9,19 @@ from dataclasses import dataclass
 from urish.context import CONTEXT_ENV, load_context
 from urish.policy import classify_uri
 
-REPL_BANNER = """Taskinity URI shell — wpisz URI lub polecenie (exit / quit / :q aby wyjść).
+REPL_BANNER = """TellMesh URI shell — wpisz URI lub polecenie (exit / quit / :q aby wyjść).
 
-Przykłady (z domen/scenariuszy - patrz domains/* i agents/scenarios):
-  view://process/agent/<agent-id>/latest
-  health://agent/<agent-id>
-  workflow://<domain>/<scenario>/dry-run
-  explain workflow://<domain>/<scenario>
-  ask zdiagnozuj agenta <agent-id>
+Przykłady:
+  health://agent/weather-map-agent.local
+  view://process/agent/weather-map-agent.local/latest
+  hypervisor://local/weather-agent/run
+  workflow://weather_map/forecast/dry-run
+  agent run weather-map-agent.local
+  browser://chrome/page/open  (real mode dodaje --approve)
+
+NL (język naturalny):
+  ask zdiagnozuj agenta invoices-agent.local
+  zdiagnozuj agenta invoices-agent.local
 
 Meta:
   .help          — domyślny tryb (teraz: {mode})
@@ -23,6 +29,23 @@ Meta:
   .json / .text / .yaml — format odpowiedzi (.json = pełny envelope)
   context use <id> — przełącz kontekst
 """
+
+_SHELL_OUTPUT_PREFIXES = (
+    "fail ",
+    "error:",
+    "exit code:",
+    "warning:",
+    "traceback",
+    "uri[",
+)
+
+_NL_HINT_WORDS = re.compile(
+    r"\b("
+    r"zdiagnozuj|napraw|pokaż|pokaz|sprawdź|sprawdz|uruchom|wystaw|wejdź|wejdz|"
+    r"agenta|workflow|health|repair|invoice|faktur|pogod"
+    r")\b",
+    re.I,
+)
 
 
 @dataclass
@@ -100,6 +123,34 @@ def _meta_text(_raw: str, state: ReplState) -> None:
     print("output: text")
 
 
+def _looks_like_shell_output(line: str) -> bool:
+    stripped = line.strip()
+    if not stripped:
+        return False
+    lowered = stripped.lower()
+    if any(lowered.startswith(prefix) for prefix in _SHELL_OUTPUT_PREFIXES):
+        return True
+    if re.match(r"^(fail|ok|blocked)\b", lowered):
+        return True
+    if "blocked/" in lowered and "policy" in lowered:
+        return True
+    return False
+
+
+def _looks_like_natural_language(line: str) -> bool:
+    stripped = line.strip()
+    if not stripped or "://" in stripped:
+        return False
+    if _looks_like_shell_output(stripped):
+        return False
+    lowered = stripped.lower()
+    if lowered.startswith("ask "):
+        return True
+    if " " not in stripped:
+        return False
+    return _NL_HINT_WORDS.search(stripped) is not None
+
+
 def _handle_context_use(stripped: str, state: ReplState) -> bool:
     if not stripped.lower().startswith("context use "):
         return False
@@ -126,6 +177,10 @@ def parse_repl_line(line: str, state: ReplState) -> list[str] | None:
     if _handle_context_use(stripped, state):
         return None
 
+    if _looks_like_shell_output(stripped):
+        print("To wygląda na output terminala, nie polecenie. Wklej sam URI albo użyj: ask …")
+        return None
+
     known = _known_commands()
     first = _first_token(stripped)
 
@@ -133,7 +188,7 @@ def parse_repl_line(line: str, state: ReplState) -> list[str] | None:
         return _argv_for_uri_line(stripped, state)
 
     if first not in known and first not in {"exit", "quit", ":q"}:
-        if " " in stripped and not _line_has_uri(stripped):
+        if _looks_like_natural_language(stripped):
             return _argv_for_ask(stripped, state)
 
     argv = shlex.split(stripped)

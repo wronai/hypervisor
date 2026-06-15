@@ -8,7 +8,10 @@ from uri2ops.operation_registry.dispatcher import call_handler
 from uri2ops.operation_registry.loader import load_operation_registry
 from uri2ops.remote_registry.loader import resolve_operation_registry
 from uri2ops.operation_registry.models import OperationSpec
-from uri2ops.operator.adapters.browser_router import cleanup_browser_session
+from uri3.config.repo_root import ensure_repo_root_on_syspath
+
+ensure_repo_root_on_syspath()
+from agents.operators.browser_operator.adapters.browser_router import cleanup_browser_session
 from uri2ops.operator.policy_loader import load_operator_policy
 
 from .dependency import topological_steps
@@ -58,27 +61,27 @@ def _hydrate_payload(payload: dict[str, Any], results: dict[str, dict[str, Any]]
 def _resolve_adapter(spec: OperationSpec, requested: str, runtime_context: dict[str, Any]) -> str:
     if requested == "auto":
         if spec.scheme in BROWSER_SCHEMES:
-            from uri2ops.operator.adapters.browser_router import resolve_adapter_mode
+            from agents.operators.browser_operator.adapters.browser_router import resolve_adapter_mode
 
             runtime_context["adapter"] = "auto"
             return resolve_adapter_mode(spec.scheme, runtime_context)
         if spec.scheme in ANDROID_SCHEMES:
-            from uri2ops.operator.adapters.android_router import resolve_adapter_mode
+            from agents.operators.desktop_operator.adapters.android_router import resolve_adapter_mode
 
             runtime_context["adapter"] = "auto"
             return resolve_adapter_mode(spec.scheme, runtime_context)
         if spec.scheme in PCWIN_SCHEMES:
-            from uri2ops.operator.adapters.pcwin_router import resolve_adapter_mode
+            from agents.operators.desktop_operator.adapters.pcwin_router import resolve_adapter_mode
 
             runtime_context["adapter"] = "auto"
             return resolve_adapter_mode(spec.scheme, runtime_context)
         if spec.scheme in SCREEN_SCHEMES:
-            from uri2ops.operator.adapters.screen_router import resolve_adapter_mode
+            from agents.operators.desktop_operator.adapters.screen_router import resolve_adapter_mode
 
             runtime_context["adapter"] = "auto"
             return resolve_adapter_mode(spec.scheme, runtime_context)
         if spec.scheme in INPUT_SCHEMES:
-            from uri2ops.operator.adapters.input_router import resolve_adapter_mode
+            from agents.operators.desktop_operator.adapters.input_router import resolve_adapter_mode
 
             runtime_context["adapter"] = "auto"
             return resolve_adapter_mode(spec.scheme, runtime_context)

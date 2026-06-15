@@ -37,10 +37,50 @@ ticket_app = typer.Typer(help="Ticket artifacts and planfile import")
 app.add_typer(ticket_app, name="ticket")
 
 
+def _load_json_payload(payload: str, payload_file: str = "") -> dict[str, Any] | None:
+    if payload_file:
+        return json.loads(Path(payload_file).read_text(encoding="utf-8"))
+    if not payload:
+        return None
+    loaded = json.loads(payload)
+    if not isinstance(loaded, dict):
+        raise typer.BadParameter("payload must decode to a JSON object")
+    return loaded
+
+
 @app.command()
-def call(uri: str):
-    """Execute a callable URI (docker://, python://, log://)."""
-    echo_json(Uri3Client().call(uri))
+def call(
+    uri: str,
+    payload: str = typer.Option("", "--payload", help="JSON object payload"),
+    payload_file: str = typer.Option("", "--payload-file", help="Read JSON payload from file"),
+    approve: bool = typer.Option(False, "--approve", help="Approve side-effecting operator calls"),
+    environment: str = typer.Option(
+        "",
+        "--environment",
+        help="Operator environment: mock/local/docker/remote",
+    ),
+):
+    """Execute a callable URI through uri3 or hypervisor operator routing."""
+    body = _load_json_payload(payload, payload_file)
+    echo_json(
+        Uri3Client().call(
+            uri,
+            body,
+            approved=approve,
+            environment=environment or None,
+        )
+    )
+
+
+@app.command()
+def explain(
+    uri: str,
+    payload: str = typer.Option("", "--payload", help="JSON object payload"),
+    payload_file: str = typer.Option("", "--payload-file", help="Read JSON payload from file"),
+):
+    """Explain semantic URI routing and hypervisor runtime resolution."""
+    body = _load_json_payload(payload, payload_file)
+    echo_json(Uri3Client().explain(uri, payload=body))
 
 
 @app.command()

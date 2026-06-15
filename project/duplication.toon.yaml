@@ -1,12 +1,12 @@
-# redup/duplication | 89 groups | 631f 47349L | 2026-06-15
+# redup/duplication | 89 groups | 642f 48574L | 2026-06-15
 
 SUMMARY:
-  files_scanned: 631
-  total_lines:   47349
+  files_scanned: 642
+  total_lines:   48574
   dup_groups:    89
   dup_fragments: 324
-  saved_lines:   1801
-  scan_ms:       4726
+  saved_lines:   1784
+  scan_ms:       4758
 
 HOTSPOTS[7] (files with most duplication):
   agents/generated/remote_deploy_agent/routes.py  dup=101L  groups=8  frags=12  (0.2%)
@@ -176,8 +176,8 @@ DUPLICATES[89] (ranked by impact):
   [93e21064bf3bcfa7]   STRU  run_uri_flow  L=26 N=2 saved=26 sim=1.00
       packages/uri2run/uri2run/transports/flow_transport.py:13-38  (run_uri_flow)
       packages/uri2run/uri2run/transports/graph_transport.py:20-45  (run_uri_graph)
-  [369062a037d9fded]   EXAC  resolve_view_uri  L=25 N=2 saved=25 sim=1.00
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:71-95  (resolve_view_uri)
+  [2740673b13b6af30]   STRU  resolve_view_uri  L=25 N=2 saved=25 sim=1.00
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:62-86  (resolve_view_uri)
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py:47-71  (resolve_view_uri)
   [c4637a2c18d6f5fb]   STRU  skill_read_markpact_source  L=3 N=9 saved=24 sim=1.00
       agents/generated/codex_nl_plan_agent/routes.py:82-84  (skill_read_markpact_source)
@@ -189,17 +189,14 @@ DUPLICATES[89] (ranked by impact):
       agents/generated/schema_collab_agent/routes.py:82-84  (skill_read_markpact_source)
       agents/generated/schema_collab_agent/routes.py:86-88  (skill_read_device_status)
       agents/generated/schema_collab_agent/routes.py:90-92  (skill_read_robot_state)
-  [3505fffbc285b004]   EXAC  decision_for_uri  L=22 N=2 saved=22 sim=1.00
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/policy.py:17-38  (decision_for_uri)
-      output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/policy.py:17-38  (decision_for_uri)
   [3e006c66c2d6c054]   STRU  _classify_physical_operator  L=22 N=2 saved=22 sim=1.00
       packages/urish/urish/policy.py:121-142  (_classify_physical_operator)
       packages/urish/urish/policy.py:164-183  (_classify_desktop_operator)
-  [1a4c0941745de7af]   EXAC  _uri_path_parts  L=7 N=4 saved=21 sim=1.00
+  [6435ce372a9eb625]   STRU  _uri_path_parts  L=7 N=4 saved=21 sim=1.00
       agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/presentation.py:11-17  (_uri_path_parts)
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:39-45  (_uri_path_parts)
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py:21-27  (_uri_path_parts)
-      packages/urish/urish/backends/call.py:48-54  (_uri_path_parts)
+      packages/resource-agent-hypervisor/hypervisor/routing/system_request.py:21-27  (uri_path_parts)
+      packages/urish/urish/backends/call.py:117-123  (_uri_path_parts)
   [c46f4a58a014c0c5]   STRU  _call_python_backend  L=7 N=4 saved=21 sim=1.00
       packages/touri/touri/backend_dispatch.py:61-67  (_call_python_backend)
       packages/touri/touri/backend_dispatch.py:70-78  (_call_shell_backend)
@@ -226,7 +223,7 @@ DUPLICATES[89] (ranked by impact):
       packages/touri/touri/backend_dispatch.py:173-176  (_call_primary_uri_flow)
       packages/touri/touri/backend_dispatch.py:179-182  (_call_primary_uri_graph)
   [d95815c02da96534]   EXAC  list_agent_deployments  L=15 N=2 saved=15 sim=1.00
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:54-68  (list_agent_deployments)
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:45-59  (list_agent_deployments)
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py:30-44  (list_agent_deployments)
   [f56d9d07f4873f75]   STRU  _port_from_http_uri  L=5 N=4 saved=15 sim=1.00
       packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/incidents.py:23-27  (_port_from_http_uri)
@@ -240,7 +237,7 @@ DUPLICATES[89] (ranked by impact):
       agents/operators/desktop_operator/adapters/pcwin_uia.py:11-13  (_task_context)
       agents/operators/desktop_operator/adapters/screen_gnome.py:19-21  (_task_context)
   [8db5ce08e3f8bbcc]   EXAC  preview_action  L=12 N=2 saved=12 sim=1.00
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/policy.py:41-52  (preview_action)
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/policy.py:43-54  (preview_action)
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/policy.py:41-52  (preview_action)
   [ce0bff36326d3cc1]   EXAC  _lifecycle_payload  L=4 N=4 saved=12 sim=1.00
       packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py:39-42  (_lifecycle_payload)
@@ -262,8 +259,8 @@ DUPLICATES[89] (ranked by impact):
   [24079059ab354988]   EXAC  to_dict  L=11 N=2 saved=11 sim=1.00
       agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/models.py:72-82  (to_dict)
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/models.py:71-81  (to_dict)
-  [a7d32828712f8295]   EXAC  _normalize_view_uri  L=11 N=2 saved=11 sim=1.00
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:98-108  (_normalize_view_uri)
+  [3849203ed605ae1c]   STRU  _normalize_view_uri  L=11 N=2 saved=11 sim=1.00
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:89-99  (_normalize_view_uri)
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py:74-84  (_normalize_view_uri)
   [949c009dbb7bdf18]   STRU  port_from_http_uri  L=11 N=2 saved=11 sim=1.00
       packages/resource-agent-hypervisor/hypervisor/deployment_registry/health_uri.py:8-18  (port_from_http_uri)
@@ -283,8 +280,8 @@ DUPLICATES[89] (ranked by impact):
       agents/custom/gnome_programmer_agent/routes.py:65-73  (skill_run_programmer_session)
       agents/custom/screenshot_analysis_agent/routes.py:63-71  (skill_capture_and_analyze)
   [244e959beba3f97f]   STRU  _chat_request  L=9 N=2 saved=9 sim=1.00
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:639-647  (_chat_request)
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:654-662  (_nl_request)
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:285-293  (_chat_request)
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:300-308  (_nl_request)
   [9d4dbbdcebf8dd41]   STRU  skill_read_order  L=3 N=4 saved=9 sim=1.00
       packages/resource-agent-factory/agents/generated/orders_agent/routes.py:70-72  (skill_read_order)
       packages/resource-agent-factory/agents/generated/orders_agent/routes.py:76-78  (skill_read_order_events)
@@ -338,8 +335,8 @@ DUPLICATES[89] (ranked by impact):
       packages/nl2uri/nl2uri/cli.py:108-113  (single)
       packages/nl2uri/nl2uri/cli.py:117-122  (list_cmd)
   [fdc7786ef049b370]   STRU  deploy_agent_cmd  L=6 N=2 saved=6 sim=1.00
-      packages/resource-agent-hypervisor/hypervisor/cli.py:464-469  (deploy_agent_cmd)
-      packages/resource-agent-hypervisor/hypervisor/cli.py:482-489  (docker_cmd)
+      packages/resource-agent-hypervisor/hypervisor/cli.py:504-509  (deploy_agent_cmd)
+      packages/resource-agent-hypervisor/hypervisor/cli.py:522-529  (docker_cmd)
   [6955871a61c45e26]   STRU  _process_log_path  L=6 N=2 saved=6 sim=1.00
       packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py:89-94  (_process_log_path)
       packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py:97-102  (_process_log_uri)
@@ -374,6 +371,9 @@ DUPLICATES[89] (ranked by impact):
   [2ea0b96f1eefaff8]   STRU  type_text  L=5 N=2 saved=5 sim=1.00
       agents/operators/desktop_operator/adapters/input_router.py:32-36  (type_text)
       agents/operators/desktop_operator/adapters/screen_router.py:32-36  (observe)
+  [e9e2e5c84c119f1f]   STRU  _select_dashboard_uri_handler  L=5 N=2 saved=5 sim=1.00
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:361-365  (_select_dashboard_uri_handler)
+      packages/resource-agent-hypervisor/hypervisor/routing/system_dispatch.py:142-148  (_select_hypervisor_system_handler)
   [2ffd9c9c609cf61a]   STRU  port_from_command  L=5 N=2 saved=5 sim=1.00
       packages/resource-agent-hypervisor/hypervisor/deployment_registry/health_uri.py:21-25  (port_from_command)
       packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py:38-42  (_port_from_command)
@@ -390,8 +390,8 @@ DUPLICATES[89] (ranked by impact):
       agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/routes.py:78-81  (root)
       agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/routes.py:85-88  (chat_page_redirect)
   [be433a0e49bca3ee]   STRU  _html_request  L=4 N=2 saved=4 sim=1.00
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:428-431  (_html_request)
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:434-437  (_markdown_request)
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:130-133  (_html_request)
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py:136-139  (_markdown_request)
   [413ce251f5ce8dbe]   STRU  _normalize_node_list  L=4 N=2 saved=4 sim=1.00
       packages/nl2uri/nl2uri/flow_extract.py:28-31  (_normalize_node_list)
       packages/nl2uri/nl2uri/graph_repair.py:221-224  (_node_list)
@@ -487,162 +487,162 @@ REFACTOR[89] (ranked by priority):
   [18] ○ extract_function   → agents/generated/utils/skill_read_markpact_source.py
       WHY: 9 occurrences of 3-line block across 4 files — saves 24 lines
       FILES: agents/generated/codex_nl_plan_agent/routes.py, agents/generated/codex_nl_smoke_agent/routes.py, agents/generated/codex_uri_smoke_agent/routes.py, agents/generated/schema_collab_agent/routes.py
-  [19] ○ extract_function   → utils/decision_for_uri.py
-      WHY: 2 occurrences of 22-line block across 2 files — saves 22 lines
-      FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/policy.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/policy.py
-  [20] ○ extract_function   → packages/urish/urish/utils/_classify_physical_operator.py
+  [19] ○ extract_function   → packages/urish/urish/utils/_classify_physical_operator.py
       WHY: 2 occurrences of 22-line block across 1 files — saves 22 lines
       FILES: packages/urish/urish/policy.py
-  [21] ● extract_function   → utils/_uri_path_parts.py
+  [20] ● extract_function   → utils/_uri_path_parts.py
       WHY: 4 occurrences of 7-line block across 4 files — saves 21 lines
-      FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/presentation.py, agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py, packages/urish/urish/backends/call.py
-  [22] ○ extract_function   → packages/touri/touri/utils/_call_python_backend.py
+      FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/presentation.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py, packages/resource-agent-hypervisor/hypervisor/routing/system_request.py, packages/urish/urish/backends/call.py
+  [21] ○ extract_function   → packages/touri/touri/utils/_call_python_backend.py
       WHY: 4 occurrences of 7-line block across 1 files — saves 21 lines
       FILES: packages/touri/touri/backend_dispatch.py
-  [23] ○ extract_function   → packages/utils/_read_yaml.py
+  [22] ○ extract_function   → packages/utils/_read_yaml.py
       WHY: 5 occurrences of 5-line block across 5 files — saves 20 lines
       FILES: packages/nl2uri/nl2uri/domain_registry.py, packages/resource-agent-hypervisor/hypervisor/agent_describe.py, packages/resource-agent-hypervisor/hypervisor/contract_registry/loader.py, packages/resource-agent-hypervisor/hypervisor/contract_registry/uri_resolver.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/aliases.py
-  [24] ○ extract_function   → packages/nl2uri/nl2uri/utils/task.py
+  [23] ○ extract_function   → packages/nl2uri/nl2uri/utils/task.py
       WHY: 2 occurrences of 19-line block across 1 files — saves 19 lines
       FILES: packages/nl2uri/nl2uri/cli.py
-  [25] ○ extract_function   → agents/operators/utils/_playwright_ready.py
+  [24] ○ extract_function   → agents/operators/utils/_playwright_ready.py
       WHY: 4 occurrences of 6-line block across 4 files — saves 18 lines
       FILES: agents/operators/browser_operator/adapters/browser_router.py, agents/operators/desktop_operator/adapters/input_router.py, agents/operators/desktop_operator/adapters/pcwin_router.py, agents/operators/desktop_operator/adapters/screen_router.py
-  [26] ○ extract_function   → packages/touri/touri/utils/_call_primary_python.py
+  [25] ○ extract_function   → packages/touri/touri/utils/_call_primary_python.py
       WHY: 5 occurrences of 4-line block across 1 files — saves 16 lines
       FILES: packages/touri/touri/backend_dispatch.py
-  [27] ○ extract_function   → utils/list_agent_deployments.py
+  [26] ○ extract_function   → utils/list_agent_deployments.py
       WHY: 2 occurrences of 15-line block across 2 files — saves 15 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py
-  [28] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_port_from_http_uri.py
+  [27] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_port_from_http_uri.py
       WHY: 4 occurrences of 5-line block across 4 files — saves 15 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/deployment_registry/inspection/incidents.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/loader.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/models.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/port_utils.py
-  [29] ○ extract_function   → agents/operators/desktop_operator/adapters/utils/_task_context.py
+  [28] ○ extract_function   → agents/operators/desktop_operator/adapters/utils/_task_context.py
       WHY: 5 occurrences of 3-line block across 5 files — saves 12 lines
       FILES: agents/operators/desktop_operator/adapters/android_adb.py, agents/operators/desktop_operator/adapters/android_mock.py, agents/operators/desktop_operator/adapters/pcwin_mock.py, agents/operators/desktop_operator/adapters/pcwin_uia.py, agents/operators/desktop_operator/adapters/screen_gnome.py
-  [30] ○ extract_function   → utils/preview_action.py
+  [29] ○ extract_function   → utils/preview_action.py
       WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/policy.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/policy.py
-  [31] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_lifecycle_payload.py
+  [30] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_lifecycle_payload.py
       WHY: 4 occurrences of 4-line block across 4 files — saves 12 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/lifecycle_status.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/stopper.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/supervisor.py
-  [32] ○ extract_function   → packages/nl2uri/nl2uri/utils/slug_from_prompt.py
+  [31] ○ extract_function   → packages/nl2uri/nl2uri/utils/slug_from_prompt.py
       WHY: 4 occurrences of 4-line block across 4 files — saves 12 lines
       FILES: packages/nl2uri/nl2uri/flow_helpers.py, packages/nl2uri/nl2uri/graph_planner.py, packages/nl2uri/nl2uri/graph_repair.py, packages/nl2uri/nl2uri/planner_templates.py
-  [33] ○ extract_function   → packages/resource-agent-factory/generator/utils/python_file_header.py
+  [32] ○ extract_function   → packages/resource-agent-factory/generator/utils/python_file_header.py
       WHY: 3 occurrences of 6-line block across 1 files — saves 12 lines
       FILES: packages/resource-agent-factory/generator/header.py
-  [34] ○ extract_function   → packages/uri3/uri3/protocols/schemes/utils/spec.py
+  [33] ○ extract_function   → packages/uri3/uri3/protocols/schemes/utils/spec.py
       WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
       FILES: packages/uri3/uri3/protocols/schemes/a2a.py, packages/uri3/uri3/protocols/schemes/mcp.py
-  [35] ○ extract_class      → utils/to_dict.py
+  [34] ○ extract_class      → utils/to_dict.py
       WHY: 2 occurrences of 11-line block across 2 files — saves 11 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/models.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/models.py
-  [36] ○ extract_function   → utils/_normalize_view_uri.py
+  [35] ○ extract_function   → utils/_normalize_view_uri.py
       WHY: 2 occurrences of 11-line block across 2 files — saves 11 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py
-  [37] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/port_from_http_uri.py
+  [36] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/port_from_http_uri.py
       WHY: 2 occurrences of 11-line block across 2 files — saves 11 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/deployment_registry/health_uri.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py
-  [38] ○ extract_function   → agents/operators/desktop_operator/adapters/utils/resolve_adapter_mode.py
+  [37] ○ extract_function   → agents/operators/desktop_operator/adapters/utils/resolve_adapter_mode.py
       WHY: 2 occurrences of 10-line block across 2 files — saves 10 lines
       FILES: agents/operators/desktop_operator/adapters/android_router.py, agents/operators/desktop_operator/adapters/input_router.py
-  [39] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_health_uri.py
+  [38] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_health_uri.py
       WHY: 3 occurrences of 5-line block across 2 files — saves 10 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/stopper.py
-  [40] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/utils/load_planfile_strategy.py
+  [39] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/utils/load_planfile_strategy.py
       WHY: 3 occurrences of 5-line block across 3 files — saves 10 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/integrations/planfile/ticket_mapper.py, packages/resource-agent-hypervisor/hypervisor/repair/registry.py, packages/resource-agent-hypervisor/hypervisor/repair/validator.py
-  [41] ○ extract_function   → agents/custom/utils/skill_run_programmer_session.py
+  [40] ○ extract_function   → agents/custom/utils/skill_run_programmer_session.py
       WHY: 2 occurrences of 9-line block across 2 files — saves 9 lines
       FILES: agents/custom/gnome_programmer_agent/routes.py, agents/custom/screenshot_analysis_agent/routes.py
-  [42] ○ extract_function   → agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/utils/_chat_request.py
+  [41] ○ extract_function   → agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/utils/_chat_request.py
       WHY: 2 occurrences of 9-line block across 1 files — saves 9 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py
-  [43] ○ extract_function   → packages/resource-agent-factory/agents/generated/utils/skill_read_order.py
+  [42] ○ extract_function   → packages/resource-agent-factory/agents/generated/utils/skill_read_order.py
       WHY: 4 occurrences of 3-line block across 2 files — saves 9 lines
       FILES: packages/resource-agent-factory/agents/generated/orders_agent/routes.py, packages/resource-agent-factory/agents/generated/user_agent/routes.py
-  [44] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_local_health_uri.py
+  [43] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_local_health_uri.py
       WHY: 2 occurrences of 9-line block across 1 files — saves 9 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/deployment_registry/local_targets.py
-  [45] ○ extract_function   → packages/touri/touri/backends/utils/call_uri_flow_backend.py
+  [44] ○ extract_function   → packages/touri/touri/backends/utils/call_uri_flow_backend.py
       WHY: 2 occurrences of 9-line block across 1 files — saves 9 lines
       FILES: packages/touri/touri/backends/uri_flow_backend.py
-  [46] ○ extract_function   → packages/uri2run/uri2run/transports/utils/run_flow_transport.py
+  [45] ○ extract_function   → packages/uri2run/uri2run/transports/utils/run_flow_transport.py
       WHY: 2 occurrences of 9-line block across 2 files — saves 9 lines
       FILES: packages/uri2run/uri2run/transports/flow_transport.py, packages/uri2run/uri2run/transports/graph_transport.py
-  [47] ○ extract_function   → packages/uri2ops/uri2ops/utils/_unwrap_config_document.py
+  [46] ○ extract_function   → packages/uri2ops/uri2ops/utils/_unwrap_config_document.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: packages/uri2ops/uri2ops/operator/policy_loader.py, packages/uri2ops/uri2ops/remote_registry/loader.py
-  [48] ○ extract_function   → packages/nl2uri/nl2uri/utils/_rule_parallel_workflow.py
+  [47] ○ extract_function   → packages/nl2uri/nl2uri/utils/_rule_parallel_workflow.py
       WHY: 3 occurrences of 4-line block across 1 files — saves 8 lines
       FILES: packages/nl2uri/nl2uri/output_classifier.py
-  [49] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/repair/utils/validate_incident_dict.py
+  [48] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/repair/utils/validate_incident_dict.py
       WHY: 3 occurrences of 4-line block across 1 files — saves 8 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/repair/validator.py
-  [50] ○ extract_class      → utils/to_dict.py
+  [49] ○ extract_class      → utils/to_dict.py
       WHY: 2 occurrences of 7-line block across 2 files — saves 7 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/models.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/models.py
-  [51] ○ extract_function   → utils/health.py
+  [50] ○ extract_function   → utils/health.py
       WHY: 2 occurrences of 7-line block across 2 files — saves 7 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/routes.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/routes.py
-  [52] ○ extract_function   → utils/ui_agents.py
+  [51] ○ extract_function   → utils/ui_agents.py
       WHY: 2 occurrences of 7-line block across 2 files — saves 7 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/routes.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/routes.py
-  [53] ○ extract_function   → utils/ui_agent_detail.py
+  [52] ○ extract_function   → utils/ui_agent_detail.py
       WHY: 2 occurrences of 7-line block across 2 files — saves 7 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/routes.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/routes.py
-  [54] ○ extract_function   → agents/operators/desktop_operator/adapters/utils/window_id_from_payload.py
+  [53] ○ extract_function   → agents/operators/desktop_operator/adapters/utils/window_id_from_payload.py
       WHY: 2 occurrences of 7-line block across 1 files — saves 7 lines
       FILES: agents/operators/desktop_operator/adapters/pcwin_uri.py
-  [55] ○ extract_function   → utils/api_process_view.py
+  [54] ○ extract_function   → utils/api_process_view.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/routes.py, output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/routes.py
-  [56] ○ extract_function   → scripts/www/utils/_import_markdown.py
+  [55] ○ extract_function   → scripts/www/utils/_import_markdown.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: scripts/www/build_examples_docs.py, scripts/www/md_html.py
-  [57] ○ extract_function   → agents/custom/remote_deploy_agent/utils/skill_start_remote_agent.py
+  [56] ○ extract_function   → agents/custom/remote_deploy_agent/utils/skill_start_remote_agent.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: agents/custom/remote_deploy_agent/routes.py
-  [58] ○ extract_function   → packages/nl2uri/nl2uri/utils/single.py
+  [57] ○ extract_function   → packages/nl2uri/nl2uri/utils/single.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/nl2uri/nl2uri/cli.py
-  [59] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/utils/deploy_agent_cmd.py
+  [58] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/utils/deploy_agent_cmd.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/cli.py
-  [60] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_process_log_path.py
+  [59] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/_process_log_path.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py
-  [61] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/repair/utils/_incident_text.py
+  [60] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/repair/utils/_incident_text.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/repair/classifier.py
-  [62] ○ extract_function   → packages/utils/find_repo_root.py
+  [61] ○ extract_function   → packages/utils/find_repo_root.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: packages/uri2pact/uri2pact/core.py, packages/urish/urish/scenario_registry.py
-  [63] ○ extract_function   → packages/uri3/uri3/graph/utils/adjacency.py
+  [62] ○ extract_function   → packages/uri3/uri3/graph/utils/adjacency.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/uri3/uri3/graph/dependency_graph.py
-  [64] ○ extract_function   → packages/uri3/uri3/graph/utils/_root_nodes.py
+  [63] ○ extract_function   → packages/uri3/uri3/graph/utils/_root_nodes.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: packages/uri3/uri3/graph/dependency_graph.py
-  [65] ○ extract_function   → packages/urish/urish/utils/_meta_json.py
+  [64] ○ extract_function   → packages/urish/urish/utils/_meta_json.py
       WHY: 3 occurrences of 3-line block across 1 files — saves 6 lines
       FILES: packages/urish/urish/repl.py
-  [66] ○ extract_function   → packages/resource-agent-factory/agents/generated/utils/read_resource.py
+  [65] ○ extract_function   → packages/resource-agent-factory/agents/generated/utils/read_resource.py
       WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
       FILES: packages/resource-agent-factory/agents/generated/orders_agent/routes.py, packages/resource-agent-factory/agents/generated/user_agent/routes.py
-  [67] ○ extract_function   → packages/resource-agent-factory/agents/generated/utils/dispatch_command.py
+  [66] ○ extract_function   → packages/resource-agent-factory/agents/generated/utils/dispatch_command.py
       WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
       FILES: packages/resource-agent-factory/agents/generated/orders_agent/routes.py, packages/resource-agent-factory/agents/generated/user_agent/routes.py
-  [68] ○ extract_function   → packages/urigen/urigen/utils/_repo_relative.py
+  [67] ○ extract_function   → packages/urigen/urigen/utils/_repo_relative.py
       WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
       FILES: packages/urigen/urigen/apply_planner.py, packages/urigen/urigen/schema_check.py
-  [69] ○ extract_function   → agents/operators/browser_operator/adapters/utils/playwright_import_error.py
+  [68] ○ extract_function   → agents/operators/browser_operator/adapters/utils/playwright_import_error.py
       WHY: 2 occurrences of 5-line block across 1 files — saves 5 lines
       FILES: agents/operators/browser_operator/adapters/browser_playwright.py
-  [70] ○ extract_function   → agents/operators/desktop_operator/adapters/utils/type_text.py
+  [69] ○ extract_function   → agents/operators/desktop_operator/adapters/utils/type_text.py
       WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
       FILES: agents/operators/desktop_operator/adapters/input_router.py, agents/operators/desktop_operator/adapters/screen_router.py
+  [70] ○ extract_function   → utils/_select_dashboard_uri_handler.py
+      WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
+      FILES: agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py, packages/resource-agent-hypervisor/hypervisor/routing/system_dispatch.py
   [71] ○ extract_function   → packages/resource-agent-hypervisor/hypervisor/deployment_registry/utils/port_from_command.py
       WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
       FILES: packages/resource-agent-hypervisor/hypervisor/deployment_registry/health_uri.py, packages/resource-agent-hypervisor/hypervisor/deployment_registry/runtime_state.py
@@ -701,7 +701,7 @@ REFACTOR[89] (ranked by priority):
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
       FILES: packages/urish/urish/repl.py
 
-QUICK_WINS[63] (low risk, high savings — do first):
+QUICK_WINS[62] (low risk, high savings — do first):
   [1] extract_function   saved=170L  → agents/generated/utils/_read_uri.py
       FILES: routes.py, routes.py, routes.py +8
   [2] extract_function   saved=130L  → agents/generated/utils/dispatch_command.py
@@ -726,8 +726,8 @@ QUICK_WINS[63] (low risk, high savings — do first):
 DEPENDENCY_RISK[16] (duplicates spanning multiple packages):
   _uri_path_parts  packages=3  files=4
       agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/presentation.py
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py
+      packages/resource-agent-hypervisor/hypervisor/routing/system_request.py
       packages/urish/urish/backends/call.py
   _uri_allowed  packages=2  files=13
       agents/generated/codex_nl_plan_agent/routes.py
@@ -744,17 +744,17 @@ DEPENDENCY_RISK[16] (duplicates spanning multiple packages):
   resolve_view_uri  packages=2  files=2
       agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py
-  decision_for_uri  packages=2  files=2
-      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/policy.py
-      output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/policy.py
   list_agent_deployments  packages=2  files=2
       agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/uri_client.py
   preview_action  packages=2  files=2
       agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/policy.py
       output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/policy.py
+  to_dict  packages=2  files=2
+      agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/models.py
+      output/ecosystems/hypervisor-dashboard/app/hypervisor_dashboard_agent/models.py
 
-EFFORT_ESTIMATE (total ≈ 73.3h):
+EFFORT_ESTIMATE (total ≈ 72.1h):
   hard   _read_uri                           saved=170L  ~340min
   hard   dispatch_command                    saved=130L  ~260min
   hard   _dispatch_command                   saved=110L  ~220min
@@ -765,8 +765,8 @@ EFFORT_ESTIMATE (total ≈ 73.3h):
   hard   skill_run_cron_monitor              saved=84L  ~168min
   hard   _command_uri                        saved=60L  ~120min
   hard   run_a2a_transport                   saved=54L  ~108min
-  ... +79 more (~2022min)
+  ... +79 more (~1954min)
 
 METRICS-TARGET:
   dup_groups:  89 → 0
-  saved_lines: 1801 lines recoverable
+  saved_lines: 1784 lines recoverable

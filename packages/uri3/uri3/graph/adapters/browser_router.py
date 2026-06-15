@@ -20,7 +20,7 @@ from uri3.graph.models import GraphNode
 
 def _uri2ops_playwright_ready() -> bool:
     try:
-        from uri2ops.operator.adapters.browser_router import playwright_ready
+        from agents.operators.browser_operator.adapters.browser_router import playwright_ready
     except ImportError:
         return False
     return playwright_ready()

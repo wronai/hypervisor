@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Any
 
@@ -12,10 +13,22 @@ from uri2ops.remote_registry.loader import list_remote_sources, registry_documen
 
 
 class OperatorService:
-    def __init__(self, *, root: Path | None = None) -> None:
+    def __init__(
+        self,
+        *,
+        root: Path | None = None,
+        registry_path: Path | str | None = None,
+    ) -> None:
         self.root = Path(root) if root else Path.cwd()
+        if registry_path is not None:
+            self.registry_path = Path(registry_path)
+        else:
+            env_path = os.getenv("URI2OPS_REGISTRY_PATH")
+            self.registry_path = Path(env_path) if env_path else None
 
     def registry(self):
+        if self.registry_path is not None:
+            return resolve_operation_registry(self.registry_path, root=self.root)
         return resolve_operation_registry(root=self.root)
 
     def registry_export(self) -> dict[str, Any]:
@@ -43,7 +56,7 @@ class OperatorService:
         *,
         dry_run: bool = False,
         approve: bool = False,
-        adapter: str = "mock",
+        adapter: str = "auto",
     ) -> dict[str, Any]:
         task: OperatorTask = parse_task(task_data)
         result = run_task(task, dry_run=dry_run, approve=approve, adapter=adapter, root=self.root)

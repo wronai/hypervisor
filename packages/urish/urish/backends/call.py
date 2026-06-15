@@ -21,6 +21,8 @@ _SYSTEM_URI_SCHEMES = frozenset(
         "log",
         "html",
         "markdown",
+        "chat",
+        "nl",
     }
 )
 _TOURI_RUNTIME_BACKENDS = frozenset(
@@ -41,6 +43,75 @@ _TOURI_RUNTIME_BACKENDS = frozenset(
         "uri2ops",
     }
 )
+
+
+_OPERATOR_SCHEMES = frozenset(
+    {"browser", "dom", "screen", "input", "android", "pcwin", "robot", "device"}
+)
+
+
+def _is_operator_uri(target: str) -> bool:
+    return urlparse(target).scheme in _OPERATOR_SCHEMES
+
+
+def _call_operator_uri(
+    target: str,
+    payload: dict[str, Any],
+    *,
+    dry_run: bool,
+    approve: bool,
+) -> dict[str, Any]:
+    """Route operator URIs through hypervisor executive layer (agent/env/policy → uri2run)."""
+    root = find_repo_root(strict=False)
+    if dry_run:
+        from hypervisor.routing import resolve_hypervisor_route
+        from urish.backends.explain import explain_target
+
+        resolution = resolve_hypervisor_route(
+            target,
+            payload=payload,
+            root=root,
+            approved=approve,
+        )
+        return {
+            "ok": True,
+            "workflow_status": "completed",
+            "execution_status": "completed",
+            "service_result_status": "succeeded",
+            "result_type": "plan",
+            "data": {
+                "target": target,
+                "payload": payload,
+                "explain": explain_target(target),
+                "canonical_uri": resolution.route.canonical_uri,
+                "hypervisor_resolution": resolution.to_dict(),
+            },
+            "meta": {
+                "runtime": "hypervisor",
+                "transport": "hypervisor.routing",
+                "target": target,
+            },
+        }
+
+    from hypervisor.routing import call_uri as hypervisor_call_uri
+
+    result = hypervisor_call_uri(target, payload, root=root, approved=approve)
+    body = result.to_dict()
+    ok = bool(body.get("ok"))
+    return {
+        "ok": ok,
+        "workflow_status": "completed" if ok else "failed",
+        "execution_status": "completed" if ok else "failed",
+        "service_result_status": "succeeded" if ok else "failed",
+        "result_type": body.get("result_type", "operator"),
+        "data": body.get("data") if isinstance(body.get("data"), dict) else body,
+        "meta": {
+            "runtime": "hypervisor",
+            "transport": "hypervisor.routing",
+            "target": target,
+            **(body.get("meta") or {}),
+        },
+    }
 
 
 def _uri_path_parts(uri: str) -> list[str]:
@@ -80,6 +151,40 @@ def _misrouted_view_hint(target: str) -> str | None:
         "view://process/agent/{id}/latest, view://incident/{id}/explain, "
         "view://workflow/{id}/timeline. For weather HTML use weather://forecast/{place}/{days}/html."
     )
+
+
+def _flow_agent_alias_hint(target: str) -> str | None:
+    parsed = urlparse(target)
+    if parsed.scheme != "agent":
+        return None
+    alias = (parsed.netloc or parsed.path.lstrip("/")).split("/", 1)[0]
+    if not alias:
+        return None
+    try:
+        from nl2uri.domain_registry import load_domain_registry
+
+        for entry in load_domain_registry():
+            aliases = entry.flow_aliases
+            if alias not in aliases.values():
+                continue
+            local_run = aliases.get("local_run") or next(
+                iter(entry.deployment_selector_aliases or {}),
+                None,
+            )
+            deployment_id = entry.default_deployment_id or "weather-map-agent.local"
+            local_hint = (
+                f"hypervisor://local/{local_run}/run"
+                if local_run
+                else f"hypervisor://agent/{deployment_id}/run"
+            )
+            return (
+                f"'{target}' is a uri2flow alias, not a direct runtime URI. "
+                f"Try health://agent/{deployment_id}, {local_hint}, "
+                f"or bash examples/15_compact_uri_flow/run.sh"
+            )
+    except Exception:
+        return None
+    return None
 
 
 def _is_system_uri(target: str) -> bool:
@@ -221,7 +326,23 @@ def call_uri(
             target,
             payload,
             dry_run=dry_run,
-            approve=bool(policy_options.approve) if policy_options else False,
+            approve=bool(
+                policy_options.resolves_approve(context_policy=context_policy)
+                if policy_options
+                else False
+            ),
+        )
+
+    if _is_operator_uri(target):
+        return _call_operator_uri(
+            target,
+            payload,
+            dry_run=dry_run,
+            approve=bool(
+                policy_options.resolves_approve(context_policy=context_policy)
+                if policy_options
+                else False
+            ),
         )
 
     if dry_run:
@@ -252,7 +373,7 @@ def call_uri(
         backend = _backend_from_explain(target, explain)
         if backend is None:
             error = f"No executable backend for URI: {target}"
-            hint = _misrouted_view_hint(target)
+            hint = _flow_agent_alias_hint(target) or _misrouted_view_hint(target)
             if hint:
                 error = f"{error}. {hint}"
             return {

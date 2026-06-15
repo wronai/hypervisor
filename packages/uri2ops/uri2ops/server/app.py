@@ -16,9 +16,15 @@ from uri2ops.server.service import OperatorService
 from uri2ops.server.routes.health import McpToolCallRequest, TaskRequest  # noqa: F401
 
 
-def create_app(*, root: Path | None = None, base_url: str = "http://127.0.0.1:8791") -> FastAPI:
-    service = OperatorService(root=root)
-    app = FastAPI(title="uri2ops", version=__version__)
+def create_app(
+    *,
+    root: Path | None = None,
+    base_url: str = "http://127.0.0.1:8791",
+    registry_path: Path | str | None = None,
+    title: str | None = None,
+) -> FastAPI:
+    service = OperatorService(root=root, registry_path=registry_path)
+    app = FastAPI(title=title or "uri2ops", version=__version__)
 
     for router_factory in (
         lambda: health_router(),

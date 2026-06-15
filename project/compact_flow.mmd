@@ -1,10 +1,10 @@
 flowchart TD
-%% generated in 0.27s
+%% generated in 0.25s
     agents__custom["agents.custom<br/>46 funcs"]
     agents__generated["agents.generated<br/>149 funcs"]
     agents__operators["agents.operators<br/>109 funcs"]
-    agents__system["agents.system<br/>159 funcs"]
-    examples__38_autonomous_agents["examples.38_autonomous_agents<br/>1 funcs"]
+    agents__system["agents.system<br/>93 funcs"]
+    examples__23_nl_to_agent_tutorial["examples.23_nl_to_agent_tutorial<br/>3 funcs"]
     generator__hashutil["generator.hashutil<br/>1 funcs"]
     generator__model["generator.model<br/>2 funcs"]
     generator__validate["generator.validate<br/>3 funcs"]
@@ -20,9 +20,10 @@ flowchart TD
     meta_agent__repair["meta_agent.repair<br/>9 funcs"]
     nl2a__cli["nl2a.cli<br/>2 funcs"]
     nl2uri__writer["nl2uri.writer<br/>1 funcs"]
+    packages__hypervisor_dashboard_agent["packages.hypervisor-dashboard-agent<br/>37 funcs"]
     packages__nl2uri["packages.nl2uri<br/>156 funcs"]
     packages__resource_agent_factory["packages.resource-agent-factory<br/>35 funcs"]
-    packages__resource_agent_hypervisor["packages.resource-agent-hypervisor<br/>452 funcs"]
+    packages__resource_agent_hypervisor["packages.resource-agent-hypervisor<br/>507 funcs"]
     packages__touri["packages.touri<br/>69 funcs"]
     packages__uri2flow["packages.uri2flow<br/>31 funcs"]
     packages__uri2ops["packages.uri2ops<br/>71 funcs"]
@@ -30,9 +31,9 @@ flowchart TD
     packages__uri2run["packages.uri2run<br/>83 funcs"]
     packages__uri2verify["packages.uri2verify<br/>44 funcs"]
     packages__uri2voice["packages.uri2voice<br/>15 funcs"]
-    packages__uri3["packages.uri3<br/>371 funcs"]
+    packages__uri3["packages.uri3<br/>395 funcs"]
     packages__urigen["packages.urigen<br/>92 funcs"]
-    packages__urish["packages.urish<br/>254 funcs"]
+    packages__urish["packages.urish<br/>256 funcs"]
     scripts__architecture_audit["scripts.architecture_audit<br/>44 funcs"]
     scripts__examples["scripts.examples<br/>25 funcs"]
     scripts__www["scripts.www<br/>82 funcs"]
@@ -46,57 +47,58 @@ flowchart TD
     www__api_bridge["www.api-bridge<br/>8 funcs"]
     www__chat_voice["www.chat-voice<br/>22 funcs"]
     www__landing["www.landing<br/>111 funcs"]
-    packages__resource_agent_hypervisor ==>|90| packages__uri3
+    packages__resource_agent_hypervisor ==>|98| packages__uri3
     packages__uri2run ==>|34| packages__uri3
-    packages__urish ==>|29| packages__uri3
-    packages__uri3 ==>|28| uri2ops__operation_registry
+    packages__urish ==>|30| packages__uri3
+    packages__uri3 ==>|29| uri2ops__operation_registry
     packages__nl2uri ==>|27| packages__uri3
-    packages__resource_agent_hypervisor ==>|24| examples__38_autonomous_agents
+    packages__resource_agent_hypervisor ==>|24| examples__23_nl_to_agent_tutorial
     packages__urish ==>|22| packages__urigen
     agents__generated ==>|22| packages__touri
-    scripts__www ==>|21| examples__38_autonomous_agents
-    agents__system ==>|20| packages__resource_agent_hypervisor
-    packages__resource_agent_hypervisor ==>|16| uri2ops__operation_registry
-    packages__urish ==>|15| packages__resource_agent_hypervisor
+    scripts__www ==>|21| examples__23_nl_to_agent_tutorial
+    packages__resource_agent_hypervisor ==>|17| uri2ops__operation_registry
+    packages__urish ==>|16| packages__resource_agent_hypervisor
     agents__operators ==>|15| packages__uri3
+    packages__uri3 ==>|13| packages__uri2ops
     packages__touri ==>|13| packages__uri2run
     packages__urish ==>|12| packages__touri
     packages__uri3 ==>|12| packages__urish
     packages__urish ==>|11| uri2ops__operation_registry
-    packages__urish ==>|11| examples__38_autonomous_agents
+    packages__urish ==>|11| examples__23_nl_to_agent_tutorial
+    packages__uri3 ==>|11| packages__touri
     packages__resource_agent_hypervisor ==>|11| hypervisor__contract_registry
     agents__generated ==>|11| uri3__resolvers
-    packages__uri3 ==>|10| packages__touri
+    agents__system ==>|10| packages__resource_agent_hypervisor
     packages__urish ==>|9| packages__uri2ops
-    packages__uri3 ==>|9| packages__uri2ops
     packages__touri ==>|9| packages__uri3
-    scripts__examples ==>|9| examples__38_autonomous_agents
+    scripts__examples ==>|9| examples__23_nl_to_agent_tutorial
     agents__custom ==>|9| packages__urigen
-    agents__system ==>|9| packages__urish
     scripts__examples ==>|8| packages__uri3
+    agents__system ==>|8| packages__hypervisor_dashboard_agent
     packages__urish ==>|7| packages__nl2uri
     packages__nl2uri ==>|7| uri2ops__operation_registry
     scripts__examples ==>|7| packages__resource_agent_hypervisor
+    packages__hypervisor_dashboard_agent ==>|7| agents__system
     agents__custom ==>|7| packages__resource_agent_hypervisor
-    agents__system ==>|7| packages__uri3
     packages__uri2ops ==>|6| uri2ops__operation_registry
     packages__uri3 ==>|6| packages__resource_agent_hypervisor
     packages__uri3 ==>|6| packages__uri2verify
-    packages__resource_agent_factory ==>|6| examples__38_autonomous_agents
+    packages__resource_agent_factory ==>|6| examples__23_nl_to_agent_tutorial
     packages__resource_agent_hypervisor ==>|6| packages__urigen
     packages__urigen ==>|5| packages__uri3
+    packages__uri2ops ==>|5| examples__23_nl_to_agent_tutorial
     packages__uri2ops ==>|5| www__landing
     packages__uri3 ==>|5| uri3__resolvers
     packages__nl2uri ==>|5| packages__resource_agent_hypervisor
     meta_agent__api ==>|5| packages__resource_agent_hypervisor
     packages__resource_agent_hypervisor ==>|5| packages__resource_agent_factory
-    packages__uri2ops ==>|5| examples__38_autonomous_agents
-    agents__system ==>|5| uri2ops__operation_registry
+    agents__system ==>|5| packages__urish
+    agents__system ==>|5| packages__uri3
     packages__urish ==>|4| packages__uri2run
     packages__urish ==>|4| hypervisor__deployment_registry
     packages__urigen ==>|4| uri2ops__operation_registry
     packages__uri2flow ==>|4| packages__urigen
-    generator__validate ==>|4| examples__38_autonomous_agents
+    generator__validate ==>|4| examples__23_nl_to_agent_tutorial
     packages__nl2uri ==>|4| packages__uri2flow
     packages__uri2verify ==>|4| packages__uri3
     packages__resource_agent_hypervisor ==>|4| hypervisor__deployment_registry
@@ -105,23 +107,28 @@ flowchart TD
     packages__urigen -->|3| packages__uri2flow
     packages__uri3 -->|3| www__landing
     packages__uri3 -->|3| hypervisor__contract_registry
-    packages__uri2flow -->|3| examples__38_autonomous_agents
+    packages__uri2flow -->|3| examples__23_nl_to_agent_tutorial
     packages__touri -->|3| packages__uri2pact
     packages__nl2uri -->|3| nl2uri__writer
     packages__nl2uri -->|3| packages__urigen
     packages__resource_agent_hypervisor -->|3| meta_agent__planner
     packages__resource_agent_hypervisor -->|3| generator__validate
     meta_agent__repair -->|3| generator__validate
-    hypervisor__verifier -->|3| examples__38_autonomous_agents
+    hypervisor__verifier -->|3| examples__23_nl_to_agent_tutorial
+    packages__resource_agent_hypervisor -->|3| packages__uri2ops
     packages__resource_agent_hypervisor -->|3| generator__hashutil
-    scripts__architecture_audit -->|3| examples__38_autonomous_agents
+    scripts__architecture_audit -->|3| examples__23_nl_to_agent_tutorial
+    agents__system -->|3| uri2ops__operation_registry
     agents__custom -->|3| packages__uri3
     agents__operators -->|3| packages__touri
+    packages__resource_agent_hypervisor -->|3| packages__urish
     packages__urish -->|2| packages__uri2pact
     uri2ops__operation_registry -->|2| packages__uri2ops
     packages__uri3 -->|2| uri3__validators
+    packages__uri3 -->|2| agents__operators
     packages__uri3 -->|2| packages__uri2flow
     packages__uri3 -->|2| packages__urigen
+    packages__uri3 -->|2| uri3__protocols
     packages__uri2flow -->|2| packages__uri3
     packages__uri2flow -->|2| packages__uri2pact
     packages__uri2run -->|2| uri2ops__operation_registry
@@ -131,28 +138,29 @@ flowchart TD
     packages__resource_agent_factory -->|2| generator__hashutil
     packages__nl2uri -->|2| packages__resource_agent_factory
     packages__resource_agent_hypervisor -->|2| meta_agent__repair
-    packages__resource_agent_hypervisor -->|2| packages__uri2verify
     packages__resource_agent_hypervisor -->|2| www__landing
     hypervisor__contract_registry -->|2| packages__resource_agent_hypervisor
     hypervisor__compatibility -->|2| hypervisor__contract_registry
-    packages__uri3 -->|2| agents__operators
-    packages__resource_agent_hypervisor -->|2| packages__uri2ops
+    packages__hypervisor_dashboard_agent -->|2| packages__resource_agent_hypervisor
+    packages__hypervisor_dashboard_agent -->|2| packages__uri3
+    packages__hypervisor_dashboard_agent -->|2| uri2ops__operation_registry
+    packages__resource_agent_hypervisor -->|2| packages__uri2verify
+    packages__resource_agent_hypervisor -->|2| packages__touri
     packages__urish -->|1| www__landing
     packages__urish -->|1| scripts__examples
     packages__urish -->|1| packages__uri2flow
     packages__urish -->|1| packages__resource_agent_factory
-    packages__urigen -->|1| examples__38_autonomous_agents
+    packages__urigen -->|1| examples__23_nl_to_agent_tutorial
     packages__urigen -->|1| packages__touri
     packages__uri2ops -->|1| uri2ops__server
     packages__uri3 -->|1| www__chat_voice
     uri3__validators -->|1| uri3__protocols
     packages__uri3 -->|1| uri3__graph
-    packages__uri3 -->|1| uri3__protocols
     packages__uri3 -->|1| hypervisor__uri2llm
     uri3__resolvers -->|1| packages__uri3
     uri3__resolvers -->|1| uri3__protocols
     packages__uri3 -->|1| packages__uri2run
-    packages__touri -->|1| examples__38_autonomous_agents
+    packages__touri -->|1| examples__23_nl_to_agent_tutorial
     packages__touri -->|1| uri2ops__operation_registry
     packages__uri2voice -->|1| packages__nl2uri
     packages__uri2run -->|1| packages__touri
@@ -160,6 +168,7 @@ flowchart TD
     generator__validate -->|1| generator__model
     packages__resource_agent_factory -->|1| packages__uri3
     packages__resource_agent_factory -->|1| generator__validate
+    packages__nl2uri -->|1| packages__uri2ops
     packages__nl2uri -->|1| packages__urish
     nl2a__cli -->|1| packages__nl2uri
     packages__uri2verify -->|1| hypervisor__contract_registry
@@ -171,27 +180,25 @@ flowchart TD
     meta_agent__api -->|1| meta_agent__repair
     meta_agent__api -->|1| packages__resource_agent_factory
     meta_agent__repair -->|1| meta_agent__planner
-    packages__resource_agent_hypervisor -->|1| packages__urish
     hypervisor__verifier -->|1| hypervisor__contract_registry
     hypervisor__verifier -->|1| packages__resource_agent_hypervisor
     hypervisor__verifier -->|1| packages__uri2verify
     packages__resource_agent_hypervisor -->|1| hypervisor__config
     hypervisor__config -->|1| uri2ops__operation_registry
     packages__resource_agent_hypervisor -->|1| hypervisor__evolution
-    packages__resource_agent_hypervisor -->|1| uri3__graph
-    packages__resource_agent_hypervisor -->|1| packages__nl2uri
     packages__resource_agent_hypervisor -->|1| generator__model
+    packages__resource_agent_hypervisor -->|1| packages__uri2run
     hypervisor__deployment_registry -->|1| packages__resource_agent_hypervisor
-    testenv__ssh_agent_host -->|1| examples__38_autonomous_agents
+    testenv__ssh_agent_host -->|1| examples__23_nl_to_agent_tutorial
     scripts__examples -->|1| hypervisor__contract_registry
     scripts__examples -->|1| packages__uri2flow
     scripts__examples -->|1| packages__urigen
     scripts__examples -->|1| packages__uri2ops
     www__api_bridge -->|1| packages__urish
     www__api_bridge -->|1| agents__system
-    packages__uri2ops -->|1| packages__nl2uri
-    agents__system -->|1| www__landing
+    packages__hypervisor_dashboard_agent -->|1| www__landing
     agents__operators -->|1| packages__uri2ops
-    agents__system -->|1| uri3__resolvers
-    agents__system -->|1| packages__uri2run
+    packages__resource_agent_hypervisor -->|1| uri3__graph
+    packages__resource_agent_hypervisor -->|1| packages__nl2uri
+    packages__resource_agent_hypervisor -->|1| uri3__resolvers
     agents__system -->|1| packages__touri

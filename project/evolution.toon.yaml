@@ -1,4 +1,4 @@
-# code2llm/evolution | 2703 func | 461f | 2026-06-15
+# code2llm/evolution | 2755 func | 470f | 2026-06-15
 # generated in 0.01s
 
 NEXT[10] (ranked by impact):
@@ -6,9 +6,9 @@ NEXT[10] (ranked by impact):
       WHY: 836L, 0 classes, max CC=24
       EFFORT: ~4h  IMPACT: 20064
 
-  [2] !! SPLIT           agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py
-      WHY: 767L, 1 classes, max CC=20
-      EFFORT: ~4h  IMPACT: 15340
+  [2] !! SPLIT           www/app.js
+      WHY: 731L, 0 classes, max CC=14
+      EFFORT: ~4h  IMPACT: 10234
 
   [3] !! SPLIT-FUNC      _render_markdown  CC=70  fan=25
       WHY: CC=70 exceeds 15
@@ -38,21 +38,21 @@ NEXT[10] (ranked by impact):
       WHY: CC=24 exceeds 15
       EFFORT: ~1h  IMPACT: 336
 
-  [10] !  SPLIT-FUNC      _handle_schema_uri  CC=20  fan=14
-      WHY: CC=20 exceeds 15
-      EFFORT: ~1h  IMPACT: 280
+  [10] !  SPLIT-FUNC      call_uri  CC=15  fan=22
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 330
 
 
 RISKS[3]:
   ⚠ Splitting planfile.yaml may break 0 import paths
   ⚠ Splitting www/landing.js may break 111 import paths
-  ⚠ Splitting agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/uri_client.py may break 56 import paths
+  ⚠ Splitting www/app.js may break 99 import paths
 
 METRICS-TARGET:
   CC̄:          3.7 → ≤2.6
   max-CC:      70 → ≤20
-  god-modules: 9 → 0
-  high-CC(≥15): 19 → ≤9
+  god-modules: 8 → 0
+  high-CC(≥15): 20 → ≤10
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):

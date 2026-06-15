@@ -78,7 +78,11 @@ See [`docs/TOURI.md`](../docs/TOURI.md).
 config/operator_policy.uri.yaml
 config/operator_registry.uri.yaml
 config/extra_operator_registry.yaml
-packages/uri2ops/uri2ops/operation_registry/registry.yaml
+packages/uri2ops/uri2ops/operation_registry/registry.yaml   # union (CLI)
+agents/operators/*/operation_registry.yaml                  # deployed agents
+agents/operators/*/main.py                                  # uvicorn entry
+agents/system/hypervisor_dashboard/main.py                  # dashboard entry
+agents/system/hypervisor_dashboard/hypervisor_dashboard_agent/  # dashboard impl
 ```
 
 See [`README.md`](../README.md), [`docs/TOURI.md`](../docs/TOURI.md), [`docs/URI2FLOW.md`](../docs/URI2FLOW.md), [`docs/URI2OPS.md`](../docs/URI2OPS.md), and [`examples/README.md`](../examples/README.md).

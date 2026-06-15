@@ -123,6 +123,13 @@ def prepare_runtime_env(deployment: AgentDeployment, *, repo: Path) -> dict[str,
         root=repo,
         resolve_secrets=True,
     )
+    repo_root = str(repo.resolve())
+    existing_pythonpath = env.get("PYTHONPATH") or os.environ.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = (
+        f"{repo_root}{os.pathsep}{existing_pythonpath}"
+        if existing_pythonpath
+        else repo_root
+    )
     role = (deployment.metadata or {}).get("role")
     if role == "desktop_operator":
         for key in (

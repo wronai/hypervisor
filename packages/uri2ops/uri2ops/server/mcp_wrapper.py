@@ -18,7 +18,17 @@ def list_mcp_tools(registry: OperationRegistry) -> list[dict[str, Any]]:
                         "uri": {"type": "string"},
                         "payload": {"type": "object"},
                         "adapter": {"type": "string"},
+                        "environment": {
+                            "type": "string",
+                            "enum": ["local", "python", "docker", "mock", "remote"],
+                            "description": "Execution environment: local/python (in-process), docker, mock, remote",
+                        },
+                        "render": {
+                            "type": "string",
+                            "enum": ["text", "ascii", "markdown", "html", "pdf"],
+                        },
                         "approve": {"type": "boolean"},
+                        "remote_url": {"type": "string"},
                     },
                     "required": ["uri"],
                 },

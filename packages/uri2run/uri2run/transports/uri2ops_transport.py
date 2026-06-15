@@ -31,11 +31,11 @@ def _build_runtime_context(
     extra: dict[str, Any],
 ) -> dict[str, Any]:
     return {
-        "adapter": str(payload.get("adapter", extra.get("adapter", "mock"))),
+        "adapter": str(payload.get("adapter", extra.get("adapter", "auto"))),
         "root": str(_resolve_root(context)),
         "task_id": str(context.get("capability") or "uri2run"),
         "run_id": str(context.get("run_id") or "uri2run-call"),
-        "session": dict(context.get("session") or {}),
+        "session": dict(context.get("session") or payload.get("session") or {}),
     }
 
 
@@ -62,14 +62,31 @@ def run_uri2ops(
         "step_id", context.get("capability") or urlparse(uri).path.strip("/") or "step"
     )
     runtime_context = _build_runtime_context(uri, payload, context, extra)
+    environment = (
+        extra.get("environment")
+        or context.get("environment")
+        or payload.get("environment")
+    )
 
     try:
-        output = dispatch(
-            registry_scheme_name,
-            registry_operation_name,
-            dispatch_payload,
-            runtime_context,
-        )
+        if environment:
+            from uri2ops.operator.environments.router import dispatch_with_environment
+
+            output = dispatch_with_environment(
+                registry_scheme_name,
+                registry_operation_name,
+                dispatch_payload,
+                runtime_context,
+                environment=str(environment),
+                control_arguments={**extra, **context},
+            )
+        else:
+            output = dispatch(
+                registry_scheme_name,
+                registry_operation_name,
+                dispatch_payload,
+                runtime_context,
+            )
     except Exception as exc:
         return error_result("URI2OPS_DISPATCH_FAILED", str(exc))
 

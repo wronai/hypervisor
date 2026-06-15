@@ -293,7 +293,7 @@ def _write_deployments(
             {
                 "id": "hypervisor-dashboard.local",
                 "agent_ref": "agent://hypervisor-dashboard",
-                "target_uri": "local://packages/hypervisor-dashboard-agent",
+                "target_uri": "local://agents/system/hypervisor_dashboard",
                 "health_uri": "http://localhost:8788/health",
                 "if_running": "reuse",
             }

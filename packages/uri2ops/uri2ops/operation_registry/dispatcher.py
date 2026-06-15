@@ -21,6 +21,9 @@ def _split_python_uri(uri: str) -> tuple[str, str]:
 
 
 def call_handler(spec: OperationSpec, payload: dict[str, Any], context: dict[str, Any] | None = None) -> dict[str, Any]:
+    from uri3.config.repo_root import ensure_repo_root_on_syspath
+
+    ensure_repo_root_on_syspath()
     module_name, func_name = _split_python_uri(spec.handler)
     module = importlib.import_module(module_name)
     func = getattr(module, func_name)

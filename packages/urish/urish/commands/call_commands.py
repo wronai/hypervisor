@@ -33,6 +33,7 @@ def register_call_commands(app: typer.Typer, deps: RuntimeCommandDeps) -> None:
         stdin_data: bool = typer.Option(False, "--stdin-data"),
         stdin_envelope: bool = typer.Option(False, "--stdin-envelope"),
         select: str = typer.Option("", "--select", help="Dot path to extract from stdin envelope"),
+        adapter: str = typer.Option("auto", "--adapter", help="uri2ops adapter: auto|mock|playwright"),
     ) -> None:
         """Execute URI via uri3 explain -> uri2run transport -> envelope."""
         from urish.backends.call import call_uri
@@ -80,6 +81,8 @@ def register_call_commands(app: typer.Typer, deps: RuntimeCommandDeps) -> None:
                     select,
                 )
             }
+        if adapter:
+            body.setdefault("adapter", adapter)
 
         if explain_first and not json_out and output == "text":
             explain_cmd(uri, json_out=False, output="text")

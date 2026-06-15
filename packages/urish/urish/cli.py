@@ -261,6 +261,7 @@ _KNOWN_COMMANDS = frozenset(
         "www",
         "ecosystem",
         "context",
+        "environments",
         "ticket",
         "repair",
         "evolve",

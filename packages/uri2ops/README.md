@@ -2,7 +2,8 @@
 
 `uri2ops` is a standalone **URI Operation Registry + Operator Runtime** package extracted from the larger hypervisor architecture.
 
-It owns the execution layer for tasks expressed as URI graphs:
+Operator adapters live under ``agents/operators/*/adapters/``. The union registry
+in ``operation_registry/registry.yaml`` references those modules for CLI use.
 
 ```txt
 nl2uri -> URI task/workflow graph
@@ -88,7 +89,7 @@ uri2ops registry list
 packages/uri2ops/
   uri2ops/
     operation_registry/
-    operator/adapters/
+    operator/
     schemas/
     server/
   README.md

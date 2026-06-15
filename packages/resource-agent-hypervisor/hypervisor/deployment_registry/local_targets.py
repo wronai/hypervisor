@@ -48,7 +48,12 @@ def local_target_to_relative_path(target_uri: str) -> Path:
 def local_target_to_module(target_uri: str) -> str:
     relative = local_target_to_relative_path(target_uri)
     parts = relative.parts
-    if len(parts) >= 3 and parts[0] == "agents" and parts[1] in {"generated", "custom"}:
+    if len(parts) >= 3 and parts[0] == "agents" and parts[1] in {
+        "generated",
+        "custom",
+        "operators",
+        "system",
+    }:
         package = parts[2]
         return f"agents.{parts[1]}.{package}.main:app"
     if len(parts) >= 2 and parts[0] == "packages":

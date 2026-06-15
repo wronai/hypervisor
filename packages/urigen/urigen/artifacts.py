@@ -58,7 +58,7 @@ DOMAIN_FILES = {
 }
 
 APP_SOURCES = {
-    "hypervisor-dashboard": "packages/hypervisor-dashboard-agent",
+    "hypervisor-dashboard": "agents/system/hypervisor_dashboard",
 }
 
 PROFILE_INCLUDES = {

@@ -19,6 +19,17 @@ def validate_config_dict(data: dict[str, Any], repo_root: Path) -> list[str]:
     return validate_artifact(data, repo_root, "schemas/config/config_base.schema.json")
 
 
+def validate_runtime_environments_dict(data: dict[str, Any], repo_root: Path) -> list[str]:
+    from uri2ops.server.runtime_profiles import (
+        validate_runtime_registry_schema,
+        validate_runtime_registry_semantics,
+    )
+
+    errors = validate_runtime_registry_schema(data, root=str(repo_root))
+    errors.extend(validate_runtime_registry_semantics(data))
+    return errors
+
+
 @dataclass
 class ArtifactCheckResult:
     path: str
@@ -41,6 +52,11 @@ class ArtifactLifecycleResult:
 
 ARTIFACT_CHECKS: list[tuple[str, str, Any]] = [
     ("config/*.uri.yaml", "schemas/config/config_base.schema.json", validate_config_dict),
+    (
+        "config/runtime_environments.yaml",
+        "schemas/runtime_environments.schema.json",
+        validate_runtime_environments_dict,
+    ),
     ("output/incidents/**/*.yaml", "schemas/incident.schema.json", validate_incident_dict),
     (
         "evolution/proposals/**/*.yaml",

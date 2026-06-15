@@ -32,4 +32,6 @@ SUPPORTED_SCHEMES = {
     "schema",
     "contract",
     "incident",
+    "chat",
+    "nl",
 }

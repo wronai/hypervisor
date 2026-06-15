@@ -22,6 +22,34 @@ _SUMMARY_RESULT_TYPES = frozenset(
 )
 
 
+def _render_browser_page_result(result: dict[str, Any], output: str) -> str | None:
+    try:
+        from uri2ops.server.renderers.browser_page import (
+            is_browser_page_result,
+            normalize_render_format,
+            render_browser_page,
+        )
+    except ImportError:
+        return None
+
+    data = result.get("data")
+    page = data if isinstance(data, dict) and is_browser_page_result(data) else None
+    if page is None and is_browser_page_result(result):
+        page = result
+    if page is None:
+        return None
+    try:
+        fmt = normalize_render_format(output)
+        if fmt is None:
+            return None
+        body, _media_type = render_browser_page(page, fmt)
+        if isinstance(body, bytes):
+            return body.decode("utf-8", errors="replace")
+        return body
+    except (ValueError, RuntimeError):
+        return None
+
+
 def render_result(result: dict[str, Any], *, output: str = "json", quiet: bool = False) -> str:
     if output == "json":
         return json.dumps(result, indent=2, ensure_ascii=False)
@@ -34,6 +62,9 @@ def render_result(result: dict[str, Any], *, output: str = "json", quiet: bool =
         if isinstance(data, dict) and "stdout" in data:
             return str(data.get("stdout") or "")
         return json.dumps(data, ensure_ascii=False)
+    browser_render = _render_browser_page_result(result, output)
+    if browser_render is not None:
+        return browser_render
     if output == "text" or quiet:
         return _render_text(result, quiet=quiet)
     return _render_table(result)

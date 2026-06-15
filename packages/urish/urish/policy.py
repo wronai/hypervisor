@@ -38,6 +38,19 @@ class PolicyOptions:
             policy=selected,  # type: ignore[arg-type]
         )
 
+    def resolves_approve(self, *, context_policy: str | None = None) -> bool:
+        """True when mutations may execute (not just plan)."""
+        effective: PolicyName = self.policy
+        if context_policy in {"safe", "dev", "prod"}:
+            effective = context_policy  # type: ignore[assignment]
+        if self.no_approve:
+            return False
+        if self.approve:
+            return True
+        if effective == "dev" and not self.dry_run and not self.readonly:
+            return True
+        return False
+
 
 READ_SCHEMES = {
     "log",
@@ -57,6 +70,8 @@ READ_SCHEMES = {
     "proposal",
     "evolution",
     "file",
+    "chat",
+    "nl",
 }
 MUTATION_SCHEMES = {
     "shell",
@@ -127,8 +142,27 @@ def _classify_physical_operator(scheme: str, path: str) -> ActionKind | None:
     return "read"
 
 
+def _classify_browser_operator(scheme: str, path: str) -> ActionKind | None:
+    if scheme != "browser":
+        return None
+    if _path_has_any(
+        path,
+        (
+            "/open",
+            "/click",
+            "/submit",
+            "/write",
+            "/set",
+            "/run",
+            "/start",
+        ),
+    ):
+        return "mutation"
+    return "read"
+
+
 def _classify_desktop_operator(scheme: str, path: str) -> ActionKind | None:
-    if scheme not in {"browser", "screen", "input", "pcwin", "android"}:
+    if scheme not in {"screen", "input", "pcwin", "android"}:
         return None
     if _path_has_any(
         path,
@@ -172,6 +206,7 @@ def classify_uri(uri: str) -> ActionKind:
         lambda: _classify_apply(scheme, path),
         lambda: _classify_hypervisor_mutation(scheme, path),
         lambda: _classify_physical_operator(scheme, path),
+        lambda: _classify_browser_operator(scheme, path),
         lambda: _classify_desktop_operator(scheme, path),
         lambda: _classify_read(scheme, path, parsed),
         lambda: _classify_mutation_scheme(scheme, path),
@@ -203,22 +238,28 @@ def evaluate_policy(
     if options.dry_run:
         return True, None, True
 
+    approved = options.resolves_approve(context_policy=context_policy)
+
     if action in {"repair", "apply", "deploy"}:
-        if options.approve:
+        if approved:
             return True, None, False
         if effective == "safe":
             return False, f"{action} requires --dry-run under policy=safe", False
         if effective == "prod":
             return False, f"{action} requires --approve under policy=prod", False
+        if options.no_approve:
+            return False, f"{action} blocked (--no-approve) under policy=dev", False
         return False, f"{action} requires --dry-run or --approve under policy=dev", False
 
     if action == "mutation":
-        if options.approve:
+        if approved:
             return True, None, False
         if effective == "safe":
             return False, "mutation blocked under policy=safe (use --dry-run)", False
         if effective == "prod":
             return False, "mutation requires --approve under policy=prod", False
-        return False, "mutation requires --dry-run by default under policy=dev", False
+        if options.no_approve:
+            return False, "mutation blocked (--no-approve) under policy=dev; use --dry-run for preview", False
+        return False, "mutation requires --dry-run under policy=dev", False
 
     return True, None, False

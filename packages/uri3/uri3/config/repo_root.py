@@ -42,3 +42,19 @@ def config_repo_root(root: Path | None = None) -> Path:
 
 def repo_root() -> Path:
     return find_repo_root()
+
+
+def ensure_repo_root_on_syspath(*, start: Path | None = None) -> Path | None:
+    """Prepend monorepo root to sys.path so top-level `agents` imports resolve."""
+    import sys
+
+    try:
+        root = find_repo_root(start, strict=False)
+    except FileNotFoundError:
+        return None
+    if not (root / "agents").is_dir():
+        return None
+    repo_str = str(root.resolve())
+    if repo_str not in sys.path:
+        sys.path.insert(0, repo_str)
+    return root
